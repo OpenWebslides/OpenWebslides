@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  upstream: MyText
+  state: 1
+
+two:
+  name: MyText
+  upstream: MyText
+  state: 1
