@@ -1,24 +1,45 @@
-# README
+# Open Webslides
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[Open Webslides](https://openwebslides.github.io) is an open-source co-creation platform.
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+Install the following software first:
 
-* System dependencies
+- RVM
+- Ruby 2.4.0
+- Yarn
+- NodeJS 7.6.0
 
-* Configuration
+Then install all dependencies:
 
-* Database creation
+```
+$ # Back-end dependencies
+$ gem install bundler --no-ri --no-rdoc
+$ bundle install
 
-* Database initialization
+$ # Front-end dependencies 
+$ yarn install
+```
 
-* How to run the test suite
+## Development
 
-* Services (job queues, cache servers, search engines, etc.)
+Use Foreman to start both the Rails server and the Webpack server:
 
-* Deployment instructions
+```
+$ rails db:migrate
+$ foreman start
+```
 
-* ...
+Use RuboCop to enforce code conventions:
+
+```
+$ rubocop --rails
+```
+
+Use RSpec to run tests
+
+```
+$ rails db:migrate RAILS_ENV=test
+$ rake rspec
+```
