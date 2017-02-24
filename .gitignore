@@ -22,3 +22,7 @@
 
 # IDE files
 .idea
+
+# Webpack files
+/node_modules
+/public/webpack

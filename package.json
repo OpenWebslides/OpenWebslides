@@ -1,0 +1,20 @@
+{
+  "name": "openwebslides",
+  "description": "Open-source co-creation platform",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "Open Webslides Team",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/OpenWebSlides/OpenWebslides.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OpenWebSlides/OpenWebslides/issues"
+  },
+  "homepage": "https://openwebslides.github.io/",
+  "dependencies": {
+    "stats-webpack-plugin": "^0.4.3",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
+  }
+}
