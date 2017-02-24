@@ -4,7 +4,7 @@ class Deck < ApplicationRecord
 
   enum :state => [:public, :protected, :private]
 
-  belongs_to :user
+  belongs_to :owner, :class_name => User
 
   has_many :contributors, :class_name => User
 end

@@ -4,6 +4,7 @@ class CreateDecks < ActiveRecord::Migration[5.0]
       t.text :name
       t.text :upstream
       t.integer :state
+      t.references :user, foreign_key: true
 
       t.timestamps
     end
