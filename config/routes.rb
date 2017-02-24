@@ -6,8 +6,10 @@ Rails.application.routes.draw do
   namespace :api do
     root :to => 'api#index'
 
-    resource :users do
-      resource :decks
+    resources :users, :except => [:new, :edit] do
+      resources :decks, :except => [:new, :edit]
     end
+
+    resources :tags, :except => [:new, :edit]
   end
 end

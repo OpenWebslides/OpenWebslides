@@ -4,5 +4,5 @@ class User < ApplicationRecord
 
   has_many :decks
 
-  has_and_belongs_to_many :contributions, :class_name => Deck
+  has_and_belongs_to_many :contributions, :class_name => 'Deck'
 end

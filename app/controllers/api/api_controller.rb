@@ -1,6 +1,4 @@
-module Api
-  class ApiController < ApplicationController
-    def index
-    end
+class Api::ApiController < ApplicationController
+  def index
   end
 end
