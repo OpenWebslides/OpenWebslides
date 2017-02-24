@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,39 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170224125646) do
+ActiveRecord::Schema.define(version: 20170224151305) do
 
-  create_table 'decks', :force => :cascade do |t|
-    t.text     'name'
-    t.text     'upstream'
-    t.integer  'state'
-    t.integer  'user_id'
-    t.datetime 'created_at', :null => false
-    t.datetime 'updated_at', :null => false
-    t.index ['user_id'], :name => 'index_decks_on_user_id'
+  create_table "decks", force: :cascade do |t|
+    t.text     "name"
+    t.text     "upstream"
+    t.integer  "state"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_decks_on_user_id"
   end
 
-  create_table 'decks_tags', :id => false, :force => :cascade do |t|
-    t.integer 'deck_id', :null => false
-    t.integer 'tag_id',  :null => false
+  create_table "decks_tags", id: false, force: :cascade do |t|
+    t.integer "deck_id", null: false
+    t.integer "tag_id",  null: false
   end
 
-  create_table 'decks_users', :id => false, :force => :cascade do |t|
-    t.integer 'user_id', :null => false
-    t.integer 'deck_id', :null => false
+  create_table "decks_users", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "deck_id", null: false
   end
 
-  create_table 'tags', :force => :cascade do |t|
-    t.text     'name'
-    t.datetime 'created_at', :null => false
-    t.datetime 'updated_at', :null => false
+  create_table "tags", force: :cascade do |t|
+    t.text     "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'users', :force => :cascade do |t|
-    t.text     'name'
-    t.text     'email'
-    t.datetime 'created_at', :null => false
-    t.datetime 'updated_at', :null => false
+  create_table "users", force: :cascade do |t|
+    t.text     "name"
+    t.text     "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end
