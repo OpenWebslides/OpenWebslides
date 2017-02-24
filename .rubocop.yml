@@ -1,0 +1,15 @@
+AllCops:
+  Exclude:
+    - db/schema.rb
+
+Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+
+Rails/HasAndBelongsToMany:
+  Enabled: False
+
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets

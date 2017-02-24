@@ -1,4 +1,6 @@
-class Api::ApiController < ApplicationController
-  def index
+# frozen_string_literal: true
+module Api
+  class ApiController < ApplicationController
+    def index; end
   end
 end

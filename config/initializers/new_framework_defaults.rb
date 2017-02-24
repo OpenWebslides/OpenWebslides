@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Be sure to restart your server when you modify this file.
 #
 # This file contains migration options to ease your Rails 5.0 upgrade.
@@ -15,4 +16,4 @@ Rails.application.config.active_record.belongs_to_required_by_default = true
 ActiveSupport.halt_callback_chains_on_return_false = false
 
 # Configure SSL options to enable HSTS with subdomains. Previous versions had false.
-Rails.application.config.ssl_options = { hsts: { subdomains: true } }
+Rails.application.config.ssl_options = { :hsts => { :subdomains => true } }

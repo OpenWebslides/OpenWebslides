@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Deck < ApplicationRecord
   validates :name, :presence => true
   validates :upstream, :presence => true
