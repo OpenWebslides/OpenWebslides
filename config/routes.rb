@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  root 'api#index'
+  namespace :api do
+    root 'api#index'
 
-  resource :users do
-    resource :decks
+    resource :users do
+      resource :decks
+    end
   end
 end
