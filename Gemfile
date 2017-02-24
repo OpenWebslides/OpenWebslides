@@ -35,6 +35,9 @@ group :development, :test do
 
   # Enforce code style using Rubocop
   gem 'rubocop', :require => false
+
+  # BDD testing for Ruby
+  gem 'rspec-rails'
 end
 
 group :development do
