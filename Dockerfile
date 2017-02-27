@@ -5,19 +5,17 @@ MAINTAINER Rein Van Imschoot <rein.vanimschoot@ugent.be>
 RUN useradd openwebslides --create-home --home-dir /app/ --shell /bin/false
 
 RUN apt-get update && apt-get install -qq -y --no-install-recommends \
-      build-essential nodejs libpq-dev
+      build-essential nodejs libpq-dev libsqlite3-dev
 
 ENV ROOT_PATH /app
 RUN mkdir -p $ROOT_PATH
 WORKDIR $ROOT_PATH
 
-ENV RAILS_ENV production
-
-COPY Gemfile Gemfile.lock $ROOT_PATH
+COPY Gemfile Gemfile.lock $ROOT_PATH/
 RUN gem install bundler
-RUN bundle install --deployment --without development test
+RUN bundle install
 
-COPY . $ROOT_PATH
+COPY . $ROOT_PATH/
 
 
-CMD ["/app/docker-entrypoint.sh"]
+CMD /app/docker-entrypoint.sh

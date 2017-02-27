@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+
   app:
     build: .
     env_file:
@@ -8,6 +9,21 @@ services:
     volumes:
       - public:/app/public
     restart: always
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    ports:
+      - "3000:3000"
+
+  postgres:
+    image: 'postgres:9.5'
+    environment:
+      POSTGRES_USER: 'openwebslides'
+      POSTGRES_PASSWORD: 'openwebslides'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
 
 volumes:
   public: {}
+  postgres:

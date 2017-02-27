@@ -15,4 +15,5 @@ su - openwebslides
 cd /app
 
 # Start app server
+mkdir -p /app/tmp/sockets
 bundle exec puma -b unix:///app/tmp/sockets/puma.sock
