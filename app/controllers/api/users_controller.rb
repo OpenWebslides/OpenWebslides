@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 module Api
-  class UsersController < ApplicationController
+  class UsersController < ApiController
     def index
       @users = User.all
     end

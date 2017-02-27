@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RspecApiDocumentation.configure do |config|
   # Set the application that Rack::Test uses
   # config.app = Rails.application
@@ -50,12 +51,12 @@ RspecApiDocumentation.configure do |config|
   # You can define documentation groups as well. A group allows you generate multiple
   # sets of documentation.
   # config.define_group :public do |config|
-    # By default the group's doc_dir is a subfolder under the parent group, based
-    # on the group's name.
-    # config.docs_dir = Rails.root.join("doc", "api", "public")
+  # By default the group's doc_dir is a subfolder under the parent group, based
+  # on the group's name.
+  # config.docs_dir = Rails.root.join("doc", "api", "public")
 
-    # Change the filter to only include :public examples
-    # config.filter = :public
+  # Change the filter to only include :public examples
+  # config.filter = :public
   # end
 
   # Change how the post body is formatted by default, you can still override by `raw_post`
@@ -65,7 +66,9 @@ RspecApiDocumentation.configure do |config|
   # Change how the response body is formatted by default
   # Is proc that will be called with the response_content_type & response_body
   # by default response_content_type of `application/json` are pretty formated.
-  # config.response_body_formatter = Proc.new { |response_content_type, response_body| response_body }
+  # config.response_body_formatter = Proc.new do
+  #   |response_content_type, response_body| response_body
+  # end
 
   # Change the embedded style for HTML output. This file will not be processed by
   # RspecApiDocumentation and should be plain CSS.
