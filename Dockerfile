@@ -17,5 +17,4 @@ RUN bundle install
 
 COPY . $ROOT_PATH/
 
-
 CMD /app/docker-entrypoint.sh
