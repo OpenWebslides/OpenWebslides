@@ -38,6 +38,13 @@ group :development, :test do
 
   # BDD testing for Ruby
   gem 'rspec-rails'
+
+  # Factory pattern for testing
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+
+  # Fake data generator
+  gem 'faker'
 end
 
 group :development do
