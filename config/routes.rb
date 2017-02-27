@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root :to => 'application#index'
 
   # API
-  namespace :api do
+  namespace :api, :constraints => { :format => :json } do
     root :to => 'api#index'
 
     resources :users, :except => [:new, :edit] do
