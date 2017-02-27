@@ -7,8 +7,8 @@ RSpec.describe Deck, :type => :model do
   end
 
   it 'is valid with attributes' do
-    user = build :user
-    expect(Deck.new(:name => 'foo', :upstream => 'bar', :state => :public_access, :owner => user)).to be_valid
+    deck = build :deck, :with_owner
+    expect(deck).to be_valid
   end
 
   it 'is invalid without name' do
@@ -33,6 +33,14 @@ RSpec.describe Deck, :type => :model do
 
   it 'has a valid :status enum' do
     deck = build :deck, :with_owner
-    expect(['public_access', 'protected_access', 'private_access']).to include deck.state
+    expect(%w(public_access protected_access private_access)).to include deck.state
+  end
+
+  it 'has many tags' do
+    deck = build :deck, :with_tags
+
+    # Use #length instead of #count for unpersisted relations
+    expect(deck.tags.length).not_to be 0
+    deck.tags.each { |t| expect(t).to be_instance_of Tag }
   end
 end

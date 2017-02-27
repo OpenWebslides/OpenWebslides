@@ -26,6 +26,9 @@ RSpec.describe User, :type => :model do
 
   it 'has many decks' do
     user = build :user, :with_decks
-    expect(user.decks.first).to be_instance_of Deck
+
+    # Use #length instead of #count for unpersisted relations
+    expect(user.decks.length).not_to be 0
+    user.decks.each { |d| expect(d).to be_instance_of Deck }
   end
 end
