@@ -30,7 +30,7 @@ module Api
     def destroy
       @user = User.find params[:id]
       @user.destroy
-      render :status => :ok
+      head :no_content
     end
 
     private

@@ -45,6 +45,9 @@ group :development, :test do
 
   # Fake data generator
   gem 'faker'
+
+  # API documentation
+  gem 'rspec_api_documentation'
 end
 
 group :development do

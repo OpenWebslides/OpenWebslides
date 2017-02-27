@@ -26,3 +26,6 @@
 # Webpack files
 /node_modules
 /public/webpack
+
+# Documentation
+doc
