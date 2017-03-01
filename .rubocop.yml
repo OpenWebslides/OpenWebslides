@@ -7,6 +7,12 @@ Documentation:
 
 Metrics/LineLength:
   Max: 100
+  Exclude:
+    - db/**/*.rb
+
+Metrics/MethodLength:
+  Exclude:
+    - db/**/*.rb
 
 Metrics/BlockLength:
   Exclude:
