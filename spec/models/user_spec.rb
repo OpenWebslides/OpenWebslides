@@ -20,6 +20,12 @@ RSpec.describe User, :type => :model do
     expect(User.new(:name => 'foo', :email => '')).not_to be_valid
   end
 
+  it 'rejects invalid email' do
+    expect(build :user, :email => 'foo@bar@baz').not_to be_valid
+    expect(build :user, :email => 'foo@').not_to be_valid
+    expect(build :user, :email => '@bar').not_to be_valid
+  end
+
   it 'is invalid without correct email' do
     expect(User.new(:email => 'foo')).not_to be_valid
   end
