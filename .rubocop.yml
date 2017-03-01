@@ -11,12 +11,10 @@ Metrics/LineLength:
     - db/**/*.rb
 
 Metrics/MethodLength:
-  Exclude:
-    - db/**/*.rb
+  Enabled: false
 
 Metrics/BlockLength:
-  Exclude:
-    - spec/**/*_spec.rb
+  Enabled: false
 
 Rails/HasAndBelongsToMany:
   Enabled: False
