@@ -54,10 +54,13 @@ PreCommit:
     enabled: true
   RuboCop:
     enabled: true
-  RSpec:
-    enabled: true
   TrailingWhitespace:
     enabled: true
   LineEndings:
     enabled: true
 
+PrePush:
+  RSpec:
+    enabled: true
+  Brakeman:
+    enabled: true

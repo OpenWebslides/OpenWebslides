@@ -68,6 +68,9 @@ group :development do
 
   # Rails best practices
   gem 'rails_best_practices', :require => false
+
+  # Security vulnerability scanner
+  gem 'brakeman', :require => false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
