@@ -18,8 +18,20 @@ $ # Back-end dependencies
 $ gem install bundler --no-ri --no-rdoc
 $ bundle install
 
-$ # Front-end dependencies 
+$ # Front-end dependencies
 $ yarn install
+```
+
+Enable git pre-commit hooks:
+
+```
+$ overcommit --install
+```
+
+When the overcommit configuration changes (and on the first run), you have to verify it:
+
+```
+$ overcommmit --sign
 ```
 
 ## Development

@@ -36,6 +36,9 @@ group :development, :test do
   # Enforce code style using Rubocop
   gem 'rubocop', :require => false
 
+  # Check for vulnerable versions of gems
+  gem 'bundler-audit', :require => false
+
   # BDD testing for Ruby
   gem 'rspec-rails'
 
@@ -51,7 +54,20 @@ group :development, :test do
 end
 
 group :development do
+  # Notify of file changes
   gem 'listen', '~> 3.0.5'
+
+  # Git pre-commit hooks
+  gem 'overcommit', :require => false
+
+  # Analyze potential speed improvements
+  gem 'fasterer', :require => false
+
+  # Check for valid JSON syntax
+  gem 'json', :require => false
+
+  # Rails best practices
+  gem 'rails_best_practices', :require => false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
