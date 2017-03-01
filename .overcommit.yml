@@ -42,6 +42,8 @@ PreCommit:
     enabled: true
   BundleOutdated:
     enabled: true
+  EsLint:
+    enabled: true
   ExecutePermissions:
     enabled: true
   FixMe:
