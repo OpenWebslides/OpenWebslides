@@ -28,6 +28,19 @@ var config = {
         test: /\.es6$/,
         exclude: /(node_modules|bower_components)/,
         loader: "babel?presets[]=es2015"
+      },
+      {
+        test: /\.scss$/,
+        loaders: [
+          'style-loader',
+          'css-loader?importLoaders=1',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'file'
       }
     ]
   },

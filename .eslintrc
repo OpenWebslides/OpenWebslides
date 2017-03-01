@@ -17,7 +17,6 @@
   "rules": {
     "no-console": "off",
     "no-unused-vars": "warn",
-
     /* Best practices */
     "class-methods-use-this": "warn",
     "default-case": "error",
@@ -28,6 +27,6 @@
     "no-eval": "warn",
     "no-self-compare": "warn",
     "no-unused-expressions": "warn",
-    "no-useless-escape": "warn",
+    "no-useless-escape": "warn"
   }
 }
