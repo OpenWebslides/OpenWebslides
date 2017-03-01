@@ -25,11 +25,15 @@ ActiveRecord::Schema.define(version: 20170224151305) do
   create_table "decks_tags", id: false, force: :cascade do |t|
     t.integer "deck_id", null: false
     t.integer "tag_id",  null: false
+    t.index ["deck_id", "tag_id"], name: "index_decks_tags_on_deck_id_and_tag_id"
+    t.index ["tag_id", "deck_id"], name: "index_decks_tags_on_tag_id_and_deck_id"
   end
 
   create_table "decks_users", id: false, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "deck_id", null: false
+    t.index ["deck_id", "user_id"], name: "index_decks_users_on_deck_id_and_user_id"
+    t.index ["user_id", "deck_id"], name: "index_decks_users_on_user_id_and_deck_id"
   end
 
   create_table "tags", force: :cascade do |t|
