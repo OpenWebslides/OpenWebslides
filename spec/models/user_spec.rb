@@ -7,27 +7,24 @@ RSpec.describe User, :type => :model do
   end
 
   it 'is valid with valid attributes' do
-    expect(User.new(:name => 'foo', :email => 'foo@bar')).to be_valid
+    expect(build :user).to be_valid
   end
 
   it 'is invalid without name' do
-    expect(User.new(:email => 'foo@bar')).not_to be_valid
-    expect(User.new(:name => '', :email => 'foo@bar')).not_to be_valid
+    expect(build :user, :name => nil).not_to be_valid
+    expect(build :user, :name => '').not_to be_valid
   end
 
   it 'is invalid without email' do
-    expect(User.new(:name => 'foo')).not_to be_valid
-    expect(User.new(:name => 'foo', :email => '')).not_to be_valid
+    expect(build :user, :email => nil).not_to be_valid
+    expect(build :user, :email => '').not_to be_valid
   end
 
   it 'rejects invalid email' do
+    expect(build :user, :email => 'foo').not_to be_valid
     expect(build :user, :email => 'foo@bar@baz').not_to be_valid
     expect(build :user, :email => 'foo@').not_to be_valid
     expect(build :user, :email => '@bar').not_to be_valid
-  end
-
-  it 'is invalid without correct email' do
-    expect(User.new(:email => 'foo')).not_to be_valid
   end
 
   it 'has many decks' do
