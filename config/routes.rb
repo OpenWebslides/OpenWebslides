@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   # Application
   root :to => 'application#index'
 
+  # Authentication
+  mount_devise_token_auth_for 'User', :at => 'api/auth'
+
   # API
   namespace :api, :constraints => { :format => :json } do
     root :to => 'api#index'

@@ -8,6 +8,11 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# Authentication/authorization
+gem 'devise'
+gem 'devise_token_auth'
+gem 'omniauth'
+
 # Webpack for client-side assets
 gem 'webpack-rails'
 

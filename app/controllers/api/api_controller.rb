@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 module Api
   class ApiController < ApplicationController
+    include DeviseTokenAuth::Concerns::SetUserByToken
+
     before_action :ensure_json_request
 
     private
