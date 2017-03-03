@@ -1,5 +1,5 @@
 {
-  "extends": "eslint:recommended",
+  "extends": "airbnb",
   "parserOptions": {
     "ecmaVersion": 7,
     "sourceType": "module",
@@ -13,20 +13,5 @@
   },
   "plugins": [
     "react"
-  ],
-  "rules": {
-    "no-console": "off",
-    "no-unused-vars": "warn",
-    /* Best practices */
-    "class-methods-use-this": "warn",
-    "default-case": "error",
-    "dot-location": "error",
-    "eqeqeq": "warn",
-    "no-alert": "error",
-    "no-empty-function": "warn",
-    "no-eval": "warn",
-    "no-self-compare": "warn",
-    "no-unused-expressions": "warn",
-    "no-useless-escape": "warn"
-  }
+  ]
 }

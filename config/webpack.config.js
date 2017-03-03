@@ -22,7 +22,10 @@ var config = {
       {
         test: /\.jsx$/,
         exclude: /(node_modules|bower_components)/,
-        loader: "babel?presets[]=react,presets[]=es2015"
+        loaders: [
+          'babel?presets[]=react,presets[]=es2015',
+          'eslint-loader'
+        ]
       },
       {
         test: /\.es6$/,
@@ -61,7 +64,11 @@ var config = {
       chunks: false,
       modules: false,
       assets: true
-    })]
+    })],
+
+  eslint: {
+    configFile: './.eslintrc'
+  }
 };
 
 if (production) {
