@@ -4,6 +4,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var StatsPlugin = require('stats-webpack-plugin');
+var StyleLintPlugin = require('stylelint-webpack-plugin');
 
 // must match config.webpack.dev_server.port
 var devServerPort = 3808;
@@ -74,7 +75,8 @@ var config = {
       chunks: false,
       modules: false,
       assets: true
-    })]
+    }),
+    new StyleLintPlugin()]
 };
 
 if (production) {

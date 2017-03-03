@@ -54,6 +54,9 @@ group :development, :test do
 
   # API documentation
   gem 'rspec_api_documentation'
+
+  # SCSS-lint rendering
+  gem 'sass'
 end
 
 group :development do

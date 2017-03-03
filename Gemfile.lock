@@ -179,6 +179,7 @@ GEM
     ruby-progressbar (1.8.1)
     ruby_parser (3.8.4)
       sexp_processor (~> 4.1)
+    sass (3.4.23)
     sexp_processor (4.8.0)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
@@ -223,6 +224,7 @@ DEPENDENCIES
   rspec-rails
   rspec_api_documentation
   rubocop
+  sass
   sqlite3
   tzinfo-data
   webpack-rails
