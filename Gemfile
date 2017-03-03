@@ -61,7 +61,7 @@ end
 
 group :development do
   # Notify of file changes
-  gem 'listen', '~> 3.0.5'
+  gem 'listen'
 
   # Git pre-commit hooks
   gem 'overcommit', :require => false
