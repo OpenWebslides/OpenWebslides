@@ -18,23 +18,30 @@ var config = {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: [
-          'babel?presets[]=react,presets[]=es2015',
-          'eslint-loader'
+        use: [
+            'babel-loader',
+            'eslint-loader'
         ]
       },
       {
         test: /\.es6$/,
         exclude: /(node_modules|bower_components)/,
-        loader: "babel?presets[]=es2015"
+        use: [
+          'babel-loader'
+        ]
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader', 'sass-loader']
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
@@ -51,8 +58,11 @@ var config = {
   },
 
   resolve: {
-    root: path.join(__dirname, '..', 'webpack'),
-    extensions: ["", ".js", ".jsx", ".es6"]
+    extensions: [".js", ".jsx", ".es6"],
+    modules: [
+              path.join(__dirname, '..', 'webpack'),
+              "node_modules"
+          ]
   },
 
   plugins: [
@@ -64,25 +74,17 @@ var config = {
       chunks: false,
       modules: false,
       assets: true
-    })],
-
-  eslint: {
-    configFile: './.eslintrc'
-  }
+    })]
 };
 
 if (production) {
   config.plugins.push(
     new webpack.NoErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: { warnings: false },
-      sourceMap: false
-    }),
+    new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify('production') }
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.DedupePlugin()
   );
 } else {
   config.devServer = {
