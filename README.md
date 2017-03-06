@@ -61,3 +61,9 @@ Use RSpec acceptance tests to write documentation
 ```
 $ rails docs:generate
 ```
+
+If you want to populate the database with sample data
+
+```
+$ rake db:populate
+```
