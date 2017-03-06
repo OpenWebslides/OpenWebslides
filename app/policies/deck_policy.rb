@@ -23,7 +23,10 @@ class DeckPolicy
     end
   end
 
-  def update?; end
+  def update?
+    return false if @user.nil?
+    @deck.owner == @user || @deck.contributors.include?(@user)
+  end
 
   def admin?; end
 end
