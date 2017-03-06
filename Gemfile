@@ -79,9 +79,6 @@ group :development do
   # Check for valid JSON syntax
   gem 'json', :require => false
 
-  # Rails best practices
-  gem 'rails_best_practices', :require => false
-
   # Security vulnerability scanner
   gem 'brakeman', :require => false
 end

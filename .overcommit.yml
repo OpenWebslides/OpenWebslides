@@ -52,8 +52,6 @@ PreCommit:
     enabled: true
   JsonSyntax:
     enabled: true
-  RailsBestPractices:
-    enabled: true
   RuboCop:
     enabled: true
   TrailingWhitespace:
