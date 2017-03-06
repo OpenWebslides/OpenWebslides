@@ -7,7 +7,7 @@ class DeckPolicy
     @deck = deck
   end
 
-  def read?
+  def show?
     if @deck.public_access?
       # Everyone can read
       true
@@ -23,13 +23,38 @@ class DeckPolicy
     end
   end
 
+  def create?
+    # Authenticated users can create a deck
+    !@user.nil?
+  end
+
   def update?
     return false if @user.nil?
     @deck.owner == @user || @deck.contributors.include?(@user)
   end
 
-  def admin?
+  def destroy?
     return false if @user.nil?
     @deck.owner == @user
+  end
+
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user  = user
+      @scope = scope
+    end
+
+    def resolve
+      # Return accessible decks
+      if @user
+        scope.where(:state => 'public_access')
+             .merge(@user.contributions)
+             .merge(@user.decks)
+      else
+        scope.where(:state => 'public_access')
+      end
+    end
   end
 end

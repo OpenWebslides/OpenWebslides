@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe DeckPolicy do
   subject { described_class }
 
-  permissions :read? do
+  permissions :show? do
     it 'allows guests read access only on public decks' do
       public_deck = build :deck, :state => :public_access
       protected_deck = build :deck, :state => :protected_access
@@ -52,6 +52,17 @@ RSpec.describe DeckPolicy do
       expect(subject).to permit owner, public_deck
       expect(subject).to permit owner, protected_deck
       expect(subject).to permit owner, private_deck
+    end
+  end
+
+  permissions :create? do
+    it 'denies guests create access' do
+      expect(subject).not_to permit
+    end
+
+    it 'allows authenticated users create access' do
+      user = build :user
+      expect(subject).to permit user
     end
   end
 
@@ -120,7 +131,7 @@ RSpec.describe DeckPolicy do
     end
   end
 
-  permissions :admin? do
+  permissions :destroy? do
     it 'denies guests admin access' do
       public_deck = build :deck, :state => :public_access
       protected_deck = build :deck, :state => :protected_access
