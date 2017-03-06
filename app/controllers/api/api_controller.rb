@@ -28,5 +28,9 @@ module Api
     rescue
       head :internal_server_error
     end
+
+    def pundit_user
+      current_api_user
+    end
   end
 end
