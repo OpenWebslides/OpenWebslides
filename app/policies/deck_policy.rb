@@ -28,5 +28,8 @@ class DeckPolicy
     @deck.owner == @user || @deck.contributors.include?(@user)
   end
 
-  def admin?; end
+  def admin?
+    return false if @user.nil?
+    @deck.owner == @user
+  end
 end
