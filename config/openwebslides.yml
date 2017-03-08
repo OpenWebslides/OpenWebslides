@@ -13,6 +13,7 @@ provider:
   ##
   # Provider port
   #
+  # Defaults to 22 for ssh provider and 80 for github
   port: 22
 
   ##
@@ -28,6 +29,16 @@ provider:
   # github_id: <%= ENV['OAUTH_GITHUB_ID'] %>
   # github_secret: <%= ENV['OAUTH_GITHUB_SECRET'] %>
 
+  ##
+  # User (only for ssh provider)
+  #
+  user: openwebslides
+
+  ##
+  #
+  # Password for user
+  #
+  # password: openwebslides
 
   ##
   # Path to private keyfile (only for ssh provider)

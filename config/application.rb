@@ -30,9 +30,5 @@ module OpenWebslides
 
     # Autoload lib
     config.autoload_paths += %W(#{config.root}/lib)
-
-    # OpenWebslides configuration
-    config_file = Rails.root.join 'config', 'openwebslides.yml'
-    config.openwebslides = YAML.safe_load ERB.new(File.read config_file).result
   end
 end

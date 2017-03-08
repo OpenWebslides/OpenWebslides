@@ -32,5 +32,4 @@ doc
 
 # Private files
 *.env
-
-/.gem
+*.key

@@ -13,6 +13,9 @@ gem 'devise'
 gem 'devise_token_auth'
 gem 'omniauth'
 
+# Data store providers
+gem 'net-ssh'
+
 # Webpack for client-side assets
 gem 'webpack-rails'
 
