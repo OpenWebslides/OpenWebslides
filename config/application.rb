@@ -17,7 +17,7 @@ require 'action_view/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Openwebslides
+module OpenWebslides
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -27,5 +27,12 @@ module Openwebslides
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Autoload lib
+    config.autoload_paths += %W(#{config.root}/lib)
+
+    # OpenWebslides configuration
+    config_file = Rails.root.join 'config', 'openwebslides.yml'
+    config.openwebslides = YAML.safe_load ERB.new(File.read config_file).result
   end
 end

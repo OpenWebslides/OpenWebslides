@@ -1,0 +1,35 @@
+provider:
+  ##
+  # Data provider type
+  #
+  # Possible values: ssh, github
+  type: ssh
+
+  ##
+  # Provider hostname/IP
+  #
+  host: localhost
+
+  ##
+  # Provider port
+  #
+  port: 22
+
+  ##
+  # Path to repository store/organisation
+  #
+  #
+  # Possible values: a full path (for ssh provider), organisation name (for github provider)
+  path: /srv/openwebslides
+
+  ##
+  # GitHub OAuth2 credentials (only for github provider)
+  #
+  # github_id: <%= ENV['OAUTH_GITHUB_ID'] %>
+  # github_secret: <%= ENV['OAUTH_GITHUB_SECRET'] %>
+
+
+  ##
+  # Path to private keyfile (only for ssh provider)
+  #
+  private_key: <%= Rails.root.join 'config', 'private.key' %>
