@@ -10,16 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306142543) do
+ActiveRecord::Schema.define(version: 20170308153820) do
 
   create_table "decks", force: :cascade do |t|
     t.string   "name"
-    t.string   "upstream"
+    t.string   "repository"
     t.integer  "state"
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "description"
+    t.index ["repository"], name: "index_decks_on_repository", unique: true
     t.index ["user_id"], name: "index_decks_on_user_id"
   end
 

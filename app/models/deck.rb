@@ -4,7 +4,7 @@ class Deck < ApplicationRecord
   # Properties
   #
   validates :name, :presence => true
-  validates :upstream, :presence => true
+  validates :repository, :presence => true, :uniqueness => true
 
   enum :state => [:public_access, :protected_access, :private_access]
   validates :state, :presence => true
@@ -24,10 +24,10 @@ class Deck < ApplicationRecord
   # Methods
   #
   def create_repository
-    self.upstream = OpenWebslides::Provider::Repository.create name unless Rails.env.test?
+    OpenWebslides::Provider::Repository.create name
   end
 
   def destroy_repository
-    OpenWebslides::Provider::Repository
+    OpenWebslides::Provider::Repository.destroy name
   end
 end
