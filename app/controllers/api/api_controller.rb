@@ -10,6 +10,11 @@ module Api
 
     rescue_from Exception, :with => :handle_error
 
+    def respond_with_errors(object)
+      @errors = ErrorSerializer.serialize_object object
+      render :errors, :status => :unprocessable_entity
+    end
+
     private
 
     def ensure_json_request
@@ -20,13 +25,15 @@ module Api
     def handle_error(exception)
       Rails.logger.error exception
 
+      @errors = ErrorSerializer.serialize_exception exception
+
       raise exception
     rescue Pundit::NotAuthorizedError
       head :not_authorized
     rescue ActiveRecord::RecordNotFound
-      head :not_found
+      render :errors, :status => :not_found
     rescue
-      head :internal_server_error
+      render :errors, :status => :internal_server_error
     end
 
     def pundit_user
