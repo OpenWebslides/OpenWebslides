@@ -10,11 +10,8 @@ Rails.application.routes.draw do
     # Authentication
     mount_devise_token_auth_for 'User', :at => 'auth'
 
-    # API
-    resources :users, :except => [:new, :edit] do
-      resources :decks, :except => [:new, :edit]
-    end
-
-    resources :tags, :except => [:new, :edit]
+    jsonapi_resources :users
+    jsonapi_resources :decks
+    jsonapi_resources :tags
   end
 end
