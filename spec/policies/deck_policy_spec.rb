@@ -2,190 +2,115 @@
 require 'rails_helper'
 
 RSpec.describe DeckPolicy do
-  subject { described_class }
+  subject { described_class.new user, deck }
 
-  permissions :show? do
-    it 'allows guests read access only on public decks' do
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
+  let(:deck) { build :deck, :state => :public_access }
 
-      expect(subject).to permit nil, public_deck
-      expect(subject).not_to permit nil, protected_deck
-      expect(subject).not_to permit nil, private_deck
+  context 'for a guest' do
+    let(:user) { nil }
+
+    it 'should not permit :create' do
+      expect(subject).to forbid_action :create
     end
 
-    it 'allows members read access on protected decks' do
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
-
-      user = build :user
-
-      expect(subject).to permit user, public_deck
-      expect(subject).to permit user, protected_deck
-      expect(subject).not_to permit user, private_deck
+    context 'for public decks' do
+      let(:deck) { build :deck, :state => :public_access }
+      it 'should permit only :show on public decks' do
+        expect(subject).to permit_action :show
+        expect(subject).to forbid_action :update
+        expect(subject).to forbid_action :destroy
+      end
     end
 
-    it 'allows contributors read access on private decks contributed to' do
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
-      contributed_deck = build :deck, :state => :private_access
-
-      contributor = build :user
-      contributed_deck.contributors << contributor
-
-      expect(subject).to permit contributor, public_deck
-      expect(subject).to permit contributor, protected_deck
-      expect(subject).not_to permit contributor, private_deck
-      expect(subject).to permit contributor, contributed_deck
+    context 'for protected decks' do
+      let(:deck) { build :deck, :state => :protected_access }
+      it 'should not permit anything on protected decks' do
+        expect(subject).to forbid_action :show
+        expect(subject).to forbid_action :update
+        expect(subject).to forbid_action :destroy
+      end
     end
 
-    it 'allows owners read access' do
-      owner = build :user
-
-      public_deck = build :deck, :state => :public_access, :owner => owner
-      protected_deck = build :deck, :state => :protected_access, :owner => owner
-      private_deck = build :deck, :state => :private_access, :owner => owner
-
-      expect(subject).to permit owner, public_deck
-      expect(subject).to permit owner, protected_deck
-      expect(subject).to permit owner, private_deck
+    context 'for private decks' do
+      let(:deck) { build :deck, :state => :private_access }
+      it 'should not permit anything on private decks' do
+        expect(subject).to forbid_action :show
+        expect(subject).to forbid_action :update
+        expect(subject).to forbid_action :destroy
+      end
     end
   end
 
-  permissions :create? do
-    it 'denies guests create access' do
-      expect(subject).not_to permit
+  context 'for a member' do
+    let(:user) { build :user }
+
+    it 'should permit :create' do
+      expect(subject).to permit_action :create
     end
 
-    it 'allows authenticated users create access' do
-      user = build :user
-      expect(subject).to permit user
-    end
-  end
-
-  permissions :update? do
-    it 'denies guests write access' do
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
-
-      expect(subject).not_to permit nil, public_deck
-      expect(subject).not_to permit nil, protected_deck
-      expect(subject).not_to permit nil, private_deck
+    context 'for public decks' do
+      let(:deck) { build :deck, :state => :public_access }
+      it 'should permit only :show on public decks' do
+        expect(subject).to permit_action :show
+        expect(subject).to forbid_action :update
+        expect(subject).to forbid_action :destroy
+      end
     end
 
-    it 'denies members write access' do
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
-
-      user = build :user
-
-      expect(subject).not_to permit user, public_deck
-      expect(subject).not_to permit user, protected_deck
-      expect(subject).not_to permit user, private_deck
+    context 'for protected decks' do
+      let(:deck) { build :deck, :state => :protected_access }
+      it 'should permit only :show on protected decks' do
+        expect(subject).to permit_action :show
+        expect(subject).to forbid_action :update
+        expect(subject).to forbid_action :destroy
+      end
     end
 
-    it 'allows contributors write access' do
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
-
-      contributed_public_deck = build :deck, :state => :private_access
-      contributed_protected_deck = build :deck, :state => :protected_access
-      contributed_private_deck = build :deck, :state => :private_access
-
-      contributor = build :user
-      contributed_public_deck.contributors << contributor
-      contributed_protected_deck.contributors << contributor
-      contributed_private_deck.contributors << contributor
-
-      expect(subject).not_to permit contributor, public_deck
-      expect(subject).not_to permit contributor, protected_deck
-      expect(subject).not_to permit contributor, private_deck
-      expect(subject).to permit contributor, contributed_public_deck
-      expect(subject).to permit contributor, contributed_protected_deck
-      expect(subject).to permit contributor, contributed_private_deck
-    end
-
-    it 'allows owners write access' do
-      owner = build :user
-
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
-
-      owned_public_deck = build :deck, :state => :private_access, :owner => owner
-      owned_protected_deck = build :deck, :state => :protected_access, :owner => owner
-      owned_private_deck = build :deck, :state => :private_access, :owner => owner
-
-      expect(subject).not_to permit owner, public_deck
-      expect(subject).not_to permit owner, protected_deck
-      expect(subject).not_to permit owner, private_deck
-      expect(subject).to permit owner, owned_public_deck
-      expect(subject).to permit owner, owned_protected_deck
-      expect(subject).to permit owner, owned_private_deck
+    context 'for private decks' do
+      let(:deck) { build :deck, :state => :private_access }
+      it 'should not permit anything on private decks' do
+        expect(subject).to forbid_action :show
+        expect(subject).to forbid_action :update
+        expect(subject).to forbid_action :destroy
+      end
     end
   end
 
-  permissions :destroy? do
-    it 'denies guests admin access' do
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
+  context 'for an owner' do
+    let(:user) { build :user, :with_decks }
 
-      expect(subject).not_to permit nil, public_deck
-      expect(subject).not_to permit nil, protected_deck
-      expect(subject).not_to permit nil, private_deck
+    it 'should permit :create' do
+      expect(subject).to permit_action :create
     end
 
-    it 'denies members admin access' do
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
-
-      user = build :user
-
-      expect(subject).not_to permit user, public_deck
-      expect(subject).not_to permit user, protected_deck
-      expect(subject).not_to permit user, private_deck
+    context 'for public decks' do
+      let(:deck) { build :deck, :with_owner, :state => :public_access }
+      let(:user) { deck.owner }
+      it 'should permit anything on public decks' do
+        expect(subject).to permit_action :show
+        expect(subject).to permit_action :update
+        expect(subject).to permit_action :destroy
+      end
     end
 
-    it 'denies contributors admin access' do
-      contributed_public_deck = build :deck, :state => :private_access
-      contributed_protected_deck = build :deck, :state => :protected_access
-      contributed_private_deck = build :deck, :state => :private_access
-
-      contributor = build :user
-      contributed_public_deck.contributors << contributor
-      contributed_protected_deck.contributors << contributor
-      contributed_private_deck.contributors << contributor
-
-      expect(subject).not_to permit contributor, contributed_public_deck
-      expect(subject).not_to permit contributor, contributed_protected_deck
-      expect(subject).not_to permit contributor, contributed_private_deck
+    context 'for protected decks' do
+      let(:deck) { build :deck, :with_owner, :state => :protected_access }
+      let(:user) { deck.owner }
+      it 'should permit anything on protected decks' do
+        expect(subject).to permit_action :show
+        expect(subject).to permit_action :update
+        expect(subject).to permit_action :destroy
+      end
     end
 
-    it 'allows owners admin access' do
-      owner = build :user
-
-      public_deck = build :deck, :state => :public_access
-      protected_deck = build :deck, :state => :protected_access
-      private_deck = build :deck, :state => :private_access
-
-      owned_public_deck = build :deck, :state => :private_access, :owner => owner
-      owned_protected_deck = build :deck, :state => :protected_access, :owner => owner
-      owned_private_deck = build :deck, :state => :private_access, :owner => owner
-
-      expect(subject).not_to permit owner, public_deck
-      expect(subject).not_to permit owner, protected_deck
-      expect(subject).not_to permit owner, private_deck
-      expect(subject).to permit owner, owned_public_deck
-      expect(subject).to permit owner, owned_protected_deck
-      expect(subject).to permit owner, owned_private_deck
+    context 'for private decks' do
+      let(:deck) { build :deck, :with_owner, :state => :private_access }
+      let(:user) { deck.owner }
+      it 'should permit anything on private decks' do
+        expect(subject).to permit_action :show
+        expect(subject).to permit_action :update
+        expect(subject).to permit_action :destroy
+      end
     end
   end
 end

@@ -23,6 +23,8 @@ gem 'webpack-rails'
 
 # JSON:API spec compliant resources
 gem 'jsonapi-resources'
+gem 'pundit-resources'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use Puma as the application server
@@ -59,8 +61,17 @@ group :development, :test do
   # Coverage report
   gem 'simplecov', :require => false
 
+  # SCSS-lint rendering
+  gem 'sass'
+end
+
+group :test do
   # BDD testing for Ruby
+  gem 'rspec'
   gem 'rspec-rails'
+
+  # Pundit RSpec matchers
+  gem 'pundit-matchers'
 
   # Factory pattern for testing
   gem 'factory_girl'
@@ -71,9 +82,6 @@ group :development, :test do
 
   # API documentation
   gem 'rspec_api_documentation'
-
-  # SCSS-lint rendering
-  gem 'sass'
 end
 
 group :development do

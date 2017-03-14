@@ -1,23 +1,23 @@
 # frozen_string_literal: true
 class DeckPolicy
-  attr_reader :user, :deck
+  attr_reader :user, :record
 
-  def initialize(user, deck)
+  def initialize(user, record)
     @user = user
-    @deck = deck
+    @record = record
   end
 
   def show?
-    if @deck.public_access?
+    if @record.public_access?
       # Everyone can read
       true
-    elsif @deck.protected_access?
+    elsif @record.protected_access?
       # Authenticated users can read protected deck
       !@user.nil?
-    elsif @deck.private_access?
+    elsif @record.private_access?
       return false if @user.nil?
       # Owner and collaborators users can read private deck
-      @deck.owner == @user || @deck.contributors.include?(@user)
+      @record.owner == @user || @record.contributors.include?(@user)
     else
       false
     end
@@ -30,12 +30,12 @@ class DeckPolicy
 
   def update?
     return false if @user.nil?
-    @deck.owner == @user || @deck.contributors.include?(@user)
+    @record.owner == @user || @record.contributors.include?(@user)
   end
 
   def destroy?
     return false if @user.nil?
-    @deck.owner == @user
+    @record.owner == @user
   end
 
   class Scope
@@ -47,13 +47,16 @@ class DeckPolicy
     end
 
     def resolve
-      # Return accessible decks
       if @user
-        scope.where(:state => 'public_access')
-             .merge(@user.contributions)
-             .merge(@user.decks)
+        # Public decks, protected decks and contributions
+        scope
+          .where(:state => 'public_access')
+          .merge(@user.decks)
+          .merge(@user.contributions)
       else
-        scope.where(:state => 'public_access')
+        # Public decks
+        scope
+          .where(:state => 'public_access')
       end
     end
   end

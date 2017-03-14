@@ -135,6 +135,14 @@ GEM
     puma (3.7.1)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
+    pundit-matchers (1.2.3)
+      pundit (~> 1.1, >= 1.1.0)
+      rspec-rails (>= 3.0.0)
+    pundit-resources (1.1.1)
+      activesupport
+      jsonapi-resources
+      pundit
+      rails (>= 4.2.1, < 5.1)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -261,7 +269,10 @@ DEPENDENCIES
   pg
   puma (~> 3.0)
   pundit
+  pundit-matchers
+  pundit-resources
   rails (~> 5.0.1)
+  rspec
   rspec-rails
   rspec_api_documentation
   rubocop

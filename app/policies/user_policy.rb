@@ -12,14 +12,17 @@ class UserPolicy
   end
 
   def create?
-    true
+    # OmniAuth takes care of creating users
+    false
   end
 
   def update?
+    # Users can only update their own account
     !@subject.nil? && @subject == @object
   end
 
   def destroy?
+    # Same as update
     update?
   end
 

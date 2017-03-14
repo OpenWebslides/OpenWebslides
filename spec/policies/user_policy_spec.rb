@@ -2,27 +2,34 @@
 require 'rails_helper'
 
 RSpec.describe UserPolicy do
-  subject { described_class }
+  subject { described_class.new user, object }
 
-  permissions :show?, :create? do
-    it 'allow everyone read and create access' do
-      user1 = build :user
-      user2 = build :user
+  let(:object) { build :user }
 
-      expect(subject).to permit nil, user1
-      expect(subject).to permit user1, user1
-      expect(subject).to permit user2, user1
-    end
+  context 'for a guest' do
+    let(:user) { nil }
+
+    it { is_expected.to forbid_action :create }
+    it { is_expected.to permit_action :show }
+    it { is_expected.to forbid_action :update }
+    it { is_expected.to forbid_action :destroy }
   end
 
-  permissions :update?, :destroy? do
-    it 'allow user to update and destroy his/her own account' do
-      user1 = build :user
-      user2 = build :user
+  context 'for a user' do
+    let(:user) { build :user }
 
-      expect(subject).not_to permit nil, user1
-      expect(subject).not_to permit user2, user1
-      expect(subject).to permit user1, user1
-    end
+    it { is_expected.to forbid_action :create }
+    it { is_expected.to permit_action :show }
+    it { is_expected.to forbid_action :update }
+    it { is_expected.to forbid_action :destroy }
+  end
+
+  context 'for the same user' do
+    let(:user) { object }
+
+    it { is_expected.to forbid_action :create }
+    it { is_expected.to permit_action :show }
+    it { is_expected.to permit_action :update }
+    it { is_expected.to permit_action :destroy }
   end
 end
