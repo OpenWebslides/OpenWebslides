@@ -6,17 +6,6 @@ module Api
     include Pundit::ResourceController
     include DeviseTokenAuth::Concerns::SetUserByToken
 
-    after_action :verify_authorized, :except => :index
-    after_action :verify_policy_scoped, :only => :index
-
-    def context
-      {
-        :user => pundit_user
-      }
-    end
-
-    def pundit_user
-      current_api_user
-    end
+    alias current_user current_api_user
   end
 end
