@@ -12,11 +12,12 @@ module Api
 
     def create
       @user = User.new user_params
+      authorize @user
 
       if @user.save
         render :status => :created
       else
-        render :status => :unprocessable_entity
+        respond_with_errors @user
       end
     end
 
@@ -27,7 +28,7 @@ module Api
       if @user.update user_params
         render :status => :ok
       else
-        render :status => :unprocessable_entity
+        respond_with_errors @user
       end
     end
 

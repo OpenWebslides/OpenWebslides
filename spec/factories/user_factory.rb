@@ -4,6 +4,7 @@ FactoryGirl.define do
     name { Faker::Name.name }
     email { Faker::Internet.email }
     password { Faker::Internet.password 6 }
+    provider 'email'
     uid { email }
 
     trait :with_decks do
