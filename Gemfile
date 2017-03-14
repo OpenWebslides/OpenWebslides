@@ -63,9 +63,7 @@ group :development, :test do
 
   # SCSS-lint rendering
   gem 'sass'
-end
 
-group :test do
   # BDD testing for Ruby
   gem 'rspec'
   gem 'rspec-rails'
