@@ -8,7 +8,12 @@ provider:
   ##
   # Data provider type
   #
-  # Possible values: ssh, github
+  # Possible values: ssh, github, local
+  #
+  # SSH Provider synchronizes the repositories to an external SSH server.
+  # GitHub provider synchronizes the repositories to a GitHub organization
+  # Local provider does nothing (the repositories are stored locally anyhow)
+  #
   type: ssh
 
   ##
