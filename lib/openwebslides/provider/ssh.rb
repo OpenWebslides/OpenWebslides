@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require_relative 'ssh/connection'
-require_relative 'ssh/repository'
+require 'openwebslides/provider/ssh/connection'
+require 'openwebslides/provider/ssh/repository'
 
 module OpenWebslides
   module Provider

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative 'github/repository'
+require 'openwebslides/provider/github/repository'
 
 module OpenWebslides
   module Provider

@@ -46,7 +46,7 @@ module OpenWebslides
       private
 
       def config
-        OpenWebslides.config.provider
+        OpenWebslides::Configuration.provider
       end
 
       def opts

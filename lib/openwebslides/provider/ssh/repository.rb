@@ -4,14 +4,12 @@ require 'net/ssh'
 module OpenWebslides
   module Provider
     class Repository
-      def self.create(repo_name)
-        command = "mkdir #{File.join OpenWebslides.config.provider.path, repo_name}"
-        Connection.connection.execute command
+      def self.create(repository)
+        puts "Creating #{repository}"
       end
 
-      def self.destroy(repo_name)
-        command = "mkdir #{File.join OpenWebslides.config.provider.path, repo_name}"
-        Connection.connection.execute command
+      def self.destroy(repository)
+        puts "Removing #{repository}"
       end
     end
   end

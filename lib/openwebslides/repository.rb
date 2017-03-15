@@ -9,7 +9,7 @@ module OpenWebslides
       ##
       # Callbacks
       #
-      before_create :generate_repository_name
+      before_validation :generate_repository_name
       after_create :create_repository
       before_destroy :destroy_repository
 
@@ -18,7 +18,7 @@ module OpenWebslides
       #
       def generate_repository_name
         # TODO: avoid collisions
-        self.repository = "#{owner.email.parameterize}-#{name.parameterize}"
+        self.repository = "#{owner.email.parameterize}-#{name.parameterize}" unless repository
       end
 
       def create_repository
@@ -44,7 +44,7 @@ module OpenWebslides
       private
 
       def repo_path
-        File.join OpenWebslides.config.repository_path, repository
+        File.join OpenWebslides::Configuration.repository_path, repository
       end
     end
   end
