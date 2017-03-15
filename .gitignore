@@ -33,3 +33,6 @@ doc
 # Private files
 *.env
 *.key
+
+# Coverage report
+coverage/

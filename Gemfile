@@ -52,6 +52,9 @@ group :development, :test do
   # Check for vulnerable versions of gems
   gem 'bundler-audit', :require => false
 
+  # Coverage report
+  gem 'simplecov', :require => false
+
   # BDD testing for Ruby
   gem 'rspec-rails'
 

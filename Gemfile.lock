@@ -61,6 +61,7 @@ GEM
       devise (> 3.5.2, <= 4.2)
       rails (< 6)
     diff-lcs (1.3)
+    docile (1.1.5)
     erubis (2.7.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
@@ -192,6 +193,11 @@ GEM
       sexp_processor (~> 4.1)
     sass (3.4.23)
     sexp_processor (4.8.0)
+    simplecov (0.14.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -242,6 +248,7 @@ DEPENDENCIES
   rspec_api_documentation
   rubocop
   sass
+  simplecov
   sqlite3
   tzinfo-data
   webpack-rails
