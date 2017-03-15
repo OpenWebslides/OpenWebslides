@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 module OpenWebslides
   class Repository
+    attr_accessor :provider
+
     def initialize(deck)
       @deck = deck
 
-      # TODO: move this
-      provider = "#{OpenWebslides::Configuration.provider.type}_provider".camelize
-      @provider = OpenWebslides::Provider.const_get(provider).new deck
+      case OpenWebslides::Configuration.provider.type
+      when 'ssh'
+        @provider = OpenWebslides::Provider::Ssh.new deck
+      when 'github'
+        @provider = OpenWebslides::Provider::Github.new deck
+      else
+        raise OpenWebslides::ConfigurationError, 'Unknown provider type'
+      end
     end
 
     def init
