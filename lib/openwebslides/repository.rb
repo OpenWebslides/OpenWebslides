@@ -26,6 +26,7 @@ module OpenWebslides
         FileUtils.mkdir_p repo_path
 
         # Populate repository
+        Rugged::Repository.clone_at OpenWebslides::Configuration.repository_seed, repo_path
 
         # Create remote repository
         OpenWebslides::Provider::Repository.create repository

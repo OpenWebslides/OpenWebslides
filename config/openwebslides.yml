@@ -4,6 +4,12 @@
 # Local path used for persistent repository storage
 repository_path: /srv/openwebslides/repositories
 
+##
+# Repository seed
+#
+# URL to git repository that will be used as starting point for new repositories
+repository_seed: https://github.com/OpenWebslides/EmptySlidedeck.git
+
 provider:
   ##
   # Data provider type
