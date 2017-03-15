@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 module OpenWebslides
   class << self
     attr_accessor :config
@@ -13,6 +12,3 @@ config = YAML.safe_load ERB.new(File.read config_file).result
 # Parse configuration
 OpenWebslides.config = OpenStruct.new
 OpenWebslides.config.provider = OpenStruct.new config['provider']
-
-# Require provider based on configuration
-require "openwebslides/provider/#{OpenWebslides.config.provider.type}"

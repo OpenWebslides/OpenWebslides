@@ -30,5 +30,7 @@ module OpenWebslides
 
     # Autoload lib
     config.autoload_paths += %W(#{config.root}/lib)
+
+    require 'openwebslides'
   end
 end
