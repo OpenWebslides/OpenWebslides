@@ -1,0 +1,51 @@
+# frozen_string_literal: true
+require 'fileutils'
+
+module OpenWebslides
+  module Repository
+    extend ActiveSupport::Concern
+
+    included do
+      ##
+      # Callbacks
+      #
+      before_create :generate_repository_name
+      after_create :create_repository
+      before_destroy :destroy_repository
+
+      ##
+      # Methods
+      #
+      def generate_repository_name
+        # TODO: avoid collisions
+        self.repository = "#{owner.email.parameterize}-#{name.parameterize}"
+      end
+
+      def create_repository
+        # Create local repository
+        FileUtils.mkdir_p repo_path
+
+        # Populate repository
+
+        # Create remote repository
+        OpenWebslides::Provider::Repository.create repository
+
+        # Synchronize remote repository
+      end
+
+      def destroy_repository
+        # Destroy local repository
+        FileUtils.remove_entry_secure repo_path
+
+        # Destroy remote repository
+        OpenWebslides::Provider::Repository.destroy repository
+      end
+
+      private
+
+      def repo_path
+        File.join OpenWebslides.config.repository_path, repository
+      end
+    end
+  end
+end

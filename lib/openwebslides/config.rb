@@ -10,5 +10,5 @@ config_file = Rails.root.join 'config', 'openwebslides.yml'
 config = YAML.safe_load ERB.new(File.read config_file).result
 
 # Parse configuration
-OpenWebslides.config = OpenStruct.new
+OpenWebslides.config = OpenStruct.new config
 OpenWebslides.config.provider = OpenStruct.new config['provider']

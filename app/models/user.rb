@@ -11,7 +11,9 @@ class User < ApplicationRecord
          :omniauthable
 
   validates :name, :presence => true
-  validates :email, :presence => true, :format => { :with => /\A[^@]+@[^@]+\z/ }
+  validates :email, :presence => true,
+                    :format => { :with => /\A[^@]+@[^@]+\z/ },
+                    :uniqueness => true
 
   has_many :decks
 

@@ -1,3 +1,9 @@
+##
+# Repository path
+#
+# Local path used for persistent repository storage
+repository_path: /srv/openwebslides/repositories
+
 provider:
   ##
   # Data provider type
@@ -20,8 +26,8 @@ provider:
   # Path to repository store/organisation
   #
   #
-  # Possible values: a full path (for ssh provider), organisation name (for github provider)
-  path: /srv/openwebslides
+  # Possible values: a remote path (for ssh provider), organisation name (for github provider)
+  path: /srv/openwebslides/repositories
 
   ##
   # GitHub OAuth2 credentials (only for github provider)
