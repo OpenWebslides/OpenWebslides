@@ -9,7 +9,7 @@ module OpenWebslides
       ##
       # Callbacks
       #
-      before_validation :generate_repository_name
+      before_create :generate_repository_name
       after_create :create_repository
       before_destroy :destroy_repository
 
@@ -18,7 +18,7 @@ module OpenWebslides
       #
       def generate_repository_name
         # TODO: avoid collisions
-        self.repository = "#{owner.email.parameterize}-#{name.parameterize}" unless repository
+        self.repository = "#{owner.email.parameterize}-#{name.parameterize}"
       end
 
       def create_repository

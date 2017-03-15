@@ -16,11 +16,6 @@ RSpec.describe Deck, :type => :model do
     expect(Deck.new(:repository => 'bar', :state => :public_access, :owner => user)).not_to be_valid
   end
 
-  it 'is invalid without repository' do
-    user = build :user
-    expect(Deck.new(:name => 'foo', :state => :public_access, :owner => user)).not_to be_valid
-  end
-
   it 'is invalid without state' do
     user = build :user
     expect(Deck.new(:name => 'foo', :repository => 'bar', :owner => user)).not_to be_valid
