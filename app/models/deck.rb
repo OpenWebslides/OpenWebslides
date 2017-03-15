@@ -4,7 +4,7 @@ class Deck < ApplicationRecord
   # Properties
   #
   validates :name, :presence => true
-  validates :repository, :uniqueness => true
+  validates :canonical_name, :uniqueness => true
 
   enum :state => [:public_access, :protected_access, :private_access]
   validates :state, :presence => true

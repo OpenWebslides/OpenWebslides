@@ -2,7 +2,6 @@
 FactoryGirl.define do
   factory :deck do
     name { Faker::Lorem.words(4).join ' ' }
-    repository { Faker::Lorem.words(4).join '-' }
     state :public_access
 
     trait :with_owner do

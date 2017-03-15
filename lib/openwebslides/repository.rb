@@ -38,9 +38,9 @@ module OpenWebslides
 
     def repo_path
       # TODO: avoid collisions
-      @deck.repository = "#{@deck.owner.email.parameterize}-#{@deck.name.parameterize}"
+      @deck.canonical_name = "#{@deck.owner.email.parameterize}-#{@deck.name.parameterize}"
 
-      File.join OpenWebslides::Configuration.repository_path, @deck.repository
+      File.join OpenWebslides::Configuration.repository_path, @deck.canonical_name
     end
 
     def repo

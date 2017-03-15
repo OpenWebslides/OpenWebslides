@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170308153820) do
+ActiveRecord::Schema.define(version: 20170315144804) do
 
   create_table "decks", force: :cascade do |t|
     t.string   "name"
-    t.string   "repository"
+    t.string   "canonical_name"
     t.integer  "state"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "description"
-    t.index ["repository"], name: "index_decks_on_repository", unique: true
+    t.index ["canonical_name"], name: "index_decks_on_canonical_name", unique: true
     t.index ["user_id"], name: "index_decks_on_user_id"
   end
 
