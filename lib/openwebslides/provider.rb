@@ -1,4 +1,4 @@
 # frozen_string_literal: true
-
-# Require provider based on configuration
-require "openwebslides/provider/#{OpenWebslides::Configuration.provider.type}"
+require 'openwebslides/provider/local'
+require 'openwebslides/provider/ssh'
+require 'openwebslides/provider/github'

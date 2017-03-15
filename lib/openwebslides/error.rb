@@ -3,4 +3,5 @@ module OpenWebslides
   class Error < StandardError; end
 
   class CommandError < Error; end
+  class ConfigurationError < Error; end
 end

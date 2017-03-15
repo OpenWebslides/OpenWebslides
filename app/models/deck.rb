@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class Deck < ApplicationRecord
-  include OpenWebslides::Repository
-
   ##
   # Properties
   #
@@ -15,4 +13,23 @@ class Deck < ApplicationRecord
 
   has_and_belongs_to_many :contributors, :class_name => 'User'
   has_and_belongs_to_many :tags
+
+  ##
+  # Callbacks
+  #
+  before_create :create_repository
+  before_destroy :destroy_repository
+
+  ##
+  # Methods
+  #
+  def create_repository
+    repo = OpenWebslides::Repository.new(self)
+    repo.init
+  end
+
+  def destroy_repository
+    repo = OpenWebslides::Repository.new(self)
+    repo.destroy
+  end
 end
