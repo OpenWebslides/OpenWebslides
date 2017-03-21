@@ -6,8 +6,11 @@ AllCops:
 Documentation:
   Enabled: false
 
+Metrics/AbcSize:
+  Max: 20
+
 Metrics/LineLength:
-  Max: 100
+  Max: 120
   Exclude:
     - db/**/*.rb
 
