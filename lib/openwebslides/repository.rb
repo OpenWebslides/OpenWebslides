@@ -55,6 +55,8 @@ module OpenWebslides
       # Destroy local repository
       FileUtils.remove_entry_secure repo_path
 
+      return unless @provider
+
       # Destroy remote repository
       @provider.destroy
     end
