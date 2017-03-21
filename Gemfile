@@ -15,6 +15,7 @@ gem 'omniauth'
 
 # Data store providers
 gem 'net-ssh'
+gem 'octokit'
 gem 'rugged'
 
 # Webpack for client-side assets
