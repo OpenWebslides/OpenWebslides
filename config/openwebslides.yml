@@ -2,13 +2,7 @@
 # Repository path
 #
 # Local path used for persistent repository storage
-repository_path: /srv/openwebslides/repositories
-
-##
-# Repository seed
-#
-# URL to git repository that will be used as starting point for new repositories
-repository_seed: https://github.com/OpenWebslides/EmptySlidedeck.git
+repository_path: /srv/repositories
 
 provider:
   ##
@@ -20,44 +14,73 @@ provider:
   # GitHub provider synchronizes the repositories to a GitHub organization
   # Local provider does nothing (the repositories are stored locally anyhow)
   #
-  type: ssh
+  type: github
+
+  ##
+  # PROVIDER COMMON CONFIGURATION
+  #
 
   ##
   # Provider hostname/IP
   #
-  host: localhost
+  # Hostname of SSH server (for both providers)
+  #
+  host: github.com
+
 
   ##
-  # Provider port
+  # Provider user
   #
-  # Defaults to 22 for ssh provider and 80 for github
-  port: 22
+  # Login user (for ssh provider)
+  # GitHub username (for github provider)
+  #
+  user: openwebslides
+
 
   ##
   # Path to repository store/organisation
   #
   #
-  # Possible values: a remote path (for ssh provider), organisation name (for github provider)
-  path: /srv/openwebslides/repositories
+  # Remote path (for ssh provider)
+  # Organization name (for github provider)
+  #
+  path: openwebslides
 
   ##
-  # GitHub OAuth2 credentials (only for github provider)
+  # SSH PROVIDER CONFIGURATION
   #
-  # github_id: <%= ENV['OAUTH_GITHUB_ID'] %>
-  # github_secret: <%= ENV['OAUTH_GITHUB_SECRET'] %>
 
   ##
-  # User (only for ssh provider)
+  # Path to public keyfile
   #
-  user: openwebslides
+  public_key: <%= Rails.root.join 'config', 'id_rsa.pub' %>
+
+  ##
+  # Path to private keyfile
+  #
+  private_key: <%= Rails.root.join 'config', 'id_rsa' %>
 
   ##
   #
-  # Password for user
+  # Passphrase for private key
   #
-  # password: openwebslides
+  passphrase: openwebslides
+
 
   ##
-  # Path to private keyfile (only for ssh provider)
+  # GITHUB PROVIDER CONFIGURATION
   #
-  private_key: <%= Rails.root.join 'config', 'private.key' %>
+
+  ##
+  # GitHub OAuth2 credentials
+  #
+  github_id: <%= ENV['OAUTH_GITHUB_ID'] %>
+  github_secret: <%= ENV['OAUTH_GITHUB_SECRET'] %>
+
+  ##
+  # GitHub API endpoint
+  #
+  # https://api.github.com/ for GitHub
+  # https://myhost.com/api/v3/ for GitHub Enterprise
+  #
+  github_api: https://api.github.com/
