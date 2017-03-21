@@ -1,12 +1,12 @@
 # frozen_string_literal: true
-require 'openwebslides/provider/github/repository'
-
 module OpenWebslides
   module Provider
-    class Github
+    class GithubProvider
       def initialize(deck)
         @deck = deck
       end
+
+      def remote; end
 
       def init; end
 

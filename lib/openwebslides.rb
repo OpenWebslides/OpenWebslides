@@ -2,4 +2,6 @@
 require 'openwebslides/configuration'
 require 'openwebslides/error'
 require 'openwebslides/repository'
-require 'openwebslides/provider'
+
+require 'openwebslides/provider/ssh'
+require 'openwebslides/provider/github'

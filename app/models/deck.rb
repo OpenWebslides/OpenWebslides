@@ -25,14 +25,15 @@ class Deck < ApplicationRecord
   # Methods
   #
   def generate_canonical_name
+    return if canonical_name?
+
     self.canonical_name = "#{owner.email.parameterize}-#{name.parameterize}"
     return unless self.class.exists? :canonical_name => canonical_name
 
     i = 2
-    candidate = nil
     loop do
       i += 1
-      candidate = "#{canonical_name}-#{i}"
+      self.canonical_name = "#{canonical_name}-#{i}"
       break unless self.class.exists? :canonical_name => candidate
     end
 

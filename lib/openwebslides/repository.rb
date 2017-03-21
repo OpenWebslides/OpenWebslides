@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 module OpenWebslides
   class Repository
+    REMOTE_NAME = 'origin'
+
     attr_accessor :provider
 
     def initialize(deck)
@@ -8,29 +10,45 @@ module OpenWebslides
 
       case OpenWebslides::Configuration.provider.type
       when 'ssh'
-        @provider = OpenWebslides::Provider::Ssh.new deck
+        @provider = OpenWebslides::Provider::SshProvider.new deck
       when 'github'
-        @provider = OpenWebslides::Provider::Github.new deck
+        @provider = OpenWebslides::Provider::GithubProvider.new deck
       else
         raise OpenWebslides::ConfigurationError, 'Unknown provider type'
       end
     end
 
     def init
-      # Create local repository
+      # Create local repo
       FileUtils.mkdir_p repo_path
+
+      # Populate local repo
+      FileUtils.cp_r "#{Rails.root.join('lib', 'assets', 'seed_repository')}/.", repo_path
+
+      # Initialize local repo
+      Rugged::Repository.init_at repo_path
+
+      # Initial commit
+      index = repo.index
+      index.add_all
+      index.write
+
+      commit 'Initial commit'
+
+      return unless @provider
 
       # Create remote repository
       @provider.init
 
-      # Populate local repository
-      Rugged::Repository.clone_at OpenWebslides::Configuration.repository_seed, repo_path
+      # Set local repo remotes
+      repo.remotes.create REMOTE_NAME, @provider.remote
 
       sync
     end
 
     def sync
-      # Synchronize remote repository
+      # Push to remote repository
+      repo.push REMOTE_NAME, :credentials => credentials
     end
 
     def destroy
@@ -44,14 +62,42 @@ module OpenWebslides
     private
 
     def repo_path
-      # TODO: avoid collisions
-      @deck.canonical_name = "#{@deck.owner.email.parameterize}-#{@deck.name.parameterize}"
-
       File.join OpenWebslides::Configuration.repository_path, @deck.canonical_name
     end
 
     def repo
       @repository ||= Rugged::Repository.new repo_path
+    end
+
+    def credentials
+      return @credentials if @credentials
+
+      user = OpenWebslides::Configuration.provider.user
+      raise OpenWebslides::ConfigurationError, 'No user specified' unless user
+
+      private_key = OpenWebslides::Configuration.provider.private_key
+      raise OpenWebslides::ConfigurationError, 'No private key specified' unless private_key
+
+      @credentials = Rugged::Credentials::SshKey.new :username => user, :privatekey => private_key
+    end
+
+    def commit_options
+      commit_author = { :email => @deck.owner.email, :name => @deck.owner.name, :time => Time.now }
+
+      {
+        :author => commit_author,
+        :committer => commit_author,
+        :parents => [],
+        :tree => repo.index.write_tree(repo),
+        :update_ref => 'HEAD'
+      }
+    end
+
+    def commit(message)
+      options = commit_options
+      options[:message] = message
+
+      Rugged::Commit.create repo, options
     end
   end
 end
