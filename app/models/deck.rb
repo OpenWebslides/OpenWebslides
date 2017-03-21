@@ -17,8 +17,8 @@ class Deck < ApplicationRecord
   # Callbacks
   #
   before_save :generate_canonical_name
-  before_create :create_repository
-  before_destroy :destroy_repository
+  before_create :create_repository, :unless => :skip_callbacks
+  before_destroy :destroy_repository, :unless => :skip_callbacks
 
   ##
   # Methods

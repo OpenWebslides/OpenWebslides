@@ -8,6 +8,16 @@ require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+# Monkey-patch ActiveRecord to allow disabling callbacks
+module ActiveRecord
+  class Base
+    cattr_accessor :skip_callbacks
+  end
+end
+
+# Default to false
+ActiveRecord::Base.skip_callbacks = true
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
