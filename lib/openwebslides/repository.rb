@@ -10,9 +10,9 @@ module OpenWebslides
 
       case OpenWebslides::Configuration.provider.type
       when 'ssh'
-        @provider = OpenWebslides::Provider::SshProvider.new deck
+        @provider = OpenWebslides::Provider::Ssh.new deck
       when 'github'
-        @provider = OpenWebslides::Provider::GithubProvider.new deck
+        @provider = OpenWebslides::Provider::Github.new deck
       else
         raise OpenWebslides::ConfigurationError, 'Unknown provider type'
       end
