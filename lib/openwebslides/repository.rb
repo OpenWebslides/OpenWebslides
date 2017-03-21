@@ -48,7 +48,7 @@ module OpenWebslides
 
     def sync
       # Push to remote repository
-      repo.push REMOTE_NAME, :credentials => credentials
+      repo.remotes.first.push 'refs/heads/master', :credentials => credentials
     end
 
     def destroy

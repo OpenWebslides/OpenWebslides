@@ -68,7 +68,7 @@ provider:
   ##
   # GitHub passphrase
   #
-  github_user: <%= ENV['GITHUB_PASSPHRASE'] %>
+  github_passphrase: <%= ENV['GITHUB_PASSPHRASE'] %>
 
   ##
   # GitHub API endpoint

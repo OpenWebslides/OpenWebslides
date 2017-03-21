@@ -19,7 +19,7 @@ module OpenWebslides
       end
 
       def destroy
-        raise NotImplementedError
+        Octokit.delete_repository "#{config.path}/#{@deck.canonical_name}"
       end
     end
   end
