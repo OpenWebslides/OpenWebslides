@@ -4,7 +4,6 @@ class Deck < ApplicationRecord
   # Properties
   #
   validates :name, :presence => true
-  validates :canonical_name, :presence => true, :uniqueness => true
 
   enum :state => [:public_access, :protected_access, :private_access]
   validates :state, :presence => true
@@ -17,7 +16,7 @@ class Deck < ApplicationRecord
   ##
   # Callbacks
   #
-  before_validation :generate_canonical_name
+  before_save :generate_canonical_name
   before_create :create_repository
   before_destroy :destroy_repository
 

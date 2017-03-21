@@ -7,7 +7,7 @@ RSpec.describe Deck, :type => :model do
   end
 
   it 'is valid with attributes' do
-    deck = build :deck, :with_owner
+    deck = build :deck
     expect(deck).to be_valid
   end
 
@@ -22,13 +22,18 @@ RSpec.describe Deck, :type => :model do
   end
 
   it 'belongs to a user' do
-    deck = build :deck, :with_owner
+    deck = build :deck
     expect(deck.owner).to be_instance_of User
   end
 
   it 'has a valid :status enum' do
-    deck = build :deck, :with_owner
+    deck = build :deck
     expect(%w(public_access protected_access private_access)).to include deck.state
+  end
+
+  it 'has a canonical name' do
+    deck = create :deck
+    expect(deck.canonical_name).not_to be_nil
   end
 
   it 'has many tags' do
