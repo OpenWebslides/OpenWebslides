@@ -27,15 +27,13 @@ provider:
   #
   host: github.com
 
-
   ##
   # Provider user
   #
   # Login user (for ssh provider)
-  # GitHub username (for github provider)
+  # GitHub login user, usually 'git' (for github provider)
   #
-  user: openwebslides
-
+  user: git
 
   ##
   # Path to repository store/organisation
@@ -44,27 +42,18 @@ provider:
   # Remote path (for ssh provider)
   # Organization name (for github provider)
   #
-  path: openwebslides
+  path: OpenWebslides-Test
 
   ##
-  # SSH PROVIDER CONFIGURATION
+  # Path to private key
   #
-
-  ##
-  # Path to public keyfile
-  #
-  public_key: <%= Rails.root.join 'config', 'id_rsa.pub' %>
-
-  ##
-  # Path to private keyfile
-  #
-  private_key: <%= Rails.root.join 'config', 'id_rsa' %>
+  private_key: <%= Rails.root.join 'config', 'openwebslides.pem' %>
 
   ##
   #
   # Passphrase for private key
   #
-  passphrase: openwebslides
+  # passphrase: <%= ENV['KEYFILE_PASSPHRASE'] %>
 
 
   ##
@@ -72,10 +61,14 @@ provider:
   #
 
   ##
-  # GitHub OAuth2 credentials
+  # GitHub username
   #
-  github_id: <%= ENV['OAUTH_GITHUB_ID'] %>
-  github_secret: <%= ENV['OAUTH_GITHUB_SECRET'] %>
+  github_user: OpenWebslides-Platform
+
+  ##
+  # GitHub passphrase
+  #
+  github_user: <%= ENV['GITHUB_PASSPHRASE'] %>
 
   ##
   # GitHub API endpoint

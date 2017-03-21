@@ -32,7 +32,7 @@ doc
 
 # Private files
 *.env
-*.key
+config/*.pem
 
 # Coverage report
 coverage/
