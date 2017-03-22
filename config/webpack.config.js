@@ -24,8 +24,8 @@ var config = {
         test: /\.jsx$/,
         exclude: /(node_modules|bower_components)/,
         use: [
-            'babel-loader',
-            'eslint-loader'
+          'babel-loader',
+          'eslint-loader'
         ]
       },
       {
@@ -61,9 +61,9 @@ var config = {
   resolve: {
     extensions: [".js", ".jsx", ".es6"],
     modules: [
-              path.join(__dirname, '..', 'webpack'),
-              "node_modules"
-          ]
+      path.join(__dirname, '..', 'webpack'),
+      "node_modules"
+    ]
   },
 
   plugins: [
