@@ -84,7 +84,7 @@ RSpec.describe DeckPolicy do
     end
 
     context 'for public decks' do
-      let(:deck) { build :deck, :with_owner, :state => :public_access }
+      let(:deck) { build :deck, :state => :public_access }
       let(:user) { deck.owner }
       it 'should permit anything on public decks' do
         expect(subject).to permit_action :show
@@ -94,7 +94,7 @@ RSpec.describe DeckPolicy do
     end
 
     context 'for protected decks' do
-      let(:deck) { build :deck, :with_owner, :state => :protected_access }
+      let(:deck) { build :deck, :state => :protected_access }
       let(:user) { deck.owner }
       it 'should permit anything on protected decks' do
         expect(subject).to permit_action :show
@@ -104,7 +104,7 @@ RSpec.describe DeckPolicy do
     end
 
     context 'for private decks' do
-      let(:deck) { build :deck, :with_owner, :state => :private_access }
+      let(:deck) { build :deck, :state => :private_access }
       let(:user) { deck.owner }
       it 'should permit anything on private decks' do
         expect(subject).to permit_action :show
