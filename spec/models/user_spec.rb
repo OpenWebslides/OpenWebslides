@@ -34,4 +34,12 @@ RSpec.describe User, :type => :model do
     expect(user.decks.length).not_to be 0
     user.decks.each { |d| expect(d).to be_instance_of Deck }
   end
+
+  it 'has many identities' do
+    user = build :user, :with_identities
+
+    # Use #length instead of #count for unpersisted relations
+    expect(user.identities.length).not_to be 0
+    user.identities.each { |i| expect(i).to be_instance_of Identity }
+  end
 end

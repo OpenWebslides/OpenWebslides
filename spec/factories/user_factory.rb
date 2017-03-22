@@ -10,5 +10,9 @@ FactoryGirl.define do
     trait :with_decks do
       decks { build_list :deck, 3 }
     end
+
+    trait :with_identities do
+      identities { build_list :identity, 3 }
+    end
   end
 end
