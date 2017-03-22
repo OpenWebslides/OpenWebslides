@@ -1,4 +1,8 @@
+import { combineReducers } from 'redux';
+import { reducer as form } from 'redux-form';
 
-export default function Reducer(state = []) {
-  return state;
-}
+const IndexReducer = combineReducers({
+  form,
+});
+
+export default IndexReducer;
