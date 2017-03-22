@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(version: 20170322082939) do
 
   create_table "decks", force: :cascade do |t|
-    t.string   "name"
-    t.string   "canonical_name"
+    t.text     "name"
+    t.text     "canonical_name"
     t.integer  "state"
     t.integer  "user_id"
     t.datetime "created_at",     null: false
@@ -49,14 +49,14 @@ ActiveRecord::Schema.define(version: 20170322082939) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string   "name"
+    t.text     "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",                   default: "", null: false
-    t.string   "email",                  default: "", null: false
+    t.text     "name"
+    t.text     "email"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "encrypted_password",     default: "", null: false

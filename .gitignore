@@ -36,3 +36,5 @@ config/*.pem
 
 # Coverage report
 coverage/
+
+/.gem
