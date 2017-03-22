@@ -56,12 +56,6 @@ $ rails db:migrate RAILS_ENV=test
 $ rake rspec
 ```
 
-Use RSpec acceptance tests to write documentation
-
-```
-$ rails docs:generate
-```
-
 If you want to populate the database with sample data
 
 ```
