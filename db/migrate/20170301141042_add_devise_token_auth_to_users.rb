@@ -3,14 +3,14 @@ class AddDeviseTokenAuthToUsers < ActiveRecord::Migration[5.0]
   def self.up
     change_table :users do |t|
       ## Required
-      t.string :provider, :null => false, :default => ''
-      t.string :uid, :null => false, :default => ''
+      # t.string :provider, :null => false, :default => ''
+      # t.string :uid, :null => false, :default => ''
 
       ## Tokens
       t.text :tokens
     end
 
-    add_index :users, [:uid, :provider], :unique => true
+    # add_index :users, [:uid, :provider], :unique => true
   end
 
   def self.down

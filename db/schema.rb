@@ -13,14 +13,13 @@
 ActiveRecord::Schema.define(version: 20170322082939) do
 
   create_table "decks", force: :cascade do |t|
-    t.text     "name"
-    t.text     "canonical_name"
+    t.string   "name"
+    t.string   "canonical_name"
     t.integer  "state"
+    t.string   "description"
     t.integer  "user_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.string   "description"
-    t.index ["canonical_name"], name: "index_decks_on_canonical_name", unique: true
     t.index ["user_id"], name: "index_decks_on_user_id"
   end
 
@@ -49,14 +48,14 @@ ActiveRecord::Schema.define(version: 20170322082939) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.text     "name"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.text     "name"
-    t.text     "email"
+    t.string   "name",                   default: "", null: false
+    t.string   "email",                  default: "", null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -71,13 +70,10 @@ ActiveRecord::Schema.define(version: 20170322082939) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "provider",               default: "", null: false
-    t.string   "uid",                    default: "", null: false
     t.text     "tokens"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
 end
