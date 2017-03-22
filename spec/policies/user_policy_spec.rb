@@ -10,7 +10,6 @@ RSpec.describe UserPolicy do
     let(:user) { nil }
 
     it { is_expected.to forbid_action :create }
-    it { is_expected.to permit_action :show }
     it { is_expected.to forbid_action :update }
     it { is_expected.to forbid_action :destroy }
   end
@@ -19,7 +18,6 @@ RSpec.describe UserPolicy do
     let(:user) { build :user }
 
     it { is_expected.to forbid_action :create }
-    it { is_expected.to permit_action :show }
     it { is_expected.to forbid_action :update }
     it { is_expected.to forbid_action :destroy }
   end
@@ -28,8 +26,17 @@ RSpec.describe UserPolicy do
     let(:user) { object }
 
     it { is_expected.to forbid_action :create }
-    it { is_expected.to permit_action :show }
     it { is_expected.to permit_action :update }
     it { is_expected.to permit_action :destroy }
+  end
+end
+
+RSpec.describe UserPolicy::Scope do
+  subject { described_class.new(user, User).resolve }
+
+  context 'for everyone' do
+    let(:user) { nil }
+
+    it { is_expected.to eq User.all }
   end
 end

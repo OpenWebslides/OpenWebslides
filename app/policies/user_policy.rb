@@ -7,12 +7,8 @@ class UserPolicy
     @object = object
   end
 
-  def show?
-    true
-  end
-
   def create?
-    # OmniAuth takes care of creating users
+    # Devise takes care of creating users
     false
   end
 
@@ -22,7 +18,6 @@ class UserPolicy
   end
 
   def destroy?
-    # Same as update
     update?
   end
 
