@@ -4,6 +4,13 @@
 # Local path used for persistent repository storage
 repository_path: /srv/repositories
 
+oauth2:
+  ##
+  # GitHub OAuth2 credentials
+  #
+  github_id: <%= ENV['OAUTH_GITHUB_ID'] %>
+  github_secret: <%= ENV['OAUTH_GITHUB_SECRET'] %>
+
 provider:
   ##
   # Data provider type
