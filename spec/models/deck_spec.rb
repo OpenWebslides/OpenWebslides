@@ -32,7 +32,8 @@ RSpec.describe Deck, :type => :model do
   end
 
   it 'has a canonical name' do
-    deck = create :deck
+    deck = build :deck
+    deck.generate_canonical_name
     expect(deck.canonical_name).not_to be_nil
   end
 
