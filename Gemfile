@@ -9,8 +9,6 @@ git_source(:github) do |repo_name|
 end
 
 # Authentication/authorization
-gem 'devise'
-gem 'devise_token_auth'
 gem 'omniauth'
 gem 'omniauth-github'
 
