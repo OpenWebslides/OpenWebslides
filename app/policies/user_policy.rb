@@ -8,8 +8,7 @@ class UserPolicy
   end
 
   def create?
-    # Devise takes care of creating users
-    false
+    true
   end
 
   def update?
