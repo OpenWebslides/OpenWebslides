@@ -6,13 +6,13 @@ import { Route } from 'react-router';
 import Layout from './modules/layout';
 import Feed from './modules/feed';
 import Signup from './modules/signup';
-import SignIn from './modules/sign_in';
+import Signin from './modules/signin';
 
 
 export default (
   <Layout>
     <Route exact path="/" component={Feed} />
     <Route path="/signup" component={Signup} />
-    <Route path="/signin" component={SignIn} />
+    <Route path="/signin" component={Signin} />
   </Layout>
 );

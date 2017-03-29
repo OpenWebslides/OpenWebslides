@@ -8,9 +8,8 @@ import {
   SIGNUP_ERROR,
 } from './constants';
 
-const signupUrl = '/api/users';
-
 function signupApi(email) {
+  const signupUrl = '/api/users';
   const body = {
     data: {
       type: 'users',
