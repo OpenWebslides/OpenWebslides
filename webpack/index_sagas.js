@@ -1,4 +1,4 @@
-import SignupSaga from './modules/sign_up/sagas';
+import SignupSaga from './modules/signup/sagas';
 
 
 export default function* IndexSaga() {
