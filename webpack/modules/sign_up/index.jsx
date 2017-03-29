@@ -5,6 +5,15 @@ import { connect } from 'react-redux';
 import requestSignup from './actions';
 
 class SignUp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.submit = this.submit.bind(this);
+  }
+
+  submit(values) {
+    this.props.requestSignup(values);
+  }
 
   render() {
     const { handleSubmit } = this.props;
@@ -47,6 +56,7 @@ class SignUp extends Component {
 
 SignUp.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  requestSignup: PropTypes.func.isRequired,
 };
 
 
