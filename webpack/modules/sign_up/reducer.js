@@ -10,6 +10,7 @@ const initialState = {
 function signupReducer(state = initialState, action) {
   switch (action.type) {
     case REQUEST_SIGNUP:
+
       return {
         requesting: true,
         successful: false,
