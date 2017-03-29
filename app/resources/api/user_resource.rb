@@ -3,7 +3,7 @@ module Api
   class UserResource < JSONAPI::Resource
     include Pundit::Resource
 
-    attributes :name, :email
+    attributes :name, :email, :password, :password_confirmation
 
     has_many :decks
     has_many :contributions
