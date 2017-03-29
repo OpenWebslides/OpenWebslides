@@ -254,6 +254,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   json
   jsonapi-resources
+  jwt
   listen
   lograge
   net-ssh

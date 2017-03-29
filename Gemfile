@@ -9,6 +9,7 @@ git_source(:github) do |repo_name|
 end
 
 # Authentication/authorization
+gem 'jwt'
 gem 'omniauth'
 gem 'omniauth-github'
 

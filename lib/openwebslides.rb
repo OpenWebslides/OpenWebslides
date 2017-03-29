@@ -5,3 +5,5 @@ require 'openwebslides/repository'
 
 require 'openwebslides/provider/ssh'
 require 'openwebslides/provider/github'
+
+require 'openwebslides/api/authentication'
