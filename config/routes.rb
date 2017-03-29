@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   # Application
   root :to => 'application#index'
 
-  # Temporary OAuth2 callback
-  get '/auth/:provider/callback', :to => 'client#github'
+  # Authentication
+  get '/auth/:provider/callback', :to => 'omniauth#callback'
 
   # API endpoints
   namespace :api, :constraints => { :format => :json } do

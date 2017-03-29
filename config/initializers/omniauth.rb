@@ -4,8 +4,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   # TODO: enable state checking
   options = {
-    :scope => 'user:email',
-    :provider_ignores_state => true
+    :scope => 'user:email'
   }
   provider :github, oauth_config.github_id, oauth_config.github_secret, options
 end
