@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 class OmniauthController < ApplicationController
+  ##
+  # OAuth2 callback
+  #
   def callback
     retrieve_identity
     sync_information
@@ -10,6 +13,21 @@ class OmniauthController < ApplicationController
     # response.headers['X-Access-Token'] = @resource.token
     response.headers['X-Access-Token'] = 'mytoken'
     redirect_to '/'
+  end
+
+  ##
+  # Email sign in
+  #
+  def sign_in
+    return head :bad_request unless params[:email] && params[:password]
+
+    user = User.find_by :email => params[:email]
+    return head :unauthorized unless user
+
+    authenticated_user = user.authenticate params[:password]
+    return head :unauthorized unless authenticated_user
+
+    render :json => { :access_token => authenticated_user.access_token }
   end
 
   protected
