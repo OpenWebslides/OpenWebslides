@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
 
+import handleApiErrors from '../util/api_errors';
 
 import {
   REQUEST_SIGNUP,
@@ -8,35 +8,43 @@ import {
   SIGNUP_ERROR,
 } from './constants';
 
-const signupUrl = '/api/auth/sign_up';
+const signupUrl = '/api/users';
 
-function signupApi(email, password) {
-  return axios.get(signupUrl, {
-    headers: {
-      'Content-Type': 'application/json',
+function signupApi(email) {
+  const body = {
+    data: {
+      type: 'users',
+      attributes: {
+        email,
+        name: 'boombie',
+      },
     },
-    body: JSON.stringify({ email, password }),
+  };
+
+  return fetch(signupUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/vnd.api+json',
+    },
+    body: JSON.stringify(body),
   })
-    .then(response => console.log(response))
+    .then(handleApiErrors)
+    .then(response => response.json())
+    .then(json => json)
     .catch((error) => { throw error; });
 }
 
 function* signupFlow(action) {
   try {
     const { email, password } = action;
-
-    const response = yield call(signupApi, email, password)
-
-    yield put({ type: SIGNUP_SUCCESS, response })
+    const response = yield call(signupApi, email, password);
+    yield put({ type: SIGNUP_SUCCESS, response });
   } catch (error) {
-
-    yield put({ type: SIGNUP_ERROR, error })
+    yield put({ type: SIGNUP_ERROR, error });
   }
 }
 
 function* signupWatcher() {
-  console.log('WATCHING');
-
   yield takeLatest(REQUEST_SIGNUP, signupFlow);
 }
 
