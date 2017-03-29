@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import requestSignup from './actions';
 
-class SignUp extends Component {
+class Signup extends Component {
   constructor(props) {
     super(props);
 
@@ -54,20 +54,20 @@ class SignUp extends Component {
   }
 }
 
-SignUp.propTypes = {
+Signup.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   requestSignup: PropTypes.func.isRequired,
 };
 
 
-function mapStateToProps({ signUp }) {
-  return { signUp };
+function mapStateToProps({ signup }) {
+  return { signup };
 }
 
-const connected = connect(mapStateToProps, { requestSignup })(SignUp);
+const connected = connect(mapStateToProps, { requestSignup })(Signup);
 
 const formed = reduxForm({
-  form: 'signUp',
+  form: 'signup',
 })(connected);
 
 export default formed;
