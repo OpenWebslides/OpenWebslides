@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   namespace :api, :constraints => { :format => :json } do
     root :to => 'api#index'
 
-    jsonapi_resources :users, :only => [:index, :show]
+    jsonapi_resources :users
     jsonapi_resources :decks
     jsonapi_resources :tags
   end
