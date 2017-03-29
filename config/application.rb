@@ -28,9 +28,8 @@ module OpenWebslides
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # Cookie store is needed for OmniAuth, but gets disabled in ApplicationController
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::Session::CacheStore
+    config.session_store :cache_store
 
     # Autoload lib
     config.autoload_paths += %W(#{config.root}/lib)
