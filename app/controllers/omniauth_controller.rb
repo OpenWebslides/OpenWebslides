@@ -27,7 +27,7 @@ class OmniauthController < ApplicationController
     authenticated_user = user.authenticate params[:password]
     return head :unauthorized unless authenticated_user
 
-    render :json => { :access_token => authenticated_user.access_token }
+    render :json => { :token => authenticated_user.token }
   end
 
   protected

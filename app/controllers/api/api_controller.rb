@@ -9,10 +9,10 @@ module Api
       header = request.env['HTTP_AUTHORIZATION']
       return nil unless header
 
-      access_token = header.scan(/Bearer (.*)$/).flatten.last
-      return nil unless access_token
+      token = header.scan(/Bearer (.*)$/).flatten.last
+      return nil unless token
 
-      payload = OpenWebslides::Api::Authentication.decode(access_token)
+      payload = OpenWebslides::Api::Authentication.decode token
 
       User.find_by payload['id']
     rescue JWT::DecodeError

@@ -25,6 +25,6 @@ class User < ApplicationRecord
   # Methods
   #
   def generate_token
-    self.access_token = OpenWebslides::Api::Authentication.encode :id => id
+    self.token = OpenWebslides::Api::Authentication.encode :id => id
   end
 end
