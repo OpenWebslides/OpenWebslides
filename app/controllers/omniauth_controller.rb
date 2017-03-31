@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 class OmniauthController < ApplicationController
+  include AuthHelper
+
   ##
   # OAuth2 callback
   #
   def callback
     retrieve_identity
     sync_information
-    create_token
 
     @resource.save
 
-    # response.headers['X-Access-Token'] = @resource.token
-    response.headers['X-Access-Token'] = 'mytoken'
+    add_token_to_response
     redirect_to '/'
   end
 
@@ -24,10 +24,11 @@ class OmniauthController < ApplicationController
     user = User.find_by :email => params[:email]
     return head :unauthorized unless user
 
-    authenticated_user = user.authenticate params[:password]
-    return head :unauthorized unless authenticated_user
+    @resource = user.authenticate params[:password]
+    return head :unauthorized unless @resource
 
-    render :json => { :token => authenticated_user.token }
+    add_token_to_response
+    head :ok
   end
 
   protected
@@ -86,6 +87,4 @@ class OmniauthController < ApplicationController
   def sync_information
     @resource.name ||= auth_hash['info']['name']
   end
-
-  def create_token; end
 end

@@ -4,9 +4,10 @@ module AuthHelper
   # Current user helper
   #
   def current_user
-    return unless payload
+    return @resource if @resource
 
-    @resource ||= User.find payload['id']
+    return unless payload
+    @resource = User.find payload['id']
   end
 
   ##
@@ -26,7 +27,7 @@ module AuthHelper
   end
 
   def add_token_to_response
-    token = OpenWebslides::Api::Authentication.encode :id => payload['id']
+    token = OpenWebslides::Api::Authentication.encode :id => current_user.id
     response.headers['Authorization'] = "Bearer #{token}"
   end
 
