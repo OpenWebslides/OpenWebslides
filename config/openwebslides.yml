@@ -84,3 +84,9 @@ provider:
   # https://myhost.com/api/v3/ for GitHub Enterprise
   #
   github_api: https://api.github.com/
+
+api:
+  ##
+  # Access token lifetime (in hours)
+  #
+  token_lifetime: 24

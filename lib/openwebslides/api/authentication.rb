@@ -5,11 +5,12 @@ module OpenWebslides
   module Api
     class Authentication
       def self.encode(payload)
+        payload[:expiration] = OpenWebslides::Configuration.api.token_lifetime.to_i.hours.from_now
         JWT.encode payload, secret
       end
 
-      def self.decode(payload)
-        JWT.decode(payload, secret).first
+      def self.decode(token)
+        JWT.decode(token, secret).first
       end
 
       def self.secret

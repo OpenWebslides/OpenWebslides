@@ -19,12 +19,7 @@ class User < ApplicationRecord
   ##
   # Callbacks
   #
-  before_create :generate_token
-
   ##
   # Methods
   #
-  def generate_token
-    self.token = OpenWebslides::Api::Authentication.encode :id => id
-  end
 end
