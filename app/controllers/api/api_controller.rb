@@ -4,7 +4,5 @@ module Api
     include JSONAPI::ActsAsResourceController
     include Pundit
     include Pundit::ResourceController
-
-    include AuthHelper
   end
 end

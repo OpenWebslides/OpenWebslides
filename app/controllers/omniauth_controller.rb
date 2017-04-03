@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 class OmniauthController < ApplicationController
-  include AuthHelper
-
   ##
   # OAuth2 callback
   #
@@ -11,7 +9,6 @@ class OmniauthController < ApplicationController
 
     @resource.save
 
-    add_token_to_response
     redirect_to '/'
   end
 

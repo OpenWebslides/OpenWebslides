@@ -4,4 +4,6 @@ module OpenWebslides
 
   class CommandError < Error; end
   class ConfigurationError < Error; end
+
+  class TokenError < Error; end
 end
