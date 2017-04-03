@@ -9,7 +9,10 @@ class OmniauthController < ApplicationController
 
     @resource.save
 
-    token = Knock::AuthToken.new :payload => { :sub => @resource.id }
+    controller = Knock::AuthTokenController.new
+    controller.instance_variable_set :@entity, @resource
+    token = controller.send :auth_token
+
     render :json => token, :status => :created
   end
 
