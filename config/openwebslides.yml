@@ -17,6 +17,11 @@ oauth2:
   google_id: <%= ENV['OAUTH_GOOGLE_ID'] %>
   google_secret: <%= ENV['OAUTH_GOOGLE_SECRET'] %>
 
+  ##
+  # Facebook OAuth2 credentials
+  facebook_id: <%= ENV['OAUTH_FACEBOOK_ID'] %>
+  facebook_secret: <%= ENV['OAUTH_FACEBOOK_SECRET'] %>
+
 provider:
   ##
   # Data provider type

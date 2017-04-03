@@ -12,6 +12,7 @@ end
 gem 'jwt'
 gem 'knock'
 gem 'omniauth'
+gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 
