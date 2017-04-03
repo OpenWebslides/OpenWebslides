@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   # Authentication
   get '/auth/:provider/callback', :to => 'omniauth#callback'
-  post '/auth/token' => 'token#create'
+  post '/auth/token' => 'user_token#create'
 
   # API endpoints
   namespace :api, :constraints => { :format => :json } do
