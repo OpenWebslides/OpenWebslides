@@ -1,8 +1,6 @@
 import { take, fork, cancel, call, put, cancelled } from 'redux-saga/effects';
-
-import { browserHistory } from 'react-router';
-
-import { handleApiErrors } from '../util/api_errors';
+import handleApiErrors from '../util/api_errors';
+import { browserHistory } from 'react-router'
 
 import {
   REQUEST_SIGNIN,
@@ -16,11 +14,11 @@ import {
 } from '../client/actions';
 
 import {
-  CLIENT_UNSET,
+  UNSET_CLIENT,
 } from '../client/constants';
 
 function signinApi(email, password) {
-  const signinUrl = '/auth/signin';
+  const signinUrl = '/auth/sign_in';
 
   return fetch(signinUrl, {
     method: 'POST',
@@ -31,7 +29,7 @@ function signinApi(email, password) {
   })
     .then(handleApiErrors)
     .then(response => response.json())
-    .then(json => json)
+    .then(json => json.access_token)
     .catch((error) => { throw error; });
 }
 
@@ -39,7 +37,6 @@ function* signout() {
   yield put(unsetClient());
 
   localStorage.removeItem('token');
-
   browserHistory.push('/signin');
 }
 
@@ -47,7 +44,6 @@ function* signinFlow(email, password) {
   let token;
   try {
     token = yield call(signinApi, email, password);
-
     yield put(setClient(token));
 
     yield put({ type: SIGNIN_SUCCESS });
@@ -59,7 +55,7 @@ function* signinFlow(email, password) {
     yield put({ type: SIGNIN_ERROR, error });
   } finally {
     if (yield cancelled()) {
-      browserHistory.push('/signin');
+      browserHistory.push('/');
     }
   }
 
@@ -71,9 +67,9 @@ function* signinWatcher() {
 
   const task = yield fork(signinFlow, email, password);
 
-  const action = yield take([CLIENT_UNSET, SIGNIN_ERROR]);
+  const action = yield take([UNSET_CLIENT, SIGNIN_ERROR]);
 
-  if (action.type === CLIENT_UNSET) yield cancel(task);
+  if (action.type === UNSET_CLIENT) yield cancel(task);
 
   yield call(signout);
 }

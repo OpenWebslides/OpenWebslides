@@ -1,14 +1,14 @@
-import { CLIENT_SET, CLIENT_UNSET } from './constants';
+import { SET_CLIENT, UNSET_CLIENT } from './constants';
 
 export function setClient(token) {
   return {
-    type: CLIENT_SET,
+    type: SET_CLIENT,
     payload: { token },
   };
 }
 
 export function unsetClient() {
   return {
-    type: CLIENT_UNSET,
+    type: UNSET_CLIENT,
   };
 }
