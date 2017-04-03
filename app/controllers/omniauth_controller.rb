@@ -9,23 +9,8 @@ class OmniauthController < ApplicationController
 
     @resource.save
 
-    redirect_to '/'
-  end
-
-  ##
-  # Email sign in
-  #
-  def sign_in
-    return head :bad_request unless params[:email] && params[:password]
-
-    user = User.find_by :email => params[:email]
-    return head :unauthorized unless user
-
-    @resource = user.authenticate params[:password]
-    return head :unauthorized unless @resource
-
-    add_token_to_response
-    head :ok
+    token = Knock::AuthToken.new :payload => { :sub => @resource.id }
+    render :json => token, :status => :created
   end
 
   protected

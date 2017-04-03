@@ -4,5 +4,6 @@ module Api
     include JSONAPI::ActsAsResourceController
     include Pundit
     include Pundit::ResourceController
+    include Knock::Authenticable
   end
 end

@@ -10,6 +10,7 @@ end
 
 # Authentication/authorization
 gem 'jwt'
+gem 'knock'
 gem 'omniauth'
 gem 'omniauth-github'
 
