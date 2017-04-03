@@ -13,6 +13,7 @@ gem 'jwt'
 gem 'knock'
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
 
 # Data store providers
 gem 'net-ssh'

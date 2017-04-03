@@ -9,4 +9,5 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   end
 
   provider :github, oauth_config.github_id, oauth_config.github_secret, :scope => 'user:email'
+  provider :google_oauth2, oauth_config.google_id, oauth_config.google_secret
 end

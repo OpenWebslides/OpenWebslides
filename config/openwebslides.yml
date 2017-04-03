@@ -11,6 +11,12 @@ oauth2:
   github_id: <%= ENV['OAUTH_GITHUB_ID'] %>
   github_secret: <%= ENV['OAUTH_GITHUB_SECRET'] %>
 
+  ##
+  # Google OAuth2 credentials
+  #
+  google_id: <%= ENV['OAUTH_GOOGLE_ID'] %>
+  google_secret: <%= ENV['OAUTH_GOOGLE_SECRET'] %>
+
 provider:
   ##
   # Data provider type
