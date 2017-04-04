@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails'
@@ -32,7 +33,7 @@ module OpenWebslides
     config.session_store :cache_store
 
     # Autoload lib
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W[#{config.root}/lib]
 
     require 'openwebslides'
   end

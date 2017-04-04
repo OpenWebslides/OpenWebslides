@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'openwebslides/provider/base'
 
 module OpenWebslides

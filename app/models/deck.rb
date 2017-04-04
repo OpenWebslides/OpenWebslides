@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 class Deck < ApplicationRecord
   ##
   # Properties
   #
   validates :name, :presence => true
 
-  enum :state => [:public_access, :protected_access, :private_access]
+  enum :state => %i[public_access protected_access private_access]
   validates :state, :presence => true
 
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'

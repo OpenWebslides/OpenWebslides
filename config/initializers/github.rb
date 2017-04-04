@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'openwebslides/configuration'
 
 if OpenWebslides::Configuration.provider.type == 'github'

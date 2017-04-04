@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'jwt'
 
-RSpec.describe UserTokenController do
+RSpec.describe TokenController do
   render_views
 
   subject { described_class.new }
@@ -12,7 +12,7 @@ RSpec.describe UserTokenController do
 
   describe 'routing' do
     it 'has a token creation route' do
-      expect(:post => '/auth/token').to route_to :controller => 'user_token', :action => 'create'
+      expect(:post => '/auth/token').to route_to :controller => 'token', :action => 'create'
     end
   end
 

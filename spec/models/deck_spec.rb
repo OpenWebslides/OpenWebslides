@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Deck, :type => :model do
@@ -28,7 +29,7 @@ RSpec.describe Deck, :type => :model do
 
   it 'has a valid :status enum' do
     deck = build :deck
-    expect(%w(public_access protected_access private_access)).to include deck.state
+    expect(%w[public_access protected_access private_access]).to include deck.state
   end
 
   it 'has a canonical name' do

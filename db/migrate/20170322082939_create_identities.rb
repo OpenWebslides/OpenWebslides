@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateIdentities < ActiveRecord::Migration[5.0]
   def change
     create_table :identities do |t|
@@ -9,6 +10,6 @@ class CreateIdentities < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_index :identities, [:uid, :provider], :unique => true
+    add_index :identities, %i[uid provider], :unique => true
   end
 end
