@@ -5,6 +5,8 @@ module Api
     include JSONAPI::ActsAsResourceController
     include Pundit
     include Pundit::ResourceController
-    include Knock::Authenticable
+    include JWT::Auth::Authentication
+
+    after_action :add_token_to_response
   end
 end

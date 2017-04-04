@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class OmniauthController < ApplicationController
+  include JWT::Auth::Authentication
+
   ##
   # OAuth2 callback
   #
@@ -10,11 +12,8 @@ class OmniauthController < ApplicationController
 
     @resource.save
 
-    controller = Knock::AuthTokenController.new
-    controller.instance_variable_set :@entity, @resource
-    token = controller.send :auth_token
-
-    render :json => token, :status => :created
+    token = JWT::Auth::Token.from_user @resource
+    render :json => { :jwt => token.to_jwt }, :status => :created
   end
 
   protected

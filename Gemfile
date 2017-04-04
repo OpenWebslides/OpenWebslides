@@ -11,7 +11,7 @@ end
 
 # Authentication/authorization
 gem 'jwt'
-gem 'knock'
+gem 'jwt-auth'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'

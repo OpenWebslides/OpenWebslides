@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include JWT::Auth::Authenticatable
+
   has_secure_password
 
   ##
@@ -23,11 +25,4 @@ class User < ApplicationRecord
   ##
   # Methods
   #
-  def self.from_token_payload(payload)
-    find_by :id => payload['sub'], :token_version => payload['ver']
-  end
-
-  def to_token_payload
-    { :sub => id, :ver => token_version }
-  end
 end
