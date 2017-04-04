@@ -21,6 +21,13 @@ RSpec.describe TokenController do
       expect { post :create }.to raise_error ActionController::ParameterMissing
     end
 
+    it 'requires valid credentials' do
+      params = { :auth => { :email => user.email, :password => 'password' } }
+      post :create, :params => params
+
+      expect(response.status).to eq 401
+    end
+
     it 'returns jwt' do
       params = { :auth => { :email => user.email, :password => user.password } }
       post :create, :params => params
@@ -37,6 +44,7 @@ RSpec.describe TokenController do
       secret = Rails.application.secrets.secret_key_base
 
       expect { JWT.decode token, secret }.not_to raise_error
+      expect(JWT::Auth::Token.from_token(token).valid?).to be true
     end
   end
 end
