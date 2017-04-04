@@ -8,6 +8,22 @@ class DeckPolicy
     @record = record
   end
 
+  def show?
+    if @record.public_access?
+      # Everyone can read
+      true
+    elsif @record.protected_access?
+      # Authenticated users can read protected deck
+      !@user.nil?
+    elsif @record.private_access?
+      return false if @user.nil?
+      # Owner and collaborators users can read private deck
+      @record.owner == @user || @record.contributors.include?(@user)
+    else
+      false
+    end
+  end
+
   def create?
     # Authenticated users can create a deck
     !@user.nil?

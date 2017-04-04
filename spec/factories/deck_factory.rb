@@ -9,5 +9,9 @@ FactoryGirl.define do
     trait :with_tags do
       tags { build_list :tag, 3 }
     end
+
+    trait :with_contributors do
+      contributors { build_list :user, 3 }
+    end
   end
 end
