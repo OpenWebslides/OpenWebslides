@@ -30,14 +30,15 @@ class Deck < ApplicationRecord
     self.canonical_name = "#{owner.email.parameterize}-#{name.parameterize}"
     return unless self.class.exists? :canonical_name => canonical_name
 
-    i = 2
+    i = 1
     loop do
       i += 1
-      self.canonical_name = "#{canonical_name}-#{i}"
-      break unless self.class.exists? :canonical_name => candidate
+      candidate = "#{canonical_name}-#{i}"
+      unless self.class.exists? :canonical_name => candidate
+        self.canonical_name = candidate
+        break
+      end
     end
-
-    self.canonical_name = candidate
   end
 
   def create_repository

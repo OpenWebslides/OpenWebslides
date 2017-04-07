@@ -45,4 +45,16 @@ RSpec.describe Deck, :type => :model do
     expect(deck.tags.length).not_to be 0
     deck.tags.each { |t| expect(t).to be_instance_of Tag }
   end
+
+  let(:owner) { build :user, :email => 'foo@bar' }
+  it 'has a unique canonical name' do
+    deck = create :deck, :name => 'Foo Bar', :owner => owner
+    expect(deck.canonical_name).to eq 'foo-bar-foo-bar'
+
+    deck2 = create :deck, :name => 'Foo Bar', :owner => owner
+    expect(deck2.canonical_name).to eq 'foo-bar-foo-bar-2'
+
+    deck.destroy
+    deck2.destroy
+  end
 end
