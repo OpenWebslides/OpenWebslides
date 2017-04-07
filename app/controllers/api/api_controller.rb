@@ -15,7 +15,7 @@ module Api
 
     def user_not_authenticated(error)
       type = self.class.name.demodulize.underscore.split('_').first.singularize
-      error = JSONAPI::Error.new :code => '401',
+      error = JSONAPI::Error.new :code => JSONAPI::UNAUTHORIZED,
                                  :status => :unauthorized,
                                  :title => "#{params[:action].capitalize} unauthorized",
                                  :detail => "You don't have permission to #{params[:action]} this #{type}."
