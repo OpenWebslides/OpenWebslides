@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/handlers/jsonapi-authorization.git
+  revision: 373169641dbaab45f3d1e0bb502cdf406de6fed7
+  branch: jsonapi-resources-0.9
+  specs:
+    jsonapi-authorization (0.8.2)
+      jsonapi-resources (~> 0.9)
+      pundit (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -85,7 +94,7 @@ GEM
       concurrent-ruby
       railties (>= 4.1)
     jwt (1.5.6)
-    jwt-auth (1.1.0)
+    jwt-auth (1.2.0)
       jwt (~> 1.5)
       rails (~> 5.0)
     listen (3.1.5)
@@ -151,11 +160,6 @@ GEM
     pundit-matchers (1.2.3)
       pundit (~> 1.1, >= 1.1.0)
       rspec-rails (>= 3.0.0)
-    pundit-resources (1.1.1)
-      activesupport
-      jsonapi-resources
-      pundit
-      rails (>= 4.2.1, < 5.1)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -263,6 +267,7 @@ DEPENDENCIES
   foreman
   jbuilder (~> 2.5)
   json
+  jsonapi-authorization!
   jsonapi-resources
   jwt
   jwt-auth
@@ -279,7 +284,6 @@ DEPENDENCIES
   puma (~> 3.0)
   pundit
   pundit-matchers
-  pundit-resources
   rails (~> 5.0.1)
   rspec
   rspec-rails

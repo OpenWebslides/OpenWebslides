@@ -2,8 +2,6 @@
 
 module Api
   class UserResource < ApiResource
-    include Pundit::Resource
-
     ##
     # Properties
     #
@@ -23,6 +21,8 @@ module Api
     def fetchable_fields
       super - [:password]
     end
+
+    protected
 
     def create_identity
       identity = @model.identities.build :uid => @model.email, :provider => 'email'

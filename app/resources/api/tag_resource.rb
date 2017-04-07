@@ -2,10 +2,18 @@
 
 module Api
   class TagResource < ApiResource
-    include Pundit::Resource
-
+    ##
+    # Properties
+    #
     attributes :name
 
     has_many :decks
+
+    ##
+    # Callbacks
+    #
+    ##
+    # Methods
+    #
   end
 end

@@ -26,8 +26,8 @@ gem 'rugged'
 gem 'webpack-rails'
 
 # JSON:API spec compliant resources
+gem 'jsonapi-authorization', :github => 'handlers/jsonapi-authorization', :branch => 'jsonapi-resources-0.9'
 gem 'jsonapi-resources'
-gem 'pundit-resources'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'

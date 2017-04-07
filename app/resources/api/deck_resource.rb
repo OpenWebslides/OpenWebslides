@@ -2,13 +2,21 @@
 
 module Api
   class DeckResource < ApiResource
-    include Pundit::Resource
-
+    ##
+    # Properties
+    #
     attributes :name, :state
 
     has_one :owner
 
     has_many :contributors
     has_many :tags
+
+    ##
+    # Callbacks
+    #
+    ##
+    # Methods
+    #
   end
 end
