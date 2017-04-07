@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class TagResource < JSONAPI::Resource
+  class TagResource < ApiResource
     include Pundit::Resource
 
     attributes :name

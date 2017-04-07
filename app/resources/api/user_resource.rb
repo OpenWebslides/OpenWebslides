@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class UserResource < JSONAPI::Resource
+  class UserResource < ApiResource
     include Pundit::Resource
 
     ##

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class DeckResource < JSONAPI::Resource
+  class DeckResource < ApiResource
     include Pundit::Resource
 
     attributes :name, :state
