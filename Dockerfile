@@ -5,7 +5,7 @@ MAINTAINER Rein Van Imschoot <rein.vanimschoot@ugent.be>
 RUN useradd openwebslides --create-home --home-dir /app/ --shell /bin/false
 
 RUN apt-get update && apt-get install -qq -y --no-install-recommends \
-      build-essential nodejs libpq-dev libsqlite3-dev cmake pkg-config
+      build-essential nodejs libpq-dev libsqlite3-dev cmake pkg-config git
 
 ENV ROOT_PATH /app
 RUN mkdir -p $ROOT_PATH
