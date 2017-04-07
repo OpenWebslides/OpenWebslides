@@ -13,7 +13,11 @@ module Api
 
     protected
 
-    def user_not_authenticated(error)
+    def context
+      { :current_user => token&.subject }
+    end
+
+    def user_not_authenticated
       type = self.class.name.demodulize.underscore.split('_').first.singularize
       error = JSONAPI::Error.new :code => JSONAPI::UNAUTHORIZED,
                                  :status => :unauthorized,
@@ -23,7 +27,7 @@ module Api
       render :json => { :errors => [error] }, :status => 401
     end
 
-    def user_not_authorized(error)
+    def user_not_authorized
       type = self.class.name.demodulize.underscore.split('_').first.singularize
       error = JSONAPI::Error.new :code => JSONAPI::FORBIDDEN,
                                  :status => :forbidden,
