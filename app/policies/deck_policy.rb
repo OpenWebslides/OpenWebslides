@@ -8,6 +8,10 @@ class DeckPolicy
     @record = record
   end
 
+  def index?
+    true
+  end
+
   def show?
     if @record.public_access?
       # Everyone can read

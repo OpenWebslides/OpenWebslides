@@ -10,6 +10,10 @@ RSpec.describe DeckPolicy do
   context 'for a guest' do
     let(:user) { nil }
 
+    it 'should permit :index' do
+      expect(subject).to permit_action :index
+    end
+
     it 'should not permit :create' do
       expect(subject).to forbid_action :create
     end
@@ -45,6 +49,10 @@ RSpec.describe DeckPolicy do
   context 'for a member' do
     let(:user) { build :user }
 
+    it 'should permit :index' do
+      expect(subject).to permit_action :index
+    end
+
     it 'should permit :create' do
       expect(subject).to permit_action :create
     end
@@ -79,6 +87,10 @@ RSpec.describe DeckPolicy do
 
   context 'for a contributor' do
     let(:user) { build :user, :with_decks }
+
+    it 'should permit :index' do
+      expect(subject).to permit_action :index
+    end
 
     it 'should permit :create' do
       expect(subject).to permit_action :create
@@ -117,6 +129,10 @@ RSpec.describe DeckPolicy do
 
   context 'for an owner' do
     let(:user) { build :user, :with_decks }
+
+    it 'should permit :index' do
+      expect(subject).to permit_action :index
+    end
 
     it 'should permit :create' do
       expect(subject).to permit_action :create
