@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class UserPolicy
-  attr_reader :subject, :object
+  attr_reader :user, :record
 
-  def initialize(subject, object)
-    @subject = subject
-    @object = object
+  def initialize(user, record)
+    @user = user
+    @record = record
+  end
+
+  def index?
+    true
   end
 
   def show?
@@ -18,7 +22,7 @@ class UserPolicy
 
   def update?
     # Users can only update their own account
-    !@subject.nil? && @subject == @object
+    !@user.nil? && @user == @record
   end
 
   def destroy?
