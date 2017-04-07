@@ -2,6 +2,6 @@
 
 module Api
   class UsersController < ApiController
-    before_action :authenticate_user, :except => [:create]
+    before_action :authenticate_user, :except => %i[index show create]
   end
 end
