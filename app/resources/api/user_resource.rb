@@ -19,7 +19,19 @@ module Api
     # Methods
     #
     def fetchable_fields
-      super - [:password]
+      if context[:current_user]
+        super - [:password]
+      else
+        super - %i[email password]
+      end
+    end
+
+    def self.creatable_fields
+      super - %i[decks contributions]
+    end
+
+    def self.updatable_fields
+      super - %i[email decks contributions]
     end
 
     protected

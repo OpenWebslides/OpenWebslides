@@ -77,6 +77,9 @@ group :test do
   # Pundit RSpec matchers
   gem 'pundit-matchers'
 
+  # JSONAPI RSpec matchers
+  gem 'jsonapi-resources-matchers'
+
   # Factory pattern for testing
   gem 'factory_girl'
   gem 'factory_girl_rails'
