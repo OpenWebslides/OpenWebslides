@@ -5,8 +5,10 @@ import {
 function requestSignin({ email, password }) {
   return {
     type: REQUEST_SIGNIN,
-    email,
-    password,
+    meta: {
+      email,
+      password,
+    },
   };
 }
 
