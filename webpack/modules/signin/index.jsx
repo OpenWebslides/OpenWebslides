@@ -1,62 +1,58 @@
-import React, { Component, PropTypes } from 'react';
-import { reduxForm, Field } from 'redux-form';
+import React, { PropTypes } from 'react';
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import requestSignin from './actions';
 
-class Signin extends Component {
-  constructor(props) {
-    super(props);
-
-    this.submit = this.submit.bind(this);
-  }
-
-  submit(values) {
-    this.props.requestSignin(values);
-  }
-
-  render() {
-    const { handleSubmit } = this.props;
-
-    return (
-      <form onSubmit={handleSubmit(this.submit)}>
-        <h1>SIGN IN</h1>
-        <label htmlFor="email">Email</label>
-        <Field
-          name="email"
-          type="text"
-          id="email"
-          className="email"
-          component="input"
-        />
-        <label htmlFor="password">Password</label>
-        <Field
-          name="password"
-          type="password"
-          id="password"
-          className="password"
-          component="input"
-        />
-        <button action="submit">SIGN IN</button>
-      </form>
-    );
-  }
+// Allows granular control over the input fields
+function renderInput({ input, type, placeholder }) {
+  return (
+    <div>
+      <input
+        {...input}
+        type={type}
+        placeholder={placeholder}
+      />
+    </div>
+  );
 }
 
-Signin.propTypes = {
+function SigninForm(props) {
+  return (
+    <div>
+      <h1>Sign in</h1>
+      <form onSubmit={props.handleSubmit(props.requestSignin)}>
+        <Field name="email" placeholder="Email" component={renderInput} />
+        <Field name="password" placeholder="Password" component={renderInput} type="password" />
+        <button type="submit">Sign in</button>
+      </form>
+    </div >
+  );
+}
+
+SigninForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   requestSignin: PropTypes.func.isRequired,
 };
 
-function mapStateToProps({ signin }) {
-  return { signin };
+renderInput.propTypes = {
+  input: React.PropTypes.objectOf(String).isRequired,
+  type: React.PropTypes.string,
+  placeholder: React.PropTypes.string.isRequired,
+};
+
+renderInput.defaultProps = {
+  type: 'text',
+};
+
+// SigninForm is wrapped by the redux-form higher-order component
+const SigninReduxForm = reduxForm({ form: 'signin' })(SigninForm);
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ requestSignin }, dispatch);
 }
 
+const visibleSigninForm = connect(null, mapDispatchToProps)(SigninReduxForm);
 
-const connected = connect(mapStateToProps, { requestSignin })(Signin);
-
-const formed = reduxForm({
-  form: 'signin',
-})(connected);
-
-export default formed;
-
+export default visibleSigninForm;
