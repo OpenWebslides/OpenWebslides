@@ -1,15 +1,13 @@
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
 
-import client from './modules/client/reducer';
 import signup from './modules/signup/reducer';
 import signin from './modules/signin/reducer';
 
-const IndexReducer = combineReducers({
-  client,
+const rootReducer = combineReducers({
+  form, // Makes redux-forms part of the state
   signup,
-  form,
   signin,
 });
 
-export default IndexReducer;
+export default rootReducer;
