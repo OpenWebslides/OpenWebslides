@@ -7,9 +7,13 @@
       "jsx": true
     }
   },
+  "rules": {
+    "prefer-arrow-callback": "off"
+  },
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "plugins": [
     "react"
