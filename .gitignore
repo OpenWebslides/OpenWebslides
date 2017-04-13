@@ -38,3 +38,6 @@ config/*.pem
 coverage/
 
 /.gem
+
+.yarnclean
+jsonconfig.json
