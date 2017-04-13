@@ -40,4 +40,4 @@ coverage/
 /.gem
 
 .yarnclean
-jsonconfig.json
+jsconfig.json
