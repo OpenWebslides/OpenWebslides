@@ -6,6 +6,7 @@ module Api
     # Properties
     #
     attributes :name, :state
+    filters :name, :state
 
     has_one :owner
 
