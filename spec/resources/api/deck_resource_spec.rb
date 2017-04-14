@@ -20,23 +20,23 @@ RSpec.describe Api::DeckResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id name state owner contributors tags]
+      expect(subject.fetchable_fields).to match_array %i[id name state description owner contributors tags]
     end
 
     it 'should have a valid set of creatable fields' do
-      expect(described_class.creatable_fields).to match_array %i[name state owner]
+      expect(described_class.creatable_fields).to match_array %i[name state description owner]
     end
 
     it 'should have a valid set of updatable fields' do
-      expect(described_class.updatable_fields).to match_array %i[name state owner tags]
+      expect(described_class.updatable_fields).to match_array %i[name state description owner tags]
     end
   end
 
   it 'should have a valid set of sortable fields' do
-    expect(described_class.sortable_fields context).to match_array %i[id name state]
+    expect(described_class.sortable_fields context).to match_array %i[id name state description]
   end
 
   it 'should have a valid set of filterable fields' do
-    expect(described_class.filters.keys).to match_array %i[id name state]
+    expect(described_class.filters.keys).to match_array %i[id name state description]
   end
 end
