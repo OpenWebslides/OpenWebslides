@@ -19,6 +19,10 @@ RSpec.describe Api::DeckResource, :type => :resource do
   it { is_expected.to have_many(:tags).with_class_name 'Tag' }
 
   describe 'fields' do
+    it 'should have a valid set of fetchable fields' do
+      expect(subject.fetchable_fields).to match_array %i[id name state owner contributors tags]
+    end
+
     it 'should have a valid set of creatable fields' do
       expect(described_class.creatable_fields).to match_array %i[name state owner]
     end
@@ -28,7 +32,7 @@ RSpec.describe Api::DeckResource, :type => :resource do
     end
   end
 
-  it 'should have a valid set of fetchable fields' do
-    expect(subject.fetchable_fields).to match_array %i[id name state owner contributors tags]
+  it 'should have a valid set of sortable fields' do
+    expect(described_class.sortable_fields context).to match_array %i[id name state]
   end
 end

@@ -6,6 +6,7 @@ module Api
     # Properties
     #
     attributes :name, :email, :password
+    filters :name, :email
 
     has_many :decks
     has_many :contributions
