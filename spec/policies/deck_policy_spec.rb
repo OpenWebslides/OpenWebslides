@@ -174,14 +174,23 @@ RSpec.describe DeckPolicy::Scope do
   subject { described_class.new(user, Deck).resolve }
 
   before :all do
-    owner = create :user
+    # We have to persist to the database because the scope uses ActiveRecord
+    Deck.destroy_all
+    User.destroy_all
 
-    create :deck, :state => :public_access, :owner => owner
-    create :deck, :state => :public_access, :owner => owner
-    create :deck, :state => :protected_access, :owner => owner
-    create :deck, :state => :protected_access, :owner => owner
-    create :deck, :state => :private_access, :owner => owner
-    create :deck, :state => :private_access, :owner => owner
+    owner1 = create :user
+    owner2 = create :user
+
+    create :deck, :state => :public_access, :owner => owner1
+    create :deck, :state => :public_access, :owner => owner1
+    create :deck, :state => :protected_access, :owner => owner1
+    create :deck, :state => :protected_access, :owner => owner1
+    create :deck, :state => :private_access, :owner => owner1
+    create :deck, :state => :private_access, :owner => owner1
+
+    create :deck, :state => :private_access, :owner => owner2
+    create :deck, :state => :private_access, :owner => owner2
+    create :deck, :state => :private_access, :owner => owner2
   end
 
   after :all do
@@ -205,11 +214,19 @@ RSpec.describe DeckPolicy::Scope do
     end
   end
 
-  context 'for an owner' do
+  context 'for owner 1' do
     let(:user) { Deck.first.owner }
 
     it 'should show public, protected and owned decks' do
       expect(subject.length).to eq 6
+    end
+  end
+
+  context 'for owner 2' do
+    let(:user) { Deck.last.owner }
+
+    it 'should show public, protected and owned decks' do
+      expect(subject.length).to eq 7
     end
   end
 end
