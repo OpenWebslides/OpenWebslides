@@ -18,5 +18,12 @@ module Api
     ##
     # Methods
     #
+    def self.creatable_fields
+      super - %i[contributors tags]
+    end
+
+    def self.updatable_fields
+      super - %i[contributors]
+    end
   end
 end
