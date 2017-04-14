@@ -34,6 +34,10 @@ module Api
       super - %i[email decks contributions]
     end
 
+    def self.sortable_fields(context)
+      super(context) - [:password]
+    end
+
     protected
 
     def create_identity
