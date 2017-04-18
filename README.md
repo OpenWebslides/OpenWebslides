@@ -25,13 +25,13 @@ $ yarn install
 Enable git pre-commit hooks:
 
 ```
-$ overcommit --install
+$ bundle exec overcommit --install
 ```
 
 When the overcommit configuration changes (and on the first run), you have to verify it:
 
 ```
-$ overcommmit --sign
+$ bundle exec overcommit --sign
 ```
 
 ## Development
@@ -39,25 +39,35 @@ $ overcommmit --sign
 Use Foreman to start both the Rails server and the Webpack server:
 
 ```
-$ rails db:migrate
-$ foreman start
+$ bundle exec rails db:migrate
+$ bundle exec foreman start
 ```
 
 Use RuboCop to enforce code conventions:
 
 ```
-$ rubocop --rails
+$ bundle exec rubocop --rails
 ```
 
 Use RSpec to run tests
 
 ```
-$ rails db:migrate RAILS_ENV=test
-$ rake rspec
+$ bundle exec rails db:migrate RAILS_ENV=test
+$ bundle exec rspec
 ```
 
 If you want to populate the database with sample data
 
 ```
-$ rake db:populate
+$ bundle exec rails db:sample
 ```
+
+## Documentation
+
+Documentation is generated using RSpec
+
+```
+$ bundle exec rails docs:generate
+```
+
+The documentation is available at `http://localhost:5000/api/documentation`

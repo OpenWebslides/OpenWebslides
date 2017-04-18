@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-resource :users do
+resource 'Users' do
   get '/api/users' do
     example 'Listing users' do
       do_request
