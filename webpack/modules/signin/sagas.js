@@ -1,52 +1,43 @@
-import { takeLatest, call, put, take, race } from 'redux-saga/effects';
-import jwtDecode from 'jwt-decode';
-
+import { takeLatest, call, put } from 'redux-saga/effects'
 
 import {
   REQUEST_SIGNIN,
   SIGNIN_SUCCESS,
-  SIGNIN_ERROR,
-  SIGNOUT_REQUEST,
-} from './constants';
+  SIGNIN_ERROR
+} from './constants'
 
-import signinApiCall from './api';
+import signinApiCall from './api'
 
-export function* signin(data) {
-  let response;
+export function * signinFlow (action) {
   try {
-    const { email, password } = data;
-    response = yield call(signinApiCall, email, password);
-    return response;
-  } catch (error) {
-    yield put({
-      type: SIGNIN_ERROR,
-      payload: { error },
-    });
-  }
-  return response;
-}
+    const { email, password } = action.meta
+    const responseBody = yield call(signinApiCall, email, password)
 
-export function* signinFlow(action) {
-  const outcome = yield race({
-    signedIn: call(signin, action.meta),
-    signedOut: take(SIGNOUT_REQUEST),
-  });
+    if (typeof responseBody.jwt === 'undefined') {
+      throw new Error('Unable to find JWT in response body')
+    }
 
-  if (outcome.signedIn) {
-    const accessToken = outcome.signedIn.access_token;
-    const decodedUserData = jwtDecode(accessToken);
+    const accessToken = responseBody.jwt
+
     yield put({
       type: SIGNIN_SUCCESS,
       payload: {
-        accessToken,
-        id: decodedUserData.id || 1,
-      },
-    });
+        accessToken
+      }
+    })
+  } catch (error) {
+    yield put({
+      type: SIGNIN_ERROR,
+      payload: {
+        message: error.message,
+        statusCode: error.statusCode
+      }
+    })
   }
 }
 
-function* signinWatcher() {
-  yield takeLatest(REQUEST_SIGNIN, signinFlow);
+function * signinWatcher () {
+  yield takeLatest(REQUEST_SIGNIN, signinFlow)
 }
 
-export default signinWatcher;
+export default signinWatcher

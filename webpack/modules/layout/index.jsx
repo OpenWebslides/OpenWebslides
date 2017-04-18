@@ -1,20 +1,21 @@
-import React, { PropTypes } from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-function Layout(props) {
+function Layout (props) {
   return (
-    <div className="app">
-      <div className="app-header">
+    <div className='app'>
+      <div className='app-header'>
         <h1>HEADER</h1>
       </div>
-      <section className="app-body">
+      <section className='app-body'>
         {props.children}
       </section>
     </div>
-  );
+  )
 }
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+  children: PropTypes.node.isRequired
+}
 
-export default Layout;
+export default Layout

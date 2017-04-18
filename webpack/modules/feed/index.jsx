@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-function Feed() {
+function Feed () {
   return (
     <div>
       <h1>BOOM</h1>
     </div>
-  );
+  )
 }
 
-export default Feed;
+export default Feed

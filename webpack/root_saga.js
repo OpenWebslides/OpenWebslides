@@ -1,5 +1,5 @@
-import SigninSaga from './modules/signin/sagas';
+import SigninSaga from './modules/signin/sagas'
 
-export default function* rootSaga() {
-  yield [SigninSaga()];
+export default function * rootSaga () {
+  yield [SigninSaga()]
 }
