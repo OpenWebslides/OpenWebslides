@@ -1,5 +1,9 @@
-import SigninSaga from './modules/signin/sagas'
+import SigninSaga from './modules/signin/saga'
+import SignupSaga from './modules/signup/saga'
 
 export default function * rootSaga () {
-  yield [SigninSaga()]
+  yield [
+    SigninSaga(),
+    SignupSaga()
+  ]
 }

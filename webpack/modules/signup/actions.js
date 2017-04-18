@@ -1,11 +1,13 @@
 import { REQUEST_SIGNUP } from './constants'
 
 function requestSignup ({ email, password }) {
-  return {
+  return ({
     type: REQUEST_SIGNUP,
-    email,
-    password
-  }
+    meta: {
+      email,
+      password
+    }
+  })
 }
 
 export default requestSignup
