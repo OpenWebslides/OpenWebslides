@@ -1,16 +1,16 @@
 // Example webpack configuration with asset fingerprinting in production.
-'use strict';
+'use strict'
 
-var path = require('path');
-var webpack = require('webpack');
-var StatsPlugin = require('stats-webpack-plugin');
-var StyleLintPlugin = require('stylelint-webpack-plugin');
+var path = require('path')
+var webpack = require('webpack')
+var StatsPlugin = require('stats-webpack-plugin')
+var StyleLintPlugin = require('stylelint-webpack-plugin')
 
 // must match config.webpack.dev_server.port
-var devServerPort = 3808;
+var devServerPort = 3808
 
 // set NODE_ENV=production on the environment to add asset fingerprints
-var production = process.env.NODE_ENV === 'production';
+var production = process.env.NODE_ENV === 'production'
 
 var config = {
   entry: {
@@ -24,8 +24,7 @@ var config = {
         test: /\.jsx$/,
         exclude: /(node_modules|bower_components)/,
         use: [
-          'babel-loader',
-          'eslint-loader'
+          'babel-loader'
         ]
       },
       {
@@ -47,6 +46,8 @@ var config = {
     ]
   },
 
+  devtool: 'eval',
+
   output: {
     // Build assets directly in to public/webpack/, let webpack know
     // that all webpacked assets start with webpack/
@@ -59,10 +60,10 @@ var config = {
   },
 
   resolve: {
-    extensions: [".js", ".jsx", ".es6"],
+    extensions: ['.js', '.jsx', '.es6'],
     modules: [
       path.join(__dirname, '..', 'webpack'),
-      "node_modules"
+      'node_modules'
     ]
   },
 
@@ -77,7 +78,7 @@ var config = {
       assets: true
     }),
     new StyleLintPlugin()]
-};
+}
 
 if (production) {
   config.plugins.push(
@@ -87,15 +88,15 @@ if (production) {
       'process.env': { NODE_ENV: JSON.stringify('production') }
     }),
     new webpack.optimize.DedupePlugin()
-  );
+  )
 } else {
   config.devServer = {
     port: devServerPort,
     headers: { 'Access-Control-Allow-Origin': '*' }
-  };
-  config.output.publicPath = '//localhost:' + devServerPort + '/webpack/';
+  }
+  config.output.publicPath = '//localhost:' + devServerPort + '/webpack/'
   // Source maps
-  config.devtool = 'cheap-module-eval-source-map';
+  config.devtool = 'cheap-module-eval-source-map'
 }
 
-module.exports = config;
+module.exports = config
