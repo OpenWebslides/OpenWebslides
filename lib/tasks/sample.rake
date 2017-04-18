@@ -5,10 +5,10 @@ unless defined? FactoryGirl
   require 'faker'
 
   Dir[Rails.root.join 'spec/factories/**/*.rb'].each { |f| require f }
-
-  require Rails.root.join 'config/initializers/active_record'
-  ActiveRecord::Base.skip_callbacks = true
 end
+
+require Rails.root.join 'config/initializers/active_record'
+ActiveRecord::Base.skip_callbacks = true
 
 namespace :db do
   desc 'Populates the database with sample data'
