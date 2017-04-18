@@ -49,6 +49,10 @@ gem 'lograge'
 # Use Pundit for permission model
 gem 'pundit'
 
+# API documentation
+gem 'apitome'
+gem 'rspec_api_documentation'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
@@ -79,10 +83,6 @@ group :test do
 
   # JSONAPI RSpec matchers
   gem 'jsonapi-resources-matchers'
-
-  # API documentation
-  gem 'apitome'
-  gem 'rspec_api_documentation'
 
   # Factory pattern for testing
   gem 'factory_girl'
