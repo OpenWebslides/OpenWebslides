@@ -54,9 +54,9 @@ class DeckPolicy
     def resolve
       if @user
         # Public decks, protected decks and contributions
-        collection = scope.where.not(:state => 'private_access') + @user.decks + @user.contributions
-
-        collection.uniq
+        scope.left_outer_joins(:contributors).where.not(:state => 'private_access')
+             .or(Deck.left_outer_joins(:contributors).where(:owner => @user))
+             .or(Deck.left_outer_joins(:contributors).where('decks_users.user_id = ?', @user.id)).distinct
       else
         # Public decks
         scope

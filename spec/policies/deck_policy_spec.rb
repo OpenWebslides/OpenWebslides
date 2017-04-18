@@ -175,58 +175,55 @@ RSpec.describe DeckPolicy::Scope do
 
   before :all do
     # We have to persist to the database because the scope uses ActiveRecord
-    Deck.destroy_all
-    User.destroy_all
+    DatabaseCleaner.clean
 
-    owner1 = create :user
-    owner2 = create :user
-
-    create :deck, :state => :public_access, :owner => owner1
-    create :deck, :state => :public_access, :owner => owner1
-    create :deck, :state => :protected_access, :owner => owner1
-    create :deck, :state => :protected_access, :owner => owner1
-    create :deck, :state => :private_access, :owner => owner1
-    create :deck, :state => :private_access, :owner => owner1
-
-    create :deck, :state => :private_access, :owner => owner2
-    create :deck, :state => :private_access, :owner => owner2
-    create :deck, :state => :private_access, :owner => owner2
+    require 'rake'
+    load File.expand_path('../../../lib/tasks/sample.rake', __FILE__)
+    Rake::Task.define_task :environment
+    Rake::Task['db:sample'].invoke
   end
 
   after :all do
-    Deck.destroy_all
-    User.destroy_all
+    DatabaseCleaner.clean
   end
 
   context 'for a guest' do
     let(:user) { nil }
 
     it 'should show all public decks' do
-      expect(subject.length).to eq 2
+      expect(subject.pluck :name).to match_array %w[u1d1 u2d1 u3d1 u4d1]
     end
   end
 
-  context 'for a member' do
-    let(:user) { create :user }
+  context 'for user 1' do
+    let(:user) { User.find_by :name => 'user1' }
 
-    it 'should show public and protected decks' do
-      expect(subject.length).to eq 4
+    it 'should show public, protected, owned and contributed decks' do
+      expect(subject.pluck :name).to match_array %w[u1d1 u1d2 u1d3 u1d4 u2d1 u2d2 u2d4 u3d1 u3d2 u3d4 u4d1 u4d2]
     end
   end
 
-  context 'for owner 1' do
-    let(:user) { Deck.first.owner }
+  context 'for user 2' do
+    let(:user) { User.find_by :name => 'user2' }
 
-    it 'should show public, protected and owned decks' do
-      expect(subject.length).to eq 6
+    it 'should show public, protected, owned and contributed decks' do
+      expect(subject.pluck :name).to match_array %w[u1d1 u1d2 u1d4 u2d1 u2d2 u2d3 u2d4 u3d1 u3d2 u3d4 u4d1 u4d2]
     end
   end
 
-  context 'for owner 2' do
-    let(:user) { Deck.last.owner }
+  context 'for user 3' do
+    let(:user) { User.find_by :name => 'user3' }
 
-    it 'should show public, protected and owned decks' do
-      expect(subject.length).to eq 7
+    it 'should show public, protected, owned and contributed decks' do
+      expect(subject.pluck :name).to match_array %w[u1d1 u1d2 u1d4 u2d1 u2d2 u2d4 u3d1 u3d2 u3d3 u3d4 u4d1 u4d2]
+    end
+  end
+
+  context 'for user 4' do
+    let(:user) { User.find_by :name => 'user4' }
+
+    it 'should show public, protected, owned and contributed decks' do
+      expect(subject.pluck :name).to match_array %w[u1d1 u1d2 u2d1 u2d2 u3d1 u3d2 u4d1 u4d2 u4d3]
     end
   end
 end
