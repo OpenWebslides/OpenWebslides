@@ -31,12 +31,12 @@ module Api
       end
     end
 
-    def self.creatable_fields
-      super - %i[decks contributions]
+    def self.creatable_fields(context = {})
+      super(context) - %i[decks contributions]
     end
 
-    def self.updatable_fields
-      super - %i[email decks contributions]
+    def self.updatable_fields(context = {})
+      super(context) - %i[email decks contributions]
     end
 
     def self.sortable_fields(context)
