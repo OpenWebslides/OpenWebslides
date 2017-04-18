@@ -6,12 +6,17 @@ module Api
     # Properties
     #
     attributes :name, :state, :description
-    filters :name, :state, :description
 
     has_one :owner
 
     has_many :contributors
     has_many :tags
+
+    ##
+    # Filters
+    #
+    filters :name, :description
+    filter :state, :verify => ->(values, _) { values & Deck.states.keys }
 
     ##
     # Callbacks

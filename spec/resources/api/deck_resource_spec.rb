@@ -30,13 +30,22 @@ RSpec.describe Api::DeckResource, :type => :resource do
     it 'should have a valid set of updatable fields' do
       expect(described_class.updatable_fields).to match_array %i[name state description owner tags]
     end
+
+    it 'should have a valid set of sortable fields' do
+      expect(described_class.sortable_fields context).to match_array %i[id name state description]
+    end
   end
 
-  it 'should have a valid set of sortable fields' do
-    expect(described_class.sortable_fields context).to match_array %i[id name state description]
-  end
+  describe 'filters' do
+    it 'should have a valid set of filters' do
+      expect(described_class.filters.keys).to match_array %i[id name state description]
+    end
 
-  it 'should have a valid set of filterable fields' do
-    expect(described_class.filters.keys).to match_array %i[id name state description]
+    let(:verify) { described_class.filters[:state][:verify] }
+
+    it 'should verify state' do
+      expect(verify.call(%w[public_access foo protected_access private_access bar], {}))
+        .to match_array %w[public_access protected_access private_access]
+    end
   end
 end

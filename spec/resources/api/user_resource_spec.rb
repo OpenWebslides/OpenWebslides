@@ -41,8 +41,10 @@ RSpec.describe Api::UserResource, :type => :resource do
     it 'should have a valid set of sortable fields' do
       expect(described_class.sortable_fields context).to match_array %i[id name email]
     end
+  end
 
-    it 'should have a valid set of filterable fields' do
+  describe 'filters' do
+    it 'should have a valid set of filters' do
       expect(described_class.filters.keys).to match_array %i[id name email]
     end
   end
