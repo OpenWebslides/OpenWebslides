@@ -80,6 +80,10 @@ group :test do
   # JSONAPI RSpec matchers
   gem 'jsonapi-resources-matchers'
 
+  # API documentation
+  gem 'apitome'
+  gem 'rspec_api_documentation'
+
   # Factory pattern for testing
   gem 'factory_girl'
   gem 'factory_girl_rails'
