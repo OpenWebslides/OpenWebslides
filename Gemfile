@@ -86,6 +86,9 @@ group :test do
 
   # Fake data generator
   gem 'faker'
+
+  # Reset database
+  gem 'database_cleaner'
 end
 
 group :development do
