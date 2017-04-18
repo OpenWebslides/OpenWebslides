@@ -1,1 +1,4 @@
-config/webpack.config.js
+/config/webpack.config.js
+coverage/
+node_modules/
+dist/
