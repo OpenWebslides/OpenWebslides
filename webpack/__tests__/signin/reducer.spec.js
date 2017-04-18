@@ -1,33 +1,37 @@
-import signinReducer from '../../modules/signin/reducer';
-import { SIGNIN_SUCCESS } from '../../modules/signin/constants';
+import faker from 'faker'
+import signinReducer from '../../modules/signin/reducer'
+import { SIGNIN_SUCCESS } from '../../modules/signin/constants'
 
-const emptyState = undefined;
-const emptyAction = { type: '' };
+const emptyState = undefined
 
 describe('Signin Reducer', () => {
   it('has a default state', () => {
+    const emptyAction = { type: '' }
+
     expect(
       signinReducer(
         emptyState,
         emptyAction))
       .toEqual({
         signedIn: false,
-        authToken: '',
-      });
-  });
+        authToken: ''
+      })
+  })
 
   it('can resolve SIGNIN_SUCCESS action', () => {
+    const fakeToken = faker.random.uuid()
+
     expect(
       signinReducer(emptyState, {
         type: SIGNIN_SUCCESS,
         payload: {
           signedIn: true,
-          accessToken: 'random token',
-        },
+          accessToken: fakeToken
+        }
       }))
       .toEqual({
         signedIn: true,
-        authToken: 'random token',
-      });
-  });
-});
+        authToken: fakeToken
+      })
+  })
+})

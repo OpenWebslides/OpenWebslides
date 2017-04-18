@@ -1,17 +1,17 @@
 import {
   REQUEST_SIGNUP,
   SIGNUP_SUCCESS,
-  SIGNUP_ERROR,
-} from './constants';
+  SIGNUP_ERROR
+} from './constants'
 
 const initialState = {
   requesting: false,
   successful: false,
   messages: [],
-  errors: [],
-};
+  errors: []
+}
 
-function signupReducer(state = initialState, action) {
+function signupReducer (state = initialState, action) {
   switch (action.type) {
     case REQUEST_SIGNUP:
 
@@ -19,22 +19,22 @@ function signupReducer(state = initialState, action) {
         requesting: true,
         successful: false,
         messages: [{ body: 'Signing up...', time: new Date() }],
-        errors: [],
-      };
+        errors: []
+      }
     case SIGNUP_SUCCESS:
       return {
         errors: [],
         messages: [{
           body: `Successfully created account for ${action.response.email}`,
-          time: new Date(),
+          time: new Date()
         }],
         requesting: false,
-        successful: true,
-      };
+        successful: true
+      }
 
     default:
-      return state;
+      return state
   }
 }
 
-export default signupReducer;
+export default signupReducer
