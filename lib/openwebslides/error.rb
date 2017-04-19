@@ -8,14 +8,4 @@ module OpenWebslides
   #
   class CommandError < Error; end
   class ConfigurationError < Error; end
-
-  ##
-  # Authentication errors
-  #
-  class TokenError < Error; end
-
-  ##
-  # Authorization errors
-  #
-  class NotAuthorizedError < Error; end
 end
