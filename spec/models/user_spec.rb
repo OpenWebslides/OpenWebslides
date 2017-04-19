@@ -21,6 +21,14 @@ RSpec.describe User, :type => :model do
     expect(build :user, :email => '').not_to be_valid
   end
 
+  it 'is invalid without password' do
+    expect(build :user, :password => nil).not_to be_valid
+  end
+
+  it 'is invalid without token version' do
+    expect(build :user, :token_version => nil).not_to be_valid
+  end
+
   it 'rejects invalid email' do
     expect(build :user, :email => 'foo').not_to be_valid
     expect(build :user, :email => 'foo@bar@baz').not_to be_valid

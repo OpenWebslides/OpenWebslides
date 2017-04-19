@@ -12,6 +12,7 @@ class User < ApplicationRecord
   validates :email, :presence => true,
                     :format => { :with => /\A[^@]+@[^@]+\z/ },
                     :uniqueness => true
+  validates :token_version, :presence => true
 
   has_many :identities, :dependent => :destroy
 
