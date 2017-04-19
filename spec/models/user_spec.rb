@@ -36,6 +36,16 @@ RSpec.describe User, :type => :model do
     expect(build :user, :email => '@bar').not_to be_valid
   end
 
+  it 'rejects changes to email' do
+    # The readonly_email callback only triggers on :update, so the record has to be persisted
+    user = create :user
+    expect(user).to be_valid
+
+    user.email = 'bar@foo'
+    expect(user).not_to be_valid
+    user.destroy
+  end
+
   it 'has many decks' do
     user = build :user, :with_decks
 

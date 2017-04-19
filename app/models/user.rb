@@ -14,6 +14,8 @@ class User < ApplicationRecord
                     :uniqueness => true
   validates :token_version, :presence => true
 
+  validate :readonly_email, :on => :update
+
   ##
   # Associations
   #
@@ -29,4 +31,7 @@ class User < ApplicationRecord
   ##
   # Methods
   #
+  def readonly_email
+    errors.add :email, 'cannot be changed' if email_changed?
+  end
 end
