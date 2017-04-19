@@ -19,22 +19,27 @@ module Api
 
     def user_not_authenticated
       type = self.class.name.demodulize.underscore.split('_').first.singularize
-      error = JSONAPI::Error.new :code => JSONAPI::UNAUTHORIZED,
-                                 :status => :unauthorized,
-                                 :title => "#{params[:action].capitalize} unauthorized",
-                                 :detail => "You don't have permission to #{params[:action]} this #{type}."
-
-      render :json => { :errors => [error] }, :status => 401
+      render_error JSONAPI::UNAUTHORIZED,
+                   :unauthorized,
+                   "#{params[:action].capitalize} unauthorized",
+                   "You don't have permission to #{params[:action]} this #{type}."
     end
 
     def user_not_authorized
       type = self.class.name.demodulize.underscore.split('_').first.singularize
-      error = JSONAPI::Error.new :code => JSONAPI::FORBIDDEN,
-                                 :status => :forbidden,
-                                 :title => "#{params[:action].capitalize} forbidden",
-                                 :detail => "You don't have permission to #{params[:action]} this #{type}."
+      render_error JSONAPI::FORBIDDEN,
+                   :forbidden,
+                   "#{params[:action].capitalize} forbidden",
+                   "You don't have permission to #{params[:action]} this #{type}."
+    end
 
-      render :json => { :errors => [error] }, :status => 403
+    def render_error(code, status, title, detail)
+      error = JSONAPI::Error.new :code => code,
+                                 :status => status,
+                                 :title => title,
+                                 :detail => detail
+
+      render :json => { :errors => [error] }, :status => status
     end
   end
 end
