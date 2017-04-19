@@ -7,6 +7,9 @@ class Identity < ApplicationRecord
   validates :uid, :presence => true, :uniqueness => { :scope => :provider }
   validates :provider, :presence => true
 
+  ##
+  # Associations
+  #
   belongs_to :user, :required => true
 
   ##

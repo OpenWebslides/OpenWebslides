@@ -14,6 +14,9 @@ class User < ApplicationRecord
                     :uniqueness => true
   validates :token_version, :presence => true
 
+  ##
+  # Associations
+  #
   has_many :identities, :dependent => :destroy
 
   has_many :decks, :dependent => :destroy
