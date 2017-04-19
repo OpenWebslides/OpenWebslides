@@ -1,21 +1,21 @@
 // Example webpack configuration with asset fingerprinting in production.
-'use strict'
 
-var path = require('path')
-var webpack = require('webpack')
-var StatsPlugin = require('stats-webpack-plugin')
-var StyleLintPlugin = require('stylelint-webpack-plugin')
+
+const path = require('path');
+const webpack = require('webpack');
+const StatsPlugin = require('stats-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 // must match config.webpack.dev_server.port
-var devServerPort = 3808
+const devServerPort = 3808;
 
 // set NODE_ENV=production on the environment to add asset fingerprints
-var production = process.env.NODE_ENV === 'production'
+const production = process.env.NODE_ENV === 'production';
 
-var config = {
+const config = {
   entry: {
     // Sources are expected to live in $app_root/webpack
-    'application': './webpack/application.jsx'
+    application: './webpack/application.jsx',
   },
 
   module: {
@@ -25,15 +25,15 @@ var config = {
         exclude: /(node_modules|bower_components)/,
         use: [
           'babel-loader',
-          'eslint-loader'
-        ]
+          'eslint-loader',
+        ],
       },
       {
         test: /\.es6$/,
         exclude: /(node_modules|bower_components)/,
         use: [
-          'babel-loader'
-        ]
+          'babel-loader',
+        ],
       },
       {
         test: /\.scss$/,
@@ -41,10 +41,10 @@ var config = {
           'style-loader',
           'css-loader',
           'postcss-loader',
-          'sass-loader'
-        ]
-      }
-    ]
+          'sass-loader',
+        ],
+      },
+    ],
   },
 
   devtool: 'eval',
@@ -57,15 +57,15 @@ var config = {
     path: path.join(__dirname, '..', 'public', 'webpack'),
     publicPath: '/webpack/',
 
-    filename: production ? '[name]-[chunkhash].js' : '[name].js'
+    filename: production ? '[name]-[chunkhash].js' : '[name].js',
   },
 
   resolve: {
     extensions: ['.js', '.jsx', '.es6'],
     modules: [
       path.join(__dirname, '..', 'webpack'),
-      'node_modules'
-    ]
+      'node_modules',
+    ],
   },
 
   plugins: [
@@ -76,28 +76,27 @@ var config = {
       source: false,
       chunks: false,
       modules: false,
-      assets: true
+      assets: true,
     }),
-    new StyleLintPlugin()]
-}
+    new StyleLintPlugin()],
+};
 
 if (production) {
   config.plugins.push(
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify('production') }
+      'process.env': { NODE_ENV: JSON.stringify('production') },
     }),
-    new webpack.optimize.DedupePlugin()
-  )
+    new webpack.optimize.DedupePlugin());
 } else {
   config.devServer = {
     port: devServerPort,
-    headers: { 'Access-Control-Allow-Origin': '*' }
-  }
-  config.output.publicPath = '//localhost:' + devServerPort + '/webpack/'
+    headers: { 'Access-Control-Allow-Origin': '*' },
+  };
+  config.output.publicPath = `//localhost:${devServerPort}/webpack/`;
   // Source maps
-  config.devtool = 'cheap-module-eval-source-map'
+  config.devtool = 'cheap-module-eval-source-map';
 }
 
-module.exports = config
+module.exports = config;
