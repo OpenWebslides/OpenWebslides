@@ -1,13 +1,13 @@
-import { REQUEST_SIGNUP } from './constants'
+import { REQUEST_SIGNUP } from './constants';
 
-function requestSignup ({ email, password }) {
+function requestSignup({ email, password }) {
   return ({
     type: REQUEST_SIGNUP,
     meta: {
       email,
-      password
-    }
-  })
+      password,
+    },
+  });
 }
 
-export default requestSignup
+export default requestSignup;

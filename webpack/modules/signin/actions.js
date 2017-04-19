@@ -1,15 +1,15 @@
 import {
-  REQUEST_SIGNIN
-} from './constants'
+  REQUEST_SIGNIN,
+} from './constants';
 
-function requestSignin ({ email, password }) {
+function requestSignin({ email, password }) {
   return {
     type: REQUEST_SIGNIN,
     meta: {
       email,
-      password
-    }
-  }
+      password,
+    },
+  };
 }
 
-export default requestSignin
+export default requestSignin;

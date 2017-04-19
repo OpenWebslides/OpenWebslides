@@ -46,6 +46,8 @@ PreCommit:
     enabled: true
   FixMe:
     enabled: true
+  EsLint:
+    enabled: true
   HardTabs:
     enabled: true
   JsonSyntax:
