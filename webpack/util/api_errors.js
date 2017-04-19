@@ -1,4 +1,4 @@
-export default function handleApiErrors (response) {
-  if (!response.ok) throw Error(response.statusText)
-  return response
+export default function handleApiErrors(response) {
+  if (!response.ok) throw Error(response.statusText);
+  return response;
 }

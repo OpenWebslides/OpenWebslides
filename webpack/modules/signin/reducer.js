@@ -1,26 +1,26 @@
 import {
-  SIGNIN_SUCCESS
-} from './constants'
+  SIGNIN_SUCCESS,
+} from './constants';
 
 const initialState = {
   signedIn: false,
-  authToken: ''
-}
+  authToken: '',
+};
 
-function signinReducer (state = initialState, action) {
+function signinReducer(state = initialState, action) {
   switch (action.type) {
     case SIGNIN_SUCCESS: {
       return Object.assign({}, state, {
         signedIn: true,
         authToken: action.payload.accessToken,
-        id: action.payload.id
-      })
+        id: action.payload.id,
+      });
     }
 
     default: {
-      return state
+      return state;
     }
   }
 }
 
-export default signinReducer
+export default signinReducer;
