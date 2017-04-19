@@ -8,4 +8,9 @@ module OpenWebslides
   #
   class CommandError < Error; end
   class ConfigurationError < Error; end
+
+  ##
+  # Unconfirmed account
+  #
+  class UnconfirmedError < Error; end
 end

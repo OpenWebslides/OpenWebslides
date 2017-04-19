@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   include JWT::Auth::Authenticatable
+  include Confirmable
 
   has_secure_password
 
