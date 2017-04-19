@@ -14,10 +14,15 @@ namespace :db do
   desc 'Populates the database with sample data'
   task :sample => :environment do
     ActiveRecord::Base.transaction do
-      u1 = FactoryGirl.create :user, :name => 'user1'
-      u2 = FactoryGirl.create :user, :name => 'user2'
-      u3 = FactoryGirl.create :user, :name => 'user3'
-      u4 = FactoryGirl.create :user, :name => 'user4'
+      u1 = FactoryGirl.create :user, :name => 'user1', :password => 'abcd1234', :password_confirmation => 'abcd1234'
+      u2 = FactoryGirl.create :user, :name => 'user2', :password => 'abcd1234', :password_confirmation => 'abcd1234'
+      u3 = FactoryGirl.create :user, :name => 'user3', :password => 'abcd1234', :password_confirmation => 'abcd1234'
+      u4 = FactoryGirl.create :user, :name => 'user4', :password => 'abcd1234', :password_confirmation => 'abcd1234'
+
+      u1.confirm
+      u2.confirm
+      u3.confirm
+      u4.confirm
 
       # User 1
       u1d1 = FactoryGirl.create :deck, :owner => u1, :name => 'u1d1'
