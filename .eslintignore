@@ -1,4 +1,3 @@
-/config/webpack.config.js
 coverage/
 node_modules/
 dist/
