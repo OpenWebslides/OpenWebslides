@@ -32,6 +32,12 @@ class User < ApplicationRecord
   ##
   # Methods
   #
+  def self.find_by_token(params)
+    user = find_by params
+    raise Pundit::NotAuthorizedError unless user.confirmed?
+    user
+  end
+
   def readonly_email
     errors.add :email, 'cannot be changed' if email_changed?
   end

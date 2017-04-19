@@ -6,7 +6,7 @@ resource 'Authentication' do
   before :all do
     DatabaseCleaner.clean
 
-    create :user, :email => 'foo@bar', :password => 'abcd1234'
+    create :user, :confirmed, :email => 'foo@bar', :password => 'abcd1234'
   end
 
   after :all do

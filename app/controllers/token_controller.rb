@@ -6,8 +6,20 @@ class TokenController < ApplicationController
   before_action :authenticate, :only => [:create]
 
   def create
+    unless resource.confirmed?
+      return render :json => { :error => 'Your account has not been activated yet.' }, :status => :forbidden
+    end
+
     token = JWT::Auth::Token.from_user resource
     render :json => { :jwt => token.to_jwt }, :status => :created
+  end
+
+  def confirm
+    if User.confirm_by_token params[:confirmation_token]
+      head :ok
+    else
+      render :json => { :error => 'invalid or missing confirmation_token' }, :status => :forbidden
+    end
   end
 
   protected

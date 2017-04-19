@@ -13,5 +13,9 @@ FactoryGirl.define do
     trait :with_identities do
       identities { build_list :identity, 3 }
     end
+
+    trait :confirmed do
+      after :create, &:confirm
+    end
   end
 end
