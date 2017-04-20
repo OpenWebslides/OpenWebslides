@@ -1,6 +1,3 @@
-// Example webpack configuration with asset fingerprinting in production.
-
-
 const path = require('path');
 const webpack = require('webpack');
 const StatsPlugin = require('stats-webpack-plugin');
@@ -66,6 +63,16 @@ const config = {
       path.join(__dirname, '..', 'webpack'),
       'node_modules',
     ],
+    alias: {
+      specHelpers: path.join(__dirname, '..', 'webpack', 'specs', 'specHelpers'),
+      components: path.join(__dirname, '..', 'webpack', 'app', 'components'),
+      reducers: path.join(__dirname, '..', 'webpack', 'app', 'reducers'),
+      actions: path.join(__dirname, '..', 'webpack', 'app', 'actions'),
+      containers: path.join(__dirname, '..', 'webpack', 'app', 'containers'),
+      helpers: path.join(__dirname, '..', 'webpack', 'app', 'helpers'),
+      sagas: path.join(__dirname, '..', 'webpack', 'app', 'sagas'),
+      errors: path.join(__dirname, '..', 'webpack', 'app', 'errors'),
+    },
   },
 
   plugins: [
