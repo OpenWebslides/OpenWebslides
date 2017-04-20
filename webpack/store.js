@@ -1,9 +1,9 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import rootReducer from './root_reducer';
-import rootSaga from './root_saga';
-import { loadState, saveState } from './util/localStorage';
+import rootReducer from 'reducers/rootReducer';
+import rootSaga from 'sagas/rootSaga';
+import { loadState, saveState } from 'helpers/localStorage';
 
 const persistedState = loadState();
 

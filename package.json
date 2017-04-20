@@ -22,11 +22,13 @@
     "css-loader": "^0.26.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
+    "eslint-import-resolver-webpack": "^0.8.1",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "faker": "^4.1.0",
+    "fetch-mock": "^5.10.0",
     "file-loader": "^0.10.1",
     "jest": "^19.0.2",
     "node-sass": "^4.5.0",
@@ -59,5 +61,21 @@
     "build:dev": "webpack --env.dev",
     "build:prod": "webpack -p --env.prod",
     "dev": "webpack-dev-server"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleNameMapper": {
+      "^specHelpers(.*)$": "<rootDir>/webpack/specs/specHelpers$1",
+      "^components(.*)$": "<rootDir>/webpack/app/components$1",
+      "^reducers(.*)$": "<rootDir>/webpack/app/reducers$1",
+      "^actions(.*)$": "<rootDir>/webpack/app/actions$1",
+      "^containers(.*)$": "<rootDir>/webpack/app/containers$1",
+      "^helpers(.*)$": "<rootDir>/webpack/app/helpers$1",
+      "^sagas(.*)$": "<rootDir>/webpack/app/sagas$1",
+      "^errors(.*)$": "<rootDir>/webpack/app/errors$1"
+    }
   }
 }

@@ -1,7 +1,7 @@
 {
   "extends": "airbnb",
   "parserOptions": {
-    "ecmaVersion": 7,
+    "ecmaVersion": 8,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -13,6 +13,15 @@
     "jest": true
   },
   "plugins": [
-    "react"
-  ]
+    "react",
+    "import"
+  ],
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolver": {
+      "webpack": {
+        "config": "./config/webpack.config.js"
+      }
+    }
+  }
 }
