@@ -1,4 +1,4 @@
-import { getBaseRequestConfig } from 'helpers/api/baseRequestConfig';
+import getBaseRequestConfig from 'helpers/api/baseRequestConfig';
 
 describe('Base Request Config', () => {
   it('returns a basic default config', () => {

@@ -1,21 +1,24 @@
 import faker from 'faker';
+import { Map } from 'immutable';
+
 import signinReducer from 'reducers/signinReducer';
 import { types } from 'actions/signinActions';
 
-const emptyState = undefined;
-
 describe('Signin Reducer', () => {
-  it('has a default state', () => {
+  const emptyState = undefined;
+
+  it('has a default immutable state', () => {
     const emptyAction = { type: '' };
 
     expect(
       signinReducer(
         emptyState,
         emptyAction))
-      .toEqual({
+      .toEqual(
+      Map({
         signedIn: false,
         authToken: '',
-      });
+      }));
   });
 
   it('can resolve SIGNIN_SUCCESS action', () => {
@@ -29,9 +32,9 @@ describe('Signin Reducer', () => {
           accessToken: fakeToken,
         },
       }))
-      .toEqual({
+      .toEqual(Map({
         signedIn: true,
         authToken: fakeToken,
-      });
+      }));
   });
 });
