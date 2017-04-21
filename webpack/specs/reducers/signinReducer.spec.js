@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { Map } from 'immutable';
+import Immutable from 'seamless-immutable';
 
 import signinReducer from 'reducers/signinReducer';
 import { types } from 'actions/signinActions';
@@ -15,9 +15,9 @@ describe('Signin Reducer', () => {
         emptyState,
         emptyAction))
       .toEqual(
-      Map({
-        signedIn: false,
-        authToken: '',
+      Immutable({
+        isAuthenticated: false,
+        authToken: undefined,
       }));
   });
 
@@ -28,12 +28,12 @@ describe('Signin Reducer', () => {
       signinReducer(emptyState, {
         type: types.SIGNIN_SUCCESS,
         payload: {
-          signedIn: true,
-          accessToken: fakeToken,
+          isAuthenticated: true,
+          authToken: fakeToken,
         },
       }))
-      .toEqual(Map({
-        signedIn: true,
+      .toEqual(Immutable({
+        isAuthenticated: true,
         authToken: fakeToken,
       }));
   });

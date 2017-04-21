@@ -11,8 +11,7 @@ async function asyncFetch(url, requestConfig = {}) {
 
   throw new ApiCallError(
     response.statusText,
-    response.status,
-  );
+    response.status);
 }
 
 export default asyncFetch;

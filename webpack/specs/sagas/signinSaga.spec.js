@@ -30,7 +30,7 @@ describe('Signin Saga', () => {
         .toEqual(
         put({
           type: types.SIGNIN_SUCCESS,
-          payload: { accessToken: fakeResponseBody.jwt },
+          payload: { authToken: fakeResponseBody.jwt },
         }));
 
       expect(

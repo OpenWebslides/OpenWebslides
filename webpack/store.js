@@ -25,7 +25,7 @@ const store = createStore(
 // Persists state to localStorage
 store.subscribe(() => {
   saveState({
-    signin: store.getState().signin,
+    auth: store.getState().auth,
   });
 });
 

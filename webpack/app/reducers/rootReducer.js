@@ -1,17 +1,19 @@
 import { combineReducers } from 'redux';
-import { reducer as form } from 'redux-form';
+import { reducer as forms } from 'redux-form';
 
-import signup from './signupReducer';
-import signin from './signinReducer';
+import auth from './signinReducer';
+
+const vendor = combineReducers({
+  forms,
+});
+
+const local = combineReducers({
+  auth,
+});
 
 const rootReducer = combineReducers({
-  vendor: {
-    form,
-  },
-  data: {
-    signup,
-    signin,
-  },
+  vendor,
+  local,
 });
 
 export default rootReducer;
