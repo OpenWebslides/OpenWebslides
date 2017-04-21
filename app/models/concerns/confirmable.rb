@@ -7,6 +7,7 @@ module Confirmable
   extend ActiveSupport::Concern
 
   included do
+    # Provides #regenerate_confirmation_token and before_create callback
     has_secure_token :confirmation_token
   end
 
@@ -26,11 +27,9 @@ module Confirmable
       return false unless token
 
       confirmable = find_by :confirmation_token => token
-
       return false unless confirmable
 
       confirmable.confirm
-      true
     end
   end
 end
