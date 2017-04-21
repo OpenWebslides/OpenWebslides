@@ -49,7 +49,7 @@ resource 'Authentication' do
 
       let(:confirmation_token) { user.confirmation_token }
 
-      example_request 'using a valid token' do
+      example_request 'Confirm email address' do
         expect(response_status).to eq 200
         expect(response_body).to be_empty
       end
