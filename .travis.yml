@@ -9,4 +9,4 @@ before_script:
   - docker build -t openwebslides .
 
 script:
-  - docker run --rm openwebslides bash -c "bundle exec rails db:setup RAILS_ENV=test && bundle exec rspec"
+  - docker run --rm openwebslides bash -c "bundle exec rails db:prepare RAILS_ENV=test && bundle exec rspec"
