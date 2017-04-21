@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   root :to => 'application#index'
 
   # Authentication
-  get '/auth/:provider/callback', :to => 'auth/omniauth#callback'
-  post '/auth/token' => 'auth/auth#token'
-  get '/auth/confirm' => 'auth/auth#confirm'
+  namespace :auth, :constraints => { :format => :json } do
+    get '/:provider/callback', :to => 'omniauth#callback'
+    post '/token' => 'auth#token'
+    get '/confirm' => 'auth#confirm'
+  end
 
   # API endpoints
   namespace :api, :constraints => { :format => :json } do
