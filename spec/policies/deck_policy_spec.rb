@@ -173,20 +173,6 @@ end
 RSpec.describe DeckPolicy::Scope do
   subject { described_class.new(user, Deck).resolve }
 
-  before :all do
-    # We have to persist to the database because the scope uses ActiveRecord
-    DatabaseCleaner.clean
-
-    require 'rake'
-    load File.expand_path('../../../lib/tasks/sample.rake', __FILE__)
-    Rake::Task.define_task :environment
-    Rake::Task['db:sample'].invoke
-  end
-
-  after :all do
-    DatabaseCleaner.clean
-  end
-
   context 'for a guest' do
     let(:user) { nil }
 

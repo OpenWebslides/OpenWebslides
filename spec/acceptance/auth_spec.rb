@@ -3,24 +3,16 @@
 require 'rails_helper'
 
 resource 'Authentication' do
-  before :all do
-    DatabaseCleaner.clean
-
-    create :user, :confirmed, :email => 'foo@bar', :password => 'abcd1234'
-  end
-
-  after :all do
-    DatabaseCleaner.clean
-  end
-
   context 'Obtain a token' do
+    let(:user) { create :user, :confirmed }
+
     post '/auth/token' do
       header 'Content-Type', 'application/json'
 
       parameter 'email', 'Email address', :required => true, :scope => :auth
       parameter 'password', 'Password', :required => true, :scope => :auth
 
-      let(:raw_post) { { :auth => { :email => 'foo@bar', :password => 'abcd1234' } }.to_json }
+      let(:raw_post) { { :auth => { :email => user.email, :password => user.password } }.to_json }
 
       example_request 'Authenticate using a local (email) account' do
         expect(status).to eq 201
@@ -50,10 +42,11 @@ resource 'Authentication' do
   end
 
   context 'Email confirmation' do
+    let(:user) { create :user }
+
     get '/auth/confirm' do
       parameter 'confirmation_token', 'Confirmation token', :required => true
 
-      let(:user) { create :user }
       let(:confirmation_token) { user.confirmation_token }
 
       example_request 'using a valid token' do

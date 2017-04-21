@@ -5,9 +5,6 @@ require 'rails_helper'
 RSpec.describe User do
   let(:subject) { build :user }
 
-  before(:all) { DatabaseCleaner.clean }
-  after(:all) { DatabaseCleaner.clean }
-
   context 'for a non-persisted user' do
     it 'responds to the correct methods' do
       expect(subject).to respond_to :confirm
