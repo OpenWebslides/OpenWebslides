@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe User, :type => :model do
+  let(:user) { create :user }
+
   it 'is invalid without attributes' do
     expect(User.new).not_to be_valid
   end
@@ -38,12 +40,18 @@ RSpec.describe User, :type => :model do
 
   it 'rejects changes to email' do
     # The readonly_email callback only triggers on :update, so the record has to be persisted
-    user = create :user
     expect(user).to be_valid
 
     user.email = 'bar@foo'
     expect(user).not_to be_valid
     user.destroy
+  end
+
+  it 'invalidates tokens on password change' do
+    token_version = user.token_version
+
+    user.update :password => 'abcd1234'
+    expect(user.token_version).to be token_version + 1
   end
 
   it 'has many decks' do

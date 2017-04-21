@@ -29,6 +29,8 @@ class User < ApplicationRecord
   ##
   # Callbacks
   #
+  before_update :invalidate_token_version
+
   ##
   # Methods
   #
@@ -40,5 +42,9 @@ class User < ApplicationRecord
 
   def readonly_email
     errors.add :email, 'cannot be changed' if email_changed?
+  end
+
+  def invalidate_token_version
+    self.token_version = token_version + 1 if password_digest_changed?
   end
 end
