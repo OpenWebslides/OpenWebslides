@@ -12,12 +12,12 @@ export function* signinFlow(action) {
       throw new Error('Unable to find JWT in response body');
     }
 
-    const accessToken = responseBody.jwt;
+    const authToken = responseBody.jwt;
 
     yield put({
       type: types.SIGNIN_SUCCESS,
       payload: {
-        accessToken,
+        authToken,
       },
     });
   } catch (error) {

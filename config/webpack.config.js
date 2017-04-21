@@ -44,7 +44,7 @@ const config = {
     ],
   },
 
-  devtool: 'eval',
+  devtool: 'source-map',
 
   output: {
     // Build assets directly in to public/webpack/, let webpack know

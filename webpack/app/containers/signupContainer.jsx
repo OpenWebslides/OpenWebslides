@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 
 import requestSignup from 'actions/signupActions';
 
-// Allows granular control over the input fields
 function renderInput({ input, type, placeholder }) {
   return (
     <div>
@@ -20,7 +19,6 @@ function renderInput({ input, type, placeholder }) {
 }
 
 function SignupForm(props) {
-  console.log(process.env.API_URL);
   return (
     <div>
       <h1>Sign in</h1>
@@ -54,7 +52,10 @@ renderInput.defaultProps = {
 };
 
 // SignupForm is wrapped by the redux-form higher-order component
-const SignupReduxForm = reduxForm({ form: 'signup' })(SignupForm);
+const SignupReduxForm = reduxForm({
+  form: 'signup',
+  getFormState: state => state.vendor.forms,
+})(SignupForm);
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ requestSignup }, dispatch);
