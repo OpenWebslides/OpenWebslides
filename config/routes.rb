@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Application
-  root :to => 'application#index'
-
   # Authentication
   namespace :auth, :constraints => { :format => :json } do
     get '/:provider/callback', :to => 'omniauth#callback'
@@ -19,4 +16,8 @@ Rails.application.routes.draw do
     jsonapi_resources :decks
     jsonapi_resources :tags
   end
+
+  # Application
+  root :to => 'application#index'
+  get '*path', :to => 'application#index'
 end
