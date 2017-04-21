@@ -3,8 +3,6 @@
 Rails.application.routes.draw do
   # Application
   root :to => 'application#index'
-  get '*path', to: 'application#index'
-
 
   # Authentication
   get '/auth/:provider/callback', :to => 'omniauth#callback'
