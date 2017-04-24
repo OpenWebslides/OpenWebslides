@@ -15,6 +15,9 @@ COPY Gemfile Gemfile.lock $ROOT_PATH/
 RUN gem install bundler
 RUN bundle install
 
+COPY package.json yarn.lock ./
+RUN yarn --pure-lockfile
+
 COPY . $ROOT_PATH/
 
 CMD /app/docker-entrypoint.sh
