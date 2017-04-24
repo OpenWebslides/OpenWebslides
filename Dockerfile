@@ -11,10 +11,6 @@ ENV ROOT_PATH /app
 RUN mkdir -p $ROOT_PATH
 WORKDIR $ROOT_PATH
 
-COPY package.json yarn.lock ./
-RUN npm install -g yarnpkg
-RUN yarn --pure-lockfile
-
 COPY Gemfile Gemfile.lock $ROOT_PATH/
 RUN gem install bundler
 RUN bundle install
