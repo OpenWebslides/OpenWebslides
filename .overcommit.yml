@@ -60,9 +60,6 @@ PreCommit:
     enabled: true
 
 PrePush:
-  Jest:
-    enabled: true
-    command: ['yarn', 'run', 'jest']
   RSpec:
     enabled: true
   Brakeman:
