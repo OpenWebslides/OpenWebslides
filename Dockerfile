@@ -16,6 +16,7 @@ RUN gem install bundler
 RUN bundle install
 
 COPY package.json yarn.lock ./
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 RUN yarn --pure-lockfile
 
 COPY . $ROOT_PATH/
