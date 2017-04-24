@@ -5,19 +5,19 @@ MAINTAINER Rein Van Imschoot <rein.vanimschoot@ugent.be>
 RUN useradd openwebslides --create-home --home-dir /app/ --shell /bin/false
 
 RUN apt-get update && apt-get install -qq -y --no-install-recommends \
-      build-essential nodejs libpq-dev libsqlite3-dev cmake pkg-config git curl
+      build-essential nodejs libpq-dev libsqlite3-dev cmake pkg-config git
 
 ENV ROOT_PATH /app
 RUN mkdir -p $ROOT_PATH
 WORKDIR $ROOT_PATH
 
+COPY package.json yarn.lock ./
+RUN npm install -g yarnpkg
+RUN yarn --pure-lockfile
+
 COPY Gemfile Gemfile.lock $ROOT_PATH/
 RUN gem install bundler
 RUN bundle install
-
-COPY package.json yarn.lock ./
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
-RUN yarn --pure-lockfile
 
 COPY . $ROOT_PATH/
 
