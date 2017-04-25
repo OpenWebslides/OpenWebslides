@@ -1,6 +1,6 @@
 #%RAML 1.0
 
-title: OpenWebslides API
+title: OpenWebslides
 version: 1
 baseUri: http://localhost:5000/api/
 mediaType: application/vnd.api+json
@@ -36,3 +36,47 @@ mediaType: application/vnd.api+json
       description: Update deck
     delete:
       description: Delete deck
+/auth:
+  displayName: Authentication
+  description: Authentication API
+  /{provider}:
+    get:
+      description: OAuth2 redirection URL
+    /callback:
+      get:
+        description: OAuth2 Provider callback URL
+  /token:
+    post:
+      description: Obtain an authentication token
+      body:
+        application/json:
+          type: object
+          properties:
+            email: string
+            password: string
+      responses:
+        201:
+          body:
+            application/json:
+              type: object
+              properties:
+                jwt: string
+              example:
+                { "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ" }
+        403:
+          body:
+            application/json:
+              type: object
+              properties:
+                error: string
+              example: |
+               { "error": "Your account has not been activated yet." }
+  /confirm:
+    get:
+      description: Verify a user's email address
+      queryParameters:
+        confirmation_token:
+          description: Confirmation token sent by email
+          required: true
+          type: string
+          example: Ez2B7waoUofjCrGqVT9vz7Fy
