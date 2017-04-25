@@ -49,14 +49,15 @@ Use RuboCop to enforce code conventions:
 $ bundle exec rubocop --rails
 ```
 
-Use RSpec to run tests
+Use RSpec to run tests:
 
 ```
+$ bundle exec rails db:migrate RAILS_ENV=test
 $ bundle exec rails db:prepare RAILS_ENV=test
 $ bundle exec rspec
 ```
 
-If you want to populate the database with sample data
+If you want to fill the development database with sample data:
 
 ```
 $ bundle exec rails db:prepare RAILS_ENV=development
