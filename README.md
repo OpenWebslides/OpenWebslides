@@ -62,13 +62,3 @@ If you want to fill the development database with sample data:
 ```
 $ bundle exec rails db:prepare RAILS_ENV=development
 ```
-
-## Documentation
-
-Documentation is generated using RSpec
-
-```
-$ bundle exec rails docs:generate
-```
-
-The documentation is available at `http://localhost:5000/api/documentation`
