@@ -14,7 +14,7 @@ module Api
     protected
 
     def context
-      { :current_user => token&.subject }
+      { :current_user => current_user }
     end
 
     def user_not_authenticated

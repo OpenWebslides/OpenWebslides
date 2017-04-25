@@ -11,6 +11,8 @@ RSpec.describe Auth::AuthController do
   describe 'routing' do
     it 'has a token creation route' do
       expect(:post => '/auth/token').to route_to :controller => 'auth/auth', :action => 'token'
+      expect(:get => '/auth/confirm').to route_to :controller => 'auth/auth', :action => 'confirm'
+      expect(:get => '/auth/expire').to route_to :controller => 'auth/auth', :action => 'expire'
     end
   end
 
@@ -90,6 +92,27 @@ RSpec.describe Auth::AuthController do
           expect(json).to include 'error'
         end
       end
+    end
+  end
+
+  context 'expiring user sessions' do
+    let(:user) { create :user, :confirmed }
+    let(:token) { JWT::Auth::Token.from_user(user).to_jwt }
+
+    it 'rejects invalid tokens' do
+      get :expire
+
+      expect(response.status).to eq 401
+    end
+
+    it 'expires valid tokens' do
+      request.headers['Authorization'] = "Bearer #{token}"
+      get :expire
+
+      expect(response.status).to eq 200
+
+      get :expire
+      expect(response.status).to eq 401
     end
   end
 end

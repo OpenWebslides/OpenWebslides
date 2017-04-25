@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get '/:provider/callback', :to => 'omniauth#callback'
     post '/token' => 'auth#token'
     get '/confirm' => 'auth#confirm'
+    get '/expire' => 'auth#expire'
   end
 
   # API endpoints

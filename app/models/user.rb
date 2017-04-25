@@ -36,6 +36,7 @@ class User < ApplicationRecord
   #
   def self.find_by_token(params)
     user = find_by params
+    return nil unless user
     raise Pundit::NotAuthorizedError unless user.confirmed?
     user
   end
@@ -45,6 +46,15 @@ class User < ApplicationRecord
   end
 
   def invalidate_token_version
-    self.token_version = token_version + 1 if password_digest_changed?
+    self.token_version += 1 if password_digest_changed?
+  end
+
+  def increment_token_version
+    self.token_version += 1
+  end
+
+  def increment_token_version!
+    increment_token_version
+    save!
   end
 end
