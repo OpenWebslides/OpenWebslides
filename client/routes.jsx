@@ -29,4 +29,3 @@ export default (
       <Route path="/editortest" component={EditorPage} />
     </Switch>
   </Router>
-);
