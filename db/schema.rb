@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419085542) do
+ActiveRecord::Schema.define(version: 20170425115529) do
 
   create_table "decks", force: :cascade do |t|
     t.string   "name"
@@ -54,13 +54,14 @@ ActiveRecord::Schema.define(version: 20170419085542) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",               default: "", null: false
+    t.string   "first_name",         default: "", null: false
     t.string   "email",              default: "", null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "password_digest",    default: "", null: false
     t.integer  "token_version",      default: 1,  null: false
     t.string   "confirmation_token"
+    t.string   "last_name",          default: "", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

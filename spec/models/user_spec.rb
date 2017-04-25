@@ -13,9 +13,9 @@ RSpec.describe User, :type => :model do
     expect(build :user).to be_valid
   end
 
-  it 'is invalid without name' do
-    expect(build :user, :name => nil).not_to be_valid
-    expect(build :user, :name => '').not_to be_valid
+  it 'is invalid without first name' do
+    expect(build :user, :first_name => nil).not_to be_valid
+    expect(build :user, :first_name => '').not_to be_valid
   end
 
   it 'is invalid without email' do
@@ -52,6 +52,12 @@ RSpec.describe User, :type => :model do
 
     user.update :password => 'abcd1234'
     expect(user.token_version).to be token_version + 1
+  end
+
+  it 'returns a correct full name' do
+    expect(build(:user, :first_name => 'foo', :last_name => nil).name).to eq 'foo'
+    expect(build(:user, :first_name => 'foo', :last_name => '').name).to eq 'foo'
+    expect(build(:user, :first_name => 'foo', :last_name => 'bar').name).to eq 'foo bar'
   end
 
   it 'has many decks' do

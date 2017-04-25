@@ -6,7 +6,7 @@ module Api
     ##
     # Properties
     #
-    attributes :name, :email, :password
+    attributes :first_name, :last_name, :email, :password
 
     has_many :decks
     has_many :contributions
@@ -14,7 +14,7 @@ module Api
     ##
     # Filters
     #
-    filters :name, :email
+    filters :first_name, :last_name, :email
 
     ##
     # Callbacks

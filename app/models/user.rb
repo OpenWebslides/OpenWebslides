@@ -9,7 +9,7 @@ class User < ApplicationRecord
   ##
   # Properties
   #
-  validates :name, :presence => true
+  validates :first_name, :presence => true
   validates :email, :presence => true,
                     :format => { :with => /\A[^@]+@[^@]+\z/ },
                     :uniqueness => true
@@ -39,6 +39,10 @@ class User < ApplicationRecord
     return nil unless user
     raise Pundit::NotAuthorizedError unless user.confirmed?
     user
+  end
+
+  def name
+    last_name? ? "#{first_name} #{last_name}" : first_name
   end
 
   def readonly_email

@@ -39,7 +39,7 @@ module Auth
 
       # New user
       attrs = {
-        :name => auth_hash['info']['name'],
+        :first_name => auth_hash['info']['name'],
         :email => auth_hash['info']['email']
       }
       @resource = User.new attrs
@@ -71,7 +71,7 @@ module Auth
     end
 
     def sync_information
-      @resource.name ||= auth_hash['info']['name']
+      @resource.first_name ||= auth_hash['info']['name']
     end
   end
 end
