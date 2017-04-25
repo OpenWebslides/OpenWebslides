@@ -1,0 +1,38 @@
+#%RAML 1.0
+
+title: OpenWebslides API
+version: 1
+baseUri: http://localhost:5000/api/
+mediaType: application/vnd.api+json
+/users:
+  displayName: Users
+  description: User API
+  get:
+    description: List of all users
+  post:
+    description: Create a new user (sign up)
+  /{id}:
+    get:
+      description: Get user
+    patch:
+      description: Update user
+    put:
+      description: Update user
+    delete:
+      description: Delete user
+/decks:
+  displayName: Decks
+  description: Slidedeck API
+  get:
+    description: List of all visible decks
+  post:
+    description: Create a new deck
+  /{id}:
+    get:
+      description: Get deck
+    patch:
+      description: Update deck
+    put:
+      description: Update deck
+    delete:
+      description: Delete deck
