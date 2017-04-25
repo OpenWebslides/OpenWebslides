@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+/.gem
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -38,3 +39,6 @@ coverage/
 
 .yarnclean
 jsconfig.json
+
+# Generated documentation
+doc/

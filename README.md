@@ -62,3 +62,11 @@ If you want to fill the development database with sample data:
 ```
 $ bundle exec rails db:prepare RAILS_ENV=development
 ```
+
+## Documentation
+
+Generate API documentation:
+
+```
+bundle exec rails documentation:generate
+```
