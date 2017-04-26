@@ -33,7 +33,7 @@ class User < ApplicationRecord
   def self.find_by_token(params)
     user = find_by params
     return nil unless user
-    raise Pundit::NotAuthorizedError unless user.confirmed?
+    raise Api::UnconfirmedError unless user.confirmed?
     user
   end
 

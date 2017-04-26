@@ -4,10 +4,8 @@ module Api
   class TokenController < ApiController
     include JWT::Auth::Authentication
 
-    before_action :verify_content_type_header
+    before_action :verify_content_type_header, :only => :create
     before_action :authenticate_user, :except => :create
-
-    # skip_after_action :add_token_to_response, :except => :create
 
     ##
     # Create a JWT
@@ -19,15 +17,15 @@ module Api
 
       token = JWT::Auth::Token.from_user resource
       headers['Authorization'] = "Bearer #{token.to_jwt}"
-      head :created
+      head :no_content
     end
 
     ##
     # Expire all JWT
     #
-    def expire
+    def destroy
       current_user.increment_token_version!
-      head :ok
+      head :no_content
     end
 
     protected
