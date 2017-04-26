@@ -29,8 +29,6 @@ class User < ApplicationRecord
   #
   before_update :invalidate_token_version
 
-  after_create :email_on_create
-
   ##
   # Methods
   #
@@ -63,9 +61,5 @@ class User < ApplicationRecord
   #
   def invalidate_token_version
     self.token_version += 1 if password_digest_changed?
-  end
-
-  def email_on_create
-    UserMailer.on_create(self).deliver
   end
 end
