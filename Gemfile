@@ -71,6 +71,9 @@ group :development, :test do
 
   # SCSS-lint rendering
   gem 'sass'
+
+  # Development mailer
+  gem 'mailcatcher'
 end
 
 group :test do
