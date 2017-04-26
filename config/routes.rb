@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # Authentication
-  devise_for :users, :only => [:confirmations]
+  devise_for :users, :controller => {
+    :confirmations => 'api/users'
+  }
 
   namespace :auth, :constraints => { :format => :json } do
     get '/:provider/callback', :to => 'omniauth#callback'
-    post '/token' => 'auth#token'
-    get '/expire' => 'auth#expire'
   end
 
   # API endpoints
@@ -19,9 +18,11 @@ Rails.application.routes.draw do
     end
     jsonapi_resources :decks
     jsonapi_resources :tags
+
+    jsonapi_resource :token, :except => %i[show update]
   end
 
   # Application
   root :to => 'application#index'
-  get '*path', :to => 'application#index'
+  # get '*path', :to => 'application#index'
 end
