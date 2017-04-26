@@ -12,7 +12,7 @@ module Api
 
       raise Api::DeviseError, resource unless resource.errors.empty?
 
-      head :ok
+      head :no_content
     end
   end
 end
