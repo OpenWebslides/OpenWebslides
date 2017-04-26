@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users, :controller => {
-    :confirmations => 'api/users'
-  }
+  devise_for :users, :only => []
 
   namespace :auth, :constraints => { :format => :json } do
     get '/:provider/callback', :to => 'omniauth#callback'
