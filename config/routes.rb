@@ -22,5 +22,5 @@ Rails.application.routes.draw do
 
   # Application
   root :to => 'application#index'
-  # get '*path', :to => 'application#index'
+  get '*path', :to => 'application#index'
 end
