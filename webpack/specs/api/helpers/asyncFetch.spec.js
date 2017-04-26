@@ -1,7 +1,7 @@
 import faker from 'faker';
 import fetchMock from 'fetch-mock';
 
-import asyncFetch from 'helpers/api/asyncFetch';
+import asyncFetch from 'api/helpers/asyncFetch';
 import helpers from 'specHelpers/setupJest';
 
 describe('async Fetch', () => {

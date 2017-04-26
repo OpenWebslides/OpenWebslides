@@ -1,15 +1,10 @@
-export const types = {
-  REQUEST_SIGNUP: 'REQUEST_SIGNUP',
-  SIGNUP_SUCCESS: 'SIGNUP_SUCCESS',
-  SIGNUP_ERROR: 'SIGNUP_ERROR',
-};
+// Action types
+export const SIGNUP_USER = 'SIGNUP_USER';
 
-export default function requestSignup({ email, password }) {
+// Action Creators
+export function signupUser(value) {
   return ({
-    type: types.REQUEST_SIGNUP,
-    meta: {
-      email,
-      password,
-    },
+    type: SIGNUP_USER,
+    meta: value,
   });
 }

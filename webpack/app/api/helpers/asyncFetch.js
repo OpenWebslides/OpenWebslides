@@ -1,5 +1,6 @@
 import ApiCallError from 'errors/apiCallError';
 
+// Async wrapper for api calls with extendable config obj
 async function asyncFetch(url, requestConfig = {}) {
   const response = await fetch(url, requestConfig);
 

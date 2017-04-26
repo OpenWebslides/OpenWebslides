@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
 import { reducer as forms } from 'redux-form';
+import { routerReducer } from 'react-router-redux';
 
-import auth from './signinReducer';
+import auth from 'reducers/authReducer';
 
 const vendor = combineReducers({
   forms,
+  routing: routerReducer,
+
 });
 
 const local = combineReducers({

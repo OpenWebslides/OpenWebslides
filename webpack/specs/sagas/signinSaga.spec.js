@@ -1,22 +1,33 @@
 import faker from 'faker';
 import { call, put } from 'redux-saga/effects';
+import { SubmissionError } from 'redux-form';
 
-import * as signinSaga from 'sagas/signin/signinSaga';
-import signinApiCall from 'sagas/signin/signinApiCall';
-import { types } from 'actions/signinActions';
+
+import * as signinSaga from 'sagas/signinSaga';
+import signinApiCall from 'api/signinApi';
+
+import {
+  SIGNIN_USER_SUCCESS,
+} from 'actions/signinActions';
 
 describe('Signin Saga', () => {
   describe('Signin Flow', () => {
     const fakeEmail = faker.internet.email();
     const fakePassword = faker.internet.password();
+    const resolve = jest.fn();
+    const reject = jest.fn();
 
     it('has a happy path', () => {
       const fakeResponseBody = { jwt: faker.random.alphaNumeric(20) };
 
       const generator = signinSaga.signinFlow({
         meta: {
-          email: fakeEmail,
-          password: fakePassword,
+          values: {
+            email: fakeEmail,
+            password: fakePassword,
+          },
+          resolve,
+          reject,
         },
       });
 
@@ -29,9 +40,15 @@ describe('Signin Saga', () => {
         generator.next(fakeResponseBody).value)
         .toEqual(
         put({
-          type: types.SIGNIN_SUCCESS,
+          type: SIGNIN_USER_SUCCESS,
           payload: { authToken: fakeResponseBody.jwt },
         }));
+
+      expect(
+        generator.next().value)
+        .toEqual(
+        call(resolve),
+      );
 
       expect(
         generator.next().done)
@@ -44,8 +61,12 @@ describe('Signin Saga', () => {
 
       const generator = signinSaga.signinFlow({
         meta: {
-          email: fakeEmail,
-          password: fakePassword,
+          values: {
+            email: fakeEmail,
+            password: fakePassword,
+          },
+          resolve,
+          reject,
         },
       });
 
@@ -58,16 +79,8 @@ describe('Signin Saga', () => {
         generator.throw({
           message: fakeErrorMessage,
           statusCode: fakeStatusCode,
-        })
-          .value)
-        .toEqual(
-        put({
-          type: types.SIGNIN_ERROR,
-          payload: {
-            message: fakeErrorMessage,
-            statusCode: fakeStatusCode,
-          },
-        }));
+        }).value)
+        .toEqual(call(reject, new SubmissionError({ _error: 'Credentials are invalid' })));
 
       expect(
         generator.next().done)
@@ -79,10 +92,15 @@ describe('Signin Saga', () => {
 
       const generator = signinSaga.signinFlow({
         meta: {
-          email: fakeEmail,
-          password: fakePassword,
+          values: {
+            email: fakeEmail,
+            password: fakePassword,
+          },
+          resolve,
+          reject,
         },
       });
+
 
       expect(
         generator.next().value)
@@ -92,14 +110,9 @@ describe('Signin Saga', () => {
 
       expect(
         generator.next(emptyResponseBody).value)
-        .toEqual(
-        put({
-          type: types.SIGNIN_ERROR,
-          payload: {
-            message: 'Unable to find JWT in response body',
-            statusCode: undefined,
-          },
-        }));
+        .toEqual(call(
+          reject,
+          new SubmissionError({ _error: 'Credentials are invalid' })));
 
       expect(
         generator.next().done)

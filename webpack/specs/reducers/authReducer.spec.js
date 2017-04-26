@@ -1,8 +1,11 @@
 import faker from 'faker';
 import Immutable from 'seamless-immutable';
 
-import signinReducer from 'reducers/signinReducer';
-import { types } from 'actions/signinActions';
+import authReducer from 'reducers/authReducer';
+
+import {
+  SIGNIN_USER_SUCCESS,
+} from 'actions/signinActions';
 
 describe('Signin Reducer', () => {
   const emptyState = undefined;
@@ -11,7 +14,7 @@ describe('Signin Reducer', () => {
     const emptyAction = { type: '' };
 
     expect(
-      signinReducer(
+      authReducer(
         emptyState,
         emptyAction))
       .toEqual(
@@ -25,8 +28,8 @@ describe('Signin Reducer', () => {
     const fakeToken = faker.random.uuid();
 
     expect(
-      signinReducer(emptyState, {
-        type: types.SIGNIN_SUCCESS,
+      authReducer(emptyState, {
+        type: SIGNIN_USER_SUCCESS,
         payload: {
           isAuthenticated: true,
           authToken: fakeToken,

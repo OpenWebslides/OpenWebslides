@@ -51,9 +51,12 @@
     "react-redux": "^5.0.3",
     "react-router": "3",
     "react-router-dom": "^4.0.0",
+    "react-router-redux": "^4.0.8",
     "redux": "^3.6.0",
+    "redux-auth-wrapper": "^1.0.0",
     "redux-form": "^6.5.0",
     "redux-saga": "^0.14.4",
+    "sane-email-validation": "^1.1.0",
     "seamless-immutable": "^7.1.2"
   },
   "scripts": {
@@ -70,13 +73,15 @@
     ],
     "moduleNameMapper": {
       "^specHelpers(.*)$": "<rootDir>/webpack/specs/specHelpers$1",
-      "^components(.*)$": "<rootDir>/webpack/app/components$1",
+      "^presentationals(.*)$": "<rootDir>/webpack/app/presentationals$1",
+      "^pages(.*)$": "<rootDir>/webpack/app/pages$1",
       "^reducers(.*)$": "<rootDir>/webpack/app/reducers$1",
       "^actions(.*)$": "<rootDir>/webpack/app/actions$1",
       "^containers(.*)$": "<rootDir>/webpack/app/containers$1",
       "^helpers(.*)$": "<rootDir>/webpack/app/helpers$1",
       "^sagas(.*)$": "<rootDir>/webpack/app/sagas$1",
-      "^errors(.*)$": "<rootDir>/webpack/app/errors$1"
+      "^errors(.*)$": "<rootDir>/webpack/app/errors$1",
+      "^api(.*)$": "<rootDir>/webpack/app/api$1"
     }
   }
 }

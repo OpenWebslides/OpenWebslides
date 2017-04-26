@@ -1,16 +1,11 @@
-export const types = {
-  REQUEST_SIGNIN: 'REQUEST_SIGNIN',
-  SIGNIN_SUCCESS: 'SIGNIN_SUCCESS',
-  SIGNIN_ERROR: 'SIGNIN_ERROR',
-  SIGNOUT_REQUEST: 'SIGNIN_REQUEST',
-};
+// Action Types
+export const SIGNIN_USER = 'SIGNIN_USER';
+export const SIGNIN_USER_SUCCESS = 'SIGNIN_USER_SUCCESS';
 
-export default function requestSignin({ email, password }) {
+// Action Creators
+export function signinUser({ values, resolve, reject }) {
   return {
-    type: types.REQUEST_SIGNIN,
-    meta: {
-      email,
-      password,
-    },
+    type: SIGNIN_USER,
+    meta: { resolve, reject, values },
   };
 }

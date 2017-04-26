@@ -1,5 +1,5 @@
-import asyncFetch from 'helpers/api/asyncFetch';
-import getBaseRequestConfig from 'helpers/api/baseRequestConfig';
+import asyncFetch from 'api/helpers/asyncFetch';
+import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
 
 async function signin(email, password) {
   const SIGNIN_API_URL = 'http://localhost:5000/auth/token';

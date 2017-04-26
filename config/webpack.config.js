@@ -65,13 +65,15 @@ const config = {
     ],
     alias: {
       specHelpers: path.join(__dirname, '..', 'webpack', 'specs', 'specHelpers'),
-      components: path.join(__dirname, '..', 'webpack', 'app', 'components'),
+      presentationals: path.join(__dirname, '..', 'webpack', 'app', 'presentationals'),
+      pages: path.join(__dirname, '..', 'webpack', 'app', 'pages'),
       reducers: path.join(__dirname, '..', 'webpack', 'app', 'reducers'),
       actions: path.join(__dirname, '..', 'webpack', 'app', 'actions'),
       containers: path.join(__dirname, '..', 'webpack', 'app', 'containers'),
       helpers: path.join(__dirname, '..', 'webpack', 'app', 'helpers'),
       sagas: path.join(__dirname, '..', 'webpack', 'app', 'sagas'),
       errors: path.join(__dirname, '..', 'webpack', 'app', 'errors'),
+      api: path.join(__dirname, '..', 'webpack', 'app', 'api'),
     },
   },
 
