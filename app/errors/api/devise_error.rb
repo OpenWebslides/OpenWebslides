@@ -13,8 +13,8 @@ module Api
 
       resource.errors.messages.each do |attr, messages|
         messages.each do |message|
-          errors << JSONAPI::Error.new(:code => JSONAPI::BAD_REQUEST,
-                                       :status => :bad_request,
+          errors << JSONAPI::Error.new(:code => JSONAPI::UNPROCESSABLE_ENTITY,
+                                       :status => :unprocessable_entity,
                                        :title => "#{attr.capitalize} #{message}",
                                        :detail => "#{attr.capitalize} #{message}")
         end

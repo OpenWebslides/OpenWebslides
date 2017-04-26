@@ -5,6 +5,7 @@ JSONAPI.configure do |config|
   config.exception_class_whitelist = [Pundit::NotAuthorizedError, JWT::Auth::UnauthorizedError]
   config.default_paginator = :offset
 
-  # Manually add missing 401 unauthorized
+  # Add missing HTTP status codes
   JSONAPI::UNAUTHORIZED = '401'
+  JSONAPI::UNPROCESSABLE_ENTITY = '422'
 end
