@@ -30,7 +30,7 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => 'localhost' }
+  config.action_mailer.default_url_options = { :host => 'localhost', :port => 5000 }
   config.action_mailer.perform_caching = false
 
   # Deliver to MailCatcher

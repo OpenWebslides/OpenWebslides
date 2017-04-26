@@ -31,6 +31,8 @@ class User < ApplicationRecord
   #
   before_update :invalidate_token_version
 
+  after_create :email_on_create
+
   ##
   # Methods
   #
@@ -49,10 +51,6 @@ class User < ApplicationRecord
     errors.add :email, 'cannot be changed' if email_changed?
   end
 
-  def invalidate_token_version
-    self.token_version += 1 if password_digest_changed?
-  end
-
   def increment_token_version
     self.token_version += 1
   end
@@ -60,5 +58,16 @@ class User < ApplicationRecord
   def increment_token_version!
     increment_token_version
     save!
+  end
+
+  ##
+  # Callback methods
+  #
+  def invalidate_token_version
+    self.token_version += 1 if password_digest_changed?
+  end
+
+  def email_on_create
+    UserMailer.on_create(self).deliver
   end
 end
