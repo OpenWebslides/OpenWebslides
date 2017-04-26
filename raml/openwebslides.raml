@@ -66,6 +66,41 @@ mediaType: application/vnd.api+json
       description: Update deck
     delete:
       description: Delete deck
+/token:
+  displayName: Tokens
+  description: Authentication API
+  post:
+    description: Obtain an authentication token
+    body:
+      application/vnd.api+json:
+        type: object
+        properties:
+          data:
+            type: object
+            properties:
+              email: string
+              password: string
+    responses:
+      204:
+        description: Returned on successful authentication
+        headers:
+          Authorization:
+            description: JSON Web Token needed to authenticate (bearer token format)
+            example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ
+      401:
+        description: Returned on incorrect email or password
+      403:
+        description: Returned on account not activated yet
+  delete:
+    is: [authenticated]
+    description: Invalidate all tokens
+    responses:
+      204:
+        description: Returned on successful token invalidation
+        headers:
+      401:
+        description: Returned on incorrect token
+
 /auth:
   displayName: Authentication
   description: Authentication API
@@ -75,29 +110,3 @@ mediaType: application/vnd.api+json
     /callback:
       get:
         description: OAuth2 Provider callback URL
-  /token:
-    post:
-      description: Obtain an authentication token
-      body:
-        application/json:
-          type: object
-          properties:
-            email: string
-            password: string
-      responses:
-        201:
-          body:
-            application/json:
-              type: object
-              properties:
-                jwt: string
-              example:
-                { "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ" }
-        403:
-          body:
-            application/json:
-              type: object
-              properties:
-                error: string
-              example: |
-               { "error": "Your account has not been activated yet." }

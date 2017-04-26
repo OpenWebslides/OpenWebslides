@@ -25,6 +25,8 @@ module Api
     #
     def destroy
       current_user.increment_token_version!
+
+      headers.delete 'Authorization'
       head :no_content
     end
 
