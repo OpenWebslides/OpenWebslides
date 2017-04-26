@@ -1,6 +1,9 @@
 #%RAML 1.0
 
-title: OpenWebslides
+traits: !include traits.raml
+
+title: Open Webslides
+description: This is the documentation of the Open Webslides RESTful API. It is built around the JSON-API v1.0 specification.
 version: 1
 baseUri: http://localhost:5000/api/
 mediaType: application/vnd.api+json
@@ -8,17 +11,25 @@ mediaType: application/vnd.api+json
   displayName: Users
   description: User API
   get:
+    is: [paginated]
     description: List of all users
   post:
     description: Create a new user (sign up)
   /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: User ID
     get:
       description: Get user
     patch:
+      is: [authenticated]
       description: Update user
     put:
+      is: [authenticated]
       description: Update user
     delete:
+      is: [authenticated]
       description: Delete user
 /decks:
   displayName: Decks
@@ -28,6 +39,10 @@ mediaType: application/vnd.api+json
   post:
     description: Create a new deck
   /{id}:
+    uriParameters:
+      id:
+        type: integer
+        description: Deck ID
     get:
       description: Get deck
     patch:

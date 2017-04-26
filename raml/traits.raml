@@ -1,0 +1,15 @@
+#%RAML 1.0
+
+filtered:
+paginated:
+authenticated:
+  headers:
+    Authorization:
+      description: JSON Web Token needed to authenticate (bearer token format)
+      example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ
+  responses:
+    200:
+      headers:
+        Authorization:
+          description: Refreshed JSON Web Token (bearer token format)
+          example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ

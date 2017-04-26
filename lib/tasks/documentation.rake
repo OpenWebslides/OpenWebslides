@@ -6,6 +6,6 @@ namespace :documentation do
   desc 'Generate API documentation'
   task :generate do
     FileUtils.mkdir_p 'doc'
-    `raml2html raml/openwebslides.raml > doc/openwebslides.html`
+    `raml2html -i raml/openwebslides.raml -o doc/openwebslides.html`
   end
 end
