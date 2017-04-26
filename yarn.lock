@@ -5080,6 +5080,10 @@ raml2html-default-theme@2.x:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/raml2html-default-theme/-/raml2html-default-theme-2.1.0.tgz#5a4aae7177a9b1332633e96c502139249ac5cf8b"
 
+raml2html-default-theme@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/raml2html-default-theme/-/raml2html-default-theme-2.1.0.tgz#5a4aae7177a9b1332633e96c502139249ac5cf8b"
+
 raml2html@^6.2.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/raml2html/-/raml2html-6.3.0.tgz#13cefc077afe4ed2086c8d3ffe81f5910ccbafcc"
