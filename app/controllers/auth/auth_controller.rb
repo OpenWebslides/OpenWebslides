@@ -35,7 +35,7 @@ module Auth
     protected
 
     def authenticate
-      head :unauthorized unless resource && resource.authenticate(auth_params[:password])
+      head :unauthorized unless resource && resource.valid_password?(auth_params[:password])
     end
 
     def resource

@@ -10,6 +10,7 @@ module Api
 
     rescue_from JWT::Auth::UnauthorizedError, :with => :user_not_authenticated
     rescue_from Pundit::NotAuthorizedError, :with => :user_not_authorized
+    rescue_from Api::DeviseError, :with => :devise_error
 
     protected
 
@@ -24,7 +25,7 @@ module Api
                                  :title => "#{params[:action].capitalize} unauthorized",
                                  :detail => "You don't have permission to #{params[:action]} this #{type}."
 
-      render :json => { :errors => [error] }, :status => 401
+      render :json => { :errors => [error] }, :status => :unauthorized
     end
 
     def user_not_authorized
@@ -34,7 +35,11 @@ module Api
                                  :title => "#{params[:action].capitalize} forbidden",
                                  :detail => "You don't have permission to #{params[:action]} this #{type}."
 
-      render :json => { :errors => [error] }, :status => 403
+      render :json => { :errors => [error] }, :status => :forbidden
+    end
+
+    def devise_error(error)
+      render :json => { :errors => error.errors }, :status => error.errors.first.status
     end
   end
 end

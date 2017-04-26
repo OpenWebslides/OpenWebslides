@@ -2,6 +2,8 @@
 
 Rails.application.routes.draw do
   # Authentication
+  devise_for :users, :only => [:confirmations]
+
   namespace :auth, :constraints => { :format => :json } do
     get '/:provider/callback', :to => 'omniauth#callback'
     post '/token' => 'auth#token'
@@ -12,7 +14,9 @@ Rails.application.routes.draw do
   namespace :api, :constraints => { :format => :json } do
     root :to => 'api#index'
 
-    jsonapi_resources :users
+    jsonapi_resources :users do
+      get '/confirm' => 'users#confirm'
+    end
     jsonapi_resources :decks
     jsonapi_resources :tags
   end
