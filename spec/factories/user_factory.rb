@@ -6,6 +6,7 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
     password { Faker::Internet.password 6 }
+    password_confirmation { password }
 
     trait :with_decks do
       decks { build_list :deck, 3 }

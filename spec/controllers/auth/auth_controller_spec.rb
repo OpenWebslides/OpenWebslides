@@ -11,7 +11,6 @@ RSpec.describe Auth::AuthController do
   describe 'routing' do
     it 'has a token creation route' do
       expect(:post => '/auth/token').to route_to :controller => 'auth/auth', :action => 'token'
-      expect(:get => '/auth/confirm').to route_to :controller => 'auth/auth', :action => 'confirm'
       expect(:get => '/auth/expire').to route_to :controller => 'auth/auth', :action => 'expire'
     end
   end
@@ -61,32 +60,6 @@ RSpec.describe Auth::AuthController do
           params = { :auth => { :email => user.email, :password => user.password } }
           post :token, :params => params
 
-          expect(response.status).to eq 403
-          json = JSON.parse response.body
-          expect(json).to include 'error'
-        end
-      end
-
-      describe 'confirming an account' do
-        it 'confirms a valid confirmation token' do
-          expect(user.confirmed?).to be false
-
-          params = { :confirmation_token => user.confirmation_token }
-          get :confirm, :params => params
-
-          # Don't check the cached version
-          user.reload
-          expect(response.status).to eq 200
-        end
-
-        it 'rejects an invalid confirmation token' do
-          expect(user.confirmed?).to be false
-
-          params = { :confirmation_token => 'foo' }
-          get :confirm, :params => params
-
-          # Don't check the cached version
-          user.reload
           expect(response.status).to eq 403
           json = JSON.parse response.body
           expect(json).to include 'error'

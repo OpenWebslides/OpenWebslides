@@ -25,17 +25,6 @@ module Auth
     end
 
     ##
-    # Confirm a user's email
-    #
-    def confirm
-      if User.confirm_by_token params[:confirmation_token]
-        head :ok
-      else
-        render :json => { :error => 'invalid or missing confirmation_token' }, :status => :forbidden
-      end
-    end
-
-    ##
     # Expire all user sessions
     #
     def expire

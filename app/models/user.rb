@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :confirmable, :trackable, :validatable
+  devise :database_authenticatable, :confirmable, :trackable, :validatable
   include JWT::Auth::Authenticatable
 
   ##
@@ -27,8 +27,6 @@ class User < ApplicationRecord
   ##
   # Callbacks
   #
-  before_update :invalidate_token_version
-
   ##
   # Methods
   #
@@ -57,9 +55,10 @@ class User < ApplicationRecord
   end
 
   ##
-  # Callback methods
+  # Overrides
   #
-  def invalidate_token_version
-    self.token_version += 1 if password_digest_changed?
+  def password=(new_password)
+    increment_token_version
+    super new_password
   end
 end

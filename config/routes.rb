@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   namespace :auth, :constraints => { :format => :json } do
     get '/:provider/callback', :to => 'omniauth#callback'
     post '/token' => 'auth#token'
-    get '/confirm' => 'auth#confirm'
     get '/expire' => 'auth#expire'
   end
 

@@ -40,19 +40,4 @@ resource 'Authentication' do
       end
     end
   end
-
-  context 'Email confirmation' do
-    let(:user) { create :user }
-
-    get '/auth/confirm' do
-      parameter 'confirmation_token', 'Confirmation token', :required => true
-
-      let(:confirmation_token) { user.confirmation_token }
-
-      example_request 'Confirm email address' do
-        expect(response_status).to eq 200
-        expect(response_body).to be_empty
-      end
-    end
-  end
 end
