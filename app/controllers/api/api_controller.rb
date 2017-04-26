@@ -8,9 +8,10 @@ module Api
 
     after_action :add_token_to_response
 
+    rescue_from Api::ApiError, :with => :api_error
+
     rescue_from JWT::Auth::UnauthorizedError, :with => :user_not_authenticated
     rescue_from Pundit::NotAuthorizedError, :with => :user_not_authorized
-    rescue_from Api::DeviseError, :with => :devise_error
 
     protected
 
@@ -18,6 +19,16 @@ module Api
       { :current_user => current_user }
     end
 
+    ##
+    # Handle generic API errors
+    #
+    def api_error(error)
+      render :json => { :errors => error.errors }, :status => error.errors.first.status
+    end
+
+    ##
+    # Handle errors originating from jwt-auth
+    #
     def user_not_authenticated
       type = self.class.name.demodulize.underscore.split('_').first.singularize
       error = JSONAPI::Error.new :code => JSONAPI::UNAUTHORIZED,
@@ -28,6 +39,9 @@ module Api
       render :json => { :errors => [error] }, :status => :unauthorized
     end
 
+    ##
+    # Handle errors originating from Pundit
+    #
     def user_not_authorized
       type = self.class.name.demodulize.underscore.split('_').first.singularize
       error = JSONAPI::Error.new :code => JSONAPI::FORBIDDEN,
@@ -36,10 +50,6 @@ module Api
                                  :detail => "You don't have permission to #{params[:action]} this #{type}."
 
       render :json => { :errors => [error] }, :status => :forbidden
-    end
-
-    def devise_error(error)
-      render :json => { :errors => error.errors }, :status => error.errors.first.status
     end
   end
 end

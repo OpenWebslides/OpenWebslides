@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class DeviseError < JSONAPI::Exceptions::Error
+  class DeviseError < ApiError
     attr_accessor :resource
 
     def initialize(resource)
