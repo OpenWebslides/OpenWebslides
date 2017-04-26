@@ -1,6 +1,6 @@
 #%RAML 1.0
 
-traits: !include traits.raml
+traits: !include include/traits.raml
 
 title: Open Webslides
 description: This is the documentation of the Open Webslides RESTful API. It is built around the JSON-API v1.0 specification.
@@ -31,6 +31,21 @@ mediaType: application/vnd.api+json
     delete:
       is: [authenticated]
       description: Delete user
+    /confirm:
+      get:
+        description: Confirm a user's email address using the `confirmation_token` sent by email
+        queryParameters:
+          confirmation_token:
+            description: Confirmation token sent by email
+            required: true
+            type: string
+            example: WdRB-7YYai9-u-SXZ388
+        responses:
+          200:
+            description: Returned on successful confirmation
+          422:
+            description: Returned on invalid confirmation code
+
 /decks:
   displayName: Decks
   description: Slidedeck API
@@ -86,12 +101,3 @@ mediaType: application/vnd.api+json
                 error: string
               example: |
                { "error": "Your account has not been activated yet." }
-  /confirm:
-    get:
-      description: Verify a user's email address
-      queryParameters:
-        confirmation_token:
-          description: Confirmation token sent by email
-          required: true
-          type: string
-          example: Ez2B7waoUofjCrGqVT9vz7Fy
