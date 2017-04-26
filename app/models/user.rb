@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  devise :confirmable, :trackable, :validatable
   include JWT::Auth::Authenticatable
-  include Confirmable
-
-  has_secure_password
 
   ##
   # Properties

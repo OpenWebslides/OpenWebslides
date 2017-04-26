@@ -10,6 +10,7 @@ git_source(:github) do |repo_name|
 end
 
 # Authentication/authorization
+gem 'devise'
 gem 'jwt'
 gem 'jwt-auth'
 gem 'omniauth'
