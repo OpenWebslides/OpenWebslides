@@ -91,8 +91,8 @@ mediaType: application/vnd.api+json
         description: Returned on error
 
 /token:
-  displayName: Tokens
-  description: Authentication API
+  displayName: Token
+  description: Token API
   post:
     description: Obtain an authentication token
     body:
@@ -102,8 +102,24 @@ mediaType: application/vnd.api+json
           data:
             type: object
             properties:
-              email: string
-              password: string
+              type:
+                description: Should be set to `tokens`
+                type: string
+              attributes:
+                type: object
+                properties:
+                  email: string
+                  password: string
+        example: |
+          {
+            "data": {
+                "type": "tokens",
+                "attributes" : {
+                    "email": "savion.mcdermott@altenwerthconsidine.org",
+                    "password": "abcd1234"
+                }
+            }
+          }
     responses:
       204:
         description: Returned on successful authentication
@@ -121,13 +137,12 @@ mediaType: application/vnd.api+json
     responses:
       204:
         description: Returned on successful token invalidation
-        headers:
       401:
         description: Returned on incorrect token
 
 /auth:
-  displayName: Authentication
-  description: Authentication API
+  displayName: OAuth2
+  description: OAuth2 API
   /{provider}:
     get:
       description: OAuth2 redirection URL
