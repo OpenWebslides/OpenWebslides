@@ -9,8 +9,6 @@ module Api
     #
     attribute :confirmation_token
 
-    has_one :user
-
     ##
     # Filters
     #
