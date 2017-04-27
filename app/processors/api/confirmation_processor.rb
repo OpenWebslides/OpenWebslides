@@ -10,7 +10,7 @@ module Api
       # Find corresponding resource to send back
       resource = UserResource.resources_for([user], context).first
 
-      JSONAPI::ResourceOperationResult.new((result == :completed ? :created : :accepted), resource)
+      JSONAPI::ResourceOperationResult.new :created, resource
     end
   end
 end
