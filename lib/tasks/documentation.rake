@@ -6,6 +6,6 @@ namespace :documentation do
   desc 'Generate API documentation'
   task :generate do
     FileUtils.mkdir_p 'doc'
-    `yarn run raml2html raml/openwebslides.raml > doc/openwebslides.html`
+    `yarn run --silent raml2html raml/openwebslides.raml > doc/openwebslides.html`
   end
 end
