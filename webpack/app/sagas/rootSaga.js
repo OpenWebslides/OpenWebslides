@@ -1,5 +1,6 @@
 import signupSaga from 'sagas/signupSaga';
 import confirmEmailSaga from 'sagas/confirmEmailSaga';
+import FeedSaga from 'sagas/feed/feedSaga';
 import requestResetPasswordSaga from 'sagas/forgotPasswordSaga';
 import resetPasswordSaga from 'sagas/resetPasswordSaga';
 import emailAvailableSaga from 'sagas/checkEmailSaga';
@@ -13,6 +14,7 @@ export default function* rootSaga() {
     signupSaga(),
     confirmEmailSaga(),
     emailAvailableSaga(),
+    FeedSaga(),
     requestResetPasswordSaga(),
     resetPasswordSaga(),
     oauthSigninSaga(),
