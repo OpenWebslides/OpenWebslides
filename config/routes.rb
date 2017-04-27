@@ -11,9 +11,7 @@ Rails.application.routes.draw do
   namespace :api, :constraints => { :format => :json } do
     root :to => 'api#index'
 
-    jsonapi_resources :users do
-      get '/confirm' => 'users#confirm'
-    end
+    jsonapi_resources :users
     jsonapi_resources :decks
     jsonapi_resources :tags
 
