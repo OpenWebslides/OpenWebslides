@@ -3,10 +3,34 @@
 traits: !include include/traits.raml
 
 title: Open Webslides
-description: This is the documentation of the Open Webslides RESTful API. It is built around the JSON-API v1.0 specification.
+description: This is the documentation of the Open Webslides RESTful API.
 version: 1
 baseUri: http://localhost:5000/api/
 mediaType: application/vnd.api+json
+documentation:
+  - title: Global
+    content: |
+      The Open Webslides API is based on the [JSON-API](http://jsonapi.org/) specification version 1.0.
+  - title: Authentication
+    content: |
+      The API supports multiple ways of signing up. Users have the possibility of signing up with an
+      [email address](#users_post) (and a password), or with one or more [OAuth2 providers](#auth). A user can
+      sign up with an email address, and later decide to sign in using an OAuth2 provider to the same account,
+      provided that the email address on the OAuth2 provider is equal.
+
+      The API enforces a token authentication scheme using [JSON Web Tokens](https://jwt.io/). Users should
+      obtain a valid authentication token from the [Token API](#token) prior to making any authenticated requests.
+
+      Most of the API is inaccessible without being authenticated, with the exception of:
+      - publically viewable decks
+      - users stripped of their confidential information
+  - title: Authorization
+    content: |
+      A simple rule-based permission system is implemented in the API. A deck can have one of the following _states_:
+      - **Public**: visible to everyone (owner, collaborators, users and guests)
+      - **Protected**: visible to owner, collaborators and users (but not to guests)
+      - **Private**: visible to owner and collaborators (but not to other users)
+
 /users:
   displayName: Users
   description: User API
