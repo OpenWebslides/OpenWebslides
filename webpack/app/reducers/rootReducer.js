@@ -4,6 +4,8 @@ import { reducer as forms } from 'redux-form';
 import auth from 'reducers/authReducer';
 import confirmEmail from 'reducers/confirmEmailReducer';
 
+import feed from './feedReducer';
+
 const vendor = combineReducers({
   forms,
 });
@@ -11,6 +13,7 @@ const vendor = combineReducers({
 const local = combineReducers({
   auth,
   confirmEmail,
+  feed,
 });
 
 const rootReducer = combineReducers({
