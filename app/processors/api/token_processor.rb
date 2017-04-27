@@ -17,5 +17,11 @@ module Api
 
       JSONAPI::ResourceOperationResult.new :created, resource
     end
+
+    def remove_resource
+      context[:current_user].increment_token_version!
+
+      JSONAPI::OperationResult.new :no_content
+    end
   end
 end

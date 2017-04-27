@@ -2,18 +2,9 @@
 
 module Api
   class TokenController < ApiController
-    before_action :authenticate_user, :only => :destroy
     after_action :add_token, :only => :create
 
-    ##
-    # Expire all JWT
-    #
-    # def destroy
-    #   current_user.increment_token_version!
-    #
-    #   headers.delete 'Authorization'
-    #   head :no_content
-    # end
+    before_action :authenticate_user, :only => :destroy
 
     protected
 
