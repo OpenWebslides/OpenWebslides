@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class DeviseError < ApiError
+  class ResourceError < ApiError
     attr_accessor :resource
 
     def initialize(resource)
@@ -13,8 +13,8 @@ module Api
 
       resource.errors.messages.each do |attr, messages|
         messages.each do |message|
-          errors << JSONAPI::Error.new(:code => JSONAPI::UNPROCESSABLE_ENTITY,
-                                       :status => :unprocessable_entity,
+          errors << JSONAPI::Error.new(:code => JSONAPI::BAD_REQUEST,
+                                       :status => :bad_request,
                                        :title => "#{attr.capitalize} #{message}",
                                        :detail => "#{attr.capitalize} #{message}")
         end

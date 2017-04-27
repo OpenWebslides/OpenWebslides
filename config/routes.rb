@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     jsonapi_resources :decks
     jsonapi_resources :tags
 
+    jsonapi_resource :confirmation, :only => :create
     jsonapi_resource :token, :except => %i[show update]
   end
 
