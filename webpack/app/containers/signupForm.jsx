@@ -4,43 +4,63 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 
+// Input Fields
 import inputField from 'presentationals/formFields/inputField';
 import newPasswordField from 'presentationals/formFields/newPasswordField';
 
+// Presentationals
+import SignupConfirmation from 'presentationals/signup/signupConfirmation';
+
+// Actions
 import { signupUser } from 'actions/signupActions';
 import { checkEmailAvailable } from 'actions/serverValidationActions';
 
 // Field validation
-function validate(values) {
+export function validate(values) {
+  const {
+    email,
+    password,
+    passwordConfirmation,
+    firstName,
+    lastName } = values;
+
   const errors = {};
 
-  if (!values.email) {
+  if (!email || email.trim() === '') {
     errors.email = 'Email is required';
-  } else if (!isEmail(values.email)) {
+  } else if (!isEmail(email)) {
     errors.email = 'Email is invalid';
   }
 
-  if (!values.password || values.password.trim() === '') {
+  if (!password || password.trim() === '') {
     errors.password = 'Password is required';
   }
 
-  if (!values.confirm_password || values.password.trim() === '') {
-    errors.confirm_password = 'Password confirmation is required';
+  if (!firstName || firstName.trim() === '') {
+    errors.firstName = 'First Name is required';
+  }
+
+  if (!lastName || lastName.trim() === '') {
+    errors.lastName = 'Last Name is required';
+  }
+
+  if (!passwordConfirmation || passwordConfirmation.trim() === '') {
+    errors.passwordConfirmation = 'Password Confirmation is required';
   }
 
   if (
-    values.confirm_password &&
-    values.confirm_password.trim() !== '' &&
-    values.password &&
-    values.password.trim() !== '' &&
-    values.password !== values.confirm_password) {
+    passwordConfirmation &&
+    passwordConfirmation.trim() !== '' &&
+    password &&
+    password.trim() !== '' &&
+    password !== passwordConfirmation) {
     errors.password = 'Password and password confirmation do not match';
   }
   return errors;
 }
 
-// Aync email availability validation
-function asyncValidate({ email }, dispatch) {
+// Async email availability validation
+export function asyncValidate({ email }, dispatch) {
   return new Promise((resolve, reject) => {
     dispatch(checkEmailAvailable({ email, resolve, reject }));
   });
@@ -56,11 +76,7 @@ function validateAndSubmit(values, dispatch) {
 // Form
 function SignupForm(props) {
   if (props.submitSucceeded) {
-    return (
-      <div>
-        <h3>We sent you a mail</h3>
-      </div>
-    );
+    return <SignupConfirmation />;
   }
 
   return (
@@ -74,6 +90,18 @@ function SignupForm(props) {
         />
 
         <Field
+          component={inputField}
+          name="firstName"
+          placeholder="First Name"
+        />
+
+        <Field
+          component={inputField}
+          name="lastName"
+          placeholder="Last Name"
+        />
+
+        <Field
           component={newPasswordField}
           name="password"
           placeholder="Password"
@@ -82,7 +110,7 @@ function SignupForm(props) {
 
         <Field
           component={inputField}
-          name="confirm_password"
+          name="passwordConfirmation"
           placeholder="Confirm Password"
           type="password"
         />

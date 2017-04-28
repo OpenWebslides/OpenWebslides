@@ -1,11 +1,13 @@
-import SigninSaga from 'sagas/signinSaga';
-import SignupSaga from 'sagas/signupSaga';
+import signinSaga from 'sagas/signinSaga';
+import signupSaga from 'sagas/signupSaga';
+import confirmEmailSaga from 'sagas/confirmEmailSaga';
 import emailAvailableSaga from 'sagas/serverValidation/emailAvailableSaga';
 
 export default function* rootSaga() {
   yield [
-    SigninSaga(),
-    SignupSaga(),
+    signinSaga(),
+    signupSaga(),
+    confirmEmailSaga(),
     emailAvailableSaga(),
   ];
 }

@@ -2,9 +2,9 @@
 export const SIGNUP_USER = 'SIGNUP_USER';
 
 // Action Creators
-export function signupUser(value) {
+export function signupUser(values) {
   return ({
     type: SIGNUP_USER,
-    meta: value,
+    meta: values,
   });
 }

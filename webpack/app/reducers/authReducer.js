@@ -7,6 +7,7 @@ import {
 const initialState = Immutable({
   isAuthenticated: false,
   authToken: undefined,
+  firstName: undefined,
 });
 
 function authReducer(state = initialState, action) {

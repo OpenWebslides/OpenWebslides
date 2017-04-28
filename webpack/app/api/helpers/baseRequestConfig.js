@@ -1,4 +1,4 @@
-// Base config for api calls to server
+// Base configuration for API calls
 export default function getBaseRequestConfig() {
   return {
     method: 'GET',

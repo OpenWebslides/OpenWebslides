@@ -6,25 +6,24 @@ import {
   SIGNIN_USER_SUCCESS,
 } from 'actions/signinActions';
 
-import signinApiCall from 'api/signinApi';
+import signinApi from 'api/signinApi';
 
-export function* signinFlow(action) {
+export function* doSignin(action) {
   const { resolve, reject } = action.meta;
+
   try {
     const { email, password } = action.meta.values;
+    const { authToken, firstName } = yield call(signinApi, email, password);
 
-    const responseBody = yield call(signinApiCall, email, password);
-
-    if (typeof responseBody.jwt === 'undefined') {
-      throw new Error('Unable to find JWT in response body');
+    if (typeof authToken === 'undefined') {
+      throw new Error('Unable to find JWT in response');
     }
-
-    const authToken = responseBody.jwt;
 
     yield put({
       type: SIGNIN_USER_SUCCESS,
       payload: {
         authToken,
+        firstName,
       },
     });
 
@@ -37,7 +36,7 @@ export function* signinFlow(action) {
 }
 
 function* signinWatcher() {
-  yield takeLatest(SIGNIN_USER, signinFlow);
+  yield takeLatest(SIGNIN_USER, doSignin);
 }
 
 export default signinWatcher;

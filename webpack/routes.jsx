@@ -7,6 +7,7 @@ import { Route, IndexRoute } from 'react-router';
 import FeedPage from 'pages/feedPage';
 import SignupPage from 'pages/signupPage';
 import SigninPage from 'pages/signinPage';
+import EmailConfirmationPage from 'pages/emailConfirmationPage';
 
 // // Redirects to /signin when not authenticated
 // const UserIsAuthenticated = UserAuthWrapper({
@@ -27,5 +28,6 @@ export default (
     <IndexRoute component={FeedPage} />
     <Route path="/signup" component={SignupPage} />
     <Route path="/signin" component={SigninPage} />
+    <Route path="/confirm_email" component={EmailConfirmationPage} />
   </Route>
 );

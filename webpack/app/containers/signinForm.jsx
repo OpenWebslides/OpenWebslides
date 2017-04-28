@@ -5,8 +5,10 @@ import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 import { browserHistory } from 'react-router';
 
+// Input Fields
 import inputField from 'presentationals/formFields/inputField';
 
+// Actions
 import { signinUser } from 'actions/signinActions';
 
 // Field validation
@@ -15,11 +17,11 @@ function validate(values) {
 
   if (!values.email) {
     errors.email = 'Email is required';
-  } else if (!isEmail(values.email)) {
+  } else if (!isEmail(values.email.trim())) {
     errors.email = 'Email is invalid';
   }
 
-  if (!values.password) {
+  if (!values.password || values.password.trim() === '') {
     errors.password = 'Password is required';
   }
 

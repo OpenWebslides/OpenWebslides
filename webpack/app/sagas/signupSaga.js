@@ -7,15 +7,15 @@ import {
 
 import signupApiCall from 'api/signupApi';
 
-function* signupFlow(action) {
+export function* doSignup(action) {
   const { resolve, reject } = action.meta;
 
   try {
-    const { email, password } = action.meta.values;
+    const { email, password, firstName, lastName } = action.meta.values;
 
-    yield call(signupApiCall, email, password);
+    yield call(signupApiCall, email, password, firstName, lastName);
 
-    resolve('Succeeded');
+    yield call(resolve);
   } catch (error) {
     yield call(
       reject,
@@ -24,7 +24,7 @@ function* signupFlow(action) {
 }
 
 function* signupWatcher() {
-  yield takeLatest(SIGNUP_USER, signupFlow);
+  yield takeLatest(SIGNUP_USER, doSignup);
 }
 
 export default signupWatcher;

@@ -5,7 +5,7 @@ import {
 } from 'actions/serverValidationActions';
 
 // Stubbed implementation, waiting for api endpoint
-function checkEmailAvailable(action) {
+export function doCheckEmailAvailable(action) {
   setTimeout(() => {
     if (action.meta.email === 'rein.vanimschoot@gmail.com') {
       action.meta.reject({ email: 'Email is already taken' });
@@ -16,5 +16,5 @@ function checkEmailAvailable(action) {
 }
 
 export default function* checkEmailAvailableWatcher() {
-  yield takeLatest(CHECK_EMAIL_AVAILABLE, checkEmailAvailable);
+  yield takeLatest(CHECK_EMAIL_AVAILABLE, doCheckEmailAvailable);
 }

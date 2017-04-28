@@ -21,23 +21,26 @@ describe('Signin Reducer', () => {
       Immutable({
         isAuthenticated: false,
         authToken: undefined,
+        firstName: undefined,
       }));
   });
 
   it('can resolve SIGNIN_SUCCESS action', () => {
     const fakeToken = faker.random.uuid();
+    const fakeFirstName = faker.name.firstName();
 
     expect(
       authReducer(emptyState, {
         type: SIGNIN_USER_SUCCESS,
         payload: {
-          isAuthenticated: true,
           authToken: fakeToken,
+          firstName: fakeFirstName,
         },
       }))
       .toEqual(Immutable({
         isAuthenticated: true,
         authToken: fakeToken,
+        firstName: fakeFirstName,
       }));
   });
 });
