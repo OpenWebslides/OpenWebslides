@@ -7,7 +7,7 @@ module Api
     ##
     # Properties
     #
-    attributes :reset_password_token, :email, :password, :password_confirmation
+    attributes :reset_password_token, :email, :password
 
     ##
     # Filters
@@ -24,7 +24,7 @@ module Api
     end
 
     def self.updatable_fields(_ = {})
-      %i[reset_password_token password password_confirmation]
+      %i[reset_password_token password]
     end
   end
 end
