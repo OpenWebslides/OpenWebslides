@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
@@ -74,62 +76,79 @@ function validateAndSubmit(values, dispatch) {
 }
 
 // Form
-function SignupForm(props) {
-  if (props.submitSucceeded) {
-    return <SignupConfirmation />;
+class SignupForm extends Component {
+  componentDidMount() {
+    if (this.props.isAuthenticated) {
+      browserHistory.push('/');
+    }
   }
 
-  return (
-    <div>
-      <form onSubmit={props.handleSubmit(validateAndSubmit)}>
+  render() {
+    if (this.props.submitSucceeded) {
+      return <SignupConfirmation />;
+    }
 
-        <Field
-          component={inputField}
-          name="email"
-          placeholder="Email"
-        />
+    return (
+      <div>
+        <form onSubmit={this.props.handleSubmit(validateAndSubmit)}>
 
-        <Field
-          component={inputField}
-          name="firstName"
-          placeholder="First Name"
-        />
+          <Field
+            component={inputField}
+            name="email"
+            placeholder="Email"
+          />
 
-        <Field
-          component={inputField}
-          name="lastName"
-          placeholder="Last Name"
-        />
+          <Field
+            component={inputField}
+            name="firstName"
+            placeholder="First Name"
+          />
 
-        <Field
-          component={newPasswordField}
-          name="password"
-          placeholder="Password"
-          type="password"
-        />
+          <Field
+            component={inputField}
+            name="lastName"
+            placeholder="Last Name"
+          />
 
-        <Field
-          component={inputField}
-          name="passwordConfirmation"
-          placeholder="Confirm Password"
-          type="password"
-        />
+          <Field
+            component={newPasswordField}
+            name="password"
+            placeholder="Password"
+            type="password"
+          />
 
-        <button type="submit">Sign up</button>
-      </form>
-    </div >
-  );
+          <Field
+            component={inputField}
+            name="passwordConfirmation"
+            placeholder="Confirm Password"
+            type="password"
+          />
+
+          <button type="submit">Sign up</button>
+        </form>
+      </div >
+    );
+  }
 }
 
 SignupForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitSucceeded: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
-export default reduxForm({
+const signupReduxForm = reduxForm({
   form: 'signupForm',
   asyncValidate,
   asyncBlurFields: ['email'],
   validate,
   getFormState: state => state.vendor.forms,
 })(SignupForm);
+
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.local.auth.isAuthenticated,
+  };
+}
+
+export default connect(mapStateToProps)(signupReduxForm);
