@@ -1,6 +1,7 @@
 import signinSaga from 'sagas/signinSaga';
 import signupSaga from 'sagas/signupSaga';
 import confirmEmailSaga from 'sagas/confirmEmailSaga';
+import resetPasswordSaga from 'sagas/resetPasswordSaga';
 import emailAvailableSaga from 'sagas/serverValidation/emailAvailableSaga';
 
 export default function* rootSaga() {
@@ -9,5 +10,6 @@ export default function* rootSaga() {
     signupSaga(),
     confirmEmailSaga(),
     emailAvailableSaga(),
+    resetPasswordSaga(),
   ];
 }
