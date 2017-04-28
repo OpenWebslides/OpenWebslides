@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe User, :type => :model do
   let(:user) { create :user }
+  let(:confirmed_user) { create :user, :confirmed }
 
   it 'is invalid without attributes' do
     expect(User.new).not_to be_valid
@@ -51,13 +52,31 @@ RSpec.describe User, :type => :model do
     token_version = user.token_version
 
     user.update :password => 'abcd1234'
-    expect(user.token_version).to be token_version + 1
+    expect(user.token_version).to eq token_version + 1
+  end
+
+  it 'increments token version' do
+    token_version = user.token_version
+
+    user.increment_token_version!
+    expect(user.token_version).to eq token_version + 1
   end
 
   it 'returns a correct full name' do
     expect(build(:user, :first_name => 'foo', :last_name => nil).name).to eq 'foo'
     expect(build(:user, :first_name => 'foo', :last_name => '').name).to eq 'foo'
     expect(build(:user, :first_name => 'foo', :last_name => 'bar').name).to eq 'foo bar'
+  end
+
+  it 'finds confirmed users by token' do
+    result = User.find_by_token :id => confirmed_user.id, :token_version => confirmed_user.token_version
+    expect(result).to eq confirmed_user
+  end
+
+  it 'does not find unconfirmed users by token' do
+    result = proc { User.find_by_token :id => user.id, :token_version => user.token_version }
+
+    expect(result).to raise_error Api::UnconfirmedError
   end
 
   it 'has many decks' do
