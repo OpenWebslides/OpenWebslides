@@ -10,7 +10,6 @@ module Api
     has_one :owner
 
     has_many :contributors
-    has_many :tags
 
     ##
     # Filters
