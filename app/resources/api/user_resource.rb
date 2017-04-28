@@ -19,8 +19,6 @@ module Api
     ##
     # Callbacks
     #
-    after_create :create_identity
-
     ##
     # Methods
     #
@@ -42,13 +40,6 @@ module Api
 
     def self.sortable_fields(context)
       super(context) - [:password]
-    end
-
-    protected
-
-    def create_identity
-      identity = @model.identities.build :uid => @model.email, :provider => 'email'
-      identity.save
     end
   end
 end

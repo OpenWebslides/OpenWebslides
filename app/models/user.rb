@@ -27,6 +27,8 @@ class User < ApplicationRecord
   ##
   # Callbacks
   #
+  before_create :create_email_identity
+
   ##
   # Methods
   #
@@ -52,6 +54,10 @@ class User < ApplicationRecord
   def increment_token_version!
     increment_token_version
     save!
+  end
+
+  def create_email_identity
+    identities.build :provider => 'email', :uid => email
   end
 
   ##
