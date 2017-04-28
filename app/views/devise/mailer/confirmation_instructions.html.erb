@@ -2,4 +2,4 @@
 
 <p>You can confirm your account email through the link below:</p>
 
-<p><%= link_to 'Confirm my account', "http://localhost:5000/api/confirmation?${@resource.confirmation_token}" %></p>
+<p><%= link_to 'Confirm my account', "#{root_url}confirmation?#{{ :confirmation_token => @token }.to_query}" %></p>
