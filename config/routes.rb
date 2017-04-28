@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
     jsonapi_resource :confirmation, :only => :create
     jsonapi_resource :token, :only => %i[create destroy]
+    jsonapi_resource :password, :only => %i[create update]
   end
 
   # Application

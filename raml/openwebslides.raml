@@ -164,6 +164,87 @@ documentation:
       401:
         description: Returned on incorrect token
 
+/password:
+  displayName: Reset password
+  description: Reset password API
+  post:
+    description: Request a `reset_password_token` sent by email
+    body:
+      application/vnd.api+json:
+        type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                description: Should be set to `passwords`
+                type: string
+              attributes:
+                type: object
+                properties:
+                  email: string
+        example: |
+          {
+            "data": {
+              "type": "passwords",
+              "attributes": {
+                "email": "may_schaden@ryan.io"
+              }
+            }
+          }
+    responses:
+      204:
+        description: Always returned, whether or not the email address was valid
+  put:
+    description: See [`PATCH`](#password_patch)
+  patch:
+    description: Reset a user's password using the `reset_password_token` sent by email
+    body:
+      application/vnd.api+json:
+        type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                description: Should be set to `passwords`
+                type: string
+              id:
+                description: Required by the JSON-API spec, unused in this spec
+                type: string
+              attributes:
+                type: object
+                properties:
+                  resetPasswordToken:
+                    description: Reset password token sent by email
+                    type: string
+                    example: JaBSxxc2j7XUYLtJzdXi
+                  password:
+                    description: New password
+                    type: string
+                    example: abcd1234
+                  passwordConfirmation:
+                    description: Password confirmation (should be equal to `password`)
+                    type: string
+                    example: abcd1234
+        example: |
+          {
+            "data": {
+                "type": "passwords",
+                "id": "",
+                "attributes" : {
+                    "resetPasswordToken": "JaBSxxc2j7XUYLtJzdXi",
+                    "password": "abcd1234",
+                    "passwordConfirmation": "abcd1234"
+                }
+            }
+          }
+    responses:
+      204:
+        description: Returned on successful reset
+      400:
+        description: Returned on error
+
 /auth:
   displayName: OAuth2
   description: OAuth2 API
