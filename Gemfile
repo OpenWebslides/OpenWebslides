@@ -64,6 +64,7 @@ group :development, :test do
   gem 'bundler-audit', :require => false
 
   # Coverage report
+  gem 'coveralls', :require => false
   gem 'simplecov', :require => false
 
   # SCSS-lint rendering
