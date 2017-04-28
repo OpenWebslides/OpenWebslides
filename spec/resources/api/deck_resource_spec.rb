@@ -16,11 +16,10 @@ RSpec.describe Api::DeckResource, :type => :resource do
   it { is_expected.to have_one :owner }
 
   it { is_expected.to have_many(:contributors).with_class_name 'User' }
-  it { is_expected.to have_many(:tags).with_class_name 'Tag' }
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id name state description owner contributors tags]
+      expect(subject.fetchable_fields).to match_array %i[id name state description owner contributors]
     end
 
     it 'should have a valid set of creatable fields' do
@@ -28,7 +27,7 @@ RSpec.describe Api::DeckResource, :type => :resource do
     end
 
     it 'should have a valid set of updatable fields' do
-      expect(described_class.updatable_fields).to match_array %i[name state description owner tags]
+      expect(described_class.updatable_fields).to match_array %i[name state description owner]
     end
 
     it 'should have a valid set of sortable fields' do
