@@ -23,8 +23,6 @@ class DeckPolicy
       return false if @user.nil?
       # Owner and collaborators users can read private deck
       @record.owner == @user || @record.contributors.include?(@user)
-    else
-      false
     end
   end
 
