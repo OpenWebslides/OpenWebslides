@@ -113,6 +113,19 @@ documentation:
         description: Returned on successful confirmation
       400:
         description: Returned on error
+        body:
+          application/vnd.api+json:
+            example: |
+              {
+                "errors": [
+                  {
+                    "title": "Confirmation_token is invalid",
+                    "detail": "Confirmation_token is invalid",
+                    "code": "400",
+                    "status": "400"
+                  }
+                ]
+              }
 
 /token:
   displayName: Token
@@ -137,11 +150,11 @@ documentation:
         example: |
           {
             "data": {
-                "type": "tokens",
-                "attributes" : {
-                    "email": "savion.mcdermott@altenwerthconsidine.org",
-                    "password": "abcd1234"
-                }
+              "type": "tokens",
+              "attributes" : {
+                "email": "savion.mcdermott@altenwerthconsidine.org",
+                "password": "abcd1234"
+              }
             }
           }
     responses:
@@ -226,12 +239,12 @@ documentation:
         example: |
           {
             "data": {
-                "type": "passwords",
-                "id": "",
-                "attributes" : {
-                    "resetPasswordToken": "JaBSxxc2j7XUYLtJzdXi",
-                    "password": "abcd1234"
-                }
+              "type": "passwords",
+              "id": "",
+              "attributes" : {
+                "resetPasswordToken": "JaBSxxc2j7XUYLtJzdXi",
+                "password": "abcd1234"
+              }
             }
           }
     responses:
