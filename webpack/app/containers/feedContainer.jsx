@@ -3,8 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Immutable from 'seamless-immutable';
-import requestEvents from 'actions/feedActions';
-import { FeedElement, feedElementTypes } from '../components/feed/feedElement';
+import { requestEvents, filterByType } from 'actions/feedActions';
+import { FeedElement } from '../components/feed/feedElement';
+import { feedElementTypes } from '../constants/feedConstants';
+import FeedToolbar from '../components/feed/feedToolbar';
 
 class Feed extends React.Component {
   componentWillMount() {
@@ -23,33 +25,41 @@ class Feed extends React.Component {
       );
     }
 
-    // console.log('Rendering feed');
-    // console.log('Feed State: ', this.props);
     const listOfFeedElements = this.props.feedState.listOfFeedElements;
+    const selectedType = this.props.feedState.typeFilter;
     let elementsToDisplay;
 
-    if (this.props.feedState.receivedList === false) {
+    const filteredFeedElements =
+            Immutable.asMutable(listOfFeedElements)
+              .concat()
+              .filter(e => e.type === selectedType || selectedType === 'ALL');
+    if (this.props.feedState.receivedList === false || filteredFeedElements.length === 0) {
       elementsToDisplay = <li key="0"> No elements to display</li>;
     } else {
-      const numOfElementsToDisplay = listOfFeedElements.length <= 10 ?
-        listOfFeedElements.length : 10;
+      const numOfElementsToDisplay = filteredFeedElements.length <= 10 ?
+        filteredFeedElements.length : 10;
 
-      const sortedElementsToDisplay = Immutable.asMutable(listOfFeedElements).concat().sort(
+      const sortedElementsToDisplay = filteredFeedElements.concat().sort(
         (e1, e2) => e1.timestamp - e2.timeStamp);
 
       elementsToDisplay =
         sortedElementsToDisplay
           .slice(0, numOfElementsToDisplay)
           .map(el => renderElement(el));
-      // .map(el => <li>Working</li>)
     }
 
     return (
-      <div className="socialFeedContainer">
+      <div className="c_feed-container">
         <h1> Social feed </h1>
-        <ol>
-          {elementsToDisplay}
-        </ol>
+        <FeedToolbar
+          selectedType={selectedType}
+          typeChange={this.props.filterByType}
+        />
+        <div className="c_feed-elements-container">
+          <ol>
+            {elementsToDisplay}
+          </ol>
+        </div>
       </div>
     );
   }
@@ -68,7 +78,9 @@ Feed.propTypes = {
     listOfFeedElements: PropTypes.array.isRequired,
     sentRequestForList: PropTypes.bool.isRequired,
     receivedList: PropTypes.bool.isRequired,
+    typeFilter: PropTypes.oneOf(Object.keys(feedElementTypes)).isRequired,
   }).isRequired,
+  filterByType: PropTypes.func.isRequired,
 
 };
 
@@ -77,11 +89,10 @@ Feed.defaultProps = {
 };
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ requestEvents }, dispatch);
+  return bindActionCreators({ requestEvents, filterByType }, dispatch);
 }
 
 function mapStateToProps(state) {
-  // console.log('mapping state: ', state.local.feed);
   const feedState = state.local.feed;
   return {
     feedState,

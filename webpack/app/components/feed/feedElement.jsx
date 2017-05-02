@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-export const feedElementTypes = {
-  DECK_CREATED: 'Deck created',
-  DECK_UPDATED: 'Deck updated',
-};
+import { feedElementTypes } from '../../constants/feedConstants';
 
 export function FeedElement({ timestamp, type, targetDeck, concernedUser, viewed }) {
   let className = 'c_feed-element';
@@ -21,7 +17,7 @@ export function FeedElement({ timestamp, type, targetDeck, concernedUser, viewed
     >
       <div>
         <h3>{feedElementTypes[type]}: </h3>
-        <p> {concernedUser} has {inlineType[type]} {targetDeck}</p>
+        <p> {concernedUser} has {inlineType[type]} &#34;{targetDeck}&#34; </p>
       </div>
     </li>
   );
@@ -35,3 +31,4 @@ FeedElement.propTypes = {
   viewed: PropTypes.bool.isRequired,
 };
 
+export default FeedElement;
