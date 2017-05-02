@@ -24,3 +24,10 @@ export function filterByType(type) {
     payload: type,
   };
 }
+
+export function filterByType(type) {
+  return {
+    type: types.CHANGE_TYPE_FILTER,
+    payLoad: type,
+  };
+}
