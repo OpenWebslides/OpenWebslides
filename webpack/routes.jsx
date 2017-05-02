@@ -22,3 +22,5 @@ export default (
     <Route path="reset_password" component={ResetPasswordPage} />
     <Route path="editor/slide" component={SlideEditorPage} />
   </Route>
+);
+
