@@ -5,6 +5,7 @@ const initialState = Immutable({
   listOfFeedElements: [],
   sentRequestForList: false,
   receivedList: false,
+  typeFilter: 'ALL',
 });
 
 function feedReducer(state = initialState, action) {
@@ -19,6 +20,10 @@ function feedReducer(state = initialState, action) {
         sentRequestForList: false,
         receivedList: true,
         listOfFeedElements: action.payload.listOfNotifications,
+      });
+    case types.CHANGE_TYPE_FILTER:
+      return Immutable.merge(state, {
+        typeFilter: action.payLoad,
       });
     default:
       return state;
