@@ -24,7 +24,7 @@ module Api
     # Methods
     #
     def self.creatable_fields(context = {})
-      super(context) - %i[contributors tags]
+      super(context) - %i[contributors]
     end
 
     def self.updatable_fields(context = {})

@@ -38,14 +38,6 @@ RSpec.describe Deck, :type => :model do
     expect(deck.canonical_name).not_to be_nil
   end
 
-  it 'has many tags' do
-    deck = build :deck, :with_tags
-
-    # Use #length instead of #count for unpersisted relations
-    expect(deck.tags.length).not_to be 0
-    deck.tags.each { |t| expect(t).to be_instance_of Tag }
-  end
-
   let(:owner) { build :user, :email => 'foo@bar' }
   it 'has a unique canonical name' do
     deck = create :deck, :name => 'Foo Bar', :owner => owner

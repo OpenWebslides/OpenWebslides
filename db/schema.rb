@@ -23,13 +23,6 @@ ActiveRecord::Schema.define(version: 20170403140230) do
     t.index ["user_id"], name: "index_decks_on_user_id"
   end
 
-  create_table "decks_tags", id: false, force: :cascade do |t|
-    t.integer "deck_id", null: false
-    t.integer "tag_id",  null: false
-    t.index ["deck_id", "tag_id"], name: "index_decks_tags_on_deck_id_and_tag_id"
-    t.index ["tag_id", "deck_id"], name: "index_decks_tags_on_tag_id_and_deck_id"
-  end
-
   create_table "decks_users", id: false, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "deck_id", null: false
@@ -45,12 +38,6 @@ ActiveRecord::Schema.define(version: 20170403140230) do
     t.datetime "updated_at", null: false
     t.index ["uid", "provider"], name: "index_identities_on_uid_and_provider", unique: true
     t.index ["user_id"], name: "index_identities_on_user_id"
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
