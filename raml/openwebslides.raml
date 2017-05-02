@@ -109,8 +109,38 @@ documentation:
             }
           }
     responses:
-      204:
+      201:
         description: Returned on successful confirmation
+        body:
+          application/vnd.api+json:
+            example: |
+              {
+                "data": {
+                  "id": "2",
+                  "type": "users",
+                  "links": {
+                    "self": "http://localhost:5000/api/users/2"
+                  },
+                  "attributes": {
+                    "firstName": "Savion",
+                    "lastName": "McDermott"
+                  },
+                  "relationships": {
+                    "decks": {
+                      "links": {
+                        "self": "http://localhost:5000/api/users/2/relationships/decks",
+                        "related": "http://localhost:5000/api/users/2/decks"
+                      }
+                    },
+                    "contributions": {
+                      "links": {
+                        "self": "http://localhost:5000/api/users/2/relationships/contributions",
+                        "related": "http://localhost:5000/api/users/2/contributions"
+                      }
+                    }
+                  }
+                }
+              }
       400:
         description: Returned on error
         body:
@@ -158,16 +188,72 @@ documentation:
             }
           }
     responses:
-      204:
+      201:
         description: Returned on successful authentication
         headers:
           Authorization:
             description: JSON Web Token needed to authenticate (bearer token format)
             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ
+        body:
+          application/vnd.api+json:
+            example: |
+              {
+                "data": {
+                  "id": "2",
+                  "type": "users",
+                  "links": {
+                    "self": "http://localhost:5000/api/users/2"
+                  },
+                  "attributes": {
+                    "firstName": "Savion",
+                    "lastName": "McDermott"
+                  },
+                  "relationships": {
+                    "decks": {
+                      "links": {
+                        "self": "http://localhost:5000/api/users/2/relationships/decks",
+                        "related": "http://localhost:5000/api/users/2/decks"
+                      }
+                    },
+                    "contributions": {
+                      "links": {
+                        "self": "http://localhost:5000/api/users/2/relationships/contributions",
+                        "related": "http://localhost:5000/api/users/2/contributions"
+                      }
+                    }
+                  }
+                }
+              }
       401:
         description: Returned on incorrect email or password
+        body:
+          application/vnd.api+json:
+            example: |
+              {
+                "errors": [
+                  {
+                    "title": "Unauthorized",
+                    "detail": "Incorrect email or password",
+                    "code": "401",
+                    "status": "401"
+                  }
+                ]
+              }
       403:
         description: Returned on account not activated yet
+        body:
+          application/vnd.api+json:
+            example: |
+              {
+                "errors": [
+                  {
+                    "title": "Account not confirmed",
+                    "detail": "Your account has not been confirmed yet",
+                    "code": "403",
+                    "status": "403"
+                  }
+                ]
+              }
   delete:
     is: [authenticated]
     description: Invalidate all tokens
@@ -223,7 +309,7 @@ documentation:
                 description: Should be set to `passwords`
                 type: string
               id:
-                description: Required by the JSON-API spec, unused in this spec
+                description: Required by the JSON-API spec, unused in this endpoint
                 type: string
               attributes:
                 type: object
