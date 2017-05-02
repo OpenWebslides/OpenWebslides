@@ -25,6 +25,7 @@ function feedReducer(state = initialState, action) {
       return Immutable.merge(state, {
         typeFilter: action.payload,
       });
+
     default:
       return state;
   }
