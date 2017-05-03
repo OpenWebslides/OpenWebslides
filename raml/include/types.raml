@@ -11,7 +11,7 @@ User:
           type: string
           required: true
         type:
-          description: Resource type, will always be `users`
+          description: Resource type, should be set to `users`
           type: string
           required: true
         attributes:
@@ -20,3 +20,35 @@ User:
             email: string
             firstName: string
             lastName?: string
+
+Confirmation:
+  type: object
+  properties:
+    data:
+      type: object
+      properties:
+        type:
+          description: Resource type, should be set to `confirmations`
+          type: string
+        attributes:
+          type: object
+          properties:
+            confirmationToken:
+              description: Confirmation token sent by email
+              type: string
+              example: SmiSe22FipwyyPY5Ljjk
+
+Token:
+  type: object
+  properties:
+    data:
+      type: object
+      properties:
+        type:
+          description: Should be set to `tokens`
+          type: string
+        attributes:
+          type: object
+          properties:
+            email: string
+            password: string

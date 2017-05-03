@@ -49,6 +49,7 @@ documentation:
       description: Get user
       responses:
         200:
+          description: Returned on success
           body:
             application/vnd.api+json:
               type: User
@@ -57,6 +58,8 @@ documentation:
     patch:
       is: [authenticated]
       description: Update user
+      responses:
+        201
     put:
       is: [authenticated]
       description: Update user
@@ -92,35 +95,14 @@ documentation:
     description: Confirm a user's email address using the `confirmation_token` sent by email
     body:
       application/vnd.api+json:
-        type: object
-        properties:
-          data:
-            type: object
-            properties:
-              type:
-                description: Should be set to `confirmations`
-                type: string
-              attributes:
-                type: object
-                properties:
-                  confirmationToken:
-                    description: Confirmation token sent by email
-                    type: string
-                    example: SmiSe22FipwyyPY5Ljjk
-        example: |
-          {
-            "data": {
-                "type": "confirmations",
-                "attributes" : {
-                    "confirmationToken": "SmiSe22FipwyyPY5Ljjk"
-                }
-            }
-          }
+        type: Confirmation
+        example: !include examples/confirmation.json
     responses:
       201:
         description: Returned on successful confirmation
         body:
           application/vnd.api+json:
+            type: User
             example: !include examples/user.json
       400:
         description: Returned on error
@@ -145,29 +127,8 @@ documentation:
     description: Obtain an authentication token
     body:
       application/vnd.api+json:
-        type: object
-        properties:
-          data:
-            type: object
-            properties:
-              type:
-                description: Should be set to `tokens`
-                type: string
-              attributes:
-                type: object
-                properties:
-                  email: string
-                  password: string
-        example: |
-          {
-            "data": {
-              "type": "tokens",
-              "attributes" : {
-                "email": "savion.mcdermott@altenwerthconsidine.org",
-                "password": "abcd1234"
-              }
-            }
-          }
+        type: Token
+        example: !include examples/token.json
     responses:
       201:
         description: Returned on successful authentication
@@ -177,6 +138,7 @@ documentation:
             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ
         body:
           application/vnd.api+json:
+            type: User
             example: !include examples/user.json
       401:
         description: Returned on incorrect email or password
@@ -292,6 +254,7 @@ documentation:
         description: Returned on successful reset
         body:
           application/vnd.api+json:
+            type: User
             example: !include examples/user.json
       400:
         description: Returned on error
