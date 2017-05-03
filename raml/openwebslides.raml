@@ -1,6 +1,7 @@
 #%RAML 1.0
 
 traits: !include include/traits.raml
+types: !include include/types.raml
 
 title: Open Webslides
 description: This is the documentation of the Open Webslides RESTful API.
@@ -46,6 +47,13 @@ documentation:
         description: User ID
     get:
       description: Get user
+      responses:
+        200:
+          body:
+            application/vnd.api+json:
+              type: User
+              example: !include examples/user.json
+
     patch:
       is: [authenticated]
       description: Update user
@@ -113,34 +121,7 @@ documentation:
         description: Returned on successful confirmation
         body:
           application/vnd.api+json:
-            example: |
-              {
-                "data": {
-                  "id": "2",
-                  "type": "users",
-                  "links": {
-                    "self": "http://localhost:5000/api/users/2"
-                  },
-                  "attributes": {
-                    "firstName": "Savion",
-                    "lastName": "McDermott"
-                  },
-                  "relationships": {
-                    "decks": {
-                      "links": {
-                        "self": "http://localhost:5000/api/users/2/relationships/decks",
-                        "related": "http://localhost:5000/api/users/2/decks"
-                      }
-                    },
-                    "contributions": {
-                      "links": {
-                        "self": "http://localhost:5000/api/users/2/relationships/contributions",
-                        "related": "http://localhost:5000/api/users/2/contributions"
-                      }
-                    }
-                  }
-                }
-              }
+            example: !include examples/user.json
       400:
         description: Returned on error
         body:
@@ -196,34 +177,7 @@ documentation:
             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ
         body:
           application/vnd.api+json:
-            example: |
-              {
-                "data": {
-                  "id": "2",
-                  "type": "users",
-                  "links": {
-                    "self": "http://localhost:5000/api/users/2"
-                  },
-                  "attributes": {
-                    "firstName": "Savion",
-                    "lastName": "McDermott"
-                  },
-                  "relationships": {
-                    "decks": {
-                      "links": {
-                        "self": "http://localhost:5000/api/users/2/relationships/decks",
-                        "related": "http://localhost:5000/api/users/2/decks"
-                      }
-                    },
-                    "contributions": {
-                      "links": {
-                        "self": "http://localhost:5000/api/users/2/relationships/contributions",
-                        "related": "http://localhost:5000/api/users/2/contributions"
-                      }
-                    }
-                  }
-                }
-              }
+            example: !include examples/user.json
       401:
         description: Returned on incorrect email or password
         body:
@@ -338,34 +292,7 @@ documentation:
         description: Returned on successful reset
         body:
           application/vnd.api+json:
-            example: |
-              {
-                "data": {
-                  "id": "2",
-                  "type": "users",
-                  "links": {
-                    "self": "http://localhost:5000/api/users/2"
-                  },
-                  "attributes": {
-                    "firstName": "Savion",
-                    "lastName": "McDermott"
-                  },
-                  "relationships": {
-                    "decks": {
-                      "links": {
-                        "self": "http://localhost:5000/api/users/2/relationships/decks",
-                        "related": "http://localhost:5000/api/users/2/decks"
-                      }
-                    },
-                    "contributions": {
-                      "links": {
-                        "self": "http://localhost:5000/api/users/2/relationships/contributions",
-                        "related": "http://localhost:5000/api/users/2/contributions"
-                      }
-                    }
-                  }
-                }
-              }
+            example: !include examples/user.json
       400:
         description: Returned on error
         body:

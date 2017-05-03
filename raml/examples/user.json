@@ -1,0 +1,28 @@
+{
+  "data": {
+    "id": "1",
+    "type": "users",
+    "links": {
+      "self": "http://localhost:5000/api/users/1"
+    },
+    "attributes": {
+      "email": "foo@bar",
+      "firstName": "Foo",
+      "lastName": "Bar"
+    },
+    "relationships": {
+      "decks": {
+        "links": {
+          "self": "http://localhost:5000/api/users/1/relationships/decks",
+          "related": "http://localhost:5000/api/users/1/decks"
+        }
+      },
+      "contributions": {
+        "links": {
+          "self": "http://localhost:5000/api/users/1/relationships/contributions",
+          "related": "http://localhost:5000/api/users/1/contributions"
+        }
+      }
+    }
+  }
+}

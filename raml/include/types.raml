@@ -1,0 +1,22 @@
+#%RAML 1.0
+
+User:
+  type: object
+  properties:
+    data:
+      type: object
+      properties:
+        id:
+          description: Numeric ID
+          type: string
+          required: true
+        type:
+          description: Resource type, will always be `users`
+          type: string
+          required: true
+        attributes:
+          type: object
+          properties:
+            email: string
+            firstName: string
+            lastName?: string
