@@ -264,7 +264,7 @@ documentation:
         description: Returned on incorrect token
 
 /password:
-  displayName: Reset password
+  displayName: Password
   description: Reset password API
   post:
     description: Request a `reset_password_token` sent by email
@@ -295,7 +295,7 @@ documentation:
       204:
         description: Always returned, whether or not the email address was valid
   put:
-    description: See [`PATCH`](#password_patch)
+    description: See [PATCH](#password_patch)
   patch:
     description: Reset a user's password using the `reset_password_token` sent by email
     body:
@@ -334,10 +334,53 @@ documentation:
             }
           }
     responses:
-      204:
+      200:
         description: Returned on successful reset
+        body:
+          application/vnd.api+json:
+            example: |
+              {
+                "data": {
+                  "id": "2",
+                  "type": "users",
+                  "links": {
+                    "self": "http://localhost:5000/api/users/2"
+                  },
+                  "attributes": {
+                    "firstName": "Savion",
+                    "lastName": "McDermott"
+                  },
+                  "relationships": {
+                    "decks": {
+                      "links": {
+                        "self": "http://localhost:5000/api/users/2/relationships/decks",
+                        "related": "http://localhost:5000/api/users/2/decks"
+                      }
+                    },
+                    "contributions": {
+                      "links": {
+                        "self": "http://localhost:5000/api/users/2/relationships/contributions",
+                        "related": "http://localhost:5000/api/users/2/contributions"
+                      }
+                    }
+                  }
+                }
+              }
       400:
         description: Returned on error
+        body:
+          application/vnd.api+json:
+            example: |
+              {
+                "errors": [
+                  {
+                    "title": "Reset_password_token is invalid",
+                    "detail": "Reset_password_token is invalid",
+                    "code": "400",
+                    "status": "400"
+                  }
+                ]
+              }
 
 /auth:
   displayName: OAuth2

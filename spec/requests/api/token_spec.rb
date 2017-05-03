@@ -10,7 +10,7 @@ RSpec.describe 'Token API', :type => :request do
   let(:password) { Faker::Internet.password 6 }
 
   describe 'Obtain an authentication token' do
-    def body(email, password)
+    def request_body(email, password)
       {
         :data => {
           :type => 'tokens',
@@ -19,23 +19,23 @@ RSpec.describe 'Token API', :type => :request do
             :password => password
           }
         }
-      }
+      }.to_json
     end
 
     it 'rejects invalid credentials' do
-      post_unauthenticated '/api/token', body(user.email, 'foo').to_json
+      post_unauthenticated '/api/token', request_body(user.email, 'foo')
 
       expect(response.status).to eq 401
     end
 
     it 'rejects unconfirmed users' do
-      post_unauthenticated '/api/token', body(unconfirmed_user.email, password).to_json
+      post_unauthenticated '/api/token', request_body(unconfirmed_user.email, password)
 
       expect(response.status).to eq 403
     end
 
     it 'returns a valid token' do
-      post_unauthenticated '/api/token', body(user.email, password).to_json
+      post_unauthenticated '/api/token', request_body(user.email, password)
 
       expect(response.status).to eq 201
       expect(response.headers['Authorization']).to start_with 'Bearer'
