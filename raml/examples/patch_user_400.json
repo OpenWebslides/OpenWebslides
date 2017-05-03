@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Param not allowed",
+      "detail": "email is not allowed.",
+      "code": "105",
+      "status": "400"
+    }
+  ]
+}

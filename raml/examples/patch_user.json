@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "users",
+    "id": "1",
+    "attributes": {
+      "firstName": "foo",
+      "lastName": "bar",
+      "password": "P@ssword1"
+    }
+  }
+}

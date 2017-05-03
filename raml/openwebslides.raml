@@ -36,7 +36,7 @@ documentation:
   displayName: Users
   description: User API
   get:
-    is: [paginated]
+    is: [ paginated, filtered ]
     description: List of all users
     responses:
       200:
@@ -53,10 +53,35 @@ documentation:
         type: object
         properties:
           data:
-            type: NewUser
+            type: object
+            properties:
+              type:
+                description: Resource type, should be set to `users`
+                type: string
+                required: true
+              attributes:
+                type: object
+                properties:
+                  email:
+                    description: Email address
+                    type: string
+                    required: true
+                  firstName:
+                    description: First name
+                    type: string
+                    required: true
+                  lastName:
+                    description: Last name
+                    type: string
+                    required: false
+                  password:
+                    description: Password
+                    type: string
+                    required: true
         example: !include examples/post_user.json
     responses:
       201:
+        description: User was successfully created
         body:
           application/vnd.api+json:
             type: object
@@ -64,10 +89,13 @@ documentation:
               data: User
             example: !include examples/get_user.json
       422:
+        description: Error while creating user
         body:
           application/vnd.api+json:
-            example: !include examples/post_user_error.json
-
+            type: object
+            properties:
+              errors: Error[]
+            example: !include examples/post_user_422.json
   /{id}:
     uriParameters:
       id: ID
@@ -81,37 +109,94 @@ documentation:
               properties:
                 data: User
               example: !include examples/get_user.json
-
+        404:
+          description: User not found
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/get_user_404.json
+    put:
+      description: See [PATCH](#users__id__patch)
     patch:
-      is: [authenticated]
+      is: [ authenticated ]
       description: Update user
+      body:
+        application/vnd.api+json:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id: ID
+                type:
+                  description: Resource type, should be set to `users`
+                  type: string
+                  required: true
+                attributes:
+                  type: object
+                  properties:
+                    firstName:
+                      description: First name
+                      type: string
+                      required: false
+                    lastName:
+                      description: Last name
+                      type: string
+                      required: false
+                    password:
+                      description: Password
+                      type: string
+                      required: false
+
+          example: !include examples/patch_user.json
       responses:
-        201
-    put:
-      is: [authenticated]
-      description: Update user
+        200:
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                data: User
+              example: !include examples/get_user.json
+        400:
+          description: Error while updating user
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/patch_user_400.json
+        404:
+          description: User not found
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/get_user_404.json
+        422:
+          description: Error while updating user
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/patch_user_422.json
     delete:
-      is: [authenticated]
+      is: [ authenticated ]
       description: Delete user
-
-/decks:
-  displayName: Decks
-  description: Slidedeck API
-  get:
-    description: List of all visible decks
-  post:
-    description: Create a new deck
-  /{id}:
-    uriParameters:
-      id: ID
-    get:
-      description: Get deck
-    patch:
-      description: Update deck
-    put:
-      description: Update deck
-    delete:
-      description: Delete deck
+      responses:
+        204:
+          description: User was successfully deleted
+        404:
+          description: User not found
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/get_user_404.json
 
 /confirmation:
   displayName: Confirmation
