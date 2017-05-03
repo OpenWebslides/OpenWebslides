@@ -7,8 +7,8 @@
     },
     "attributes": {
       "email": "foo@bar",
-      "firstName": "Foo",
-      "lastName": "Bar"
+      "firstName": "foo1",
+      "lastName": "bar"
     },
     "relationships": {
       "decks": {

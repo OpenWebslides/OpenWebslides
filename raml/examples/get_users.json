@@ -1,0 +1,86 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "users",
+      "links": {
+        "self": "http://localhost:5000/api/users/1"
+      },
+      "attributes": {
+        "email": "foo1@bar",
+        "firstName": "foo1",
+        "lastName": "bar"
+      },
+      "relationships": {
+        "decks": {
+          "links": {
+            "self": "http://localhost:5000/api/users/1/relationships/decks",
+            "related": "http://localhost:5000/api/users/1/decks"
+          }
+        },
+        "contributions": {
+          "links": {
+            "self": "http://localhost:5000/api/users/1/relationships/contributions",
+            "related": "http://localhost:5000/api/users/1/contributions"
+          }
+        }
+      }
+    },
+    {
+      "id": "2",
+      "type": "users",
+      "links": {
+        "self": "http://localhost:5000/api/users/2"
+      },
+      "attributes": {
+        "email": "foo2@bar",
+        "firstName": "foo2",
+        "lastName": "bar"
+      },
+      "relationships": {
+        "decks": {
+          "links": {
+            "self": "http://localhost:5000/api/users/2/relationships/decks",
+            "related": "http://localhost:5000/api/users/2/decks"
+          }
+        },
+        "contributions": {
+          "links": {
+            "self": "http://localhost:5000/api/users/2/relationships/contributions",
+            "related": "http://localhost:5000/api/users/2/contributions"
+          }
+        }
+      }
+    },
+    {
+      "id": "3",
+      "type": "users",
+      "links": {
+        "self": "http://localhost:5000/api/users/3"
+      },
+      "attributes": {
+        "email": "foo3@bar",
+        "firstName": "foo3",
+        "lastName": "bar"
+      },
+      "relationships": {
+        "decks": {
+          "links": {
+            "self": "http://localhost:5000/api/users/3/relationships/decks",
+            "related": "http://localhost:5000/api/users/3/decks"
+          }
+        },
+        "contributions": {
+          "links": {
+            "self": "http://localhost:5000/api/users/3/relationships/contributions",
+            "related": "http://localhost:5000/api/users/3/contributions"
+          }
+        }
+      }
+    }
+  ],
+  "links": {
+    "first": "http://localhost:5000/api/users?page%5Blimit%5D=10&page%5Boffset%5D=0",
+    "last": "http://localhost:5000/api/users?page%5Blimit%5D=10&page%5Boffset%5D=0"
+  }
+}

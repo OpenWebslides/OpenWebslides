@@ -38,22 +38,49 @@ documentation:
   get:
     is: [paginated]
     description: List of all users
+    responses:
+      200:
+        body:
+          application/vnd.api+json:
+            type: object
+            properties:
+              data: User[]
+            example: !include examples/get_users.json
   post:
-    description: Create a new user (sign up)
+    description: Create a new user
+    body:
+      application/vnd.api+json:
+        type: object
+        properties:
+          data:
+            type: NewUser
+        example: !include examples/post_user.json
+    responses:
+      201:
+        body:
+          application/vnd.api+json:
+            type: object
+            properties:
+              data: User
+            example: !include examples/get_user.json
+      422:
+        body:
+          application/vnd.api+json:
+            example: !include examples/post_user_error.json
+
   /{id}:
     uriParameters:
-      id:
-        type: integer
-        description: User ID
+      id: ID
     get:
       description: Get user
       responses:
         200:
-          description: Returned on success
           body:
             application/vnd.api+json:
-              type: User
-              example: !include examples/user.json
+              type: object
+              properties:
+                data: User
+              example: !include examples/get_user.json
 
     patch:
       is: [authenticated]
@@ -76,9 +103,7 @@ documentation:
     description: Create a new deck
   /{id}:
     uriParameters:
-      id:
-        type: integer
-        description: Deck ID
+      id: ID
     get:
       description: Get deck
     patch:
@@ -95,17 +120,20 @@ documentation:
     description: Confirm a user's email address using the `confirmation_token` sent by email
     body:
       application/vnd.api+json:
-        type: Confirmation
+        type: object
+        properties:
+          data: Confirmation
         example: !include examples/confirmation.json
     responses:
       201:
         description: Returned on successful confirmation
         body:
           application/vnd.api+json:
-            type: User
+            type: object
+            properties:
+              data: User
             example: !include examples/user.json
       400:
-        description: Returned on error
         body:
           application/vnd.api+json:
             example: |
@@ -127,7 +155,9 @@ documentation:
     description: Obtain an authentication token
     body:
       application/vnd.api+json:
-        type: Token
+        type: object
+        properties:
+          data: Token
         example: !include examples/token.json
     responses:
       201:
@@ -138,7 +168,9 @@ documentation:
             example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ
         body:
           application/vnd.api+json:
-            type: User
+            type: object
+            properties:
+              data: User
             example: !include examples/user.json
       401:
         description: Returned on incorrect email or password
@@ -254,10 +286,11 @@ documentation:
         description: Returned on successful reset
         body:
           application/vnd.api+json:
-            type: User
+            type: object
+            properties:
+              data: User
             example: !include examples/user.json
       400:
-        description: Returned on error
         body:
           application/vnd.api+json:
             example: |

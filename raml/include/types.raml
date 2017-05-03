@@ -3,52 +3,83 @@
 User:
   type: object
   properties:
-    data:
+    id:
+      description: Numeric ID
+      type: string
+      required: true
+    type:
+      description: Resource type, should be set to `users`
+      type: string
+      required: true
+    attributes:
       type: object
       properties:
-        id:
-          description: Numeric ID
+        email:
+          description: Email address
           type: string
           required: true
-        type:
-          description: Resource type, should be set to `users`
+        firstName:
+          description: First name
           type: string
           required: true
-        attributes:
-          type: object
-          properties:
-            email: string
-            firstName: string
-            lastName?: string
+        lastName:
+          description: Last name
+          type: string
+          required: false
+
+NewUser:
+  type: object
+  properties:
+    id:
+      description: Numeric ID
+      type: string
+      required: false
+    type:
+      description: Resource type, should be set to `users`
+      type: string
+      required: true
+    attributes:
+      type: object
+      properties:
+        email:
+          description: Email address
+          type: string
+          required: true
+        firstName:
+          description: First name
+          type: string
+          required: true
+        lastName:
+          description: Last name
+          type: string
+          required: false
+        password:
+          description: Password
+          type: string
+          required: true
 
 Confirmation:
   type: object
   properties:
-    data:
+    type:
+      description: Resource type, should be set to `confirmations`
+      type: string
+    attributes:
       type: object
       properties:
-        type:
-          description: Resource type, should be set to `confirmations`
+        confirmationToken:
+          description: Confirmation token sent by email
           type: string
-        attributes:
-          type: object
-          properties:
-            confirmationToken:
-              description: Confirmation token sent by email
-              type: string
-              example: SmiSe22FipwyyPY5Ljjk
+          example: SmiSe22FipwyyPY5Ljjk
 
 Token:
   type: object
   properties:
-    data:
+    type:
+      description: Should be set to `tokens`
+      type: string
+    attributes:
       type: object
       properties:
-        type:
-          description: Should be set to `tokens`
-          type: string
-        attributes:
-          type: object
-          properties:
-            email: string
-            password: string
+        email: string
+        password: string
