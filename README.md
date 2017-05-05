@@ -1,4 +1,4 @@
-# Open Webslides [![Travis](https://travis-ci.org/OpenWebslides/OpenWebslides.svg?branch=master)](https://travis-ci.org/OpenWebslides/OpenWebslides)
+# Open Webslides [![Travis](https://travis-ci.org/OpenWebslides/OpenWebslides.svg?branch=master)](https://travis-ci.org/OpenWebslides/OpenWebslides) [![Coverage Status](https://coveralls.io/repos/github/OpenWebslides/OpenWebslides/badge.svg)](https://coveralls.io/github/OpenWebslides/OpenWebslides)
 
 [Open Webslides](https://openwebslides.github.io) is an open-source co-creation platform.
 
