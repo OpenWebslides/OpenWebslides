@@ -19,7 +19,7 @@ RSpec.describe 'Confirmation API', :type => :request do
   end
 
   it 'rejects invalid confirmation tokens' do
-    post_unauthenticated '/api/confirmation', request_body('foo')
+    post_unauthenticated api_confirmation_path, request_body('foo')
 
     expect(response.status).to eq 400
   end
@@ -27,7 +27,7 @@ RSpec.describe 'Confirmation API', :type => :request do
   it 'confirm a user' do
     expect(user.confirmed?).not_to be true
 
-    post_unauthenticated '/api/confirmation', request_body(user.confirmation_token)
+    post_unauthenticated api_confirmation_path, request_body(user.confirmation_token)
 
     expect(response.status).to eq 201
 

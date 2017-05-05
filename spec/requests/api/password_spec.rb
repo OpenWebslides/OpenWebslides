@@ -36,19 +36,19 @@ RSpec.describe 'Password API', :type => :request do
 
   describe 'request a password reset' do
     it 'accepts unconfirmed users' do
-      post_unauthenticated '/api/password', request_body(unconfirmed_user.email)
+      post_unauthenticated api_password_path, request_body(unconfirmed_user.email)
 
       expect(response.status).to eq 204
     end
 
     it 'accepts invalid emails' do
-      post_unauthenticated '/api/password', request_body('foo')
+      post_unauthenticated api_password_path, request_body('foo')
 
       expect(response.status).to eq 204
     end
 
     it 'requests a password reset token' do
-      post_unauthenticated '/api/password', request_body(user.email)
+      post_unauthenticated api_password_path, request_body(user.email)
 
       expect(response.status).to eq 204
     end
@@ -62,7 +62,7 @@ RSpec.describe 'Password API', :type => :request do
       new_password = Faker::Internet.password 6
       expect(password).not_to eql new_password
 
-      patch_unauthenticated '/api/password', reset_body('foo', new_password)
+      patch_unauthenticated api_password_path, reset_body('foo', new_password)
 
       expect(response.status).to eq 400
     end
@@ -73,7 +73,7 @@ RSpec.describe 'Password API', :type => :request do
 
       expect(password).not_to eql new_password
 
-      patch_unauthenticated '/api/password', reset_body(token, new_password)
+      patch_unauthenticated api_password_path, reset_body(token, new_password)
 
       expect(response.status).to eq 200
 
@@ -88,7 +88,7 @@ RSpec.describe 'Password API', :type => :request do
 
       expect(password).not_to eql new_password
 
-      patch_unauthenticated '/api/password', reset_body(token, new_password)
+      patch_unauthenticated api_password_path, reset_body(token, new_password)
 
       expect(response.status).to eq 200
 

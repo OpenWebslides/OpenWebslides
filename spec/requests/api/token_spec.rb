@@ -23,19 +23,19 @@ RSpec.describe 'Token API', :type => :request do
     end
 
     it 'rejects invalid credentials' do
-      post_unauthenticated '/api/token', request_body(user.email, 'foo')
+      post_unauthenticated api_token_path, request_body(user.email, 'foo')
 
       expect(response.status).to eq 401
     end
 
     it 'rejects unconfirmed users' do
-      post_unauthenticated '/api/token', request_body(unconfirmed_user.email, password)
+      post_unauthenticated api_token_path, request_body(unconfirmed_user.email, password)
 
       expect(response.status).to eq 403
     end
 
     it 'returns a valid token' do
-      post_unauthenticated '/api/token', request_body(user.email, password)
+      post_unauthenticated api_token_path, request_body(user.email, password)
 
       expect(response.status).to eq 201
       expect(response.headers['Authorization']).to start_with 'Bearer'
@@ -47,7 +47,7 @@ RSpec.describe 'Token API', :type => :request do
 
   describe 'Invalidate all tokens' do
     it 'rejects unauthenticated requests' do
-      delete_unauthenticated '/api/token'
+      delete_unauthenticated api_token_path
 
       expect(response.status).to eq 401
     end
@@ -58,7 +58,7 @@ RSpec.describe 'Token API', :type => :request do
 
       expect(JWT::Auth::Token.from_token jwt).to be_valid
 
-      delete_authenticated user, '/api/token'
+      delete_authenticated user, api_token_path
 
       expect(response.status).to eq 204
       expect(JWT::Auth::Token.from_token jwt).not_to be_valid
