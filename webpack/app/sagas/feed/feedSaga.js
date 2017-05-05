@@ -1,11 +1,15 @@
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
 
 import { types } from 'actions/feedActions';
-import feedApiCall from './feedApiCall';
+import feedApiCall from 'api/feedApiCall';
 
 export function* getFeedFlow() {
   try {
-    const listOfNotifications = feedApiCall();
+    const listOfNotifications = yield call(feedApiCall);
+
+    if (!listOfNotifications) {
+      throw new Error('Received undefined list.');
+    }
 
     yield put({
       type: types.RECEIVED_LIST,
@@ -18,7 +22,6 @@ export function* getFeedFlow() {
       type: types.RECEPTION_ERROR,
       payload: {
         message: error.message,
-        statusCode: error.statusCode,
       },
     });
   }
