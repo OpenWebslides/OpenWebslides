@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module RequestsHelper
+module RequestHelper
   ##
   # Use the following methods to add the appropriate headers
   # - get_unauthenticated

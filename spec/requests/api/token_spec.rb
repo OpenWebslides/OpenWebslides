@@ -2,8 +2,6 @@
 
 require 'rails_helper'
 
-include RequestsHelper
-
 RSpec.describe 'Token API', :type => :request do
   let(:unconfirmed_user) { create :user, :password => password }
   let(:user) { create :user, :confirmed, :password => password }

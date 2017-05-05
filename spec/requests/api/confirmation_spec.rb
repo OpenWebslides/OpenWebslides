@@ -2,8 +2,6 @@
 
 require 'rails_helper'
 
-include RequestsHelper
-
 RSpec.describe 'Confirmation API', :type => :request do
   let(:user) { create :user }
 
