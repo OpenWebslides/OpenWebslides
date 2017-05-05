@@ -23,7 +23,7 @@ function feedReducer(state = initialState, action) {
       });
     case types.CHANGE_TYPE_FILTER:
       return Immutable.merge(state, {
-        typeFilter: action.payLoad,
+        typeFilter: action.payload,
       });
     default:
       return state;
