@@ -7,7 +7,7 @@ import {
   SIGNIN_USER_SUCCESS,
 } from 'actions/signinActions';
 
-describe('Signin Reducer', () => {
+describe('Auth Reducer', () => {
   const emptyState = undefined;
 
   it('has a default immutable state', () => {
@@ -21,26 +21,22 @@ describe('Signin Reducer', () => {
       Immutable({
         isAuthenticated: false,
         authToken: undefined,
-        firstName: undefined,
       }));
   });
 
-  it('can resolve SIGNIN_SUCCESS action', () => {
+  it('can resolve SIGNIN_USER_SUCCESS action', () => {
     const fakeToken = faker.random.uuid();
-    const fakeFirstName = faker.name.firstName();
 
     expect(
       authReducer(emptyState, {
         type: SIGNIN_USER_SUCCESS,
         payload: {
           authToken: fakeToken,
-          firstName: fakeFirstName,
         },
       }))
       .toEqual(Immutable({
         isAuthenticated: true,
         authToken: fakeToken,
-        firstName: fakeFirstName,
       }));
   });
 });

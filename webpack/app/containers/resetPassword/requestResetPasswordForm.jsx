@@ -3,30 +3,22 @@ import PropTypes from 'prop-types';
 
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
-import { browserHistory } from 'react-router';
 
 // Input Fields
 import inputField from 'presentationals/formFields/inputField';
 
 // Actions
-import { signinUser } from 'actions/signinActions';
+import { requestResetPassword } from 'actions/resetPasswordActions';
 
 // Field validation
-export function validate(values) {
-  const {
-    email,
-    password } = values;
-
+function validate(values) {
+  const { email } = values;
   const errors = {};
 
   if (!email || email.trim() === '') {
     errors.email = 'Email is required';
-  } else if (!isEmail(email)) {
+  } else if (!isEmail(email.trim())) {
     errors.email = 'Email is invalid';
-  }
-
-  if (!password || password.trim() === '') {
-    errors.password = 'Password is required';
   }
 
   return errors;
@@ -35,15 +27,26 @@ export function validate(values) {
 // Submit validation
 function validateAndSubmit(values, dispatch) {
   return new Promise((resolve, reject) => {
-    dispatch(signinUser({ values, resolve, reject }));
+    dispatch(requestResetPassword({ values, resolve, reject }));
   });
 }
 
 // Form
-function SigninForm(props) {
+function resetPasswordForm(props) {
+  if (props.submitSucceeded) {
+    return (
+      <div>
+        <h4>
+          If the account was registered with us,
+          you will receive an email with further instructions
+        </h4>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h1>Sign in</h1>
+      <h1>Reset Password</h1>
       <form onSubmit={props.handleSubmit(validateAndSubmit)}>
 
         <Field
@@ -52,30 +55,19 @@ function SigninForm(props) {
           placeholder="Email"
         />
 
-        <Field
-          component={inputField}
-          name="password"
-          placeholder="Password"
-          type="password"
-        />
-
-        {props.error && <strong>{props.error}</strong>}
-
-        <button type="submit">Sign in</button>
+        <button type="submit">Submit</button>
       </form>
     </div >
   );
 }
 
-SigninForm.propTypes = {
+resetPasswordForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.string.isRequired,
+  submitSucceeded: PropTypes.bool.isRequired,
 };
 
 export default reduxForm({
-  form: 'signin',
+  form: 'requetResetPassword',
   validate,
   getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => browserHistory.push('/'),
-})(SigninForm);
-
+})(resetPasswordForm);

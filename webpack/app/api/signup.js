@@ -1,9 +1,9 @@
 import asyncFetch from 'api/helpers/asyncFetch';
 import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
 
-async function confirmEmail(confirmationToken) {
-  const CONFIRM_EMAIL_API_URL = 'http://localhost:5000/api/confirmation';
+export const SIGNUP_API_URL = 'http://localhost:5000/api/users';
 
+async function signup(email, password, firstName, lastName) {
   const baseRequestConfig = getBaseRequestConfig();
 
   const requestConfig = Object.assign({}, baseRequestConfig, {
@@ -11,17 +11,18 @@ async function confirmEmail(confirmationToken) {
     body: JSON.stringify(
       {
         data: {
-          type: 'confirmations',
+          type: 'users',
           attributes: {
-            confirmationToken,
+            email,
+            password,
+            firstName,
+            lastName,
           },
         },
       }),
   });
 
-  const response = await asyncFetch(CONFIRM_EMAIL_API_URL, requestConfig);
-
-  return response.json();
+  return asyncFetch(SIGNUP_API_URL, requestConfig);
 }
 
-export default confirmEmail;
+export default signup;

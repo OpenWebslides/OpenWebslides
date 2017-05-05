@@ -1,9 +1,9 @@
-import asyncFetch from 'api/helpers/asyncFetch';
-import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
+import asyncFetch from './helpers/asyncFetch';
+import getBaseRequestConfig from './helpers/baseRequestConfig';
 
-async function signin(email, password) {
-  const SIGNIN_API_URL = 'http://localhost:5000/api/token';
+export const SIGNIN_API_URL = 'http://localhost:5000/api/token';
 
+async function emailSignin(email, password) {
   const baseRequestConfig = getBaseRequestConfig();
 
   const requestConfig = Object.assign({}, baseRequestConfig, {
@@ -21,13 +21,10 @@ async function signin(email, password) {
   });
 
   const response = await asyncFetch(SIGNIN_API_URL, requestConfig);
-  const responseBody = await response.json();
-
   const bearerResponseHeader = response.headers.get('Authorization');
   const authToken = bearerResponseHeader.split(' ')[1];
-  const firstName = responseBody.data.attributes.firstName;
 
-  return { authToken, firstName };
+  return { authToken };
 }
 
-export default signin;
+export default emailSignin;

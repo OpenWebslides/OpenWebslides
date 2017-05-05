@@ -1,18 +1,29 @@
-import ApiCallError from 'errors/apiCallError';
+import {
+  ClientError,
+  ServerError,
+  ValidationError,
+} from './errors';
 
-// Async wrapper for api calls with extendable configuration object
-async function asyncFetch(url, requestConfig = {}) {
+export default async function asyncFetch(url, requestConfig = {}) {
   const response = await fetch(url, requestConfig);
+  const responseBody = await response.json();
+  const { statusText, status } = response;
 
-  const isSuccess = response.status >= 200 && response.status < 300;
-
-  if (isSuccess) {
-    return response;
+  switch (status) {
+    case 400:
+    case 401:
+    case 403:
+      throw new ClientError(statusText, status);
+    case 422:
+      throw new ValidationError(statusText, status, responseBody.errors);
+    case 500:
+    case 501:
+    case 502:
+    case 503:
+    case 504:
+    case 505:
+      throw new ServerError(statusText, status);
+    default:
+      return response;
   }
-
-  throw new ApiCallError(
-    response.statusText,
-    response.status);
 }
-
-export default asyncFetch;

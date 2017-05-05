@@ -5,7 +5,7 @@ import {
   SIGNUP_USER,
 } from 'actions/signupActions';
 
-import signupApiCall from 'api/signupApi';
+import signupApi from 'api/signup';
 
 export function* doSignup(action) {
   const { resolve, reject } = action.meta;
@@ -13,13 +13,21 @@ export function* doSignup(action) {
   try {
     const { email, password, firstName, lastName } = action.meta.values;
 
-    yield call(signupApiCall, email, password, firstName, lastName);
+    yield call(signupApi, email, password, firstName, lastName);
 
     yield call(resolve);
   } catch (error) {
-    yield call(
-      reject,
-      new SubmissionError({ _error: 'Something went wrong' }));
+    let errorMessage;
+
+    switch (error.statusCode) {
+      case 422:
+        yield errorMessage = error.validationErrors;
+        break;
+      default:
+        yield errorMessage = { _error: 'Something went wrong on our end.' };
+    }
+
+    yield call(reject, new SubmissionError(errorMessage));
   }
 }
 

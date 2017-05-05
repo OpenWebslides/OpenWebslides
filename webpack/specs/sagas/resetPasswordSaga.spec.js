@@ -2,27 +2,21 @@ import faker from 'faker';
 import { call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import * as signupSaga from 'sagas/signupSaga';
-import signupApi from 'api/signup';
+import * as resetPasswordSaga from 'sagas/resetPassword/resetPasswordSaga';
+import resetPasswordApi from 'api/resetPassword/resetPassword';
 
-describe('Signup Saga', () => {
-  describe('Signup Flow', () => {
-    const fakeEmail = faker.internet.email();
+describe('Reset Password Saga', () => {
+  describe('Reset Password Flow', () => {
     const fakePassword = faker.internet.password();
-    const fakeFirstName = faker.name.firstName();
-    const fakeLastName = faker.name.lastName();
+    const fakePasswordToken = faker.random.alphaNumeric(20);
     const resolve = jest.fn();
     const reject = jest.fn();
 
     it('has a happy path', () => {
-      const generator = signupSaga.doSignup({
+      const generator = resetPasswordSaga.doResetPassword({
         meta: {
-          values: {
-            email: fakeEmail,
-            password: fakePassword,
-            firstName: fakeFirstName,
-            lastName: fakeLastName,
-          },
+          password: fakePassword,
+          resetPasswordToken: fakePasswordToken,
           resolve,
           reject,
         },
@@ -31,7 +25,7 @@ describe('Signup Saga', () => {
       expect(
         generator.next().value)
         .toEqual(
-        call(signupApi, fakeEmail, fakePassword, fakeFirstName, fakeLastName));
+        call(resetPasswordApi, fakePasswordToken, fakePassword));
 
       expect(
         generator.next().value)
@@ -44,19 +38,14 @@ describe('Signup Saga', () => {
         .toBeTruthy();
     });
 
-    it('throws an error when field validation fails', () => {
+    it('throws an error when password reset token is invalid', () => {
       const fakeErrorMessage = faker.lorem.sentence();
-      const fakeStatusCode = 422;
-      const fakeValidationError = { email: 'Email has already been taken' };
+      const fakeStatusCode = 400;
 
-      const generator = signupSaga.doSignup({
+      const generator = resetPasswordSaga.doResetPassword({
         meta: {
-          values: {
-            email: fakeEmail,
-            password: fakePassword,
-            firstName: fakeFirstName,
-            lastName: fakeLastName,
-          },
+          resetPasswordToken: fakePasswordToken,
+          password: fakePassword,
           resolve,
           reject,
         },
@@ -65,15 +54,14 @@ describe('Signup Saga', () => {
       expect(
         generator.next().value)
         .toEqual(
-        call(signupApi, fakeEmail, fakePassword, fakeFirstName, fakeLastName));
+        call(resetPasswordApi, fakePasswordToken, fakePassword));
 
       expect(
         generator.throw({
           message: fakeErrorMessage,
           statusCode: fakeStatusCode,
-          validationErrors: fakeValidationError,
         }).value)
-        .toEqual({ email: 'Email has already been taken' });
+        .toEqual({ _error: 'Password reset token is invalid.' });
 
       expect(
         generator.next().value)
@@ -89,14 +77,10 @@ describe('Signup Saga', () => {
       const fakeErrorMessage = faker.lorem.sentence();
       const fakeStatusCode = 500;
 
-      const generator = signupSaga.doSignup({
+      const generator = resetPasswordSaga.doResetPassword({
         meta: {
-          values: {
-            email: fakeEmail,
-            password: fakePassword,
-            firstName: fakeFirstName,
-            lastName: fakeLastName,
-          },
+          resetPasswordToken: fakePasswordToken,
+          password: fakePassword,
           resolve,
           reject,
         },
@@ -105,7 +89,7 @@ describe('Signup Saga', () => {
       expect(
         generator.next().value)
         .toEqual(
-        call(signupApi, fakeEmail, fakePassword, fakeFirstName, fakeLastName));
+        call(resetPasswordApi, fakePasswordToken, fakePassword));
 
       expect(
         generator.throw({

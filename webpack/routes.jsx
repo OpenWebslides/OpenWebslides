@@ -7,29 +7,19 @@ import { Route, IndexRoute } from 'react-router';
 import FeedPage from 'pages/feedPage';
 import SignupPage from 'pages/signupPage';
 import SigninPage from 'pages/signinPage';
-import ResetPasswordPage from 'pages/resetPasswordPage';
+import RequestResetPasswordPage from 'pages/resetPassword/requestResetPasswordPage';
+import ResetPasswordPage from 'pages/resetPassword/resetPasswordPage';
 import EmailConfirmationPage from 'pages/emailConfirmationPage';
-
-// // Redirects to /signin when not authenticated
-// const UserIsAuthenticated = UserAuthWrapper({
-//   // Get the current auth state
-//   authSelector: state => state.local.auth,
-//   // Checks the isAuthenticated value in the auth state to determine if a user is authenticated
-//   predicate: auth => auth.isAuthenticated,
-//   // React-redux-router action to dispatch for redirect
-//   redirectAction: routerActions.replace,
-//   // Path we want to redirect to
-//   failureRedirectPath: '/signin',
-//   // A descriptive name for this auth check
-//   wrapperDisplayName: 'UserIsAuthenticated',
-// });
+import OAuthCallbackPage from 'pages/oauthCallbackPage';
 
 export default (
   <Route path="/">
     <IndexRoute component={FeedPage} />
     <Route path="/signup" component={SignupPage} />
     <Route path="/signin" component={SigninPage} />
-    <Route path="/confirm_email" component={EmailConfirmationPage} />
+    <Route path="/confirmation" component={EmailConfirmationPage} />
+    <Route path="/request_reset_password" component={RequestResetPasswordPage} />
+    <Route path="/auth/omniauth" component={OAuthCallbackPage} />
     <Route path="/reset_password" component={ResetPasswordPage} />
   </Route>
 );

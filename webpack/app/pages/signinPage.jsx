@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import SigninForm from 'containers/signinForm';
+import EmailSigninForm from 'containers/emailSigninForm';
+import ExternalAuthLinks from 'presentationals/externalAuthLinks';
 
 function signinPage() {
   return (
     <div>
-      <SigninForm />
+      <EmailSigninForm />
       <Link to="/reset_password">Forgot Password?</Link>
+      <ExternalAuthLinks />
     </div>
   );
 }

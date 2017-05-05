@@ -1,6 +1,6 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
-import confirmEmailApi from 'api/confirmEmailApi';
+import confirmEmailApi from 'api/confirmEmail';
 
 import {
   CONFIRM_EMAIL,
