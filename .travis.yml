@@ -1,12 +1,12 @@
 language: ruby
-
-services:
-  - docker
-
-install: true
-
+rvm:
+  - 2.4.1
+cache: bundler
+env:
+  - RAILS_ENV=test CI=true TRAVIS=true
 before_script:
-  - docker build -t openwebslides .
-
+  - bundle exec rails db:create
+  - bundle exec rails db:migrate
+  - bundle exec rails db:sample
 script:
-  - docker run --rm openwebslides bash -e /app/travis.sh
+  - bundle exec rspec
