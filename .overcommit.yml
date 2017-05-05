@@ -48,6 +48,8 @@ PreCommit:
     enabled: true
   EsLint:
     enabled: true
+    required_executable: './node_modules/.bin/eslint'
+    command: ['./node_modules/.bin/eslint']
   HardTabs:
     enabled: true
   JsonSyntax:
