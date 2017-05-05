@@ -1,12 +1,23 @@
 language: ruby
 rvm:
   - 2.4.1
-cache: bundler
+cache:
+  bundler: true
+  directories:
+    - node_modules
+  yarn: true
 env:
   - RAILS_ENV=test CI=true TRAVIS=true
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm install -g yarn
+  - yarn
 before_script:
   - bundle exec rails db:create
   - bundle exec rails db:migrate
   - bundle exec rails db:sample
 script:
   - bundle exec rspec
+  - yarn run test
