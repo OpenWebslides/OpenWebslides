@@ -9,4 +9,4 @@ before_script:
   - docker build -t openwebslides .
 
 script:
-  - docker run --rm openwebslides bash -c /app/travis.sh
+  - docker run --rm openwebslides bash -e /app/travis.sh
