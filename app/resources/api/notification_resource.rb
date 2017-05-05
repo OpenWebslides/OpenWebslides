@@ -22,6 +22,10 @@ module Api
     ##
     # Methods
     #
+    def self.sortable_fields(context)
+      []
+    end
+
     def created_at
       @model.created_at.to_i.to_s
     end

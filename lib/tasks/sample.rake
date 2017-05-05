@@ -52,6 +52,8 @@ namespace :db do
       u4d1 = FactoryGirl.create :deck, :owner => u4, :name => 'u4d1'
       u4d2 = FactoryGirl.create :deck, :owner => u4, :name => 'u4d2', :state => :protected_access
       u4d3 = FactoryGirl.create :deck, :owner => u4, :name => 'u4d3', :state => :private_access
+
+      Notification.create :event_type => :deck_created, :deck => Deck.first, :user => User.first
     end
   end
 end
