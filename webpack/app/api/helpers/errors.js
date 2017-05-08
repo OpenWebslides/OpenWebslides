@@ -1,39 +1,21 @@
 import parseValidationErrors from './parseValidationErrors';
 
-export class ServerError extends Error {
+export class ApiError extends Error {
   constructor(message, statusCode) {
     super(message);
 
     this.message = message;
     this.statusCode = statusCode;
-
-    this.stack = (new Error(message)).stack;
-    this.name = 'ServerError';
+    this.stack = new Error(message).stack;
+    this.name = 'ApiError';
   }
 }
 
-export class ClientError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-
-    this.message = message;
-    this.statusCode = statusCode;
-
-    this.stack = (new Error(message)).stack;
-    this.name = 'ClientError';
-  }
-}
-
-export class ValidationError extends Error {
+export class ValidationError extends ApiError {
   constructor(message, statusCode, errors) {
-    super(message);
+    super(message, statusCode);
 
-    this.message = message;
-    this.statusCode = statusCode;
     this.validationErrors = parseValidationErrors(errors);
-
-    this.stack = (new Error(message)).stack;
     this.name = 'ValidationError';
   }
 }
-

@@ -1,8 +1,4 @@
-import {
-  ClientError,
-  ServerError,
-  ValidationError,
-} from './errors';
+import { ApiError, ValidationError } from './errors';
 
 export default async function asyncFetch(url, requestConfig = {}) {
   const response = await fetch(url, requestConfig);
@@ -13,7 +9,7 @@ export default async function asyncFetch(url, requestConfig = {}) {
     case 400:
     case 401:
     case 403:
-      throw new ClientError(statusText, status);
+      throw new ApiError(statusText, status);
     case 422:
       throw new ValidationError(statusText, status, responseBody.errors);
     case 500:
@@ -22,7 +18,7 @@ export default async function asyncFetch(url, requestConfig = {}) {
     case 503:
     case 504:
     case 505:
-      throw new ServerError(statusText, status);
+      throw new ApiError(statusText, status);
     default:
       return response;
   }
