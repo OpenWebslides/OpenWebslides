@@ -8,18 +8,17 @@ async function signup(email, password, firstName, lastName) {
 
   const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
-    body: JSON.stringify(
-      {
-        data: {
-          type: 'users',
-          attributes: {
-            email,
-            password,
-            firstName,
-            lastName,
-          },
+    body: JSON.stringify({
+      data: {
+        type: 'users',
+        attributes: {
+          email,
+          password,
+          firstName,
+          lastName,
         },
-      }),
+      },
+    }),
   });
 
   return asyncFetch(SIGNUP_API_URL, requestConfig);

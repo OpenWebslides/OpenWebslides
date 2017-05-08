@@ -8,15 +8,14 @@ async function resetPassword(email) {
 
   const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
-    body: JSON.stringify(
-      {
-        data: {
-          type: 'passwords',
-          attributes: {
-            email,
-          },
+    body: JSON.stringify({
+      data: {
+        type: 'passwords',
+        attributes: {
+          email,
         },
-      }),
+      },
+    }),
   });
 
   return asyncFetch(REQUEST_PASSWORD_RESET_API_URL, requestConfig);

@@ -8,16 +8,15 @@ async function emailSignin(email, password) {
 
   const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
-    body: JSON.stringify(
-      {
-        data: {
-          type: 'tokens',
-          attributes: {
-            email,
-            password,
-          },
+    body: JSON.stringify({
+      data: {
+        type: 'tokens',
+        attributes: {
+          email,
+          password,
         },
-      }),
+      },
+    }),
   });
 
   const response = await asyncFetch(SIGNIN_API_URL, requestConfig);

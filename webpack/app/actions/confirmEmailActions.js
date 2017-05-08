@@ -5,8 +5,8 @@ export const CONFIRM_EMAIL_FAILURE = 'CONFIRM_EMAIL_FAILURE';
 
 // Action Creators
 export function confirmEmail(confirmationToken) {
-  return ({
+  return {
     type: CONFIRM_EMAIL,
     meta: { confirmationToken },
-  });
+  };
 }

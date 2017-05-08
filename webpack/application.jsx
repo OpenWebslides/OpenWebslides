@@ -2,21 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-
 import routes from './routes';
-import store from './store';
+import configureStore from './configureStore';
 
-const history = syncHistoryWithStore(
-  browserHistory,
-  store,
-  { selectLocationState: state => state.vendor.routing },
-);
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={browserHistory}>
       {routes}
     </Router>
   </Provider>,
-  document.getElementById('main'));
+  document.getElementById('main'),
+);

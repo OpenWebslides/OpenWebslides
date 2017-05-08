@@ -8,15 +8,14 @@ async function confirmEmail(confirmationToken) {
 
   const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
-    body: JSON.stringify(
-      {
-        data: {
-          type: 'confirmations',
-          attributes: {
-            confirmationToken,
-          },
+    body: JSON.stringify({
+      data: {
+        type: 'confirmations',
+        attributes: {
+          confirmationToken,
         },
-      }),
+      },
+    }),
   });
 
   return asyncFetch(CONFIRM_EMAIL_API_URL, requestConfig);

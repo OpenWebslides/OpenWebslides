@@ -8,17 +8,16 @@ async function resetPassword(resetPasswordToken, password) {
 
   const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'PUT',
-    body: JSON.stringify(
-      {
-        data: {
-          type: 'passwords',
-          id: '',
-          attributes: {
-            resetPasswordToken,
-            password,
-          },
+    body: JSON.stringify({
+      data: {
+        type: 'passwords',
+        id: '',
+        attributes: {
+          resetPasswordToken,
+          password,
         },
-      }),
+      },
+    }),
   });
 
   return asyncFetch(RESET_PASSWORD_API_URL, requestConfig);
