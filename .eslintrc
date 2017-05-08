@@ -1,5 +1,17 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "all",
+        "singleQuote": true
+      }
+    ]
+  },
   "parserOptions": {
     "ecmaVersion": 8,
     "sourceType": "module",
@@ -14,6 +26,7 @@
   },
   "plugins": [
     "react",
+    "prettier",
     "import"
   ],
   "settings": {
