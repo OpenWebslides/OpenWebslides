@@ -1,0 +1,37 @@
+{
+  "data": {
+    "id": "1",
+    "type": "notifications",
+    "links": {
+      "self": "http://localhost:5000/api/notifications/1"
+    },
+    "attributes": {
+      "eventType": "deck_created",
+      "createdAt": "1493993177",
+      "userName": "Foo Bar",
+      "deckName": "Foobar"
+    },
+    "relationships": {
+      "user": {
+        "links": {
+          "self": "http://localhost:5000/api/notifications/1/relationships/user",
+          "related": "http://localhost:5000/api/notifications/1/user"
+        },
+        "data": {
+          "type": "users",
+          "id": "1"
+        }
+      },
+      "deck": {
+        "links": {
+          "self": "http://localhost:5000/api/notifications/1/relationships/deck",
+          "related": "http://localhost:5000/api/notifications/1/deck"
+        },
+        "data": {
+          "type": "decks",
+          "id": "1"
+        }
+      }
+    }
+  }
+}

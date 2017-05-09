@@ -37,7 +37,7 @@ documentation:
   description: User API
   get:
     is: [ paginated, filtered ]
-    description: List of all users
+    description: Get all users
     responses:
       200:
         body:
@@ -197,6 +197,42 @@ documentation:
               properties:
                 errors: Error[]
               example: !include examples/get_user_404.json
+
+/notifications:
+  displayName: Notifications
+  description: Social feed API
+  get:
+    is: [ paginated, filtered ]
+    description: Get all notifications
+    responses:
+      200:
+        body:
+          application/vnd.api+json:
+            type: object
+            properties:
+              data: Notification[]
+            example: !include examples/get_notifications.json
+  /{id}:
+    uriParameters:
+      id: ID
+    get:
+      description: Get notification
+      responses:
+        200:
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                data: Notification
+              example: !include examples/get_notification.json
+        404:
+          description: User not found
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/get_notification_404.json
 
 /confirmation:
   displayName: Confirmation

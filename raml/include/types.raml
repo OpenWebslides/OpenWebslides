@@ -78,6 +78,30 @@ User:
     links?: Links
     meta?: Meta
 
+Notification:
+  type: object
+  properties:
+    id: ID
+    type:
+      description: Resource type, should be set to `notifications`
+      type: string
+      required: true
+    attributes:
+      type: object
+      properties:
+        eventType:
+          description: Event type
+          enum: [deck_created, deck_updated]
+        createdAt:
+          description: Timestamp of event
+          type: integer
+        userName:
+          description: Full name of the related user
+          type: string
+        deckName:
+          description: Name of the slidedeck
+          type: string
+
 Confirmation:
   type: object
   properties:
