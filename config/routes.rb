@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
     jsonapi_resources :users
     jsonapi_resources :decks
-    jsonapi_resources :notifications, :only => :index
+    jsonapi_resources :notifications, :only => %i[index show]
 
     jsonapi_resource :confirmation, :only => :create
     jsonapi_resource :token, :only => %i[create destroy]
