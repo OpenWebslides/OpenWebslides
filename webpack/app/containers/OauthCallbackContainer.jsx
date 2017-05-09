@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
 // Actions
-import { oauthSigninUser } from 'actions/signin';
+import { oauthSigninUser } from 'actions/signinActions';
 
 class OauthCallback extends Component {
   componentDidMount() {

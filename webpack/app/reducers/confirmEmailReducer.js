@@ -3,7 +3,7 @@ import Immutable from 'seamless-immutable';
 import {
   CONFIRM_EMAIL_SUCCESS,
   CONFIRM_EMAIL_FAILURE,
-} from 'actions/confirmEmail';
+} from 'actions/confirmEmailActions';
 
 const initialState = Immutable({
   emailConfirmed: 'confirming',

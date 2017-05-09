@@ -3,8 +3,8 @@ import Immutable from 'seamless-immutable';
 import {
   CONFIRM_EMAIL_SUCCESS,
   CONFIRM_EMAIL_FAILURE,
-} from 'actions/confirmEmail';
-import confirmEmailReducer from 'reducers/confirmEmail';
+} from 'actions/confirmEmailActions';
+import confirmEmailReducer from 'reducers/confirmEmailReducer';
 
 describe('Confirm Email Reducer', () => {
   it('has an immutable initial state', () => {

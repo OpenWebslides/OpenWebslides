@@ -1,11 +1,11 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
-import confirmEmailApi from 'api/confirmEmail';
+import confirmEmailApi from 'api/confirmEmailApi';
 import {
   CONFIRM_EMAIL,
   CONFIRM_EMAIL_SUCCESS,
   CONFIRM_EMAIL_FAILURE,
-} from 'actions/confirmEmail';
+} from 'actions/confirmEmailActions';
 
 export function* doConfirmEmail(action) {
   try {

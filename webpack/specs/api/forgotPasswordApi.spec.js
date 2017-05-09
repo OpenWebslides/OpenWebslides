@@ -1,38 +1,35 @@
 import faker from 'faker';
 
 import asyncFetch from '../../app/api/helpers/asyncFetch';
-import resetPassword, {
-  RESET_PASSWORD_API_URL,
-} from '../../app/api/resetPassword';
+import forgotPassword, {
+  FORGOT_PASSWORD_API_URL,
+} from '../../app/api/forgotPasswordApi';
 
 jest.mock('api/helpers/asyncFetch');
 
-describe('resetPassword Api Call', () => {
+describe('RequestResetPassword Api Call', () => {
   it('has a happy path', async () => {
-    const resetPasswordToken = faker.random.alphaNumeric(20);
-    const password = faker.internet.password();
+    const email = faker.internet.email();
 
     asyncFetch.mockReturnValue(200);
 
-    const response = await resetPassword(resetPasswordToken, password);
+    const response = await forgotPassword(email);
     expect(response).toEqual(200);
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual(RESET_PASSWORD_API_URL);
+    expect(calledUrl).toEqual(FORGOT_PASSWORD_API_URL);
 
     const body = JSON.stringify({
       data: {
         type: 'passwords',
-        id: '',
         attributes: {
-          resetPasswordToken,
-          password,
+          email,
         },
       },
     });
     const requestConfig = asyncFetch.mock.calls[0][1];
     expect(body).toEqual(requestConfig.body);
 
-    expect(requestConfig.method).toEqual('PUT');
+    expect(requestConfig.method).toEqual('POST');
   });
 });

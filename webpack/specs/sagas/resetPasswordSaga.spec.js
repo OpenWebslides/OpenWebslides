@@ -2,8 +2,8 @@ import faker from 'faker';
 import { call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import * as resetPasswordSaga from 'sagas/resetPassword';
-import resetPasswordApi from 'api/resetPassword';
+import * as resetPasswordSaga from 'sagas/resetPasswordSaga';
+import resetPasswordApi from 'api/resetPasswordApi';
 
 describe('Reset Password Saga', () => {
   describe('Reset Password Flow', () => {

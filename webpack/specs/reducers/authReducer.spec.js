@@ -1,9 +1,9 @@
 import faker from 'faker';
 import Immutable from 'seamless-immutable';
 
-import authReducer from 'reducers/auth';
+import authReducer from 'reducers/authReducer';
 
-import { SIGNIN_USER_SUCCESS } from 'actions/signin';
+import { SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 
 describe('Auth Reducer', () => {
   const emptyState = undefined;

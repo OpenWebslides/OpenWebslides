@@ -1,8 +1,8 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import { EMAIL_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signin';
-import emailSigninApi from 'api/emailSignin';
+import { EMAIL_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signinActions';
+import emailSigninApi from 'api/emailSigninApi';
 
 export function* doEmailSignin(action) {
   const { resolve, reject } = action.meta;

@@ -1,7 +1,7 @@
 import { takeLatest, call } from 'redux-saga/effects';
 
-import { FORGOT_PASSWORD } from 'actions/forgotPassword';
-import forgotPassword from 'api/forgotPassword';
+import { FORGOT_PASSWORD } from 'actions/forgotPasswordActions';
+import forgotPassword from 'api/forgotPasswordApi';
 
 function* doForgotPassword(action) {
   const { email, resolve } = action.meta;

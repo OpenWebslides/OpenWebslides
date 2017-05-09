@@ -1,6 +1,6 @@
 import { takeLatest, put } from 'redux-saga/effects';
 
-import { OAUTH_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signin';
+import { OAUTH_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 
 function* doOauthSigninUser(action) {
   const { authToken } = action.meta;

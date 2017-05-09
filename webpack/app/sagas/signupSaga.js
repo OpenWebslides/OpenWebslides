@@ -1,8 +1,8 @@
 import { takeLatest, call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import { SIGNUP_USER } from 'actions/signup';
-import signupApi from 'api/signup';
+import { SIGNUP_USER } from 'actions/signupActions';
+import signupApi from 'api/signupApi';
 
 export function* doSignup(action) {
   const { resolve, reject } = action.meta;

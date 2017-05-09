@@ -7,7 +7,7 @@ import isEmail from 'sane-email-validation';
 import inputField from 'presentationals/formFields/InputField';
 
 // Actions
-import { forgotPassword } from 'actions/forgotPassword';
+import { forgotPassword } from 'actions/forgotPasswordActions';
 
 // Field validation
 function validate(values) {

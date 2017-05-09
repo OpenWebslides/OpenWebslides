@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Actions
-import { confirmEmail } from 'actions/confirmEmail';
+import { confirmEmail } from 'actions/confirmEmailActions';
 
 // Presentationals
 import SuccessMessage from 'presentationals/emailConfirmation/SuccessMessage';

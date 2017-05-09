@@ -1,8 +1,8 @@
 import { takeLatest, call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import { RESET_PASSWORD } from 'actions/resetPassword';
-import resetPasswordApi from 'api/resetPassword';
+import { RESET_PASSWORD } from 'actions/resetPasswordActions';
+import resetPasswordApi from 'api/resetPasswordApi';
 
 export function* doResetPassword(action) {
   const { resolve, reject } = action.meta;

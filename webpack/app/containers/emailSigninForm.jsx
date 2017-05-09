@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router';
 import InputField from 'presentationals/formFields/InputField';
 
 // Actions
-import { emailSigninUser } from 'actions/signin';
+import { emailSigninUser } from 'actions/signinActions';
 
 // Field validation
 export function validate(values) {

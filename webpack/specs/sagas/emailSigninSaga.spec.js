@@ -2,10 +2,10 @@ import faker from 'faker';
 import { call, put } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import * as emailSigninSaga from 'sagas/signin/emailSignin';
-import emailSigninApi from 'api/emailSignin';
+import * as emailSigninSaga from 'sagas/signin/emailSigninSaga';
+import emailSigninApi from 'api/emailSigninApi';
 
-import { SIGNIN_USER_SUCCESS } from 'actions/signin';
+import { SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 
 describe('Email Signin Saga', () => {
   describe('Email Signin Flow', () => {

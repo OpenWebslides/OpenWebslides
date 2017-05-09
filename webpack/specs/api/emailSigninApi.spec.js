@@ -1,7 +1,7 @@
 import faker from 'faker';
 
 import asyncFetch from '../../app/api/helpers/asyncFetch';
-import emailSignin, { SIGNIN_API_URL } from '../../app/api/emailSignin';
+import emailSignin, { SIGNIN_API_URL } from '../../app/api/emailSigninApi';
 
 jest.mock('api/helpers/asyncFetch');
 

@@ -10,11 +10,11 @@ import inputField from 'presentationals/formFields/InputField';
 import newPasswordField from 'presentationals/formFields/NewPasswordField';
 
 // Presentationals
-import SignupConfirmation from 'presentationals/SignupConfirmed';
+import SignupConfirmation from 'presentationals/SignupConfirmation';
 
 // Actions
-import { signupUser } from 'actions/signup';
-import { checkEmail } from 'actions/checkEmail';
+import { signupUser } from 'actions/signupActions';
+import { checkEmail } from 'actions/checkEmailActions';
 
 // Field validation
 export function validate(values) {

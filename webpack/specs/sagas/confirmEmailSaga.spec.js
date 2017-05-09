@@ -1,14 +1,14 @@
 import { call, put } from 'redux-saga/effects';
 import faker from 'faker';
 
-import confirmEmailApi from 'api/confirmEmail';
+import confirmEmailApi from 'api/confirmEmailApi';
 
 import {
   CONFIRM_EMAIL_SUCCESS,
   CONFIRM_EMAIL_FAILURE,
-} from 'actions/confirmEmail';
+} from 'actions/confirmEmailActions';
 
-import { doConfirmEmail } from 'sagas/confirmEmail';
+import { doConfirmEmail } from 'sagas/confirmEmailSaga';
 
 describe('Confirm Email Saga', () => {
   describe('Confirmation Email Flow', () => {

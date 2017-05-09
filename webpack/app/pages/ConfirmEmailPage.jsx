@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EmailConfirmation from 'containers/EmailConfirmation';
+import EmailConfirmation from 'containers/ConfirmEmailContainer';
 
 function emailConfirmationPage(props) {
   return (

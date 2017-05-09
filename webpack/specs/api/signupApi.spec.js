@@ -1,7 +1,7 @@
 import faker from 'faker';
 
 import asyncFetch from '../../app/api/helpers/asyncFetch';
-import signup, { SIGNUP_API_URL } from '../../app/api/signup';
+import signup, { SIGNUP_API_URL } from '../../app/api/signupApi';
 
 jest.mock('api/helpers/asyncFetch');
 

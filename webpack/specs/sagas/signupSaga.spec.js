@@ -2,8 +2,8 @@ import faker from 'faker';
 import { call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import * as signupSaga from 'sagas/signup';
-import signupApi from 'api/signup';
+import * as signupSaga from 'sagas/signupSaga';
+import signupApi from 'api/signupApi';
 
 describe('Signup Saga', () => {
   describe('Signup Flow', () => {

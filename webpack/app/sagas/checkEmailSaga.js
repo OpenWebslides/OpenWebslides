@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects';
 
-import { CHECK_EMAIL } from 'actions/checkEmail';
+import { CHECK_EMAIL } from 'actions/checkEmailActions';
 
 // Stubbed implementation, waiting for api endpoint
 export function doCheckEmail(action) {

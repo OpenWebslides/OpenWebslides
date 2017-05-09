@@ -8,7 +8,7 @@ import inputField from 'presentationals/formFields/InputField';
 import newPasswordField from 'presentationals/formFields/NewPasswordField';
 
 // Actions
-import { resetPassword } from 'actions/resetPassword';
+import { resetPassword } from 'actions/resetPasswordActions';
 
 // Field validation
 export function validate(values) {

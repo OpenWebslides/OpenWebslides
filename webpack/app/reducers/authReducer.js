@@ -1,6 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import { SIGNIN_USER_SUCCESS } from 'actions/signin';
+import { SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 
 const initialState = Immutable({
   isAuthenticated: false,

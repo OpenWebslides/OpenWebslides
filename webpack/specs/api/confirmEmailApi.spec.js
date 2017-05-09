@@ -3,7 +3,7 @@ import faker from 'faker';
 import asyncFetch from '../../app/api/helpers/asyncFetch';
 import confirmEmail, {
   CONFIRM_EMAIL_API_URL,
-} from '../../app/api/confirmEmail';
+} from '../../app/api/confirmEmailApi';
 
 jest.mock('api/helpers/asyncFetch');
 
