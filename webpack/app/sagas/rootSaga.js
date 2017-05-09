@@ -1,11 +1,11 @@
-import signupSaga from 'sagas/signupSaga';
-import confirmEmailSaga from 'sagas/confirmEmailSaga';
-import requestResetPasswordSaga from 'sagas/resetPassword/requestResetPasswordSaga';
-import resetPasswordSaga from 'sagas/resetPassword/resetPasswordSaga';
-import emailAvailableSaga from 'sagas/serverValidation/emailAvailableSaga';
+import signupSaga from 'sagas/signup';
+import confirmEmailSaga from 'sagas/confirmEmail';
+import requestResetPasswordSaga from 'sagas/forgotPassword';
+import resetPasswordSaga from 'sagas/resetPassword';
+import emailAvailableSaga from 'sagas/checkEmail';
 
-import oauthSigninSaga from 'sagas/signin/oauthSigninSaga';
-import emailSigninSaga from 'sagas/signin/emailSigninSaga';
+import oauthSigninSaga from 'sagas/signin/oauthSignin';
+import emailSigninSaga from 'sagas/signin/emailSignin';
 
 export default function* rootSaga() {
   yield [

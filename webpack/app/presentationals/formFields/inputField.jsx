@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function inputField(
-  { input, placeholder, type, meta: { touched, error, active } }) {
+function inputField({
+  input,
+  placeholder,
+  type,
+  meta: { touched, error, active },
+}) {
   return (
     <div>
-      <input
-        {...input}
-        type={type}
-        placeholder={placeholder}
-      />
+      <input {...input} type={type} placeholder={placeholder} />
       {!active && error && touched && <span>{error}</span>}
     </div>
   );

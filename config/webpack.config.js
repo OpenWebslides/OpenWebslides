@@ -20,26 +20,16 @@ const config = {
       {
         test: /\.jsx$/,
         exclude: /(node_modules|bower_components)/,
-        use: [
-          'babel-loader',
-          'eslint-loader',
-        ],
+        use: ['babel-loader', 'eslint-loader'],
       },
       {
         test: /\.es6$/,
         exclude: /(node_modules|bower_components)/,
-        use: [
-          'babel-loader',
-        ],
+        use: ['babel-loader'],
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
     ],
   },
@@ -59,12 +49,8 @@ const config = {
 
   resolve: {
     extensions: ['.js', '.jsx', '.es6'],
-    modules: [
-      path.join(__dirname, '..', 'webpack'),
-      'node_modules',
-    ],
+    modules: [path.join(__dirname, '..', 'webpack'), 'node_modules'],
     alias: {
-      specHelpers: path.join(__dirname, '..', 'webpack', 'specs', 'specHelpers'),
       presentationals: path.join(__dirname, '..', 'webpack', 'app', 'presentationals'),
       pages: path.join(__dirname, '..', 'webpack', 'app', 'pages'),
       reducers: path.join(__dirname, '..', 'webpack', 'app', 'reducers'),
@@ -87,7 +73,8 @@ const config = {
       modules: false,
       assets: true,
     }),
-    new StyleLintPlugin()],
+    new StyleLintPlugin(),
+  ],
 };
 
 if (production) {

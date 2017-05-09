@@ -1,16 +1,14 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-// import { routerActions } from 'react-router-redux';
-// import { UserAuthWrapper } from 'redux-auth-wrapper';
 
 // Pages
-import FeedPage from 'pages/feedPage';
-import SignupPage from 'pages/signupPage';
-import SigninPage from 'pages/signinPage';
-import RequestResetPasswordPage from 'pages/resetPassword/requestResetPasswordPage';
-import ResetPasswordPage from 'pages/resetPassword/resetPasswordPage';
-import EmailConfirmationPage from 'pages/emailConfirmationPage';
-import OAuthCallbackPage from 'pages/oauthCallbackPage';
+import FeedPage from 'pages/Feed';
+import SignupPage from 'pages/Signup';
+import SigninPage from 'pages/Signin';
+import ForgotPasswordPage from 'pages/ForgotPassword';
+import ResetPasswordPage from 'pages/ResetPassword';
+import EmailConfirmationPage from 'pages/EmailConfirmation';
+import OauthCallbackPage from 'pages/OauthCallback';
 
 export default (
   <Route path="/">
@@ -18,8 +16,8 @@ export default (
     <Route path="/signup" component={SignupPage} />
     <Route path="/signin" component={SigninPage} />
     <Route path="/confirmation" component={EmailConfirmationPage} />
-    <Route path="/request_reset_password" component={RequestResetPasswordPage} />
-    <Route path="/auth/omniauth" component={OAuthCallbackPage} />
+    <Route path="/forgot_password" component={ForgotPasswordPage} />
+    <Route path="/auth/omniauth" component={OauthCallbackPage} />
     <Route path="/reset_password" component={ResetPasswordPage} />
   </Route>
 );

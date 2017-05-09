@@ -2,8 +2,8 @@ import { ApiError, ValidationError } from './errors';
 
 export default async function asyncFetch(url, requestConfig = {}) {
   const response = await fetch(url, requestConfig);
-  const responseBody = await response.json();
   const { statusText, status } = response;
+  let responseBody;
 
   switch (status) {
     case 400:
@@ -11,6 +11,7 @@ export default async function asyncFetch(url, requestConfig = {}) {
     case 403:
       throw new ApiError(statusText, status);
     case 422:
+      responseBody = await response.json();
       throw new ValidationError(statusText, status, responseBody.errors);
     case 500:
     case 501:

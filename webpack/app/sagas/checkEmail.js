@@ -1,11 +1,9 @@
 import { takeLatest } from 'redux-saga/effects';
 
-import {
-  CHECK_EMAIL_AVAILABLE,
-} from 'actions/serverValidationActions';
+import { CHECK_EMAIL } from 'actions/checkEmail';
 
 // Stubbed implementation, waiting for api endpoint
-export function doCheckEmailAvailable(action) {
+export function doCheckEmail(action) {
   setTimeout(() => {
     if (action.meta.email === 'rein.vanimschoot@gmail.com') {
       action.meta.reject({ email: 'Email is already taken' });
@@ -16,5 +14,5 @@ export function doCheckEmailAvailable(action) {
 }
 
 export default function* checkEmailAvailableWatcher() {
-  yield takeLatest(CHECK_EMAIL_AVAILABLE, doCheckEmailAvailable);
+  yield takeLatest(CHECK_EMAIL, doCheckEmail);
 }

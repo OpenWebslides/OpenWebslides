@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 
-// Input Fields
-import inputField from 'presentationals/formFields/inputField';
+// Fields
+import inputField from 'presentationals/formFields/InputField';
 
 // Actions
-import { requestResetPassword } from 'actions/resetPasswordActions';
+import { requestResetPassword } from 'actions/resetPassword';
 
 // Field validation
 function validate(values) {
@@ -49,15 +48,11 @@ function resetPasswordForm(props) {
       <h1>Reset Password</h1>
       <form onSubmit={props.handleSubmit(validateAndSubmit)}>
 
-        <Field
-          component={inputField}
-          name="email"
-          placeholder="Email"
-        />
+        <Field component={inputField} name="email" placeholder="Email" />
 
         <button type="submit">Submit</button>
       </form>
-    </div >
+    </div>
   );
 }
 

@@ -9,6 +9,7 @@ function parseValidationErrors(errors) {
 
     validationErrors[fieldName] = `${capitalizedFieldName} ${error.title}`;
   });
+
   return validationErrors;
 }
 

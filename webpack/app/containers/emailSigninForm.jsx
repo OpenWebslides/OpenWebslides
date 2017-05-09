@@ -1,21 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 import { browserHistory } from 'react-router';
 
-// Input Fields
-import inputField from 'presentationals/formFields/inputField';
+// Fields
+import InputField from 'presentationals/formFields/InputField';
 
 // Actions
-import { emailSigninUser } from 'actions/signinActions';
+import { emailSigninUser } from 'actions/signin';
 
 // Field validation
 export function validate(values) {
-  const {
-    email,
-    password } = values;
+  const { email, password } = values;
 
   const errors = {};
 
@@ -46,14 +43,10 @@ function emailSigninForm(props) {
       <h1>Sign in</h1>
       <form onSubmit={props.handleSubmit(validateAndSubmit)}>
 
-        <Field
-          component={inputField}
-          name="email"
-          placeholder="Email"
-        />
+        <Field component={InputField} name="email" placeholder="Email" />
 
         <Field
-          component={inputField}
+          component={InputField}
           name="password"
           placeholder="Password"
           type="password"
@@ -63,7 +56,7 @@ function emailSigninForm(props) {
 
         <button type="submit">Sign in</button>
       </form>
-    </div >
+    </div>
   );
 }
 
@@ -82,4 +75,3 @@ export default reduxForm({
   getFormState: state => state.vendor.forms,
   onSubmitSuccess: () => browserHistory.push('/'),
 })(emailSigninForm);
-

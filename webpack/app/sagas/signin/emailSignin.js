@@ -1,11 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import {
-  EMAIL_SIGNIN_USER,
-  SIGNIN_USER_SUCCESS,
-} from 'actions/signinActions';
-
+import { EMAIL_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signin';
 import emailSigninApi from 'api/emailSignin';
 
 export function* doEmailSignin(action) {
@@ -31,13 +27,15 @@ export function* doEmailSignin(action) {
     let errorMessage;
     switch (error.statusCode) {
       case 401:
-        yield errorMessage = { _error: 'Password or email is incorrect.' };
+        yield (errorMessage = { _error: 'Password or email is incorrect.' });
         break;
       case 403:
-        yield errorMessage = { _error: 'Account had not yet been activated. Please check your email.' };
+        yield (errorMessage = {
+          _error: 'Account had not yet been activated. Please check your email.',
+        });
         break;
       default:
-        yield errorMessage = { _error: 'Something went wrong on our end.' };
+        yield (errorMessage = { _error: 'Something went wrong on our end.' });
     }
 
     yield call(reject, new SubmissionError(errorMessage));

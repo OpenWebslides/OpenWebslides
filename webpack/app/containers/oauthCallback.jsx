@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import { oauthSigninUser } from 'actions/signinActions';
+// Actions
+import { oauthSigninUser } from 'actions/signin';
 
-class oAuthCallback extends Component {
+class OauthCallback extends Component {
   componentDidMount() {
     const authToken = this.props.location.query.token;
     this.props.OAuthSigninUser({ authToken });
@@ -25,13 +26,13 @@ class oAuthCallback extends Component {
   }
 }
 
-oAuthCallback.propTypes = {
+OauthCallback.propTypes = {
   location: PropTypes.objectOf(Object),
   OAuthSigninUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
 };
 
-oAuthCallback.defaultProps = {
+OauthCallback.defaultProps = {
   location: { query: '' },
 };
 
@@ -45,4 +46,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ oauthSigninUser }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(oAuthCallback);
+export default connect(mapStateToProps, mapDispatchToProps)(OauthCallback);

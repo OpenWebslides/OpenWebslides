@@ -1,10 +1,7 @@
 import { takeLatest, call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import {
-  SIGNUP_USER,
-} from 'actions/signupActions';
-
+import { SIGNUP_USER } from 'actions/signup';
 import signupApi from 'api/signup';
 
 export function* doSignup(action) {
@@ -21,10 +18,10 @@ export function* doSignup(action) {
 
     switch (error.statusCode) {
       case 422:
-        yield errorMessage = error.validationErrors;
+        yield (errorMessage = error.validationErrors);
         break;
       default:
-        yield errorMessage = { _error: 'Something went wrong on our end.' };
+        yield (errorMessage = { _error: 'Something went wrong on our end.' });
     }
 
     yield call(reject, new SubmissionError(errorMessage));

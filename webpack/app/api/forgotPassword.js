@@ -1,9 +1,9 @@
 import asyncFetch from 'api/helpers/asyncFetch';
 import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
 
-async function resetPassword(email) {
-  const REQUEST_PASSWORD_RESET_API_URL = 'http://localhost:5000/api/password';
+export const FORGOT_PASSWORD_API_URL = 'http://localhost:5000/api/password';
 
+async function resetPassword(email) {
   const baseRequestConfig = getBaseRequestConfig();
 
   const requestConfig = Object.assign({}, baseRequestConfig, {
@@ -18,7 +18,7 @@ async function resetPassword(email) {
     }),
   });
 
-  return asyncFetch(REQUEST_PASSWORD_RESET_API_URL, requestConfig);
+  return asyncFetch(FORGOT_PASSWORD_API_URL, requestConfig);
 }
 
 export default resetPassword;

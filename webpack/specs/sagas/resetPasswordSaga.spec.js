@@ -2,110 +2,74 @@ import faker from 'faker';
 import { call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import * as resetPasswordSaga from 'sagas/resetPassword/resetPasswordSaga';
-import resetPasswordApi from 'api/resetPassword/resetPassword';
+import * as resetPasswordSaga from 'sagas/resetPassword';
+import resetPasswordApi from 'api/resetPassword';
 
 describe('Reset Password Saga', () => {
   describe('Reset Password Flow', () => {
-    const fakePassword = faker.internet.password();
-    const fakePasswordToken = faker.random.alphaNumeric(20);
+    const password = faker.internet.password();
+    const resetPasswordToken = faker.random.alphaNumeric(20);
     const resolve = jest.fn();
     const reject = jest.fn();
 
     it('has a happy path', () => {
       const generator = resetPasswordSaga.doResetPassword({
-        meta: {
-          password: fakePassword,
-          resetPasswordToken: fakePasswordToken,
-          resolve,
-          reject,
-        },
+        meta: { password, resetPasswordToken, resolve, reject },
       });
 
-      expect(
-        generator.next().value)
-        .toEqual(
-        call(resetPasswordApi, fakePasswordToken, fakePassword));
-
-      expect(
-        generator.next().value)
-        .toEqual(
-        call(resolve),
+      expect(generator.next().value).toEqual(
+        call(resetPasswordApi, resetPasswordToken, password),
       );
 
-      expect(
-        generator.next().done)
-        .toBeTruthy();
+      expect(generator.next().value).toEqual(call(resolve));
+
+      expect(generator.next().done).toBeTruthy();
     });
 
     it('throws an error when password reset token is invalid', () => {
-      const fakeErrorMessage = faker.lorem.sentence();
-      const fakeStatusCode = 400;
+      const message = faker.lorem.sentence();
+      const statusCode = 400;
 
       const generator = resetPasswordSaga.doResetPassword({
-        meta: {
-          resetPasswordToken: fakePasswordToken,
-          password: fakePassword,
-          resolve,
-          reject,
-        },
+        meta: { resetPasswordToken, password, resolve, reject },
       });
 
-      expect(
-        generator.next().value)
-        .toEqual(
-        call(resetPasswordApi, fakePasswordToken, fakePassword));
+      expect(generator.next().value).toEqual(
+        call(resetPasswordApi, resetPasswordToken, password),
+      );
 
-      expect(
-        generator.throw({
-          message: fakeErrorMessage,
-          statusCode: fakeStatusCode,
-        }).value)
-        .toEqual({ _error: 'Password reset token is invalid.' });
+      expect(generator.throw({ message, statusCode }).value).toEqual({
+        _error: 'Password reset token is invalid.',
+      });
 
-      expect(
-        generator.next().value)
-        .toEqual(
-        call(reject, new SubmissionError()));
+      expect(generator.next().value).toEqual(
+        call(reject, new SubmissionError()),
+      );
 
-      expect(
-        generator.next().done)
-        .toBeTruthy();
+      expect(generator.next().done).toBeTruthy();
     });
 
     it('throws an error when server connection fails', () => {
-      const fakeErrorMessage = faker.lorem.sentence();
-      const fakeStatusCode = 500;
+      const message = faker.lorem.sentence();
+      const statusCode = 500;
 
       const generator = resetPasswordSaga.doResetPassword({
-        meta: {
-          resetPasswordToken: fakePasswordToken,
-          password: fakePassword,
-          resolve,
-          reject,
-        },
+        meta: { resetPasswordToken, password, resolve, reject },
       });
 
-      expect(
-        generator.next().value)
-        .toEqual(
-        call(resetPasswordApi, fakePasswordToken, fakePassword));
+      expect(generator.next().value).toEqual(
+        call(resetPasswordApi, resetPasswordToken, password),
+      );
 
-      expect(
-        generator.throw({
-          message: fakeErrorMessage,
-          statusCode: fakeStatusCode,
-        }).value)
-        .toEqual({ _error: 'Something went wrong on our end.' });
+      expect(generator.throw({ message, statusCode }).value).toEqual({
+        _error: 'Something went wrong on our end.',
+      });
 
-      expect(
-        generator.next().value)
-        .toEqual(
-        call(reject, new SubmissionError()));
+      expect(generator.next().value).toEqual(
+        call(reject, new SubmissionError()),
+      );
 
-      expect(
-        generator.next().done)
-        .toBeTruthy();
+      expect(generator.next().done).toBeTruthy();
     });
   });
 });

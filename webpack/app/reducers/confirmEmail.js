@@ -3,15 +3,14 @@ import Immutable from 'seamless-immutable';
 import {
   CONFIRM_EMAIL_SUCCESS,
   CONFIRM_EMAIL_FAILURE,
-} from 'actions/confirmEmailActions';
+} from 'actions/confirmEmail';
 
 const initialState = Immutable({
   emailConfirmed: 'confirming',
 });
 
-function confirmEmailReducer(state = initialState, action) {
+function confirmEmail(state = initialState, action) {
   switch (action.type) {
-
     case CONFIRM_EMAIL_SUCCESS:
       return Immutable.merge(state, { emailConfirmed: 'success' });
 
@@ -23,4 +22,4 @@ function confirmEmailReducer(state = initialState, action) {
   }
 }
 
-export default confirmEmailReducer;
+export default confirmEmail;

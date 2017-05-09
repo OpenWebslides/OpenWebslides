@@ -1,13 +1,13 @@
 import Immutable from 'seamless-immutable';
 
-import { SIGNIN_USER_SUCCESS } from 'actions/signinActions';
+import { SIGNIN_USER_SUCCESS } from 'actions/signin';
 
 const initialState = Immutable({
   isAuthenticated: false,
   authToken: undefined,
 });
 
-function authReducer(state = initialState, action) {
+function auth(state = initialState, action) {
   switch (action.type) {
     case SIGNIN_USER_SUCCESS:
       return Immutable.merge(state, [
@@ -20,4 +20,4 @@ function authReducer(state = initialState, action) {
   }
 }
 
-export default authReducer;
+export default auth;

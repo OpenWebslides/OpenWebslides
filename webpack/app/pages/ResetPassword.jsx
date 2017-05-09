@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ResetPasswordForm from 'containers/resetPassword/resetPasswordForm';
+import ResetPasswordForm from 'containers/ResetPasswordForm';
 
 function resetPasswordPage(props) {
   return (

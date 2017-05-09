@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EmailSigninForm from 'containers/emailSigninForm';
+import EmailSigninForm from 'containers/EmailSigninForm';
 
 function successMessage() {
   return (

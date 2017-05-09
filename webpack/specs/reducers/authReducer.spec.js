@@ -1,11 +1,9 @@
 import faker from 'faker';
 import Immutable from 'seamless-immutable';
 
-import authReducer from 'reducers/authReducer';
+import authReducer from 'reducers/auth';
 
-import {
-  SIGNIN_USER_SUCCESS,
-} from 'actions/signinActions';
+import { SIGNIN_USER_SUCCESS } from 'actions/signin';
 
 describe('Auth Reducer', () => {
   const emptyState = undefined;
@@ -13,30 +11,29 @@ describe('Auth Reducer', () => {
   it('has a default immutable state', () => {
     const emptyAction = { type: '' };
 
-    expect(
-      authReducer(
-        emptyState,
-        emptyAction))
-      .toEqual(
+    expect(authReducer(emptyState, emptyAction)).toEqual(
       Immutable({
         isAuthenticated: false,
         authToken: undefined,
-      }));
+      }),
+    );
   });
 
   it('can resolve SIGNIN_USER_SUCCESS action', () => {
-    const fakeToken = faker.random.uuid();
+    const token = faker.random.uuid();
 
     expect(
       authReducer(emptyState, {
         type: SIGNIN_USER_SUCCESS,
         payload: {
-          authToken: fakeToken,
+          authToken: token,
         },
-      }))
-      .toEqual(Immutable({
+      }),
+    ).toEqual(
+      Immutable({
         isAuthenticated: true,
-        authToken: fakeToken,
-      }));
+        authToken: token,
+      }),
+    );
   });
 });

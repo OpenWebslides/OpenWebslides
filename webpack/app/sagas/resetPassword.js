@@ -1,9 +1,8 @@
 import { takeLatest, call } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import { RESET_PASSWORD } from 'actions/resetPasswordActions';
-
-import resetPasswordApi from 'api/resetPassword/resetPassword';
+import { RESET_PASSWORD } from 'actions/resetPassword';
+import resetPasswordApi from 'api/resetPassword';
 
 export function* doResetPassword(action) {
   const { resolve, reject } = action.meta;
@@ -17,16 +16,15 @@ export function* doResetPassword(action) {
     let errorMessage;
     switch (error.statusCode) {
       case 400:
-        yield errorMessage = { _error: 'Password reset token is invalid.' };
+        yield (errorMessage = { _error: 'Password reset token is invalid.' });
         break;
       default:
-        yield errorMessage = { _error: 'Something went wrong on our end.' };
+        yield (errorMessage = { _error: 'Something went wrong on our end.' });
     }
 
     yield call(reject, new SubmissionError(errorMessage));
   }
 }
-
 
 function* resetPasswordWatcher() {
   yield takeLatest(RESET_PASSWORD, doResetPassword);

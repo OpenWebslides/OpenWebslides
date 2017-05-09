@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as forms } from 'redux-form';
 
-import auth from 'reducers/authReducer';
-import confirmEmail from 'reducers/confirmEmailReducer';
+import auth from 'reducers/auth';
+import confirmEmail from 'reducers/confirmEmail';
 
 const vendor = combineReducers({
   forms,

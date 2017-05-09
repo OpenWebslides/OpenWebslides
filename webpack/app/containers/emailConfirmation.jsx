@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Actions
-import { confirmEmail } from 'actions/confirmEmailActions';
+import { confirmEmail } from 'actions/confirmEmail';
 
 // Presentationals
-import SuccessMessage from 'presentationals/emailConfirmation/successMessage';
-import FailureMessage from 'presentationals/emailConfirmation/failureMessage';
-import WaitingMessage from 'presentationals/emailConfirmation/waitingMessage';
+import SuccessMessage from 'presentationals/emailConfirmation/SuccessMessage';
+import FailureMessage from 'presentationals/emailConfirmation/FailureMessage';
+import WaitingMessage from 'presentationals/emailConfirmation/WaitingMessage';
 
 class EmailConfirmation extends Component {
   componentDidMount() {

@@ -2,29 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 
-// Input Fields
-import inputField from 'presentationals/formFields/inputField';
-import newPasswordField from 'presentationals/formFields/newPasswordField';
+// Fields
+import inputField from 'presentationals/formFields/InputField';
+import newPasswordField from 'presentationals/formFields/NewPasswordField';
 
 // Presentationals
-import SignupConfirmation from 'presentationals/signup/signupConfirmation';
+import SignupConfirmation from 'presentationals/SignupConfirmed';
 
 // Actions
-import { signupUser } from 'actions/signupActions';
-import { checkEmailAvailable } from 'actions/serverValidationActions';
+import { signupUser } from 'actions/signup';
+import { checkEmailAvailable } from 'actions/checkEmail';
 
 // Field validation
 export function validate(values) {
-  const {
-    email,
-    password,
-    passwordConfirmation,
-    firstName,
-    lastName } = values;
+  const { email, password, passwordConfirmation, firstName, lastName } = values;
 
   const errors = {};
 
@@ -55,7 +49,8 @@ export function validate(values) {
     passwordConfirmation.trim() !== '' &&
     password &&
     password.trim() !== '' &&
-    password !== passwordConfirmation) {
+    password !== passwordConfirmation
+  ) {
     errors.password = 'Password and password confirmation do not match';
   }
   return errors;
@@ -92,11 +87,7 @@ class SignupForm extends Component {
       <div>
         <form onSubmit={this.props.handleSubmit(validateAndSubmit)}>
 
-          <Field
-            component={inputField}
-            name="email"
-            placeholder="Email"
-          />
+          <Field component={inputField} name="email" placeholder="Email" />
 
           <Field
             component={inputField}
@@ -126,7 +117,7 @@ class SignupForm extends Component {
 
           <button type="submit">Sign up</button>
         </form>
-      </div >
+      </div>
     );
   }
 }

@@ -4,18 +4,15 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 
 // Fields
-import inputField from 'presentationals/formFields/inputField';
-import newPasswordField from 'presentationals/formFields/newPasswordField';
+import inputField from 'presentationals/formFields/InputField';
+import newPasswordField from 'presentationals/formFields/NewPasswordField';
 
 // Actions
-import { resetPassword } from 'actions/resetPasswordActions';
+import { resetPassword } from 'actions/resetPassword';
 
 // Field validation
 export function validate(values) {
-  const {
-    password,
-    passwordConfirmation,
-  } = values;
+  const { password, passwordConfirmation } = values;
 
   const errors = {};
 
@@ -32,7 +29,8 @@ export function validate(values) {
     passwordConfirmation.trim() !== '' &&
     password &&
     password.trim() !== '' &&
-    password !== passwordConfirmation) {
+    password !== passwordConfirmation
+  ) {
     errors.password = 'Password and password confirmation do not match';
   }
 
@@ -51,15 +49,11 @@ function resetPasswordForm(props) {
   const resetPasswordToken = props.location.query.reset_password_token;
 
   if (!resetPasswordToken) {
-    return (
-      <h2>No password reset token was provided.</h2>
-    );
+    return <h2>No password reset token was provided.</h2>;
   }
 
   if (props.submitSucceeded) {
-    return (
-      <h2>Your password has been successfully reset!</h2>
-    );
+    return <h2>Your password has been successfully reset!</h2>;
   }
 
   return (
@@ -67,7 +61,9 @@ function resetPasswordForm(props) {
 
       <form
         className="red"
-        onSubmit={props.handleSubmit(validateAndSubmit.bind(null, resetPasswordToken))}
+        onSubmit={props.handleSubmit(
+          validateAndSubmit.bind(null, resetPasswordToken),
+        )}
       >
 
         <Field
@@ -91,10 +87,9 @@ function resetPasswordForm(props) {
 
       </form>
 
-    </div >
+    </div>
   );
 }
-
 
 resetPasswordForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
@@ -113,4 +108,3 @@ export default reduxForm({
   validate,
   getFormState: state => state.vendor.forms,
 })(resetPasswordForm);
-

@@ -1,11 +1,11 @@
 import React from 'react';
 
-import RequestResetPasswordForm from 'containers/resetPassword/requestResetPasswordForm';
+import ForgotPasswordForm from 'containers/ForgotPasswordForm';
 
 function requestResetPasswordPage(props) {
   return (
     <div>
-      <RequestResetPasswordForm {...props} />
+      <ForgotPasswordForm {...props} />
     </div>
   );
 }

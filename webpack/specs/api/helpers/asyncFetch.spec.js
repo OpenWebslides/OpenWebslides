@@ -2,49 +2,67 @@ import faker from 'faker';
 import fetchMock from 'fetch-mock';
 
 import asyncFetch from 'api/helpers/asyncFetch';
-// import helpers from 'specHelpers/setupJest';
 
-describe('async Fetch', () => {
-  // Reset fetchMock after each test
+describe('asyncFetch function', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  xit('can fetch', async () => {
-    const fakeUrl = faker.internet.url();
-    const fakeResponse = { key: faker.lorem.word() };
+  it('can fetch', async () => {
+    const url = faker.internet.url();
+    const response = { key: 'value' };
 
-    fetchMock.get(fakeUrl, fakeResponse);
+    fetchMock.get(url, response);
 
-    const response = await asyncFetch(fakeUrl);
-    const result = await response.json();
+    const outcome = await asyncFetch(url);
+    const outcomeJson = await outcome.json();
 
-    expect(result.key).toEqual(fakeResponse.key);
+    expect(outcomeJson).toEqual(response);
   });
 
-  // it('handles errors', async () => {
-  //   const fakeUrl = faker.internet.url();
+  it('handles errors', async () => {
+    const url = faker.internet.url();
+    const response = {
+      status: 400,
+      body: JSON.stringify('Bad data'),
+    };
 
-  //   fetchMock.get(fakeUrl, {
-  //     status: 400,
-  //     body: JSON.stringify('Bad data'),
-  //   });
+    fetchMock.get(url, response);
 
-  //   const outcome = await helpers.syncify(async () => asyncFetch(fakeUrl));
+    expect.assertions(1);
+    try {
+      await asyncFetch(url);
+    } catch (error) {
+      expect(error.name).toEqual('ApiError');
+    }
+  });
 
-  //   expect(outcome).toThrow();
-  // });
+  it('handles validation errors', async () => {
+    const url = faker.internet.url();
+    const status = 422;
+    const body = {
+      errors: [
+        {
+          title: 'has already been taken',
+          detail: 'email - has already been taken',
+        },
+      ],
+    };
 
-  // it('displays an error message if one is provided', async () => {
-  //   const fakeUrl = faker.internet.url();
+    fetchMock.get(url, {
+      statusText: 'Unprocessable Entity',
+      status,
+      body,
+    });
 
-  //   fetchMock.get(fakeUrl, {
-  //     status: 403,
-  //     body: JSON.stringify('Bad data'),
-  //   });
-
-  //   const outcome = await helpers.syncify(async () => asyncFetch(fakeUrl));
-
-  //   expect(outcome).toThrow('Forbidden');
+    expect.assertions(2);
+    try {
+      await asyncFetch(url);
+    } catch (e) {
+      expect(e.name).toEqual('ValidationError');
+      expect(e.validationErrors).toEqual({
+        email: 'Email has already been taken',
+      });
+    }
+  });
 });
-// });

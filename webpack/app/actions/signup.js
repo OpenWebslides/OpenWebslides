@@ -1,7 +1,7 @@
-// Action types
+// Types
 export const SIGNUP_USER = 'SIGNUP_USER';
 
-// Action Creators
+// Creators
 export function signupUser(values) {
   return {
     type: SIGNUP_USER,

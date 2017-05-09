@@ -10,18 +10,17 @@ function checkPasswordStrength(passwordFieldValue) {
   if (value.length >= 8) {
     return <div>There you go!</div>;
   }
-  return <div> Too short!</div >;
+  return <div> Too short!</div>;
 }
 
-function passwordField(
-  { input, placeholder, meta: { touched, active, error } }) {
+function passwordField({
+  input,
+  placeholder,
+  meta: { touched, active, error },
+}) {
   return (
     <div>
-      <input
-        {...input}
-        type="password"
-        placeholder={placeholder}
-      />
+      <input {...input} type="password" placeholder={placeholder} />
       {!active && touched && error && <span>{error}</span>}
       {active && checkPasswordStrength(input.value)}
     </div>

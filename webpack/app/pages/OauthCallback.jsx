@@ -1,6 +1,6 @@
 import React from 'react';
 
-import OAuthCallback from 'containers/oauthCallback';
+import OAuthCallback from 'containers/OauthCallback';
 
 function oauthCallbackPage(props) {
   return (
