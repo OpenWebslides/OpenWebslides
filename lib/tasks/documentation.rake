@@ -11,6 +11,8 @@ namespace :documentation do
 
   desc 'Deploy API documentation to GitHub Pages'
   task :deploy do
+    abort "Not deploying documentation on branch #{ENV['TRAVIS_BRANCH']}" unless ENV['TRAVIS_BRANCH'] == 'master'
+
     client = Octokit::Client.new :login => ENV['GITHUB_MACHINE_USER'],
                                  :password => ENV['GITHUB_MACHINE_PASSWORD']
 
@@ -22,7 +24,7 @@ namespace :documentation do
 
     client.update_contents 'openwebslides/openwebslides',
                            'index.html',
-                           'Generate API documentation',
+                           "Generate API documentation for commit #{`git rev-parse HEAD`}",
                            sha,
                            :file => 'doc/openwebslides.html',
                            :branch => 'gh-pages'
