@@ -4,6 +4,11 @@ import { types } from 'actions/feedActions';
 import feedApiCall from 'api/feedApiCall';
 
 export function* getFeedFlow() {
+  const receivedElementTypes = {
+    deck_created: 'DECK_CREATED',
+    deck_updated: 'DECK_UPDATED',
+  };
+
   try {
     const responseListOfNotifications = yield call(feedApiCall);
     if (!responseListOfNotifications) {
@@ -12,11 +17,10 @@ export function* getFeedFlow() {
 
     const listOfNotifications = responseListOfNotifications.map(responseNotification => ({
       timestamp: responseNotification.attributes.createdAt,
-      type: responseNotification.attributes.eventType,
+      type: receivedElementTypes[responseNotification.attributes.eventType.toLowerCase()],
       targetDeck: responseNotification.attributes.deckName,
       concernedUser: responseNotification.attributes.userName,
     }));
-
 
     yield put({
       type: types.RECEIVED_LIST,
