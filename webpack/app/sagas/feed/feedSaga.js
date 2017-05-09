@@ -14,7 +14,7 @@ export function* getFeedFlow() {
     if (!responseListOfNotifications) {
       throw new Error('Received undefined list.');
     }
-
+    console.log(responseListOfNotifications);
     const listOfNotifications = responseListOfNotifications.map(responseNotification => ({
       timestamp: responseNotification.attributes.createdAt,
       type: receivedElementTypes[responseNotification.attributes.eventType.toLowerCase()],
