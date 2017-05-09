@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Update forbidden",
+      "detail": "You don't have permission to update this user.",
+      "code": "403",
+      "status": "403"
+    }
+  ]
+}

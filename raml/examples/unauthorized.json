@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Destroy unauthorized",
+      "detail": "You don't have permission to update this user.",
+      "code": "401",
+      "status": "401"
+    }
+  ]
+}

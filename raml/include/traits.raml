@@ -19,3 +19,20 @@ authenticated:
     Authorization:
       description: JSON Web Token needed to authenticate (bearer token format)
       example: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0OTI1OTMxNTcsInN1YiI6MSwidmVyIjoxfQ.cFLhHCC4vFmkGg3FkFaDUA2qnk-RxWkz_pt2SY8VOcQ
+  responses:
+    401:
+      description: Returned when invalid or no token specified
+      body:
+        application/vnd.api+json:
+          type: object
+          properties:
+            errors: Error[]
+          example: !include ../examples/unauthorized.json
+    403:
+      description: Returned when action is not permitted
+      body:
+        application/vnd.api+json:
+          type: object
+          properties:
+            errors: Error[]
+          example: !include ../examples/forbidden.json
