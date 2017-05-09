@@ -7,7 +7,7 @@
         "self": "http://localhost:5000/api/notifications/1"
       },
       "attributes": {
-        "eventType": "deck_created",
+        "eventType": "DECK_CREATED",
         "createdAt": "1493993177",
         "userName": "Foo Bar",
         "deckName": "Foobar"
@@ -42,7 +42,7 @@
         "self": "http://localhost:5000/api/notifications/2"
       },
       "attributes": {
-        "eventType": "deck_updated",
+        "eventType": "DECK_UPDATED",
         "createdAt": "1493993177",
         "userName": "Foo Bar",
         "deckName": "Foobar"

@@ -7,7 +7,8 @@ module Api
     ##
     # Properties
     #
-    attributes :event_type, :created_at, :user_name, :deck_name
+    attribute :event_type, :format => :uppercase
+    attributes :created_at, :user_name, :deck_name
 
     has_one :user, :always_include_linkage_data => true
     has_one :deck, :always_include_linkage_data => true
