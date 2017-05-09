@@ -36,7 +36,7 @@ documentation:
   displayName: Users
   description: User API
   get:
-    is: [ paginated, filtered ]
+    is: [ paginated, filtered: { values: [firstName, lastName, email] } ]
     description: Get all users
     responses:
       200:
@@ -202,7 +202,7 @@ documentation:
   displayName: Notifications
   description: Social feed API
   get:
-    is: [ paginated, filtered ]
+    is: [ paginated, filtered: { values: [user, deck, eventType] } ]
     description: Get all notifications
     responses:
       200:

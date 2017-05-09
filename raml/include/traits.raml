@@ -3,13 +3,14 @@
 filtered:
   queryParameters:
     filter[attribute]?:
-      description: Returns results filtered by attribute. Specify the attribute between the brackets.
-      type: string
+      description: Returns results filtered by `attribute`.
+      enum: <<values>>
 paginated:
   queryParameters:
     offset?:
-      description: Returns results based on an `offset` from the beginning of the resultset. Defaults to `0`.
+      description: Returns results based on an `offset` from the beginning of the resultset.
       type: integer
+      default: 0
     limit?:
       description: Imposes limits on returned results.
       type: integer
