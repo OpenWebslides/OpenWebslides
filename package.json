@@ -72,20 +72,21 @@
     "dev": "webpack-dev-server"
   },
   "jest": {
+    "rootDir": "./webpack",
     "moduleFileExtensions": [
       "js",
       "jsx"
     ],
     "moduleNameMapper": {
-      "^presentationals(.*)$": "<rootDir>/webpack/app/presentationals$1",
-      "^pages(.*)$": "<rootDir>/webpack/app/pages$1",
-      "^reducers(.*)$": "<rootDir>/webpack/app/reducers$1",
-      "^actions(.*)$": "<rootDir>/webpack/app/actions$1",
-      "^containers(.*)$": "<rootDir>/webpack/app/containers$1",
-      "^helpers(.*)$": "<rootDir>/webpack/app/helpers$1",
-      "^sagas(.*)$": "<rootDir>/webpack/app/sagas$1",
-      "^errors(.*)$": "<rootDir>/webpack/app/errors$1",
-      "^api(.*)$": "<rootDir>/webpack/app/api$1"
+      "^presentationals(.*)$": "<rootDir>/app/presentationals$1",
+      "^pages(.*)$": "<rootDir>/app/pages$1",
+      "^reducers(.*)$": "<rootDir>/app/reducers$1",
+      "^actions(.*)$": "<rootDir>/app/actions$1",
+      "^containers(.*)$": "<rootDir>/app/containers$1",
+      "^helpers(.*)$": "<rootDir>/app/helpers$1",
+      "^sagas(.*)$": "<rootDir>/app/sagas$1",
+      "^errors(.*)$": "<rootDir>/app/errors$1",
+      "^api(.*)$": "<rootDir>/app/api$1"
     }
   }
 }
