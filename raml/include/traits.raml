@@ -2,6 +2,13 @@
 
 filtered:
 paginated:
+  queryParameters:
+    offset?:
+      description: Returns results based on an `offset` from the beginning of the resultset. Defaults to `0`.
+      type: integer
+    limit?:
+      description: Imposes limits on returned results.
+      type: integer
 authenticated:
   headers:
     Authorization:
