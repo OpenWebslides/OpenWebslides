@@ -17,7 +17,7 @@ module Api
     # Filters
     #
     filters :user, :deck
-    filter :event_type, :verify => ->(values, _) { values & Notification.event_types.keys }
+    filter :event_type, :verify => ->(values, _) { values.map(&:downcase) & Notification.event_types.keys }
 
     ##
     # Callbacks
