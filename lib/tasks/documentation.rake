@@ -16,9 +16,9 @@ namespace :documentation do
     client = Octokit::Client.new :login => ENV['GITHUB_MACHINE_USER'],
                                  :password => ENV['GITHUB_MACHINE_PASSWORD']
 
-    file = Octokit.contents 'openwebslides/openwebslides',
-                            :path => 'index.html',
-                            :ref => 'gh-pages'
+    file = client.contents 'openwebslides/openwebslides',
+                           :path => 'index.html',
+                           :ref => 'gh-pages'
 
     sha = file.sha
 
