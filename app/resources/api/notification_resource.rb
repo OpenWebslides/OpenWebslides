@@ -2,6 +2,8 @@
 
 module Api
   class NotificationResource < ApiResource
+    immutable
+
     ##
     # Properties
     #
@@ -22,7 +24,7 @@ module Api
     ##
     # Methods
     #
-    def self.sortable_fields(context)
+    def self.sortable_fields(_)
       []
     end
 
