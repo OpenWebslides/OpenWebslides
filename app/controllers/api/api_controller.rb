@@ -6,8 +6,6 @@ module Api
     include JWT::Auth::Authentication
     include Pundit
 
-    after_action :add_token_to_response
-
     rescue_from Api::ApiError, :with => :api_error
 
     rescue_from JWT::Auth::UnauthorizedError, :with => :user_not_authenticated

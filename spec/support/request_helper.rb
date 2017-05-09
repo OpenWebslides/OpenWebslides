@@ -21,6 +21,12 @@ module RequestHelper
     end
 
     define_method("#{method}_authenticated") do |user, path, params = {}, headers = {}|
+      extra_headers = auth_headers user
+
+      # Include headers for controller specs
+      @request.env['HTTP_AUTHORIZATION'] = extra_headers['Authorization'] if @request
+
+      # Include headers for request specs
       send method, path, :params => params, :headers => headers.merge(auth_headers user)
     end
   end
@@ -32,7 +38,13 @@ module RequestHelper
     end
 
     define_method("#{method}_authenticated") do |user, path, params = {}, headers = {}|
-      send method, path, :params => params, :headers => headers.merge(auth_headers user).except('Content-Type')
+      extra_headers = auth_headers user
+
+      # Include headers for controller specs
+      @request.env['HTTP_AUTHORIZATION'] = extra_headers['Authorization'] if @request
+
+      # Include headers for request specs
+      send method, path, :params => params, :headers => headers.merge(extra_headers).except('Content-Type')
     end
   end
 
