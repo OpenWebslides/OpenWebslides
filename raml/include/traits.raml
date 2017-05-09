@@ -1,6 +1,10 @@
 #%RAML 1.0
 
 filtered:
+  queryParameters:
+    filter[attribute]?:
+      description: Returns results filtered by attribute. Specify the attribute between the brackets.
+      type: string
 paginated:
   queryParameters:
     offset?:
