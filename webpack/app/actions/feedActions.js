@@ -14,13 +14,13 @@ export function requestEvents() {
 export function receiveEvents(list) {
   return {
     type: types.RECEIVED_LIST,
-    payLoad: list,
+    payload: list,
   };
 }
 
 export function filterByType(type) {
   return {
     type: types.CHANGE_TYPE_FILTER,
-    payLoad: type,
+    payload: type,
   };
 }

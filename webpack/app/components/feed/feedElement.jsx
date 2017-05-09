@@ -17,7 +17,7 @@ export function FeedElement({ timestamp, type, targetDeck, concernedUser, viewed
     >
       <div>
         <h3>{feedElementTypes[type]}: </h3>
-        <p> {concernedUser} has {inlineType[type]} &#34;{targetDeck}&#34; </p>
+        <p> {concernedUser} has {inlineType[type]} <br /> &#34;{targetDeck}&#34; </p>
       </div>
     </li>
   );
