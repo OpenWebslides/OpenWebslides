@@ -5,11 +5,18 @@ import feedApiCall from 'api/feedApiCall';
 
 export function* getFeedFlow() {
   try {
-    const listOfNotifications = yield call(feedApiCall);
-
-    if (!listOfNotifications) {
+    const responseListOfNotifications = yield call(feedApiCall);
+    if (!responseListOfNotifications) {
       throw new Error('Received undefined list.');
     }
+
+    const listOfNotifications = responseListOfNotifications.map(responseNotification => ({
+      timestamp: responseNotification.attributes.createdAt,
+      type: responseNotification.attributes.eventType,
+      targetDeck: responseNotification.attributes.deckName,
+      concernedUser: responseNotification.attributes.userName,
+    }));
+
 
     yield put({
       type: types.RECEIVED_LIST,

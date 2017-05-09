@@ -19,7 +19,6 @@ class Feed extends React.Component {
         timestamp={el.timestamp}
         concernedUser={el.concernedUser}
         targetDeck={el.targetDeck}
-        viewed={el.viewed}
         type={el.type}
       />
       );
@@ -72,7 +71,6 @@ Feed.propTypes = {
     type: PropTypes.oneOf(Object.keys(feedElementTypes)).isRequired,
     targetDeck: PropTypes.string.isRequired,
     concernedUser: PropTypes.string.isRequired,
-    viewed: PropTypes.bool.isRequired,
   })),
   feedState: PropTypes.shape({
     listOfFeedElements: PropTypes.array.isRequired,
