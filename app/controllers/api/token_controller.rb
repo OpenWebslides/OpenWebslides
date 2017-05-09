@@ -2,10 +2,10 @@
 
 module Api
   class TokenController < ApiController
-    after_action :add_token, :only => :create
-
     before_action :authenticate_user, :only => :destroy
     before_action :add_dummy_id, :only => :destroy
+
+    after_action :add_token, :only => :create
 
     protected
 

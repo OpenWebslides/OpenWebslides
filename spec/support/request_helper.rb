@@ -17,14 +17,27 @@ module RequestHelper
   #
   %i[get post put patch].each do |method|
     define_method("#{method}_unauthenticated") do |path, params = {}, headers = {}|
+      if @request
+        # Include headers for controller specs
+        api_headers.each do |k, v|
+          @request.env["HTTP_#{k.underscore.upcase}"] = v
+          @request.env[k.underscore.upcase] = v
+        end
+      end
+
       send method, path, :params => params, :headers => headers.merge(api_headers)
     end
 
     define_method("#{method}_authenticated") do |user, path, params = {}, headers = {}|
       extra_headers = auth_headers user
 
-      # Include headers for controller specs
-      @request.env['HTTP_AUTHORIZATION'] = extra_headers['Authorization'] if @request
+      if @request
+        # Include headers for controller specs
+        extra_headers.each do |k, v|
+          @request.env["HTTP_#{k.underscore.upcase}"] = v
+          @request.env[k.underscore.upcase] = v
+        end
+      end
 
       # Include headers for request specs
       send method, path, :params => params, :headers => headers.merge(auth_headers user)
@@ -34,14 +47,25 @@ module RequestHelper
   # Requests without body don't need Content-Type
   %i[get delete].each do |method|
     define_method("#{method}_unauthenticated") do |path, params = {}, headers = {}|
+      if @request
+        # Include headers for controller specs
+        api_headers.each do |k, v|
+          @request.env["HTTP_#{k.upcase}"] = v
+        end
+      end
+
       send method, path, :params => params, :headers => headers.merge(api_headers).except('Content-Type')
     end
 
     define_method("#{method}_authenticated") do |user, path, params = {}, headers = {}|
       extra_headers = auth_headers user
 
-      # Include headers for controller specs
-      @request.env['HTTP_AUTHORIZATION'] = extra_headers['Authorization'] if @request
+      if @request
+        # Include headers for controller specs
+        extra_headers.each do |k, v|
+          @request.env["HTTP_#{k.upcase}"] = v
+        end
+      end
 
       # Include headers for request specs
       send method, path, :params => params, :headers => headers.merge(extra_headers).except('Content-Type')

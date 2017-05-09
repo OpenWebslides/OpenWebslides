@@ -70,7 +70,7 @@ RSpec.describe Api::UsersController do
       end
     end
 
-    describe 'DELETE update' do
+    describe 'DELETE destroy' do
       it 'denies unauthenticated requests and does not return token' do
         delete_unauthenticated :destroy, :id => user.id
 
