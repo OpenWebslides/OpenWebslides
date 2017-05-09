@@ -38,8 +38,6 @@ RSpec.describe Api::TokenController do
         expect(response.status).not_to be 401
         expect(token response).to be_nil
       end
-
-      # Proper token creation is tested in spec/requests/api/token_spec.rb
     end
   end
 end
