@@ -21,3 +21,6 @@ before_script:
 script:
   - bundle exec rspec
   - yarn run test
+after_script:
+  - bundle exec documentation:generate
+  - bundle exec documentation:deploy
