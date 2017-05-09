@@ -7,7 +7,7 @@ import isEmail from 'sane-email-validation';
 import inputField from 'presentationals/formFields/InputField';
 
 // Actions
-import { requestResetPassword } from 'actions/resetPassword';
+import { forgotPassword } from 'actions/forgotPassword';
 
 // Field validation
 function validate(values) {
@@ -26,7 +26,7 @@ function validate(values) {
 // Submit validation
 function validateAndSubmit(values, dispatch) {
   return new Promise((resolve, reject) => {
-    dispatch(requestResetPassword({ values, resolve, reject }));
+    dispatch(forgotPassword({ values, resolve, reject }));
   });
 }
 

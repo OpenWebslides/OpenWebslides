@@ -14,7 +14,7 @@ import SignupConfirmation from 'presentationals/SignupConfirmed';
 
 // Actions
 import { signupUser } from 'actions/signup';
-import { checkEmailAvailable } from 'actions/checkEmail';
+import { checkEmail } from 'actions/checkEmail';
 
 // Field validation
 export function validate(values) {
@@ -59,7 +59,7 @@ export function validate(values) {
 // Async email availability validation
 export function asyncValidate({ email }, dispatch) {
   return new Promise((resolve, reject) => {
-    dispatch(checkEmailAvailable({ email, resolve, reject }));
+    dispatch(checkEmail({ email, resolve, reject }));
   });
 }
 

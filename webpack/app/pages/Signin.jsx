@@ -8,7 +8,7 @@ function signinPage() {
   return (
     <div>
       <EmailSigninForm />
-      <Link to="/reset_password">Forgot Password?</Link>
+      <Link to="/forgot_password">Forgot Password?</Link>
       <OauthLinks />
     </div>
   );
