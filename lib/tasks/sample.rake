@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-unless defined? FactoryGirl
-  require 'factory_girl'
-  require 'faker'
-
-  Dir[Rails.root.join 'spec/factories/**/*.rb'].each { |f| require f }
-end
+require 'faker'
 
 require Rails.root.join 'config/initializers/active_record'
 ActiveRecord::Base.skip_callbacks = true
@@ -13,47 +8,50 @@ ActiveRecord::Base.skip_callbacks = true
 namespace :db do
   desc 'Populates the database with sample data'
   task :sample => :environment do
+    # Database size factor (10 =~ 100 users)
+    FACTOR = 1
+
+    RANDOM = Random.new
+
+    ##
+    # Returns true in `chance` number of calls
+    #
+    def prob(chance)
+      RANDOM.rand(1.0) < chance
+    end
+
+    # Silence logging
+    ActiveRecord::Base.logger.level = Logger::WARN
+
     ActiveRecord::Base.transaction do
-      u1 = FactoryGirl.create :user, :first_name => 'user1', :password => 'a', :password_confirmation => 'a'
-      u2 = FactoryGirl.create :user, :first_name => 'user2', :password => 'a', :password_confirmation => 'a'
-      u3 = FactoryGirl.create :user, :first_name => 'user3', :password => 'a', :password_confirmation => 'a'
-      u4 = FactoryGirl.create :user, :first_name => 'user4', :password => 'a', :password_confirmation => 'a'
+      ##
+      # Users
+      #
+      users = FACTOR * 10
 
-      u1.confirm
-      u2.confirm
-      u3.confirm
-      u4.confirm
+      users.times do |i|
+        print "Creating user #{i + 1}/#{users}\r"
+        $stdout.flush
 
-      # User 1
-      u1d1 = FactoryGirl.create :deck, :owner => u1, :name => 'u1d1'
-      u1d2 = FactoryGirl.create :deck, :owner => u1, :name => 'u1d2', :state => :protected_access
-      u1d3 = FactoryGirl.create :deck, :owner => u1, :name => 'u1d3', :state => :private_access
-      u1d4 = FactoryGirl.create :deck, :owner => u1, :name => 'u1d4', :state => :private_access
-      u1d4.contributors << u2
-      u1d4.contributors << u3
+        user = User.new :email => Faker::Internet.email,
+                        :first_name => Faker::Name.first_name,
+                        :password => Faker::Internet.password
 
-      # User 2
-      u2d1 = FactoryGirl.create :deck, :owner => u2, :name => 'u2d1'
-      u2d2 = FactoryGirl.create :deck, :owner => u2, :name => 'u2d2', :state => :protected_access
-      u2d3 = FactoryGirl.create :deck, :owner => u2, :name => 'u2d3', :state => :private_access
-      u2d4 = FactoryGirl.create :deck, :owner => u2, :name => 'u2d4', :state => :private_access
-      u2d4.contributors << u1
-      u2d4.contributors << u3
+        # 90% of the users have a last name
+        user.last_name = Faker::Name.last_name if prob 0.9
 
-      # User 3
-      u3d1 = FactoryGirl.create :deck, :owner => u3, :name => 'u3d1'
-      u3d2 = FactoryGirl.create :deck, :owner => u3, :name => 'u3d2', :state => :protected_access
-      u3d3 = FactoryGirl.create :deck, :owner => u3, :name => 'u3d3', :state => :private_access
-      u3d4 = FactoryGirl.create :deck, :owner => u3, :name => 'u3d4', :state => :private_access
-      u3d4.contributors << u1
-      u3d4.contributors << u2
+        # 90% of the users are confirmed
+        user.confirm if prob 0.9
 
-      # User 4
-      u4d1 = FactoryGirl.create :deck, :owner => u4, :name => 'u4d1'
-      u4d2 = FactoryGirl.create :deck, :owner => u4, :name => 'u4d2', :state => :protected_access
-      u4d3 = FactoryGirl.create :deck, :owner => u4, :name => 'u4d3', :state => :private_access
+        user.save!
 
-      Notification.create :event_type => :deck_created, :deck => Deck.first, :user => User.first
+        # 50% of the user have sign up with an external provider
+        if prob 0.5
+          user.identities.create :uid => Faker::Number.number(4),
+                                 :provider => %i[github google_oauth2 facebook].sample
+        end
+      end
+      print "\n"
     end
   end
 end
