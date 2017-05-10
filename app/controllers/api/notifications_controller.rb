@@ -2,5 +2,6 @@
 
 module Api
   class NotificationsController < ApiController
+    after_action :renew_token
   end
 end
