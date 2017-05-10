@@ -3,7 +3,7 @@ import asyncFetch from 'api/helpers/asyncFetch';
 import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
 
 async function getNotifications() {
-  const NOTIFICATIONS_API_URL = 'http://localhost:5000/api/notifications';
+  const NOTIFICATIONS_API_URL = 'http://localhost:5000/api/notifications?sort=-createdAt';
 
   const baseRequestConfig = getBaseRequestConfig();
 
