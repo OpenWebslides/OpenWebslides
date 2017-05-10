@@ -31,6 +31,7 @@
 # Private files
 *.env
 config/*.pem
+config/*.pub
 
 # Coverage report
 coverage/
