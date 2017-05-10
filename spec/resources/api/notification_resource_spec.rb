@@ -24,7 +24,12 @@ RSpec.describe Api::NotificationResource, :type => :resource do
     end
 
     it 'should have a valid set of sortable fields' do
-      expect(described_class.sortable_fields context).to match_array %i[]
+      expect(described_class.sortable_fields context).to match_array %i[created_at]
+    end
+
+    it 'should sort on descending :created_at by default' do
+      expect(described_class.default_sort.first[:field]).to eq 'created_at'
+      expect(described_class.default_sort.first[:direction]).to eq :desc
     end
   end
 

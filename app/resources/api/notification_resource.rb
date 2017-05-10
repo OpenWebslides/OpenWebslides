@@ -26,7 +26,11 @@ module Api
     # Methods
     #
     def self.sortable_fields(_)
-      []
+      [:created_at]
+    end
+
+    def self.default_sort
+      [{ :field => 'created_at', :direction => :desc }]
     end
 
     def created_at
