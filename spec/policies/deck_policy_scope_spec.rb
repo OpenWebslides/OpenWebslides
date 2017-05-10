@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe DeckPolicy::Scope do
   subject { described_class.new(user, Deck).resolve }
 
+  include_context 'policy_sample'
+
   context 'for a guest' do
     let(:user) { nil }
 
