@@ -14,21 +14,20 @@ function dateToTimeIdentifier(date) {
     return 'less than a minute ago';
   } else if (interval < hr) {
     const minutes = Math.floor(interval / min);
-    return `${minutes} ${minutes === 1 ? 'minute' : minutes} ago`;
+    return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
   } else if (interval < day) {
     const hours = Math.floor(interval / hr);
-    return `${hours} ${hours === 1 ? 'hour' : hours} ago`;
+    return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
   } else if (interval < week) {
     const days = Math.floor(interval / day);
-    return `${days} ${days === 1 ? 'day' : days} ago`;
+    return `${days} ${days === 1 ? 'day' : 'days'} ago`;
   } else if (interval < month) {
     const weeks = Math.floor(interval / week);
-    return `${weeks} ${weeks === 1 ? 'week' : weeks} ago`;
+    return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
   }
   const months = Math.floor(interval / month);
-  return `${months} ${months === 1 ? 'month' : months} ago`;
+  return `${months} ${months === 1 ? 'month' : 'months'} ago`;
 }
-
 
 export function FeedElement({ timestamp, type, targetDeck, concernedUser }) {
   const className = 'c_feed-element';
@@ -41,19 +40,29 @@ export function FeedElement({ timestamp, type, targetDeck, concernedUser }) {
   const displayDate = dateToTimeIdentifier(date);
 
   return (
-    <li
-      key={timestamp}
-      className={className}
-    >
+    <li key={timestamp} className={className}>
       <div>
         <h3>{feedElementTypes[type]}: </h3>
-        <p> {concernedUser} has {inlineType[type]} <br /> &#34;{targetDeck}&#34; </p>
+        <p>
+          {' '}
+          {concernedUser}
+          {' '}
+          has
+          {' '}
+          {inlineType[type]}
+          {' '}
+          <br />
+          {' '}
+          {'"'}
+          {targetDeck}
+          {'"'}
+          {' '}
+        </p>
         <p> - {displayDate} </p>
       </div>
     </li>
   );
 }
-
 
 FeedElement.propTypes = {
   timestamp: PropTypes.string.isRequired,
