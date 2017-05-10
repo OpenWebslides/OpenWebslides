@@ -35,10 +35,11 @@ namespace :db do
       ##
       # Users
       #
-      users = FACTOR * 10
+      user_count = FACTOR * 10
+      users = []
 
-      users.times do |i|
-        puts "Creating user #{i + 1}/#{users}"
+      user_count.times do |i|
+        puts "Creating user #{i + 1}/#{user_count}"
 
         user = User.new :email => Faker::Internet.email,
                         :first_name => Faker::Name.first_name,
@@ -51,6 +52,7 @@ namespace :db do
         user.confirm if prob 0.9
 
         user.save!
+        users << user
 
         # 50% of the user have sign up with an external provider
         if prob 0.5
@@ -64,30 +66,61 @@ namespace :db do
       #
       ActiveRecord::Base.skip_callbacks = true
 
-      User.all.each_with_index do |user, i|
+      decks = []
+
+      users.each_with_index do |user, i|
         # 20% of the users have no decks
         next if prob 0.2
 
-        decks = RANDOM.rand 10
+        deck_count = RANDOM.rand 10
 
         # 10% of the users have a lot of decks
-        decks = RANDOM.rand 100 if prob 0.1
+        deck_count = RANDOM.rand 100 if prob 0.1
 
-        puts "Creating #{decks} decks for user #{i}/#{users}"
+        puts "Creating #{deck_count} decks for user #{i + 1}/#{user_count}"
 
-        decks.times do
+        deck_count.times do
           deck = user.decks.build :name => Faker::Lorem.words.join(' '),
                                   :state => %i[public_access protected_access private_access].sample
 
           # 80% of the decks have a description
           deck.description = Faker::Lorem.words 10 if prob 0.8
 
+          # Add some random contributors
+          RANDOM.rand(5).times do
+            deck.contributors << User.offset(RANDOM.rand user_count).first
+          end
+
           deck.save!
+          decks << deck
         end
       end
-      puts "\n"
 
       ActiveRecord::Base.skip_callbacks = false
+
+      decks.each_with_index do |deck, i|
+        notification_count = RANDOM.rand 100
+
+        puts "Creating #{notification_count + 1} events for deck #{i + 1}/#{decks.size}"
+
+        creation_time = RANDOM.rand(1.year)
+
+        # Deck created
+        Notification.create :event_type => :deck_created,
+                            :user => deck.owner,
+                            :deck => deck,
+                            :created_at => creation_time.seconds.ago,
+                            :updated_at => creation_time.seconds.ago
+
+        # Deck updated
+        notification_count.times do
+          Notification.create :event_type => :deck_updated,
+                              :user => ([deck.owner] + deck.contributors).sample,
+                              :deck => deck,
+                              :created_at => RANDOM.rand(creation_time).seconds.ago,
+                              :updated_at => RANDOM.rand(creation_time).seconds.ago
+        end
+      end
     end
   end
 end
