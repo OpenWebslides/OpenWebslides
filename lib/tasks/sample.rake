@@ -8,7 +8,11 @@ ActiveRecord::Base.skip_callbacks = true
 namespace :db do
   desc 'Populates the database with sample data'
   task :sample => :environment do
+    ##
     # Database size factor (10 =~ 100 users)
+    #
+    # Set this to 100 for testing
+    #
     FACTOR = 1
 
     RANDOM = Random.new
@@ -52,6 +56,36 @@ namespace :db do
         end
       end
       print "\n"
+
+      ##
+      # Decks
+      #
+      ActiveRecord::Base.skip_callbacks = true
+
+      User.all.each_with_index do |user, i|
+        # 20% of the users have no decks
+        next if prob 0.2
+
+        decks = RANDOM.rand 10
+
+        # 10% of the users have a lot of decks
+        decks = RANDOM.rand 100 if prob 0.1
+
+        print "Creating #{decks} decks for user #{i}/#{users}\r"
+
+        decks.times do
+          deck = user.decks.build :name => Faker::Lorem.words,
+                                  :state => %i[public_access protected_access private_access].sample
+
+          # 80% of the decks have a description
+          deck.description = Faker::Lorem.words 10 if prob 0.8
+
+          deck.save!
+        end
+      end
+      print "\n"
+
+      ActiveRecord::Base.skip_callbacks = false
     end
   end
 end
