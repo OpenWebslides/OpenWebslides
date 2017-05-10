@@ -40,8 +40,6 @@ PreCommit:
     enabled: true
   BundleCheck:
     enabled: true
-  BundleOutdated:
-    enabled: true
   ExecutePermissions:
     enabled: true
   FixMe:
