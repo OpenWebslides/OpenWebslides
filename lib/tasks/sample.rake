@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faker'
+require 'benchmark'
 
 require Rails.root.join 'config/initializers/active_record'
 ActiveRecord::Base.skip_callbacks = true
@@ -13,7 +14,7 @@ namespace :db do
     #
     # Set this to 100 for testing
     #
-    FACTOR = 1
+    FACTOR = 10
 
     RANDOM = Random.new
 
@@ -27,6 +28,9 @@ namespace :db do
     # Silence logging
     ActiveRecord::Base.logger.level = Logger::WARN
 
+    # Don't wast time on encrypting passwords
+    Rails.application.config.devise.stretches = 1
+
     ActiveRecord::Base.transaction do
       ##
       # Users
@@ -34,8 +38,7 @@ namespace :db do
       users = FACTOR * 10
 
       users.times do |i|
-        print "Creating user #{i + 1}/#{users}\r"
-        $stdout.flush
+        puts "Creating user #{i + 1}/#{users}"
 
         user = User.new :email => Faker::Internet.email,
                         :first_name => Faker::Name.first_name,
@@ -55,7 +58,6 @@ namespace :db do
                                  :provider => %i[github google_oauth2 facebook].sample
         end
       end
-      print "\n"
 
       ##
       # Decks
@@ -71,7 +73,7 @@ namespace :db do
         # 10% of the users have a lot of decks
         decks = RANDOM.rand 100 if prob 0.1
 
-        print "Creating #{decks} decks for user #{i}/#{users}\r"
+        puts "Creating #{decks} decks for user #{i}/#{users}"
 
         decks.times do
           deck = user.decks.build :name => Faker::Lorem.words,
@@ -83,7 +85,7 @@ namespace :db do
           deck.save!
         end
       end
-      print "\n"
+      puts "\n"
 
       ActiveRecord::Base.skip_callbacks = false
     end
