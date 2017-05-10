@@ -14,30 +14,34 @@ class DeckPolicy
 
   def show?
     if @record.public_access?
-      # Everyone can read
+      # Users and guests can read
       true
     elsif @record.protected_access?
-      # Authenticated users can read protected deck
+      # Users can read protected deck
       !@user.nil?
     elsif @record.private_access?
       return false if @user.nil?
-      # Owner and collaborators users can read private deck
+      # Owner and collaborators can read private deck
       @record.owner == @user || @record.contributors.include?(@user)
     end
   end
 
   def create?
-    # Authenticated users can create a deck
+    # Users can create a deck
     !@user.nil?
   end
 
   def update?
     return false if @user.nil?
+
+    # Owner and collaborators can update deck
     @record.owner == @user || @record.contributors.include?(@user)
   end
 
   def destroy?
     return false if @user.nil?
+
+    # Owner can destroy deck
     @record.owner == @user
   end
 
@@ -51,12 +55,12 @@ class DeckPolicy
 
     def resolve
       if @user
-        # Public decks, protected decks and contributions
+        # Users can see public decks, protected decks and collaborations
         scope.left_outer_joins(:contributors).where.not(:state => 'private_access')
              .or(Deck.left_outer_joins(:contributors).where(:owner => @user))
              .or(Deck.left_outer_joins(:contributors).where('decks_users.user_id = ?', @user.id)).distinct
       else
-        # Public decks
+        # Everyone can see public decks
         scope
           .where(:state => 'public_access')
       end
