@@ -21,13 +21,3 @@ RSpec.describe NotificationPolicy do
     it { is_expected.to permit_action :show }
   end
 end
-
-RSpec.describe UserPolicy::Scope do
-  subject { described_class.new(user, Notification).resolve }
-
-  context 'for everyone' do
-    let(:user) { nil }
-
-    it { is_expected.to eq Notification.all }
-  end
-end
