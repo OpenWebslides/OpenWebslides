@@ -14,7 +14,7 @@ namespace :db do
     #
     # Set this to 100 for testing
     #
-    FACTOR = 10
+    FACTOR = 1
 
     RANDOM = Random.new
 
@@ -76,7 +76,7 @@ namespace :db do
         puts "Creating #{decks} decks for user #{i}/#{users}"
 
         decks.times do
-          deck = user.decks.build :name => Faker::Lorem.words,
+          deck = user.decks.build :name => Faker::Lorem.words.join(' '),
                                   :state => %i[public_access protected_access private_access].sample
 
           # 80% of the decks have a description
