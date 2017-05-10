@@ -7,6 +7,7 @@ RSpec.describe 'Notification API', :type => :request do
 
   describe 'get all notifications' do
     it 'returns a list of all notifications' do
+      create :notification
       get_unauthenticated api_notifications_path
 
       expect(response.status).to eq 200
