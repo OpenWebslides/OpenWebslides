@@ -85,7 +85,7 @@ RSpec.describe DeckPolicy do
     end
   end
 
-  context 'for a contributor' do
+  context 'for a collaborator' do
     let(:user) { build :user, :with_decks }
 
     it 'should permit :index' do
@@ -97,8 +97,8 @@ RSpec.describe DeckPolicy do
     end
 
     context 'for public decks' do
-      let(:deck) { build :deck, :with_contributors, :state => :public_access }
-      let(:user) { deck.contributors.first }
+      let(:deck) { build :deck, :with_collaborators, :state => :public_access }
+      let(:user) { deck.collaborators.first }
       it 'should permit anything but destroy on public decks' do
         expect(subject).to permit_action :show
         expect(subject).to permit_action :update
@@ -107,8 +107,8 @@ RSpec.describe DeckPolicy do
     end
 
     context 'for protected decks' do
-      let(:deck) { build :deck, :with_contributors, :state => :protected_access }
-      let(:user) { deck.contributors.first }
+      let(:deck) { build :deck, :with_collaborators, :state => :protected_access }
+      let(:user) { deck.collaborators.first }
       it 'should permit anything but destroy on protected decks' do
         expect(subject).to permit_action :show
         expect(subject).to permit_action :update
@@ -117,8 +117,8 @@ RSpec.describe DeckPolicy do
     end
 
     context 'for private decks' do
-      let(:deck) { build :deck, :with_contributors, :state => :private_access }
-      let(:user) { deck.contributors.first }
+      let(:deck) { build :deck, :with_collaborators, :state => :private_access }
+      let(:user) { deck.collaborators.first }
       it 'should permit anything but destroy on private decks' do
         expect(subject).to permit_action :show
         expect(subject).to permit_action :update

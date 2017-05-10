@@ -22,7 +22,7 @@ class User < ApplicationRecord
 
   has_many :decks, :dependent => :destroy
 
-  has_and_belongs_to_many :contributions, :class_name => 'Deck'
+  has_and_belongs_to_many :collaborations, :class_name => 'Deck'
 
   ##
   # Callbacks

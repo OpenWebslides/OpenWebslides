@@ -86,9 +86,9 @@ namespace :db do
           # 80% of the decks have a description
           deck.description = Faker::Lorem.words 10 if prob 0.8
 
-          # Add some random contributors
+          # Add some random collaborators
           RANDOM.rand(5).times do
-            deck.contributors << User.offset(RANDOM.rand user_count).first
+            deck.collaborators << User.offset(RANDOM.rand user_count).first
           end
 
           deck.save!
@@ -115,7 +115,7 @@ namespace :db do
         # Deck updated
         notification_count.times do
           Notification.create :event_type => :deck_updated,
-                              :user => ([deck.owner] + deck.contributors).sample,
+                              :user => ([deck.owner] + deck.collaborators).sample,
                               :deck => deck,
                               :created_at => RANDOM.rand(creation_time).seconds.ago,
                               :updated_at => RANDOM.rand(creation_time).seconds.ago

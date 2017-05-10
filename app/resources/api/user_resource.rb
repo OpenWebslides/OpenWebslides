@@ -9,7 +9,7 @@ module Api
     attributes :first_name, :last_name, :email, :password
 
     has_many :decks
-    has_many :contributions
+    has_many :collaborations
 
     ##
     # Filters
@@ -31,11 +31,11 @@ module Api
     end
 
     def self.creatable_fields(context = {})
-      super(context) - %i[decks contributions]
+      super(context) - %i[decks collaborations]
     end
 
     def self.updatable_fields(context = {})
-      super(context) - %i[email decks contributions]
+      super(context) - %i[email decks collaborations]
     end
 
     def self.sortable_fields(context)

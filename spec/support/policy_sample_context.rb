@@ -13,24 +13,24 @@ RSpec.shared_context 'policy_sample', :shared_context => :metadata do
       u1d2 = create :deck, :owner => u1, :name => 'u1d2', :state => :protected_access
       u1d3 = create :deck, :owner => u1, :name => 'u1d3', :state => :private_access
       u1d4 = create :deck, :owner => u1, :name => 'u1d4', :state => :private_access
-      u1d4.contributors << u2
-      u1d4.contributors << u3
+      u1d4.collaborators << u2
+      u1d4.collaborators << u3
 
       # User 2
       u2d1 = create :deck, :owner => u2, :name => 'u2d1'
       u2d2 = create :deck, :owner => u2, :name => 'u2d2', :state => :protected_access
       u2d3 = create :deck, :owner => u2, :name => 'u2d3', :state => :private_access
       u2d4 = create :deck, :owner => u2, :name => 'u2d4', :state => :private_access
-      u2d4.contributors << u1
-      u2d4.contributors << u3
+      u2d4.collaborators << u1
+      u2d4.collaborators << u3
 
       # User 3
       u3d1 = create :deck, :owner => u3, :name => 'u3d1'
       u3d2 = create :deck, :owner => u3, :name => 'u3d2', :state => :protected_access
       u3d3 = create :deck, :owner => u3, :name => 'u3d3', :state => :private_access
       u3d4 = create :deck, :owner => u3, :name => 'u3d4', :state => :private_access
-      u3d4.contributors << u1
-      u3d4.contributors << u2
+      u3d4.collaborators << u1
+      u3d4.collaborators << u2
 
       # User 4
       u4d1 = create :deck, :owner => u4, :name => 'u4d1'

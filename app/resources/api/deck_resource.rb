@@ -8,8 +8,7 @@ module Api
     attributes :name, :state, :description
 
     has_one :owner
-
-    has_many :contributors
+    has_many :collaborators
 
     ##
     # Filters
@@ -24,11 +23,11 @@ module Api
     # Methods
     #
     def self.creatable_fields(context = {})
-      super(context) - %i[contributors]
+      super(context) - %i[collaborators]
     end
 
     def self.updatable_fields(context = {})
-      super(context) - %i[contributors]
+      super(context) - %i[collaborators]
     end
   end
 end

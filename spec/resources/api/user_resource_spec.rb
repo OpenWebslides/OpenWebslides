@@ -15,19 +15,19 @@ RSpec.describe Api::UserResource, :type => :resource do
   it { is_expected.not_to have_attribute :email }
 
   it { is_expected.to have_many(:decks).with_class_name 'Deck' }
-  it { is_expected.to have_many(:contributions).with_class_name 'Deck' }
+  it { is_expected.to have_many(:collaborations).with_class_name 'Deck' }
 
   describe 'fields' do
     context 'for a guest' do
       it 'should have a valid set of fetchable fields' do
-        expect(subject.fetchable_fields).to match_array %i[id first_name last_name decks contributions]
+        expect(subject.fetchable_fields).to match_array %i[id first_name last_name decks collaborations]
       end
     end
 
     context 'for a user' do
       let(:context) { { :current_user => user } }
       it 'should have a valid set of fetchable fields' do
-        expect(subject.fetchable_fields).to match_array %i[id first_name last_name email decks contributions]
+        expect(subject.fetchable_fields).to match_array %i[id first_name last_name email decks collaborations]
       end
     end
 

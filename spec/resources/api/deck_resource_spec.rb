@@ -15,11 +15,11 @@ RSpec.describe Api::DeckResource, :type => :resource do
 
   it { is_expected.to have_one :owner }
 
-  it { is_expected.to have_many(:contributors).with_class_name 'User' }
+  it { is_expected.to have_many(:collaborators).with_class_name 'User' }
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id name state description owner contributors]
+      expect(subject.fetchable_fields).to match_array %i[id name state description owner collaborators]
     end
 
     it 'should have a valid set of creatable fields' do

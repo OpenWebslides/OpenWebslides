@@ -6,8 +6,8 @@ FactoryGirl.define do
     state :public_access
     owner { build :user }
 
-    trait :with_contributors do
-      contributors { build_list :user, 3 }
+    trait :with_collaborators do
+      collaborators { build_list :user, 3 }
     end
   end
 end
