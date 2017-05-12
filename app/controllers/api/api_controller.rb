@@ -4,7 +4,6 @@ module Api
   class ApiController < ApplicationController
     include JSONAPI::ActsAsResourceController
     include JWT::Auth::Authentication
-    include Pundit
 
     rescue_from Api::ApiError, :with => :api_error
 
