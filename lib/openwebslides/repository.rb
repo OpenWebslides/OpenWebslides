@@ -20,11 +20,16 @@ module OpenWebslides
     end
 
     def init
+      raise OpenWebslides::RepoExistsError if Dir.exist? repo_path
+
       # Create local repo
       FileUtils.mkdir_p repo_path
 
       # Populate local repo
-      FileUtils.cp_r "#{Rails.root.join('lib', 'assets', 'seed_repository')}/.", repo_path
+      FileUtils.cp_r "#{Rails.root.join('lib', 'assets', 'template')}/.", repo_path
+
+      # Delete submodule .git
+      FileUtils.rm_r File.join(repo_path, '.git'), :secure => true
 
       # Initialize local repo
       Rugged::Repository.init_at repo_path
@@ -45,6 +50,14 @@ module OpenWebslides
       repo.remotes.create REMOTE_NAME, @provider.remote
 
       sync
+    rescue OpenWebslides::RepoExistsError => e
+      # Do not handle RepoExistsErrors
+      raise e
+    rescue => e
+      # Try to remove the repo if any other error
+      FileUtils.rm_r repo_path, :secure => true if Dir.exist? repo_path
+
+      raise e
     end
 
     def sync
@@ -54,7 +67,7 @@ module OpenWebslides
 
     def destroy
       # Destroy local repository
-      FileUtils.remove_entry_secure repo_path
+      FileUtils.rm_r repo_path, :secure => true
 
       return unless @provider
 

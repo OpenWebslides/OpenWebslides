@@ -8,6 +8,7 @@ module OpenWebslides
   #
   class CommandError < Error; end
   class ConfigurationError < Error; end
+  class RepoExistsError < Error; end
 
   ##
   # Unconfirmed account

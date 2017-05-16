@@ -81,12 +81,12 @@ provider:
   ##
   # GitHub username
   #
-  github_user: OpenWebslides-Platform
+  github_user: <%= ENV['GITHUB_MACHINE_USER'] %>
 
   ##
   # GitHub passphrase
   #
-  github_passphrase: <%= ENV['GITHUB_PASSPHRASE'] %>
+  github_passphrase: <%= ENV['GITHUB_MACHINE_PASSWORD'] %>
 
   ##
   # GitHub API endpoint
