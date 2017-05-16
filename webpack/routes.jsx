@@ -23,4 +23,3 @@ export default (
     <Route path="editor/slide" component={SlideEditorPage} />
   </Route>
 );
-

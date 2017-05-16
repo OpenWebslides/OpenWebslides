@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Immutable from 'seamless-immutable';
-import { requestEvents, filterByType, requestMore } from 'actions/feedActions';
-import { FeedElement } from '../components/feed/feedElement';
+import { requestFeedNotifications, filterByType } from 'actions/feedActions';
+import { FeedElement } from '../components/feed/FeedNotification';
 import { feedElementTypes } from '../constants/feedConstants';
-import FeedToolbar from '../components/feed/feedToolbar';
+import FeedToolbar from '../components/feed/FeedToolbar';
 
 function renderElement(el) {
   return (
@@ -21,7 +21,7 @@ function renderElement(el) {
 
 class Feed extends React.Component {
   componentWillMount() {
-    this.props.requestEvents();
+    this.props.requestFeedNotifications();
   }
 
   render() {
@@ -35,10 +35,17 @@ class Feed extends React.Component {
       .filter(e => e.type === selectedType || selectedType === 'ALL');
 
     if (
-      this.props.feedState.receivedList === false ||
-      filteredFeedElements.length === 0
+      filteredFeedElements.length === 0 &&
+      this.props.feedState.errorMessage === ''
     ) {
-      elementsToDisplay = <li key="0"> No elements to display </li>;
+      elementsToDisplay = <li key="0"> No notifications to display </li>;
+    } else if (
+      filteredFeedElements.length === 0 &&
+      this.props.feedState.errorMessage !== ''
+    ) {
+      elementsToDisplay = (
+        <li key="0"> There was an error retrieving notifications! </li>
+      );
     } else {
       const numOfElementsToDisplay = filteredFeedElements.length <=
         this.props.feedState.currentOffset
@@ -53,19 +60,23 @@ class Feed extends React.Component {
         .slice(0, numOfElementsToDisplay)
         .map(el => renderElement(el));
     }
-    debugger;
     let lastElement;
 
-    if (this.props.feedState.requestedMore) {
+    if (
+      filteredFeedElements.length === 0 &&
+      this.props.feedState.sentRequestForList
+    ) {
       lastElement = <p> loading... </p>;
     } else {
       lastElement = (
         <button
           onClick={() => {
-            this.props.requestMore(this.props.feedState.currentOffset);
+            this.props.requestFeedNotifications(
+              this.props.feedState.currentOffset,
+            );
           }}
         >
-          {' '}more{' '}
+          more
         </button>
       );
     }
@@ -91,8 +102,7 @@ class Feed extends React.Component {
 }
 
 Feed.propTypes = {
-  requestEvents: PropTypes.func.isRequired,
-  requestMore: PropTypes.func.isRequired,
+  requestFeedNotifications: PropTypes.func.isRequired,
   listOfFeedElements: PropTypes.arrayOf(
     PropTypes.shape({
       timeStamp: PropTypes.number.isRequired,
@@ -105,7 +115,7 @@ Feed.propTypes = {
     listOfFeedElements: PropTypes.array.isRequired,
     sentRequestForList: PropTypes.bool.isRequired,
     receivedList: PropTypes.bool.isRequired,
-    requestedMore: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string.isRequired,
     currentOffset: PropTypes.number.isRequired,
     typeFilter: PropTypes.oneOf(Object.keys(feedElementTypes)).isRequired,
   }).isRequired,
@@ -118,7 +128,7 @@ Feed.defaultProps = {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { requestEvents, requestMore, filterByType },
+    { requestFeedNotifications, filterByType },
     dispatch,
   );
 }

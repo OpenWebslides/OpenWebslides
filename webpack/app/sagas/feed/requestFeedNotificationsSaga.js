@@ -1,16 +1,23 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 
-import { types } from 'actions/feedActions';
-import feedApiCall from 'api/feedApiCall';
+import {
+  REQUEST_FEED_NOTIFICATIONS_SUCCESS,
+  REQUEST_FEED_NOTIFICATIONS,
+  REQUEST_FEED_NOTIFICATIONS_FAILURE,
+} from 'actions/feedActions';
+import moreNotificationsCall from 'api/feedApiCall';
 
-export function* getFeedFlow() {
+export function* getFeedNotificationsFlow(action) {
   const receivedElementTypes = {
     deck_created: 'DECK_CREATED',
     deck_updated: 'DECK_UPDATED',
   };
 
   try {
-    const responseListOfNotifications = yield call(feedApiCall);
+    const responseListOfNotifications = yield call(
+      moreNotificationsCall,
+      action.meta,
+    );
     if (!responseListOfNotifications) {
       throw new Error('Received undefined list.');
     }
@@ -26,14 +33,14 @@ export function* getFeedFlow() {
     );
 
     yield put({
-      type: types.RECEIVED_LIST,
+      type: REQUEST_FEED_NOTIFICATIONS_SUCCESS,
       payload: {
         listOfNotifications,
       },
     });
   } catch (error) {
     yield put({
-      type: types.RECEPTION_ERROR,
+      type: REQUEST_FEED_NOTIFICATIONS_FAILURE,
       payload: {
         message: error.message,
       },
@@ -42,7 +49,7 @@ export function* getFeedFlow() {
 }
 
 function* feedUpdateWatcher() {
-  yield takeLatest(types.REQUEST_FEED_ELEMENTS, getFeedFlow);
+  yield takeLatest(REQUEST_FEED_NOTIFICATIONS, getFeedNotificationsFlow);
 }
 
 export default feedUpdateWatcher;

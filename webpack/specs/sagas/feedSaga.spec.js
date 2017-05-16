@@ -55,7 +55,7 @@ describe('Feed Saga', () => {
 
       expect(generator.next(dummyResponse).value)
         .toEqual(put({
-          type: types.RECEIVED_LIST,
+          type: types.REQUEST_FEED_NOTIFICATIONS_SUCCESS,
           payload: {
             listOfNotifications: [{
               timestamp: dummyResponse[0].attributes.createdAt,
