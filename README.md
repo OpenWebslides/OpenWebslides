@@ -22,6 +22,13 @@ $ # Front-end dependencies
 $ yarn install
 ```
 
+Initialize and update the git submodules:
+
+```
+$ git submodule init
+$ git submodule update
+```
+
 Enable git pre-commit hooks:
 
 ```

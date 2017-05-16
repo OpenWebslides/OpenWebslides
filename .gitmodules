@@ -1,0 +1,3 @@
+[submodule "lib/assets/template"]
+  path = lib/assets/template
+  url = https://github.com/OpenWebslides/template.git
