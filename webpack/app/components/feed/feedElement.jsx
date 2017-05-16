@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { intervalFromNow } from '../../../lib/dateDisplay';
-import { feedElementTypes } from '../../constants/feedConstants';
+import {
+  feedElementTypes,
+  inlineFeedElementType,
+} from '../../constants/feedConstants';
 
 export function FeedElement({ timestamp, type, targetDeck, concernedUser }) {
   const className = 'c_feed-element';
-  const inlineType = {
-    DECK_CREATED: 'created a new deck:',
-    DECK_UPDATED: 'updated the deck:',
-  };
+
   const date = new Date(timestamp * 1000);
-
   const displayDate = intervalFromNow(date);
-
   return (
     <li key={timestamp} className={className}>
       <div>
@@ -23,7 +21,7 @@ export function FeedElement({ timestamp, type, targetDeck, concernedUser }) {
           {' '}
           has
           {' '}
-          {inlineType[type]}
+          {inlineFeedElementType[type]}
           {' '}
           <br />
           {' '}
