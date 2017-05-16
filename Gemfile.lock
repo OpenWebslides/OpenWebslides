@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/handlers/jsonapi-authorization.git
-  revision: 373169641dbaab45f3d1e0bb502cdf406de6fed7
+  revision: 927dd2021bc10c29b0c2a86a210d963ab8a88c26
   branch: jsonapi-resources-0.9
   specs:
     jsonapi-authorization (0.8.2)

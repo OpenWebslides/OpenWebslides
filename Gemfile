@@ -9,7 +9,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# Authentication/authorization
+# Authentication
 gem 'devise'
 gem 'jwt'
 gem 'jwt-auth'
@@ -17,6 +17,10 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
+
+# Authorization
+gem 'jsonapi-authorization', :github => 'handlers/jsonapi-authorization', :branch => 'jsonapi-resources-0.9'
+gem 'pundit'
 
 # Data store providers
 gem 'net-ssh'
@@ -27,7 +31,6 @@ gem 'rugged'
 gem 'webpack-rails'
 
 # JSON:API spec compliant resources
-gem 'jsonapi-authorization', :github => 'handlers/jsonapi-authorization', :branch => 'jsonapi-resources-0.9'
 gem 'jsonapi-resources'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -47,8 +50,6 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Tame Rails logging
 gem 'lograge'
-# Use Pundit for permission model
-gem 'pundit'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record

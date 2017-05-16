@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class TokenResource < ApiResource
+  class TokenResource < JSONAPI::Resource
     abstract
 
     ##

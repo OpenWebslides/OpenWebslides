@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class ConfirmationResource < ApiResource
+  class ConfirmationResource < JSONAPI::Resource
     abstract
 
     ##
