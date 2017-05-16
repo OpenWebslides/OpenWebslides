@@ -30,10 +30,10 @@ describe('Feed Reducer', () => {
         }));
   });
 
-  it('can resolve REQUEST_FEED_ELEMENTS action', () => {
+  it('can resolve REQUEST_FEED_NOTIFICATIONS action', () => {
     expect(
       feedReducer(emptyState, {
-        type: types.REQUEST_FEED_ELEMENTS,
+        type: types.REQUEST_FEED_NOTIFICATIONS,
       }))
       .toEqual(Immutable({
         listOfFeedElements: [],
@@ -43,10 +43,10 @@ describe('Feed Reducer', () => {
       }));
   });
 
-  it('can resolve RECEIVED_LIST action', () => {
+  it('can resolve REQUEST_FEED_NOTIFICATIONS_SUCCESS action', () => {
     expect(
       feedReducer(emptyState, {
-        type: types.RECEIVED_LIST,
+        type: types.REQUEST_FEED_NOTIFICATIONS_SUCCESS,
         payload: { listOfNotifications: samples },
       }))
       .toEqual(Immutable({

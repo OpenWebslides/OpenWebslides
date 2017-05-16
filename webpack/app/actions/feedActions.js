@@ -1,33 +1,26 @@
-export const types = {
-  REQUEST_FEED_ELEMENTS: 'REQUEST_FEED_ELEMENTS',
-  RECEIVED_LIST: 'RECEIVED_LIST',
-  RECEPTION_ERROR: 'RECEPTION_ERROR',
-  CHANGE_TYPE_FILTER: 'CHANGE_TYPE_FILTER',
-  REQUEST_MORE_NOTIFICATIONS: 'REQUEST_MORE_NOTIFICATIONS',
-  RECEIVED_MORE_NOTIFICATIONS: 'RECEIVED_MORE_NOTIFICATIONS',
-};
+export const REQUEST_FEED_NOTIFICATIONS = 'REQUEST_FEED_NOTIFICATIONS';
+export const REQUEST_FEED_NOTIFICATIONS_SUCCESS =
+  'REQUEST_FEED_NOTIFICATIONS_SUCCESS';
+export const REQUEST_FEED_NOTIFICATIONS_FAILURE =
+  'REQUEST_FEED_NOTIFICATIONS_FAILURE';
+export const CHANGE_TYPE_FILTER = 'CHANGE_TYPE_FILTER';
 
-export function requestEvents() {
+export function requestFeedNotifications(amount) {
   return {
-    type: types.REQUEST_FEED_ELEMENTS,
-  };
-}
-export function requestMore(amount) {
-  return {
-    type: types.REQUEST_MORE_NOTIFICATIONS,
+    type: REQUEST_FEED_NOTIFICATIONS,
     meta: amount,
   };
 }
 export function receiveEvents(list) {
   return {
-    type: types.RECEIVED_LIST,
+    type: REQUEST_FEED_NOTIFICATIONS_SUCCESS,
     payload: list,
   };
 }
 
 export function filterByType(type) {
   return {
-    type: types.CHANGE_TYPE_FILTER,
+    type: CHANGE_TYPE_FILTER,
     payload: type,
   };
 }
