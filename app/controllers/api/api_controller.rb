@@ -4,6 +4,7 @@ module Api
   class ApiController < ApplicationController
     include JSONAPI::ActsAsResourceController
     include JWT::Auth::Authentication
+    include Pundit::ResourceController
 
     rescue_from Api::ApiError, :with => :api_error
 
@@ -11,10 +12,6 @@ module Api
     rescue_from Pundit::NotAuthorizedError, :with => :user_not_authorized
 
     protected
-
-    def context
-      { :current_user => current_user }
-    end
 
     ##
     # Handle generic API errors

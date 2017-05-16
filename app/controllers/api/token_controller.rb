@@ -7,6 +7,8 @@ module Api
 
     after_action :add_token, :only => :create
 
+    skip_after_action :enforce_policy_use, :only => %i[create destroy]
+
     protected
 
     def add_token

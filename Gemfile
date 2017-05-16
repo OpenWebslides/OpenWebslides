@@ -19,8 +19,8 @@ gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 
 # Authorization
-gem 'jsonapi-authorization', :github => 'handlers/jsonapi-authorization', :branch => 'jsonapi-resources-0.9'
 gem 'pundit'
+gem 'pundit-resources'
 
 # Data store providers
 gem 'net-ssh'
