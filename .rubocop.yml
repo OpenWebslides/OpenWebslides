@@ -7,7 +7,7 @@ Documentation:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 40
 
 Metrics/LineLength:
   Max: 120
