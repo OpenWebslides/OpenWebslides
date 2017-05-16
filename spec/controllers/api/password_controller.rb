@@ -38,4 +38,23 @@ RSpec.describe Api::PasswordController do
       end
     end
   end
+
+  describe 'authorization' do
+    describe 'POST create' do
+      it 'allows requests' do
+        post_authenticated user, :create
+
+        expect(response.status).not_to eq 403
+      end
+    end
+
+    describe 'PUT/PATCH update' do
+      it 'allows requests' do
+        patch_unauthenticated :update
+
+        expect(response.status).not_to eq 403
+        expect(token response).to be_nil
+      end
+    end
+  end
 end

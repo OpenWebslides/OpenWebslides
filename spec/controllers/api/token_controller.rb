@@ -40,4 +40,22 @@ RSpec.describe Api::TokenController do
       end
     end
   end
+
+  describe 'authorization' do
+    describe 'POST create' do
+      it 'allows requests' do
+        post_authenticated user, :create
+
+        expect(response.status).not_to eq 403
+      end
+    end
+
+    describe 'DELETE destroy' do
+      it 'allows requests' do
+        delete_authenticated user, :destroy, :id => user.id
+
+        expect(response.status).not_to eq 403
+      end
+    end
+  end
 end
