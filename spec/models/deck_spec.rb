@@ -17,9 +17,9 @@ RSpec.describe Deck, :type => :model do
     expect(Deck.new :state => :public_access, :owner => user).not_to be_valid
   end
 
-  it 'is invalid without state' do
+  it 'is valid without state' do
     user = build :user
-    expect(Deck.new :name => 'foo', :owner => user).not_to be_valid
+    expect(Deck.new :name => 'foo', :owner => user).to be_valid
   end
 
   it 'belongs to a user' do
