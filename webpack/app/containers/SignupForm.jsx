@@ -6,8 +6,8 @@ import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 
 // Fields
-import inputField from 'presentationals/formFields/inputField';
-import newPasswordField from 'presentationals/formFields/newPasswordField';
+import inputField from 'presentationals/formFields/InputField';
+import newPasswordField from 'presentationals/formFields/NewPasswordField';
 
 // Presentationals
 import SignupConfirmation from 'presentationals/SignupConfirmation';

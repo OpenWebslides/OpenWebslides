@@ -15,7 +15,6 @@ export function* getMoreNotificationsFlow(action) {
       action.meta,
     );
 
-    console.log(responseListOfNotifications);
     if (!responseListOfNotifications) {
       throw new Error('Received undefined list.');
     }

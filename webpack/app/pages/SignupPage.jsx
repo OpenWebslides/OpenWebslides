@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SignupForm from 'containers/signupForm';
+import SignupForm from 'containers/SignupForm';
 import OauthLinks from 'presentationals/OauthLinks';
 
 function SignupPage() {

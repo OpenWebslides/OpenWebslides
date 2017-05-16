@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import EmailSigninForm from 'containers/emailSigninForm';
+import EmailSigninForm from 'containers/EmailSigninForm';
 import OauthLinks from 'presentationals/OauthLinks';
 
 function SigninPage({ t }) {
