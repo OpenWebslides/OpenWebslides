@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'erb'
+
 class Deck < ApplicationRecord
   ##
   # Properties
@@ -62,20 +64,29 @@ class Deck < ApplicationRecord
   # Methods
   #
   def content
-    return nil unless canonical_name
-
-    File.read content_file
+    doc = Nokogiri::HTML5 File.read content_file
+    doc.at('body').children.to_html.strip
   end
 
   def content=(value)
-    File.write content_file, value
+    template = ERB.new File.read File.join template_path, 'index.html.erb'
 
-    touch
+    struct = OpenStruct.new :name => name,
+                            :description => description,
+                            :content => value
+
+    rendered = template.result(struct.instance_eval { binding })
+
+    File.write content_file, rendered
+
+    touch if persisted?
   end
-
-  private
 
   def content_file
     File.join OpenWebslides::Configuration.repository_path, canonical_name, 'index.html'
+  end
+
+  def template_path
+    Rails.root.join 'lib', 'assets', 'templates', template
   end
 end
