@@ -14,6 +14,7 @@ module OpenWebslides
         @provider = OpenWebslides::Provider::Ssh.new deck
       when 'github'
         @provider = OpenWebslides::Provider::Github.new deck
+      when 'local'
       else
         raise OpenWebslides::ConfigurationError, 'Unknown provider type'
       end
@@ -26,10 +27,14 @@ module OpenWebslides
       FileUtils.mkdir_p repo_path
 
       # Populate local repo
-      FileUtils.cp_r "#{Rails.root.join('lib', 'assets', 'template')}/.", repo_path
+      FileUtils.cp_r "#{@deck.template_path}/.", repo_path
 
-      # Delete submodule .git
+      # Delete unnecessary files
+      FileUtils.rm File.join repo_path, 'index.html.erb'
       FileUtils.rm_r File.join(repo_path, '.git'), :secure => true
+
+      # Render empty file
+      @deck.content = ''
 
       # Initialize local repo
       Rugged::Repository.init_at repo_path
