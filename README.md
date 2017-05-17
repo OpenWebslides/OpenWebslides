@@ -74,6 +74,15 @@ $ bundle exec rails db:migrate RAILS_ENV=development
 $ bundle exec rails db:sample RAILS_ENV=development
 ```
 
+There is a Rake task for generating JWTs with a long lifetime for developing:
+
+```
+$ # Use the user ID as argument
+$ bundle exec rails token:generate[1]
+$ # Or if you're using zsh
+$ bundle exec rails 'token:generate[1]'
+```
+
 ## Documentation
 
 Generate API documentation:
