@@ -11,13 +11,13 @@ Rails.application.routes.draw do
   namespace :api, :constraints => { :format => :json } do
     root :to => 'api#index'
 
-    jsonapi_resources :users
-    jsonapi_resources :decks
-    jsonapi_resources :notifications, :only => %i[index show]
+    jsonapi_resources :users do end
+    jsonapi_resources :decks do end
+    jsonapi_resources :notifications, :only => %i[index show] do end
 
-    jsonapi_resource :confirmation, :only => :create
-    jsonapi_resource :token, :only => %i[create destroy]
-    jsonapi_resource :password, :only => %i[create update]
+    jsonapi_resource :confirmation, :only => :create do end
+    jsonapi_resource :token, :only => %i[create destroy] do end
+    jsonapi_resource :password, :only => %i[create update] do end
   end
 
   # Application

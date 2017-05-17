@@ -2,7 +2,7 @@
 
 module Api
   class UsersController < ApiController
-    before_action :authenticate_user, :only => %i[update destroy update_relationship destroy_relationship]
+    before_action :authenticate_user, :only => %i[update destroy]
 
     after_action :renew_token, :except => :destroy
   end

@@ -7,7 +7,7 @@ module Api
     MEDIA_TYPE = 'text/html'
 
     before_action :authenticate_user,
-                  :only => %i[create update destroy create_relationship update_relationship destroy_relationship]
+                  :only => %i[create update destroy]
 
     after_action :renew_token
 

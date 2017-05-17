@@ -28,3 +28,7 @@ Style/HashSyntax:
 
 Style/NestedParenthesizedCalls:
   Enabled: false
+
+Style/BlockDelimiters:
+  Exclude:
+    - config/routes.rb
