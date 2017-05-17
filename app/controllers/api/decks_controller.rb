@@ -17,9 +17,26 @@ module Api
       deck = Deck.find params[:id]
       raise Pundit::NotAuthorizedError unless DeckPolicy.new(current_user, deck).show?
 
-      content = Nokogiri::HTML(deck.content).at('body').children.to_html
+      doc = Nokogiri::HTML5(deck.content)
 
-      render :body => content, :content_type => 'text/html'
+      body = doc.at('body').children.to_html.strip
+
+      render :body => body, :content_type => 'text/html'
+    end
+
+    def update
+      return super unless request.content_type == MEDIA_TYPE
+
+      deck = Deck.find params[:id]
+      raise Pundit::NotAuthorizedError unless DeckPolicy.new(current_user, deck).update?
+
+      doc = Nokogiri::HTML5(deck.content)
+      new_body = Nokogiri::HTML5.fragment request.body.read
+      doc.at('body').inner_html = new_body
+
+      deck.content = doc.to_html
+
+      head :no_content
     end
   end
 end

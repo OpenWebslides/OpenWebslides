@@ -65,6 +65,8 @@ class Deck < ApplicationRecord
     touch
   end
 
+  private
+
   def content_file
     File.join OpenWebslides::Configuration.repository_path, canonical_name, 'index.html'
   end
