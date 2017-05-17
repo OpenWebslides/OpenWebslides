@@ -50,6 +50,7 @@ PreCommit:
     command: ['./node_modules/.bin/eslint']
   HardTabs:
     enabled: true
+    exclude: .gitmodules
   JsonSyntax:
     enabled: true
   RuboCop:
