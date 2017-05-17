@@ -1,0 +1,269 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/1"
+      },
+      "attributes": {
+        "name": "natus ut dolorem",
+        "state": "public_access",
+        "description": "magnam et enim in repellat libero suscipit nulla occaecati dolores"
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/1/relationships/owner",
+            "related": "http://localhost:5000/api/decks/1/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/1/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/1/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "3",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/3"
+      },
+      "attributes": {
+        "name": "minus qui rerum",
+        "state": "public_access",
+        "description": "ut consequatur possimus eligendi consequatur aut fuga in omnis ducimus"
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/3/relationships/owner",
+            "related": "http://localhost:5000/api/decks/3/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/3/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/3/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "4",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/4"
+      },
+      "attributes": {
+        "name": "dolorum porro perferendis",
+        "state": "public_access",
+        "description": null
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/4/relationships/owner",
+            "related": "http://localhost:5000/api/decks/4/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/4/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/4/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "10",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/10"
+      },
+      "attributes": {
+        "name": "iure deleniti at",
+        "state": "public_access",
+        "description": null
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/10/relationships/owner",
+            "related": "http://localhost:5000/api/decks/10/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/10/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/10/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "14",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/14"
+      },
+      "attributes": {
+        "name": "rerum natus quaerat",
+        "state": "public_access",
+        "description": "praesentium possimus consequatur et impedit ut repellendus natus corrupti eum"
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/14/relationships/owner",
+            "related": "http://localhost:5000/api/decks/14/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/14/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/14/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "17",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/17"
+      },
+      "attributes": {
+        "name": "quaerat sed recusandae",
+        "state": "public_access",
+        "description": "quae sed molestiae sit aspernatur qui non rerum minima atque"
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/17/relationships/owner",
+            "related": "http://localhost:5000/api/decks/17/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/17/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/17/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "18",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/18"
+      },
+      "attributes": {
+        "name": "et sapiente non",
+        "state": "public_access",
+        "description": "cupiditate velit illum necessitatibus eligendi molestiae minima tenetur est iste"
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/18/relationships/owner",
+            "related": "http://localhost:5000/api/decks/18/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/18/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/18/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "21",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/21"
+      },
+      "attributes": {
+        "name": "ex vel non",
+        "state": "public_access",
+        "description": "quos deserunt sit qui distinctio ut sunt cumque possimus nostrum"
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/21/relationships/owner",
+            "related": "http://localhost:5000/api/decks/21/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/21/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/21/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "25",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/25"
+      },
+      "attributes": {
+        "name": "repudiandae nam tempora",
+        "state": "public_access",
+        "description": "voluptatum est tempora rem consectetur ad commodi voluptas cum delectus"
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/25/relationships/owner",
+            "related": "http://localhost:5000/api/decks/25/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/25/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/25/collaborators"
+          }
+        }
+      }
+    },
+    {
+      "id": "26",
+      "type": "decks",
+      "links": {
+        "self": "http://localhost:5000/api/decks/26"
+      },
+      "attributes": {
+        "name": "exercitationem dolores libero",
+        "state": "public_access",
+        "description": "autem amet minima impedit et beatae corrupti aut quo cumque"
+      },
+      "relationships": {
+        "owner": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/26/relationships/owner",
+            "related": "http://localhost:5000/api/decks/26/owner"
+          }
+        },
+        "collaborators": {
+          "links": {
+            "self": "http://localhost:5000/api/decks/26/relationships/collaborators",
+            "related": "http://localhost:5000/api/decks/26/collaborators"
+          }
+        }
+      }
+    }
+  ],
+  "links": {
+    "first": "http://localhost:5000/api/decks?page%5Blimit%5D=10&page%5Boffset%5D=0",
+    "next": "http://localhost:5000/api/decks?page%5Blimit%5D=10&page%5Boffset%5D=10",
+    "last": "http://localhost:5000/api/decks?page%5Blimit%5D=10&page%5Boffset%5D=20"
+  }
+}

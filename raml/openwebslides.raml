@@ -58,26 +58,21 @@ documentation:
               type:
                 description: Resource type, should be set to `users`
                 type: string
-                required: true
               attributes:
                 type: object
                 properties:
                   email:
                     description: Email address
                     type: string
-                    required: true
                   firstName:
                     description: First name
                     type: string
-                    required: true
-                  lastName:
+                  lastName?:
                     description: Last name
                     type: string
-                    required: false
                   password:
                     description: Password
                     type: string
-                    required: true
         example: !include examples/post_user.json
     responses:
       201:
@@ -116,7 +111,7 @@ documentation:
               type: object
               properties:
                 errors: Error[]
-              example: !include examples/get_user_404.json
+              example: !include examples/get_404.json
     put:
       description: See [PATCH](#users__id__patch)
     patch:
@@ -133,22 +128,18 @@ documentation:
                 type:
                   description: Resource type, should be set to `users`
                   type: string
-                  required: true
                 attributes:
                   type: object
                   properties:
-                    firstName:
+                    firstName?:
                       description: First name
                       type: string
-                      required: false
-                    lastName:
+                    lastName?:
                       description: Last name
                       type: string
-                      required: false
-                    password:
+                    password?:
                       description: Password
                       type: string
-                      required: false
 
           example: !include examples/patch_user.json
       responses:
@@ -174,7 +165,7 @@ documentation:
               type: object
               properties:
                 errors: Error[]
-              example: !include examples/get_user_404.json
+              example: !include examples/get_404.json
         422:
           description: Error while updating user
           body:
@@ -196,7 +187,173 @@ documentation:
               type: object
               properties:
                 errors: Error[]
-              example: !include examples/get_user_404.json
+              example: !include examples/get_404.json
+
+/decks:
+  displayName: Decks
+  description: Decks API
+  get:
+    is: [ paginated, filtered: { values: [name, description, state] } ]
+    description: Get all visible decks
+    responses:
+      200:
+        body:
+          application/vnd.api+json:
+            type: object
+            properties:
+              data: Deck[]
+            example: !include examples/get_decks.json
+  post:
+    description: Create a new deck
+    body:
+      application/vnd.api+json:
+        type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                description: Resource type, should be set to `decks`
+                type: string
+              attributes:
+                type: object
+                properties:
+                  name:
+                    description: Deck name
+                    type: string
+                  description?:
+                    description: Deck description
+                    type: string
+                  state?:
+                    description: Access level, defaults to `public_access`
+                    enum: [public_access, protected_access, private_access]
+              relationships:
+                type: object
+                properties:
+                  owner:
+                    type: object
+                    properties:
+                      type: object
+                      properties:
+                        id: ID
+                        type:
+                          description: Resource type, should be set to `users`
+                          type: string
+        example: !include examples/post_deck.json
+    responses:
+      201:
+        description: Deck was successfully created
+        body:
+          application/vnd.api+json:
+            type: object
+            properties:
+              data: Deck
+            example: !include examples/get_deck.json
+      422:
+        description: Error while creating deck
+        body:
+          application/vnd.api+json:
+            type: object
+            properties:
+              errors: Error[]
+            example: !include examples/post_deck_422.json
+  /{id}:
+    uriParameters:
+      id: ID
+    get:
+      description: Get deck
+      responses:
+        200:
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                data: Deck
+              example: !include examples/get_deck.json
+        404:
+          description: Deck not found
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/get_404.json
+    put:
+      description: See [PATCH](#decks__id__patch)
+    patch:
+      is: [ authenticated ]
+      description: Update deck
+      body:
+        application/vnd.api+json:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id: ID
+                type:
+                  description: Resource type, should be set to `decks`
+                  type: string
+                attributes:
+                  type: object
+                  properties:
+                    name?:
+                      description: Deck name
+                      type: string
+                    description?:
+                      description: Deck description
+                      type: string
+                    state?:
+                      description: Access level, defaults to `public_access`
+                      enum: [public_access, protected_access, private_access]
+
+          example: !include examples/patch_deck.json
+      responses:
+        200:
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                data: Deck
+              example: !include examples/get_deck.json
+        400:
+          description: Error while updating deck
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/patch_deck_400.json
+        404:
+          description: Deck not found
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/get_404.json
+        422:
+          description: Error while updating deck
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/patch_deck_422.json
+    delete:
+      is: [ authenticated ]
+      description: Delete deck
+      responses:
+        204:
+          description: Deck was successfully deleted
+        404:
+          description: Deck not found
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/get_404.json
 
 /notifications:
   displayName: Notifications

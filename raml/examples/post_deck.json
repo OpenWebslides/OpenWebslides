@@ -1,0 +1,16 @@
+{
+  "data": {
+    "type": "decks",
+    "attributes": {
+      "name": "Foo"
+    },
+    "relationships": {
+      "owner": {
+        "data": {
+          "id": "1",
+          "type": "users"
+        }
+      }
+    }
+  }
+}

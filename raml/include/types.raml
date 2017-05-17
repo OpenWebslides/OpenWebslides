@@ -6,7 +6,6 @@
 ID:
   type: string
   description: Unique identifier
-  required: true
 
 Meta:
   type: object
@@ -58,22 +57,41 @@ User:
     type:
       description: Resource type, should be set to `users`
       type: string
-      required: true
-    attributes?:
+    attributes:
       type: object
       properties:
         email:
           description: Email address
           type: string
-          required: true
         firstName:
           description: First name
           type: string
-          required: true
-        lastName:
+        lastName?:
           description: Last name
           type: string
-          required: false
+    relationships?: Relationships
+    links?: Links
+    meta?: Meta
+
+Deck:
+  type: object
+  properties:
+    id: ID
+    type:
+      description: Resource type, should be set to `decks`
+      type: string
+    attributes:
+      type: object
+      properties:
+        name:
+          description: Deck name
+          type: string
+        description?:
+          description: Deck description
+          type: string
+        state:
+          description: Access level
+          enum: [public_access, protected_access, private_access]
     relationships?: Relationships
     links?: Links
     meta?: Meta
@@ -85,7 +103,6 @@ Notification:
     type:
       description: Resource type, should be set to `notifications`
       type: string
-      required: true
     attributes:
       type: object
       properties:
