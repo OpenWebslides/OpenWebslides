@@ -84,7 +84,7 @@ namespace :db do
                                   :state => %i[public_access protected_access private_access].sample
 
           # 80% of the decks have a description
-          deck.description = Faker::Lorem.words 10 if prob 0.8
+          deck.description = Faker::Lorem.words(10).join(' ') if prob 0.8
 
           # Add some random collaborators
           RANDOM.rand(5).times do
