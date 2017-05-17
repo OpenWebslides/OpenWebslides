@@ -27,7 +27,7 @@ RSpec.describe Api::DeckResource, :type => :resource do
     end
 
     it 'should have a valid set of updatable fields' do
-      expect(described_class.updatable_fields).to match_array %i[name state description owner]
+      expect(described_class.updatable_fields).to match_array %i[name state description]
     end
 
     it 'should have a valid set of sortable fields' do

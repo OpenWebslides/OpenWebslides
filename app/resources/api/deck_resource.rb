@@ -7,7 +7,7 @@ module Api
     #
     attributes :name, :state, :description
 
-    has_one :owner
+    has_one :owner, :foreign_key => 'user_id'
     has_many :collaborators
 
     ##
@@ -27,7 +27,7 @@ module Api
     end
 
     def self.updatable_fields(context = {})
-      super(context) - %i[collaborators]
+      super(context) - %i[owner collaborators]
     end
   end
 end
