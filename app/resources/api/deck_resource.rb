@@ -5,7 +5,7 @@ module Api
     ##
     # Properties
     #
-    attributes :name, :state, :description
+    attributes :name, :state, :description, :template
 
     has_one :owner, :foreign_key => 'user_id'
     has_many :collaborators

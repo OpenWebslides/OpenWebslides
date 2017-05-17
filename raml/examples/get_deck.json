@@ -8,7 +8,8 @@
     "attributes": {
       "name": "Foo",
       "state": "public_access",
-      "description": null
+      "description": null,
+      "template": "shower-ows"
     },
     "relationships": {
       "owner": {

@@ -9,6 +9,8 @@ class Deck < ApplicationRecord
   enum :state => %i[public_access protected_access private_access]
   validates :state, :presence => true
 
+  validates :template, :presence => true
+
   ##
   # Associations
   #
@@ -23,6 +25,7 @@ class Deck < ApplicationRecord
   before_save :generate_canonical_name
   before_create :create_repository, :unless => :skip_callbacks
   before_destroy :destroy_repository, :unless => :skip_callbacks
+  after_initialize :set_default_template
 
   def generate_canonical_name
     return if canonical_name?
@@ -49,6 +52,10 @@ class Deck < ApplicationRecord
   def destroy_repository
     repo = OpenWebslides::Repository.new self
     repo.destroy
+  end
+
+  def set_default_template
+    self.template = OpenWebslides::Configuration.default_template if new_record?
   end
 
   ##

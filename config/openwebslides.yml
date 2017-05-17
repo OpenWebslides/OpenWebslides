@@ -101,3 +101,8 @@ api:
   # Access token lifetime (in hours)
   #
   token_lifetime: 24
+
+##
+# Default template for new decks
+#
+default_template: shower-ows

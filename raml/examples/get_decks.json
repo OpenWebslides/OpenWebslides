@@ -9,7 +9,8 @@
       "attributes": {
         "name": "natus ut dolorem",
         "state": "public_access",
-        "description": "magnam et enim in repellat libero suscipit nulla occaecati dolores"
+        "description": "magnam et enim in repellat libero suscipit nulla occaecati dolores",
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -35,7 +36,8 @@
       "attributes": {
         "name": "minus qui rerum",
         "state": "public_access",
-        "description": "ut consequatur possimus eligendi consequatur aut fuga in omnis ducimus"
+        "description": "ut consequatur possimus eligendi consequatur aut fuga in omnis ducimus",
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -61,7 +63,8 @@
       "attributes": {
         "name": "dolorum porro perferendis",
         "state": "public_access",
-        "description": null
+        "description": null,
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -87,7 +90,8 @@
       "attributes": {
         "name": "iure deleniti at",
         "state": "public_access",
-        "description": null
+        "description": null,
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -113,7 +117,8 @@
       "attributes": {
         "name": "rerum natus quaerat",
         "state": "public_access",
-        "description": "praesentium possimus consequatur et impedit ut repellendus natus corrupti eum"
+        "description": "praesentium possimus consequatur et impedit ut repellendus natus corrupti eum",
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -139,7 +144,8 @@
       "attributes": {
         "name": "quaerat sed recusandae",
         "state": "public_access",
-        "description": "quae sed molestiae sit aspernatur qui non rerum minima atque"
+        "description": "quae sed molestiae sit aspernatur qui non rerum minima atque",
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -165,7 +171,8 @@
       "attributes": {
         "name": "et sapiente non",
         "state": "public_access",
-        "description": "cupiditate velit illum necessitatibus eligendi molestiae minima tenetur est iste"
+        "description": "cupiditate velit illum necessitatibus eligendi molestiae minima tenetur est iste",
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -191,7 +198,8 @@
       "attributes": {
         "name": "ex vel non",
         "state": "public_access",
-        "description": "quos deserunt sit qui distinctio ut sunt cumque possimus nostrum"
+        "description": "quos deserunt sit qui distinctio ut sunt cumque possimus nostrum",
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -217,7 +225,8 @@
       "attributes": {
         "name": "repudiandae nam tempora",
         "state": "public_access",
-        "description": "voluptatum est tempora rem consectetur ad commodi voluptas cum delectus"
+        "description": "voluptatum est tempora rem consectetur ad commodi voluptas cum delectus",
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {
@@ -243,7 +252,8 @@
       "attributes": {
         "name": "exercitationem dolores libero",
         "state": "public_access",
-        "description": "autem amet minima impedit et beatae corrupti aut quo cumque"
+        "description": "autem amet minima impedit et beatae corrupti aut quo cumque",
+        "template": "shower-ows"
       },
       "relationships": {
         "owner": {

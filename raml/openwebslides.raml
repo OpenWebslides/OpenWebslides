@@ -227,6 +227,9 @@ documentation:
                   state?:
                     description: Access level, defaults to `public_access`
                     enum: [public_access, protected_access, private_access]
+                  template?:
+                    description: Deck template
+                    type: string
               relationships:
                 type: object
                 properties:
@@ -306,6 +309,9 @@ documentation:
                     state?:
                       description: Access level, defaults to `public_access`
                       enum: [public_access, protected_access, private_access]
+                    template?:
+                      description: Deck template
+                      type: string
 
           example: !include examples/patch_deck.json
       responses:
