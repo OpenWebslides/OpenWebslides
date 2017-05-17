@@ -23,9 +23,6 @@ class Deck < ApplicationRecord
   before_create :create_repository, :unless => :skip_callbacks
   before_destroy :destroy_repository, :unless => :skip_callbacks
 
-  ##
-  # Methods
-  #
   def generate_canonical_name
     return if canonical_name?
 
@@ -51,5 +48,24 @@ class Deck < ApplicationRecord
   def destroy_repository
     repo = OpenWebslides::Repository.new self
     repo.destroy
+  end
+
+  ##
+  # Methods
+  #
+  def content
+    return nil unless canonical_name
+
+    File.read content_file
+  end
+
+  def content=(value)
+    File.write content_file, value
+
+    touch
+  end
+
+  def content_file
+    File.join OpenWebslides::Configuration.repository_path, canonical_name, 'index.html'
   end
 end
