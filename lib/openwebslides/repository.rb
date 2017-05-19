@@ -62,8 +62,13 @@ module OpenWebslides
     end
 
     def sync
+      return unless @provider
+
       # Push to remote repository
       repo.remotes.first.push 'refs/heads/master', :credentials => credentials
+
+      # Update additional data
+      @provider.sync
     end
 
     def destroy

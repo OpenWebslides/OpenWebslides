@@ -17,11 +17,15 @@ module OpenWebslides
       end
 
       def init
-        raise NotImplementedError
+        raise OpenWebslides::NotImplementedError
       end
 
       def destroy
-        raise NotImplementedError
+        raise OpenWebslides::NotImplementedError
+      end
+
+      def sync
+        raise OpenWebslides::NotImplementedError
       end
 
       private

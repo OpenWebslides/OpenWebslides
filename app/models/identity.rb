@@ -18,4 +18,10 @@ class Identity < ApplicationRecord
   ##
   # Methods
   #
+  ##
+  # Overrides
+  #
+  ##
+  # Helpers and callback methods
+  #
 end
