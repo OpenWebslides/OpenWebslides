@@ -40,11 +40,7 @@ module OpenWebslides
       Rugged::Repository.init_at repo_path
 
       # Initial commit
-      index = repo.index
-      index.add_all
-      index.write
-
-      commit 'Initial commit'
+      commit @deck.owner, 'Initial commit', :parents => []
 
       return unless @provider
 
@@ -80,6 +76,29 @@ module OpenWebslides
       @provider.destroy
     end
 
+    def commit(author, message, options = {})
+      repo.checkout 'refs/heads/master' unless repo.index.count.zero?
+
+      index = repo.index
+      index.add_all
+
+      commit_tree = index.write_tree repo
+      index.write
+
+      commit_author = { :email => author.email, :name => author.name, :time => Time.now }
+
+      commit_options = {
+        :author => commit_author,
+        :committer => commit_author,
+        :message => message,
+        :parents => repo.empty? ? [] : [repo.head.target],
+        :tree => commit_tree,
+        :update_ref => 'HEAD'
+      }
+
+      Rugged::Commit.create repo, commit_options.merge(options)
+    end
+
     private
 
     def repo_path
@@ -87,7 +106,7 @@ module OpenWebslides
     end
 
     def repo
-      @repository ||= Rugged::Repository.new repo_path
+      @repo ||= Rugged::Repository.new repo_path
     end
 
     def credentials
@@ -100,25 +119,6 @@ module OpenWebslides
       raise OpenWebslides::ConfigurationError, 'No private key specified' unless private_key
 
       @credentials = Rugged::Credentials::SshKey.new :username => user, :privatekey => private_key
-    end
-
-    def commit_options
-      commit_author = { :email => @deck.owner.email, :name => @deck.owner.name, :time => Time.now }
-
-      {
-        :author => commit_author,
-        :committer => commit_author,
-        :parents => [],
-        :tree => repo.index.write_tree(repo),
-        :update_ref => 'HEAD'
-      }
-    end
-
-    def commit(message)
-      options = commit_options
-      options[:message] = message
-
-      Rugged::Commit.create repo, options
     end
   end
 end
