@@ -67,4 +67,8 @@ class User < ApplicationRecord
     increment_token_version
     super new_password
   end
+
+  ##
+  # Helpers and callback methods
+  #
 end
