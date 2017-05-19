@@ -27,4 +27,11 @@ class Notification < ApplicationRecord
     errors.add :base, :immutable
     reload
   end
+
+  ##
+  # Overrides
+  #
+  ##
+  # Helpers and callback methods
+  #
 end
