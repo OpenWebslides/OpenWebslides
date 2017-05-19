@@ -2,7 +2,7 @@ import React from 'react';
 
 import FeedContainer from 'containers/FeedContainer';
 
-function signinPage() {
+function feedPage() {
   return (
     <div>
       <FeedContainer />
@@ -10,4 +10,4 @@ function signinPage() {
   );
 }
 
-export default signinPage;
+export default feedPage;
