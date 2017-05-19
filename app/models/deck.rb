@@ -53,16 +53,23 @@ class Deck < ApplicationRecord
     touch if persisted?
   end
 
+  def commit
+    repo.commit @author, 'Update slidedeck'
+    repo.sync
+  end
+
+  ##
+  # Overrides
+  #
+  ##
+  # Helpers and callback methods
+  #
   def content_file
     File.join OpenWebslides::Configuration.repository_path, canonical_name, 'index.html'
   end
 
   def template_path
     Rails.root.join 'lib', 'assets', 'templates', template
-  end
-
-  def commit
-    repo.commit @author, 'Update slidedeck'
   end
 
   private

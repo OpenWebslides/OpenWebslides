@@ -7,7 +7,7 @@ module OpenWebslides
     class Github < Base
       def init
         options = {
-          :description => 'OpenWebslides slidedeck',
+          :description => @deck.description || 'OpenWebslides slidedeck',
           :private => !@deck.public_access?,
           :has_issues => false,
           :has_wiki => false,
@@ -21,6 +21,10 @@ module OpenWebslides
 
       def destroy
         Octokit.delete_repository "#{config.path}/#{@deck.canonical_name}"
+      end
+
+      def sync
+        # TODO: update description, private
       end
     end
   end
