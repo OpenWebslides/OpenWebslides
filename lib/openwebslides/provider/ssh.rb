@@ -19,6 +19,8 @@ module OpenWebslides
 
         raise CommandError, "Command '#{command}' exited with status #{exit_status}" unless exit_status.zero?
       end
+
+      def sync; end
     end
   end
 end

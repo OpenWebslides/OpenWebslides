@@ -4,6 +4,11 @@ module OpenWebslides
   class Error < StandardError; end
 
   ##
+  # Generic errors
+  #
+  class NotImplementedError < Error; end
+
+  ##
   # Core errors
   #
   class CommandError < Error; end
