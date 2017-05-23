@@ -17,7 +17,7 @@ const initialState = Immutable({
   deletionErrorMessage: '',
 });
 
-function feedReducer(state = initialState, action) {
+function deckManagementReducer(state = initialState, action) {
   switch (action.type) {
     case REQUEST_DECK_LIST:
       return Immutable.merge(state, {
