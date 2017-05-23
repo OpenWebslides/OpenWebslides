@@ -60,4 +60,4 @@ function feedReducer(state = initialState, action) {
   }
 }
 
-export default feedReducer;
+export default deckManagementReducer;
