@@ -14,7 +14,7 @@ const initialState = Immutable({
   receivedList: false,
   listErrorMessage: '',
   sentDeletionRequestFor: null,
-  deletionErrorMessage: ''
+  deletionErrorMessage: '',
 });
 
 function feedReducer(state = initialState, action) {
@@ -46,14 +46,18 @@ function feedReducer(state = initialState, action) {
       return Immutable.merge(state, {
         sentDeletionRequestFor: null,
         deletionErrorMessage: action.payload,
-      })
-      case DECK_DELETION_REQUEST_SUCCESS:
-        return Immutable.merge(state,{
-          listOfDecks: state.listOfDecks.concat().filter((deck) => {
-            return deck.deckId !== state.sentDeletionRequestFor;
-          }),
-          sentDeletionRequestFor: null,
-          deletionErrorMessage: '',
-        });
+      });
+    case DECK_DELETION_REQUEST_SUCCESS:
+      return Immutable.merge(state, {
+        listOfDecks: state.listOfDecks
+          .concat()
+          .filter(deck => deck.deckId !== state.sentDeletionRequestFor),
+        sentDeletionRequestFor: null,
+        deletionErrorMessage: '',
+      });
+    default:
+      return state;
   }
 }
+
+export default feedReducer;
