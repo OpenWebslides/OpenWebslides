@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe DeckPolicy do
   subject { described_class.new user, deck }
 
-  let(:deck) { build :deck, :state => :public_access }
+  let(:deck) { build :deck, :state => :public_access, :owner => user }
 
   context 'for a guest' do
     let(:user) { nil }
@@ -16,6 +16,10 @@ RSpec.describe DeckPolicy do
 
     it 'should not permit :create' do
       expect(subject).to forbid_action :create
+    end
+
+    it 'should not permit :create for another user' do
+      expect(described_class.new(build(:user), deck)).to forbid_action :create
     end
 
     context 'for public decks' do
@@ -57,6 +61,10 @@ RSpec.describe DeckPolicy do
       expect(subject).to permit_action :create
     end
 
+    it 'should not permit :create for another user' do
+      expect(described_class.new(build(:user), deck)).to forbid_action :create
+    end
+
     context 'for public decks' do
       let(:deck) { build :deck, :state => :public_access }
       it 'should permit only :show on public decks' do
@@ -94,6 +102,10 @@ RSpec.describe DeckPolicy do
 
     it 'should permit :create' do
       expect(subject).to permit_action :create
+    end
+
+    it 'should not permit :create for another user' do
+      expect(described_class.new(build(:user), deck)).to forbid_action :create
     end
 
     context 'for public decks' do

@@ -27,8 +27,8 @@ class DeckPolicy
   end
 
   def create?
-    # Users can create a deck
-    !@user.nil?
+    # Users can create a deck but only for itself
+    !@user.nil? && @record.owner == @user
   end
 
   def update?
