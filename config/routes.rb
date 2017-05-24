@@ -3,24 +3,33 @@
 Rails.application.routes.draw do
   devise_for :users, :only => []
 
+  ##
+  # OAuth2 endpoints
+  #
   namespace :auth, :constraints => { :format => :json } do
     get '/:provider/callback', :to => 'omniauth#callback'
   end
 
+  ##
   # API endpoints
+  #
   namespace :api, :constraints => { :format => :json } do
-    root :to => 'api#index'
-
+    # Users and decks
     jsonapi_resources :users do end
     jsonapi_resources :decks do end
+
+    # Social feed
     jsonapi_resources :notifications, :only => %i[index show] do end
 
+    # Authentication
     jsonapi_resource :confirmation, :only => :create do end
     jsonapi_resource :token, :only => %i[create destroy] do end
     jsonapi_resource :password, :only => %i[create update] do end
   end
 
+  ##
   # Application
+  #
   root :to => 'application#index'
   get '*path', :to => 'application#index'
 end
