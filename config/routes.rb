@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   #
   namespace :api, :constraints => { :format => :json } do
     # Users and decks
-    jsonapi_resources :users do end
-    jsonapi_resources :decks do end
+    jsonapi_resources :users
+    jsonapi_resources :decks
 
     # Social feed
     jsonapi_resources :notifications, :only => %i[index show] do end
