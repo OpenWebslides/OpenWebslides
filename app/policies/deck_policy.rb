@@ -57,8 +57,8 @@ class DeckPolicy
       if @user
         # Users can see public decks, protected decks and collaborations
         scope.left_outer_joins(:collaborators).where.not(:state => 'private_access')
-             .or(Deck.left_outer_joins(:collaborators).where(:owner => @user))
-             .or(Deck.left_outer_joins(:collaborators).where('decks_users.user_id = ?', @user.id)).distinct
+             .or(scope.left_outer_joins(:collaborators).where(:owner => @user))
+             .or(scope.left_outer_joins(:collaborators).where('decks_users.user_id = ?', @user.id)).distinct
       else
         # Everyone can see public decks
         scope
