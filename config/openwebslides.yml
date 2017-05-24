@@ -32,7 +32,7 @@ provider:
   # GitHub provider synchronizes the repositories to a GitHub organization
   # Local provider does nothing (the repositories are stored locally anyhow)
   #
-  type: github
+  type: local
 
   ##
   # PROVIDER COMMON CONFIGURATION
