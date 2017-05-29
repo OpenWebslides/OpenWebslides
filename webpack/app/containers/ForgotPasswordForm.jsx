@@ -31,7 +31,7 @@ function validateAndSubmit(values, dispatch) {
 }
 
 // Form
-function resetPasswordForm(props) {
+function ResetPasswordForm(props) {
   if (props.submitSucceeded) {
     return (
       <div>
@@ -56,7 +56,7 @@ function resetPasswordForm(props) {
   );
 }
 
-resetPasswordForm.propTypes = {
+ResetPasswordForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitSucceeded: PropTypes.bool.isRequired,
 };
@@ -65,4 +65,4 @@ export default reduxForm({
   form: 'requetResetPassword',
   validate,
   getFormState: state => state.vendor.forms,
-})(resetPasswordForm);
+})(ResetPasswordForm);
