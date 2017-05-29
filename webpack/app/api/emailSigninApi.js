@@ -20,10 +20,13 @@ async function emailSignin(email, password) {
   });
 
   const response = await asyncFetch(SIGNIN_API_URL, requestConfig);
+  const responseBody = await response.json();
   const bearerResponseHeader = response.headers.get('Authorization');
-  const authToken = bearerResponseHeader.split(' ')[1];
 
-  return { authToken };
+  const authToken = bearerResponseHeader.split(' ')[1];
+  const { firstName } = responseBody.data.attributes;
+
+  return { authToken, firstName };
 }
 
 export default emailSignin;

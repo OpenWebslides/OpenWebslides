@@ -1,20 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
-import PropTypes from 'prop-types';
+import FeedContainer from 'containers/FeedContainer';
 
-import { translate } from 'react-i18next';
-
-function SigninPage({ t }) {
-  return (
-    <div>
-      <h1>{t('appName')}</h1>
-      <Link to="/signin">{t('signin:signin')}</Link>
-    </div>
-  );
+function FeedPage() {
+  return <FeedContainer />;
 }
 
-SigninPage.propTypes = {
-  t: PropTypes.func.isRequired,
-};
-
-export default translate()(SigninPage);
+export default FeedPage;

@@ -5,6 +5,7 @@ import { SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 const initialState = Immutable({
   isAuthenticated: false,
   authToken: undefined,
+  firstName: '',
 });
 
 function auth(state = initialState, action) {
