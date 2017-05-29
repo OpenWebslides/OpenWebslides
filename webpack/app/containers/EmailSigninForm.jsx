@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 import { browserHistory } from 'react-router';
+import i18n from 'i18next';
+import { translate } from 'react-i18next';
 
 // Fields
 import InputField from 'presentationals/formFields/InputField';
@@ -17,13 +19,13 @@ export function validate(values) {
   const errors = {};
 
   if (!email || email.trim() === '') {
-    errors.email = 'Email is required';
+    errors.email = i18n.t('formErrors:emailRequired');
   } else if (!isEmail(email)) {
-    errors.email = 'Email is invalid';
+    errors.email = i18n.t('formErrors:emailInvalid');
   }
 
   if (!password || password.trim() === '') {
-    errors.password = 'Password is required';
+    errors.password = i18n.t('formErrors:passwordRequired');
   }
 
   return errors;
@@ -37,35 +39,37 @@ function validateAndSubmit(values, dispatch) {
 }
 
 // Form
-function emailSigninForm(props) {
+function EmailSigninForm(props) {
+  const { t } = props;
   return (
     <div>
-      <h1>Sign in</h1>
+      <h1>{t('signin:signin')}</h1>
       <form onSubmit={props.handleSubmit(validateAndSubmit)}>
 
-        <Field component={InputField} name="email" placeholder="Email" />
+        <Field component={InputField} name="email" placeholder={t('email')} />
 
         <Field
           component={InputField}
           name="password"
-          placeholder="Password"
+          placeholder={t('password')}
           type="password"
         />
 
         {props.error && <strong>{props.error}</strong>}
 
-        <button type="submit">Sign in</button>
+        <button type="submit">{t('signin:signin')}</button>
       </form>
     </div>
   );
 }
 
-emailSigninForm.propTypes = {
+EmailSigninForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
-emailSigninForm.defaultProps = {
+EmailSigninForm.defaultProps = {
   error: '',
 };
 
@@ -74,4 +78,4 @@ export default reduxForm({
   validate,
   getFormState: state => state.vendor.forms,
   onSubmitSuccess: () => browserHistory.push('/'),
-})(emailSigninForm);
+})(translate()(EmailSigninForm));
