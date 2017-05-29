@@ -50,11 +50,14 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
+    "i18next": "^8.3.0",
+    "i18next-resource-store-loader": "^0.1.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.8",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-i18next": "^4.1.0",
     "react-redux": "^5.0.3",
     "react-router": "3",
     "react-router-dom": "^4.0.0",

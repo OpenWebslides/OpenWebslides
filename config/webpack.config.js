@@ -31,6 +31,10 @@ const config = {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
+      {
+        test: /locales/,
+        use: ['i18next-resource-store-loader']
+      },
     ],
   },
 
