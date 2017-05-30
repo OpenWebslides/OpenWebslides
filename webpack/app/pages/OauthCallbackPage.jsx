@@ -2,7 +2,7 @@ import React from 'react';
 
 import OAuthCallback from 'containers/OauthCallbackContainer';
 
-function oauthCallbackPage(props) {
+function OauthCallbackPage(props) {
   return (
     <div>
       <OAuthCallback {...props} />
@@ -10,4 +10,4 @@ function oauthCallbackPage(props) {
   );
 }
 
-export default oauthCallbackPage;
+export default OauthCallbackPage;

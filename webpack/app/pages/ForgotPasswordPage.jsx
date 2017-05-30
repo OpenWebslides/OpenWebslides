@@ -2,7 +2,7 @@ import React from 'react';
 
 import ForgotPasswordForm from 'containers/ForgotPasswordForm';
 
-function requestResetPasswordPage(props) {
+function RequestResetPasswordPage(props) {
   return (
     <div>
       <ForgotPasswordForm {...props} />
@@ -10,4 +10,4 @@ function requestResetPasswordPage(props) {
   );
 }
 
-export default requestResetPasswordPage;
+export default RequestResetPasswordPage;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import ResetPasswordForm from 'containers/ResetPasswordForm';
 
-function resetPasswordPage(props) {
+function ResetPasswordPage(props) {
   return (
     <div>
       <ResetPasswordForm {...props} />
@@ -10,4 +10,4 @@ function resetPasswordPage(props) {
   );
 }
 
-export default resetPasswordPage;
+export default ResetPasswordPage;
