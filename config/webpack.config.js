@@ -78,7 +78,7 @@ const config = {
       modules: false,
       assets: true,
     }),
-    new StyleLintPlugin()
+    //new StyleLintPlugin()
   ],
 };
 
