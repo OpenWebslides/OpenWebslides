@@ -1,0 +1,148 @@
+
+// -------------------
+// Layout mixins: font
+// -------------------
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin font--base ($auto-variations: false)
+    {
+        font-family: $font-family--base;
+        font-size: $font-size--base;
+        font-style: $font-style--base;
+        font-variant: $font-variant--base;
+        font-weight: $font-weight--base;
+        letter-spacing: $letter-spacing--base;
+        line-height: $line-height--base;
+
+        @if $auto-variations == true
+        {
+            #{$SELECTORS-STRONG}
+            {
+                font-weight: $font-weight--base__strong;
+            }
+
+            #{$SELECTORS-ITALIC}
+            {
+                @if $font-style--base == 'italic'
+                {
+                    font-style: normal;
+                }
+                @else
+                {
+                    font-style: italic;
+                }
+            }
+        }
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin font--emphasis ($auto-variations: false)
+    {
+        font-family: $font-family--emphasis;
+        font-size: $font-size--emphasis;
+        font-style: $font-style--emphasis;
+        font-variant: $font-variant--emphasis;
+        font-weight: $font-weight--emphasis;
+        letter-spacing: $letter-spacing--emphasis;
+        line-height: $line-height--emphasis;
+
+        @if $auto-variations == true
+        {
+            #{$SELECTORS-STRONG}
+            {
+                font-weight: $font-weight--emphasis__strong;
+            }
+
+            #{$SELECTORS-ITALIC}
+            {
+                @if $font-style--emphasis == 'italic'
+                {
+                    font-style: normal;
+                }
+                @else
+                {
+                    font-style: italic;
+                }
+            }
+        }
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin font--mono ($auto-variations: false)
+    {
+        font-family: $font-family--mono;
+        font-size: $font-size--mono;
+        font-style: $font-style--mono;
+        font-variant: $font-variant--mono;
+        font-weight: $font-weight--mono;
+        letter-spacing: $letter-spacing--mono;
+        line-height: $line-height--mono;
+
+        @if $auto-variations == true
+        {
+            #{$SELECTORS-STRONG}
+            {
+                font-weight: $font-weight--mono__strong;
+            }
+
+            #{$SELECTORS-ITALIC}
+            {
+                @if $font-style--mono == 'italic'
+                {
+                    font-style: normal;
+                }
+                @else
+                {
+                    font-style: italic;
+                }
+            }
+        }
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin font--heading ($auto-variations: false)
+    {
+        font-family: $font-family--heading;
+        // no font-size because there are different font sizes for h1, h2, ...
+        // use $font-size--h1, $font-size--h2, ... to set the font-size
+        font-style: $font-style--heading;
+        font-variant: $font-variant--heading;
+        font-weight: $font-weight--heading;
+        letter-spacing: $letter-spacing--heading;
+        // line-height is set in typography--heading()
+
+        @if $auto-variations == true
+        {
+            #{$SELECTORS-STRONG}
+            {
+                font-weight: $font-weight--heading__strong;
+            }
+
+            #{$SELECTORS-ITALIC}
+            {
+                @if $font-style--heading == 'italic'
+                {
+                    font-style: normal;
+                }
+                @else
+                {
+                    font-style: italic;
+                }
+            }
+        }
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //

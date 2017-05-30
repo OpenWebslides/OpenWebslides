@@ -7,6 +7,7 @@ import { I18nextProvider } from 'react-i18next';
 import routes from './routes';
 import configureStore from './configureStore';
 import i18n from './i18n';
+import './assets/stylesheets/scss/application.scss';
 
 const store = configureStore();
 

@@ -1,0 +1,26 @@
+
+// --------------
+// Core: viewport
+// --------------
+
+
+    html
+    {
+        overflow-y: scroll; // make scrollbar always visible; avoid changes in page with between long / short pages
+    }
+
+    html,
+    body
+    {
+        height: 100%; // enable the effect of min-height on .site__background
+    }
+
+    .l_site
+    {
+        &__background
+        {
+            min-height: 100%; // make sure the element is always at least as high as the viewport
+            overflow: hidden; // prevent margin collapsing
+            position: relative; // make .l_site__background the reference frame for position: absolute; & position: fixed; on its descendants
+        }
+    }

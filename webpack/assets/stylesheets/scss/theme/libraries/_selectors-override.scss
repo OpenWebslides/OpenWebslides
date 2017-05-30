@@ -1,0 +1,10 @@
+
+// ------------------------------------------
+// Overrides for framework selector variables
+// ------------------------------------------
+
+
+    // Add <a> to the list of elements that should always have a heavier font-weight than the surrounding text.
+    // Note: we add this here (instead of simply setting 'font-weight: bold' on 'a') so that it will be applied
+    // accross different font-families and weights (provided that 'font--[name]' mixins are used consisently).
+    $SELECTORS-STRONG:  'strong, b, dt, a';

@@ -1,0 +1,29 @@
+
+// -----------
+// Icon mixins
+// -----------
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin icon ($icon-var: false, $size: false)
+    {
+        @include fa-icon;
+
+        @if $icon-var != false
+        {
+            content: $icon-var;
+        }
+
+        @if $size != false
+        {
+            height: $size;
+            line-height: $size;
+            width: $size;
+            text-align: center;
+        }
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //

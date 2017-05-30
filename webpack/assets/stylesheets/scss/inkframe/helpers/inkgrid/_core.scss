@@ -1,0 +1,550 @@
+
+// ------------
+// inkGrid Core
+// ------------
+
+    // A very flexible inline-block grid system, that uses fluid width columns combined with fixed width gutters.
+    //
+    // Basic usage:
+    //
+    // .row-element { @include inkgrid-row; }
+    // .col-element { @include inkgrid-col; @include inkgrid-col__parts (6); }
+    //
+    // The above code will display up to six columns next to each other, all of equal (fluid) width, with horizontal
+    // and vertical gutters set to the default size (see inkGrid settings). A seventh .col-element would wrap onto the
+    // next line.
+    //
+    // More advanced example:
+    //
+    // .row-element { @include inkgrid-row (2em, 1em); }
+    // .col-element-1, .col-element-2 { @include inkgrid-col (2em, 1em); @include inkgrid-col__align (middle); }
+    // .col-element-1 { @include inkgrid-col__parts (4, 1);
+    // .col-element-2 { @include inkgrid-col__parts (4, 3);
+    //
+    // The above code will cause .col-element-1 to be 1/4th of the row width, and .col-element-2 to be 3/4th of the
+    // row width. Vertical gutter is 2em, horizontal gutter is 1em. In case .col-element-1 and .col-element-2 have
+    // different heights, their vertical midway points will align with each other.
+    //
+    // See the website for more examples. #TODO add link
+    //
+    // Notes:
+    //
+    // - Make sure that all children of a row element include the inkgrid-col mixin. Otherwise, we could end up with
+    //   'disappearing' text. This has to do with the way inkGrid works around the inline-block spacing issue.
+    //   See the comments on the helper mixins at the bottom of this file for more info.
+    //   (Note-inside-note: the cols don't necessarily have to be direct childeren of the row; wrapper divs can be
+    //   safely 'skipped' if necessary, as long as all text content is eventually contained inside a col.)
+    //
+    // - Because of the same workaround, inkGrid cols will reset any font family set to them or one of their ancestors
+    //   to the default font family defined in $inkgrid__font-family. (Same for letter-spacing and word-spacing.) To fix
+    //   this, simply set the font-family on a descendant element of the col element instead. (We might need a wrapper
+    //   div to do this; but setting layout properties such as a grid on a separate element is good practice anyway.)
+    //
+    // - Don't forget to override the $inkgrid__font-family (and possibly also the letter-spacing and word-spacing) with
+    //   the values used in the current theme! If the fonts don't look right, this is most likely the cause.
+    //
+    // - About setting $v-gutter and $h-gutter: note that there is a difference between a value of 'false' and a value
+    //   of '0'. The former will leave existing margins and padding alone, the latter will override them.
+    //
+    // - Also note that percentage gutter widths are not supported, although they can be (sort of) faked using
+    //   @include inkgrid-row__h-align (justify); #TODO make a demo / or add support for percentage margins?
+
+
+    // inkGrid settings
+
+
+        // Set the default vertical gutter between grid columns. Note that this value is a default, and only takes
+        // effect if no custom $v-gutter is passed to the inkgrid-row & inkgrid-col mixins.
+        // Possible values: false (no vertical gutter) | custom (fixed) value
+        $inkgrid__default-v-gutter:         1em !default;
+        // Set the default horizontal gutter between grid columns. Note that this value is a default, and only takes
+        // effect if no custom $h-gutter is passed to the inkgrid-row & inkgrid-col mixins.
+        // Possible values: false (no horizontal gutter) | true (match vertical gutter) | custom (fixed) value
+        $inkgrid__default-h-gutter:         true !default;
+
+        // If this is enabled, the text-align effect of the inkgrid-row__h-align mixin will cascade to text contents in
+        // the columns. The same goes for text-align values that were set on a parent element of the row.
+        // If this is disabled, all columns will have their contents automatically aligned to the left.
+        $inkgrid__cascade-text-align:               false !default;
+
+        // If this is set to true, rows will be 'snug' around the columns; meaning that the cols will fit to the row
+        // edges. Visually this looks as if there is no row at all (although a row wrapper element is still necessary!)
+        // If this is set to false, there will be a space (equal to v-gutter and h-gutter) around the inner edge of the
+        // row.
+        // Note that this value is a default; snug rows can be enabled/disabled on a case by case basis using the $snug
+        // parameter on the inkgrid-row mixin.
+        $inkgrid__snug-rows:                        true !default;
+
+        // Override these with the default font-family / letter spacing / word spacing of the current theme!
+        // See the notes at the top / the comments on the helper mixins at the bottom for more info.
+        $inkgrid__font-family:                      serif !default;
+        $inkgrid__letter-spacing:                   0 !default;
+        $inkgrid__word-spacing:                     normal !default;
+
+
+
+    // inkGrid rows
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this on an element to make it into a grid row. Note that rows don't necessarily have to contain only
+        // one 'line' of columns; if there is not enough space for all the columsn on one line, the columns will simply
+        // wrap onto the next line.
+        // Important: the $v-gutter & $h-gutter values must be the same as those passed to the corresponding
+        // inkgrid-col elements, otherwise inkGrid can't calculate the gutters correctly.
+
+        @mixin inkgrid-row (
+            // The vertical gutter height. If this value is not passed, the default will be used.
+            // Possible values: false (no vertical gutter) | custom (fixed) value
+            $v-gutter: $inkgrid__default-v-gutter,
+            // The horizontal gutter width. If this value is not passed, the default will be used.
+            // Possible values: false (no horizontal gutter) | true (match vertical gutter) | custom (fixed) value
+            $h-gutter: $inkgrid__default-h-gutter,
+            // True if the edges of the row should align with the columns, false if there should be gutter along the
+            // inner edge of the row. If this value is not passed, the default will be used.
+            $snug: $inkgrid__snug-rows
+        ) {
+            // Make sure the row is displayed as a block element, so we can add margin / padding to it.
+            display: block;
+
+            // Delete spaces between descendant inline elements.
+            @include _inkgrid-helper--inline-block__container;
+
+            // Set the gutter values.
+            @include inkgrid-row__gutter ($v-gutter, $h-gutter, $snug);
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // We extract the gutter-generating functionality into a separate mixin, so we can later change the gutter
+        // on-the-fly (for instance, at different breakpoints).
+        // Note that to change the gutter, both inkgrid-row__gutter and inkgrid-col__gutter need to be included with
+        // the same values on the row and the col elements, respectively.
+
+        @mixin inkgrid-row__gutter (
+            // The vertical gutter height. If this value is not passed, the default will be used.
+            // Possible values: false (no vertical gutter) | custom (fixed) value
+            $v-gutter: $inkgrid__default-v-gutter,
+            // The horizontal gutter width. If this value is not passed, the default will be used.
+            // Possible values: false (no horizontal gutter) | true (match vertical gutter) | custom (fixed) value
+            $h-gutter: $inkgrid__default-h-gutter,
+            // True if the edges of the row should align with the columns, false if there should be gutter along the
+            // inner edge of the row. If this value is not passed, the default will be used.
+            $snug: $inkgrid__snug-rows
+        ) {
+            // If $h-gutter equals true, set it to be equal to $v-gutter.
+            @if $h-gutter == true { $h-gutter: $v-gutter; }
+
+            // Only change the horizontal gutter if $h-gutter does not equal false.
+            @if $h-gutter != false
+            {
+                // On snug rows, use negative margins to compensate for the padding on the columns.
+                @if $snug == true
+                {
+                    margin-right: -$h-gutter / 2;
+                    margin-left: -$h-gutter / 2;
+
+                    // Undo possible previous $snug setting.
+                    padding-right: 0;
+                    padding-left: 0;
+                }
+                // On loose rows, add padding to create a full gutter at the edges.
+                @else
+                {
+                    padding-right: $h-gutter / 2;
+                    padding-left: $h-gutter / 2;
+
+                    // Undo possible previous $snug setting.
+                    margin-right: 0;
+                    margin-left: 0;
+                }
+            }
+
+            // Only change the vertical gutter if $v-gutter does not equal false.
+            @if $v-gutter != false
+            {
+                // On snug rows, use a negative top margin to compensate for the top margin on the columns.
+                // (Note that we're using single-direction vertical margins, which are easier to debug / maintain.)
+                @if $snug == true
+                {
+                    margin-top: -$v-gutter;
+
+                    // Undo possible previous $snug setting.
+                    padding-bottom: 0;
+                }
+                // On loose rows, add extra padding to the bottom of the row to create a gutter there. Note that the
+                // top gutter is handled by the margins on the columns.
+                @else
+                {
+                    padding-bottom: $v-gutter;
+
+                    // Undo possible previous $snug setting.
+                    margin-top: 0;
+                }
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this mixin to set the horizontal alignments of the columns inside a row.
+
+        @mixin inkgrid-row__h-align (
+            // The horizontal align value.
+            // Possible values: left | center | right | justify
+            // Note that to use the 'justify' value, you need to provide the current line-height (in units).
+            $horizontal-align,
+            // This parameter only needs to be specified when using a 'justify' align value and can be ignored
+            // otherwise. The reason we need this is that the 'trick' we're using to make 'text-align: justify' work on
+            // the last line of columns requires us to insert an pseudo-element underneath it. We need a negative
+            // bottom margin equal to the current line-height to hide this. Note that this bottom margin goes against
+            // our single-direction margin(-top) policy; use with caution.
+            $line-height: false
+        ) {
+            // Because the columns are inline-blocks, they can be horizontally aligned simply by using text-align.
+            text-align: $horizontal-align;
+
+            // 'text-align: justify' requires some extra workarounds.
+            @if $horizontal-align == 'justify'
+            {
+                // We need a line-height that has a unit, otherwise it can't be used to create a margin.
+                @if type-of($line-height) != 'number' or unitless($line-height) == true
+                {
+                    @error 'Please specify a valid $line-height.
+                            $line-height has to be a number and have a unit. The given value was: #{$line-height}'
+                }
+
+                // Negative bottom margin compensates for the extra space created by the &:after element.
+                margin-bottom: -$line-height;
+
+                // We need to insert this element because otherwise 'text-align: justify' would not affect the last
+                // line of columns in the row. (We should be able to fix this by using 'text-align-last: justify' but
+                // unfortunately there is not nearly enough browser support to make that a viable solution.)
+                &:after
+                {
+                    // Enable the pseudo-element.
+                    content: '';
+                    // Enable the 'width' property by displaying it as inline-block (instead of just inline).
+                    display: inline-block;
+                    // Set the width to 100% of the containing row to make sure this element takes up its own 'line'.
+                    // Because of this, &:after becomes the last line in the row and the line of actual cols above it
+                    // will be justified.
+                    width: 100%;
+                }
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+
+    // inkGrid columns
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this on an element to make it into a grid column. Note that we will probably also want to include the
+        // inkgrid-col__parts mixin to determine how wide each column should be. If no explicit width is set, columns
+        // will resize to fit their content - which might also come in handy in some cases.
+
+        @mixin inkgrid-col (
+            // The vertical gutter height. If this value is not passed, the default will be used.
+            // Possible values: false (no vertical gutter) | custom (fixed) value
+            $v-gutter: $inkgrid__default-v-gutter,
+            // The horizontal gutter width. If this value is not passed, the default will be used.
+            // Possible values: false (no horizontal gutter) | true (match vertical gutter) | custom (fixed) value
+            $h-gutter: $inkgrid__default-h-gutter
+        ) {
+            // Display the column as inline-block.
+            display: inline-block;
+
+            // Revert side-effects of the inline-block whitespace fix we applied to the grid row.
+            @include _inkgrid-helper--inline-block__child;
+
+            // Set the gutter values.
+            @include inkgrid-col__gutter ($v-gutter, $h-gutter);
+
+            // Default vertical-align is 'baseline', but this results in a small unwanted space underneath the element.
+            // For most use cases, 'top' is probably the expected value (since it matches with the behaviour of floats).
+            @include inkgrid-col__v-align (top);
+
+            // One side effect of the inkgrid-row__h-align mixin is that its effects cascade onto descendant elements.
+            // if $inkgrid__cascade-text-align is set to false, we negate this by explicitly aligning column content
+            // to the left.
+            @if $inkgrid__cascade-text-align == false
+            {
+                text-align: left;
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // We extract the gutter-generating functionality into a separate mixin, so we can later change the gutter
+        // on-the-fly (for instance, at different breakpoints).
+        // Note that to change the gutter, both inkgrid-row__gutter and inkgrid-col__gutter need to be included with
+        // the same values on the row and the col elements, respectively.
+
+        @mixin inkgrid-col__gutter (
+            // The vertical gutter height. If this value is not passed, the default will be used.
+            // Possible values: false (no vertical gutter) | custom (fixed) value
+            $v-gutter: $inkgrid__default-v-gutter,
+            // The horizontal gutter width. If this value is not passed, the default will be used.
+            // Possible values: false (no horizontal gutter) | true (match vertical gutter) | custom (fixed) value
+            $h-gutter: $inkgrid__default-h-gutter
+        ) {
+            // If $h-gutter equals true, set it to be equal to $v-gutter.
+            @if $h-gutter == true { $h-gutter: $v-gutter; }
+
+            // Only change the horizontal gutter if $h-gutter does not equal false.
+            @if $h-gutter != false
+            {
+                // Set the padding on each side to half the gutter. (The other half will be provided by adjecent cols.)
+                padding-left: $h-gutter / 2;
+                padding-right: $h-gutter / 2;
+            }
+
+            // Only change the vertical gutter if $v-gutter does not equal false.
+            @if $v-gutter != false
+            {
+                // We're using single direction vertical margins, so set the vertical gutter all at once.
+                // (Note: the reason why we don't need to do this in the horizontal direction is that horizontal
+                // margins can't collapse anyway, avoiding the problems multiple-direction margins can cause.)
+                margin-top: $v-gutter; // #TODO changed from padding to margin; test!
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this mixin to set the vertical alignments of the columns relative to each other.
+
+        @mixin inkgrid-col__v-align (
+            // The vertical align value.
+            // Possible values: top | middle | bottom
+            // (Note that the vertical-align property can have other values than those listed above, but those don't
+            // really make sense to use in a grid system.)
+            $vertical-align
+        ) {
+            // Because the columns are inline-blocks, they can be vertically aligned simply by using vertical-align.
+            vertical-align: $vertical-align;
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this mixin to determine the size of each col element.
+
+        @mixin inkgrid-col__parts (
+            // The total number of 'parts' (or possible columns) in a row.
+            // Possible values: number | auto (no set width; size columns to their content)
+            $number-of-parts,
+            // The amount of 'parts' that the current column should take up.
+            $parts-span: 1
+        ) {
+            // Set the box-sizing to border-box so we can set the column width independent of the gutter width.
+            box-sizing: border-box;
+
+            // We can't do math with 'auto' or '0', so we handle these separately.
+            @if $number-of-parts == auto or $number-of-parts == 0
+            {
+                width: $number-of-parts;
+            }
+            // Calculate the width (in percentages) for the current column based on the total number of parts and
+            // the parts span value of the current column.
+            @else
+            {
+                width: 100% * ($parts-span / $number-of-parts);
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this mixin to push the column to the right by adding an 'empty' space to the left of it.
+
+        @mixin inkgrid-col__push-to-right (
+            // The total number of 'parts' (or possible columns) in a row.
+            // Possible values: number | false (reset right push to 0)
+            $number-of-parts,
+            // The amount of 'parts' that the empty space should consist of.
+            $parts-span: 1
+        ) {
+            // If the mixin gets passed a value of false, reset the push value to 0.
+            @if $number-of-parts == false
+            {
+                margin-left: 0;
+            }
+            // Use a left margin to create the appearance of empty space to the left of the column,
+            // 'pushing' the column to the right.
+            @else
+            {
+                margin-left: 100% * ($parts-span / $number-of-parts);
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this mixin to push the column to the left by adding an 'empty' space to the right of it.
+
+        @mixin inkgrid-col__push-to-left (
+            // The total number of 'parts' (or possible columns) in a row.
+            // Possible values: number | false (reset left push to 0)
+            $number-of-parts,
+            // The amount of 'parts' that the empty space should consist of.
+            $parts-span: 1
+        ) {
+            // If the mixin gets passed a value of false, reset the push value to 0.
+            @if $number-of-parts == false
+            {
+                margin-right: 0;
+            }
+            // Use a right margin to create the appearance of empty space to the right of the column,
+            // 'pushing' the column to the left.
+            @else
+            {
+                margin-right: 100% * ($parts-span / $number-of-parts);
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this mixin to shift the column to the right without affecting the other columns. (Note: this can
+        // result in overlap.)
+        // inkgrid-col__shift-to-right and inkgrid-col__shift-to-left can be combined to change the visual order of
+        // columns (although we should only rarely do this, as it affects tab order and can be an accessibility
+        // concern).
+
+        @mixin inkgrid-col__shift-to-right (
+            // The total number of 'parts' (or possible columns) in a row.
+            // Possible values: number | false (reset right shift to 0)
+            $number-of-parts,
+            // The amount of 'parts' over which the current column should be shifted to the right.
+            $parts-span: 1
+        ) {
+            // Relatively position the column to allow it to shift without disturbing surrounding content.
+            position: relative;
+
+            // If the mixin gets passed a value of false, reset the shift value to 0.
+            @if $number-of-parts == false
+            {
+                left: 0;
+            }
+            // Use a positive value for the left property to shift the column to the right.
+            @else
+            {
+                left: 100% * ($parts-span / $number-of-parts);
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+        // Include this mixin to shift the column to the left without affecting the other columns. (Note: this can
+        // result in overlap.)
+        // inkgrid-col__shift-to-right and inkgrid-col__shift-to-left can be combined to change the visual order of
+        // columns (although we should only rarely do this, as it affects tab order and can be an accessibility
+        // concern).
+
+        @mixin inkgrid-col__shift-to-left (
+            // The total number of 'parts' (or possible columns) in a row.
+            // Possible values: number | false (reset left shift to 0)
+            $number-of-parts,
+            // The amount of 'parts' over which the current column should be shifted to the left.
+            $parts-span: 1
+        ) {
+            // Relatively position the column to allow it to shift without disturbing surrounding content.
+            position: relative;
+
+            // If the mixin gets passed a value of false, reset the shift value to 0.
+            @if $number-of-parts == false
+            {
+                right: 0;
+            }
+            // Use a positive value for the right property to shift the column to the left.
+            @else
+            {
+                right: 100% * ($parts-span / $number-of-parts);
+            }
+        }
+
+
+        // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+
+
+// ---------------------
+// inkGrid helper mixins
+// ---------------------
+
+
+    // These helpers remove the space between inline-block element by setting the font-family of their container to
+    // a zero-width font (AdobeBlank, see imported file below).
+    //
+    // This method has several advantages over other methods to remove spaces between inline-blocks:
+    // - No need to edit or pay special attention to the way we write HTML; works with any code style / HTML tags.
+    // - No dependency on magic numbers (such as with the letter-spacing hack).
+    // - Compatible with font-sizes defined in em units (unlike the font-size: 0; hack).
+    //
+    // Of course there is a drawback:
+    // - font-family (and letter-spacing / word-spacing) is reset in the process, making it impossible for columns
+    //   to inherit these values from parent elements. The use of preprocessor variables should mitigate most of this
+    //   problem.
+
+
+    // #TODO add @font-face rule if $setting--ie-fix is TRUE
+    @import "adobeblank/_font";
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    // Include this mixin on the element which contains inline-block descendants that need their whitespace removed.
+    // Make sure all text-containing descendants have _inkgrid-helper--inline-block__child included to undo the side
+    // effects.
+
+    @mixin _inkgrid-helper--inline-block__container ()
+    {
+        // Map all characters, including all horizontal whitespace, to 'nothing'. This effectively removes whitespace.
+        font-family: "AdobeBlank";
+
+        // Both letter-spacing and word-spacing can cause extra spacing not tied to characters (and thus not removed by
+        // setting the font-family to AdobeBlank). Set these to 0 / normal to prevent this issue.
+        letter-spacing: 0;
+        word-spacing: normal;
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    // Include this mixin on the inline-block elements themselves to undo the side effects of
+    // _inkgrid-helper--inline-block__container.
+
+    @mixin _inkgrid-helper--inline-block__child ()
+    {
+        // Set font properties back to normal.
+        font-family: $inkgrid__font-family;
+        letter-spacing: $inkgrid__letter-spacing;
+        word-spacing: $inkgrid__word-spacing;
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //

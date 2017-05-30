@@ -1,0 +1,118 @@
+
+// ---------------
+// Position mixins
+// ---------------
+
+
+    // #TODO make test page!
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin position-absolute-fill ()
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin center-element-by-size (
+        $element-class,
+        $container-class: '&',
+        $element-width: false,
+        $element-height: false,
+        $horizontal: true,
+        $vertical: true
+    ) {
+        // uses position: absolute; to vertically and/or horizontally center
+        // a fixed size element inside a container of unknown size
+
+        #{$container-class}
+        {
+            position: relative;
+        }
+
+        #{$element-class}
+        {
+            position: absolute;
+
+            @if $horizontal == true
+            {
+                @if $element-width == false
+                {
+                    @error "$element-width is needed to be able to horizontally center this element.";
+                }
+
+                width: $element-width;
+
+                left: 50%;
+                margin-left: -$element-width / 2;
+            }
+            @if $vertical == true
+            {
+                @if $element-height == false
+                {
+                    @error "$element-height is needed to be able to vertically center this element.";
+                }
+
+                height: $element-height;
+
+                top: 50%;
+                margin-top: -$element-height / 2;
+            }
+        }
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin center-element-by-container-height (
+        $container-class,
+        $element-class,
+        $container-height,
+        $horizontal: true
+    ) {
+        // uses a :before pseudo-element and inline-block vertical-align (and optionally text-align)
+        // to vertically (and optionally horizontally) center an element of unknown size inside a fixed height container
+
+        #{$container-class}
+        {
+            @include inkgrid-row (false, false);
+            @if $horizontal == true
+            {
+                @include inkgrid-row__h-align (center);
+            }
+
+            height: $container-height;
+
+            &:before
+            {
+                content: '';
+                height: 100%;
+            }
+        }
+
+        #{$container-class}:before,
+        #{$element-class}
+        {
+            @include inkgrid-col (false, false);
+            @include inkgrid-col__v-align (middle);
+        }
+
+        #{$element-class}
+        {
+            // prevent layout from breaking when element is wider than its container
+            max-width: 100%;
+        }
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
