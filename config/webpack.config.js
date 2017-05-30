@@ -10,9 +10,10 @@ const devServerPort = 3808;
 const production = process.env.NODE_ENV === 'production';
 
 const config = {
+  context: path.join(__dirname, '..', 'webpack'),
+
   entry: {
-    // Sources are expected to live in $app_root/webpack
-    application: './webpack/application.jsx',
+    application: './application.jsx',
   },
 
   module: {
@@ -77,7 +78,7 @@ const config = {
       modules: false,
       assets: true,
     }),
-    new StyleLintPlugin(),
+    new StyleLintPlugin()
   ],
 };
 
@@ -95,8 +96,6 @@ if (production) {
     headers: { 'Access-Control-Allow-Origin': '*' },
   };
   config.output.publicPath = `//localhost:${devServerPort}/webpack/`;
-  // Source maps
-  config.devtool = 'cheap-module-eval-source-map';
 }
 
 module.exports = config;

@@ -37,6 +37,7 @@ config/*.pub
 coverage/
 
 /.gem
+/.vscode
 
 .yarnclean
 jsconfig.json
