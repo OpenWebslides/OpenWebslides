@@ -33,6 +33,10 @@ const config = {
         use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: ['file-loader'],
+      },
+      {
         test: /locales/,
         use: ['i18next-resource-store-loader']
       },
