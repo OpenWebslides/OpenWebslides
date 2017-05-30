@@ -48,6 +48,8 @@ PreCommit:
     enabled: true
     required_executable: './node_modules/.bin/eslint'
     command: ['./node_modules/.bin/eslint']
+  Fasterer:
+    enabled: true
   HardTabs:
     enabled: true
     exclude: .gitmodules
