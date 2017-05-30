@@ -240,14 +240,14 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     ruby_dep (1.5.0)
-    ruby_parser (3.8.4)
+    ruby_parser (3.9.0)
       sexp_processor (~> 4.1)
     rugged (0.25.1.1)
     sass (3.4.23)
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
-    sexp_processor (4.8.0)
+    sexp_processor (4.9.0)
     simplecov (0.14.1)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -281,7 +281,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt (~> 3.1.7)
+  bcrypt
   brakeman
   bundler-audit
   byebug
@@ -293,7 +293,7 @@ DEPENDENCIES
   faker
   fasterer
   foreman
-  jbuilder (~> 2.5)
+  jbuilder
   json
   jsonapi-authorization!
   jsonapi-resources
@@ -311,10 +311,10 @@ DEPENDENCIES
   omniauth-google-oauth2
   overcommit
   pg
-  puma (~> 3.0)
+  puma
   pundit
   pundit-matchers
-  rails (~> 5.0.1)
+  rails
   rspec
   rspec-rails
   rubocop

@@ -37,13 +37,13 @@ gem 'jsonapi-resources'
 gem 'nokogumbo'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.1'
+gem 'rails'
 # Use Puma as the application server
-gem 'puma', '~> 3.0'
+gem 'puma'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder'
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -58,9 +58,6 @@ group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', :platform => :mri
-
   # Enforce code style using Rubocop
   gem 'rubocop', :require => false
 
@@ -72,7 +69,10 @@ group :development, :test do
   gem 'simplecov', :require => false
 
   # SCSS-lint rendering
-  gem 'sass'
+  gem 'sass', :require => false
+
+  # Process manager
+  gem 'foreman', :require => false
 end
 
 group :test do
@@ -98,6 +98,9 @@ group :test do
 end
 
 group :development do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', :platform => :mri
+
   # Notify of file changes
   gem 'listen'
 
@@ -121,5 +124,3 @@ group :production do
   # Use PostgreSQL as database
   gem 'pg'
 end
-
-gem 'foreman'
