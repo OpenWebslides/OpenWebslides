@@ -10,7 +10,8 @@
         "trailingComma": "all",
         "singleQuote": true
       }
-    ]
+    ],
+    "linebreak-style": "off"
   },
   "parserOptions": {
     "ecmaVersion": 8,
