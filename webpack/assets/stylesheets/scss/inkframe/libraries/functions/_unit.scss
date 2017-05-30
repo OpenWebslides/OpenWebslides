@@ -1,0 +1,30 @@
+
+// --------------
+// Unit functions
+// --------------
+
+// Defines functions that can be used to manupulate units or associated values.
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    // Function to work around an issue that can arise if properties like padding or margin are applied to an
+    // element that has a 'different' font-size set. Because em units scale with the font size, this results in
+    // length values that are larger/smaller than they would be if the default font-size had been used. Usually this is
+    // what we want (scale an entire object using font-size on the parent element), but in case it isn't, this function
+    // can be used to calculate the value that will result in an equal length as if the element didn't have a
+    // different font-size.
+    // Note: if we end up in this situation very often, we're probably applying font-size too early, or we don't
+    // have enough wrapper elements to keep our styles cleanly separate from each other.
+    // This function should mostly be used on things like :before or :after, where it's impossible to add a wrapper.
+
+    @function scale-length-to-font-size ($em-length, $em-font-size)
+    {
+        // #TODO use validation functions to verify parameters have 'em' units
+
+        @return $em-length * (1em / $em-font-size);
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //

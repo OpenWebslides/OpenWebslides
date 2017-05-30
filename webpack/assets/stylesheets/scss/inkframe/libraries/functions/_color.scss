@@ -1,0 +1,43 @@
+
+// ---------------
+// Color functions
+// ---------------
+
+// Defines functions that can be used to manipulate colors.
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    // Mixes $color with white, in the amount determined by $percentage.
+    // This results in a 'paler' looking color compared to lighten($color, $percentage),
+    // which works better on some color palettes.
+
+    @function tint (//
+        // The color to tint.
+        $color,
+        // The strength of the color change (in %).
+        $percentage
+    ) {
+        @return mix(white, $color, $percentage);
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    // Mixes $color with black, in the amount determined by $percentage.
+    // This results in a more 'dim' looking color compared to darken($color, $percentage),
+    // which works better on some color palettes.
+
+    @function shade (//
+        // The color to shade.
+        $color,
+        // The strength of the color change (in %).
+        $percentage
+    ) {
+        @return mix(black, $color, $percentage);
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //

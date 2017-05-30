@@ -1,0 +1,46 @@
+
+// --------------
+// Spacing mixins
+// --------------
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin wrap-line-height ($wrap-line-height, $total-line-height: $line-height--base * 1em)
+    {
+        // $line-height has to have a unit! Unitless line-height will not work. #TODO error checking
+
+        $line-height-difference: ($total-line-height - $wrap-line-height) / 2;
+
+        line-height: $wrap-line-height;
+        padding-top: $line-height-difference;
+        padding-bottom: $line-height-difference;
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    @mixin stretch ($direction, $amount: 9999em)
+    {
+        // default $amount will stretch the element offscreen
+
+        margin-#{$direction}: -$amount;
+        padding-#{$direction}: $amount;
+    }
+
+        @mixin stretch--horizontal ($amount: 9999em)
+        {
+            @include stretch (left, $amount);
+            @include stretch (right, $amount);
+        }
+
+        @mixin stretch--vertical ($amount: 9999em)
+        {
+            @include stretch (top, $amount);
+            @include stretch (bottom, $amount);
+        }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //

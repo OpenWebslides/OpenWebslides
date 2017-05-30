@@ -1,0 +1,26 @@
+
+// inkFrame note: Font Awesome classes have been disabled; only its mixins and variables can be used.
+// We should define font icons in the CSS (using :before pseudo-elements), not in the HTML, because they are
+// decorative elements. This also makes it easier to switch icon fonts (because only the CSS needs to be changed) if
+// necessary, and we won't have to change the HTML (potentially in many places) when creating a new theme that uses
+// icons differently from the previous one.
+
+
+//!
+//Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+//License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+//
+
+@import "imports/_variables";
+@import "imports/_mixins";
+@import "imports/_path";
+//@import "imports/core";
+//@import "imports/larger";
+//@import "imports/fixed-width";
+//@import "imports/list";
+//@import "imports/bordered-pulled";
+//@import "imports/animated";
+//@import "imports/rotated-flipped";
+//@import "imports/stacked";
+//@import "imports/icons";
+//@import "imports/screen-reader";
