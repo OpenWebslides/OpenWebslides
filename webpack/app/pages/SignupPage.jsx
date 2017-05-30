@@ -3,7 +3,7 @@ import React from 'react';
 import SignupForm from 'containers/SignupForm';
 import OauthLinks from 'presentationals/OauthLinks';
 
-function signupPage() {
+function SignupPage() {
   return (
     <div>
       <SignupForm />
@@ -12,4 +12,4 @@ function signupPage() {
   );
 }
 
-export default signupPage;
+export default SignupPage;

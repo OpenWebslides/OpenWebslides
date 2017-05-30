@@ -2,7 +2,7 @@ import React from 'react';
 
 import EmailConfirmation from 'containers/ConfirmEmailContainer';
 
-function emailConfirmationPage(props) {
+function EmailConfirmationPage(props) {
   return (
     <div>
       <EmailConfirmation {...props} />
@@ -10,4 +10,4 @@ function emailConfirmationPage(props) {
   );
 }
 
-export default emailConfirmationPage;
+export default EmailConfirmationPage;
