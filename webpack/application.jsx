@@ -18,5 +18,5 @@ ReactDOM.render(
       </Router>
     </Provider>
   </I18nextProvider>,
-  document.getElementById('main'),
+  document.getElementById('react-container'),
 );
