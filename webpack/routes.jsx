@@ -9,6 +9,7 @@ import ForgotPasswordPage from 'pages/ForgotPasswordPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage';
 import ConfirmEmailPage from 'pages/ConfirmEmailPage';
 import OauthCallbackPage from 'pages/OauthCallbackPage';
+import SlideEditorPage from 'pages/SlideEditorPage';
 
 export default (
   <Route path="app">
@@ -19,5 +20,6 @@ export default (
     <Route path="forgot_password" component={ForgotPasswordPage} />
     <Route path="auth/omniauth" component={OauthCallbackPage} />
     <Route path="reset_password" component={ResetPasswordPage} />
+    <Route path="editor/slide" component={SlideEditorPage} />
   </Route>
 );
