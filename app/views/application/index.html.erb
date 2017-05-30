@@ -3,8 +3,12 @@
   <head>
     <%= stylesheet_link_tag *webpack_asset_paths('application', extension: 'css') %>
   </head>
-  <body>
-    <div id='main'></div>
+  <body class="site">
+    <div class="l_site__background">
+      <div class="l_site__wrapper">
+        <div id="react-container"></div>
+      </div>
+    </div>
     <%= javascript_include_tag *webpack_asset_paths("application") %>
   </body>
 </html>
