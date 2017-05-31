@@ -20,7 +20,7 @@ gem 'omniauth-google-oauth2'
 
 # Authorization
 gem 'pundit'
-gem 'pundit-resources'
+gem 'pundit-resources', :github => 'Ross-Hunter/pundit-resources', :branch => 'rails-5.1'
 
 # Data store providers
 gem 'net-ssh'
@@ -100,6 +100,9 @@ end
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', :platform => :mri
+
+  # Debugger
+  gem 'debase', '~> 0.2.1'
 
   # Notify of file changes
   gem 'listen'
