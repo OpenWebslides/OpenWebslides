@@ -9,19 +9,27 @@ function SlideEditorPage() {
     <div className="l_page l_page--slide-editor">
       <div className="l_page__wrapper">
         <div className="l_page__item l_page__item--header">
-          <PageHeader />
+          <div className="l_page__item__wrapper">
+            <PageHeader />
+          </div>
         </div>
         <div className="l_page__item l_page__item--main">
-          <main className="l_main">
-            <div className="l_main__wrapper">
-              <div className="l_main__item l_main__item--deck-navigator">
-                <DeckNavigator />
+          <div className="l_page__item__wrapper">
+            <main className="l_main">
+              <div className="l_main__wrapper">
+                <div className="l_main__item l_main__item--deck-navigator">
+                  <div className="l_main__item__wrapper">
+                    <DeckNavigator />
+                  </div>
+                </div>
+                <div className="l_main__item l_main__item--slide-editor">
+                  <div className="l_main__item__wrapper">
+                    <SlideEditor />
+                  </div>
+                </div>
               </div>
-              <div className="l_main__item l_main__item--slide-editor">
-                <SlideEditor />
-              </div>
-            </div>
-          </main>
+            </main>
+          </div>
         </div>
       </div>
     </div>
