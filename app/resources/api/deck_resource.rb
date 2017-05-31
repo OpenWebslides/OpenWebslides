@@ -27,7 +27,7 @@ module Api
     end
 
     def self.updatable_fields(context = {})
-      super(context) - %i[owner collaborators]
+      super(context) - %i[collaborators]
     end
   end
 end
