@@ -10,7 +10,7 @@ export function* doEmailSignin(action) {
   try {
     const { email, password } = action.meta.values;
     const response = yield call(emailSigninApi, email, password);
-    const { authToken, firstName } = response;
+    const { authToken, firstName, id } = response;
 
     if (typeof authToken === 'undefined') {
       throw new Error('Unable to find JWT in response');
@@ -21,6 +21,7 @@ export function* doEmailSignin(action) {
       payload: {
         authToken,
         firstName,
+        id,
       },
     });
 
