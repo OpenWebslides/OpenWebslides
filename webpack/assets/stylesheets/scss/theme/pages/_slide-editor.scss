@@ -1,0 +1,54 @@
+
+// -----------------
+// Slide editor page
+// -----------------
+
+
+    .l_page--slide-editor
+    {
+        $gutter__v: $spacing--site__v;
+        $gutter__h: $spacing--site__h;
+
+        .l_page__item--main,
+        .l_page__item--main .l_page__item__wrapper,
+        .l_main,
+        .l_main__wrapper
+        {
+            // allow children to take 100% height
+            box-sizing: border-box;
+            height: 100%;
+        }
+
+        .l_main
+        {
+            &__wrapper
+            {
+                display: flex;
+                flex-direction: row;
+
+                margin-right: -$gutter__h / 2;
+                margin-left: -$gutter__h / 2;
+            }
+
+            &__item
+            {
+                flex: 1 1 0;
+
+                padding-right: $gutter__h / 2;
+                padding-left: $gutter__h / 2;
+
+                &--slide-editor
+                {
+                    flex: 3 3 0;
+                }
+
+                &__wrapper
+                {
+                    @include box-style--subtle;
+
+                    box-sizing: border-box;
+                    min-height: 100%;
+                }
+            }
+        }
+    }
