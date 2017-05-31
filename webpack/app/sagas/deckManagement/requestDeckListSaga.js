@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import getDecksCall from 'api/userDecksApiCall';
+import getDecksCall from 'api/requestUserDecksCall';
 
 import {
   REQUEST_DECK_LIST,
@@ -8,17 +8,16 @@ import {
 } from 'actions/deckManagementActions';
 
 function mapJsonDeckToDeck(jsonDeck) {
-    const deck = {};
-    deck.id = jsonDeck.id;
-    deck.name = jsonDeck.attributes.name;
-    deck.description = jsonDeck.attributes.description;
-    return deck;
+  const deck = {};
+  deck.id = jsonDeck.id;
+  deck.name = jsonDeck.attributes.name;
+  deck.description = jsonDeck.attributes.description;
+  return deck;
 }
-
 
 export function* requestDeckListFlow(userID) {
   try {
-    const responseListOfDecks = yield call(getDecksCall,userID);
+    const responseListOfDecks = yield call(getDecksCall, userID);
     if (!responseListOfDecks) {
       throw new Error('Received undefined list.');
     }
@@ -40,7 +39,6 @@ export function* requestDeckListFlow(userID) {
     });
   }
 }
-
 
 function* userDeckRequestWatcher() {
   yield takeLatest(REQUEST_DECK_LIST, requestDeckListFlow());
