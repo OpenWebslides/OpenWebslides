@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 
 function PageHeader(props) {
   // Define logo content in separate variable so it can be included in
   // logoContainer.
   const logoContent = (
     <span className="o_logo__wrapper">
-      <a className="o_logo__link">
+      <Link className="o_logo__link" to="/">
         <span className="o_logo__text">
           <span className="o_logo__text__wrapper">
             <span className="o_logo__item o_logo__item--open">
@@ -17,7 +18,7 @@ function PageHeader(props) {
             </span>
           </span>
         </span>
-      </a>
+      </Link>
     </span>
   );
   // Use a different container tag for logo content depending on the value of
