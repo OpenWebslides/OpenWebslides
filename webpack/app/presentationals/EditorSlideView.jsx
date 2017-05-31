@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import SlideContainer from './SlideContainer';
+
 function EditorSlideView(props) {
   return (
     <div
       className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}
     >
       <div className="c_editor-slide-view__wrapper">
-        <p>[Slide view goes here]</p>
+        <SlideContainer />
       </div>
     </div>
   );
