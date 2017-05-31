@@ -12,10 +12,12 @@ export function DeckThumbnail({ deckTitle, deckIconImage, deckLink }) {
     </div>
   );
 }
+
 DeckThumbnail.propTypes = {
   deckTitle: PropTypes.string.isRequired,
   deckIconImage: PropTypes.string,
   deckLink: PropTypes.string.isRequired,
+  key: PropTypes.number.isRequired,
 };
 
 DeckThumbnail.defaultProps = {
