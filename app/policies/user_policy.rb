@@ -25,16 +25,5 @@ class UserPolicy < ApplicationPolicy
     update?
   end
 
-  class Scope < Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user  = user
-      @scope = scope
-    end
-
-    def resolve
-      scope.all
-    end
-  end
+  class Scope < Scope; end
 end
