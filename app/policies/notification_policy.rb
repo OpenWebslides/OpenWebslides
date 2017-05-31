@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NotificationPolicy
+class NotificationPolicy < ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -12,7 +12,7 @@ class NotificationPolicy
     true
   end
 
-  class Scope
+  class Scope < Scope
     attr_reader :user, :scope
 
     def initialize(user, scope)
