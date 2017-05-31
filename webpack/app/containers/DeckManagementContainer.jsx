@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { requestOwnDecks } from 'actions/deckManagementActions';
-import DeckThumbnail from '../presentationals/deckManagement/DeckThumbnail';
+import { DeckThumbnail } from '../presentationals/deckManagement/DeckThumbnail';
 
 function renderDeckThumbnail(el, index) {
   return (
