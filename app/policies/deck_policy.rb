@@ -12,20 +12,6 @@ class DeckPolicy
     true
   end
 
-  def show?
-    if @record.public_access?
-      # Users and guests can read
-      true
-    elsif @record.protected_access?
-      # Users can read protected deck
-      !@user.nil?
-    elsif @record.private_access?
-      return false if @user.nil?
-      # Owner and collaborators can read private deck
-      @record.owner == @user || @record.collaborators.include?(@user)
-    end
-  end
-
   def create?
     # Users can create a deck but only for itself
     !@user.nil? && @record.owner == @user

@@ -12,10 +12,6 @@ class NotificationPolicy
     true
   end
 
-  def show?
-    true
-  end
-
   class Scope
     attr_reader :user, :scope
 

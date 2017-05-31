@@ -24,8 +24,7 @@ RSpec.describe DeckPolicy do
 
     context 'for public decks' do
       let(:deck) { build :deck, :state => :public_access }
-      it 'should permit only :show on public decks' do
-        expect(subject).to permit_action :show
+      it 'should not permit anything on public decks' do
         expect(subject).to forbid_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -34,7 +33,6 @@ RSpec.describe DeckPolicy do
     context 'for protected decks' do
       let(:deck) { build :deck, :state => :protected_access }
       it 'should not permit anything on protected decks' do
-        expect(subject).to forbid_action :show
         expect(subject).to forbid_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -43,7 +41,6 @@ RSpec.describe DeckPolicy do
     context 'for private decks' do
       let(:deck) { build :deck, :state => :private_access }
       it 'should not permit anything on private decks' do
-        expect(subject).to forbid_action :show
         expect(subject).to forbid_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -67,8 +64,7 @@ RSpec.describe DeckPolicy do
 
     context 'for public decks' do
       let(:deck) { build :deck, :state => :public_access }
-      it 'should permit only :show on public decks' do
-        expect(subject).to permit_action :show
+      it 'should not permit anything on public decks' do
         expect(subject).to forbid_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -76,8 +72,7 @@ RSpec.describe DeckPolicy do
 
     context 'for protected decks' do
       let(:deck) { build :deck, :state => :protected_access }
-      it 'should permit only :show on protected decks' do
-        expect(subject).to permit_action :show
+      it 'should not permit anything on protected decks' do
         expect(subject).to forbid_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -86,7 +81,6 @@ RSpec.describe DeckPolicy do
     context 'for private decks' do
       let(:deck) { build :deck, :state => :private_access }
       it 'should not permit anything on private decks' do
-        expect(subject).to forbid_action :show
         expect(subject).to forbid_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -112,7 +106,6 @@ RSpec.describe DeckPolicy do
       let(:deck) { build :deck, :with_collaborators, :state => :public_access }
       let(:user) { deck.collaborators.first }
       it 'should permit anything but destroy on public decks' do
-        expect(subject).to permit_action :show
         expect(subject).to permit_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -122,7 +115,6 @@ RSpec.describe DeckPolicy do
       let(:deck) { build :deck, :with_collaborators, :state => :protected_access }
       let(:user) { deck.collaborators.first }
       it 'should permit anything but destroy on protected decks' do
-        expect(subject).to permit_action :show
         expect(subject).to permit_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -132,7 +124,6 @@ RSpec.describe DeckPolicy do
       let(:deck) { build :deck, :with_collaborators, :state => :private_access }
       let(:user) { deck.collaborators.first }
       it 'should permit anything but destroy on private decks' do
-        expect(subject).to permit_action :show
         expect(subject).to permit_action :update
         expect(subject).to forbid_action :destroy
       end
@@ -154,7 +145,6 @@ RSpec.describe DeckPolicy do
       let(:deck) { build :deck, :state => :public_access }
       let(:user) { deck.owner }
       it 'should permit anything on public decks' do
-        expect(subject).to permit_action :show
         expect(subject).to permit_action :update
         expect(subject).to permit_action :destroy
       end
@@ -164,7 +154,6 @@ RSpec.describe DeckPolicy do
       let(:deck) { build :deck, :state => :protected_access }
       let(:user) { deck.owner }
       it 'should permit anything on protected decks' do
-        expect(subject).to permit_action :show
         expect(subject).to permit_action :update
         expect(subject).to permit_action :destroy
       end
@@ -174,7 +163,6 @@ RSpec.describe DeckPolicy do
       let(:deck) { build :deck, :state => :private_access }
       let(:user) { deck.owner }
       it 'should permit anything on private decks' do
-        expect(subject).to permit_action :show
         expect(subject).to permit_action :update
         expect(subject).to permit_action :destroy
       end
