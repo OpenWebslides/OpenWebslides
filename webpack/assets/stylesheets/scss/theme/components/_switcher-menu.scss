@@ -1,0 +1,28 @@
+
+// -----------------------
+// Switcher menu component
+// -----------------------
+
+
+    .c_switcher-menu
+    {
+        &__list
+        {
+            display: flex;
+            flex-direction: row;
+
+            list-style: none;
+            padding: 0;
+        }
+
+        &__item
+        {
+            flex: 1 1 0;
+        }
+
+        &__button
+        {
+            display: block;
+            width: 100%;
+        }
+    }
