@@ -1,5 +1,5 @@
 // Types
-export const CHECK_EMAIL = 'CHECK_EMAIL_AVAILABLE';
+export const CHECK_EMAIL = 'CHECK_EMAIL';
 
 // Creators
 export function checkEmail({ email, resolve, reject }) {

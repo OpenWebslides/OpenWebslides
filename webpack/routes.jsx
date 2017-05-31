@@ -10,6 +10,7 @@ import ResetPasswordPage from 'pages/ResetPasswordPage';
 import ConfirmEmailPage from 'pages/ConfirmEmailPage';
 import OauthCallbackPage from 'pages/OauthCallbackPage';
 import SlideEditorPage from 'pages/SlideEditorPage';
+import EditorPage from 'pages/EditorPage';
 
 export default (
   <Route path="/">
@@ -21,5 +22,6 @@ export default (
     <Route path="/auth/omniauth" component={OauthCallbackPage} />
     <Route path="/reset_password" component={ResetPasswordPage} />
     <Route path="/editor/slide" component={SlideEditorPage} />
+    <Route path="/editortest" experimentingcomponent={EditorPage} />
   </Route>
 );

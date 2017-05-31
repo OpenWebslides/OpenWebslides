@@ -1,9 +1,9 @@
 const contentBlockTypes = {
-  H1: 'TITLE',
+  H1: 'Title',
   '#text': 'TEXT',
-  H2: 'SUBTITLE',
-  EM: 'EMPHASIS',
-  STRONG: 'STRONG',
+  H2: 'Subtitle',
+  EM: 'EmphasizedText',
+  STRONG: 'StrongText',
 };
 
 export default contentBlockTypes;

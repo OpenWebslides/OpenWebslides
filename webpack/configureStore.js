@@ -29,6 +29,9 @@ function configureStore() {
       local: {
         auth: store.getState().local.auth,
       },
+      data: {
+        activeDeck: store.getState().data.activeDeck,
+      },
     });
   }, 1000));
 
