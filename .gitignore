@@ -43,3 +43,6 @@ jsconfig.json
 
 # Generated documentation
 doc/
+
+.vscode
+.DS_Store
