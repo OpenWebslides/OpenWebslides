@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DeckPolicy
+class DeckPolicy < ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -31,7 +31,7 @@ class DeckPolicy
     @record.owner == @user
   end
 
-  class Scope
+  class Scope < Scope
     attr_reader :user, :scope
 
     def initialize(user, scope)
