@@ -6,7 +6,11 @@
 
     .o_logo--site
     {
-        .o_logo__wrapper,
+        .o_logo__wrapper
+        {
+            display: inline-block;
+        }
+
         .o_logo__link,
         .o_logo__text
         {
