@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserPolicy < ApplicationPolicy
+class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -9,23 +9,26 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    true
+    false
   end
 
   def create?
-    true
+    false
   end
 
   def update?
-    # Users can only update their own account
-    !@user.nil? && @user == @record
+    false
   end
 
   def destroy?
-    update?
+    false
   end
 
-  class Scope < Scope
+  def scope
+    Pundit.policy_scope! user, record.class
+  end
+
+  class Scope
     attr_reader :user, :scope
 
     def initialize(user, scope)
