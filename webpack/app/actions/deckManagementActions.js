@@ -18,3 +18,10 @@ export function deckDeletionFailure(message) {
     payload: message,
   };
 }
+
+export function requestOwnDecks(userID) {
+  return {
+    type: DECK_DELETION_REQUEST,
+    meta: userID,
+  };
+}
