@@ -6,6 +6,7 @@ const initialState = Immutable({
   isAuthenticated: false,
   authToken: undefined,
   firstName: '',
+  id: undefined,
 });
 
 function auth(state = initialState, action) {
