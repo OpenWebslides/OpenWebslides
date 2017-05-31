@@ -7,14 +7,23 @@ import {
   REQUEST_DECK_LIST_SUCCESS,
 } from 'actions/deckManagementActions';
 
-export function* requestDeckListFlow() {
+function mapJsonDeckToDeck(jsonDeck) {
+    const deck = {};
+    deck.id = jsonDeck.id;
+    deck.name = jsonDeck.attributes.name;
+    deck.description = jsonDeck.attributes.description;
+    return deck;
+}
+
+
+export function* requestDeckListFlow(userID) {
   try {
-    const responseListOfDecks = yield call(getDecksCall);
+    const responseListOfDecks = yield call(getDecksCall,userID);
     if (!responseListOfDecks) {
       throw new Error('Received undefined list.');
     }
     const listOfDecks = responseListOfDecks.map(
-      responseDeck => null, // TODO When api supports getting decks from specific user
+      responseDeck => mapJsonDeckToDeck(responseDeck), // TODO When api supports getting decks from specific user
     );
     yield put({
       type: REQUEST_DECK_LIST_SUCCESS,
@@ -31,6 +40,7 @@ export function* requestDeckListFlow() {
     });
   }
 }
+
 
 function* userDeckRequestWatcher() {
   yield takeLatest(REQUEST_DECK_LIST, requestDeckListFlow());
