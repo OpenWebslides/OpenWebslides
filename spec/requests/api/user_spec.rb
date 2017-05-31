@@ -75,7 +75,7 @@ RSpec.describe 'User API', :type => :request do
       expect(json['data']).to include 'attributes'
 
       # Email is hidden for unauthenticated users
-      hash = { 'firstName' => attributes[:firstName], 'lastName' => nil }
+      hash = { 'firstName' => attributes[:firstName] }
       expect(json['data']['attributes']).to match hash
     end
   end

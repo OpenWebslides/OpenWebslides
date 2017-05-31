@@ -6,6 +6,8 @@ RSpec.describe Api::DeckResource, :type => :resource do
   let(:deck) { create :deck }
   let(:context) { {} }
 
+  let(:nil_deck) { create :deck, :description => nil }
+
   subject { described_class.new deck, context }
 
   it { is_expected.to have_primary_key :id }
@@ -19,6 +21,11 @@ RSpec.describe Api::DeckResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
+      expect(subject.fetchable_fields).to match_array %i[id name state description template owner collaborators]
+    end
+
+    it 'should omit empty fields' do
+      subject { described_class.new nil_deck, context }
       expect(subject.fetchable_fields).to match_array %i[id name state description template owner collaborators]
     end
 

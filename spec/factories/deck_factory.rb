@@ -3,6 +3,7 @@
 FactoryGirl.define do
   factory :deck do
     name { Faker::Lorem.words(4).join ' ' }
+    description { Faker::Lorem.words(20).join ' ' }
     state :public_access
     owner { build :user }
 

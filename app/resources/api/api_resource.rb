@@ -5,5 +5,18 @@ module Api
     include Pundit::Resource
 
     abstract
+
+    ##
+    # Callbacks
+    #
+    ##
+    # Methods
+    #
+    def fetchable_fields
+      # Omit null values
+      super.collect do |field|
+        field unless self.class._attributes.key?(field) && public_send(field).nil?
+      end
+    end
   end
 end
