@@ -13,7 +13,11 @@ module Api
       return super unless media_types_for('Accept').include? MEDIA_TYPE
 
       deck = Deck.find params[:id]
-      raise Pundit::NotAuthorizedError unless DeckPolicy.new(current_user, deck).show?
+
+      # Authorize show
+      scope = DeckPolicy::Scope.new(current_user, Deck).resolve
+      raise Pundit::NotAuthorizedError unless scope.where(:id => deck.id).exists?
+      context[:policy_used]&.call
 
       render :body => deck.content, :content_type => 'text/html'
     end
@@ -22,7 +26,10 @@ module Api
       return super unless request.content_type == MEDIA_TYPE
 
       deck = Deck.find params[:id]
+
+      # Authorize update
       raise Pundit::NotAuthorizedError unless DeckPolicy.new(current_user, deck).update?
+      context[:policy_used]&.call
 
       deck.content = Nokogiri::HTML5.fragment(request.body.read).to_html
       deck.author = current_user
