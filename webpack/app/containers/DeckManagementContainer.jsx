@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { requestOwnDecks } from 'actions/deckManagementActions';
 import DeckThumbnail from '../presentationals/deckManagement/DeckThumbnail';
 
 function renderDeckThumbnail(el, index) {
@@ -39,6 +43,21 @@ class DeckManagementContainer extends React.Component {
 
 DeckManagementContainer.propTypes = {
   requestOwnDecks: PropTypes.func.isRequired,
+  ownDecksState: PropTypes.shape({
+    listOfDecks: PropTypes.array.isRequired,
+  }),
 };
 
-export default DeckManagementContainer;
+function mapStateToProps(state) {
+  const ownDecksState = state.local.feed;
+  return {
+    ownDecksState,
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ requestOwnDecks }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  DeckManagementContainer,
+);
