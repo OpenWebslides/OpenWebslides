@@ -10,15 +10,17 @@ describe('EmailSignin Api Call', () => {
     const authToken = faker.random.alphaNumeric(20);
     const email = faker.internet.email();
     const password = faker.internet.password();
+    const firstName = faker.name.firstName();
 
     asyncFetch.mockReturnValue({
       headers: {
         get: () => `Bearer ${authToken}`,
       },
+      json: () => ({ data: { attributes: { firstName } } }),
     });
 
     const response = await emailSignin(email, password);
-    expect(response).toEqual({ authToken });
+    expect(response).toEqual({ authToken, firstName });
 
     const calledUrl = asyncFetch.mock.calls[0][0];
     expect(calledUrl).toEqual(SIGNIN_API_URL);
