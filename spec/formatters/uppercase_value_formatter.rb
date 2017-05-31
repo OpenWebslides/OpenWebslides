@@ -9,7 +9,7 @@ RSpec.describe UppercaseValueFormatter do
     expect(described_class.format word).to eq word.upcase
   end
 
-  it 'downcasses' do
+  it 'downcases' do
     expect(described_class.unformat word.upcase).to eq word
   end
 end
