@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/Ross-Hunter/pundit-resources.git
+  revision: 9b59d45999eaa2df8fade43f74e8ccecf5dfc193
+  branch: rails-5.1
+  specs:
+    pundit-resources (1.1.1)
+      activesupport
+      jsonapi-resources
+      pundit
+      rails (>= 4.2.1, < 5.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -61,6 +72,9 @@ GEM
       thor (~> 0.19.4)
       tins (~> 1.6)
     database_cleaner (1.6.1)
+    debase (0.2.1)
+      debase-ruby_core_source
+    debase-ruby_core_source (0.9.9)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -175,11 +189,6 @@ GEM
     pundit-matchers (1.2.3)
       pundit (~> 1.1, >= 1.1.0)
       rspec-rails (>= 3.0.0)
-    pundit-resources (1.1.1)
-      activesupport
-      jsonapi-resources
-      pundit
-      rails (>= 4.2.1, < 5.1)
     rack (2.0.3)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -296,6 +305,7 @@ DEPENDENCIES
   byebug
   coveralls
   database_cleaner
+  debase (~> 0.2.1)
   devise
   factory_girl
   factory_girl_rails
@@ -322,7 +332,7 @@ DEPENDENCIES
   puma
   pundit
   pundit-matchers
-  pundit-resources
+  pundit-resources!
   rails
   rspec
   rspec-rails
