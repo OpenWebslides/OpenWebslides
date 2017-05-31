@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   ##
   # Application
   #
-  root :to => 'application#index'
+  root :to => redirect('/app')
 
   get '/app', :to => 'application#index'
   get '/app/*path', :to => 'application#index'
