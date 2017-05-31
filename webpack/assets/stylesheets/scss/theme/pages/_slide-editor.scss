@@ -6,39 +6,33 @@
 
     .l_page--slide-editor
     {
-        $gutter__v: $spacing--site__v;
-        $gutter__h: $spacing--site__h;
-
         .l_page__item--main,
-        .l_page__item--main .l_page__item__wrapper,
+        .l_page__item__wrapper,
         .l_main,
         .l_main__wrapper
         {
-            // allow children to take 100% height
-            box-sizing: border-box;
-            height: 100%;
+            @include inkflex-item__passthrough;
         }
 
         .l_main
         {
             &__wrapper
             {
-                display: flex;
-                flex-direction: row;
+                @include inkflex-container ($spacing--site__v, $spacing--site__h);
 
-                margin-right: -$gutter__h / 2;
-                margin-left: -$gutter__h / 2;
+                flex-direction: row;
             }
 
             &__item
             {
-                flex: 1 1 0;
+                @include inkflex-item ($spacing--site__v, $spacing--site__h);
 
-                padding-right: $gutter__h / 2;
-                padding-left: $gutter__h / 2;
+                flex: 1 1 auto;
+                display: flex;
 
                 &--deck-navigator
                 {
+                    flex-basis: 0;
                     flex-grow: 0;
                 }
 
@@ -46,8 +40,7 @@
                 {
                     @include box-style--subtle;
 
-                    box-sizing: border-box;
-                    height: 100%;
+                    flex: 1 1 auto;
                 }
             }
         }

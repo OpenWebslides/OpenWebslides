@@ -562,6 +562,12 @@
             $inkgrid__letter-spacing:                   $letter-spacing--base !default;
 
 
+        // inkFlex (experimental)
+
+            $inkflex__default-h-gutter:                 $spacing--element__h !default;
+            $inkflex__default-v-gutter:                 $spacing--element__v !default;
+
+
         // respond-to
 
             // Settings for the respond-to helper; allows turning responsiveness on or off for the entire site.

@@ -8,12 +8,13 @@
     {
         &__wrapper
         {
-            display: flex;
-            flex-direction: row;
+            @include inkflex-container;
         }
 
         &__item
         {
+            @include inkflex-item;
+
             flex: 1 1 auto;
 
             &--toolbar
