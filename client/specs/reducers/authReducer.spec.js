@@ -15,6 +15,7 @@ describe('Auth Reducer', () => {
       Immutable({
         isAuthenticated: false,
         authToken: undefined,
+        id: undefined,
         firstName: '',
       }),
     );
@@ -29,6 +30,7 @@ describe('Auth Reducer', () => {
         type: SIGNIN_USER_SUCCESS,
         payload: {
           authToken: token,
+          id: 213423,
           firstName,
         },
       }),
@@ -36,6 +38,7 @@ describe('Auth Reducer', () => {
       Immutable({
         isAuthenticated: true,
         authToken: token,
+        id: 213423,
         firstName,
       }),
     );
