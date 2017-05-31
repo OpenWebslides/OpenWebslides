@@ -13,6 +13,19 @@
             padding: 0;
         }
 
+        &__item
+        {
+            margin-top: $spacing--element__v;
+        }
+
+        &__button
+        {
+            display: block;
+            width: 100%;
+
+            padding-bottom: $spacing--element__v;
+        }
+
         &__add-button
         {
             display: block;
@@ -21,10 +34,12 @@
 
         .c_slide-container
         {
+            vertical-align: middle;
+
             &__size
             {
                 // #TODO better resizing system
-                font-size: 0.4vw;
+                font-size: 0.5vw;
             }
         }
     }

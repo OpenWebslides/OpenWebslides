@@ -12,7 +12,9 @@ function DeckNavigator(props) {
         <ol className="o_list c_deck-navigator__list">
           {[1, 2, 3].map(() => (
             <li className="o_list__item c_deck-navigator__item">
-              <SlideContainer />
+              <button className="c_deck-navigator__button">
+                <SlideContainer />
+              </button>
             </li>
           ))}
         </ol>
