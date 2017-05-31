@@ -22,17 +22,18 @@
         &__item
         {
             flex: 1 1 auto;
-        }
 
-        &__item--header
-        {
-            @include box-style--subtle;
+            &--header
+            {
+                @include box-style--subtle;
 
-            margin-top: $gutter__v;
-        }
+                flex-grow: 0;
+                margin-top: $gutter__v;
+            }
 
-        &__item--main
-        {
-            margin-top: $gutter__v;
+            &--main
+            {
+                margin-top: $gutter__v;
+            }
         }
     }

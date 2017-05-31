@@ -7,15 +7,16 @@ function SlideEditor(props) {
   return (
     <div className={`c_slide-editor c_slide-editor--${props.cssIdentifier}`}>
       <div className="c_slide-editor__wrapper">
-        <div className="c_slide-editor__toolbar">
+        <div className="c_slide-editor__item c_slide-editor__item--toolbar">
           <p>[Toolbar goes here]</p>
         </div>
-        <div className="c_slide-editor__views-panel">
+        <div className="c_slide-editor__item c_slide-editor__item--views-panel">
           <EditorViewsPanel />
         </div>
-        <div className="c_slide-editor__slide-health">
+        {/* #TODO
+        <div className="c_slide-editor__item c_slide-editor__item--slide-health">
           <p>[Slide health goes here]</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

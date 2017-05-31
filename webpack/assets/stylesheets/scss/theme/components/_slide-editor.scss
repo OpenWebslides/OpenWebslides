@@ -6,5 +6,19 @@
 
     .c_slide-editor
     {
+        &__wrapper
+        {
+            display: flex;
+            flex-direction: row;
+        }
 
+        &__item
+        {
+            flex: 1 1 auto;
+
+            &--toolbar
+            {
+                flex-grow: 0;
+            }
+        }
     }
