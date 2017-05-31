@@ -11,7 +11,7 @@ env:
   - RAILS_ENV=test CI=true TRAVIS=true
 install:
   - bundle install
-  - nvm install node
+  - nvm install 7.10.0
   - node -v
   - npm install -g yarn
   - yarn
