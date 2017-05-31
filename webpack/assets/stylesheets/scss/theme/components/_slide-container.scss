@@ -1,0 +1,32 @@
+
+// -------------------------
+// Slide container component
+// -------------------------
+
+
+    .c_slide-container
+    {
+        $vertical-ratio: 66.7%;
+
+        border: $border-width--subtle $border-style--subtle $color--main__text;
+        margin-top: $spacing--element__v;
+
+        padding-top: $vertical-ratio;
+
+        // container for position: absolute; on &__wrapper
+        position: relative;
+
+        &__wrapper
+        {
+            @include position-absolute-fill;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &__size
+        {
+            @include padding--x-small;
+        }
+    }

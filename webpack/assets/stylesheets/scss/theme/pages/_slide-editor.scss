@@ -37,9 +37,9 @@
                 padding-right: $gutter__h / 2;
                 padding-left: $gutter__h / 2;
 
-                &--slide-editor
+                &--deck-navigator
                 {
-                    flex: 3 3 0;
+                    flex-grow: 0;
                 }
 
                 &__wrapper
@@ -47,7 +47,7 @@
                     @include box-style--subtle;
 
                     box-sizing: border-box;
-                    min-height: 100%;
+                    height: 100%;
                 }
             }
         }

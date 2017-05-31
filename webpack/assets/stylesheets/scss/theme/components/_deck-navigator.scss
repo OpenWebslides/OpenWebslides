@@ -6,5 +6,25 @@
 
     .c_deck-navigator
     {
+        width: 20vw;
 
+        &__list
+        {
+            padding: 0;
+        }
+
+        &__add-button
+        {
+            display: block;
+            width: 100%;
+        }
+
+        .c_slide-container
+        {
+            &__size
+            {
+                // #TODO better resizing system
+                font-size: 0.4vw;
+            }
+        }
     }
