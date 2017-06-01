@@ -30,15 +30,15 @@
 
             // The font that is used for headings.
 
-            $font-family--heading:                      $font-family--base !default;
+            $font-family--heading:                      $font-family--emphasis !default;
             $font-size--h1:                             2.00em !default;
             $font-size--h2:                             1.50em !default;
             $font-size--h3:                             1.25em !default;
             $font-size--h4:                             1.10em !default;
             $font-size--h5:                             1.00em !default;
             $font-size--h6:                             0.90em !default;
-            $font-weight--heading:                      $font-weight--base__strong !default;
-            $font-weight--heading__strong:              $font-weight--base__x-strong !default;
+            $font-weight--heading:                      $font-weight--emphasis__strong !default;
+            $font-weight--heading__strong:              $font-weight--emphasis__x-strong !default;
 
 
 
