@@ -12,6 +12,7 @@ import ConfirmEmailPage from 'presentationals/pages/ConfirmEmailPage';
 import OauthCallbackPage from 'presentationals/pages/OauthCallbackPage';
 import SlideEditorPage from 'presentationals/pages/SlideEditorPage';
 import EditorPage from 'presentationals/pages/EditorPage';
+import CreateDeckPage from 'pages/CreateDeckPage';
 
 import history from './history';
 
@@ -27,5 +28,6 @@ export default (
       <Route path="/reset_password" component={ResetPasswordPage} />
       <Route path="/editor/slide" component={SlideEditorPage} />
       <Route path="/editortest" component={EditorPage} />
+      <Route path="create_new_deck" component={CreateDeckPage} />
     </Switch>
   </Router>
