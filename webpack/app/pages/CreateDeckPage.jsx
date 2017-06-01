@@ -1,11 +1,11 @@
 import React from 'react';
 
-import CreateDeckContainer from 'containers/CreateDeckContainer';
+import CreateDeckForm from 'containers/CreateDeckForm';
 
 function feedPage() {
   return (
     <div>
-      <CreateDeckContainer />
+      <CreateDeckForm />
     </div>
   );
 }
