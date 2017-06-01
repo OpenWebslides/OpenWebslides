@@ -29,7 +29,7 @@ function EditorViewsPanel(props) {
 }
 
 EditorViewsPanel.propTypes = {
-  cssIdentifier: PropTypes.string.isRequired,
+  cssIdentifier: PropTypes.string,
   activeSlide: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
