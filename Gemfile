@@ -27,9 +27,6 @@ gem 'net-ssh'
 gem 'octokit'
 gem 'rugged'
 
-# Webpack for client-side assets
-gem 'webpack-rails'
-
 # JSON:API spec compliant resources
 gem 'jsonapi-resources'
 
@@ -49,7 +46,7 @@ gem 'bcrypt'
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
 # Tame Rails logging
 gem 'lograge'
