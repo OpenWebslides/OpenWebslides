@@ -17,6 +17,7 @@ function mapJsonDeckToDeck(jsonDeck) {
 
 export function* requestDeckListFlow(userID) {
   try {
+    debugger;
     const responseListOfDecks = yield call(getDecksCall, userID);
     if (!responseListOfDecks) {
       throw new Error('Received undefined list.');
@@ -41,7 +42,7 @@ export function* requestDeckListFlow(userID) {
 }
 
 function* userDeckRequestWatcher() {
-  yield takeLatest(REQUEST_DECK_LIST, requestDeckListFlow());
+  yield takeLatest(REQUEST_DECK_LIST, requestDeckListFlow);
 }
 
 export default userDeckRequestWatcher;
