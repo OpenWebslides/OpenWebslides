@@ -5,7 +5,7 @@ function parseDeck(deckString) {
   let id = 0;
 
   const slideData = {
-    slides: { byId: {}, allIds: [] },
+    slides: { byId: {}, allIds: [], selectedSlide: 1 },
     contentBlocks: { byId: {}, allIds: [] },
   };
 
@@ -65,6 +65,7 @@ function parseDeck(deckString) {
 
     slideArray.forEach(slide => {
       slides.byId[slideCounter] = { id: slideCounter, contentBlocks: [] };
+      slides.selectedSlide = slideCounter;
       slides.allIds.push(slideCounter);
 
       const { childNodes } = slide;

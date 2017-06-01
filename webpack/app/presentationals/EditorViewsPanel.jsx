@@ -16,7 +16,7 @@ function EditorViewsPanel(props) {
         </div>
         <div className="c_editor-views-panel__views-list">
           <div className="c_editor-views-panel__views-item">
-            <EditorSlideView />
+            <EditorSlideView>{props.activeSlide}</EditorSlideView>
           </div>
           {/* #TODO
           <div className="c_editor-views-panel__views-item">
@@ -30,6 +30,7 @@ function EditorViewsPanel(props) {
 
 EditorViewsPanel.propTypes = {
   cssIdentifier: PropTypes.string.isRequired,
+  activeSlide: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 EditorViewsPanel.defaultProps = {

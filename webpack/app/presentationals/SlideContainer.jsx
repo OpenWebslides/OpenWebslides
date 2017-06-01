@@ -9,7 +9,7 @@ function SlideContainer(props) {
       <div className="c_slide-container__wrapper">
         <div className="c_slide-container__size">
           <div className="c_slide-container__content">
-            <p>[Slide content goes here]</p>
+            {props.children}
           </div>
         </div>
       </div>
@@ -19,6 +19,8 @@ function SlideContainer(props) {
 
 SlideContainer.propTypes = {
   cssIdentifier: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+    .isRequired,
 };
 
 SlideContainer.defaultProps = {

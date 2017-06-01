@@ -9,7 +9,7 @@ function EditorSlideView(props) {
       className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}
     >
       <div className="c_editor-slide-view__wrapper">
-        <SlideContainer />
+        <SlideContainer>{props.children}</SlideContainer>
       </div>
     </div>
   );
@@ -17,6 +17,7 @@ function EditorSlideView(props) {
 
 EditorSlideView.propTypes = {
   cssIdentifier: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
 EditorSlideView.defaultProps = {

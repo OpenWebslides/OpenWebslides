@@ -50,7 +50,10 @@ function parseDeckObject(deckObject) {
 
     const slideComponent = React.createElement(
       ReactContentBlocks.Slide,
-      { key: `slide${slideId}` },
+      {
+        key: `slide${slideId}`,
+        id: slideId,
+      },
       slideContent,
     );
     slideArray.push(slideComponent);

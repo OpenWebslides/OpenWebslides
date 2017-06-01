@@ -77,5 +77,5 @@ export default reduxForm({
   form: 'emailSignin',
   validate,
   getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => browserHistory.push('/'),
+  onSubmitSuccess: () => browserHistory.push('/app'),
 })(translate()(EmailSigninForm));
