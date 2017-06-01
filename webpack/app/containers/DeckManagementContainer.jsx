@@ -49,7 +49,7 @@ DeckManagementContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const ownDecksState = state.local.feed;
+  const ownDecksState = state.local.ownDecks;
   return {
     ownDecksState,
   };
