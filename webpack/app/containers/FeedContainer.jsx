@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Immutable from 'seamless-immutable';
 import { requestFeedNotifications, filterByType } from 'actions/feedActions';
-import { FeedElement } from 'presentationals/feed/FeedNotification';
+import { FeedNotification } from 'presentationals/feed/FeedNotification';
 import FeedToolbar from 'presentationals/feed/FeedToolbar';
-import { feedElementTypes } from '../constants/feedConstants';
+import { feedNotificationTypes } from '../constants/feedConstants';
 
-function renderElement(el) {
+function renderFeedNotification(el) {
   return (
-    <FeedElement
+    <FeedNotification
       timestamp={el.timestamp}
       concernedUser={el.concernedUser}
       targetDeck={el.targetDeck}
@@ -25,50 +25,53 @@ class Feed extends React.Component {
   }
 
   render() {
-    const listOfFeedElements = this.props.feedState.listOfFeedElements;
+    const listOfFeedNotifications = this.props.feedState
+      .listOfFeedNotifications;
     const selectedType = this.props.feedState.typeFilter;
 
-    let elementsToDisplay;
+    let notificationsToDisplay;
 
-    const filteredFeedElements = Immutable.asMutable(listOfFeedElements)
+    const filteredFeedNotifications = Immutable.asMutable(
+      listOfFeedNotifications,
+    )
       .concat()
       .filter(e => e.type === selectedType || selectedType === 'ALL');
 
     if (
-      filteredFeedElements.length === 0 &&
+      filteredFeedNotifications.length === 0 &&
       this.props.feedState.errorMessage === ''
     ) {
-      elementsToDisplay = <li key="0"> No notifications to display </li>;
+      notificationsToDisplay = <li key="0"> No notifications to display </li>;
     } else if (
-      filteredFeedElements.length === 0 &&
+      filteredFeedNotifications.length === 0 &&
       this.props.feedState.errorMessage !== ''
     ) {
-      elementsToDisplay = (
+      notificationsToDisplay = (
         <li key="0"> There was an error retrieving notifications! </li>
       );
     } else {
-      const numOfElementsToDisplay = filteredFeedElements.length <=
+      const numOfNotificationsToDisplay = filteredFeedNotifications.length <=
         this.props.feedState.currentOffset
-        ? filteredFeedElements.length
+        ? filteredFeedNotifications.length
         : this.props.feedState.currentOffset;
 
-      const sortedElementsToDisplay = filteredFeedElements
+      const sortedNotificationsToDisplay = filteredFeedNotifications
         .concat()
         .sort((e1, e2) => e1.timestamp - e2.timeStamp);
 
-      elementsToDisplay = sortedElementsToDisplay
-        .slice(0, numOfElementsToDisplay)
-        .map(el => renderElement(el));
+      notificationsToDisplay = sortedNotificationsToDisplay
+        .slice(0, numOfNotificationsToDisplay)
+        .map(el => renderFeedNotification(el));
     }
-    let lastElement;
+    let lastNotification;
 
     if (
-      filteredFeedElements.length === 0 &&
+      filteredFeedNotifications.length === 0 &&
       this.props.feedState.sentRequestForList
     ) {
-      lastElement = <p> loading... </p>;
+      lastNotification = <p> loading... </p>;
     } else {
-      lastElement = (
+      lastNotification = (
         <button
           onClick={() => {
             this.props.requestFeedNotifications(
@@ -88,11 +91,11 @@ class Feed extends React.Component {
           selectedType={selectedType}
           typeChange={this.props.filterByType}
         />
-        <div className="c_feed-elements-container">
+        <div className="c_feed-notifications-container">
           <ol>
-            {elementsToDisplay}
+            {notificationsToDisplay}
             <li key={Number.MAX_SAFE_INTEGER}>
-              {lastElement}
+              {lastNotification}
             </li>
           </ol>
         </div>
@@ -103,27 +106,27 @@ class Feed extends React.Component {
 
 Feed.propTypes = {
   requestFeedNotifications: PropTypes.func.isRequired,
-  listOfFeedElements: PropTypes.arrayOf(
+  listOfFeedNotifications: PropTypes.arrayOf(
     PropTypes.shape({
       timeStamp: PropTypes.number.isRequired,
-      type: PropTypes.oneOf(Object.keys(feedElementTypes)).isRequired,
+      type: PropTypes.oneOf(Object.keys(feedNotificationTypes)).isRequired,
       targetDeck: PropTypes.string.isRequired,
       concernedUser: PropTypes.string.isRequired,
     }),
   ),
   feedState: PropTypes.shape({
-    listOfFeedElements: PropTypes.array.isRequired,
+    listOfFeedNotifications: PropTypes.array.isRequired,
     sentRequestForList: PropTypes.bool.isRequired,
     receivedList: PropTypes.bool.isRequired,
     errorMessage: PropTypes.string.isRequired,
     currentOffset: PropTypes.number.isRequired,
-    typeFilter: PropTypes.oneOf(Object.keys(feedElementTypes)).isRequired,
+    typeFilter: PropTypes.oneOf(Object.keys(feedNotificationTypes)).isRequired,
   }).isRequired,
   filterByType: PropTypes.func.isRequired,
 };
 
 Feed.defaultProps = {
-  listOfFeedElements: [],
+  listOfFeedNotifications: [],
 };
 
 function mapDispatchToProps(dispatch) {

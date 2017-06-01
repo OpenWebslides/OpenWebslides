@@ -8,7 +8,7 @@ import {
 import moreNotificationsCall from 'api/feedApiCall';
 
 export function* getFeedNotificationsFlow(action) {
-  const receivedElementTypes = {
+  const receivedNotificationTypes = {
     deck_created: 'DECK_CREATED',
     deck_updated: 'DECK_UPDATED',
   };
@@ -24,7 +24,7 @@ export function* getFeedNotificationsFlow(action) {
     const listOfNotifications = responseListOfNotifications.map(
       responseNotification => ({
         timestamp: responseNotification.attributes.createdAt,
-        type: receivedElementTypes[
+        type: receivedNotificationTypes[
           responseNotification.attributes.eventType.toLowerCase()
         ],
         targetDeck: responseNotification.attributes.deckName,
