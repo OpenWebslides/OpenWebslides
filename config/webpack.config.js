@@ -4,7 +4,7 @@ const StatsPlugin = require('stats-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 // must match config.webpack.dev_server.port
-const devServerPort = 3808;
+const devServerPort = 8080;
 
 // set NODE_ENV=production on the environment to add asset fingerprints
 const production = process.env.NODE_ENV === 'production';
@@ -50,7 +50,7 @@ const config = {
     // that all webpacked assets start with webpack/
 
     // must match config.webpack.output_dir
-    path: path.join(__dirname, '..', 'public', 'webpack'),
+    path: path.join(__dirname, '..', 'webpack', 'public'),
     publicPath: '/webpack/',
 
     filename: production ? '[name]-[chunkhash].js' : '[name].js',
@@ -98,6 +98,10 @@ if (production) {
   config.devServer = {
     port: devServerPort,
     headers: { 'Access-Control-Allow-Origin': '*' },
+    contentBase: 'webpack/public/',
+    historyApiFallback: {
+      index: 'index.html'
+    }
   };
   config.output.publicPath = `//localhost:${devServerPort}/webpack/`;
 }

@@ -3,6 +3,8 @@
 Rails.application.routes.draw do
   devise_for :users, :only => []
 
+  root :to => 'application#index'
+
   ##
   # OAuth2 endpoints
   #
@@ -26,10 +28,4 @@ Rails.application.routes.draw do
     jsonapi_resource :token, :only => %i[create destroy] do end
     jsonapi_resource :password, :only => %i[create update] do end
   end
-
-  ##
-  # Application
-  #
-  root :to => 'application#index'
-  get '*path', :to => 'application#index'
 end

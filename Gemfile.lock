@@ -190,6 +190,7 @@ GEM
       pundit (~> 1.1, >= 1.1.0)
       rspec-rails (>= 3.0.0)
     rack (2.0.3)
+    rack-cors (0.4.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.1.1)
@@ -288,8 +289,6 @@ GEM
     unicode-display_width (1.2.1)
     warden (1.2.7)
       rack (>= 1.0)
-    webpack-rails (0.9.10)
-      railties (>= 3.2.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -333,6 +332,7 @@ DEPENDENCIES
   pundit
   pundit-matchers
   pundit-resources!
+  rack-cors
   rails
   rspec
   rspec-rails
@@ -342,7 +342,6 @@ DEPENDENCIES
   simplecov
   sqlite3
   tzinfo-data
-  webpack-rails
 
 RUBY VERSION
    ruby 2.4.1p111
