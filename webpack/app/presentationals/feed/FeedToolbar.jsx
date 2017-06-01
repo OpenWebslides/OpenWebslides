@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { feedElementTypes } from '../../constants/feedConstants';
+import { feedNotificationTypes } from '../../constants/feedConstants';
 
 function FeedToolbar({ selectedType, typeChange }) {
   function types() {
-    const typeOptions = Object.keys(feedElementTypes).map(type => (
-      <option key={type} value={type}> {feedElementTypes[type]} </option>
+    const typeOptions = Object.keys(feedNotificationTypes).map(type => (
+      <option key={type} value={type}> {feedNotificationTypes[type]} </option>
     ));
     return typeOptions;
   }
@@ -31,7 +31,7 @@ function FeedToolbar({ selectedType, typeChange }) {
 }
 
 FeedToolbar.propTypes = {
-  selectedType: PropTypes.oneOf(Object.keys(feedElementTypes)),
+  selectedType: PropTypes.oneOf(Object.keys(feedNotificationTypes)),
   typeChange: PropTypes.func.isRequired,
 };
 

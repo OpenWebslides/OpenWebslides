@@ -11,7 +11,7 @@ import { samples } from '../api/helpers/feedElementsGenerator';
 describe('Feed Reducer', () => {
   const emptyState = undefined;
   const stateWithEvents = Immutable({
-    listOfFeedElements: samples,
+    listOfFeedNotifications: samples,
     sentRequestForList: false,
     receivedList: false,
     errorMessage: '',
@@ -19,7 +19,7 @@ describe('Feed Reducer', () => {
     typeFilter: 'ALL',
   });
   const stateWithSentRequestAndEvents = Immutable({
-    listOfFeedElements: samples,
+    listOfFeedNotifications: samples,
     sentRequestForList: true,
     receivedList: false,
     errorMessage: '',
@@ -31,7 +31,7 @@ describe('Feed Reducer', () => {
     const emptyAction = { type: '' };
     expect(feedReducer(emptyState, emptyAction)).toEqual(
       Immutable({
-        listOfFeedElements: [],
+        listOfFeedNotifications: [],
         sentRequestForList: false,
         receivedList: false,
         errorMessage: '',
@@ -47,7 +47,7 @@ describe('Feed Reducer', () => {
       }),
     ).toEqual(
       Immutable({
-        listOfFeedElements: [],
+        listOfFeedNotifications: [],
         sentRequestForList: true,
         receivedList: false,
         errorMessage: '',
@@ -64,7 +64,7 @@ describe('Feed Reducer', () => {
       }),
     ).toEqual(
       Immutable({
-        listOfFeedElements: samples,
+        listOfFeedNotifications: samples,
         sentRequestForList: false,
         receivedList: true,
         errorMessage: '',
@@ -81,7 +81,7 @@ describe('Feed Reducer', () => {
       }),
     ).toEqual(
       Immutable({
-        listOfFeedElements: samples.concat(samples),
+        listOfFeedNotifications: samples.concat(samples),
         sentRequestForList: false,
         receivedList: true,
         errorMessage: '',
@@ -98,7 +98,7 @@ describe('Feed Reducer', () => {
       }),
     ).toEqual(
       Immutable({
-        listOfFeedElements: samples,
+        listOfFeedNotifications: samples,
         sentRequestForList: false,
         receivedList: false,
         errorMessage: '',
@@ -115,7 +115,7 @@ describe('Feed Reducer', () => {
       }),
     ).toEqual(
       Immutable({
-        listOfFeedElements: samples,
+        listOfFeedNotifications: samples,
         sentRequestForList: false,
         receivedList: false,
         errorMessage: 'error message',

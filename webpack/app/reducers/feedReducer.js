@@ -7,7 +7,7 @@ import {
 } from 'actions/feedActions';
 
 const initialState = Immutable({
-  listOfFeedElements: [],
+  listOfFeedNotifications: [],
   sentRequestForList: false,
   receivedList: false,
   errorMessage: '',
@@ -27,7 +27,7 @@ function feedReducer(state = initialState, action) {
         sentRequestForList: false,
         receivedList: true,
         errorMessage: '',
-        listOfFeedElements: state.listOfFeedElements.concat(
+        listOfFeedNotifications: state.listOfFeedNotifications.concat(
           action.payload.listOfNotifications,
         ),
         currentOffset: state.currentOffset +
