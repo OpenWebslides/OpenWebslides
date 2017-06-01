@@ -25,10 +25,10 @@ function createDeckReducer(state = initialState, action) {
       });
     case DECK_CREATION_REQUEST_SUCCESS:
       return Immutable.merge(state, {
-      sentCreationRequest: false,
-      creationErrorMessage: '',
-      creationSucceeded: true,
-    });
+        sentCreationRequest: false,
+        creationErrorMessage: '',
+        creationSucceeded: true,
+      });
     default:
       return state;
   }
