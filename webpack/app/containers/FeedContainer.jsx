@@ -11,6 +11,7 @@ import { feedNotificationTypes } from '../constants/feedConstants';
 function renderFeedNotification(el) {
   return (
     <FeedNotification
+      key={el.timestamp}
       timestamp={el.timestamp}
       concernedUser={el.concernedUser}
       targetDeck={el.targetDeck}
