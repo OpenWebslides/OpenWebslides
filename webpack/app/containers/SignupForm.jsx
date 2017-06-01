@@ -33,15 +33,15 @@ export function validate(values) {
   }
 
   if (!firstName || firstName.trim() === '') {
-    errors.firstName = 'First Name is required';
+    errors.firstName = 'First name is required';
   }
 
   if (!lastName || lastName.trim() === '') {
-    errors.lastName = 'Last Name is required';
+    errors.lastName = 'Last name is required';
   }
 
   if (!passwordConfirmation || passwordConfirmation.trim() === '') {
-    errors.passwordConfirmation = 'Password Confirmation is required';
+    errors.passwordConfirmation = 'Password confirmation is required';
   }
 
   if (
@@ -85,37 +85,40 @@ class SignupForm extends Component {
 
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(validateAndSubmit)}>
+        <form
+          onSubmit={this.props.handleSubmit(validateAndSubmit)}
+          className="o_form"
+        >
+          <div className="o_form__wrapper">
 
-          <Field component={inputField} name="email" placeholder="Email" />
+            <div className="o_form__header">
+              <h1 className="title">Sign up</h1>
+            </div>
 
-          <Field
-            component={inputField}
-            name="firstName"
-            placeholder="First Name"
-          />
+            <Field component={inputField} name="email" label="Email" />
 
-          <Field
-            component={inputField}
-            name="lastName"
-            placeholder="Last Name"
-          />
+            <Field component={inputField} name="firstName" label="First name" />
 
-          <Field
-            component={newPasswordField}
-            name="password"
-            placeholder="Password"
-            type="password"
-          />
+            <Field component={inputField} name="lastName" label="Last name" />
 
-          <Field
-            component={inputField}
-            name="passwordConfirmation"
-            placeholder="Confirm Password"
-            type="password"
-          />
+            <Field
+              component={newPasswordField}
+              name="password"
+              label="Password"
+            />
 
-          <button type="submit">Sign up</button>
+            <Field
+              component={inputField}
+              name="passwordConfirmation"
+              label="Confirm password"
+              type="password"
+            />
+
+            <p className="o_form__buttons">
+              <button type="submit">Sign up</button>
+            </p>
+
+          </div>
         </form>
       </div>
     );

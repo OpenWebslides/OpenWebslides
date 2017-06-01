@@ -1,29 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function inputField({
-  input,
-  placeholder,
-  type,
-  meta: { touched, error, active },
-}) {
+function InputField(props) {
+  // #TODO test this
+  let errors;
+  if (props.meta.extraErrors) {
+    errors = (
+      <ul>
+        {props.meta.error && <li>{props.meta.error}</li>}
+        {props.meta.extraErrors.map(error => <li>{error}</li>)}
+      </ul>
+    );
+  } else {
+    errors = <p>{props.meta.error}</p>;
+  }
   return (
-    <div>
-      <input {...input} type={type} placeholder={placeholder} />
-      {!active && error && touched && <span>{error}</span>}
+    <div className="c_input-field">
+      <div className="c_input-field__wrapper">
+        <label className="c_input-field__widget">
+          <span className="c_input-field__label">{props.label}</span>
+          <span className="c_input-field__object">
+            <input
+              className="c_input-field__element"
+              {...props.input}
+              type={props.type}
+              placeholder={props.placeholder}
+            />
+          </span>
+        </label>
+        {props.meta.touched &&
+          props.meta.error &&
+          <span className="c_input-field__error">
+            <span className="c_input-field__error__wrapper">
+              {errors}
+            </span>
+          </span>}
+      </div>
     </div>
   );
 }
 
-inputField.propTypes = {
-  input: PropTypes.objectOf(String).isRequired,
-  meta: PropTypes.objectOf(String).isRequired,
+InputField.propTypes = {
   type: PropTypes.string,
-  placeholder: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  input: PropTypes.objectOf(String).isRequired,
+  meta: PropTypes.shape({
+    touched: PropTypes.bool,
+    active: PropTypes.bool,
+    error: PropTypes.string,
+    extraErrors: PropTypes.arrayOf(String),
+  }).isRequired,
 };
 
-inputField.defaultProps = {
+InputField.defaultProps = {
   type: 'text',
+  placeholder: '',
 };
 
-export default inputField;
+export default InputField;
