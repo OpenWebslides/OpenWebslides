@@ -62,7 +62,7 @@ const createDeckReduxForm = reduxForm({
   form: 'createDeckForm',
   validate,
   getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => browserHistory.push('/'),
+  onSubmitSuccess: () => browserHistory.push('/app/'),
 })(CreateDeckForm);
 
 function mapStateToProps(state) {
