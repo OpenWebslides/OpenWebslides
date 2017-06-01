@@ -45,12 +45,23 @@ function ResetPasswordForm(props) {
 
   return (
     <div>
-      <h1>Reset Password</h1>
-      <form onSubmit={props.handleSubmit(validateAndSubmit)}>
+      <form className="o_form" onSubmit={props.handleSubmit(validateAndSubmit)}>
+        <div className="o_form__wrapper">
 
-        <Field component={inputField} name="email" placeholder="Email" />
+          <div className="o_form__header">
+            <h1 className="title">Reset Password</h1>
+          </div>
 
-        <button type="submit">Submit</button>
+          <Field component={inputField} name="email" label="Email" />
+
+          <p className="o_form__buttons o_buttons-row">
+            <span className="o_buttons-row__list">
+              <span className="o_buttons-row__item">
+                <button type="submit" className="o_button">Submit</button>
+              </span>
+            </span>
+          </p>
+        </div>
       </form>
     </div>
   );
