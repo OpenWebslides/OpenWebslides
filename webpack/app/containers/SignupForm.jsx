@@ -114,8 +114,12 @@ class SignupForm extends Component {
               type="password"
             />
 
-            <p className="o_form__buttons">
-              <button type="submit">Sign up</button>
+            <p className="o_form__buttons o_buttons-row">
+              <span className="o_buttons-row__list">
+                <span className="o_buttons-row__item">
+                  <button type="submit" className="o_button">Sign up</button>
+                </span>
+              </span>
             </p>
 
           </div>

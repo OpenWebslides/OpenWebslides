@@ -1,0 +1,18 @@
+
+// ------------------
+// Buttons row object
+// ------------------
+
+
+    .o_buttons-row
+    {
+        &__list
+        {
+            @include inkgrid-row;
+        }
+
+        &__item
+        {
+            @include inkgrid-col;
+        }
+    }
