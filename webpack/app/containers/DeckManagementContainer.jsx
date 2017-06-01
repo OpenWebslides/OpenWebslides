@@ -11,7 +11,7 @@ function renderDeckThumbnail(el, index) {
     <DeckThumbnail
       key={index}
       deckLink={el.deckLink}
-      deckTitle={el.deckTitle}
+      deckTitle={el.name}
       deckIconImage={el.deckIconImage}
     />
   );
