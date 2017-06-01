@@ -21,7 +21,7 @@ export function deckDeletionFailure(message) {
 
 export function requestOwnDecks(userID) {
   return {
-    type: DECK_DELETION_REQUEST,
+    type: REQUEST_DECK_LIST,
     meta: userID,
   };
 }
