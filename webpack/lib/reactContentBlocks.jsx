@@ -14,26 +14,28 @@ Subtitle.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
 };
 
-/* function Title(props) {
-  return (
-    <h1>
-      {props.children}
-    </h1>
-  );
-}
-Title.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
-};*/
-
 function EmphasizedText(props) {
   return (
-    <em onChange={() => console.log('somethings gotta give')}>
+    <em data-key={props.contentBlockId}>
       {props.children}
     </em>
   );
 }
 EmphasizedText.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+  contentBlockId: PropTypes.number.isRequired,
+};
+
+function TextNode(props) {
+  return (
+    <span data-key={props.contentBlockId}>
+      {props.children}
+    </span>
+  );
+}
+TextNode.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+  contentBlockId: PropTypes.number.isRequired,
 };
 
 function StrongText(props) {
@@ -69,6 +71,7 @@ const ReactContentBlocks = {
   Subtitle,
   EmphasizedText,
   StrongText,
+  TextNode,
 };
 
 export default ReactContentBlocks;

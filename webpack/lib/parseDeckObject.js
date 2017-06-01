@@ -11,11 +11,11 @@ function parseDeckObject(deckObject) {
 
     contentBlockIds.forEach(id => {
       const { type, attributes, childIds, value } = contentBlocks.byId[id];
+
       const props = Object.assign(
         {
           key: `contentBlock${id}`,
           contentBlockId: id,
-          onChange: () => console.log('hem?'),
         },
         attributes,
       );
@@ -31,7 +31,12 @@ function parseDeckObject(deckObject) {
       }
 
       if (value) {
-        ReactElementArr.push(value);
+        const element = React.createElement(
+          ReactContentBlocks.TextNode,
+          props,
+          value,
+        );
+        ReactElementArr.push(element);
       }
     });
     return ReactElementArr;

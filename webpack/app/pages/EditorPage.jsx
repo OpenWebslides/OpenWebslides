@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-// import { bindActionCreators } from 'redux';
-// import { connect } from 'react-redux';
-// import _ from 'lodash';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import EditorActivePane from '../../lib/reactContentBlock/EmphasizedText';
+// import EditorActivePane from '../../lib/reactContentBlock/EmphasizedText';
 
-// import { fetchSlides } from 'actions/fetchSlidesActions';
-// import parseDeckObject from '../../lib/parseDeckObject';
+import { fetchSlides } from 'actions/fetchSlidesActions';
+import parseDeckObject from '../../lib/parseDeckObject';
 
-/* class Editor extends Component {
+class Editor extends Component {
   componentDidMount() {
     const id = 1;
     this.props.fetchSlides(id);
@@ -51,7 +51,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchSlides }, dispatch);
-}*/
+}
 
 // function Spayun(props){
 //   return <span></span>
@@ -81,7 +81,7 @@ EditorActivePane.propTypes = {
   onChange: PropTypes.func.isRequired,
 };*/
 
-const state = {
+/* const state = {
   state1: 'this is the first state',
   state2: 'this is more state',
 };
@@ -106,6 +106,6 @@ export default class Editor extends Component {
       />
     );
   }
-}
+}*/
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);

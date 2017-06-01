@@ -42,29 +42,31 @@ export default connect(null, mapDispatchToProps)(EmphasizedText);*/
 function TextNode(props) {
   return <span data-key="2">{props.children}</span>;
 }
-Text.propTypes = {
-  value: PropTypes.string.isRequired,
+TextNode.propTypes = {
+  children: PropTypes.oneOf(Array, String).isRequired,
 };
 
 export default class EditorActivePane extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: this.props.editorState.state1 };
     this.handleInput = this.handleInput.bind(this);
   }
 
   handleInput() {
     const domselection = global.getSelection();
-    const value = domselection.anchorNode.data;
-    this.props.onChange();
+    const value = domselection;
+    console.log(this);
+    console.log(value);
   }
 
   render() {
     return (
       <div contentEditable onInput={this.handleInput}>
         <h1>
-          <TextNode>this is wrapped tect</TextNode>
-          <em> this is some more text</em>
+          <TextNode>this is wrapped</TextNode>
+          <em> this more text</em>
+          <TextNode> wrapped tect</TextNode>
+
         </h1>
       </div>
     );
@@ -73,5 +75,4 @@ export default class EditorActivePane extends Component {
 
 EditorActivePane.propTypes = {
   onChange: PropTypes.func.isRequired,
-  editorState: PropTypes.objectOf(Object).isRequired,
 };
