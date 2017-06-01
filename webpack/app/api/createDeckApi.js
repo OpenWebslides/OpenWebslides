@@ -9,7 +9,9 @@ async function createDeck(title, description, authorID, token) {
   const requestConfig = Object.assign({}, baseRequestConfig, {
     method: 'POST',
     headers: {
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.api+json',
+      'Content-Type': 'application/vnd.api+json',
     },
     body: JSON.stringify({
       data: {
