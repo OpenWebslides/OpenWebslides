@@ -6,41 +6,19 @@
 
     .l_page--slide-editor
     {
-        .l_page__item--main,
-        .l_page__item__wrapper,
-        .l_main,
-        .l_main__wrapper
-        {
-            @include inkflex-item__passthrough;
-        }
-
         .l_main
         {
             &__wrapper
             {
-                @include inkflex-container ($spacing--site__v, $spacing--site__h);
-
                 flex-direction: row;
             }
 
             &__item
             {
-                @include inkflex-item ($spacing--site__v, $spacing--site__h);
-
-                flex: 1 1 auto;
-                display: flex;
-
                 &--deck-navigator
                 {
                     flex-basis: 0;
                     flex-grow: 0;
-                }
-
-                &__wrapper
-                {
-                    @include box-style--subtle;
-
-                    flex: 1 1 auto;
                 }
             }
         }
