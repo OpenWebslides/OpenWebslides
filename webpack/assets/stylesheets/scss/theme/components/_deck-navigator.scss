@@ -16,6 +16,14 @@
         &__item
         {
             margin-top: $spacing--element__v;
+
+            &__wrapper
+            {
+                // Fix weird extra spacing in list item bug in Chrome
+                display: inline-block;
+                width: 100%;
+                vertical-align: top;
+            }
         }
 
         &__button

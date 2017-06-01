@@ -45,15 +45,17 @@ class DeckNavigator extends Component {
                   className="o_list__item c_deck-navigator__item"
                   key={slide.key}
                 >
-                  <button
-                    key={slide.key}
-                    onClick={() => this.handleSelectSlide(slide.props.id)}
-                    className="c_deck-navigator__button"
-                  >
-                    <SlideContainer key={slide.key}>
-                      {slide}
-                    </SlideContainer>
-                  </button>
+                  <div className="o_list__item__wrapper c_deck-navigator__item__wrapper">
+                    <button
+                      key={slide.key}
+                      onClick={() => this.handleSelectSlide(slide.props.id)}
+                      className="c_deck-navigator__button"
+                    >
+                      <SlideContainer key={slide.key}>
+                        {slide}
+                      </SlideContainer>
+                    </button>
+                  </div>
                 </li>
               ))}
             </ol>
