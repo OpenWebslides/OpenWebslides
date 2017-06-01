@@ -7,7 +7,7 @@ function PageHeader(props) {
   // logoContainer.
   const logoContent = (
     <span className="o_logo__wrapper">
-      <Link className="o_logo__link" to="app">
+      <Link className="o_logo__link" to="/">
         <span className="o_logo__text">
           <span className="o_logo__text__wrapper">
             <span className="o_logo__item o_logo__item--open">
