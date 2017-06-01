@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
-import { browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import i18n from 'i18next';
 import { translate } from 'react-i18next';
 
@@ -43,21 +43,40 @@ function EmailSigninForm(props) {
   const { t } = props;
   return (
     <div>
-      <h1>{t('signin:signin')}</h1>
-      <form onSubmit={props.handleSubmit(validateAndSubmit)}>
+      <form className="o_form" onSubmit={props.handleSubmit(validateAndSubmit)}>
+        <div className="o_form__wrapper">
 
-        <Field component={InputField} name="email" placeholder={t('email')} />
+          <div className="o_form__header">
+            <h1 className="title">{t('signin:signin')}</h1>
+          </div>
 
-        <Field
-          component={InputField}
-          name="password"
-          placeholder={t('password')}
-          type="password"
-        />
+          <Field component={InputField} name="email" label={t('email')} />
 
-        {props.error && <strong>{props.error}</strong>}
+          <Field
+            component={InputField}
+            name="password"
+            label={t('password')}
+            type="password"
+          />
 
-        <button type="submit">{t('signin:signin')}</button>
+          {props.error && <strong>{props.error}</strong>}
+
+          <p className="o_form__buttons o_buttons-row">
+            <span className="o_buttons-row__list">
+              <span className="o_buttons-row__item">
+                <button type="submit" className="o_button">
+                  {t('signin:signin')}
+                </button>
+              </span>
+              <span className="o_buttons-row__item">
+                <Link className="o_button" to="/forgot_password">
+                  {t('forgotPassword')}
+                </Link>
+              </span>
+            </span>
+          </p>
+
+        </div>
       </form>
     </div>
   );
