@@ -6,7 +6,7 @@ import { feedElementTypes } from '../../constants/feedConstants';
 function FeedToolbar({ selectedType, typeChange }) {
   function types() {
     const typeOptions = Object.keys(feedElementTypes).map(type => (
-      <option value={type}> {feedElementTypes[type]} </option>
+      <option key={type} value={type}> {feedElementTypes[type]} </option>
     ));
     return typeOptions;
   }
