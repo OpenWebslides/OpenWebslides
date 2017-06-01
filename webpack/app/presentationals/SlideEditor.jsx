@@ -7,9 +7,9 @@ function SlideEditor(props) {
   return (
     <div className={`c_slide-editor c_slide-editor--${props.cssIdentifier}`}>
       <div className="c_slide-editor__wrapper">
-        <div className="c_slide-editor__item c_slide-editor__item--toolbar">
+        {/* <div className="c_slide-editor__item c_slide-editor__item--toolbar">
           <p>[Toolbar goes here]</p>
-        </div>
+        </div> */}
         <div className="c_slide-editor__item c_slide-editor__item--views-panel">
           <EditorViewsPanel />
         </div>
