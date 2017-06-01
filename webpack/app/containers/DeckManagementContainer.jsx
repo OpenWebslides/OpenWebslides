@@ -20,7 +20,7 @@ function renderDeckThumbnail(el, index) {
 
 class DeckManagementContainer extends React.Component {
   componentWillMount() {
-    this.props.requestOwnDecks();
+    this.props.requestOwnDecks(this.props.authState.id);
   }
 
   render() {
@@ -50,12 +50,17 @@ DeckManagementContainer.propTypes = {
   ownDecksState: PropTypes.shape({
     listOfDecks: PropTypes.array.isRequired,
   }),
+  authState: PropTypes.shape({
+    id: PropTypes.number,
+  }),
 };
 
 function mapStateToProps(state) {
   const ownDecksState = state.local.ownDecks;
+  const authState = state.local.auth;
   return {
     ownDecksState,
+    authState,
   };
 }
 function mapDispatchToProps(dispatch) {
