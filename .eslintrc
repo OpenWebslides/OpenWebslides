@@ -5,13 +5,13 @@
   ],
   "rules": {
     "prettier/prettier": [
-      "error",
-      {
+      "error", {
         "trailingComma": "all",
         "singleQuote": true
       }
     ],
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "jsx-a11y/label-has-for": "off"
   },
   "parserOptions": {
     "ecmaVersion": 8,
