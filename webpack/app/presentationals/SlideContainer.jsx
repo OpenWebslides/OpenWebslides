@@ -18,7 +18,7 @@ function SlideContainer(props) {
 }
 
 SlideContainer.propTypes = {
-  cssIdentifier: PropTypes.string.isRequired,
+  cssIdentifier: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
     .isRequired,
 };

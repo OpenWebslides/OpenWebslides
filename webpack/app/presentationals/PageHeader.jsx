@@ -54,8 +54,8 @@ function PageHeader(props) {
 }
 
 PageHeader.propTypes = {
-  cssIdentifier: PropTypes.string.isRequired,
-  logoIsHeading: PropTypes.bool.isRequired,
+  cssIdentifier: PropTypes.string,
+  logoIsHeading: PropTypes.bool,
 };
 
 PageHeader.defaultProps = {

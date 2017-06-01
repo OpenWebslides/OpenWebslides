@@ -77,7 +77,7 @@ class DeckNavigator extends Component {
 }
 
 DeckNavigator.propTypes = {
-  cssIdentifier: PropTypes.string.isRequired,
+  cssIdentifier: PropTypes.string,
   fetchSlides: PropTypes.func.isRequired,
   addSlide: PropTypes.func.isRequired,
   selectSlide: PropTypes.func.isRequired,

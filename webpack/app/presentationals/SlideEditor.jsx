@@ -67,7 +67,7 @@ class SlideEditor extends Component {
 }
 
 SlideEditor.propTypes = {
-  cssIdentifier: PropTypes.string.isRequired,
+  cssIdentifier: PropTypes.string,
   activeDeck: PropTypes.objectOf(Object).isRequired,
 };
 

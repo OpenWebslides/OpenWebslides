@@ -14,7 +14,7 @@ function EditorContentView(props) {
 }
 
 EditorContentView.propTypes = {
-  cssIdentifier: PropTypes.string.isRequired,
+  cssIdentifier: PropTypes.string,
 };
 
 EditorContentView.defaultProps = {

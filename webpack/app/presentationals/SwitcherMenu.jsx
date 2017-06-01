@@ -31,7 +31,7 @@ function SwitcherMenu(props) {
 }
 
 SwitcherMenu.propTypes = {
-  cssIdentifier: PropTypes.string.isRequired,
+  cssIdentifier: PropTypes.string,
 };
 
 SwitcherMenu.defaultProps = {

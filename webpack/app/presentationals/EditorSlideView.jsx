@@ -16,7 +16,7 @@ function EditorSlideView(props) {
 }
 
 EditorSlideView.propTypes = {
-  cssIdentifier: PropTypes.string.isRequired,
+  cssIdentifier: PropTypes.string,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
