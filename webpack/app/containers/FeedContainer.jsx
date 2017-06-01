@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Immutable from 'seamless-immutable';
 import { requestFeedNotifications, filterByType } from 'actions/feedActions';
-import { FeedElement } from '../components/feed/FeedNotification';
+import { FeedElement } from 'presentationals/feed/FeedNotification';
+import FeedToolbar from 'presentationals/feed/FeedToolbar';
 import { feedElementTypes } from '../constants/feedConstants';
-import FeedToolbar from '../components/feed/FeedToolbar';
 
 function renderElement(el) {
   return (

@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 
-import './styles/application.scss';
-
 import { I18nextProvider } from 'react-i18next';
 
 import routes from './routes';
