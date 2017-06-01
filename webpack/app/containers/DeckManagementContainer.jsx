@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import { requestOwnDecks } from 'actions/deckManagementActions';
-import { DeckThumbnail } from '../presentationals/deckManagement/DeckThumbnail';
+import { DeckThumbnail } from 'presentationals/deckManagement/DeckThumbnail';
 
 function renderDeckThumbnail(el, index) {
   return (
@@ -34,6 +35,9 @@ class DeckManagementContainer extends React.Component {
         <div className="o_owned-decks-container">
           <ol>
             {listOfDeckThumbnails}
+            <li key={Number.MAX_SAFE_INTEGER}>
+              <Link to="app/create_new_deck"> Add new </Link>
+            </li>
           </ol>
         </div>
       </div>
