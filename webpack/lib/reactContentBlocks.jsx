@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Title from './reactContentBlock/Title';
-// import EmphasizedText from './reactContentBlock/EmphasizedText';
+
+function Title(props) {
+  return (
+    <h1>
+      {props.children}
+    </h1>
+  );
+}
+Title.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+};
 
 function Subtitle(props) {
   return (
@@ -16,14 +25,13 @@ Subtitle.propTypes = {
 
 function EmphasizedText(props) {
   return (
-    <em data-key={props.contentBlockId}>
+    <em>
       {props.children}
     </em>
   );
 }
 EmphasizedText.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
-  contentBlockId: PropTypes.number.isRequired,
 };
 
 function TextNode(props) {
