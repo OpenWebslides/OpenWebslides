@@ -1,15 +1,19 @@
-import { takeLatest, call } from 'redux-saga/effects';
-import { SubmissionError } from 'redux-form';
+import {takeLatest, call, select} from 'redux-saga/effects';
+import {SubmissionError} from 'redux-form';
 
-import { REQUEST_DECK_CREATION } from 'actions/createDeckActions';
+import {DECK_CREATION_REQUEST} from 'actions/createDeckActions';
+import createDeckApi from 'api/createDeckApi';
 
-export function* createDeckFlow() {
-  const { resolve, reject } = action.meta;
+const authState = (state) => state.local.auth;
 
+
+export function* createDeckFlow(action) {
+  const {resolve, reject} = action.meta;
   try {
-    const { title, description } = action.meta.values;
+    const {id, authToken} = yield select(authState);
+    const {title, description} = action.meta.values;
 
-    yield call(createDeckApi, title, description);
+    yield call(createDeckApi, title, description, id, authToken);
 
     yield call(resolve);
   } catch (error) {
@@ -20,11 +24,13 @@ export function* createDeckFlow() {
         yield (errorMessage = error.validationErrors);
         break;
       default:
-        yield (errorMessage = { _error: 'Something went wrong on our end.' });
+        yield (errorMessage = {_error: 'Something went wrong on our end.'});
     }
     yield call(reject, new SubmissionError(errorMessage));
   }
 }
 function* createDeckWatcher() {
-  yield takeLatest(REQUEST_DECK_CREATION, createDeckFlow);
+  yield takeLatest(DECK_CREATION_REQUEST, createDeckFlow);
 }
+
+export default createDeckWatcher;
