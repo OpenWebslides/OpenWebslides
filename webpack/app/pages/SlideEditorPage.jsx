@@ -1,8 +1,8 @@
 import React from 'react';
 
-import PageHeader from '../presentationals/PageHeader';
-import DeckNavigator from '../presentationals/DeckNavigator';
-import SlideEditor from '../presentationals/SlideEditor';
+import PageHeader from 'presentationals/PageHeader';
+import DeckNavigator from 'presentationals/DeckNavigator';
+import SlideEditor from 'presentationals/SlideEditor';
 
 function SlideEditorPage() {
   return (
