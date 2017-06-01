@@ -24,5 +24,10 @@
         {
             display: block;
             width: 100%;
+
+            &:before
+            {
+                @include icon ($fa-var-file-o, $line-height--base * 1em);
+            }
         }
     }

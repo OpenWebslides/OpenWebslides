@@ -11,7 +11,7 @@ function SwitcherMenu(props) {
           </button>
         </li>
         <li className="o_list__item c_switcher-menu__item is_active">
-          <button className="c_switcher-menu__button">
+          <button className="c_switcher-menu__button" disabled>
             Content view
           </button>
         </li>
