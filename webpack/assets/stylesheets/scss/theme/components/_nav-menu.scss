@@ -1,0 +1,20 @@
+
+// ------------------
+// Nav menu component
+// ------------------
+
+
+    .c_nav-menu
+    {
+        margin-top: $spacing--element__v;
+
+        &__list
+        {
+            @include inkgrid-row;
+        }
+
+        &__item
+        {
+            @include inkgrid-col;
+        }
+    }

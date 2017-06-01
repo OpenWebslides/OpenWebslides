@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
+import NavMenu from './NavMenu';
+
 function PageHeader(props) {
   // Define logo content in separate variable so it can be included in
   // logoContainer.
@@ -46,7 +48,7 @@ function PageHeader(props) {
           {logoContainer}
         </div>
         <div className="c_page-header__item c_page-header__item--menu">
-          <p>[nav menu goes here]</p>
+          <NavMenu />
         </div>
       </div>
     </header>
