@@ -1,0 +1,23 @@
+
+// ---------------------
+// Page header component
+// ---------------------
+
+
+    .c_page-header
+    {
+        .o_logo--site
+        {
+            line-height: 1;
+
+            .o_logo__text
+            {
+                font-size: 2.5em;
+
+                &__wrapper
+                {
+                    line-height: inherit;
+                }
+            }
+        }
+    }

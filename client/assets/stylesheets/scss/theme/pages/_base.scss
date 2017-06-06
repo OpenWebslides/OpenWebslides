@@ -1,0 +1,32 @@
+
+// ---------
+// Base page
+// ---------
+
+
+    .l_page
+    {
+        &__wrapper
+        {
+            @include inkflex-container ($spacing--site__v, $spacing--site__h, false);
+
+            flex-direction: column;
+
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        &__item
+        {
+            @include inkflex-item ($spacing--site__v, $spacing--site__h);
+
+            flex: 1 1 auto;
+
+            &--header
+            {
+                @include box-style--subtle;
+
+                flex-grow: 0;
+            }
+        }
+    }

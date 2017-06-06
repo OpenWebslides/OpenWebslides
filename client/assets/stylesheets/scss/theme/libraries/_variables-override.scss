@@ -1,0 +1,128 @@
+
+// ---------------------------------
+// Overrides for framework variables
+// ---------------------------------
+
+
+    // Fonts
+
+        // Base font
+
+            $font-family--base:                         'Open Sans', sans-serif !default;
+            $font-weight--base:                         300 !default;
+            $font-weight--base__strong:                 400 !default;
+            $font-weight--base__x-strong:               600 !default;
+            $line-height--base:                         1.8 !default;
+            $line-height--base__small:                  $line-height--base / 1.2 !default;
+            $line-height--base__large:                  $line-height--base * 1.2 !default;
+
+
+        // Emphasis font
+
+            $font-family--emphasis:                     'Raleway', sans-serif !default;
+            $font-weight--emphasis:                     300 !default;
+            $font-weight--emphasis__strong:             400 !default;
+            $font-weight--emphasis__x-strong:           600 !default;
+            $font-weight--emphasis__light:              100 !default;
+
+
+        // Headings font
+
+            // The font that is used for headings.
+
+            $font-family--heading:                      $font-family--base !default;
+            $font-size--h1:                             2.00em !default;
+            $font-size--h2:                             1.50em !default;
+            $font-size--h3:                             1.25em !default;
+            $font-size--h4:                             1.10em !default;
+            $font-size--h5:                             1.00em !default;
+            $font-size--h6:                             0.90em !default;
+            $font-weight--heading:                      $font-weight--base__strong !default;
+            $font-weight--heading__strong:              $font-weight--base__x-strong !default;
+
+
+
+    // Vertical spacing
+
+        // Base vertical spacing
+
+            $spacing--base__v:                          $line-height--base * 1em !default;
+
+            $spacing--xx-small__v:                      $spacing--base__v * (1/4) !default;
+            $spacing--x-small__v:                       $spacing--base__v * (2/4) !default;
+            $spacing--small__v:                         $spacing--base__v * (3/4) !default;
+            $spacing--large__v:                         $spacing--base__v * (4/3) !default;
+            $spacing--x-large__v:                       $spacing--base__v * (4/2) !default;
+            $spacing--xx-large__v:                      $spacing--base__v * (4/1) !default;
+
+
+        // Object vertical spacing
+
+            $spacing--element__v:                       $spacing--x-small__v !default;
+            $spacing--block__v:                         $spacing--base__v !default;
+            $spacing--site__v:                          $spacing--xx-small__v !default;
+
+
+
+    // Horizontal spacing
+
+        // Base horizontal spacing
+
+            $spacing--base__h:                          $spacing--base__v !default;
+
+            $spacing--xx-small__h:                      $spacing--base__h * (1/4) !default;
+            $spacing--x-small__h:                       $spacing--base__h * (2/4) !default;
+            $spacing--small__h:                         $spacing--base__h * (3/4) !default;
+            $spacing--large__h:                         $spacing--base__h * (4/3) !default;
+            $spacing--x-large__h:                       $spacing--base__h * (4/2) !default;
+            $spacing--xx-large__h:                      $spacing--base__h * (4/4) !default;
+
+
+        // Object horizontal spacing
+
+            $spacing--element__h:                       $spacing--x-small__h !default;
+            $spacing--block__h:                         $spacing--base__h !default;
+            $spacing--site__h:                          $spacing--xx-small__h !default;
+
+
+
+    // Colors
+
+        // Base colors
+
+            // The background color of the main area of the site.
+            $color--main:                               hsl(  0,   0%, 100%) !default;
+            // The text color of the main area of the site (which should be contrasting enough to make text readable).
+            $color--contrast:                           hsl(  0,   0%,  15%) !default;
+            // Alternative background color, usually close to $color--main, used to softly emphasize some areas.
+            $color--emphasis:                           hsl(  0,   0%,  93%) !default;
+            // Color / background color used to make certain text or areas stand out from their surroundings.
+            $color--highlight:                          hsl(208,  56%,  46%) !default;
+            // Extra color used distinguish small areas or pieces of text (for example, links) from their surroundings.
+            $color--accent:                             hsl(190,  80%,  40%) !default;
+
+            // Color used for info messages; indicates that everything went ok.
+            $color--info:                               hsl( 80,  80%,  75%) !default;
+            // Color used for warning messages; indicates that a problem might have occurred.
+            $color--warning:                            hsl( 55,  80%,  75%) !default;
+            // Color used for error messages; indicates that a problem has occurred that needs user attention.
+            $color--error:                              hsl( 25,  80%,  80%) !default;
+
+
+        // Background & text colors
+
+            $color--main__background:                   $color--main !default;
+            $color--main__text:                         $color--contrast !default;
+            $color--main__text-alt:                     shade($color--main, 40%) !default;
+            $color--main__text-icon:                    shade($color--main, 10%) !default;
+            $color--main__link:                         $color--accent !default;
+            $color--main__link-hover:                   shade($color--accent, 40%) !default;
+            $color--main__border:                       shade($color--main, 10%) !default;
+
+            $color--emphasis__background:               $color--emphasis !default;
+            $color--emphasis__text:                     $color--contrast !default;
+            $color--emphasis__text-alt:                 shade($color--emphasis, 35%) !default;
+            $color--emphasis__text-icon:                darken($color--emphasis, 10%) !default;
+            $color--emphasis__link:                     lighten($color--highlight, 15%) !default;
+            $color--emphasis__link-hover:               $color--highlight !default;
+

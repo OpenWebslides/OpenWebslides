@@ -1,0 +1,48 @@
+
+// ----------------
+// Site logo object
+// ----------------
+
+
+    .o_logo--site
+    {
+        .o_logo__wrapper
+        {
+            display: inline-block;
+        }
+
+        .o_logo__link,
+        .o_logo__text
+        {
+            display: block;
+        }
+
+        .o_logo__link
+        {
+            // set color on link so that it overrides default link styles
+            color: $color--highlight;
+        }
+
+        .o_logo__text
+        {
+            &__wrapper
+            {
+                // #TODO change to heading font?
+                @include font--emphasis;
+            }
+        }
+
+        .o_logo__item
+        {
+            &--open
+            {
+                font-weight: $font-weight--emphasis__light;
+                text-transform: uppercase;
+            }
+
+            &--webslides
+            {
+                font-weight: $font-weight--emphasis__strong;
+            }
+        }
+    }
