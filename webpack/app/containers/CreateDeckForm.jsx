@@ -78,7 +78,7 @@ CreateDeckForm.propTypes = {
 
 CreateDeckForm.defaultProps = {
   authState: null,
-}
+};
 
 const createDeckReduxForm = reduxForm({
   form: 'createDeckForm',
