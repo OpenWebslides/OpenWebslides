@@ -4,8 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
+// Actions:
 import { requestOwnDecks } from 'actions/deckManagementActions';
+
+// Presentationals:
+import NeedSigninWarning from 'presentationals/NeedSigninWarning';
 import { DeckThumbnail } from 'presentationals/deckManagement/DeckThumbnail';
+
+// Helpers:
+import IfAuthHOC from '../../lib/IfAuthHOC';
 
 function renderDeckThumbnail(el, index) {
   return (
@@ -20,7 +27,9 @@ function renderDeckThumbnail(el, index) {
 
 class DeckManagementContainer extends React.Component {
   componentWillMount() {
-    this.props.requestOwnDecks(this.props.authState.id);
+    if (this.props.authState.isAuthenticated) {
+      this.props.requestOwnDecks(this.props.authState.id);
+    }
   }
 
   render() {
@@ -28,19 +37,25 @@ class DeckManagementContainer extends React.Component {
     const listOfDeckThumbnails = listOfDecks.map((el, index) =>
       renderDeckThumbnail(el, index),
     );
-
     return (
-      <div className="c_deck-management-container">
-        <h1> Your decks </h1>
-        <div className="o_owned-decks-container">
-          <ol>
-            {listOfDeckThumbnails}
-            <li key={Number.MAX_SAFE_INTEGER}>
-              <Link to="/create_new_deck"> Add new </Link>
-            </li>
-          </ol>
+      <IfAuthHOC
+        isAuthenticated={this.props.authState.isAuthenticated}
+        fallback={() => (
+          <NeedSigninWarning requestedAction="display your decks" />
+        )}
+      >
+        <div className="c_deck-management-container">
+          <h1> Your decks </h1>
+          <div className="o_owned-decks-container">
+            <ol>
+              {listOfDeckThumbnails}
+              <li key={Number.MAX_SAFE_INTEGER}>
+                <Link to="/create_new_deck"> Add new </Link>
+              </li>
+            </ol>
+          </div>
         </div>
-      </div>
+      </IfAuthHOC>
     );
   }
 }
@@ -52,6 +67,7 @@ DeckManagementContainer.propTypes = {
   }),
   authState: PropTypes.shape({
     id: PropTypes.number,
+    isAuthenticated: PropTypes.bool.isRequired,
   }),
 };
 
