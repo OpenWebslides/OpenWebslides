@@ -39,6 +39,7 @@ coverage/
 /.gem
 /.vscode
 
+dist/
 .yarnclean
 jsconfig.json
 

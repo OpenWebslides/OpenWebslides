@@ -58,6 +58,7 @@
     "prop-types": "^15.5.8",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-hot-loader": "next",
     "react-i18next": "^4.1.0",
     "react-redux": "^5.0.3",
     "react-router": "3",

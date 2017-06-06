@@ -87,7 +87,7 @@ class Feed extends React.Component {
 
     return (
       <div className="c_feed-container">
-        <h1> Social feed </h1>
+        <h1> Social feed</h1>
         <FeedToolbar
           selectedType={selectedType}
           typeChange={this.props.filterByType}
