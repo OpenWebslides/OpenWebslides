@@ -36,7 +36,7 @@ class DeckManagementContainer extends React.Component {
           <ol>
             {listOfDeckThumbnails}
             <li key={Number.MAX_SAFE_INTEGER}>
-              <Link to="app/create_new_deck"> Add new </Link>
+              <Link to="/create_new_deck"> Add new </Link>
             </li>
           </ol>
         </div>
