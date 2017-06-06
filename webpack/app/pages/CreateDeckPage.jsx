@@ -2,7 +2,7 @@ import React from 'react';
 
 import CreateDeckForm from 'containers/CreateDeckForm';
 
-function feedPage() {
+function CreateDeckPage() {
   return (
     <div>
       <CreateDeckForm />
@@ -10,4 +10,4 @@ function feedPage() {
   );
 }
 
-export default feedPage;
+export default CreateDeckPage;

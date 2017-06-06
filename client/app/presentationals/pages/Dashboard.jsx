@@ -4,7 +4,7 @@ import DefaultLayout from 'presentationals/layouts/DefaultLayout';
 import FeedContainer from 'containers/FeedContainer';
 import DeckManagementContainer from 'containers/DeckManagementContainer';
 
-function FeedPage() {
+function Dashboard() {
   return (
     <DefaultLayout
       cssIdentifier="feed"
@@ -16,4 +16,4 @@ function FeedPage() {
   );
 }
 
-export default FeedPage;
+export default Dashboard;
