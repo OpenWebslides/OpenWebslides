@@ -5,16 +5,18 @@ import { feedNotificationTypes } from '../../constants/feedConstants';
 
 function FeedToolbar({ selectedType, typeChange }) {
   function types() {
-    const typeOptions = Object.keys(feedNotificationTypes).map(type => (
-      <option key={type} value={type}> {feedNotificationTypes[type]} </option>
-    ));
+    const typeOptions = Object.keys(feedNotificationTypes).map(type =>
+      <option key={type} value={type}> {feedNotificationTypes[type]} </option>,
+    );
     return typeOptions;
   }
 
   return (
     <div className="c_feed-toolbar">
       <p>
-        {' '}Filter by type: <select
+        {' '}Filter by type:
+        {' '}
+        <select
           key={selectedType}
           value={selectedType}
           onChange={e => {
@@ -24,7 +26,8 @@ function FeedToolbar({ selectedType, typeChange }) {
           }}
         >
           {types()}
-        </select>{' '}
+        </select>
+        {' '}
       </p>
     </div>
   );

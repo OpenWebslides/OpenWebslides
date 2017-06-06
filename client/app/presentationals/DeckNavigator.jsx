@@ -10,13 +10,13 @@ function DeckNavigator(props) {
     >
       <div className="c_deck-navigator__wrapper">
         <ol className="o_list c_deck-navigator__list">
-          {[1, 2, 3].map(() => (
+          {[1, 2, 3].map(() =>
             <li className="o_list__item c_deck-navigator__item">
               <button className="c_deck-navigator__button">
                 <SlideContainer />
               </button>
-            </li>
-          ))}
+            </li>,
+          )}
         </ol>
         <p className="c_deck-navigator__controls">
           <button className="c_deck-navigator__add-button o_action o_action--add">
