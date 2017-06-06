@@ -1,8 +1,7 @@
 function IfAuthHOC(props) {
-  if (props.isAuthorized) {
+  if (props.isAuthenticated) {
     return props.children;
   }
-  debugger;
   return props.fallback();
 }
 export default IfAuthHOC;
