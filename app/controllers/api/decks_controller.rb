@@ -31,10 +31,7 @@ module Api
       raise Pundit::NotAuthorizedError unless DeckPolicy.new(current_user, deck).update?
       context[:policy_used]&.call
 
-      deck.content = Nokogiri::HTML5.fragment(request.body.read).to_html
-      deck.author = current_user
-
-      deck.commit
+      deck.update_content :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
 
       head :no_content
     end
