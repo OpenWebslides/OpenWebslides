@@ -28,6 +28,6 @@ export default (
       <Route path="/reset_password" component={ResetPasswordPage} />
       <Route path="/editor/slide" component={SlideEditorPage} />
       <Route path="/editortest" component={EditorPage} />
-      <Route path="create_new_deck" component={CreateDeckPage} />
+      <Route path="/create_new_deck" component={CreateDeckPage} />
     </Switch>
   </Router>
