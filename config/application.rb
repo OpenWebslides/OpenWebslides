@@ -41,7 +41,7 @@ module OpenWebslides
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => %i[get post put patch delete options]
+        resource '*', :headers => :any, :methods => %i[get post put patch delete options], :expose => ['Authorization']
       end
     end
   end
