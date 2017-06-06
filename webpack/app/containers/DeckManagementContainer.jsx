@@ -66,7 +66,7 @@ DeckManagementContainer.propTypes = {
     listOfDecks: PropTypes.array.isRequired,
   }),
   authState: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
   }),
 };
