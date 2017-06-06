@@ -1,18 +1,13 @@
-
 // ---------------------------
 // Editor slide view component
 // ---------------------------
 
+.c_editor-slide-view {
+  text-align: center;
 
-    .c_editor-slide-view
-    {
-        text-align: center;
-
-        .c_slide-container
-        {
-            &__size
-            {
-                font-size: 2vw;
-            }
-        }
+  .c_slide-container {
+    &__size {
+      font-size: 2vw;
     }
+  }
+}

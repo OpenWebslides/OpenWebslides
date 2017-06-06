@@ -1,74 +1,62 @@
-
-// based on https://github.com/Dromin/inkGrid
+// based on https://github.com/Dromin/inkFrame
 
 // -----------------------------------------------------------------------------
 // --- inkFrame ----------------------------------------------------------------
 // -----------------------------------------------------------------------------
 
+// Functions
 
-    // Functions
+    @import 'inkframe/libraries/functions/color';
+    @import 'inkframe/libraries/functions/math';
+    @import 'inkframe/libraries/functions/selector';
+    @import 'inkframe/libraries/functions/unit';
 
-        @import 'inkframe/libraries/functions/color';
-        @import 'inkframe/libraries/functions/math';
-        @import 'inkframe/libraries/functions/selector';
-        @import 'inkframe/libraries/functions/unit';
+    // Property-generating functions
 
-        // Property-generating functions
-
-            @import 'inkframe/libraries/functions/property/text-shadow';
-
+        @import 'inkframe/libraries/functions/property/text-shadow';
 
 
-    // Variables
+// Variables
 
-        @import 'theme/libraries/selectors-override';
-        @import 'inkframe/libraries/selectors';
+    @import 'theme/libraries/selectors-override';
+    @import 'inkframe/libraries/selectors';
+    @import 'theme/libraries/variables-override';
+    @import 'inkframe/libraries/variables';
 
-        @import 'theme/libraries/variables-override';
-        @import 'inkframe/libraries/variables';
+// Helpers
 
-
-
-    // Helpers
-
-        @import 'inkframe/helpers/font-awesome/font-awesome';
-        @import 'inkframe/helpers/respond-to/respond-to';
-        @import 'inkframe/helpers/inkgrid/core';
-        @import 'inkframe/helpers/inkflex/core'; // EXPERIMENTAL
+    @import 'inkframe/helpers/font-awesome/font-awesome';
+    @import 'inkframe/helpers/respond-to/respond-to';
+    @import 'inkframe/helpers/inkgrid/core';
+    @import 'inkframe/helpers/inkflex/core'; // EXPERIMENTAL
 
 
+// Maps
 
-    // Maps
-
-        @import 'theme/libraries/maps-override';
-        @import 'inkframe/libraries/maps';
-
+    @import 'theme/libraries/maps-override';
+    @import 'inkframe/libraries/maps';
 
 
-    // Mixins
+// Mixins
 
-        @import 'inkframe/libraries/mixins/core/typography';
-
-        @import 'inkframe/libraries/mixins/property/color';
-        @import 'inkframe/libraries/mixins/property/font';
-        @import 'inkframe/libraries/mixins/property/padding';
-
-        @import 'inkframe/libraries/mixins/utility/accessibility';
-        @import 'inkframe/libraries/mixins/utility/font-face';
-        @import 'inkframe/libraries/mixins/utility/icon';
-        @import 'inkframe/libraries/mixins/utility/position';
-        @import 'inkframe/libraries/mixins/utility/spacing';
+    @import 'inkframe/libraries/mixins/core/typography';
+    @import 'inkframe/libraries/mixins/property/color';
+    @import 'inkframe/libraries/mixins/property/font';
+    @import 'inkframe/libraries/mixins/property/padding';
+    @import 'inkframe/libraries/mixins/utility/accessibility';
+    @import 'inkframe/libraries/mixins/utility/font-face';
+    @import 'inkframe/libraries/mixins/utility/icon';
+    @import 'inkframe/libraries/mixins/utility/position';
+    @import 'inkframe/libraries/mixins/utility/spacing';
 
 
+// Core
 
-    // Core
-
-        @import 'inkframe/core/normalize';
-        @import 'inkframe/core/viewport';
-        @import 'inkframe/core/typography';
-        @import 'inkframe/core/accessibility';
-        @import 'inkframe/core/utility-classes';
-
+    @import 'inkframe/core/normalize';
+    @import 'inkframe/core/viewport';
+    @import 'inkframe/core/typography';
+    @import 'inkframe/core/accessibility';
+    @import 'inkframe/core/utility-classes';
 
 
 
@@ -76,37 +64,36 @@
 // --- Theme -------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 
+// Styles
 
-    // Styles
-
-        @import 'theme/styles/box';
-
-
-    // Base
-
-        @import 'theme/base';
+    @import 'theme/styles/box';
 
 
-    // Pages
+// Base
 
-        @import 'theme/pages/base';
-        @import 'theme/pages/slide-editor';
-
-
-    // Components
-
-        @import 'theme/components/page-header';
-        @import 'theme/components/nav-menu';
-        @import 'theme/components/deck-navigator';
-        @import 'theme/components/slide-editor';
-        @import 'theme/components/editor-slide-view';
-        @import 'theme/components/switcher-menu';
-        @import 'theme/components/slide-container';
+    @import 'theme/base';
 
 
-    // Objects
+// Pages
 
-        @import 'theme/objects/action';
-        @import 'theme/objects/form';
-        @import 'theme/objects/buttons-row';
-        @import 'theme/objects/logo--site';
+    @import 'theme/pages/base';
+    @import 'theme/pages/slide-editor';
+
+
+// Components
+
+    @import 'theme/components/page-header';
+    @import 'theme/components/nav-menu';
+    @import 'theme/components/deck-navigator';
+    @import 'theme/components/slide-editor';
+    @import 'theme/components/editor-slide-view';
+    @import 'theme/components/switcher-menu';
+    @import 'theme/components/slide-container';
+
+
+// Objects
+
+    @import 'theme/objects/action';
+    @import 'theme/objects/form';
+    @import 'theme/objects/buttons-row';
+    @import 'theme/objects/logo--site';

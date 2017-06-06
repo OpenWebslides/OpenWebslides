@@ -1,71 +1,57 @@
-
 // -------------------------------------------
 // Form object (temporary, rudimentary styling
 // -------------------------------------------
 
+.o_form {
+  $label-width: 10em;
 
-    .o_form
-    {
-        $label-width: 10em;
+  //text-align: center;
 
-        //text-align: center;
+  &__wrapper {
+    text-align: left;
 
-        &__wrapper
-        {
-            text-align: left;
+    // size to content
+    display: inline-block;
+  }
 
-            // size to content
-            display: inline-block;
-        }
+  &__header {
+    margin-top: $spacing--element__v;
 
-        &__header
-        {
-            margin-top: $spacing--element__v;
-
-            .title
-            {
-                margin-top: 0;
-            }
-        }
-
-        &__buttons
-        {
-            text-align: right;
-        }
-
-        .c_input-field
-        {
-            margin-top: $spacing--element__v;
-
-            &__label
-            {
-                display: inline-block;
-                width: $label-width;
-
-                font-weight: $font-weight--base__strong;
-
-                &:after
-                {
-                    content: ':';
-                }
-            }
-
-            &__element
-            {
-                line-height: inherit;
-                padding: 0 $spacing--line__h;
-            }
-
-            &__error
-            {
-                display: block;
-                padding-left: $label-width;
-
-                &__wrapper
-                {
-                    color: red;
-                    font-size: $font-size--x-smaller;
-                }
-            }
-        }
+    .title {
+      margin-top: 0;
     }
+  }
+
+  &__buttons {
+    text-align: right;
+  }
+
+  .c_input-field {
+    margin-top: $spacing--element__v;
+
+    &__label {
+      display: inline-block;
+      width: $label-width;
+      font-weight: $font-weight--base__strong;
+
+      &::after {
+        content: ':';
+      }
+    }
+
+    &__element {
+      line-height: inherit;
+      padding: 0 $spacing--line__h;
+    }
+
+    &__error {
+      display: block;
+      padding-left: $label-width;
+
+      &__wrapper {
+        color: red;
+        font-size: $font-size--x-smaller;
+      }
+    }
+  }
+}
