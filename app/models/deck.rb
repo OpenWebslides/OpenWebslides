@@ -3,8 +3,6 @@
 require 'erb'
 
 class Deck < ApplicationRecord
-  attr_accessor :author
-
   ##
   # Properties
   #
@@ -34,29 +32,11 @@ class Deck < ApplicationRecord
   ##
   # Methods
   #
-  def content
-    doc = Nokogiri::HTML5 File.read content_file
-    doc.at('body').children.to_html.strip
-  end
-
-  def content=(value)
-    template = ERB.new File.read File.join template_path, 'index.html.erb'
-
-    struct = OpenStruct.new :name => name,
-                            :description => description,
-                            :content => value
-
-    rendered = template.result(struct.instance_eval { binding })
-
-    File.write content_file, rendered
-
-    touch if persisted?
-  end
-
-  def commit
-    repo.commit @author, 'Update slidedeck'
-    repo.sync
-  end
+  delegate :create_repository,
+           :destroy_repository,
+           :content,
+           :update_content,
+           :to => :service
 
   ##
   # Overrides
@@ -64,19 +44,8 @@ class Deck < ApplicationRecord
   ##
   # Helpers and callback methods
   #
-  def content_file
-    File.join OpenWebslides::Configuration.repository_path, canonical_name, 'index.html'
-  end
-
-  def template_path
-    Rails.root.join 'lib', 'assets', 'templates', template
-  end
 
   private
-
-  def repo
-    @repo ||= OpenWebslides::Repository.new self
-  end
 
   def generate_canonical_name
     return if canonical_name?
@@ -95,15 +64,11 @@ class Deck < ApplicationRecord
     end
   end
 
-  def create_repository
-    repo.init
-  end
-
-  def destroy_repository
-    repo.destroy
-  end
-
   def set_default_template
     self.template = OpenWebslides::Configuration.default_template if new_record?
+  end
+
+  def service
+    @service ||= DeckService.new self
   end
 end
