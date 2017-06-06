@@ -3,7 +3,7 @@ import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 
 // Pages
-import FeedPage from 'presentationals/pages/FeedPage';
+import Dashboard from 'presentationals/pages/Dashboard';
 import SignupPage from 'presentationals/pages/SignupPage';
 import SigninPage from 'presentationals/pages/SigninPage';
 import ForgotPasswordPage from 'presentationals/pages/ForgotPasswordPage';
@@ -19,7 +19,7 @@ import history from './history';
 export default (
   <Router history={history}>
     <Switch>
-      <Route path="/" exact component={FeedPage} />
+      <Route path="/" exact component={Dashboard} />
       <Route path="/signup" component={SignupPage} />
       <Route path="/signin" component={SigninPage} />
       <Route path="/confirmation" component={ConfirmEmailPage} />
