@@ -6,3 +6,6 @@ module ActiveRecord
     cattr_accessor :skip_callbacks
   end
 end
+
+# Disable callbacks by default
+ActiveRecord::Base.skip_callbacks = true
