@@ -16,7 +16,9 @@ export function FeedNotification({
 
   const date = new Date(timestamp * 1000);
   const displayDate = intervalFromNow(date);
-  const contentsStringBegin = `${concernedUser} has ${inlineFeedNotificationType[type]}`;
+  const contentsStringBegin = `${concernedUser} has ${inlineFeedNotificationType[
+    type
+  ]}`;
   const contentsStringEnd = `"${targetDeck}"`;
 
   return (
