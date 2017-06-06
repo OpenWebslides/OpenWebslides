@@ -1,25 +1,18 @@
-
 // -----------------
 // Slide editor page
 // -----------------
 
-
-    .l_page--slide-editor
-    {
-        .l_main
-        {
-            &__wrapper
-            {
-                flex-direction: row;
-            }
-
-            &__item
-            {
-                &--deck-navigator
-                {
-                    flex-basis: 0;
-                    flex-grow: 0;
-                }
-            }
-        }
+.l_page--slide-editor {
+  .l_main {
+    &__wrapper {
+      flex-direction: row;
     }
+
+    &__item {
+      &--deck-navigator {
+        flex-basis: 0;
+        flex-grow: 0;
+      }
+    }
+  }
+}

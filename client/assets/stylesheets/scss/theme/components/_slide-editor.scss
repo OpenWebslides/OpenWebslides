@@ -1,25 +1,19 @@
-
 // ----------------------
 // Slide editor component
 // ----------------------
 
+.c_slide-editor {
+  &__wrapper {
+    @include inkflex-container;
+  }
 
-    .c_slide-editor
-    {
-        &__wrapper
-        {
-            @include inkflex-container;
-        }
+  &__item {
+    @include inkflex-item;
 
-        &__item
-        {
-            @include inkflex-item;
+    flex: 1 1 auto;
 
-            flex: 1 1 auto;
-
-            &--toolbar
-            {
-                flex-grow: 0;
-            }
-        }
+    &--toolbar {
+      flex-grow: 0;
     }
+  }
+}
