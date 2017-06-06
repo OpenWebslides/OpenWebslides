@@ -71,12 +71,12 @@
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "build:dev": "webpack --env.dev",
-    "build:prod": "webpack -p --env.prod",
-    "dev": "webpack-dev-server"
+    "build:dev": "webpack --config webpackConfig/webpack.config.js",
+    "build:prod": "webpack -p --config webpackConfig/webpack.config.js",
+    "dev": "webpack-dev-server --config webpackConfig/webpack.config.js"
   },
   "jest": {
-    "rootDir": "./webpack",
+    "rootDir": "./",
     "moduleFileExtensions": [
       "js",
       "jsx"

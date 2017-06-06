@@ -2,4 +2,4 @@ coverage/
 node_modules/
 dist/
 postcss.config.js
-config/webpack.config.js
+webpackConfig/

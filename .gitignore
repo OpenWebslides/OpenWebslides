@@ -25,8 +25,8 @@
 .idea
 
 # Webpack files
-/node_modules
-/public/webpack
+node_modules
+/client/public
 
 # Private files
 *.env

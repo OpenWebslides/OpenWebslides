@@ -34,7 +34,7 @@
     "import/parser": "babel-eslint",
     "import/resolver": {
       "webpack": {
-        "config": "./config/webpack.config.js"
+        "config": "./webpackConfig/webpack.config.js"
       }
     }
   }
