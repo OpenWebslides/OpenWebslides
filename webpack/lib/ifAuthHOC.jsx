@@ -1,5 +1,5 @@
-function ifAuthHOC(props, isAuthorized) {
-  if (isAuthorized) {
+function ifAuthHOC(props) {
+  if (props.isAuthorized) {
     return props.children;
   }
   return props.fallback;
