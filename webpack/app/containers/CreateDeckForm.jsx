@@ -67,7 +67,7 @@ class CreateDeckForm extends Component {
 CreateDeckForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   authState: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
   }),
 };
 
