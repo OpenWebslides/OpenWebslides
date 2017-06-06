@@ -46,8 +46,8 @@ PreCommit:
     enabled: true
   EsLint:
     enabled: true
-    required_executable: './node_modules/.bin/eslint'
-    command: ['./node_modules/.bin/eslint']
+    required_executable: './client/node_modules/.bin/eslint'
+    command: ['./client/node_modules/.bin/eslint' ,'--config', './client/.eslintrc', '--ignore-path', './client/.eslintignore']
   Fasterer:
     enabled: true
   HardTabs:
