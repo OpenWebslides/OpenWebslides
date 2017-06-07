@@ -3,16 +3,10 @@ const webpack = require('webpack');
 const StatsPlugin = require('stats-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
-const devServerPort = 8080;
-const APP_DIR = path.resolve(__dirname, "src");
-
-// set NODE_ENV=production on the environment to add asset fingerprints
-const production = process.env.NODE_ENV === 'production';
-
 const config = {
-  context: path.join(__dirname, '..', 'webpack'),
+  context: path.join(__dirname, '..'),
 
-  devtool: 'source-map',
+  devtool: 'cheap-source-map',
 
   entry: [
     'react-hot-loader/patch',
@@ -28,14 +22,12 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.jsx{0,1}$/,
         exclude: /(node_modules)/,
-        loaders: ['babel-loader'],
-      },
-      {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        loaders: ['babel-loader'],
+        loader: require.resolve('babel-loader'),
+        options: {
+          cacheDirectory: true,
+        },
       },
       {
         test: /\.scss$/,
@@ -55,15 +47,16 @@ const config = {
     extensions: ['.js', '.jsx', '.es6'],
     modules: [path.join(__dirname, '..'), 'node_modules'],
     alias: {
-      presentationals: path.join(__dirname, '..', 'webpack', 'app', 'presentationals'),
-      pages: path.join(__dirname, '..', 'webpack', 'app', 'pages'),
-      reducers: path.join(__dirname, '..', 'webpack', 'app', 'reducers'),
-      actions: path.join(__dirname, '..', 'webpack', 'app', 'actions'),
-      containers: path.join(__dirname, '..', 'webpack', 'app', 'containers'),
-      helpers: path.join(__dirname, '..', 'webpack', 'app', 'helpers'),
-      sagas: path.join(__dirname, '..', 'webpack', 'app', 'sagas'),
-      errors: path.join(__dirname, '..', 'webpack', 'app', 'errors'),
-      api: path.join(__dirname, '..', 'webpack', 'app', 'api'),
+      presentationals: path.join(__dirname, '..', 'app', 'presentationals'),
+      pages: path.join(__dirname, '..', 'app', 'pages'),
+      reducers: path.join(__dirname, '..', 'app', 'reducers'),
+      actions: path.join(__dirname, '..', 'app', 'actions'),
+      containers: path.join(__dirname, '..', 'app', 'containers'),
+      helpers: path.join(__dirname, '..', 'app', 'helpers'),
+      sagas: path.join(__dirname, '..', 'app', 'sagas'),
+      errors: path.join(__dirname, '..', 'app', 'errors'),
+      api: path.join(__dirname, '..', 'app', 'api'),
+      lib: path.join(__dirname, '..', 'lib'),
     },
   },
 
