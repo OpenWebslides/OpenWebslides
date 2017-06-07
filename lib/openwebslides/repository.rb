@@ -34,7 +34,13 @@ module OpenWebslides
       FileUtils.rm_r File.join(repo_path, '.git'), :secure => true
 
       # Render empty file
-      @deck.content = ''
+      command = UpdateRepoCommand.new @deck
+
+      command.author = @deck.owner
+      command.content = ''
+
+      # Write repo content but don't commit
+      command.write_file
 
       # Initialize local repo
       Rugged::Repository.init_at repo_path
