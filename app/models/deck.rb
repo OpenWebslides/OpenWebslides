@@ -34,7 +34,7 @@ class Deck < ApplicationRecord
   #
   delegate :create_repository,
            :destroy_repository,
-           :content,
+           :fetch_content,
            :update_content,
            :to => :service
 
@@ -69,6 +69,6 @@ class Deck < ApplicationRecord
   end
 
   def service
-    @service ||= DeckService.new self
+    @service ||= RepoService.new self
   end
 end
