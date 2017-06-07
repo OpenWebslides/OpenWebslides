@@ -18,8 +18,8 @@ $ # Back-end dependencies
 $ gem install bundler --no-ri --no-rdoc
 $ bundle install
 
-$ # Front-end dependencies
-$ yarn install
+$ # Front-end dependencies (based in client folder)
+$ cd client && yarn install
 ```
 
 Initialize and update the git submodules:

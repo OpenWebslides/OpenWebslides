@@ -14,7 +14,7 @@ install:
   - nvm install 7.10.0
   - node -v
   - npm install -g yarn
-  - yarn
+  - cd client && yarn
 before_script:
   - bundle exec rails db:create
   - bundle exec rails db:migrate
