@@ -19,7 +19,7 @@ module Api
       raise Pundit::NotAuthorizedError unless scope.where(:id => deck.id).exists?
       context[:policy_used]&.call
 
-      render :body => deck.content, :content_type => 'text/html'
+      render :body => deck.fetch_content, :content_type => 'text/html'
     end
 
     def update
