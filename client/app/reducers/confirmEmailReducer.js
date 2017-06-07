@@ -5,7 +5,7 @@ import {
   CONFIRM_EMAIL_FAILURE,
 } from 'actions/confirmEmailActions';
 
-const initialState = Immutable({});
+const initialState = Immutable({ emailConfirmed: 'confirming' });
 
 function confirmEmail(state = initialState, action) {
   switch (action.type) {

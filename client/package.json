@@ -91,7 +91,8 @@
       "^helpers(.*)$": "<rootDir>/app/helpers$1",
       "^sagas(.*)$": "<rootDir>/app/sagas$1",
       "^errors(.*)$": "<rootDir>/app/errors$1",
-      "^api(.*)$": "<rootDir>/app/api$1"
+      "^api(.*)$": "<rootDir>/app/api$1",
+      "^lib(.*)$": "<rootDir>/lib$1"
     }
   }
 }
