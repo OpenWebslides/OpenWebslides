@@ -30,8 +30,8 @@ function feedReducer(state = initialState, action) {
         listOfFeedNotifications: state.listOfFeedNotifications.concat(
           action.payload.listOfNotifications,
         ),
-        currentOffset: state.currentOffset +
-          action.payload.listOfNotifications.length,
+        currentOffset:
+          state.currentOffset + action.payload.listOfNotifications.length,
       });
     case REQUEST_FEED_NOTIFICATIONS_FAILURE:
       return Immutable.merge(state, {
