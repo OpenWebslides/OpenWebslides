@@ -1,30 +1,13 @@
 import { combineReducers } from 'redux';
-import { reducer as forms } from 'redux-form';
 
-import auth from 'reducers/authReducer';
-import confirmEmail from 'reducers/confirmEmailReducer';
-import activeDeck from 'reducers/deckReducer';
-
-import feed from './feedReducer';
-
-const vendor = combineReducers({
-  forms,
-});
-
-const local = combineReducers({
-  auth,
-  confirmEmail,
-  feed,
-});
-
-const data = combineReducers({
-  activeDeck,
-});
+import app from 'reducers/app';
+import entities from 'reducers/entities';
+import vendor from 'reducers/vendor-reducer';
 
 const rootReducer = combineReducers({
+  app,
+  entities,
   vendor,
-  local,
-  data,
 });
 
 export default rootReducer;
