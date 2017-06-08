@@ -1,4 +1,4 @@
-import parseDeck from '../../lib/parseDeckString';
+import convertToState from '../../lib/convert-to-state';
 import contentBlockTypes from '../../lib/contentBlockTypes';
 
 function addWrappingHtml(string) {
@@ -37,25 +37,40 @@ describe('parseSlideString', () => {
     });
   });
 
-  xit('can parse a simple slide', () => {
-    const slideElement = '<section><h1>Like tears in the rain.</h1></section>';
+  it('can parse a simple slide', () => {
+    const slideElement =
+      '<section><h1>Like <strong>tears</strong> <em>in the rain.</em></h1><h2>boop</h2></section>';
     const string = addWrappingHtml(slideElement);
 
-    expect(parseDeck(string)).toEqual({
+    expect(convertToState(string)).toEqual({
       slides: {
-        byId: { 1: { id: 1, contentBlocks: [1] } },
-        allIds: [1],
+        byId: { 1: { id: 1, contentBlockIds: [1, 2] } },
       },
       contentBlocks: {
         byId: {
-          1: { id: 1, type: contentBlockTypes.H1, childIds: [2] },
+          1: {
+            id: 1,
+            type: contentBlockTypes.H1,
+            data: 'Like tears in the rain.',
+            inlineProperties: [
+              {
+                type: 'STRONG',
+                startsAtChar: 5,
+                endsAtChar: 10,
+              },
+              {
+                type: 'EM',
+                startsAtChar: 11,
+                endsAtChar: 23,
+              },
+            ],
+          },
           2: {
             id: 2,
-            type: contentBlockTypes['#text'],
-            value: 'Like tears in the rain.',
+            type: contentBlockTypes.H2,
+            data: 'boop',
           },
         },
-        allIds: [1, 2],
       },
     });
   });
