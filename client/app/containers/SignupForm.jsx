@@ -145,7 +145,7 @@ const signupReduxForm = reduxForm({
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.local.auth.isAuthenticated,
+    isAuthenticated: state.app.authentication.isAuthenticated,
   };
 }
 

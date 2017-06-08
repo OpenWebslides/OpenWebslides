@@ -43,7 +43,7 @@ Editor.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    activeDeck: state.data.activeDeck,
+    activeDeck: state.entities.deck,
   };
 }
 
