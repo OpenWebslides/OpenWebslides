@@ -6,11 +6,11 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const config = {
   context: path.join(__dirname, '..'),
 
-  devtool: 'cheap-source-map',
+  devtool: 'cheap-module-source-map',
 
   entry: [
     'react-hot-loader/patch',
-    './application.jsx',
+    './index.jsx',
   ],
 
   output: {
