@@ -38,7 +38,7 @@ OauthCallback.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: state.local.auth.isAuthenticated,
+    isAuthenticated: state.app.authentication.isAuthenticated,
   };
 }
 

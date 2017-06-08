@@ -138,7 +138,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const feedState = state.local.feed;
+  const feedState = state.app.feed;
   return {
     feedState,
   };
