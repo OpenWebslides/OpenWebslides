@@ -42,7 +42,7 @@ EmailConfirmation.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    emailConfirmed: state.local.confirmEmail.emailConfirmed,
+    emailConfirmed: state.app.confirmEmail.emailConfirmed,
   };
 }
 

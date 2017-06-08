@@ -28,7 +28,8 @@ class SlideEditor extends Component {
       );
       return (
         <div
-          className={`c_slide-editor c_slide-editor--${this.props.cssIdentifier}`}
+          className={`c_slide-editor c_slide-editor--${this.props
+            .cssIdentifier}`}
         >
           <div className="c_slide-editor__wrapper">
             {/* <div className="c_slide-editor__item c_slide-editor__item--toolbar">
@@ -77,7 +78,7 @@ SlideEditor.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    activeDeck: state.data.activeDeck,
+    activeDeck: state.entities.decks,
   };
 }
 

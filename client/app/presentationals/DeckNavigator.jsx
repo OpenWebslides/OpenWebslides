@@ -36,11 +36,12 @@ class DeckNavigator extends Component {
       const slides = parseDeckObject(activeDeck);
       return (
         <div
-          className={`c_deck-navigator c_deck-navigator--${this.props.cssIdentifier}`}
+          className={`c_deck-navigator c_deck-navigator--${this.props
+            .cssIdentifier}`}
         >
           <div className="c_deck-navigator__wrapper">
             <ol className="o_list c_deck-navigator__list">
-              {slides.map(slide => (
+              {slides.map(slide =>
                 <li
                   className="o_list__item c_deck-navigator__item"
                   key={slide.key}
@@ -56,8 +57,8 @@ class DeckNavigator extends Component {
                       </SlideContainer>
                     </button>
                   </div>
-                </li>
-              ))}
+                </li>,
+              )}
             </ol>
             <p className="c_deck-navigator__controls">
               <button
@@ -91,7 +92,7 @@ DeckNavigator.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    activeDeck: state.data.activeDeck,
+    activeDeck: state.entities.decks,
   };
 }
 
