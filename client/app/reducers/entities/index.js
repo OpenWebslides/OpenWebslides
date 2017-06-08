@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import contentBlocks from 'reducers/content-block-reducer';
-import decks from 'reducers/decks-reducer';
-import slides from 'reducers/slides-reducer';
+import contentBlocks from 'reducers/entities/content-blocks';
+import decks from 'reducers/entities/decks';
+import slides from 'reducers/entities/slides';
 
 const entities = combineReducers({
   decks,
