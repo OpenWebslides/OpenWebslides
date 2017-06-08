@@ -1,16 +1,16 @@
 language: ruby
+cache:
+  bundler: true
+  yarn: true
+  directories:
+  - $HOME/.cache/yarn
+  - client/node_modules # Remove this when testing multiple versions of Node
 rvm:
   - 2.3.4
   - 2.4.1
-cache:
-  bundler: true
-  directories:
-    - node_modules
-  yarn: true
 env:
   - RAILS_ENV=test CI=true TRAVIS=true
-install:
-  - bundle install
+before_install:
   - nvm install 7.10.0
   - node -v
   - npm install -g yarn
