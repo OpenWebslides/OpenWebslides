@@ -18,12 +18,12 @@ function mapJsonDeckToDeck(jsonDeck) {
 export function* requestDeckListFlow(action) {
   try {
     const userID = action.meta;
-    const responseListOfDecks = yield call(getDecksCall, userID); //TODO: just for testing
+    const responseListOfDecks = yield call(getDecksCall, userID);
     if (!responseListOfDecks) {
       throw new Error('Received undefined list.');
     }
-    const listOfDecks = responseListOfDecks.map(
-      responseDeck => mapJsonDeckToDeck(responseDeck), // TODO When api supports getting decks from specific user
+    const listOfDecks = responseListOfDecks.map(responseDeck =>
+      mapJsonDeckToDeck(responseDeck),
     );
     yield put({
       type: REQUEST_DECK_LIST_SUCCESS,

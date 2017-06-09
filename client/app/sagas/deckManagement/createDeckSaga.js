@@ -1,17 +1,16 @@
-import {takeLatest, call, select} from 'redux-saga/effects';
-import {SubmissionError} from 'redux-form';
+import { takeLatest, call, select } from 'redux-saga/effects';
+import { SubmissionError } from 'redux-form';
 
-import {DECK_CREATION_REQUEST} from 'actions/createDeckActions';
+import { DECK_CREATION_REQUEST } from 'actions/createDeckActions';
 import createDeckApi from 'api/createDeckApi';
 
-const authState = (state) => state.local.auth;
-
+const authState = state => state.local.auth;
 
 export function* createDeckFlow(action) {
-  const {resolve, reject} = action.meta;
+  const { resolve, reject } = action.meta;
   try {
-    const {id, authToken} = yield select(authState);
-    const {title, description} = action.meta.values;
+    const { id, authToken } = yield select(authState);
+    const { title, description } = action.meta.values;
 
     yield call(createDeckApi, title, description, id, authToken);
 
@@ -24,7 +23,7 @@ export function* createDeckFlow(action) {
         yield (errorMessage = error.validationErrors);
         break;
       default:
-        yield (errorMessage = {_error: 'Something went wrong on our end.'});
+        yield (errorMessage = { _error: 'Something went wrong on our end.' });
     }
     yield call(reject, new SubmissionError(errorMessage));
   }
