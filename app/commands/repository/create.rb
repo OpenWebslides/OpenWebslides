@@ -4,26 +4,24 @@ module Repository
   class Create < Command
     def execute
       # Create and populate local repository
-      Local::Init.new(@receiver).execute
-      Git::Init.new(@receiver).execute
+      exec Local::Init
+      exec Git::Init
 
       # Render empty deck
-      render = Local::Render.new @receiver
-      render.content = ''
-
-      render.execute
+      exec Local::Render do |c|
+        c.content = ''
+      end
 
       # Initial commit
-      commit = Git::Commit.new @receiver
-      commit.author = @receiver.owner
-      commit.message = 'Initial commit'
-      commit.params = { :parents => [] }
-
-      commit.execute
+      exec Git::Commit do |c|
+        c.author = @receiver.owner
+        c.message = 'Initial commit'
+        c.params = { :parents => [] }
+      end
 
       # Create and sync remote repository
-      Remote::Init.new(@receiver).execute
-      Git::Sync.new(@receiver).execute
+      exec Remote::Init
+      exec Git::Sync
     end
   end
 end
