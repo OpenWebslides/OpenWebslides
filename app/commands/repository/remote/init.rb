@@ -7,6 +7,8 @@ module Repository
     #
     class Init < Command
       def execute
+        return unless OpenWebslides.config.github.enabled
+
         options = {
           :description => @receiver.description || 'OpenWebslides slidedeck',
           :private => !@receiver.public_access?,

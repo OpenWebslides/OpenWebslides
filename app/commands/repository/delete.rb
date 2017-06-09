@@ -3,11 +3,11 @@
 module Repository
   class Delete < Command
     def execute
-      # Delete remote repository
-      exec Remote::Destroy
-
       # Delete local repository
       exec Local::Destroy
+
+      # Delete remote repository
+      exec Remote::Destroy
     end
   end
 end
