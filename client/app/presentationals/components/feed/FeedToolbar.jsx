@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { feedNotificationTypes } from '../../constants/feedConstants';
+import { feedNotificationTypes } from '../../../constants/feedConstants';
 
 function FeedToolbar({ selectedType, typeChange }) {
   function types() {

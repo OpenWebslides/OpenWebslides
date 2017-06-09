@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { fetchSlides } from 'actions/slideActions';
-import parseDeckObject from '../../lib/parseDeckObject';
+import parseDeckObject from 'lib/parseDeckObject';
 
 class Editor extends Component {
   componentDidMount() {
