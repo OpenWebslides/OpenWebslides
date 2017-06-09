@@ -1,7 +1,7 @@
 import { takeLatest, put } from 'redux-saga/effects';
-import { FETCH_SLIDES } from 'actions/fetchSlidesActions';
+import { FETCH_SLIDES } from 'actions/slideActions';
 
-import parseDeckString from '../../lib/parseDeckString';
+import convertToState from 'lib/convert-to-state';
 
 const deckString = `
   <header class="caption">
@@ -29,7 +29,7 @@ function* doFetchSlides() {
       },
     };
 
-    const slideData = yield parseDeckString(deckString);
+    const slideData = yield convertToState(deckString);
     const stateObject = yield Object.assign({}, deckData, slideData);
 
     yield put({ type: 'FETCH_SLIDES_SUCCESS', payload: stateObject });
