@@ -36,6 +36,8 @@ CommitMsg:
     enabled: true
 
 PreCommit:
+  AuthorName:
+    enabled: false
   BundleAudit:
     enabled: true
   BundleCheck:
