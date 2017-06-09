@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import EditorSlideView from './EditorSlideView';
+import SlideMode from './SlideMode';
 // import EditorContentView from './EditorContentView';
-import SwitcherMenu from './SwitcherMenu';
+import ModeMenu from './ModeMenu';
 
-function EditorViewsPanel(props) {
+function ViewPane(props) {
   return (
     <div
       className={`c_editor-views-panel c_editor-views-panel--${props.cssIdentifier}`}
     >
       <div className="c_editor-views-panel__wrapper">
         <div className="c_editor-views-panel__switcher">
-          <SwitcherMenu />
+          <ModeMenu />
         </div>
         <div className="c_editor-views-panel__views-list">
           <div className="c_editor-views-panel__views-item">
-            <EditorSlideView>{props.activeSlide}</EditorSlideView>
+            <SlideMode>{props.activeSlide}</SlideMode>
           </div>
           {/* #TODO
           <div className="c_editor-views-panel__views-item">
@@ -28,13 +28,13 @@ function EditorViewsPanel(props) {
   );
 }
 
-EditorViewsPanel.propTypes = {
+ViewPane.propTypes = {
   cssIdentifier: PropTypes.string,
   activeSlide: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
-EditorViewsPanel.defaultProps = {
+ViewPane.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default EditorViewsPanel;
+export default ViewPane;
