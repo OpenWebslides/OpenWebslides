@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 // Actions:
-import { requestOwnDecks } from 'actions/deckManagementActions';
+import {
+  requestOwnDecks,
+  requestDeckDeletion,
+} from 'actions/deckManagementActions';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/NeedSigninWarning';
@@ -14,13 +17,15 @@ import { DeckThumbnail } from 'presentationals/deckManagement/DeckThumbnail';
 // Helpers:
 import IfAuthHOC from '../../lib/IfAuthHOC';
 
-function renderDeckThumbnail(el, index) {
+function renderDeckThumbnail(el, deleteDeck) {
   return (
     <DeckThumbnail
-      key={index}
+      key={el.id}
+      deckId={el.id}
       deckLink={el.deckLink}
       deckTitle={el.name}
       deckIconImage={el.deckIconImage}
+      deleteDeck={deleteDeck}
     />
   );
 }
@@ -34,15 +39,14 @@ class DeckManagementContainer extends React.Component {
 
   render() {
     const listOfDecks = this.props.ownDecksState.listOfDecks;
-    const listOfDeckThumbnails = listOfDecks.map((el, index) =>
-      renderDeckThumbnail(el, index),
+    const listOfDeckThumbnails = listOfDecks.map(el =>
+      renderDeckThumbnail(el, this.props.requestDeckDeletion),
     );
     return (
       <IfAuthHOC
         isAuthenticated={this.props.authState.isAuthenticated}
-        fallback={() => (
-          <NeedSigninWarning requestedAction="display your decks" />
-        )}
+        fallback={() =>
+          <NeedSigninWarning requestedAction="display your decks" />}
       >
         <div className="c_deck-management-container">
           <h1> Your decks </h1>
@@ -65,6 +69,7 @@ DeckManagementContainer.propTypes = {
   ownDecksState: PropTypes.shape({
     listOfDecks: PropTypes.array.isRequired,
   }),
+  requestDeckDeletion: PropTypes.func.isRequired,
   authState: PropTypes.shape({
     id: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
@@ -80,7 +85,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ requestOwnDecks }, dispatch);
+  return bindActionCreators({ requestOwnDecks, requestDeckDeletion }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
