@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 module Repository
-  module Git
+  module Remote
     class Sync < Command
       def execute
+        return unless OpenWebslides.config.github.enabled
+
         # Push to remote repository
         repo = Rugged::Repository.new repo_path
         repo.remotes.first.push 'refs/heads/master', :credentials => credentials
