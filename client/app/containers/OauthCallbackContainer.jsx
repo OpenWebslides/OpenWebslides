@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
 
 // Actions
 import { oauthSigninUser } from 'actions/signinActions';
+
+import history from '../../history';
 
 class OauthCallback extends Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class OauthCallback extends Component {
 
   render() {
     if (this.props.isAuthenticated) {
-      browserHistory.push('/');
+      history.push('/');
     }
 
     return (

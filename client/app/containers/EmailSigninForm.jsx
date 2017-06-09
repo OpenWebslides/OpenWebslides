@@ -7,7 +7,7 @@ import i18n from 'i18next';
 import { translate } from 'react-i18next';
 
 // Fields
-import InputField from 'presentationals/form-fields/InputField';
+import InputField from 'presentationals/objects/form-fields/InputField';
 
 // Actions
 import { emailSigninUser } from 'actions/signinActions';

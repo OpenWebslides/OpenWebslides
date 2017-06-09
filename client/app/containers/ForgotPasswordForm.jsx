@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 
 // Fields
-import inputField from 'presentationals/form-fields/InputField';
+import inputField from 'presentationals/objects/form-fields/InputField';
 
 // Actions
 import { forgotPassword } from 'actions/forgotPasswordActions';

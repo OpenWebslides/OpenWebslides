@@ -2,9 +2,9 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import PageHeader from 'presentationals/PageHeader';
+import PageHeader from 'presentationals/components/PageHeader';
 import EmailSigninForm from 'containers/EmailSigninForm';
-import OauthLinks from 'presentationals/OauthLinks';
+import OauthLinks from 'presentationals/components/OauthLinks';
 
 function SigninPage() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PageHeader from 'presentationals/PageHeader';
+import PageHeader from 'presentationals/components/PageHeader';
 import DeckNavigator from 'presentationals/components/editor/NavigationPane';
 import SlideEditor from 'presentationals/components/editor/EditingPane';
 

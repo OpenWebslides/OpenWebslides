@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import intervalFromNow from '../../../lib/dateDisplay';
+import intervalFromNow from 'lib/dateDisplay';
+
 import {
   feedNotificationTypes,
   inlineFeedNotificationType,
-} from '../../constants/feedConstants';
+} from '../../../constants/feedConstants';
 
 export function FeedNotification({
   timestamp,

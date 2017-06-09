@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import NavMenu from './NavMenu';
+import NavMenu from 'presentationals/components/NavMenu';
 
 function PageHeader(props) {
   // Define logo content in separate variable so it can be included in
