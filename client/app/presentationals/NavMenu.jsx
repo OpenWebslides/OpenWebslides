@@ -14,13 +14,13 @@ function NavMenu(props) {
     <header className={`c_nav-menu c_nav-menu--${props.cssIdentifier}`}>
       <div className="c_nav-menu__wrapper">
         <ul className="c_nav-menu__list">
-          {Object.keys(menuItems).map(route => (
+          {Object.keys(menuItems).map(route =>
             <li className="c_nav-menu__item" key={route}>
               <Link className="c_nav-menu__link" to={route}>
                 {menuItems[route]}
               </Link>
-            </li>
-          ))}
+            </li>,
+          )}
         </ul>
       </div>
     </header>
