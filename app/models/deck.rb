@@ -26,17 +26,32 @@ class Deck < ApplicationRecord
   #
   before_save :generate_canonical_name
   before_create :create_repository, :unless => :skip_callbacks
-  before_destroy :destroy_repository, :unless => :skip_callbacks
+  before_destroy :delete_repository, :unless => :skip_callbacks
   after_initialize :set_default_template
 
   ##
   # Methods
   #
-  delegate :create_repository,
-           :destroy_repository,
-           :fetch_content,
-           :update_content,
-           :to => :service
+  def create_repository
+    Repository::Create.new(self).execute
+  end
+
+  def read_repository
+    Repository::Read.new(self).execute
+  end
+
+  def update_repository(params)
+    command = Repository::Update.new self
+
+    command.content = params[:content]
+    command.author = params[:author]
+
+    command.execute
+  end
+
+  def delete_repository
+    Repository::Delete.new(self).execute
+  end
 
   ##
   # Overrides
@@ -66,9 +81,5 @@ class Deck < ApplicationRecord
 
   def set_default_template
     self.template = OpenWebslides::Configuration.default_template if new_record?
-  end
-
-  def service
-    @service ||= RepoService.new self
   end
 end
