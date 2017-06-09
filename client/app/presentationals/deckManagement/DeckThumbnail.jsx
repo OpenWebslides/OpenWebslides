@@ -19,12 +19,13 @@ export function DeckThumbnail({ deckTitle, deckIconImage, deckLink }) {
 DeckThumbnail.propTypes = {
   deckTitle: PropTypes.string.isRequired,
   deckIconImage: PropTypes.string,
-  deckLink: PropTypes.string.isRequired,
-  key: PropTypes.number.isRequired,
+  deckLink: PropTypes.string,
 };
 
 DeckThumbnail.defaultProps = {
-  deckIconImage: 'https://www.iconfinder.com/data/icons/penthemes-layour-builder/512/slider-128.png', //  TODO : add a dummy image
+  deckIconImage:
+    'https://www.iconfinder.com/data/icons/penthemes-layour-builder/512/slider-128.png', //  TODO : add a dummy image
+  deckLink: '#',
 };
 
 export default DeckThumbnail;
