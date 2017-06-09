@@ -74,6 +74,7 @@ const config = {
 
   devServer: {
     hot: true,
+    historyApiFallback: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
   }
 };
