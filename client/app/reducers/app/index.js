@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import authentication from 'reducers/app/auth-reducer';
-import confirmEmail from 'reducers/app/confirm-email-reducer';
-import editor from 'reducers/app/editor-reducer';
-import feed from 'reducers/app/feed-reducer';
+import authentication from 'reducers/app/authenticationReducer';
+import confirmEmail from 'reducers/app/confirmEmailReducer';
+import editor from 'reducers/app/editorReducer';
+import feed from 'reducers/app/feedReducer';
 
 const app = combineReducers({
   authentication,

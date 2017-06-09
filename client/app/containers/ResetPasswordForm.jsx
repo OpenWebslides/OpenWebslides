@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 
 // Fields
-import inputField from 'presentationals/formFields/InputField';
-import newPasswordField from 'presentationals/formFields/NewPasswordField';
+import inputField from 'presentationals/form-fields/InputField';
+import newPasswordField from 'presentationals/form-fields/NewPasswordField';
 
 // Actions
 import { resetPassword } from 'actions/resetPasswordActions';
