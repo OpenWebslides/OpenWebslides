@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SlideContainer(props) {
+function Slide(props) {
   return (
     <div
       className={`c_slide-container c_slide-container--${props.cssIdentifier}`}
@@ -17,14 +17,14 @@ function SlideContainer(props) {
   );
 }
 
-SlideContainer.propTypes = {
+Slide.propTypes = {
   cssIdentifier: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
     .isRequired,
 };
 
-SlideContainer.defaultProps = {
+Slide.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default SlideContainer;
+export default Slide;

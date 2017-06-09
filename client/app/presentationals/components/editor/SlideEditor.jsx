@@ -6,7 +6,7 @@ import _ from 'lodash';
 import EditorViewsPanel from './EditorViewsPanel';
 import parseDeckObject from '../../lib/parseDeckObject';
 
-class SlideEditor extends Component {
+class EditingPane extends Component {
   componentDidMount() {
     this.activeSlide = 'hm?';
   }
@@ -67,12 +67,12 @@ class SlideEditor extends Component {
   }
 }
 
-SlideEditor.propTypes = {
+EditingPane.propTypes = {
   cssIdentifier: PropTypes.string,
   activeDeck: PropTypes.objectOf(Object).isRequired,
 };
 
-SlideEditor.defaultProps = {
+EditingPane.defaultProps = {
   cssIdentifier: 'default',
 };
 
@@ -82,4 +82,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(SlideEditor);
+export default connect(mapStateToProps)(EditingPane);

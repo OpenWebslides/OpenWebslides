@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SlideContainer from './SlideContainer';
+import Slide from './Slide';
 
-function EditorSlideView(props) {
+function SlideMode(props) {
   return (
     <div
       className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}
     >
       <div className="c_editor-slide-view__wrapper">
-        <SlideContainer>{props.children}</SlideContainer>
+        <Slide>{props.children}</Slide>
       </div>
     </div>
   );
 }
 
-EditorSlideView.propTypes = {
+SlideMode.propTypes = {
   cssIdentifier: PropTypes.string,
   children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };
 
-EditorSlideView.defaultProps = {
+SlideMode.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default EditorSlideView;
+export default SlideMode;
