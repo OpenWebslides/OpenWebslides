@@ -4,7 +4,7 @@ import {
   CONFIRM_EMAIL_SUCCESS,
   CONFIRM_EMAIL_FAILURE,
 } from 'actions/confirmEmailActions';
-import confirmEmailReducer from 'reducers/confirmEmailReducer';
+import confirmEmailReducer from 'reducers/app/confirmEmailReducer';
 
 describe('Confirm Email Reducer', () => {
   it('has an immutable initial state', () => {
