@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { fetchSlides, addSlide, selectSlide } from 'actions/slideActions';
-import SlideContainer from './SlideContainer';
+import SlideContainer from './Slide';
 import parseDeckObject from '../../lib/parseDeckObject';
 
 class NavigationPane extends Component {
