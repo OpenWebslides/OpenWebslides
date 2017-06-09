@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import parseDeckObject from 'lib/parseDeckObject';
 import ViewPane from './ViewPane';
-import parseDeckObject from '../../lib/parseDeckObject';
 
 class EditingPane extends Component {
   componentDidMount() {
