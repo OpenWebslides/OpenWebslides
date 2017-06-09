@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import EditorViewsPanel from './EditorViewsPanel';
+import ViewPane from './ViewPane';
 import parseDeckObject from '../../lib/parseDeckObject';
 
 class EditingPane extends Component {
@@ -36,7 +36,7 @@ class EditingPane extends Component {
           <p>[Toolbar goes here]</p>
         </div> */}
             <div className="c_slide-editor__item c_slide-editor__item--views-panel">
-              <EditorViewsPanel activeSlide={activeSlide} />
+              <ViewPane activeSlide={activeSlide} />
             </div>
             {/* #TODO
         <div className="c_slide-editor__item c_slide-editor__item--slide-health">
@@ -55,7 +55,7 @@ class EditingPane extends Component {
           <p>[Toolbar goes here]</p>
         </div> */}
           <div className="c_slide-editor__item c_slide-editor__item--views-panel">
-            <EditorViewsPanel />
+            <ViewPane />
           </div>
           {/* #TODO
         <div className="c_slide-editor__item c_slide-editor__item--slide-health">
