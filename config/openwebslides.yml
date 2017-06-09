@@ -19,82 +19,9 @@ oauth2:
 
   ##
   # Facebook OAuth2 credentials
+  #
   facebook_id: <%= ENV['OAUTH_FACEBOOK_ID'] %>
   facebook_secret: <%= ENV['OAUTH_FACEBOOK_SECRET'] %>
-
-provider:
-  ##
-  # Data provider type
-  #
-  # Possible values: ssh, github, local
-  #
-  # SSH Provider synchronizes the repositories to an external SSH server.
-  # GitHub provider synchronizes the repositories to a GitHub organization
-  # Local provider does nothing (the repositories are stored locally anyhow)
-  #
-  type: local
-
-  ##
-  # PROVIDER COMMON CONFIGURATION
-  #
-
-  ##
-  # Provider hostname/IP
-  #
-  # Hostname of SSH server (for both providers)
-  #
-  host: github.com
-
-  ##
-  # Provider user
-  #
-  # Login user (for ssh provider)
-  # GitHub login user, usually 'git' (for github provider)
-  #
-  user: git
-
-  ##
-  # Path to repository store/organisation
-  #
-  #
-  # Remote path (for ssh provider)
-  # Organization name (for github provider)
-  #
-  path: OpenWebslides-Test
-
-  ##
-  # Path to private key
-  #
-  private_key: <%= Rails.root.join 'config', 'openwebslides.pem' %>
-
-  ##
-  #
-  # Passphrase for private key
-  #
-  # passphrase: <%= ENV['KEYFILE_PASSPHRASE'] %>
-
-
-  ##
-  # GITHUB PROVIDER CONFIGURATION
-  #
-
-  ##
-  # GitHub username
-  #
-  github_user: <%= ENV['GITHUB_MACHINE_USER'] %>
-
-  ##
-  # GitHub passphrase
-  #
-  github_passphrase: <%= ENV['GITHUB_MACHINE_PASSWORD'] %>
-
-  ##
-  # GitHub API endpoint
-  #
-  # https://api.github.com/ for GitHub
-  # https://myhost.com/api/v3/ for GitHub Enterprise
-  #
-  github_api: https://api.github.com/
 
 api:
   ##
@@ -106,3 +33,55 @@ api:
 # Default template for new decks
 #
 default_template: shower-ows
+
+##
+# GitHub backend store configuration
+#
+github:
+  ##
+  # Enable syncing to GitHub
+  #
+  enabled: false
+
+  ##
+  # GitHub hostname
+  #
+  host: github.com
+
+  ##
+  # GitHub SSH username (usually 'git')
+  #
+  ssh_user: git
+
+  ##
+  # GitHub organization
+  #
+  organization: <%= ENV['GITHUB_ORGANIZATION'] %>
+
+  ##
+  # Path to private key
+  #
+  private_key: <%= Rails.root.join 'config', 'openwebslides.pem' %>
+
+  ##
+  # Passphrase for private key
+  #
+  # passphrase: <%= ENV['KEYFILE_PASSPHRASE'] %>
+
+  ##
+  # GitHub machine user, must be admin of GitHub organization
+  #
+  github_user: <%= ENV['GITHUB_MACHINE_USER'] %>
+
+  ##
+  # GitHub machine user passphrase
+  #
+  github_passphrase: <%= ENV['GITHUB_MACHINE_PASSWORD'] %>
+
+  ##
+  # GitHub API endpoint
+  #
+  # https://api.github.com/ for GitHub
+  # https://myhost.com/api/v3/ for GitHub Enterprise
+  #
+  github_api: https://api.github.com/
