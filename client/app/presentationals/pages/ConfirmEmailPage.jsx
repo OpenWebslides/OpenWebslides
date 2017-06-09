@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PageHeader from 'presentationals/PageHeader';
+import PageHeader from 'presentationals/components/PageHeader';
 import EmailConfirmation from 'containers/ConfirmEmailContainer';
 
 function ConfirmEmailPage(props) {

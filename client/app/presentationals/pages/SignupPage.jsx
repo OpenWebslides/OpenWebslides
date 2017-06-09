@@ -1,8 +1,8 @@
 import React from 'react';
 
-import PageHeader from 'presentationals/PageHeader';
+import PageHeader from 'presentationals/components/PageHeader';
 import SignupForm from 'containers/SignupForm';
-import OauthLinks from 'presentationals/OauthLinks';
+import OauthLinks from 'presentationals/components/OauthLinks';
 
 function SignupPage() {
   return (

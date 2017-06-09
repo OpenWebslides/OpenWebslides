@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PageHeader from 'presentationals/PageHeader';
+import PageHeader from 'presentationals/components/PageHeader';
 import ForgotPasswordForm from 'containers/ForgotPasswordForm';
 
 function ForgotPasswordPage(props) {
