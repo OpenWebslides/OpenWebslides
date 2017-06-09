@@ -80,6 +80,6 @@ class Deck < ApplicationRecord
   end
 
   def set_default_template
-    self.template = OpenWebslides::Configuration.default_template if new_record?
+    self.template = OpenWebslides.config.default_template if new_record?
   end
 end

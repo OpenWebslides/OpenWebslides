@@ -25,7 +25,7 @@ module Repository
       private
 
       def repo_path
-        File.join OpenWebslides::Configuration.repository_path, @receiver.canonical_name
+        File.join OpenWebslides.config.repository_path, @receiver.canonical_name
       end
 
       def content_file

@@ -20,17 +20,14 @@ module Repository
 
         # Set local repo remotes
         repo = Rugged::Repository.new repo_path
-        repo.remotes.create 'origin', "#{config.user}@#{config.host}:#{repo_path}"
+        remote = "#{OpenWebslides.config.github.ssh_user}@#{OpenWebslides.config.github.host}:#{repo_path}"
+        repo.remotes.create 'origin', remote
       end
 
       private
 
       def repo_path
-        File.join OpenWebslides::Configuration.repository_path, @receiver.canonical_name
-      end
-
-      def config
-        OpenWebslides::Configuration.provider
+        File.join OpenWebslides.config.repository_path, @receiver.canonical_name
       end
     end
   end
