@@ -1,5 +1,6 @@
 import Immutable from 'seamless-immutable';
-import feedReducer from 'reducers/feedReducer';
+import feedReducer from 'reducers/app/feedReducer';
+
 import {
   CHANGE_TYPE_FILTER,
   REQUEST_FEED_NOTIFICATIONS,
