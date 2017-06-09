@@ -23,7 +23,7 @@ export function FeedNotification({
   const contentsStringEnd = `"${targetDeck}"`;
 
   return (
-    <li key={timestamp} className={className}>
+    <li className={className}>
       <div>
         <h3>{feedNotificationTypes[type]}: </h3>
         <p>
