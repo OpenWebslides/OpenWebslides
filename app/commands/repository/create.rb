@@ -21,7 +21,7 @@ module Repository
 
       # Create and sync remote repository
       exec Remote::Init
-      exec Git::Sync
+      exec Remote::Sync
     end
   end
 end

@@ -18,6 +18,9 @@ module Repository
 
       # Update timestamps
       @receiver.touch
+
+      # Sync remote
+      exec Remote::Sync
     end
   end
 end
