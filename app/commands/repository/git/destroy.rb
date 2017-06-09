@@ -7,13 +7,7 @@ module Repository
     #
     class Destroy < Command
       def execute
-        Octokit.delete_repository "#{config.path}/#{@receiver.canonical_name}"
-      end
-
-      private
-
-      def config
-        OpenWebslides::Configuration.provider
+        Octokit.delete_repository "#{OpenWebslides.config.github.organization}/#{@receiver.canonical_name}"
       end
     end
   end
