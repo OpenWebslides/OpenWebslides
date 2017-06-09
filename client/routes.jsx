@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+
+import { Router, Route, Switch } from 'react-router-dom';
 
 // Pages
 import FeedPage from 'pages/FeedPage';
@@ -12,16 +13,20 @@ import OauthCallbackPage from 'pages/OauthCallbackPage';
 import SlideEditorPage from 'pages/SlideEditorPage';
 import EditorPage from 'pages/EditorPage';
 
+import history from './history';
+
 export default (
-  <Route path="/">
-    <IndexRoute component={FeedPage} />
-    <Route path="/signup" component={SignupPage} />
-    <Route path="/signin" component={SigninPage} />
-    <Route path="/confirmation" component={ConfirmEmailPage} />
-    <Route path="/forgot_password" component={ForgotPasswordPage} />
-    <Route path="/auth/omniauth" component={OauthCallbackPage} />
-    <Route path="/reset_password" component={ResetPasswordPage} />
-    <Route path="/editor/slide" component={SlideEditorPage} />
-    <Route path="/editortest" experimentingcomponent={EditorPage} />
-  </Route>
+  <Router history={history}>
+    <Switch>
+      <Route path="/" exact component={FeedPage} />
+      <Route path="/signup" component={SignupPage} />
+      <Route path="/signin" component={SigninPage} />
+      <Route path="/confirmation" component={ConfirmEmailPage} />
+      <Route path="/forgot_password" component={ForgotPasswordPage} />
+      <Route path="/auth/omniauth" component={OauthCallbackPage} />
+      <Route path="/reset_password" component={ResetPasswordPage} />
+      <Route path="/editor/slide" component={SlideEditorPage} />
+      <Route path="/editortest" component={EditorPage} />
+    </Switch>
+  </Router>
 );
