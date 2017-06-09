@@ -5,17 +5,18 @@ module Repository
     attr_accessor :author, :content
 
     def execute
-      render = Local::Render.new @receiver
-      render.content = @content
+      # Render HTML file
+      exec Local::Render do |c|
+        c.content = @content
+      end
 
-      render.execute
+      # Commit
+      exec Git::Commit do |c|
+        c.author = @author
+        c.message = 'Update content'
+      end
 
-      commit = Git::Commit.new @receiver
-      commit.author = @author
-      commit.message = 'Update content'
-
-      commit.execute
-
+      # Update timestamps
       @receiver.touch
     end
   end
