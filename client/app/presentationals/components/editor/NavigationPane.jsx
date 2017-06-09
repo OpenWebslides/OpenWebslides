@@ -8,7 +8,7 @@ import { fetchSlides, addSlide, selectSlide } from 'actions/slideActions';
 import SlideContainer from './SlideContainer';
 import parseDeckObject from '../../lib/parseDeckObject';
 
-class DeckNavigator extends Component {
+class NavigationPane extends Component {
   constructor(props) {
     super(props);
     this.handleAddSlide = this.handleAddSlide.bind(this);
@@ -76,7 +76,7 @@ class DeckNavigator extends Component {
   }
 }
 
-DeckNavigator.propTypes = {
+NavigationPane.propTypes = {
   cssIdentifier: PropTypes.string,
   fetchSlides: PropTypes.func.isRequired,
   addSlide: PropTypes.func.isRequired,
@@ -84,7 +84,7 @@ DeckNavigator.propTypes = {
   activeDeck: PropTypes.objectOf(Object),
 };
 
-DeckNavigator.defaultProps = {
+NavigationPane.defaultProps = {
   cssIdentifier: 'default',
   activeDeck: null,
 };
@@ -99,4 +99,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchSlides, addSlide, selectSlide }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeckNavigator);
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationPane);
