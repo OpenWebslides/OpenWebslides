@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export function DeckThumbnail({ deckTitle, deckIconImage, deckLink }) {
+export function DeckThumbnail({
+  deckTitle,
+  deckId,
+  deckIconImage,
+  deckLink,
+  deleteDeck,
+}) {
   const altIconText = `Icon of deck: ${deckTitle}`;
   return (
     <li>
@@ -9,7 +15,14 @@ export function DeckThumbnail({ deckTitle, deckIconImage, deckLink }) {
         <a href={deckLink}>
           <img src={deckIconImage} alt={altIconText} />
           <p>{deckTitle}</p>
-          <button onClick=""> Delete </button>
+          <button
+            onClick={() => {
+              deleteDeck(deckId);
+            }}
+          >
+            {' '}Delete
+            {' '}
+          </button>
         </a>
       </div>
     </li>
@@ -18,8 +31,10 @@ export function DeckThumbnail({ deckTitle, deckIconImage, deckLink }) {
 
 DeckThumbnail.propTypes = {
   deckTitle: PropTypes.string.isRequired,
+  deckId: PropTypes.string.isRequired,
   deckIconImage: PropTypes.string,
   deckLink: PropTypes.string,
+  deleteDeck: PropTypes.func.isRequired,
 };
 
 DeckThumbnail.defaultProps = {
