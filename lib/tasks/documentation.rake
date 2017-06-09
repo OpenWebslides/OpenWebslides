@@ -6,12 +6,13 @@ namespace :documentation do
   desc 'Generate API documentation'
   task :generate do
     FileUtils.mkdir_p 'doc'
-    `yarn run --silent raml2html raml/openwebslides.raml > doc/openwebslides.html`
+    `cd client && yarn run --silent raml2html ../raml/openwebslides.raml > ../doc/openwebslides.html`
   end
 
   desc 'Deploy API documentation to GitHub Pages'
   task :deploy do
     abort "Not deploying documentation on branch #{ENV['TRAVIS_BRANCH']}" unless ENV['TRAVIS_BRANCH'] == 'master'
+    abort "Not deploying on Ruby version #{ENV['TRAVIS_RUBY_VERSION']}" unless ENV['TRAVIS_RUBY_VERSION'] == '2.4.1'
 
     client = Octokit::Client.new :login => ENV['GITHUB_MACHINE_USER'],
                                  :password => ENV['GITHUB_MACHINE_PASSWORD']

@@ -8,8 +8,6 @@ cache:
 rvm:
   - 2.3.4
   - 2.4.1
-env:
-  - RAILS_ENV=test CI=true TRAVIS=true
 before_install:
   - nvm install 7.10.0
   - node -v
