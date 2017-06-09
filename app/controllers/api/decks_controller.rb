@@ -19,7 +19,7 @@ module Api
       raise Pundit::NotAuthorizedError unless scope.where(:id => deck.id).exists?
       context[:policy_used]&.call
 
-      render :body => deck.fetch_content, :content_type => 'text/html'
+      render :body => deck.read_repository, :content_type => 'text/html'
     end
 
     def update
@@ -31,7 +31,7 @@ module Api
       raise Pundit::NotAuthorizedError unless DeckPolicy.new(current_user, deck).update?
       context[:policy_used]&.call
 
-      deck.update_content :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
+      deck.update_repository :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
 
       head :no_content
     end
