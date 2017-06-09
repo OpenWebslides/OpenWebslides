@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { fetchSlides } from 'actions/fetchSlidesActions';
-import { addSlide, selectSlide } from 'actions/slideActions';
+import { fetchSlides, addSlide, selectSlide } from 'actions/slideActions';
 import SlideContainer from './SlideContainer';
 import parseDeckObject from '../../lib/parseDeckObject';
 
