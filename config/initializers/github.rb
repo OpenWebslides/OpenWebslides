@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require 'openwebslides/configuration'
-
-if OpenWebslides::Configuration.provider.type == 'github'
+if OpenWebslides.config.github.enabled == 'github'
   Octokit.configure do |config|
-    config.login = OpenWebslides::Configuration.provider.github_user
-    config.password = OpenWebslides::Configuration.provider.github_passphrase
+    config.login = OpenWebslides.config.github.github_user
+    config.password = OpenWebslides.config.github.github_passphrase
 
-    config.api_endpoint = OpenWebslides::Configuration.provider.github_api
+    config.api_endpoint = OpenWebslides.config.github.github_api
   end
 end

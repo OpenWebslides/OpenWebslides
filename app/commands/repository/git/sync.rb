@@ -14,18 +14,19 @@ module Repository
       private
 
       def repo_path
-        File.join OpenWebslides::Configuration.repository_path, @receiver.canonical_name
+        File.join OpenWebslides.config.repository_path, @receiver.canonical_name
       end
 
       def credentials
         return @credentials if @credentials
 
-        user = OpenWebslides::Configuration.provider.user
+        user = OpenWebslides.config.github.user
         raise OpenWebslides::ConfigurationError, 'No user specified' unless user
 
-        private_key = OpenWebslides::Configuration.provider.private_key
+        private_key = OpenWebslides.config.github.private_key
         raise OpenWebslides::ConfigurationError, 'No private key specified' unless private_key
 
+        # TODO: passphrase
         @credentials = Rugged::Credentials::SshKey.new :username => user, :privatekey => private_key
       end
     end
