@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function SwitcherMenu(props) {
+function ModeMenu(props) {
   return (
     <div className={`c_switcher-menu c_switcher-menu--${props.cssIdentifier}`}>
       <menu className="o_list c_switcher-menu__list">
@@ -30,12 +30,12 @@ function SwitcherMenu(props) {
   );
 }
 
-SwitcherMenu.propTypes = {
+ModeMenu.propTypes = {
   cssIdentifier: PropTypes.string,
 };
 
-SwitcherMenu.defaultProps = {
+ModeMenu.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default SwitcherMenu;
+export default ModeMenu;
