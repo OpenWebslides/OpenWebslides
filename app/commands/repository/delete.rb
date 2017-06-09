@@ -4,10 +4,10 @@ module Repository
   class Delete < Command
     def execute
       # Delete remote repository
-      Remote::Destroy.new(@receiver).execute
+      exec Remote::Destroy
 
       # Delete local repository
-      Local::Destroy.new(@receiver).execute
+      exec Local::Destroy
     end
   end
 end
