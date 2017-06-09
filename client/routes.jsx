@@ -31,3 +31,5 @@ export default (
       <Route path="/create_new_deck" component={CreateDeckPage} />
     </Switch>
   </Router>
+);
+
