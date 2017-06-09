@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
 
 // Fields
-import inputField from 'presentationals/form-fields/InputField';
-import newPasswordField from 'presentationals/form-fields/NewPasswordField';
+import inputField from 'presentationals/objects/form-fields/InputField';
+import newPasswordField from 'presentationals/objects/form-fields/NewPasswordField';
 
 // Presentationals
-import SignupConfirmation from 'presentationals/SignupConfirmation';
+import SignupConfirmation from 'presentationals/components/SignupConfirmation';
 
 // Actions
 import { signupUser } from 'actions/signupActions';
 import { checkEmail } from 'actions/checkEmailActions';
+
+import history from '../../history';
 
 // Field validation
 export function validate(values) {
@@ -74,7 +75,7 @@ function validateAndSubmit(values, dispatch) {
 class SignupForm extends Component {
   componentDidMount() {
     if (this.props.isAuthenticated) {
-      browserHistory.push('/');
+      history.push('/');
     }
   }
 

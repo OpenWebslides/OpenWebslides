@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as Immutable from 'seamless-immutable';
 import { requestFeedNotifications, filterByType } from 'actions/feedActions';
-import { FeedNotification } from 'presentationals/feed/FeedNotification';
-import FeedToolbar from 'presentationals/feed/FeedToolbar';
+import { FeedNotification } from 'presentationals/components/feed/FeedNotification';
+import FeedToolbar from 'presentationals/components/feed/FeedToolbar';
 import { feedNotificationTypes } from '../constants/feedConstants';
 
 function renderFeedNotification(el) {
