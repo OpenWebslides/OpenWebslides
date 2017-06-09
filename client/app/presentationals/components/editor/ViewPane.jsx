@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ModeMenu from './ModeMenu';
-import SlideMode from './SlideMode';
+import ModeMenu from './ViewsMenu';
+import SlideMode from './SlideView';
 
 function ViewPane(props) {
   return (
