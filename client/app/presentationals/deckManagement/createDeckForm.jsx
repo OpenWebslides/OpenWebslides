@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
-import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { Field } from 'redux-form';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/NeedSigninWarning';
@@ -14,25 +12,7 @@ import inputField from 'presentationals/formFields/InputField';
 import { requestDeckCreation } from 'actions/createDeckActions';
 
 // Helpers:
-import IfAuthHOC from '../../lib/IfAuthHOC';
-
-function validate(values) {
-  const { title, description } = values;
-
-  const errors = {};
-
-  if (!title || title.trim() === '') {
-    errors.title = 'Title is required';
-  } else if (title.trim().length < 6) {
-    errors.title = 'Title is too short (min. 6 characters)';
-  }
-
-  if (!description || description.trim() === '') {
-    errors.description = 'Description is required';
-  }
-
-  return errors;
-}
+import IfAuthHOC from '../../../lib/IfAuthHOC';
 
 // Submit Validation
 function validateAndSubmit(values, dispatch) {
@@ -74,18 +54,3 @@ CreateDeckForm.propTypes = {
 CreateDeckForm.defaultProps = {
   authState: null,
 };
-
-const createDeckReduxForm = reduxForm({
-  form: 'createDeckForm',
-  validate,
-  getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => browserHistory.push('/'),
-})(CreateDeckForm);
-
-function mapStateToProps(state) {
-  return {
-    authState: state.local.auth,
-  };
-}
-
-export default connect(mapStateToProps)(createDeckReduxForm);
