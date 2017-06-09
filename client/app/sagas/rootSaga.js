@@ -11,6 +11,7 @@ import emailSigninSaga from 'sagas/signin/emailSigninSaga';
 
 import requestDeckListSaga from 'sagas/deckManagement/requestDeckListSaga';
 import createDeckSaga from 'sagas/deckManagement/createDeckSaga';
+import deleteDeckSaga from 'sagas/deckManagement/deleteDeckSaga';
 
 export default function* rootSaga() {
   yield [
@@ -24,5 +25,6 @@ export default function* rootSaga() {
     oauthSigninSaga(),
     fetchSlidesSaga(),
     createDeckSaga(),
+    deleteDeckSaga(),
   ];
 }
