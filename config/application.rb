@@ -2,6 +2,7 @@
 
 require_relative 'boot'
 
+require 'ostruct'
 require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
@@ -19,6 +20,8 @@ require 'action_view/railtie'
 Bundler.require(*Rails.groups)
 
 module OpenWebslides
+  mattr_accessor :config
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -35,7 +38,19 @@ module OpenWebslides
     # Autoload lib
     config.autoload_paths += %W[#{config.root}/lib]
 
-    require 'openwebslides'
+    # Load configuration
+    ows_config_file = Rails.root.join 'config', 'openwebslides.yml'
+    ows_config = YAML.safe_load ERB.new(File.read ows_config_file).result
+
+    # Parse configuration
+    OpenWebslides.config = OpenStruct.new
+    ows_config.each do |key, value|
+      if value.is_a? Hash
+        OpenWebslides.config.send "#{key.to_sym}=", OpenStruct.new(value)
+      else
+        OpenWebslides.config.send "#{key.to_sym}=", value
+      end
+    end
 
     # Cross Origin Resource Sharing
     config.middleware.insert_before 0, Rack::Cors do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  oauth_config = OpenWebslides::Configuration.oauth2
+  oauth_config = OpenWebslides.config.oauth2
 
   before_callback_phase do |env|
     # TODO: verify state
