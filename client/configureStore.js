@@ -24,16 +24,16 @@ function configureStore() {
   );
 
   // Persists state to localStorage
-  store.subscribe(throttle(() => {
-    saveState({
-      local: {
-        auth: store.getState().local.auth,
-      },
-      data: {
-        activeDeck: store.getState().data.activeDeck,
-      },
-    });
-  }, 1000));
+  store.subscribe(
+    throttle(() => {
+      saveState({
+        app: {
+          authentication: store.getState().app.authentication,
+        },
+        entities: store.getState().entities,
+      });
+    }, 1000),
+  );
 
   // Fire up root Saga
   sagaMiddleware.run(rootSaga);

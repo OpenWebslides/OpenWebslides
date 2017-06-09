@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import isEmail from 'sane-email-validation';
-import { Link, browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import i18n from 'i18next';
 import { translate } from 'react-i18next';
 
@@ -11,6 +11,8 @@ import InputField from 'presentationals/form-fields/InputField';
 
 // Actions
 import { emailSigninUser } from 'actions/signinActions';
+
+import history from '../../history';
 
 // Field validation
 export function validate(values) {
@@ -96,5 +98,5 @@ export default reduxForm({
   form: 'emailSignin',
   validate,
   getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => browserHistory.push('/app'),
+  onSubmitSuccess: () => history.push('/app'),
 })(translate()(EmailSigninForm));
