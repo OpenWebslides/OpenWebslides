@@ -6,7 +6,7 @@ import SuccessMessage from 'presentationals/components/email-confirmation/Succes
 import FailureMessage from 'presentationals/components/email-confirmation/FailureMessage';
 import WaitingMessage from 'presentationals/components/email-confirmation/WaitingMessage';
 
-class EmailConfirmation extends Component {
+export default class EmailConfirmation extends Component {
   componentDidMount() {
     const confirmationToken = queryString.parse(this.props.location.search)
       .confirmation_token;
