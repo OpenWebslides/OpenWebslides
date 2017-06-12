@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 // Actions
 import { confirmEmail } from 'actions/confirmEmailActions';
@@ -13,7 +14,8 @@ import WaitingMessage from 'presentationals/components/email-confirmation/Waitin
 
 class EmailConfirmation extends Component {
   componentDidMount() {
-    const confirmationToken = this.props.location.query.confirmation_token;
+    const confirmationToken = queryString.parse(this.props.location.search)
+      .confirmation_token;
     this.props.confirmEmail(confirmationToken);
   }
 
