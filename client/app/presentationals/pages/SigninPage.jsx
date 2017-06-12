@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import PageHeader from 'presentationals/components/PageHeader';
 import EmailSigninForm from 'containers/EmailSigninContainer';
-import OauthLinks from 'presentationals/components/OauthLinks';
+import OauthLinks from 'presentationals/components/oauth/OauthLinks';
 
 function SigninPage() {
   return (
