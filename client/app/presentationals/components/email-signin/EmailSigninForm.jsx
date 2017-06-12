@@ -12,6 +12,10 @@ function EmailSigninForm(props) {
     return <Redirect to="/" />;
   }
 
+  if (props.submitSucceeded) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div>
       <form className="o_form" onSubmit={props.handleSubmit}>
@@ -57,6 +61,7 @@ EmailSigninForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
+  submitSucceeded: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 };
 
