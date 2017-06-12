@@ -1,5 +1,4 @@
 import React from 'react';
-
 import DefaultLayout from 'presentationals/layouts/DefaultLayout';
 import SignupContainer from 'containers/SignupContainer';
 import OauthLinks from 'presentationals/components/oauth/OauthLinks';

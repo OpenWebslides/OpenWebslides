@@ -1,7 +1,6 @@
 import signupSaga from 'sagas/signupSaga';
 import confirmEmailSaga from 'sagas/confirmEmailSaga';
-import requestFeedNorificationsSaga
-  from 'sagas/feed/requestFeedNotificationsSaga';
+import requestFeedNorificationsSaga from 'sagas/feed/requestFeedNotificationsSaga';
 import requestResetPasswordSaga from 'sagas/forgotPasswordSaga';
 import resetPasswordSaga from 'sagas/resetPasswordSaga';
 import fetchSlidesSaga from 'sagas/fetchSlidesSaga';
