@@ -1,6 +1,6 @@
 import ApiRequest from './helpers/apiHelper';
 
-export const FORGOT_PASSWORD_API_URL = 'http://localhost:5000/api/password';
+export const FORGOT_PASSWORD_API_URL = 'http://localhost:3000/api/password';
 
 async function resetPassword(email) {
   const request = new ApiRequest();
