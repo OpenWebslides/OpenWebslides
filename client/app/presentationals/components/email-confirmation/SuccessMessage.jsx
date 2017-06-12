@@ -1,12 +1,12 @@
 import React from 'react';
 
-import EmailSigninForm from 'containers/EmailSigninForm';
+import EmailSigninContainer from 'containers/EmailSigninContainer';
 
 function successMessage() {
   return (
     <div>
       <h3>Your email was successfully confirmed! You can nog sign in:</h3>
-      <EmailSigninForm />
+      <EmailSigninContainer />
     </div>
   );
 }
