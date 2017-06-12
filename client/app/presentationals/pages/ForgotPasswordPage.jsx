@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageHeader from 'presentationals/components/PageHeader';
-import ForgotPasswordForm from 'containers/ForgotPasswordForm';
+import ForgotPasswordContainer from 'containers/ForgotPasswordContainer';
 
 function ForgotPasswordPage(props) {
   return (
@@ -18,7 +18,7 @@ function ForgotPasswordPage(props) {
               <div className="l_main__wrapper">
                 <div className="l_main__item l_main__item--forgot-password">
                   <div className="l_main__item__wrapper">
-                    <ForgotPasswordForm {...props} />
+                    <ForgotPasswordContainer {...props} />
                   </div>
                 </div>
               </div>
