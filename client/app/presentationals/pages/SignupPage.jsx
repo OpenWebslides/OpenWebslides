@@ -2,7 +2,7 @@ import React from 'react';
 
 import PageHeader from 'presentationals/components/PageHeader';
 import SignupContainer from 'containers/SignupContainer';
-import OauthLinks from 'presentationals/components/OauthLinks';
+import OauthLinks from 'presentationals/components/oauth/OauthLinks';
 
 function SignupPage() {
   return (
