@@ -1,6 +1,6 @@
 import React from 'react';
 
-function externalAuthLinks() {
+function OauthLinks() {
   return (
     <div>
       <ul>
@@ -12,4 +12,4 @@ function externalAuthLinks() {
   );
 }
 
-export default externalAuthLinks;
+export default OauthLinks;
