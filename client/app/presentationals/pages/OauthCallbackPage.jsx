@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageHeader from 'presentationals/components/PageHeader';
-import OAuthCallback from 'containers/OauthCallbackContainer';
+import OauthCallback from 'containers/OauthCallbackContainer';
 
 function OauthCallbackPage(props) {
   return (
@@ -18,7 +18,7 @@ function OauthCallbackPage(props) {
               <div className="l_main__wrapper">
                 <div className="l_main__item l_main__item--oauth-callback">
                   <div className="l_main__item__wrapper">
-                    <OAuthCallback {...props} />
+                    <OauthCallback {...props} />
                   </div>
                 </div>
               </div>
