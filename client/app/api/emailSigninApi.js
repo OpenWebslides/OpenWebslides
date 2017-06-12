@@ -20,7 +20,7 @@ async function emailSignin(email, password) {
   const authToken = bearerResponseHeader.split(' ')[1];
   const { firstName } = responseBody.data.attributes;
 
-  return { authToken, id ,firstName};
+  return { authToken, id, firstName };
 }
 
 export default emailSignin;
