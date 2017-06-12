@@ -1,41 +1,9 @@
-import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-// Actions
 import { oauthSigninUser } from 'actions/signinActions';
 
-import history from '../../history';
-
-class OauthCallback extends Component {
-  componentDidMount() {
-    const authToken = this.props.location.query.token;
-    this.props.OAuthSigninUser({ authToken });
-  }
-
-  render() {
-    if (this.props.isAuthenticated) {
-      history.push('/');
-    }
-
-    return (
-      <div>
-        <h4>Authenticating...</h4>
-      </div>
-    );
-  }
-}
-
-OauthCallback.propTypes = {
-  location: PropTypes.objectOf(Object),
-  OAuthSigninUser: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-};
-
-OauthCallback.defaultProps = {
-  location: { query: '' },
-};
+import OauthCallback from 'presentationals/components/oauth/OauthCallback';
 
 function mapStateToProps(state) {
   return {
