@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageHeader from 'presentationals/components/PageHeader';
-import ResetPasswordForm from 'containers/ResetPasswordForm';
+import ResetPasswordContainer from 'containers/ResetPasswordContainer';
 
 function ResetPasswordPage(props) {
   return (
@@ -18,7 +18,7 @@ function ResetPasswordPage(props) {
               <div className="l_main__wrapper">
                 <div className="l_main__item l_main__item--reset-password">
                   <div className="l_main__item__wrapper">
-                    <ResetPasswordForm {...props} />
+                    <ResetPasswordContainer {...props} />
                   </div>
                 </div>
               </div>
