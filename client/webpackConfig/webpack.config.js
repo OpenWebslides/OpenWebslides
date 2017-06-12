@@ -47,6 +47,7 @@ const config = {
     extensions: ['.js', '.jsx', '.es6'],
     modules: [path.join(__dirname, '..'), 'node_modules'],
     alias: {
+      root: path.join(__dirname, '..'),
       presentationals: path.join(__dirname, '..', 'app', 'presentationals'),
       pages: path.join(__dirname, '..', 'app', 'pages'),
       reducers: path.join(__dirname, '..', 'app', 'reducers'),

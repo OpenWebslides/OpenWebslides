@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageHeader from 'presentationals/components/PageHeader';
-import SignupForm from 'containers/SignupForm';
+import SignupContainer from 'containers/SignupContainer';
 import OauthLinks from 'presentationals/components/OauthLinks';
 
 function SignupPage() {
@@ -19,7 +19,7 @@ function SignupPage() {
               <div className="l_main__wrapper">
                 <div className="l_main__item l_main__item--signup">
                   <div className="l_main__item__wrapper">
-                    <SignupForm />
+                    <SignupContainer />
                     <OauthLinks />
                   </div>
                 </div>

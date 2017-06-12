@@ -84,6 +84,7 @@
       "jsx"
     ],
     "moduleNameMapper": {
+      "^root(.*)$": "<rootDir>$1",
       "^presentationals(.*)$": "<rootDir>/app/presentationals$1",
       "^pages(.*)$": "<rootDir>/app/pages$1",
       "^reducers(.*)$": "<rootDir>/app/reducers$1",
