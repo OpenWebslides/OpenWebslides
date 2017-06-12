@@ -1,7 +1,7 @@
 import asyncFetch from './helpers/asyncFetch';
 import getBaseRequestConfig from './helpers/baseRequestConfig';
 
-export const SIGNIN_API_URL = 'http://localhost:5000/api/token';
+export const SIGNIN_API_URL = 'http://localhost:3000/api/token';
 
 async function emailSignin(email, password) {
   const baseRequestConfig = getBaseRequestConfig();
