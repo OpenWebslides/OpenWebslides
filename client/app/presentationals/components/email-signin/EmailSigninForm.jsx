@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import InputField from 'presentationals/objects/form-fields/InputField';
 
 function EmailSigninForm(props) {
   const { t } = props;
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div>
@@ -52,6 +56,7 @@ function EmailSigninForm(props) {
 EmailSigninForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
+  isAuthenticated: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 };
 

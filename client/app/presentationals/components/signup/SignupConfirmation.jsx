@@ -1,6 +1,6 @@
 import React from 'react';
 
-function signupConfirmation() {
+function SignupConfirmation() {
   return (
     <div>
       <h3>We have sent you an email!</h3>
@@ -8,4 +8,4 @@ function signupConfirmation() {
   );
 }
 
-export default signupConfirmation;
+export default SignupConfirmation;
