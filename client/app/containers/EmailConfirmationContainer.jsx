@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { confirmEmail } from 'actions/confirmEmailActions';
 
-import ConfirmEmail from 'presentationals/components/email-confirmation/ConfirmEmail';
+import EmailConfirmation from 'presentationals/components/email-confirmation/EmailConfirmation';
 
 function mapStateToProps(state) {
   return {
@@ -15,4 +15,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ confirmEmail }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmEmail);
+export default connect(mapStateToProps, mapDispatchToProps)(EmailConfirmation);
