@@ -1,7 +1,9 @@
 import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import i18n from 'i18next';
 import { translate } from 'react-i18next';
 import isEmail from 'sane-email-validation';
+
 import EmailSigninForm from 'presentationals/components/email-signin/EmailSigninForm';
 
 import { emailSigninUser } from 'actions/signinActions';
@@ -32,10 +34,18 @@ function validateAndSubmit(values, dispatch) {
   });
 }
 
-export default reduxForm({
+const connectedForm = reduxForm({
   form: 'emailSignin',
   validate,
   onSubmit: validateAndSubmit,
   getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => history.push('/app'),
+  onSubmitSuccess: () => history.push('/'),
 })(translate()(EmailSigninForm));
+
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.app.authentication.isAuthenticated,
+  };
+}
+
+export default connect(mapStateToProps)(connectedForm);
