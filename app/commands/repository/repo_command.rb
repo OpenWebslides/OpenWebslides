@@ -18,5 +18,9 @@ module Repository
     def template_path
       File.join OpenWebslides.config.template_path, @receiver.template
     end
+
+    def template_file
+      File.join template_path, 'index.html.erb'
+    end
   end
 end
