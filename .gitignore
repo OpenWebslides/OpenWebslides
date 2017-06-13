@@ -48,3 +48,6 @@ doc/
 
 .vscode
 .DS_Store
+
+# Local repositories
+data/*
