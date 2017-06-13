@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
 module Repository
+  ##
+  # Create a repository in the backing store
+  #
   class Create < Command
     def execute
       # Create and populate local repository
-      exec Local::Init
+      exec Filesystem::Init
       exec Git::Init
 
       # Render empty deck
-      exec Local::Render do |c|
+      exec Filesystem::Render do |c|
         c.content = ''
       end
 
@@ -18,6 +21,8 @@ module Repository
         c.message = 'Initial commit'
         c.params = { :parents => [] }
       end
+
+      return unless OpenWebslides.config.github.enabled
 
       # Create and sync remote repository
       exec Remote::Init
