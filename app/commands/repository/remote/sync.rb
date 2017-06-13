@@ -2,7 +2,7 @@
 
 module Repository
   module Remote
-    class Sync < Command
+    class Sync < RepoCommand
       def execute
         return unless OpenWebslides.config.github.enabled
 
@@ -14,10 +14,6 @@ module Repository
       end
 
       private
-
-      def repo_path
-        File.join OpenWebslides.config.repository_path, @receiver.canonical_name
-      end
 
       def credentials
         return @credentials if @credentials

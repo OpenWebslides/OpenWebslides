@@ -5,7 +5,7 @@ module Repository
     ##
     # Destroy local repository
     #
-    class Destroy < Command
+    class Destroy < RepoCommand
       def execute
         return unless OpenWebslides.config.github.enabled
 
