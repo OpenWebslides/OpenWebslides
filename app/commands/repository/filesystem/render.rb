@@ -5,7 +5,7 @@ module Repository
     ##
     # Render the HTML
     #
-    class Render < Command
+    class Render < RepoCommand
       attr_accessor :content
 
       def execute
@@ -20,20 +20,6 @@ module Repository
         rendered = template.result(struct.instance_eval { binding })
 
         File.write content_file, rendered
-      end
-
-      private
-
-      def repo_path
-        File.join OpenWebslides.config.repository_path, @receiver.canonical_name
-      end
-
-      def content_file
-        File.join repo_path, 'index.html'
-      end
-
-      def template_path
-        Rails.root.join 'lib', 'assets', @receiver.template
       end
     end
   end
