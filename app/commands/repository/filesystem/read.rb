@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 module Repository
-  module Local
+  module Filesystem
     ##
-    # Destroy repository directory
+    # Create local repository
     #
-    class Destroy < Command
+    class Init < Command
       def execute
-        FileUtils.rm_r repo_path, :secure => true
+        # Initialize local repo
+        Rugged::Repository.init_at repo_path
       end
 
       private
