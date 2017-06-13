@@ -2,7 +2,7 @@
 
 module Repository
   module Git
-    class Commit < Command
+    class Commit < RepoCommand
       attr_accessor :author, :message, :params
 
       def execute
@@ -30,12 +30,6 @@ module Repository
         commit_options.merge! @params if @params
 
         Rugged::Commit.create repo, commit_options.merge(params)
-      end
-
-      private
-
-      def repo_path
-        File.join OpenWebslides.config.repository_path, @receiver.canonical_name
       end
     end
   end
