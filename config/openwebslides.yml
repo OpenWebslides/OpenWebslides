@@ -4,6 +4,12 @@
 # Local path used for persistent repository storage
 repository_path: <%= Rails.root.join 'data' %>
 
+##
+# Template path
+#
+# Local path used for templates
+template_path: <%= Rails.root.join 'lib', 'assets', 'templates' %>
+
 oauth2:
   ##
   # GitHub OAuth2 credentials
