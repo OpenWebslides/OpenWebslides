@@ -5,7 +5,7 @@ module Repository
     ##
     # Create remote repository
     #
-    class Init < Command
+    class Init < RepoCommand
       def execute
         return unless OpenWebslides.config.github.enabled
 
@@ -24,12 +24,6 @@ module Repository
         repo = Rugged::Repository.new repo_path
         remote = "#{OpenWebslides.config.github.ssh_user}@#{OpenWebslides.config.github.host}:#{repo_path}"
         repo.remotes.create 'origin', remote
-      end
-
-      private
-
-      def repo_path
-        File.join OpenWebslides.config.repository_path, @receiver.canonical_name
       end
     end
   end
