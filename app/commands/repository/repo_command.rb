@@ -11,7 +11,7 @@ module Repository
       File.join OpenWebslides.config.repository_path, @receiver.canonical_name
     end
 
-    def content_file
+    def repo_file
       File.join repo_path, 'index.html'
     end
 

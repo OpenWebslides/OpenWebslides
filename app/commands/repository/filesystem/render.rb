@@ -19,7 +19,7 @@ module Repository
 
         rendered = template.result(struct.instance_eval { binding })
 
-        File.write content_file, rendered
+        File.write repo_file, rendered
       end
     end
   end
