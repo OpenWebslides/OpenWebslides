@@ -2,7 +2,7 @@
 # Repository path
 #
 # Local path used for persistent repository storage
-repository_path: /srv/repositories
+repository_path: <%= Rails.root.join 'data' %>
 
 oauth2:
   ##
