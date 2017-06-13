@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Repository
-  module Local
+  module Filesystem
     ##
     # Render the HTML
     #
