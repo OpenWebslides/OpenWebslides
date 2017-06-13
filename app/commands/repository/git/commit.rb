@@ -29,7 +29,7 @@ module Repository
 
         commit_options.merge! @params if @params
 
-        Rugged::Commit.create repo, commit_options.merge(params)
+        Rugged::Commit.create repo, commit_options
       end
     end
   end
