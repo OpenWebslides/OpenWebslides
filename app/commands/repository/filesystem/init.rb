@@ -5,7 +5,7 @@ module Repository
     ##
     # Create and populate repository directory
     #
-    class Init < Command
+    class Init < RepoCommand
       def execute
         # Create local repo
         raise OpenWebslides::RepoExistsError if Dir.exist? repo_path
@@ -18,16 +18,6 @@ module Repository
         # Delete unnecessary files
         FileUtils.rm File.join repo_path, 'index.html.erb'
         FileUtils.rm_r File.join(repo_path, '.git'), :secure => true
-      end
-
-      private
-
-      def repo_path
-        File.join OpenWebslides.config.repository_path, @receiver.canonical_name
-      end
-
-      def template_path
-        Rails.root.join 'lib', 'assets', @receiver.template
       end
     end
   end
