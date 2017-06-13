@@ -3,12 +3,12 @@
 module Repository
   module Filesystem
     ##
-    # Create local repository
+    # Read contents of local repository
     #
-    class Init < RepoCommand
+    class Read < RepoCommand
       def execute
-        # Initialize local repo
-        Rugged::Repository.init_at repo_path
+        doc = Nokogiri::HTML5 File.read content_file
+        doc.at('body').children.to_html.strip
       end
     end
   end
