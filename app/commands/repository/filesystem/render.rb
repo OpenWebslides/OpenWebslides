@@ -11,7 +11,7 @@ module Repository
       def execute
         raise OpenWebslides::ArgumentError, 'Content not specified' unless @content
 
-        template = ERB.new File.read File.join template_path, 'index.html.erb'
+        template = ERB.new File.read File.join template_file
 
         struct = OpenStruct.new :name => @receiver.name,
                                 :description => @receiver.description,
