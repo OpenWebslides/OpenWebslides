@@ -16,7 +16,7 @@ module Repository
     end
 
     def template_path
-      Rails.root.join 'lib', 'assets', @receiver.template
+      File.join OpenWebslides.config.template_path, @receiver.template
     end
   end
 end
