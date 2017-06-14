@@ -47,6 +47,7 @@ class Deck < ApplicationRecord
 
     command.content = params[:content]
     command.author = params[:author]
+    command.message = params[:message] if params.key? :message
 
     command.execute
   end
