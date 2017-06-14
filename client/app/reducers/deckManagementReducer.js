@@ -1,4 +1,6 @@
 import Immutable from 'seamless-immutable';
+import _ from 'lodash';
+
 import {
   DECK_DELETION_REQUEST,
   DECK_DELETION_REQUEST_FAILURE,
@@ -30,7 +32,11 @@ function deckManagementReducer(state = initialState, action) {
         sentRequestForDecksList: false,
         receivedList: true,
         listErrorMessage: '',
-        listOfDecks: state.listOfDecks.concat(action.payload.listOfDecks),
+        listOfDecks: _.unionWith(
+          state.listOfDecks,
+          action.payload.listOfDecks,
+          (a, b) => a.id === b.id,
+        ),
       });
     case REQUEST_DECK_LIST_FAILURE:
       return Immutable.merge(state, {
