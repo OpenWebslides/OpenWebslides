@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ModeMenu from './ViewsMenu';
-import SlideMode from './SlideView';
+import ViewsMenu from './ViewsMenu';
+import SlideView from './SlideView';
 
-function ViewPane(props) {
+function ViewsPane(props) {
   return (
     <div
       className={`c_editor-views-panel c_editor-views-panel--${props.cssIdentifier}`}
     >
       <div className="c_editor-views-panel__wrapper">
         <div className="c_editor-views-panel__switcher">
-          <ModeMenu />
+          <ViewsMenu />
         </div>
         <div className="c_editor-views-panel__views-list">
           <div className="c_editor-views-panel__views-item">
-            <SlideMode>{props.activeSlide}</SlideMode>
+            <SlideView activeSlide={props.activeSlide} />
           </div>
           {/* #TODO
           <div className="c_editor-views-panel__views-item">
@@ -27,13 +27,13 @@ function ViewPane(props) {
   );
 }
 
-ViewPane.propTypes = {
+ViewsPane.propTypes = {
   cssIdentifier: PropTypes.string,
-  activeSlide: PropTypes.arrayOf(PropTypes.element).isRequired,
+  activeSlide: PropTypes.node.isRequired,
 };
 
-ViewPane.defaultProps = {
+ViewsPane.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default ViewPane;
+export default ViewsPane;

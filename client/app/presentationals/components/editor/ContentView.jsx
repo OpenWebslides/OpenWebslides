@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ContentMode(props) {
+function ContentView(props) {
   return (
     <div
       className={`c_editor-content-view c_editor-content-view--${props.cssIdentifier}`}
@@ -13,12 +13,12 @@ function ContentMode(props) {
   );
 }
 
-ContentMode.propTypes = {
+ContentView.propTypes = {
   cssIdentifier: PropTypes.string,
 };
 
-ContentMode.defaultProps = {
+ContentView.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default ContentMode;
+export default ContentView;
