@@ -113,7 +113,7 @@ documentation:
                 errors: Error[]
               example: !include examples/get_404.json
     put:
-      description: See [PATCH](#users__id__patch)
+      description: Same as [PATCH](#users__id__patch), but replaces the entire resource
     patch:
       is: [ authenticated ]
       description: Update user
@@ -282,7 +282,7 @@ documentation:
                 errors: Error[]
               example: !include examples/get_404.json
     put:
-      description: See [PATCH](#decks__id__patch)
+      description: Same as [PATCH](#decks__id__patch), but replaces the entire resource
     patch:
       is: [ authenticated ]
       description: Update deck
@@ -527,7 +527,7 @@ documentation:
       204:
         description: Always returned, whether or not the email address was valid
   put:
-    description: See [PATCH](#password_patch)
+    description: Same as [PATCH](#password_patch), but replaces the entire resource
   patch:
     description: Reset a user's password using the `reset_password_token` sent by email
     body:
