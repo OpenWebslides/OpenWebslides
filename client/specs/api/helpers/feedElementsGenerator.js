@@ -1,67 +1,89 @@
 export const samples = [
   {
+    id: 'ertwc2',
     timestamp: '1000',
     type: 'DECK_CREATED',
     targetDeck: 'OpenWebSlides',
     concernedUser: 'Florian',
     viewed: false,
-  }, {
+  },
+  {
+    id: '5u7g5t',
     timestamp: '1001',
     type: 'DECK_CREATED',
     targetDeck: 'World Domination',
     concernedUser: 'Rein',
     viewed: true,
-  }, {
+  },
+  {
+    id: '2341d',
     timestamp: '1002',
     type: 'DECK_CREATED',
     targetDeck: 'The greatest deck ever. Bigly.',
     concernedUser: 'Donald Trump',
     viewed: true,
-  }, {
+  },
+  {
+    id: '6h245',
     timestamp: '1003',
     type: 'DECK_UPDATED',
     targetDeck: 'How to always be on time',
     concernedUser: 'Gandalf',
     viewed: false,
-  }, {
+  },
+  {
+    id: 'ew2345',
     timestamp: '1004',
     type: 'DECK_CREATED',
     targetDeck: 'ts ard to rwtie with onw hnd',
     concernedUser: 'Jamie Lannister ',
     viewed: false,
-  }, {
+  },
+  {
+    id: '234rw',
     timestamp: '1005',
     type: 'DECK_UPDATED',
     targetDeck: 'You shall not use html tables for a list',
     concernedUser: 'Min',
     viewed: true,
-  }, {
+  },
+  {
+    id: '2345rqwd',
     timestamp: '1006',
     type: 'DECK_CREATED',
-    targetDeck: 'Hey! I\'m making a deck! Funny how deck almost sounds like [censured]. Wait, seriously, I can\'t write' +
-    '[censured]? What kind of lame-[censured] app is this? I bet you that the developpers are all dorks. And that they don\'t have friends. ' +
-    'And that they\'re mad at me because this title is way to long now. Hah! [censored] you developers!',
+    targetDeck:
+      "Hey! I'm making a deck! Funny how deck almost sounds like [censured]. Wait, seriously, I can't write" +
+        "[censured]? What kind of lame-[censured] app is this? I bet you that the developpers are all dorks. And that they don't have friends. " +
+        "And that they're mad at me because this title is way to long now. Hah! [censored] you developers!",
     concernedUser: 'Deadpool',
     viewed: false,
-  }, {
+  },
+  {
+    id: 'ef23',
     timestamp: '1007',
     type: 'DECK_UPDATED',
     targetDeck: 'How to come up with funny deck names',
     concernedUser: 'Luca',
     viewed: true,
-  }, {
+  },
+  {
+    id: '2345',
     timestamp: '1008',
     type: 'DECK_CREATED',
     targetDeck: 'The way of the Jedi',
     concernedUser: 'Obi-Wan',
     viewed: true,
-  }, {
+  },
+  {
+    id: 'r43',
     timestamp: '1009',
     type: 'DECK_CREATED',
     targetDeck: 'Let it go',
     concernedUser: 'The frozen chick',
     viewed: false,
-  }, {
+  },
+  {
+    id: '234',
     timestamp: '1010',
     type: 'DECK_UPDATED',
     targetDeck: 'I should really write a generator for deck names',
