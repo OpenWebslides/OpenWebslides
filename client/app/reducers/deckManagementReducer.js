@@ -51,7 +51,7 @@ function deckManagementReducer(state = initialState, action) {
       return Immutable.merge(state, {
         listOfDecks: state.listOfDecks
           .concat()
-          .filter(deck => deck.deckId !== state.sentDeletionRequestFor),
+          .filter(deck => deck.id !== state.sentDeletionRequestFor),
         sentDeletionRequestFor: null,
         deletionErrorMessage: '',
       });
