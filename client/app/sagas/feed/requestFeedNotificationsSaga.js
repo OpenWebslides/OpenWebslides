@@ -23,10 +23,12 @@ export function* getFeedNotificationsFlow(action) {
     }
     const listOfNotifications = responseListOfNotifications.map(
       responseNotification => ({
+        id: responseNotification.id,
         timestamp: responseNotification.attributes.createdAt,
-        type: receivedNotificationTypes[
-          responseNotification.attributes.eventType.toLowerCase()
-        ],
+        type:
+          receivedNotificationTypes[
+            responseNotification.attributes.eventType.toLowerCase()
+          ],
         targetDeck: responseNotification.attributes.deckName,
         concernedUser: responseNotification.attributes.userName,
       }),
