@@ -9,19 +9,19 @@ class ApplicationPolicy
   end
 
   def index?
-    false
+    raise OpenWebslides::NotImplementedError
   end
 
   def create?
-    false
+    raise OpenWebslides::NotImplementedError
   end
 
   def update?
-    false
+    raise OpenWebslides::NotImplementedError
   end
 
   def destroy?
-    false
+    raise OpenWebslides::NotImplementedError
   end
 
   def scope
