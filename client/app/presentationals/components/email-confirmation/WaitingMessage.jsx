@@ -1,6 +1,6 @@
 import React from 'react';
 
-function waitingMessage() {
+function WaitingMessage() {
   return (
     <div>
       <h3>Confirming...</h3>
@@ -8,4 +8,4 @@ function waitingMessage() {
   );
 }
 
-export default waitingMessage;
+export default WaitingMessage;
