@@ -11,7 +11,7 @@ import { feedNotificationTypes } from '../constants/feedConstants';
 function renderFeedNotification(el) {
   return (
     <FeedNotification
-      key={el.timestamp}
+      key={el.id}
       timestamp={el.timestamp}
       concernedUser={el.concernedUser}
       targetDeck={el.targetDeck}
@@ -109,6 +109,7 @@ Feed.propTypes = {
   requestFeedNotifications: PropTypes.func.isRequired,
   listOfFeedNotifications: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
       timeStamp: PropTypes.number.isRequired,
       type: PropTypes.oneOf(Object.keys(feedNotificationTypes)).isRequired,
       targetDeck: PropTypes.string.isRequired,
