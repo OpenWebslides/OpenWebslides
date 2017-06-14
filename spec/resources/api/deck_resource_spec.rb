@@ -18,15 +18,16 @@ RSpec.describe Api::DeckResource, :type => :resource do
   it { is_expected.to have_one :owner }
 
   it { is_expected.to have_many(:collaborators).with_class_name 'User' }
+  it { is_expected.to have_many(:assets) }
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id name state description template owner collaborators]
+      expect(subject.fetchable_fields).to match_array %i[id name state description template owner collaborators assets]
     end
 
     it 'should omit empty fields' do
       subject { described_class.new nil_deck, context }
-      expect(subject.fetchable_fields).to match_array %i[id name state description template owner collaborators]
+      expect(subject.fetchable_fields).to match_array %i[id name state description template owner collaborators assets]
     end
 
     it 'should have a valid set of creatable fields' do
