@@ -6,7 +6,7 @@ i18n.init({
   fallbackLng: 'en',
   ns: ['common', 'signin'],
   defaultNS: 'common',
-  debug: true,
+  debug: false,
   resources,
 
   interpolation: {
