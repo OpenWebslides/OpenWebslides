@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Slide from './Slide';
 
-function NavigationPane(props) {
+function DeckNavigationPane(props) {
   return (
     <div
       className={`c_deck-navigator c_deck-navigator--${props.cssIdentifier}`}
@@ -32,12 +32,12 @@ function NavigationPane(props) {
   );
 }
 
-NavigationPane.propTypes = {
+DeckNavigationPane.propTypes = {
   cssIdentifier: PropTypes.string,
 };
 
-NavigationPane.defaultProps = {
+DeckNavigationPane.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default NavigationPane;
+export default DeckNavigationPane;

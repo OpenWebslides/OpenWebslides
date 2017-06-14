@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ViewsPane from './ViewsPane';
 
-function EditingPane(props) {
+function SlideEditingPane(props) {
   const activeSlide = <h1>Dummy slide content</h1>;
 
   return (
@@ -24,12 +24,12 @@ function EditingPane(props) {
   );
 }
 
-EditingPane.propTypes = {
+SlideEditingPane.propTypes = {
   cssIdentifier: PropTypes.string,
 };
 
-EditingPane.defaultProps = {
+SlideEditingPane.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default EditingPane;
+export default SlideEditingPane;
