@@ -30,9 +30,15 @@ class CreateDeckForm extends Component {
       >
         <div>
           <form onSubmit={this.props.handleSubmit(validateAndSubmit)}>
-            <Field component={inputField} name="title" placeholder="Title" />
             <Field
               component={inputField}
+              label="Title:"
+              name="title"
+              placeholder="Title"
+            />
+            <Field
+              component={inputField}
+              label="Description:"
               name="description"
               placeholder="Description"
             />
@@ -54,3 +60,5 @@ CreateDeckForm.propTypes = {
 CreateDeckForm.defaultProps = {
   authState: null,
 };
+
+export default CreateDeckForm;
