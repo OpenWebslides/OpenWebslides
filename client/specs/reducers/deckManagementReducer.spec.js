@@ -15,10 +15,10 @@ describe('Deck Management Reducer', () => {
   const emptyState = undefined;
   const stateWithDecks = Immutable({
     listOfDecks: [
-      { deckName: 'deck1', deckId: '22' },
-      { deckName: 'deck2', deckId: '653' },
-      { deckName: 'deck3', deckId: '3422' },
-      { deckName: 'deck4', deckId: '345' },
+      { deckName: 'deck1', id: '22' },
+      { deckName: 'deck2', id: '653' },
+      { deckName: 'deck3', id: '3422' },
+      { deckName: 'deck4', id: '345' },
     ],
     sentRequestForDecksList: false,
     receivedList: false,
@@ -57,11 +57,13 @@ describe('Deck Management Reducer', () => {
   it('Can resolve a REQUEST_DECK_LIST_SUCCESS action', () => {
     const action = {
       type: 'REQUEST_DECK_LIST_SUCCESS',
-      payload: { listOfDecks: ['deck1', 'deck2', 'deck3'] },
+      payload: {
+        listOfDecks: [{ id: 'deck1' }, { id: 'deck2' }, { id: 'deck3' }],
+      },
     };
     expect(deckManagementReducer(emptyState, action)).toEqual(
       Immutable({
-        listOfDecks: ['deck1', 'deck2', 'deck3'],
+        listOfDecks: [{ id: 'deck1' }, { id: 'deck2' }, { id: 'deck3' }],
         sentRequestForDecksList: false,
         receivedList: true,
         listErrorMessage: '',
@@ -126,9 +128,9 @@ describe('Deck Management Reducer', () => {
     expect(deckManagementReducer(stateWithDecks, action)).toEqual(
       Immutable({
         listOfDecks: [
-          { deckName: 'deck1', deckId: '22' },
-          { deckName: 'deck2', deckId: '653' },
-          { deckName: 'deck3', deckId: '3422' },
+          { deckName: 'deck1', id: '22' },
+          { deckName: 'deck2', id: '653' },
+          { deckName: 'deck3', id: '3422' },
         ],
         sentRequestForDecksList: false,
         receivedList: false,
