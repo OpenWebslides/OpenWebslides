@@ -5,7 +5,7 @@ module Repository
   # Update the contents of a repository in the backing store
   #
   class Update < Command
-    attr_accessor :author, :content
+    attr_accessor :author, :content, :message
 
     def execute
       raise ArgumentError 'No author specified' unless @author
@@ -19,7 +19,7 @@ module Repository
       # Commit
       exec Git::Commit do |c|
         c.author = @author
-        c.message = 'Update slidedeck'
+        c.message = @message || 'Update slidedeck'
       end
 
       # Update timestamps
