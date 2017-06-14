@@ -15,15 +15,15 @@ export function DeckThumbnail({
         <a href={deckLink}>
           <img src={deckIconImage} alt={altIconText} />
           <p>{deckTitle}</p>
-          <button
-            onClick={() => {
-              deleteDeck(deckId);
-            }}
-          >
-            {' '}Delete
-            {' '}
-          </button>
         </a>
+        <button
+          onClick={() => {
+            deleteDeck(deckId);
+          }}
+        >
+          {' '}Delete
+          {' '}
+        </button>
       </div>
     </li>
   );
