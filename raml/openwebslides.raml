@@ -264,7 +264,11 @@ documentation:
     uriParameters:
       id: ID
     get:
-      description: Get deck
+      description: |
+        Get deck. Request body media type (`Accept` header) determines what kind of data you receive: `application/vnd.api+json` returns deck metadata, `text/html` returns the deck's contents.
+      headers:
+        Accept:
+          enum: [application/vnd.api+json, text/html]
       responses:
         200:
           body:
@@ -273,6 +277,9 @@ documentation:
               properties:
                 data: Deck
               example: !include examples/get_deck.json
+            text/html:
+              type: string
+              example: !include examples/get_deck.html
         404:
           description: Deck not found
           body:
@@ -285,7 +292,8 @@ documentation:
       description: Same as [PATCH](#decks__id__patch), but replaces the entire resource
     patch:
       is: [ authenticated ]
-      description: Update deck
+      description: |
+        Update deck. Request body media type (`Content-Type` header) determines what kind of data you update: `application/vnd.api+json` updates deck metadata, `text/html` updates the deck's contents.
       body:
         application/vnd.api+json:
           type: object
@@ -312,8 +320,13 @@ documentation:
                     template?:
                       description: Deck template
                       type: string
-
           example: !include examples/patch_deck.json
+        text/html:
+          type: string
+          example: !include examples/patch_deck.html
+      headers:
+        Content-Type:
+          enum: [application/vnd.api+json, text/html]
       responses:
         200:
           body:
@@ -322,6 +335,9 @@ documentation:
               properties:
                 data: Deck
               example: !include examples/get_deck.json
+            text/html:
+              type: string
+              example: !include examples/get/deck.html
         400:
           description: Error while updating deck
           body:
