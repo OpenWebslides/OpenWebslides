@@ -79,5 +79,22 @@ RSpec.describe 'routing', :type => :routing do
         expect(:delete => route).to route_to 'api/users#destroy', :id => 'foo'
       end
     end
+
+    describe 'assets' do
+      it 'routes assets endpoint' do
+        route = '/api/assets'
+
+        expect(:post => route).to route_to 'api/assets#create'
+      end
+
+      it 'routes asset endpoint' do
+        route = '/api/assets/foo'
+
+        expect(:get => route).to route_to 'api/assets#show', :id => 'foo'
+        expect(:patch => route).to route_to 'api/assets#update', :id => 'foo'
+        expect(:put => route).to route_to 'api/assets#update', :id => 'foo'
+        expect(:delete => route).to route_to 'api/assets#destroy', :id => 'foo'
+      end
+    end
   end
 end
