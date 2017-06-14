@@ -19,8 +19,7 @@ function Slide(props) {
 
 Slide.propTypes = {
   cssIdentifier: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
-    .isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 Slide.defaultProps = {
