@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 
 import Slide from './Slide';
 
-function SlideMode(props) {
+function SlideView(props) {
   return (
     <div
       className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}
     >
       <div className="c_editor-slide-view__wrapper">
-        <Slide>{props.children}</Slide>
+        <Slide>{props.activeSlide}</Slide>
       </div>
     </div>
   );
 }
 
-SlideMode.propTypes = {
+SlideView.propTypes = {
   cssIdentifier: PropTypes.string,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  activeSlide: PropTypes.node.isRequired,
 };
 
-SlideMode.defaultProps = {
+SlideView.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default SlideMode;
+export default SlideView;
