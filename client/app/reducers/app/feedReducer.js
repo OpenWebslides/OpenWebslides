@@ -1,4 +1,7 @@
+/* eslint-disable no-case-declarations */
 import Immutable from 'seamless-immutable';
+import _ from 'lodash';
+
 import {
   REQUEST_FEED_NOTIFICATIONS,
   REQUEST_FEED_NOTIFICATIONS_SUCCESS,
@@ -23,15 +26,17 @@ function feedReducer(state = initialState, action) {
         receivedList: false,
       });
     case REQUEST_FEED_NOTIFICATIONS_SUCCESS:
+      const newListOfNotifications = _.unionWith(
+        state.listOfFeedNotifications,
+        action.payload.listOfNotifications,
+        (a, b) => a.id === b.id,
+      );
       return Immutable.merge(state, {
         sentRequestForList: false,
         receivedList: true,
         errorMessage: '',
-        listOfFeedNotifications: state.listOfFeedNotifications.concat(
-          action.payload.listOfNotifications,
-        ),
-        currentOffset:
-          state.currentOffset + action.payload.listOfNotifications.length,
+        listOfFeedNotifications: newListOfNotifications,
+        currentOffset: newListOfNotifications.length,
       });
     case REQUEST_FEED_NOTIFICATIONS_FAILURE:
       return Immutable.merge(state, {
