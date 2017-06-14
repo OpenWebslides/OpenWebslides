@@ -82,11 +82,11 @@ describe('Feed Reducer', () => {
       }),
     ).toEqual(
       Immutable({
-        listOfFeedNotifications: samples.concat(samples),
+        listOfFeedNotifications: samples,
         sentRequestForList: false,
         receivedList: true,
         errorMessage: '',
-        currentOffset: samples.concat(samples).length,
+        currentOffset: samples.length,
         typeFilter: 'ALL',
       }),
     );
