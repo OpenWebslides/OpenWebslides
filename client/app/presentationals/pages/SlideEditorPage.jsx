@@ -1,16 +1,16 @@
 import React from 'react';
 
 import DefaultLayout from 'presentationals/layouts/DefaultLayout';
-import DeckNavigator from 'presentationals/components/editor/NavigationPane';
-import SlideEditor from 'presentationals/components/editor/EditingPane';
+import NavigationPane from 'presentationals/components/editor/NavigationPane';
+import EditingPane from 'presentationals/components/editor/EditingPane';
 
 function SlideEditorPage() {
   return (
     <DefaultLayout
       cssIdentifier="slide-editor"
       components={{
-        'deck-navigator': <DeckNavigator />,
-        'slide-editor': <SlideEditor />,
+        'deck-navigator': <NavigationPane />,
+        'slide-editor': <EditingPane />,
       }}
     />
   );
