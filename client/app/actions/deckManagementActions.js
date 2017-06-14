@@ -8,7 +8,7 @@ export const DECK_DELETION_REQUEST_FAILURE = 'DECK_DELETION_REQUEST_FAILURE';
 export function requestDeckDeletion(deckID) {
   return {
     type: DECK_DELETION_REQUEST,
-    meta: deckID,
+    payload: deckID,
   };
 }
 
