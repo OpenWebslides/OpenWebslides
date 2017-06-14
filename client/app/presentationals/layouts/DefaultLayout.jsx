@@ -9,12 +9,12 @@ function DefaultLayout(props) {
   // 2) including JSX directly via props.children
   // (If an array of components is passed, props.children is ignored.)
   let layoutContent;
-  if (props.components.length > 0) {
+  if (Object.keys(props.components).length > 0) {
     layoutContent = (
       <main className="l_main">
         <div className="l_main__wrapper">
           {Object.keys(props.components).map(id => (
-            <div className={`l_main__item l_main__item--${id}`}>
+            <div className={`l_main__item l_main__item--${id}`} key={id}>
               <div className="l_main__item__wrapper">
                 {props.components[id]}
               </div>
@@ -48,7 +48,7 @@ function DefaultLayout(props) {
 DefaultLayout.propTypes = {
   cssIdentifier: PropTypes.string.isRequired,
   children: PropTypes.node,
-  components: PropTypes.ObjectOf(PropTypes.element),
+  components: PropTypes.objectOf(PropTypes.element),
 };
 
 DefaultLayout.defaultProps = {
