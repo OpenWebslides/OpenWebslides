@@ -23,11 +23,11 @@ function deckManagementReducer(state = initialState, action) {
       return Immutable.merge(state, {
         sentRequestForDecksList: true,
         receivedList: false,
-        sendDeletionRequest: false,
+        sentDeletionRequestFor: null,
       });
     case REQUEST_DECK_LIST_SUCCESS:
       return Immutable.merge(state, {
-        sentRequestForDeckList: false,
+        sentRequestForDecksList: false,
         receivedList: true,
         listErrorMessage: '',
         listOfDecks: state.listOfDecks.concat(action.payload.listOfDecks),
