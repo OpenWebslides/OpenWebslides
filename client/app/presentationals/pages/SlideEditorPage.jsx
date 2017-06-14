@@ -9,8 +9,8 @@ function SlideEditorPage() {
     <DefaultLayout
       cssIdentifier="slide-editor"
       components={{
-        'deck-navigator': DeckNavigator,
-        'slide-editor': SlideEditor,
+        'deck-navigator': <DeckNavigator />,
+        'slide-editor': <SlideEditor />,
       }}
     />
   );
