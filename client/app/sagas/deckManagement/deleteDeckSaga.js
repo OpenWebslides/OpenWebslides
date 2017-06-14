@@ -12,7 +12,7 @@ const authState = state => state.local.auth;
 export function* deleteDeckFlow(action) {
   try {
     const { authToken } = yield select(authState);
-    const deckId = action.meta;
+    const deckId = action.payload;
     yield call(deleteDeckApi, deckId, authToken);
     yield put({ type: DECK_DELETION_REQUEST_SUCCESS });
   } catch (error) {
