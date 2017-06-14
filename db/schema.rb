@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517131505) do
+ActiveRecord::Schema.define(version: 20170614105333) do
+
+  create_table "assets", force: :cascade do |t|
+    t.string "filename"
+    t.integer "deck_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deck_id"], name: "index_assets_on_deck_id"
+    t.index ["filename", "deck_id"], name: "index_assets_on_filename_and_deck_id", unique: true
+  end
 
   create_table "decks", force: :cascade do |t|
     t.string "name"
