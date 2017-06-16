@@ -10,6 +10,7 @@ import {
 import DeckManagementSection from 'presentationals/deckManagement/DeckManagementSection';
 
 function mapStateToProps(state) {
+  debugger;
   const ownDecksState = state.local.ownDecks;
   const authState = state.local.auth;
   return {

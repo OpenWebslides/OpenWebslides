@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 // Presentationals:
-import NeedSigninWarning from 'presentationals/NeedSigninWarning';
+import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 import { DeckThumbnail } from 'presentationals/deckManagement/DeckThumbnail';
 
 // Helpers:
