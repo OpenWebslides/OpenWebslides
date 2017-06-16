@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 
 // Presentationals:
-import NeedSigninWarning from 'presentationals/NeedSigninWarning';
+import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 
 // Fields
-import inputField from 'presentationals/formFields/InputField';
+import inputField from 'presentationals/objects/form-fields/InputField';
 
 // Actions
 import { requestDeckCreation } from 'actions/createDeckActions';
