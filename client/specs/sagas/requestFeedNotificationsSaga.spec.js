@@ -7,9 +7,7 @@ import {
 } from 'actions/feedActions';
 import feedApiCall from 'api/feedApiCall';
 
-import {
-  getFeedNotificationsFlow,
-} from 'sagas/feed/requestFeedNotificationsSaga';
+import { getFeedNotificationsFlow } from 'sagas/feed/requestFeedNotificationsSaga';
 
 function fakeResponseElement() {
   const id = faker.random.number();
@@ -39,7 +37,8 @@ function fakeResponseElement() {
         },
         deck: {
           links: {
-            self: 'http://localhost:5000/api/notifications/1/relationships/deck',
+            self:
+              'http://localhost:5000/api/notifications/1/relationships/deck',
             related: 'http://localhost:5000/api/notifications/1/deck',
           },
           data: {
@@ -73,6 +72,7 @@ describe('Feed Saga', () => {
       const resultListOfNotifications = [];
       for (let i = 0; i < 12; i += 1) {
         resultListOfNotifications.push({
+          id: dummyResponse[i].id,
           timestamp: dummyResponse[i].attributes.createdAt,
           type: dummyResponse[i].attributes.eventType,
           targetDeck: dummyResponse[i].attributes.deckName,
@@ -114,7 +114,7 @@ describe('Feed Saga', () => {
       const generator = getFeedNotificationsFlow({
         meta: 12,
       });
-      expect(generator.next().value).toEqual(call(feedApiCall,12));
+      expect(generator.next().value).toEqual(call(feedApiCall, 12));
 
       expect(generator.throw(dummyError).value).toEqual(
         put({
