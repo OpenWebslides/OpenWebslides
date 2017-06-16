@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CreateDeckForm from 'containers/CreateDeckForm';
+import CreateDeckForm from 'containers/CreateDeckFormContainer';
 
 function CreateDeckPage() {
   return (
