@@ -1,6 +1,6 @@
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import history from 'history';
 
 import CreateDeckForm from 'presentationals/deckManagement/createDeckForm';
 
@@ -26,7 +26,7 @@ const createDeckReduxForm = reduxForm({
   form: 'createDeckForm',
   validate,
   getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => browserHistory.push('/'),
+  onSubmitSuccess: () => history.push('/'),
 })(CreateDeckForm);
 
 function mapStateToProps(state) {
