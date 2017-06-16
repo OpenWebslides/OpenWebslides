@@ -19,7 +19,7 @@ function fakeResponseElement() {
         id,
         type: 'decks',
         links: {
-          self: `http://localhost:5000/api/decks/${id}`,
+          self: `http://localhost:3000/api/decks/${id}`,
         },
         attributes: {
           name: faker.lorem.sentence(),
@@ -30,14 +30,14 @@ function fakeResponseElement() {
         relationships: {
           owner: {
             links: {
-              self: `http://localhost:5000/api/decks/${id}/relationships/owner`,
-              related: `http://localhost:5000/api/decks/${id}/owner`,
+              self: `http://localhost:3000/api/decks/${id}/relationships/owner`,
+              related: `http://localhost:3000/api/decks/${id}/owner`,
             },
           },
           collaborators: {
             links: {
-              self: `http://localhost:5000/api/decks/${id}/relationships/collaborators`,
-              related: `http://localhost:5000/api/decks/${id}/collaborators`,
+              self: `http://localhost:3000/api/decks/${id}/relationships/collaborators`,
+              related: `http://localhost:3000/api/decks/${id}/collaborators`,
             },
           },
         },
