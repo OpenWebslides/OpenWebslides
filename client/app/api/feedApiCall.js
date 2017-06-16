@@ -3,7 +3,7 @@ import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
 
 async function requestFeedNotifications(offset = 0) {
   const NOTIFICATIONS_API_URL =
-    'http://localhost:5000/api/notifications?sort=-createdAt';
+    'http://localhost:3000/api/notifications?sort=-createdAt';
   const PARAMETER = `&page[offset]=${offset}`;
 
   const baseRequestConfig = getBaseRequestConfig();
