@@ -16,7 +16,7 @@ describe('Api call to delete a deck', () => {
 
     const calledUrl = asyncFetch.mock.calls[0][0];
 
-    expect(calledUrl).toEqual(`http://localhost:5000/api/decks/${deckId}`);
+    expect(calledUrl).toEqual(`http://localhost:3000/api/decks/${deckId}`);
 
     const requestConfig = asyncFetch.mock.calls[0][1];
 

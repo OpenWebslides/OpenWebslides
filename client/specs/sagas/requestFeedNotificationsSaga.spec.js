@@ -16,7 +16,7 @@ function fakeResponseElement() {
       id,
       type: 'notifications',
       links: {
-        self: `http://localhost:5000/api/notifications/${id}`,
+        self: `http://localhost:3000/api/notifications/${id}`,
       },
       attributes: {
         eventType: faker.random.arrayElement(['DECK_CREATED', 'DECK_UPDATED']),
@@ -27,8 +27,8 @@ function fakeResponseElement() {
       relationships: {
         user: {
           links: {
-            self: `http://localhost:5000/api/notifications/${id}/relationships/user'`,
-            related: 'http://localhost:5000/api/notifications/1/user',
+            self: `http://localhost:3000/api/notifications/${id}/relationships/user'`,
+            related: 'http://localhost:3000/api/notifications/1/user',
           },
           data: {
             type: 'users',
@@ -38,8 +38,8 @@ function fakeResponseElement() {
         deck: {
           links: {
             self:
-              'http://localhost:5000/api/notifications/1/relationships/deck',
-            related: 'http://localhost:5000/api/notifications/1/deck',
+              'http://localhost:3000/api/notifications/1/relationships/deck',
+            related: 'http://localhost:3000/api/notifications/1/deck',
           },
           data: {
             type: 'decks',

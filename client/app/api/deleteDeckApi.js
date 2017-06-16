@@ -1,7 +1,7 @@
 import asyncFetch from 'api/helpers/asyncFetch';
 import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
 
-export const DECK_DELETION_URL = 'http://localhost:5000/api/decks/';
+export const DECK_DELETION_URL = 'http://localhost:3000/api/decks/';
 
 async function deleteDeck(deckId, token) {
   const baseRequestConfig = getBaseRequestConfig();
