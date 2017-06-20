@@ -17,6 +17,19 @@ class Asset < ApplicationRecord
   ##
   # Methods
   #
+  def path
+    Repository::Asset::Find.new(self).execute
+  end
+
+  def update_file(params)
+    command = Repository::Asset::Update.new self
+
+    command.content = params[:content]
+    command.author = params[:author]
+
+    command.execute
+  end
+
   ##
   # Overrides
   #
