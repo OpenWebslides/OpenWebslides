@@ -12,7 +12,7 @@ import inputField from 'presentationals/objects/form-fields/InputField';
 import { requestDeckCreation } from 'actions/createDeckActions';
 
 // Helpers:
-import IfAuthHOC from '../../../lib/IfAuthHOC';
+import IfAuthHOC from '../../../../lib/IfAuthHOC';
 
 // Submit Validation
 function validateAndSubmit(values, dispatch) {
