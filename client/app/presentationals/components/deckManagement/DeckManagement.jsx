@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
-import { DeckThumbnail } from 'presentationals/deckManagement/DeckThumbnail';
+import { DeckThumbnail } from 'presentationals/components/deckManagement/DeckThumbnail';
 
 // Helpers:
 import IfAuthHOC from '../../../../lib/IfAuthHOC';
@@ -22,7 +22,7 @@ function renderDeckThumbnail(el, deleteDeck) {
   );
 }
 
-class DeckManagementSection extends React.Component {
+class DeckManagement extends React.Component {
   componentWillMount() {
     if (this.props.authState.isAuthenticated) {
       this.props.requestOwnDecks(this.props.authState.id);
@@ -56,7 +56,7 @@ class DeckManagementSection extends React.Component {
   }
 }
 
-DeckManagementSection.propTypes = {
+DeckManagement.propTypes = {
   requestOwnDecks: PropTypes.func.isRequired,
   ownDecksState: PropTypes.shape({
     listOfDecks: PropTypes.array.isRequired,
@@ -68,4 +68,4 @@ DeckManagementSection.propTypes = {
   }),
 };
 
-export default DeckManagementSection;
+export default DeckManagement;
