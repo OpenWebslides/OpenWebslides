@@ -21,9 +21,54 @@ function renderFeedNotification(el) {
   );
 }
 
+function filterNotificationsByType(listOfNotifications, type) {
+  return Immutable.asMutable(listOfNotifications)
+    .concat() // Return a new array instead of mutating
+    .filter(e => e.type === type || type === 'ALL');
+}
+
 class Feed extends React.Component {
   componentWillMount() {
     this.props.requestFeedNotifications();
+  }
+
+  checkWhatToDisplay(filteredList) {
+    if (this.props.feedState.errorMessage === '' && filteredList.length === 0) {
+      return <li key="0"> No notifications to display </li>;
+    } else if (
+      filteredList.length === 0 &&
+      this.props.feedState.errorMessage !== ''
+    ) {
+      return <li key="0"> There was an error retrieving notifications! </li>;
+    }
+    const numOfNotificationsToDisplay = filteredList.length <=
+      this.props.feedState.currentOffset
+      ? filteredList.length
+      : this.props.feedState.currentOffset;
+    const sortedNotificationsToDisplay = filteredList
+      .concat()
+      .sort((e1, e2) => e1.timestamp - e2.timeStamp);
+
+    return sortedNotificationsToDisplay
+      .slice(0, numOfNotificationsToDisplay)
+      .map(el => renderFeedNotification(el));
+  }
+
+  computeLastNotification(filteredList) {
+    if (filteredList.length === 0 && this.props.feedState.sentRequestForList) {
+      return <p> loading... </p>;
+    }
+    return (
+      <button
+        onClick={() => {
+          this.props.requestFeedNotifications(
+            this.props.feedState.currentOffset,
+          );
+        }}
+      >
+        more
+      </button>
+    );
   }
 
   render() {
@@ -31,60 +76,16 @@ class Feed extends React.Component {
       .listOfFeedNotifications;
     const selectedType = this.props.feedState.typeFilter;
 
-    let notificationsToDisplay;
-
-    const filteredFeedNotifications = Immutable.asMutable(
+    const filteredFeedNotifications = filterNotificationsByType(
       listOfFeedNotifications,
-    )
-      .concat()
-      .filter(e => e.type === selectedType || selectedType === 'ALL');
-
-    if (
-      filteredFeedNotifications.length === 0 &&
-      this.props.feedState.errorMessage === ''
-    ) {
-      notificationsToDisplay = <li key="0"> No notifications to display </li>;
-    } else if (
-      filteredFeedNotifications.length === 0 &&
-      this.props.feedState.errorMessage !== ''
-    ) {
-      notificationsToDisplay = (
-        <li key="0"> There was an error retrieving notifications! </li>
-      );
-    } else {
-      const numOfNotificationsToDisplay = filteredFeedNotifications.length <=
-        this.props.feedState.currentOffset
-        ? filteredFeedNotifications.length
-        : this.props.feedState.currentOffset;
-
-      const sortedNotificationsToDisplay = filteredFeedNotifications
-        .concat()
-        .sort((e1, e2) => e1.timestamp - e2.timeStamp);
-
-      notificationsToDisplay = sortedNotificationsToDisplay
-        .slice(0, numOfNotificationsToDisplay)
-        .map(el => renderFeedNotification(el));
-    }
-    let lastNotification;
-
-    if (
-      filteredFeedNotifications.length === 0 &&
-      this.props.feedState.sentRequestForList
-    ) {
-      lastNotification = <p> loading... </p>;
-    } else {
-      lastNotification = (
-        <button
-          onClick={() => {
-            this.props.requestFeedNotifications(
-              this.props.feedState.currentOffset,
-            );
-          }}
-        >
-          more
-        </button>
-      );
-    }
+      selectedType,
+    );
+    const notificationsToDisplay = this.checkWhatToDisplay(
+      filteredFeedNotifications,
+    );
+    const lastNotification = this.computeLastNotification(
+      filteredFeedNotifications,
+    );
 
     return (
       <div className="c_feed-container">
@@ -132,4 +133,4 @@ Feed.defaultProps = {
   listOfFeedNotifications: [],
 };
 
-export default Feed
+export default Feed;
