@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import history from 'history';
 
-import CreateDeckForm from 'presentationals/deckManagement/createDeckForm';
+import CreateDeckForm from 'presentationals/components/deckManagement/CreateDeckForm';
 
 function validate(values) {
   const { title, description } = values;
