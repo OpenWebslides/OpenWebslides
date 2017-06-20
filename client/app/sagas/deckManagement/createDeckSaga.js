@@ -4,7 +4,7 @@ import { SubmissionError } from 'redux-form';
 import { DECK_CREATION_REQUEST } from 'actions/createDeckActions';
 import createDeckApi from 'api/createDeckApi';
 
-const authState = state => state.local.auth;
+const authState = state => state.app.authentication;
 
 export function* createDeckFlow(action) {
   const { resolve, reject } = action.meta;
