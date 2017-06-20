@@ -131,3 +131,5 @@ Feed.propTypes = {
 Feed.defaultProps = {
   listOfFeedNotifications: [],
 };
+
+export default Feed
