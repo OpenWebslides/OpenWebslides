@@ -7,7 +7,7 @@ import {
 } from 'actions/deckManagementActions';
 import deleteDeckApi from 'api/deleteDeckApi';
 
-const authState = state => state.local.auth;
+const authState = state => state.app.authentication;
 
 export function* deleteDeckFlow(action) {
   try {
