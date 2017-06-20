@@ -31,7 +31,7 @@ const createDeckReduxForm = reduxForm({
 
 function mapStateToProps(state) {
   return {
-    authState: state.local.auth,
+    authState: state.app.authentication,
   };
 }
 
