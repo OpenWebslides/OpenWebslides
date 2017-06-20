@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     # Users and decks
     jsonapi_resources :users
     jsonapi_resources :decks
-    jsonapi_resources :assets, :except => :index
+    jsonapi_resources :assets, :except => :index do end
 
     # Social feed
     jsonapi_resources :notifications, :only => %i[index show] do end
