@@ -12,7 +12,7 @@ import ConfirmEmailPage from 'presentationals/pages/ConfirmEmailPage';
 import OauthCallbackPage from 'presentationals/pages/OauthCallbackPage';
 import SlideEditorPage from 'presentationals/pages/SlideEditorPage';
 import EditorPage from 'presentationals/pages/EditorPage';
-import CreateDeckPage from 'pages/CreateDeckPage';
+import CreateDeckPage from 'presentationals/pages/CreateDeckPage';
 
 import history from './history';
 
