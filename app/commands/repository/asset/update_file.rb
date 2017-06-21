@@ -3,20 +3,20 @@
 module Repository
   module Asset
     ##
-    # Update an asset in the backing store with a string
+    # Update an asset in the backing store with a file
     #
-    class Update < AssetCommand
-      attr_accessor :author, :content
+    class UpdateFile < AssetCommand
+      attr_accessor :author, :file
 
       def execute
         raise ArgumentError 'No author specified' unless @author
-        raise ArgumentError 'No content specified' unless @content
+        raise ArgumentError 'No file specified' unless @file
 
         exists = File.exist? asset_file
 
-        # Write asset file
-        exec Asset::Write do |c|
-          c.content = @content
+        # Copy asset file
+        exec Asset::Copy do |c|
+          c.file = @file
         end
 
         # Commit
