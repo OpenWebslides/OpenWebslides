@@ -1,3 +1,6 @@
 [submodule "lib/assets/templates/shower-ows"]
 	path = lib/assets/templates/shower-ows
 	url = https://github.com/OpenWebslides/template-shower-ows.git
+[submodule "lib/assets/conversion"]
+	path = lib/assets/conversion
+	url = git@github.com:OpenWebslides/conversion-tool-binaries.git
