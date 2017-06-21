@@ -4,15 +4,17 @@ module Repository
   ##
   # Destroy a repository in the backing store
   #
-  class Delete < Command
+  class Delete < RepoCommand
     def execute
-      # Delete local repository
-      exec Filesystem::Destroy
+      write_lock do
+        # Delete local repository
+        exec Filesystem::Destroy
 
-      return unless OpenWebslides.config.github.enabled
+        return unless OpenWebslides.config.github.enabled
 
-      # Delete remote repository
-      exec Remote::Destroy
+        # Delete remote repository
+        exec Remote::Destroy
+      end
     end
   end
 end
