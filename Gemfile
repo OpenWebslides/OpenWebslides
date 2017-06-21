@@ -73,6 +73,9 @@ group :development, :test do
 
   # Process manager
   gem 'foreman', :require => false
+
+  # Detect code smells
+  gem 'reek', :require => false
 end
 
 group :test do
