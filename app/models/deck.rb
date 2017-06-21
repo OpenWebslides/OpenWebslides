@@ -27,7 +27,7 @@ class Deck < ApplicationRecord
   # Callbacks
   #
   before_save :generate_canonical_name
-  after_commit :create_repository, :unless => :skip_callbacks
+  after_save :create_repository, :unless => :skip_callbacks
   before_destroy :delete_repository, :unless => :skip_callbacks
   after_initialize :set_default_template
 
@@ -35,6 +35,8 @@ class Deck < ApplicationRecord
   # Methods
   #
   def create_repository
+    # Run only after :save callback on create
+    return unless id_changed?
     Repository::Create.new(self).execute
   end
 
