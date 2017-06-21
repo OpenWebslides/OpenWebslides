@@ -4,10 +4,12 @@ module Repository
   ##
   # Read the contents of a repository in the backing store
   #
-  class Read < Command
+  class Read < RepoCommand
     def execute
-      # Get repository contents
-      exec Filesystem::Read
+      read_lock do
+        # Get repository contents
+        exec Filesystem::Read
+      end
     end
   end
 end
