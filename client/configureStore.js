@@ -30,7 +30,7 @@ function configureStore() {
         app: {
           authentication: store.getState().app.authentication,
         },
-        entities: store.getState().entities,
+        // entities: store.getState().entities,
       });
     }, 1000),
   );
