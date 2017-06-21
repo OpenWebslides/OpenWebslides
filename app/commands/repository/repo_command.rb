@@ -15,12 +15,46 @@ module Repository
       File.join repo_path, 'index.html'
     end
 
+    def lock_path
+      File.join Rails.root.join 'tmp', 'locks'
+    end
+
     def template_path
       File.join OpenWebslides.config.template_path, @receiver.template
     end
 
     def template_file
       File.join template_path, 'index.html.erb'
+    end
+
+    ##
+    # Exclusively lock a repository
+    #
+    def write_lock(&block)
+      lock File::LOCK_EX, block
+    end
+
+    ##
+    # Shared lock a repository
+    #
+    def read_lock(&block)
+      lock File::LOCK_SH, block
+    end
+
+    private
+
+    def lock(type, block)
+      file = File.join lock_path, "#{@receiver.id}.lock"
+
+      File.open(file, File::RDWR | File::CREAT, 0o644) do |lock|
+        begin
+          lock.flock type
+
+          block.call
+        ensure
+          lock.flock File::LOCK_UN
+        end
+      end
     end
   end
 end
