@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import renderActiveSlide from 'lib/render-active-slide/renderActiveSlide';
+import renderActiveSlide from 'lib/convert-to-react/renderActiveSlide';
 
 function SlideView(props) {
   if (props.activeSlide) {
