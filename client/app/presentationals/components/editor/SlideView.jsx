@@ -4,8 +4,7 @@ import renderActiveSlide from 'lib/render-active-slide/renderActiveSlide';
 
 function SlideView(props) {
   if (props.activeSlide) {
-    const { slides, activeSlide } = props;
-    const ActiveSlide = renderActiveSlide(slides[activeSlide]);
+    const ActiveSlide = renderActiveSlide(props.activeSlide);
 
     return (
       <div
@@ -17,17 +16,18 @@ function SlideView(props) {
       </div>
     );
   }
+
   return <h1>Loading...</h1>;
 }
 
 SlideView.propTypes = {
   cssIdentifier: PropTypes.string,
-  activeSlide: PropTypes.node.isRequired,
-  slides: PropTypes.objectOf(Object).isRequired,
+  activeSlide: PropTypes.objectOf(Object),
 };
 
 SlideView.defaultProps = {
   cssIdentifier: 'default',
+  activeSlide: null,
 };
 
 export default SlideView;
