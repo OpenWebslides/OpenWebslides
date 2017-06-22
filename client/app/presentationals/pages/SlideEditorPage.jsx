@@ -1,10 +1,8 @@
 import React from 'react';
 
 import DefaultLayout from 'presentationals/layouts/DefaultLayout';
-import DeckNavigationPane
-  from 'presentationals/components/editor/DeckNavigationPane';
-import SlideEditingPane
-  from 'presentationals/components/editor/SlideEditingPane';
+import DeckNavigationPane from 'presentationals/components/editor/DeckNavigationPane';
+import SlideEditingPane from 'presentationals/components/editor/SlideEditingPane';
 
 function SlideEditorPage() {
   return (
