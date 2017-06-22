@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import convertSlides from 'lib/convert-to-react/convertSlides';
+import convertSlides from 'lib/convert-to-react/renderReadOnlySlides';
 
 export default class NavigationPane extends Component {
   constructor(props) {
