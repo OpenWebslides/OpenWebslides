@@ -13,7 +13,10 @@ const deckString = `
   </section>
   <section class="slide">
     <h1>Second Slide</h1>
-    <h1>This is a subtitle with <em>emphasized text</em> and even <strong>strong text</strong></h1>
+    <section>
+      <p>This is a subtitle with <em>emphasized text</em> and even <strong>strong text</strong></p>
+      <p>This is a subtitle with <em>emphasized text</em> and even <strong>strong text</strong></p>
+    </section>
   </section>
   <div class="progress"></div>
   <footer class="badge">
@@ -22,17 +25,11 @@ const deckString = `
 
 function* doFetchSlides() {
   try {
-    const deckData = {
-      meta: {
-        title: 'Test presentation',
-        description: 'Best presentation',
-      },
-    };
+    const state = yield convertToState(deckString);
+    yield put({ type: 'FETCH_SLIDES_SUCCESS', payload: state });
 
-    const slideData = yield convertToState(deckString);
-    const stateObject = yield Object.assign({}, deckData, slideData);
-
-    yield put({ type: 'FETCH_SLIDES_SUCCESS', payload: stateObject });
+    const slideId = yield Object.keys(state.slides).length - 1;
+    yield put({ type: 'SET_ACTIVE_SLIDE', payload: { slideId } });
   } catch (e) {
     console.log(e);
   }
