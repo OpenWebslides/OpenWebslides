@@ -1,20 +1,14 @@
-import _ from 'lodash';
+import serializeSlides from './serializeSlides';
 
-import parseSlides from './parseSlides';
-
-function convertToState(html) {
+function convertToState(htmlString) {
   const parser = new DOMParser();
-  const document = parser.parseFromString(html, 'text/html');
+  const document = parser.parseFromString(htmlString, 'text/html');
 
-  if (_.isUndefined(document)) {
-    throw new Error('Invalid data');
-  }
-
-  const slideArr = Array.from(document.body.children).filter(
-    node => node.nodeName === 'SECTION',
+  const slidesArray = Array.from(document.body.children).filter(
+    node => node.nodeName === 'SECTION' && node.className.includes('slide'),
   );
 
-  return parseSlides(slideArr);
+  return serializeSlides(slidesArray);
 }
 
 export default convertToState;
