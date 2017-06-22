@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ViewPane from './ViewPane';
 
 import addTitle from 'actions/contentBlockActions';
 
 class EditingPane extends Component {
-  componentDidMount() {
-    this.activeSlide = 'hm?';
+  constructor() {
+    super();
+    this.handleAddTitle = this.handleAddTitle.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.selectedSlideId === nextProps.activeDeck.slides.selectedSlide) {
-      return false;
-    }
-    return true;
+  handleAddTitle() {
+    this.props.addTitle(this.props.activeSlide);
   }
-
-  addTitle() {}
 
   render() {
     //   return (
@@ -63,7 +60,6 @@ class EditingPane extends Component {
 
 EditingPane.propTypes = {
   cssIdentifier: PropTypes.string,
-  activeDeck: PropTypes.objectOf(Object).isRequired,
 };
 
 EditingPane.defaultProps = {
@@ -72,8 +68,12 @@ EditingPane.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    activeDeck: state.entities.decks,
+    activeSlide: state.app.editor.activeSlide,
   };
 }
 
-export default connect(mapStateToProps)(EditingPane);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ addTitle }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditingPane);
