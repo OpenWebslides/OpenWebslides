@@ -2,11 +2,12 @@
 export const FETCH_SLIDES = 'FETCH_SLIDES';
 export const FETCH_SLIDES_SUCCESS = 'FETCH_SLIDES_SUCCESS';
 export const FETCH_SLIDES_FAILURE = 'FETCH_SLIDES_FAILURE';
+
 export const UPDATE_SLIDE = 'UPDATE_SLIDE';
 
 export const ADD_SLIDE = 'ADD_SLIDE';
 
-export const SELECT_SLIDE = 'SELECT_SLIDE';
+export const SET_ACTIVE_SLIDE = 'SET_ACTIVE_SLIDE';
 
 // Creators
 export function fetchSlides(deckId) {
@@ -16,10 +17,10 @@ export function fetchSlides(deckId) {
   };
 }
 
-export function updateSlide(content) {
+export function updateSlide(id, content) {
   return {
     type: UPDATE_SLIDE,
-    payload: { content },
+    payload: { id, content },
   };
 }
 
@@ -30,9 +31,9 @@ export function addSlide(newSlideId) {
   };
 }
 
-export function selectSlide(selectedSlideId) {
+export function setActiveSlide(slideId) {
   return {
-    type: SELECT_SLIDE,
-    payload: { selectedSlideId },
+    type: SET_ACTIVE_SLIDE,
+    payload: { slideId },
   };
 }
