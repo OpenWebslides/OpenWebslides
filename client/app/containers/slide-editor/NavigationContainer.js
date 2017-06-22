@@ -8,7 +8,6 @@ import NavigationPane from 'presentationals/components/editor/NavigationPane';
 function mapStateToProps(state) {
   return {
     slides: state.entities.slides.byId,
-    contentBlocks: state.entities.contentBlocks.byId,
   };
 }
 

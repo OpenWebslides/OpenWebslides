@@ -11,7 +11,6 @@ import ResetPasswordPage from 'presentationals/pages/ResetPasswordPage';
 import ConfirmEmailPage from 'presentationals/pages/ConfirmEmailPage';
 import OauthCallbackPage from 'presentationals/pages/OauthCallbackPage';
 import SlideEditorPage from 'presentationals/pages/SlideEditorPage';
-import EditorPage from 'presentationals/pages/EditorPage';
 import CreateDeckPage from 'presentationals/pages/CreateDeckPage';
 
 import history from './history';
@@ -27,9 +26,7 @@ export default (
       <Route path="/oauth/omniauth" component={OauthCallbackPage} />
       <Route path="/reset_password" component={ResetPasswordPage} />
       <Route path="/editor" component={SlideEditorPage} />
-      <Route path="/editortest" component={EditorPage} />
       <Route path="/create_new_deck" component={CreateDeckPage} />
     </Switch>
   </Router>
 );
-

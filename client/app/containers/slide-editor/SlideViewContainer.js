@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import SlideView from 'presentationals/components/editor/SlideView';
 
 function mapStateToProps(state) {
+  const { activeSlide } = state.app.editor;
   return {
-    activeSlide: state.app.editor.activeSlide,
-    slides: state.entities.slides.byId,
-    contentBlocks: state.entities.contentBlocks.byId,
+    activeSlide: state.entities.slides.byId[activeSlide],
   };
 }
 
