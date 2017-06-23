@@ -1,11 +1,11 @@
+import defaults from 'API_config';
+
 import { loadState } from 'localStorage';
 import { ApiError, ValidationError } from './errors';
 
 function getAuthToken() {
   // We load it from the local storage.
-
   const loadedState = loadState();
-
   return loadedState.local.auth.token; // TODO: change this when master gets updated to the last frontend branch
 }
 
@@ -46,8 +46,10 @@ function ApiRequest() {
   if (tryToken) {
     that.headers.Authentication = tryToken;
   }
-
   that.parameters = {};
+
+  that.port = defaults.port ? defaults.port : undefined;
+  that.host = defaults.host ? defaults.host : undefined;
 
   that.setEndpoint = endpoint => {
     that.endPoint = endpoint;
