@@ -107,7 +107,7 @@ function ApiRequest() {
     if (that.method === 'GET') {
       throw new Error(`Can't add a body to a GET request.`);
     }
-    that.body = body;
+    that.body = JSON.stringify(body);
     return that;
   };
 
