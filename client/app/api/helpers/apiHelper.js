@@ -133,8 +133,9 @@ function ApiRequest() {
     }
     if (that.parameters) {
       const keys = Object.keys(that.parameters);
-      keys.forEach(key => {
-        url += `&${key}=${that.parameters[key]}`;
+      keys.forEach((key, index) => {
+        const beginChar = index === 0 ? '?' : '&';
+        url += `${beginChar}${key}=${that.parameters[key]}`;
       });
     }
     const config = {
