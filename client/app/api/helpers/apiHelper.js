@@ -37,15 +37,17 @@ async function asyncFetch(url, requestConfig = {}) {
 function ApiRequest() {
   const that = {};
 
+  that.headers = {
+    'Content-Type': 'application/vnd.api+json',
+  };
+
   // try to get the auth token from the store:
   const tryToken = getAuthToken();
   if (tryToken) {
     that.headers.Authentication = tryToken;
   }
 
-  that.headers = {
-    'Content-Type': 'application/vnd.api+json',
-  };
+  that.parameters = {};
 
   that.setEndpoint = endpoint => {
     that.endPoint = endpoint;
