@@ -1,15 +1,14 @@
-import defaults from 'API_config';
-
-import { loadState } from 'localStorage';
+import { loadState } from '../../../localStorage';
+import defaults from '../../../API_config';
 import { ApiError, ValidationError } from './errors';
 
 function getAuthToken() {
   // We load it from the local storage.
   const loadedState = loadState();
-  return loadedState.local.auth.token; // TODO: change this when master gets updated to the last frontend branch
+  return loadedState ? loadedState.local.auth.token : null; // TODO: change this when master gets updated to the last frontend branch
 }
 
-async function asyncFetch(url, requestConfig = {}) {
+export async function asyncFetch(url, requestConfig = {}) {
   const response = await fetch(url, requestConfig);
   const { statusText, status } = response;
   let responseBody;
@@ -48,7 +47,7 @@ function ApiRequest() {
   }
   that.parameters = {};
 
-  that.port = defaults.port ? defaults.port : undefined;
+  that.port = defaults.port ? parseInt(defaults.port, 10) : undefined;
   that.host = defaults.host ? defaults.host : undefined;
 
   that.setEndpoint = endpoint => {
