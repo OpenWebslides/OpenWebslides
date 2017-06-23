@@ -36,6 +36,13 @@ async function asyncFetch(url, requestConfig = {}) {
 
 function ApiRequest() {
   const that = {};
+
+  // try to get the auth token from the store:
+  const tryToken = getAuthToken();
+  if (tryToken) {
+    that.headers.Authentication = tryToken;
+  }
+
   that.headers = {
     'Content-Type': 'application/vnd.api+json',
   };
@@ -52,6 +59,11 @@ function ApiRequest() {
     that.port = port;
     return that;
   };
+
+  that.setHost = host => {
+    that.host = host;
+  };
+
   that.setMethod = type => {
     // Check it's a valid type:
     if (!(type in ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])) {
@@ -107,6 +119,31 @@ function ApiRequest() {
 
     that.parameters[paramName] = paramVal;
     return that;
+  };
+
+  that.executeRequest = async function executeRequest() {
+    let url = `http://${that.host}`;
+    if (that.port) {
+      url += `:${that.port}`;
+    }
+    if (that.endPoint) {
+      url += `/${that.endPoint}`;
+    } else {
+      throw new Error('Cannot execute request: no endpoint is set!');
+    }
+    if (that.parameters) {
+      const keys = Object.keys(that.parameters);
+      keys.forEach(key => {
+        url += `&${key}=${that.parameters[key]}`;
+      });
+    }
+    const config = {
+      method: that.method,
+      headers: that.headers,
+      body: that.body,
+    };
+
+    return asyncFetch(url, config);
   };
 }
 
