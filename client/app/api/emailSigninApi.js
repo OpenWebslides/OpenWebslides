@@ -1,14 +1,15 @@
-import asyncFetch from './helpers/asyncFetch';
-import getBaseRequestConfig from './helpers/baseRequestConfig';
+import ApiRequest from './helpers/apiHelper';
 
 export const SIGNIN_API_URL = 'http://localhost:5000/api/token';
 
 async function emailSignin(email, password) {
-  const baseRequestConfig = getBaseRequestConfig();
-
-  const requestConfig = Object.assign({}, baseRequestConfig, {
-    method: 'POST',
-    body: JSON.stringify({
+  const request = new ApiRequest();
+  request
+    .setHost('localhost')
+    .setPort(5000)
+    .setEndpoint('api/token')
+    .setMethod('POST')
+    .setBody({
       data: {
         type: 'tokens',
         attributes: {
@@ -16,10 +17,9 @@ async function emailSignin(email, password) {
           password,
         },
       },
-    }),
-  });
+    });
 
-  const response = await asyncFetch(SIGNIN_API_URL, requestConfig);
+  const response = await request.executeRequest();
   const responseBody = await response.json();
   const bearerResponseHeader = response.headers.get('Authorization');
 
