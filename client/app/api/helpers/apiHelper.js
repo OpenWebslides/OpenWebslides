@@ -1,4 +1,4 @@
-import loadState from 'localStorage';
+import { loadState } from 'localStorage';
 import { ApiError, ValidationError } from './errors';
 
 function getAuthToken() {
