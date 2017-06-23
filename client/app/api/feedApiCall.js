@@ -9,10 +9,10 @@ async function requestFeedNotifications(offset = 0) {
     .setEndpoint('api/notifications')
     .setMethod('GET')
     .addParameter('sort', '-createdAt')
-    .addParameter('page[offset]', `${offset}`)
+    .addParameter('page[offset]', `${offset}`);
 
+  const response = await request.executeRequest();
 
-  const response = request.executeRequest();
   const responseBody = await response.json();
 
   return responseBody.data;
