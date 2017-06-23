@@ -1,4 +1,4 @@
-import loadState from 'localStorage';
+import loadState from 'client/localStorage';
 
 function getAuthToken() {
   // We load it from the local storage.
