@@ -122,6 +122,20 @@ Notification:
           description: Name of the slidedeck
           type: string
 
+Conversion:
+  type: object
+  properties:
+  id: ID
+    type:
+      description: Resource type, should be set to `notifications`
+      type: string
+  attributes:
+    type: object
+    properties:
+      status:
+        description: Conversion job status
+        enum: [queued processing success error]
+
 Confirmation:
   type: object
   properties:

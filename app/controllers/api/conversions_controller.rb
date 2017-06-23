@@ -45,6 +45,12 @@ module Api
       results.add_result JSONAPI::ResourceOperationResult.new :created, resource
 
       render_results results
+    rescue Api::ApiError => e
+      e.params[:code] = JSONAPI::UNPROCESSABLE_ENTITY
+      e.params[:status] = :unprocessable_entity
+      e.params[:title] = 'Unprocessable entity'
+
+      raise e
     end
   end
 end
