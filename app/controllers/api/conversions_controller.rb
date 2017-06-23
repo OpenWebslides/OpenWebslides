@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+
 module Api
   class ConversionsController < ApiController
     MEDIA_TYPE = 'application/octet-stream'
@@ -23,15 +25,16 @@ module Api
       raise Pundit::NotAuthorizedError unless ConversionPolicy.new(current_user, conversion).create?
       context[:policy_used]&.call
 
-      # Write uploaded file
+      # Copy uploaded file to tempfile
       filename = request.headers['HTTP_CONTENT_DISPOSITION'].match(/filename ?= ?"?([^\\"]*)"?/)[1]
       raise Api::ApiError, :detail => 'Invalid Content-Disposition header' unless filename
 
-      file = Tempfile.new
-      FileUtils.cp request.body.path, file.path
+      file = Rails.root.join 'tmp', 'uploads', "#{SecureRandom.urlsafe_base64}-#{filename}"
+      raise OpenWebslides::NotImplementedError unless request.body.is_a?(Tempfile)
+      FileUtils.cp request.body.path, file
 
       # Create and queue conversion
-      conversion.filename = file.path
+      conversion.filename = file
       conversion.name = filename
       conversion.status = :queued
       conversion.save
