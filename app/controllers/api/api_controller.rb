@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Api
+  ##
+  # REST API controller
+  #
   class ApiController < ApplicationController
     include JSONAPI::ActsAsResourceController
     include JWT::Auth::Authentication
@@ -17,7 +20,10 @@ module Api
     # Handle generic API errors
     #
     def api_error(error)
-      render :json => { :errors => error.errors }, :status => error.errors.first.status
+      errors = error.errors
+
+      response.headers['Content-Type'] = JSONAPI::MEDIA_TYPE
+      render :json => { :errors => errors }, :status => errors.first.status
     end
 
     ##
@@ -25,11 +31,13 @@ module Api
     #
     def user_not_authenticated
       type = self.class.name.demodulize.underscore.split('_').first.singularize
+      action = params[:action]
       error = JSONAPI::Error.new :code => JSONAPI::UNAUTHORIZED,
                                  :status => :unauthorized,
-                                 :title => "#{params[:action].capitalize} unauthorized",
-                                 :detail => "You don't have permission to #{params[:action]} this #{type}."
+                                 :title => "#{action.capitalize} unauthorized",
+                                 :detail => "You don't have permission to #{action} this #{type}."
 
+      response.headers['Content-Type'] = JSONAPI::MEDIA_TYPE
       render :json => { :errors => [error] }, :status => :unauthorized
     end
 
@@ -38,11 +46,13 @@ module Api
     #
     def user_not_authorized
       type = self.class.name.demodulize.underscore.split('_').first.singularize
+      action = params[:action]
       error = JSONAPI::Error.new :code => JSONAPI::FORBIDDEN,
                                  :status => :forbidden,
-                                 :title => "#{params[:action].capitalize} forbidden",
-                                 :detail => "You don't have permission to #{params[:action]} this #{type}."
+                                 :title => "#{action.capitalize} forbidden",
+                                 :detail => "You don't have permission to #{action} this #{type}."
 
+      response.headers['Content-Type'] = JSONAPI::MEDIA_TYPE
       render :json => { :errors => [error] }, :status => :forbidden
     end
   end
