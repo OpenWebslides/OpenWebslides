@@ -10,7 +10,9 @@ function getAuthToken() {
 
 function ApiRequest() {
   const that = {};
-  that.headers = {};
+  that.headers = {
+    'Content-Type': 'application/vnd.api+json',
+  };
 
   that.setEndpoint = endpoint => {
     that.endPoint = endpoint;
