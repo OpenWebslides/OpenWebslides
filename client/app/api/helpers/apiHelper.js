@@ -67,7 +67,7 @@ function ApiRequest() {
 
   that.setMethod = type => {
     // Check it's a valid type:
-    if (!(type in ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])) {
+    if (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].indexOf(type) === -1) {
       throw new Error(
         `Invalid request method: '${type}'. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')`,
       );
