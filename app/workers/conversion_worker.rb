@@ -8,19 +8,19 @@ require 'open3'
 class ConversionWorker
   include Sidekiq::Worker
 
+  sidekiq_options :queue => 'conversion'
+
   JAR = Rails.root.join 'lib', 'assets', 'conversion', 'OpenWebslidesConverter.jar'
 
-  def perform(file, user_id)
-    raise ArgumentError, "File '#{file}' not found" unless File.exist? file
+  def perform(conversion_id)
+    @conversion = Conversion.find conversion_id
 
-    @file = file
-    @author = User.find user_id
-    raise ArgumentError, "User '#{user_id}' not found" unless @author
+    @conversion.update :status => :processing
 
     # Create temporary storage
     @output = Dir.mktmpdir 'ows-conversion-'
 
-    logger.info "Starting conversion of #{@file} to #{@output}"
+    logger.info "Starting conversion of #{@conversion.filename} to #{@output}"
 
     convert_file
     create_deck
@@ -30,18 +30,25 @@ class ConversionWorker
     FileUtils.remove_entry_secure @output
 
     # Delete uploaded file
-    File.delete @file unless Rails.env.development?
+    File.delete @conversion.filename
 
-    logger.info "Converted file #{@file} successfully"
+    logger.info "Converted file #{@conversion.filename} successfully"
 
-    @deck
+    @conversion.update :status => :success
+    @conversion.deck
+  rescue => e
+    logger.error e
+
+    @conversion.update :status => :error if @conversion
+
+    raise e
   end
 
   ##
   # Convert PPTX/PDF to HTML
   #
   def convert_file
-    command = "java -jar #{JAR} -i #{@file} -o #{@output} -t raw"
+    command = "java -jar #{JAR} -i #{@conversion.filename} -o #{@output} -t raw"
 
     stdin, stdout, stderr, wait_thr = Open3.popen3 command
     stdin.close
@@ -53,18 +60,19 @@ class ConversionWorker
 
     exit_status = wait_thr.value.exitstatus
     raise OpenWebslides::ConversionError, exit_status unless exit_status.zero?
+    raise OpenWebslides::ConversionError, 'error converting' unless File.exist? File.join(@output, 'index.html')
   end
 
   ##
   # Create deck metadata
   #
   def create_deck
-    doc = Nokogiri::HTML5 File.read File.join @output, 'index.html'
-    @deck = Deck.create :owner => @author, :name => File.basename(@file)
+    @conversion.deck = Deck.create :owner => @conversion.user, :name => @conversion.name
 
-    @deck.update_repository :author => @author,
-                            :message => 'Add converted slides',
-                            :content => doc.at('body').children.to_html.strip
+    doc = Nokogiri::HTML5 File.read File.join @output, 'index.html'
+    @conversion.deck.update_repository :author => @conversion.user,
+                                       :message => 'Add converted slides',
+                                       :content => doc.at('body').children.to_html.strip
   end
 
   ##
@@ -75,12 +83,12 @@ class ConversionWorker
       logger.info "Copying asset '#{asset_file}'"
 
       # Create asset metadata
-      asset = Asset.create :deck => @deck, :filename => File.basename(asset_file)
+      asset = Asset.create :deck => @conversion.deck, :filename => File.basename(asset_file)
 
       # Copy asset file
       command = Repository::Asset::UpdateFile.new asset
 
-      command.author = @author
+      command.author = @conversion.user
       command.file = asset_file
 
       command.execute
