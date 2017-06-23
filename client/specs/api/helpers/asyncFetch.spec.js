@@ -1,7 +1,7 @@
 import faker from 'faker';
 import fetchMock from 'fetch-mock';
 
-import asyncFetch from 'api/helpers/asyncFetch';
+import { asyncFetch } from 'api/helpers/apiHelper';
 
 describe('asyncFetch function', () => {
   afterEach(() => {
