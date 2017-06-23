@@ -53,7 +53,7 @@ function ApiRequest() {
   };
 
   that.setPort = port => {
-    if (!isNaN(port)) {
+    if (isNaN(port)) {
       throw new Error(`Port must be an integer (received ${port} instead).`);
     }
     that.port = port;
