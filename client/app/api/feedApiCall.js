@@ -4,8 +4,6 @@ async function requestFeedNotifications(offset = 0) {
   const request = new ApiRequest();
 
   request
-    .setHost('localhost')
-    .setPort(5000)
     .setEndpoint('api/notifications')
     .setMethod('GET')
     .addParameter('sort', '-createdAt')
