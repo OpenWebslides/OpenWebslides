@@ -62,6 +62,7 @@ function ApiRequest() {
 
   that.setHost = host => {
     that.host = host;
+    return that;
   };
 
   that.setMethod = type => {
