@@ -21,6 +21,9 @@ Rails.application.routes.draw do
     jsonapi_resources :decks
     jsonapi_resources :assets, :except => :index do end
 
+    # Conversion tool
+    jsonapi_resources :conversions, :only => %i[create show]
+
     # Social feed
     jsonapi_resources :notifications, :only => %i[index show] do end
 
