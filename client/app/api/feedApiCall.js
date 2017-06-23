@@ -1,21 +1,18 @@
-import asyncFetch from 'api/helpers/asyncFetch';
-import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
+import ApiRequest from './helpers/apiHelper';
 
 async function requestFeedNotifications(offset = 0) {
-  const NOTIFICATIONS_API_URL =
-    'http://localhost:5000/api/notifications?sort=-createdAt';
-  const PARAMETER = `&page[offset]=${offset}`;
+  const request = new ApiRequest();
 
-  const baseRequestConfig = getBaseRequestConfig();
+  request
+    .setHost('localhost')
+    .setPort(5000)
+    .setEndpoint('api/notifications')
+    .setMethod('GET')
+    .addParameter('sort', '-createdAt')
+    .addParameter('page[offset]', `${offset}`)
 
-  const requestConfig = Object.assign({}, baseRequestConfig, {
-    method: 'GET',
-  });
 
-  const response = await asyncFetch(
-    NOTIFICATIONS_API_URL + PARAMETER,
-    requestConfig,
-  );
+  const response = request.executeRequest();
   const responseBody = await response.json();
 
   return responseBody.data;
