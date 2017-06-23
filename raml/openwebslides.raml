@@ -413,6 +413,61 @@ documentation:
                 errors: Error[]
               example: !include examples/get_notification_404.json
 
+
+/conversions:
+  displayName: Conversions
+  description: Conversions API allows converting a PPTX/PDF file to webslides
+  post:
+    is: [ authenticated ]
+    description: Queue a conversion
+    body:
+      application/octet-stream:
+        type: binary
+        description: The binary PPTX/PDF file
+    headers:
+      Content-Disposition:
+        description: Signals the filename
+        example: attachment; filename="foo.pptx"
+    responses:
+      201:
+        description: Conversion was successfully queued
+        body:
+          application/vnd.api+json:
+            type: object
+            properties:
+              data: Conversion
+            example: !include examples/get_conversion.json
+      422:
+        description: Error while queuing conversion
+        body:
+          application/vnd.api+json:
+            type: object
+            properties:
+              errors: Error[]
+            example: !include examples/post_conversion_422.json
+  /{id}:
+    uriParameters:
+      id: ID
+    get:
+      is: [ authenticated ]
+      description: Get conversion job status
+      responses:
+        200:
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                data: Conversion
+              example: !include examples/get_conversion.json
+        404:
+          description: Conversion not found
+          body:
+            application/vnd.api+json:
+              type: object
+              properties:
+                errors: Error[]
+              example: !include examples/get_conversion_404.json
+
 /confirmation:
   displayName: Confirmation
   description: Email confirmation API

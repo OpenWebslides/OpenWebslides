@@ -1,0 +1,10 @@
+{
+  "errors": [
+    {
+      "title": "Unprocessable entity",
+      "detail": "No Content-Disposition header",
+      "code": "422",
+      "status": "422"
+    }
+  ]
+}
