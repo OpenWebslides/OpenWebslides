@@ -33,6 +33,6 @@ class Conversion < ApplicationRecord
   #
 
   def queue_job
-    raise OpenWebslides::NotImplementedError
+    ConversionWorker.perform_async id
   end
 end
