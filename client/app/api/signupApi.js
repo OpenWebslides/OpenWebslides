@@ -1,6 +1,5 @@
 import ApiRequest from './helpers/apiHelper';
 
-export const SIGNUP_API_URL = 'http://localhost:5000/api/users';
 
 async function signup(email, password, firstName, lastName) {
   const request = new ApiRequest();
