@@ -1,14 +1,16 @@
-import asyncFetch from 'api/helpers/asyncFetch';
-import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
+import ApiRequest from './helpers/apiHelper';
 
 export const RESET_PASSWORD_API_URL = 'http://localhost:5000/api/password';
 
 async function resetPassword(resetPasswordToken, password) {
-  const baseRequestConfig = getBaseRequestConfig();
+  const request = new ApiRequest();
 
-  const requestConfig = Object.assign({}, baseRequestConfig, {
-    method: 'PUT',
-    body: JSON.stringify({
+  request
+    .setHost('localhost')
+    .setPort(5000)
+    .setEndpoint('api/password')
+    .setMethod('PUT')
+    .setBody({
       data: {
         type: 'passwords',
         id: '',
@@ -17,10 +19,9 @@ async function resetPassword(resetPasswordToken, password) {
           password,
         },
       },
-    }),
-  });
+    });
 
-  return asyncFetch(RESET_PASSWORD_API_URL, requestConfig);
+  return request.executeRequest();
 }
 
 export default resetPassword;
