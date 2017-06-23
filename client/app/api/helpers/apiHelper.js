@@ -147,6 +147,7 @@ function ApiRequest() {
 
     return asyncFetch(url, config);
   };
+  return that;
 }
 
 export default ApiRequest;
