@@ -1,24 +1,18 @@
 import ApiRequest from './helpers/apiHelper';
 
-
 async function resetPassword(resetPasswordToken, password) {
   const request = new ApiRequest();
 
-  request
-    .setHost('localhost')
-    .setPort(5000)
-    .setEndpoint('api/password')
-    .setMethod('PUT')
-    .setBody({
-      data: {
-        type: 'passwords',
-        id: '',
-        attributes: {
-          resetPasswordToken,
-          password,
-        },
+  request.setEndpoint('api/password').setMethod('PUT').setBody({
+    data: {
+      type: 'passwords',
+      id: '',
+      attributes: {
+        resetPasswordToken,
+        password,
       },
-    });
+    },
+  });
 
   return request.executeRequest();
 }
