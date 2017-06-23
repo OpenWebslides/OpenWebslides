@@ -1,14 +1,16 @@
-import asyncFetch from 'api/helpers/asyncFetch';
-import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
+import ApiRequest from './helpers/apiHelper';
 
 export const SIGNUP_API_URL = 'http://localhost:5000/api/users';
 
 async function signup(email, password, firstName, lastName) {
-  const baseRequestConfig = getBaseRequestConfig();
+  const request = new ApiRequest();
 
-  const requestConfig = Object.assign({}, baseRequestConfig, {
-    method: 'POST',
-    body: JSON.stringify({
+  request
+    .setHost('localhost')
+    .setPort(5000)
+    .setEndpoint('api/users')
+    .setMethod('POST')
+    .setBody({
       data: {
         type: 'users',
         attributes: {
@@ -18,10 +20,9 @@ async function signup(email, password, firstName, lastName) {
           lastName,
         },
       },
-    }),
-  });
+    });
 
-  return asyncFetch(SIGNUP_API_URL, requestConfig);
+  return request.executeRequest();
 }
 
 export default signup;
