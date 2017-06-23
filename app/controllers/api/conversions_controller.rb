@@ -1,0 +1,47 @@
+# frozen_string_literal: true
+
+module Api
+  class ConversionsController < ApiController
+    MEDIA_TYPE = 'application/octet-stream'
+
+    before_action :authenticate_user
+
+    after_action :renew_token
+
+    def create
+      unless request.content_type == MEDIA_TYPE
+        return handle_exceptions JSONAPI::Exceptions::UnsupportedMediaTypeError.new(request.content_type)
+      end
+
+      return unless verify_accept_header
+
+      raise Api::ApiError, :detail => 'No Content-Disposition header' unless request.headers['HTTP_CONTENT_DISPOSITION']
+
+      conversion = Conversion.new :user => current_user
+
+      # Authorize
+      raise Pundit::NotAuthorizedError unless ConversionPolicy.new(current_user, conversion).create?
+      context[:policy_used]&.call
+
+      # Write uploaded file
+      filename = request.headers['HTTP_CONTENT_DISPOSITION'].match(/filename ?= ?"?([^\\"]*)"?/)[1]
+      raise Api::ApiError, :detail => 'Invalid Content-Disposition header' unless filename
+
+      file = Tempfile.new
+      FileUtils.cp request.body.path, file.path
+
+      # Create and queue conversion
+      conversion.filename = file.path
+      conversion.name = filename
+      conversion.status = :queued
+      conversion.save
+
+      resource = ConversionResource.resources_for([conversion], context).first
+
+      results = JSONAPI::OperationResults.new
+      results.add_result JSONAPI::ResourceOperationResult.new :created, resource
+
+      render_results results
+    end
+  end
+end
