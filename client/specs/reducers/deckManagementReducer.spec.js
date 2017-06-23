@@ -1,6 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import deckManagementReducer from 'reducers/deckManagementReducer';
+import deckManagementReducer from 'reducers/app/deckManagementReducer';
 
 import {
   DECK_DELETION_REQUEST,
