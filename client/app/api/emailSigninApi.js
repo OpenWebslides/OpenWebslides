@@ -1,7 +1,5 @@
 import ApiRequest from './helpers/apiHelper';
 
-export const SIGNIN_API_URL = 'http://localhost:5000/api/token';
-
 async function emailSignin(email, password) {
   const request = new ApiRequest();
   request
