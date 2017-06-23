@@ -1,24 +1,25 @@
-import asyncFetch from 'api/helpers/asyncFetch';
-import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
+import ApiRequest from './helpers/apiHelper';
 
 export const CONFIRM_EMAIL_API_URL = 'http://localhost:5000/api/confirmation';
 
 async function confirmEmail(confirmationToken) {
-  const baseRequestConfig = getBaseRequestConfig();
+  const request = new ApiRequest();
 
-  const requestConfig = Object.assign({}, baseRequestConfig, {
-    method: 'POST',
-    body: JSON.stringify({
+  request
+    .setHost('localhost')
+    .setPort(5000)
+    .setEndpoint('api/confirmation')
+    .setMethod('POST')
+    .setBody({
       data: {
         type: 'confirmations',
         attributes: {
           confirmationToken,
         },
       },
-    }),
-  });
+    });
 
-  return asyncFetch(CONFIRM_EMAIL_API_URL, requestConfig);
+  return request.executeRequest();
 }
 
 export default confirmEmail;
