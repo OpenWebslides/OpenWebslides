@@ -6,7 +6,7 @@ function getAuthToken() {
 
   const loadedState = loadState();
 
-  return loadedState.app.auth.token;
+  return loadedState.local.auth.token; // TODO: change this when master gets updated to the last frontend branch
 }
 
 async function asyncFetch(url, requestConfig = {}) {
