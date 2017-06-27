@@ -1,16 +1,12 @@
-import asyncFetch from 'api/helpers/asyncFetch';
-import getBaseRequestConfig from 'api/helpers/baseRequestConfig';
+import ApiRequest from './helpers/apiHelper';
 
 async function requestUserDecks(userID) {
-  const USER_DECKS_URL = `http://localhost:3000/api/users/${userID}/decks`;
+  const request = new ApiRequest();
 
-  const baseRequestConfig = getBaseRequestConfig();
+  request.setMethod('GET').setEndPoint(`api/users/${userID}/decks`);
 
-  const requestConfig = Object.assign({}, baseRequestConfig, {
-    method: 'GET',
-  });
+  const response = await request.executeRequest();
 
-  const response = await asyncFetch(USER_DECKS_URL, requestConfig);
   const responseBody = await response.json();
 
   return responseBody.data;
