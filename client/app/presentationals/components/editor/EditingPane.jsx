@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import ViewPane from './ViewPane';
+import ViewsPane from './ViewsPane';
 import { RichUtils } from 'draft-js';
 import { updateSlide } from 'actions/slideActions';
 
@@ -64,7 +64,7 @@ class EditingPane extends Component {
 
           </div>
           <div className="c_slide-editor__item c_slide-editor__item--views-panel">
-            <ViewPane />
+            <ViewsPane />
           </div>
           {/* #TODO
         <div className="c_slide-editor__item c_slide-editor__item--slide-health">
