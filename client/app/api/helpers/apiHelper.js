@@ -5,7 +5,9 @@ import asyncFetch from './asyncFetch';
 function getAuthToken() {
   // We load it from the local storage.
   const loadedState = loadState();
-  return loadedState ? loadedState.local.auth.token : null; // TODO: change this when master gets updated to the last frontend branch
+  return loadedState.app.authentication.token
+    ? loadedState.app.authentication.token
+    : null; // TODO: change this when master gets updated to the last frontend branch
 }
 
 /**
