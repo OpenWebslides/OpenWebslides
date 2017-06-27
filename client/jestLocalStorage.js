@@ -1,3 +1,7 @@
+/**
+ * Allows Jest to emulate a localStorage so that we can test functions interacting with it.
+ * @type {{getItem, setItem, clear, removeItem}}
+ */
 const localStorageMock = (function() {
   let store = {};
   return {
