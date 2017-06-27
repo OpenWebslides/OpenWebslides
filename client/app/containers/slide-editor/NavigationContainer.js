@@ -1,7 +1,11 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { addSlide, setActiveSlide, deleteSlide } from 'actions/slideActions';
+import {
+  addSlide,
+  setActiveSlide,
+  deleteSlideWithContent,
+} from 'actions/slideActions';
 
 import NavigationPane from 'presentationals/components/editor/NavigationPane';
 
@@ -15,7 +19,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { addSlide, deleteSlide, setActiveSlide },
+    { addSlide, deleteSlideWithContent, setActiveSlide },
     dispatch,
   );
 }
