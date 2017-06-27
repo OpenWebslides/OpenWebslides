@@ -35,14 +35,15 @@ services:
   #
   sidekiq:
     build: .
+    env_file:
+      - openwebslides.env
     volumes:
       - /var/run/postgresql/:/var/run/postgresql/
     depends_on:
+      - postgres
       - redis
     links:
       - redis
-    env_file:
-      - openwebslides.env
     restart: always
     command: bundle exec sidekiq
 
@@ -50,9 +51,9 @@ services:
   # Redis container
   #
   redis:
-    image: redis
+    image: redis:3.0
     volumes:
-      - redis:/data
+      - redis:/var/lib/redis/data/
     restart: always
 
 volumes:

@@ -47,7 +47,7 @@ COPY . /app/
 ##
 # Install submodules
 #
-RUN git submodule init && git submodule update
+RUN git submodule init && git submodule update && rm -rf .git
 
 ##
 # Build public assets
