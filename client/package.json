@@ -69,6 +69,7 @@
     "redux-saga": "^0.14.4",
     "sane-email-validation": "^1.1.0",
     "seamless-immutable": "^7.1.2",
+    "shortid": "^2.2.8",
     "yarn": "^0.27.5"
   },
   "scripts": {
