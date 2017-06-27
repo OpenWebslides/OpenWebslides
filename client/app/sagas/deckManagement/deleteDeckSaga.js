@@ -11,9 +11,8 @@ const authState = state => state.app.authentication;
 
 export function* deleteDeckFlow(action) {
   try {
-    const { authToken } = yield select(authState);
     const deckId = action.payload;
-    yield call(deleteDeckApi, deckId, authToken);
+    yield call(deleteDeckApi, deckId);
     yield put({ type: DECK_DELETION_REQUEST_SUCCESS });
   } catch (error) {
     yield put({ type: DECK_DELETION_REQUEST_FAILURE, payload: error.message });
