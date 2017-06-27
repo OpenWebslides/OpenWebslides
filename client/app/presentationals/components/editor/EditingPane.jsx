@@ -3,17 +3,33 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ViewPane from './ViewPane';
+import { RichUtils } from 'draft-js';
+import { updateSlide } from 'actions/slideActions';
 
-import addTitle from 'actions/contentBlockActions';
+import { addTitle } from 'actions/contentBlockActions';
 
 class EditingPane extends Component {
   constructor() {
     super();
+    this.handleToggleBold = this.handleToggleBold.bind(this);
     this.handleAddTitle = this.handleAddTitle.bind(this);
   }
 
-  handleAddTitle() {
-    this.props.addTitle(this.props.activeSlide);
+  handleToggleBold(e) {
+    e.preventDefault();
+    const newState = RichUtils.toggleInlineStyle(
+      this.props.activeContentBlock.data,
+      'BOLD',
+    );
+
+    this.props.updateSlide(this.props.activeContentBlock.id, newState);
+  }
+
+  handleAddTitle(e) {
+    e.preventDefault();
+    const { contentBlockSequence, activeSlide } = this.props;
+
+    this.props.addTitle(activeSlide, contentBlockSequence);
   }
 
   render() {
@@ -43,7 +59,9 @@ class EditingPane extends Component {
       >
         <div className="c_slide-editor__wrapper">
           <div className="c_slide-editor__item c_slide-editor__item--toolbar">
-            <button onMouseDown={this.addTitle}>Add Title</button>
+            <button onMouseDown={this.handleAddTitle}>Add Title</button>
+            <button onMouseDown={this.handleToggleBold}>Set Bold</button>
+
           </div>
           <div className="c_slide-editor__item c_slide-editor__item--views-panel">
             <ViewPane />
@@ -67,13 +85,16 @@ EditingPane.defaultProps = {
 };
 
 function mapStateToProps(state) {
+  const activeContentBlock = state.app.editor.contentBlocks.active;
   return {
-    activeSlide: state.app.editor.activeSlide,
+    activeSlide: state.app.editor.slides.active,
+    activeContentBlock: state.entities.contentBlocks.byId[activeContentBlock],
+    contentBlockSequence: state.app.editor.contentBlocks.sequence,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addTitle }, dispatch);
+  return bindActionCreators({ addTitle, updateSlide }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditingPane);
