@@ -2,17 +2,17 @@ import { convertFromHTML } from 'draft-convert';
 import { EditorState } from 'draft-js';
 
 function parseSlides(slideArr) {
-  let slideId = 0;
-  let contentGroupId = 0;
-  let contentBlockId = 0;
+  let slideSequence = 0;
+  let contentGroupSequence = 0;
+  let contentBlockSequence = 0;
 
   const slides = {};
   const contentBlocks = {};
 
   slideArr.forEach(slide => {
-    slides[slideId] = { meta: {}, content: [] };
+    slides[slideSequence] = { meta: {}, content: [] };
 
-    slides[slideId].content = (function parseContentBlocks(nodes) {
+    slides[slideSequence].content = (function parseContentBlocks(nodes) {
       const content = [];
 
       nodes.forEach(node => {
@@ -25,32 +25,38 @@ function parseSlides(slideArr) {
 
           content.push({
             type: 'contentGroup',
-            id: contentGroupId,
+            id: contentGroupSequence,
             childContent,
           });
-          contentGroupId += 1;
+          contentGroupSequence += 1;
         } else {
           content.push({
-            id: contentBlockId,
+            id: contentBlockSequence,
             type: 'contentBlock',
           });
 
-          contentBlocks[contentBlockId] = {
+          contentBlocks[contentBlockSequence] = {
             data: EditorState.createWithContent(
               convertFromHTML(node.outerHTML),
             ),
           };
 
-          contentBlockId += 1;
+          contentBlockSequence += 1;
         }
       });
       return content;
     })(slide.childNodes);
 
-    slideId += 1;
+    slideSequence += 1;
   });
 
-  return { slides, contentBlocks };
+  return {
+    slides,
+    contentBlocks,
+    slideSequence,
+    contentBlockSequence,
+    contentGroupSequence,
+  };
 }
 
 export default parseSlides;
