@@ -23,7 +23,7 @@ function ApiRequest() {
   // try to get the auth token from the store:
   const tryToken = getAuthToken();
   if (tryToken) {
-    that.headers.Authentication = tryToken;
+    that.headers.Authentication = `Bearer: ${tryToken}`;
   }
   that.parameters = {};
 
