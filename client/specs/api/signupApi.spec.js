@@ -1,7 +1,7 @@
 import faker from 'faker';
 
 import asyncFetch from '../../app/api/helpers/asyncFetch';
-import signup, { SIGNUP_API_URL } from '../../app/api/signupApi';
+import signup from '../../app/api/signupApi';
 
 jest.mock('api/helpers/asyncFetch');
 
@@ -18,7 +18,7 @@ describe('Signup Api Call', () => {
     expect(response).toEqual(200);
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual(SIGNUP_API_URL);
+    expect(calledUrl).toEqual('http://localhost:5000/api/users');
 
     const body = JSON.stringify({
       data: {

@@ -1,9 +1,7 @@
 import faker from 'faker';
 
 import asyncFetch from '../../app/api/helpers/asyncFetch';
-import resetPassword, {
-  RESET_PASSWORD_API_URL,
-} from '../../app/api/resetPasswordApi';
+import resetPassword from '../../app/api/resetPasswordApi';
 
 jest.mock('api/helpers/asyncFetch');
 
@@ -18,7 +16,7 @@ describe('resetPassword Api Call', () => {
     expect(response).toEqual(200);
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual(RESET_PASSWORD_API_URL);
+    expect(calledUrl).toEqual('http://localhost:5000/api/password');
 
     const body = JSON.stringify({
       data: {
