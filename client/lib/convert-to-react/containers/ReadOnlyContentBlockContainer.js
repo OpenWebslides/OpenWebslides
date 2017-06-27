@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import debounceRender from 'react-debounce-render';
 
 import ReadOnlyContentBlock from 'lib/convert-to-react/components/ReadOnlyContentBlock';
 
@@ -8,4 +9,6 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(ReadOnlyContentBlock);
+const debouncedComponent = debounceRender(ReadOnlyContentBlock);
+
+export default connect(mapStateToProps)(debouncedComponent);
