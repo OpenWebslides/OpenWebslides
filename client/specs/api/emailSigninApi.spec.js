@@ -1,7 +1,7 @@
 import faker from 'faker';
 
 import asyncFetch from '../../app/api/helpers/asyncFetch';
-import emailSignin, { SIGNIN_API_URL } from '../../app/api/emailSigninApi';
+import emailSignin from '../../app/api/emailSigninApi';
 
 jest.mock('api/helpers/asyncFetch');
 
@@ -23,7 +23,7 @@ describe('EmailSignin Api Call', () => {
     expect(response).toEqual({ authToken, firstName });
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual(SIGNIN_API_URL);
+    expect(calledUrl).toEqual('http://localhost:5000/api/token');
 
     const body = JSON.stringify({
       data: {
