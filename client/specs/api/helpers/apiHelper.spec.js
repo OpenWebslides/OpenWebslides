@@ -6,7 +6,7 @@ describe('ApiHelper constructor', () => {
     const testEmpty = new ApiRequest();
 
     expect(testEmpty.host).toEqual('localhost');
-    expect(testEmpty.port).toEqual(5000);
+    expect(testEmpty.port).toEqual(3000);
     expect(testEmpty.headers).toEqual({
       'Content-Type': 'application/vnd.api+json',
     });

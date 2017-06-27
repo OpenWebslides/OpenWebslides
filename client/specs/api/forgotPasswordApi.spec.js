@@ -15,7 +15,7 @@ describe('RequestResetPassword Api Call', () => {
     expect(response).toEqual(200);
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual('http://localhost:5000/api/password');
+    expect(calledUrl).toEqual('http://localhost:3000/api/password');
 
     const body = JSON.stringify({
       data: {
