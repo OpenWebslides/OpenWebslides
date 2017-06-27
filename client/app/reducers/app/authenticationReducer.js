@@ -9,7 +9,7 @@ const initialState = Immutable({
   id: undefined,
 });
 
-function auth(state = initialState, action) {
+function authentication(state = initialState, action) {
   switch (action.type) {
     case SIGNIN_USER_SUCCESS:
       return Immutable.merge(state, [
@@ -22,4 +22,4 @@ function auth(state = initialState, action) {
   }
 }
 
-export default auth;
+export default authentication;
