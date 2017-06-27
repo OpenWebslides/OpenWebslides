@@ -1,6 +1,9 @@
 version: '2'
 
 services:
+  ##
+  # Application container
+  #
   app:
     build: .
     env_file:
@@ -8,22 +11,59 @@ services:
     environment:
       - RAILS_ENV=production
     volumes:
-      - public:/app/public
-      - sockets:/app/tmp/sockets
+      - public:/app/public/
+      - data:/app/data/
     restart: always
     depends_on:
       - postgres
+      - sidekiq
+      - redis
     links:
       - postgres
-    ports:
-      - '3000:3000'
+      - redis
 
+  ##
+  # Database container
+  #
   postgres:
-    image: postgres:9.5
+    image: postgres:9.6
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data/
+
+  ##
+  # Sidekiq container
+  #
+  sidekiq:
+    build: .
+    volumes:
+      - /var/run/postgresql/:/var/run/postgresql/
+    depends_on:
+      - redis
+    links:
+      - redis
+    env_file:
+      - openwebslides.env
+    restart: always
+    command: bundle exec sidekiq
+
+  ##
+  # Redis container
+  #
+  redis:
+    image: redis
+    volumes:
+      - redis:/data
+    restart: always
 
 volumes:
+  # Repository data volume
+  data:
+
+  # Public assets (frontend) volume
   public:
+
+  # Database volume
   postgres:
-  sockets:
+
+  # Redis volume
+  redis:
