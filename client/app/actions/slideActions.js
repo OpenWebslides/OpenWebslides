@@ -7,6 +7,7 @@ export const UPDATE_SLIDE = 'UPDATE_SLIDE';
 
 export const ADD_SLIDE = 'ADD_SLIDE';
 export const DELETE_SLIDE = 'DELETE_SLIDE';
+export const DELETE_SLIDE_WITH_CONTENT = 'DELETE_SLIDE_WITH_CONTENT';
 
 export const SET_ACTIVE_SLIDE = 'SET_ACTIVE_SLIDE';
 
@@ -32,10 +33,10 @@ export function addSlide(slideSequence) {
   };
 }
 
-export function deleteSlide(slideId) {
+export function deleteSlideWithContent(slideId) {
   return {
-    type: DELETE_SLIDE,
-    payload: { slideId },
+    type: DELETE_SLIDE_WITH_CONTENT,
+    meta: { slideId },
   };
 }
 

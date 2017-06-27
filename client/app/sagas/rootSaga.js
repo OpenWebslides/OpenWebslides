@@ -4,6 +4,7 @@ import requestFeedNorificationsSaga from 'sagas/feed/requestFeedNotificationsSag
 import requestResetPasswordSaga from 'sagas/forgotPasswordSaga';
 import resetPasswordSaga from 'sagas/resetPasswordSaga';
 import fetchSlidesSaga from 'sagas/fetchSlidesSaga';
+import deleteSlideSaga from 'sagas/deleteSlideSaga';
 
 import oauthSigninSaga from 'sagas/signin/oauthSigninSaga';
 import emailSigninSaga from 'sagas/signin/emailSigninSaga';
@@ -22,6 +23,7 @@ export default function* rootSaga() {
     requestResetPasswordSaga(),
     resetPasswordSaga(),
     oauthSigninSaga(),
+    deleteSlideSaga(),
     fetchSlidesSaga(),
     createDeckSaga(),
     deleteDeckSaga(),
