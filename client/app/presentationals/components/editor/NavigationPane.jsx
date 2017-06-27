@@ -16,7 +16,7 @@ export default class NavigationPane extends Component {
   }
 
   handleDeleteSlide(selectedSlideId) {
-    this.props.deleteSlide(selectedSlideId);
+    this.props.deleteSlideWithContent(selectedSlideId);
   }
 
   handleSetActiveSlide(selectedSlideId) {
@@ -76,10 +76,13 @@ NavigationPane.propTypes = {
   cssIdentifier: PropTypes.string,
   addSlide: PropTypes.func.isRequired,
   setActiveSlide: PropTypes.func.isRequired,
+  deleteSlideWithContent: PropTypes.func.isRequired,
   slides: PropTypes.objectOf(Object),
+  slideSequence: PropTypes.number,
 };
 
 NavigationPane.defaultProps = {
   cssIdentifier: 'default',
+  slideSequence: null,
   slides: null,
 };
