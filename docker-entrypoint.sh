@@ -12,8 +12,8 @@ rm -f /app/tmp/pids/server.pid
 # Run as regular user
 su - openwebslides
 
-cd /app
+# Migrate relational data
+bundle exec rake db:migrate
 
 # Start app server
-mkdir -p /app/tmp/sockets
-bundle exec puma -b unix:///app/tmp/sockets/puma.sock
+bundle exec puma
