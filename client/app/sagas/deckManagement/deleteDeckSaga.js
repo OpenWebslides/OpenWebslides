@@ -1,4 +1,4 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects';
+import { takeLatest, call, put } from 'redux-saga/effects';
 
 import {
   DECK_DELETION_REQUEST,
@@ -6,8 +6,6 @@ import {
   DECK_DELETION_REQUEST_SUCCESS,
 } from 'actions/deckManagementActions';
 import deleteDeckApi from 'api/deleteDeckApi';
-
-const authState = state => state.app.authentication;
 
 export function* deleteDeckFlow(action) {
   try {
