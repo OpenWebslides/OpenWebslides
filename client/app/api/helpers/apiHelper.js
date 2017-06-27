@@ -5,9 +5,10 @@ import asyncFetch from './asyncFetch';
 function getAuthToken() {
   // We load it from the local storage.
   const loadedState = loadState();
-  return loadedState.app.authentication.token
-    ? loadedState.app.authentication.token
-    : null; // TODO: change this when master gets updated to the last frontend branch
+  return loadedState.app.authentication.authToken
+    ? loadedState.app.authentication.authToken
+    : null;
+
 }
 
 /**
@@ -25,7 +26,7 @@ function ApiRequest() {
   // try to get the auth token from the store:
   const tryToken = getAuthToken();
   if (tryToken) {
-    that.headers.Authentication = `Bearer: ${tryToken}`;
+    that.headers.Authorization = `Bearer ${tryToken}`;
   }
   that.parameters = {};
 
