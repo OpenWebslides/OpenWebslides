@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-require 'faker'
-require 'benchmark'
-
-require Rails.root.join 'config/initializers/active_record'
-ActiveRecord::Base.skip_callbacks = true
-
 namespace :db do
   desc 'Populates the database with sample data'
   task :sample => :environment do
