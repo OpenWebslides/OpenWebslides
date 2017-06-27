@@ -5,10 +5,13 @@ import asyncFetch from './asyncFetch';
 function getAuthToken() {
   // We load it from the local storage.
   const loadedState = loadState();
-  return loadedState.app.authentication.authToken
-    ? loadedState.app.authentication.authToken
-    : null;
+  if (loadedState) {
+    return loadedState.app.authentication.authToken
+      ? loadedState.app.authentication.authToken
+      : null;
+  }
 
+  return null;
 }
 
 /**
