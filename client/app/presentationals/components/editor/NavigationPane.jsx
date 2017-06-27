@@ -8,10 +8,15 @@ export default class NavigationPane extends Component {
   constructor(props) {
     super(props);
     this.handleAddSlide = this.handleAddSlide.bind(this);
+    this.handleDeleteSlide = this.handleDeleteSlide.bind(this);
   }
 
   handleAddSlide() {
-    this.props.addSlide(newSlideId);
+    this.props.addSlide(this.props.slideSequence);
+  }
+
+  handleDeleteSlide(selectedSlideId) {
+    this.props.deleteSlide(selectedSlideId);
   }
 
   handleSetActiveSlide(selectedSlideId) {
@@ -34,6 +39,11 @@ export default class NavigationPane extends Component {
                   key={slide.key}
                 >
                   <div className="o_list__item__wrapper c_deck-navigator__item__wrapper">
+                    <button
+                      onClick={() => this.handleDeleteSlide(slide.props.id)}
+                    >
+                      Delete
+                    </button>
                     <button
                       key={slide.key}
                       onClick={() => this.handleSetActiveSlide(slide.props.id)}
