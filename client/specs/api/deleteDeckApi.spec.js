@@ -8,9 +8,8 @@ jest.mock('api/helpers/asyncFetch');
 describe('Api call to delete a deck', () => {
   it('has a happy path', async () => {
     const deckId = faker.random.number();
-    const token = faker.random.number();
     asyncFetch.mockReturnValue(200);
-    const response = await deleteDeck(deckId, token);
+    const response = await deleteDeck(deckId);
 
     expect(response).toEqual(200);
 

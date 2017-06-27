@@ -23,7 +23,7 @@ describe('EmailSignin Api Call', () => {
     expect(response).toEqual({ authToken, firstName });
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual('http://localhost:5000/api/token');
+    expect(calledUrl).toEqual('http://localhost:3000/api/token');
 
     const body = JSON.stringify({
       data: {

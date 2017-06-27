@@ -15,7 +15,7 @@ describe('ConfirmEmail Api Call', () => {
     expect(response).toEqual(200);
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual('http://localhost:5000/api/confirmation');
+    expect(calledUrl).toEqual('http://localhost:3000/api/confirmation');
 
     const body = JSON.stringify({
       data: {
