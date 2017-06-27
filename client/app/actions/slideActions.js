@@ -6,6 +6,7 @@ export const FETCH_SLIDES_FAILURE = 'FETCH_SLIDES_FAILURE';
 export const UPDATE_SLIDE = 'UPDATE_SLIDE';
 
 export const ADD_SLIDE = 'ADD_SLIDE';
+export const DELETE_SLIDE = 'DELETE_SLIDE';
 
 export const SET_ACTIVE_SLIDE = 'SET_ACTIVE_SLIDE';
 
@@ -24,10 +25,17 @@ export function updateSlide(id, content) {
   };
 }
 
-export function addSlide(newSlideId) {
+export function addSlide(slideSequence) {
   return {
     type: ADD_SLIDE,
-    payload: { newSlideId },
+    payload: { slideSequence },
+  };
+}
+
+export function deleteSlide(slideId) {
+  return {
+    type: DELETE_SLIDE,
+    payload: { slideId },
   };
 }
 
