@@ -33,6 +33,11 @@ export async function asyncFetch(url, requestConfig = {}) {
   }
 }
 
+/**
+ * Represents an API request.
+ * @returns {{}}
+ * @constructor
+ */
 function ApiRequest() {
   const that = {};
 
@@ -50,11 +55,21 @@ function ApiRequest() {
   that.port = defaults.port ? parseInt(defaults.port, 10) : undefined;
   that.host = defaults.host ? defaults.host : undefined;
 
+  /**
+   * Set the last part of the url to which to make the request
+   * @param endpoint
+   * @returns {{}}
+   */
   that.setEndpoint = endpoint => {
     that.endPoint = endpoint;
     return that;
   };
 
+  /**
+   * Set the port to which to send the request. Set to whatever is in the API_config file by default.
+   * @param port
+   * @returns {{}}
+   */
   that.setPort = port => {
     if (isNaN(port)) {
       throw new Error(`Port must be an integer (received ${port} instead).`);
@@ -63,11 +78,21 @@ function ApiRequest() {
     return that;
   };
 
+  /**
+   * Set the host to which to send the request. Set to whatever is in the API_config file by default.
+   * @param host
+   * @returns {{}}
+   */
   that.setHost = host => {
     that.host = host;
     return that;
   };
 
+  /**
+   * Set the type of http request to make.
+   * @param type Type of the request. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')
+   * @returns {{}}
+   */
   that.setMethod = type => {
     // Check it's a valid type:
     if (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].indexOf(type) === -1) {
@@ -94,6 +119,12 @@ function ApiRequest() {
     return that;
   };
 
+  /**
+   * Add a header to the http request
+   * @param headerName
+   * @param headerValue
+   * @returns {{}}
+   */
   that.addHeader = (headerName, headerValue) => {
     // Check it's not an authentication header. that one is included by default.
     if (headerName === 'Authentication') {
@@ -106,6 +137,11 @@ function ApiRequest() {
     }
   };
 
+  /**
+   * Set the body of the http request. Only works if it's not a 'GET' request.
+   * @param body
+   * @returns {{}}
+   */
   that.setBody = body => {
     // Check we're not trying to add a body to a GET request
     if (that.method === 'GET') {
@@ -115,6 +151,12 @@ function ApiRequest() {
     return that;
   };
 
+  /**
+   * Add a parameter to the request. Only works for GET requests.
+   * @param paramName
+   * @param paramVal
+   * @returns {{}}
+   */
   that.addParameter = (paramName, paramVal) => {
     // Check we're not adding parameters to something else than a GET:
     if (that.method !== 'GET') {
@@ -125,6 +167,10 @@ function ApiRequest() {
     return that;
   };
 
+  /**
+   * Execute the request and return a promise which will resolve with the response.
+   * @returns {Promise}
+   */
   that.executeRequest = async function executeRequest() {
     let url = `http://${that.host}`;
     if (that.port) {
