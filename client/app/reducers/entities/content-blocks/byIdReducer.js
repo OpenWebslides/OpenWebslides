@@ -1,6 +1,8 @@
-import { FETCH_SLIDES_SUCCESS, UPDATE_SLIDE } from 'actions/slideActions';
-import { ADD_TITLE } from 'actions/contentBlockActions';
 import { EditorState } from 'draft-js';
+import _ from 'lodash';
+
+import { FETCH_SLIDES_SUCCESS, UPDATE_SLIDE } from 'actions/slideActions';
+import { ADD_TITLE, DELETE_CONTENT_BLOCKS } from 'actions/contentBlockActions';
 
 const initialState = {};
 
@@ -14,6 +16,9 @@ function byId(state = initialState, action) {
           data: EditorState.createEmpty(),
         },
       };
+    case DELETE_CONTENT_BLOCKS:
+      return _.omit(state, action.payload.contentBlocksToDelete);
+
     case UPDATE_SLIDE:
       return {
         ...state,
