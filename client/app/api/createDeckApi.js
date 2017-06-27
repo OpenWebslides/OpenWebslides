@@ -1,6 +1,6 @@
 import ApiRequest from './helpers/apiHelper';
 
-async function createDeck(title, description, authorID, token) {
+async function createDeck(title, description, authorID) {
   const request = new ApiRequest();
 
   const requestBody = {
