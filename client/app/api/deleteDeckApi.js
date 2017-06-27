@@ -5,7 +5,7 @@ async function deleteDeck(deckId) {
 
   request
     .setMethod('DELETE')
-    .setEndPoint(`api/decks/${deckId}`)
+    .setEndpoint(`api/decks/${deckId}`)
     .addHeader('Accept', 'application/vnd.api+json');
 
   return request.executeRequest();
