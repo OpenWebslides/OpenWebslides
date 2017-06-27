@@ -1,36 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Editor from 'draft-js-plugins-editor';
-import { DefaultDraftBlockRenderMap } from 'draft-js';
-import Immutable from 'immutable';
-
-const blockRenderMap = Immutable.Map({
-  paragraph: {
-    element: 'p',
-  },
-});
-
-const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(blockRenderMap);
-
-// const getBlockRendererFn = (getEditorState, onChange) => () => ({
-//   component: Title,
-//   props: {
-//     getEditorState,
-//     onChange,
-//   },
-// });
-
-// function LogPlugin(type) {
-//   return {
-//     initialize: ({ getEditorState }) => {
-//       console.log(type);
-//       console.log(getEditorState);
-//     },
-//     blockRendererFn: getBlockRendererFn(),
-//   };
-// }
-
-// const pluggy = LogPlugin('title');
 
 export default class EditableContentBlock extends Component {
   constructor() {
@@ -74,7 +44,6 @@ export default class EditableContentBlock extends Component {
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           onChange={this.handleChange}
-          blockRenderMap={extendedBlockRenderMap}
           editorState={this.props.contentBlockState}
         />
       </div>
