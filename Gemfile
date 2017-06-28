@@ -20,7 +20,6 @@ gem 'omniauth-google-oauth2'
 
 # Authorization
 gem 'pundit'
-gem 'pundit-resources', :github => 'Ross-Hunter/pundit-resources', :branch => 'rails-5.1'
 
 # Data store providers
 gem 'net-ssh'
@@ -28,7 +27,7 @@ gem 'octokit'
 gem 'rugged'
 
 # JSON:API spec compliant resources
-gem 'jsonapi-resources'
+gem 'jsonapi-utils'
 
 # HTML5 parser
 gem 'nokogumbo'
