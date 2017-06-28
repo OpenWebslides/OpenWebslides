@@ -36,7 +36,7 @@ class Deck < ApplicationRecord
   #
   def create_repository
     # Run only after :save callback on create
-    return unless id_changed?
+    return unless saved_change_to_id?
     Repository::Create.new(self).execute
   end
 
