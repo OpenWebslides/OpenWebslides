@@ -44,6 +44,8 @@ module Repository
     private
 
     def lock(type, block)
+      Dir.mkdir lock_path unless Dir.exist? lock_path
+
       file = File.join lock_path, "#{@receiver.id}.lock"
 
       File.open(file, File::RDWR | File::CREAT, 0o644) do |lock|
