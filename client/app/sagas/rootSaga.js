@@ -13,6 +13,8 @@ import requestDeckListSaga from 'sagas/deckManagement/requestDeckListSaga';
 import createDeckSaga from 'sagas/deckManagement/createDeckSaga';
 import deleteDeckSaga from 'sagas/deckManagement/deleteDeckSaga';
 
+import updateDeckSaga from 'sagas/updateDeckSaga';
+
 export default function* rootSaga() {
   yield [
     emailSigninSaga(),
@@ -27,5 +29,6 @@ export default function* rootSaga() {
     fetchSlidesSaga(),
     createDeckSaga(),
     deleteDeckSaga(),
+    updateDeckSaga(),
   ];
 }
