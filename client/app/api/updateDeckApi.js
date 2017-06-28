@@ -1,14 +1,15 @@
 import ApiRequest from './helpers/apiHelper';
 
-async function fetchDeck(deckId) {
+async function updateDeck(deckId, HTMLString) {
   const request = new ApiRequest();
 
   request
-    .setMethod('GET')
+    .setMethod('PATCH')
     .setEndpoint(`api/decks/${deckId}`)
-    .addHeader('Accept', 'text/html');
+    .addHeader('Content-Type', 'text/html')
+    .setBody(HTMLString);
 
   return request.executeRequest();
 }
 
-export default fetchDeck;
+export default updateDeck;
