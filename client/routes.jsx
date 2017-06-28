@@ -12,6 +12,7 @@ import ConfirmEmailPage from 'presentationals/pages/ConfirmEmailPage';
 import OauthCallbackPage from 'presentationals/pages/OauthCallbackPage';
 import SlideEditorPage from 'presentationals/pages/SlideEditorPage';
 import CreateDeckPage from 'presentationals/pages/CreateDeckPage';
+import ImportDeckPage from 'presentationals/pages/ImportDeckPage';
 import PresentationViewPage from 'presentationals/pages/PresentationViewPage';
 
 import history from './history';
@@ -29,6 +30,7 @@ export default (
       <Route path="/editor/:deckId" component={SlideEditorPage} />
       <Route path="/presentation/:deckId" component={PresentationViewPage} />
       <Route path="/create_new_deck" component={CreateDeckPage} />
+      <Route path="/import_deck" component={ImportDeckPage} />
     </Switch>
   </Router>
 );
