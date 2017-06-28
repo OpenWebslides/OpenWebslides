@@ -116,6 +116,13 @@ function ApiRequest() {
     return that;
   };
 
+  that.setSendFile = file => {
+    if (that.method === 'GET') {
+      throw new Error(`Can't sent a file with a GET request.`);
+    }
+    that.addHeader('Content-Disposition', `filename="${file.name}"`);
+    that.body = file;
+  };
   /**
    * Add a parameter to the request. Only works for GET requests.
    * @param paramName
