@@ -6,7 +6,7 @@ import EditingPane from 'containers/slide-editor/EditingPaneContainer';
 
 export default class Editor extends Component {
   componentDidMount() {
-    this.props.fetchSlides(1);
+    this.props.fetchSlides(2);
   }
 
   render() {

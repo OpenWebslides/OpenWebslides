@@ -32,6 +32,7 @@ export default class EditableContentBlock extends Component {
   handleBlur() {
     this.setState({ hasFocus: false });
     this.props.setActiveContentBlock(null);
+    this.props.updateDeck();
   }
 
   render() {
@@ -56,6 +57,7 @@ EditableContentBlock.propTypes = {
   id: PropTypes.number.isRequired,
   setActiveContentBlock: PropTypes.func.isRequired,
   activeContentBlock: PropTypes.number,
+  updateDeck: PropTypes.func.isRequired,
   updateSlide: PropTypes.func.isRequired,
   contentBlockState: PropTypes.objectOf(Object).isRequired,
 };
