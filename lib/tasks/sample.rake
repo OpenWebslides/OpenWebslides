@@ -58,8 +58,6 @@ namespace :db do
       ##
       # Decks
       #
-      ActiveRecord::Base.skip_callbacks = true
-
       decks = []
 
       users.each_with_index do |user, i|
@@ -89,8 +87,6 @@ namespace :db do
           decks << deck
         end
       end
-
-      ActiveRecord::Base.skip_callbacks = false
 
       decks.each_with_index do |deck, i|
         notification_count = RANDOM.rand 100
