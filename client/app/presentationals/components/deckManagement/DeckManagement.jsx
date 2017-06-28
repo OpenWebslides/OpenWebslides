@@ -47,6 +47,7 @@ class DeckManagement extends React.Component {
               {listOfDeckThumbnails}
             </table>
             <Link to="/create_new_deck"> Add new </Link>
+            <Link to="/import_deck"> Import Deck </Link>
           </div>
         </div>
       </IfAuthHOC>
