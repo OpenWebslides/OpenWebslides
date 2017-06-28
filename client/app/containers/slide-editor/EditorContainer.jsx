@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchSlides } from 'actions/slideActions';
 
-import Editor from 'presentationals/components/editor/Editor';
+import Editor from 'presentationals/components/slide-editor/Editor';
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchSlides }, dispatch);
