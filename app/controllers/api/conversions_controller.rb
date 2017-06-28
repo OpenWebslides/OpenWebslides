@@ -19,7 +19,7 @@ module Api
 
       raise Api::ApiError, :detail => 'No Content-Disposition header' unless request.headers['HTTP_CONTENT_DISPOSITION']
 
-      conversion = Conversion.new :user => current_user
+      conversion = Conversion.new :user => current_user, :status => :queued
 
       # Authorize
       raise Pundit::NotAuthorizedError unless ConversionPolicy.new(current_user, conversion).create?
@@ -29,14 +29,15 @@ module Api
       filename = request.headers['HTTP_CONTENT_DISPOSITION'].match(/filename ?= ?"?([^\\"]*)"?/)[1]
       raise Api::ApiError, :detail => 'Invalid Content-Disposition header' unless filename
 
-      file = Rails.root.join 'tmp', 'uploads', "#{SecureRandom.urlsafe_base64}-#{filename}"
-      raise OpenWebslides::NotImplementedError unless request.body.is_a?(Tempfile)
-      FileUtils.cp request.body.path, file
+      # Create tempfile with proper extension
+      file = Tempfile.new ['', ".#{filename.split('.').last}"]
+      file.binmode
+      file.write request.body.read
+      file.close
 
       # Create and queue conversion
-      conversion.filename = file
+      conversion.filename = file.path
       conversion.name = filename
-      conversion.status = :queued
       conversion.save
 
       resource = ConversionResource.resources_for([conversion], context).first
