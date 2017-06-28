@@ -7,7 +7,7 @@ import {
   deleteSlideWithContent,
 } from 'actions/slideActions';
 
-import NavigationPane from 'presentationals/components/editor/NavigationPane';
+import NavigationPane from 'presentationals/components/slide-editor/NavigationPane';
 
 function mapStateToProps(state) {
   return {
