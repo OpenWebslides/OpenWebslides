@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateSlide } from 'actions/slideActions';
+import { updateDeck } from 'actions/deckActions';
 import { setActiveContentBlock } from 'actions/contentBlockActions';
 
 import EditableContentBlock from 'lib/convert-to-react/components/EditableContentBlock';
@@ -13,7 +14,10 @@ function mapStateToProps(state, props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateSlide, setActiveContentBlock }, dispatch);
+  return bindActionCreators(
+    { updateSlide, setActiveContentBlock, updateDeck },
+    dispatch,
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
