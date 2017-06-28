@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import NavigationPane from 'containers/slide-editor/NavigationContainer';
-import EditingPane from 'presentationals/components/editor/EditingPane';
+import NavigationPane from 'containers/slide-editor/NavigationPaneContainer';
+import EditingPane from 'containers/slide-editor/EditingPaneContainer';
 
 export default class Editor extends Component {
   componentDidMount() {
