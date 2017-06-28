@@ -8,7 +8,7 @@ require 'open3'
 class ConversionWorker
   include Sidekiq::Worker
 
-  sidekiq_options :queue => 'conversion'
+  sidekiq_options :queue => 'conversion', :retry => false
 
   JAR = Rails.root.join 'lib', 'assets', 'conversion', 'OpenWebslidesConverter.jar'
 
@@ -26,12 +26,6 @@ class ConversionWorker
     create_deck
     copy_assets
 
-    # Remove temporary storage
-    FileUtils.remove_entry_secure @output
-
-    # Delete uploaded file
-    File.delete @conversion.filename
-
     logger.info "Converted file #{@conversion.filename} successfully"
 
     @conversion.update :status => :success
@@ -42,6 +36,12 @@ class ConversionWorker
     @conversion.update :status => :error if @conversion
 
     raise e
+  ensure
+    # Remove temporary storage
+    FileUtils.remove_entry_secure @output if @output
+
+    # Delete uploaded file
+    File.delete @conversion.filename if @conversion
   end
 
   ##
