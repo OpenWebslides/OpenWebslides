@@ -9,6 +9,11 @@ function parseSlides(slideArr) {
   const slides = {};
   const contentBlocks = {};
 
+  if (slideArr.length === 0) {
+    slides[slideSequence] = { meta: {}, content: [] };
+    slideSequence += 1;
+  }
+
   slideArr.forEach(slide => {
     slides[slideSequence] = { meta: {}, content: [] };
 
