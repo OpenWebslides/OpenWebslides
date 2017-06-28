@@ -1,14 +1,3 @@
-GIT
-  remote: https://github.com/Ross-Hunter/pundit-resources.git
-  revision: 9b59d45999eaa2df8fade43f74e8ccecf5dfc193
-  branch: rails-5.1
-  specs:
-    pundit-resources (1.1.1)
-      activesupport
-      jsonapi-resources
-      pundit
-      rails (>= 4.2.1, < 5.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -128,6 +117,8 @@ GEM
       railties (>= 4.1)
     jsonapi-resources-matchers (1.0.0)
       jsonapi-resources (>= 0.9.0)
+    jsonapi-utils (0.6.0)
+      jsonapi-resources (= 0.9.0)
     jwt (1.5.6)
     jwt-auth (3.0.0)
       jwt (~> 1.5)
@@ -347,8 +338,8 @@ DEPENDENCIES
   foreman
   jbuilder
   json
-  jsonapi-resources
   jsonapi-resources-matchers
+  jsonapi-utils
   jwt
   jwt-auth
   listen
@@ -365,7 +356,6 @@ DEPENDENCIES
   puma
   pundit
   pundit-matchers
-  pundit-resources!
   rack-cors
   rails
   reek

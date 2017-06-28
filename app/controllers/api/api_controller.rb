@@ -5,11 +5,12 @@ module Api
   # REST API controller
   #
   class ApiController < ApplicationController
-    include JSONAPI::ActsAsResourceController
+    include JSONAPI::Utils
     include JWT::Auth::Authentication
-    include Pundit::ResourceController
+    include Pundit
 
     rescue_from Api::ApiError, :with => :api_error
+    rescue_from ActiveRecord::RecordNotFound, :with => :jsonapi_render_not_found
 
     rescue_from JWT::Auth::UnauthorizedError, :with => :user_not_authenticated
     rescue_from Pundit::NotAuthorizedError, :with => :user_not_authorized
