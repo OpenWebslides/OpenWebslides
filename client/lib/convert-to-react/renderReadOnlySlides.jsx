@@ -1,7 +1,7 @@
 import React from 'react';
 
 import convertContent from 'lib/convert-to-react/convertContent';
-import Slide from 'presentationals/components/editor/Slide';
+import Slide from 'presentationals/components/slide-editor/Slide';
 
 export default function convertToReact(slides) {
   const slideComponentArr = [];
