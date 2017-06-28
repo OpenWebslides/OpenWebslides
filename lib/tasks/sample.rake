@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'faker'
+require 'benchmark'
+
 namespace :db do
   desc 'Populates the database with sample data'
   task :sample => :environment do
