@@ -31,6 +31,7 @@ export default class EditableContentBlock extends Component {
 
   handleBlur() {
     this.setState({ hasFocus: false });
+    this.props.setActiveContentBlock(null);
   }
 
   render() {
