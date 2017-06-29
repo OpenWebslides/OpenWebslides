@@ -23,8 +23,8 @@ function byId(state = initialState, action) {
       return {
         ...state,
         [action.payload.id]: {
-          id: action.payload.id,
-          data: action.payload.content,
+          ...state[action.payload.id],
+          data: action.payload.data,
         },
       };
 

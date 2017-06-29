@@ -19,10 +19,10 @@ export function fetchSlides(deckId) {
   };
 }
 
-export function updateSlide(id, content) {
+export function updateSlide(id, data) {
   return {
     type: UPDATE_SLIDE,
-    payload: { id, content },
+    payload: { id, data },
   };
 }
 

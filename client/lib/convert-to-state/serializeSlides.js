@@ -39,8 +39,9 @@ function parseSlides(slideArr) {
             id: contentBlockSequence,
             type: 'contentBlock',
           });
-
           contentBlocks[contentBlockSequence] = {
+            id: contentBlockSequence,
+            type: node.nodeName,
             data: EditorState.createWithContent(
               convertFromHTML(node.outerHTML),
             ),
