@@ -53,7 +53,7 @@
   "dependencies": {
     "draft-convert": "^1.4.6",
     "draft-js": "^0.10.1",
-    "draft-js-plugins-editor": "^2.0.0-beta1",
+    "draft-js-plugins-editor": "2.0.0-rc2",
     "history": "^4.6.1",
     "i18next": "^8.3.0",
     "i18next-resource-store-loader": "^0.1.1",
@@ -102,6 +102,6 @@
       "^api(.*)$": "<rootDir>/app/api$1",
       "^lib(.*)$": "<rootDir>/lib$1"
     },
-    "setupTestFrameworkScriptFile":"./jestLocalStorage.js"
+    "setupTestFrameworkScriptFile": "./jestLocalStorage.js"
   }
 }
