@@ -41,7 +41,7 @@ function convertSlidesToHtml(slides, contentBlocks) {
 
     htmlString += `<section class="slide">${slideContentHTML}</section>`;
   });
-
+  console.log(htmlString);
   return addWrappingHtml(htmlString);
 }
 

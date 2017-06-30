@@ -4,12 +4,13 @@ import { updateSlide } from 'actions/slideActions';
 import { updateDeck } from 'actions/deckActions';
 import { setActiveContentBlock } from 'actions/contentBlockActions';
 
-import EditableContentBlock from 'lib/convert-to-react/components/EditableContentBlock';
+import ContentBlockEditor from 'lib/convert-to-react/content-block-editor/ContentBlockEditor';
 
 function mapStateToProps(state, props) {
   return {
     activeContentBlock: state.app.editor.contentBlocks.active,
     contentBlockState: state.entities.contentBlocks.byId[props.id].data,
+    contentBlockType: state.entities.contentBlocks.byId[props.id].type,
   };
 }
 
@@ -20,6 +21,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  EditableContentBlock,
-);
+export default connect(mapStateToProps, mapDispatchToProps)(ContentBlockEditor);
