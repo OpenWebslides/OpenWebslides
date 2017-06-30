@@ -13,7 +13,6 @@ services:
     volumes:
       - public:/app/public/
       - data:/app/data/
-    restart: always
     depends_on:
       - postgres
       - sidekiq
@@ -29,6 +28,7 @@ services:
     image: postgres:9.6
     volumes:
       - postgres:/var/lib/postgresql/data/
+    restart: always
 
   ##
   # Sidekiq container
@@ -44,8 +44,8 @@ services:
       - redis
     links:
       - redis
-    restart: always
     command: bundle exec sidekiq
+    restart: always
 
   ##
   # Redis container
@@ -54,6 +54,23 @@ services:
     image: redis:3.0
     volumes:
       - redis:/var/lib/redis/data/
+    restart: always
+
+  ##
+  # Web server
+  #
+  nginx:
+    image: nginx:1.13
+    volumes:
+      - public:/app/public/
+      - ${PWD}/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+    depends_on:
+      - app
+    links:
+      - app
     restart: always
 
 volumes:

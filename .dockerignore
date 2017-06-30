@@ -8,3 +8,5 @@ vendor/
 client/node_modules/
 client/coverage/
 *.env
+nginx.conf
+docker-compose.yml
