@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { RichUtils } from 'draft-js';
 
-import ViewsPane from './ViewsPane';
+import SlideViewsPane from './SlideViewsPane';
 
-export default class EditingPane extends Component {
+export default class SlideEditingPane extends Component {
   constructor() {
     super();
     this.handleToggleInlineStyle = this.handleToggleInlineStyle.bind(this);
@@ -88,7 +88,7 @@ export default class EditingPane extends Component {
 
           </div>
           <div className="c_slide-editor__item c_slide-editor__item--views-panel">
-            <ViewsPane />
+            <SlideViewsPane />
           </div>
           {/* #TODO
         <div className="c_slide-editor__item c_slide-editor__item--slide-health">
@@ -100,7 +100,7 @@ export default class EditingPane extends Component {
   }
 }
 
-EditingPane.propTypes = {
+SlideEditingPane.propTypes = {
   activeContentBlock: PropTypes.objectOf(Object),
   activeSlideId: PropTypes.number,
   addContentBlock: PropTypes.func.isRequired,
@@ -109,7 +109,7 @@ EditingPane.propTypes = {
   updateSlide: PropTypes.func.isRequired,
 };
 
-EditingPane.defaultProps = {
+SlideEditingPane.defaultProps = {
   activeContentBlock: null,
   activeSlideId: null,
   contentBlockSequence: null,

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ViewsMenu(props) {
+function SlideViewsMenu(props) {
   return (
     <div className={`c_switcher-menu c_switcher-menu--${props.cssIdentifier}`}>
       <menu className="o_list c_switcher-menu__list">
@@ -30,12 +30,12 @@ function ViewsMenu(props) {
   );
 }
 
-ViewsMenu.propTypes = {
+SlideViewsMenu.propTypes = {
   cssIdentifier: PropTypes.string,
 };
 
-ViewsMenu.defaultProps = {
+SlideViewsMenu.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default ViewsMenu;
+export default SlideViewsMenu;
