@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ContentView(props) {
+function SlideContentView(props) {
   return (
     <div
       className={`c_editor-content-view c_editor-content-view--${props.cssIdentifier}`}
@@ -13,12 +13,12 @@ function ContentView(props) {
   );
 }
 
-ContentView.propTypes = {
+SlideContentView.propTypes = {
   cssIdentifier: PropTypes.string,
 };
 
-ContentView.defaultProps = {
+SlideContentView.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default ContentView;
+export default SlideContentView;

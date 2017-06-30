@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { updateSlide } from 'actions/slideActions';
 import { addContentBlock } from 'actions/contentBlockActions';
 
-import EditingPane from 'presentationals/components/slide-editor/EditingPane';
+import SlideEditingPane
+  from 'presentationals/components/slide-editor/SlideEditingPane';
 
 function mapStateToProps(state) {
   const activeContentBlock = state.app.editor.contentBlocks.active;
@@ -21,4 +22,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ addContentBlock, updateSlide }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditingPane);
+export default connect(mapStateToProps, mapDispatchToProps)(SlideEditingPane);
