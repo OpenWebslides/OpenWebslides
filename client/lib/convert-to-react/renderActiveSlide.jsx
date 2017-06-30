@@ -7,7 +7,7 @@ import convertContent from 'lib/convert-to-react/convertContent';
 export default function renderActiveSlide({ content }) {
   const slideContent = convertContent(content, { active: true });
 
-  return React.createElement(Slide, {}, slideContent);
+  return <Slide>{slideContent}</Slide>;
 }
 
 renderActiveSlide.propTypes = {

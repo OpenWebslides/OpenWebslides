@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ReadOnlyContentBlockContainer from 'lib/convert-to-react/containers/ReadOnlyContentBlockContainer';
-import EditableContentBlockContainer from 'lib/convert-to-react/containers/EditableContentBlockContainer';
+import ContentBlockReadOnlyContainer from 'lib/convert-to-react/content-block-read-only/ContentBlockReadOnlyContainer';
+import ContentBlockEditorContainer from 'lib/convert-to-react/content-block-editor/ContentBlockEditorContainer';
 
 export default function convertContent(content, { active }) {
   const contentArr = [];
@@ -20,14 +20,12 @@ export default function convertContent(content, { active }) {
 
       contentArr.push(GroupComponent);
     } else if (active) {
-      const EditorComponent = (
-        <EditableContentBlockContainer key={id} id={id} />
-      );
+      const EditorComponent = <ContentBlockEditorContainer key={id} id={id} />;
 
       contentArr.push(EditorComponent);
     } else {
       const EditorComponent = (
-        <ReadOnlyContentBlockContainer key={id} id={id} />
+        <ContentBlockReadOnlyContainer key={id} id={id} />
       );
 
       contentArr.push(EditorComponent);

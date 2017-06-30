@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Editor from 'draft-js-plugins-editor';
 
-export default class EditableContentBlock extends Component {
+import EditorTypes from 'lib/content-block-configs';
+
+export default class BaseEditor extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
@@ -36,13 +38,19 @@ export default class EditableContentBlock extends Component {
   }
 
   render() {
+    const { placeholder, plugins, keyBindings } = EditorTypes[
+      this.props.contentBlockType
+    ];
+
     return (
       <div className={`${this.state.hasFocus ? 'hasFocus' : ''}`}>
         <Editor
-          ref={el => {
-            this.editor = el;
+          ref={component => {
+            this.editor = component;
           }}
-          placeholder="Add your text here..."
+          placeholder={placeholder || ''}
+          plugins={plugins || []}
+          keyBindingFn={keyBindings}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           onChange={this.handleChange}
@@ -53,15 +61,16 @@ export default class EditableContentBlock extends Component {
   }
 }
 
-EditableContentBlock.propTypes = {
+BaseEditor.propTypes = {
   id: PropTypes.number.isRequired,
   setActiveContentBlock: PropTypes.func.isRequired,
   activeContentBlock: PropTypes.number,
   updateDeck: PropTypes.func.isRequired,
   updateSlide: PropTypes.func.isRequired,
   contentBlockState: PropTypes.objectOf(Object).isRequired,
+  contentBlockType: PropTypes.string.isRequired,
 };
 
-EditableContentBlock.defaultProps = {
+BaseEditor.defaultProps = {
   activeContentBlock: null,
 };
