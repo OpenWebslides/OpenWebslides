@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SlideView from 'containers/slide-editor/SlideViewContainer';
+import SlideLiveViewContainer
+  from 'containers/slide-editor/SlideLiveViewContainer';
 // import ModeMenu from './ViewsMenu';
 
-function ViewsPane(props) {
+function SlideViewsPane(props) {
   return (
     <div
       className={`c_editor-views-panel c_editor-views-panel--${props.cssIdentifier}`}
@@ -15,7 +16,7 @@ function ViewsPane(props) {
         </div>*/}
         <div className="c_editor-views-panel__views-list">
           <div className="c_editor-views-panel__views-item">
-            <SlideView />
+            <SlideLiveViewContainer />
           </div>
           {/* #TODO
           <div className="c_editor-views-panel__views-item">
@@ -27,12 +28,12 @@ function ViewsPane(props) {
   );
 }
 
-ViewsPane.propTypes = {
+SlideViewsPane.propTypes = {
   cssIdentifier: PropTypes.string,
 };
 
-ViewsPane.defaultProps = {
+SlideViewsPane.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default ViewsPane;
+export default SlideViewsPane;
