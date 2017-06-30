@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import convertSlides from 'lib/convert-to-react/renderReadOnlySlides';
+import convertToReact from 'lib/convert-to-react/renderReadOnlySlides';
 
-export default class NavigationPane extends Component {
+export default class DeckNavigationPane extends Component {
   constructor(props) {
     super(props);
     this.handleAddSlide = this.handleAddSlide.bind(this);
@@ -25,15 +25,14 @@ export default class NavigationPane extends Component {
 
   render() {
     if (!_.isEmpty(this.props.slides)) {
-      const slideComponents = convertSlides(this.props.slides);
+      const slideComponents = convertToReact(this.props.slides);
       return (
         <div
-          className={`c_deck-navigator c_deck-navigator--${this.props
-            .cssIdentifier}`}
+          className={`c_deck-navigator c_deck-navigator--${this.props.cssIdentifier}`}
         >
           <div className="c_deck-navigator__wrapper">
             <ol className="o_list c_deck-navigator__list">
-              {slideComponents.map(slide =>
+              {slideComponents.map(slide => (
                 <li
                   className="o_list__item c_deck-navigator__item"
                   key={slide.key}
@@ -52,8 +51,8 @@ export default class NavigationPane extends Component {
                       {slide}
                     </button>
                   </div>
-                </li>,
-              )}
+                </li>
+              ))}
             </ol>
             <p className="c_deck-navigator__controls">
               <button
@@ -72,7 +71,7 @@ export default class NavigationPane extends Component {
   }
 }
 
-NavigationPane.propTypes = {
+DeckNavigationPane.propTypes = {
   cssIdentifier: PropTypes.string,
   addSlide: PropTypes.func.isRequired,
   setActiveSlide: PropTypes.func.isRequired,
@@ -81,7 +80,7 @@ NavigationPane.propTypes = {
   slideSequence: PropTypes.number,
 };
 
-NavigationPane.defaultProps = {
+DeckNavigationPane.defaultProps = {
   cssIdentifier: 'default',
   slideSequence: null,
   slides: null,

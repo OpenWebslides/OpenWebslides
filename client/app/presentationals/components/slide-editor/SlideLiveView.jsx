@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import renderActiveSlide from 'lib/convert-to-react/renderActiveSlide';
 
-function SlideView(props) {
+function SlideLiveView(props) {
   if (props.activeSlide) {
     const ActiveSlide = renderActiveSlide(props.activeSlide);
 
@@ -20,14 +20,14 @@ function SlideView(props) {
   return <h1>Loading...</h1>;
 }
 
-SlideView.propTypes = {
+SlideLiveView.propTypes = {
   cssIdentifier: PropTypes.string,
   activeSlide: PropTypes.objectOf(Object),
 };
 
-SlideView.defaultProps = {
+SlideLiveView.defaultProps = {
   cssIdentifier: 'default',
   activeSlide: null,
 };
 
-export default SlideView;
+export default SlideLiveView;

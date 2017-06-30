@@ -7,7 +7,8 @@ import {
   deleteSlideWithContent,
 } from 'actions/slideActions';
 
-import NavigationPane from 'presentationals/components/slide-editor/NavigationPane';
+import DeckNavigationPane
+  from 'presentationals/components/slide-editor/DeckNavigationPane';
 
 function mapStateToProps(state) {
   return {
@@ -24,4 +25,4 @@ function mapDispatchToProps(dispatch) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavigationPane);
+export default connect(mapStateToProps, mapDispatchToProps)(DeckNavigationPane);
