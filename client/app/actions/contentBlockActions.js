@@ -1,5 +1,5 @@
 // Action types
-export const ADD_TITLE = 'ADD_TITLE';
+export const ADD_CONTENT_BLOCK = 'ADD_CONTENT_BLOCK';
 export const SET_ACTIVE_CONTENT_BLOCK = 'SET_ACTIVE_CONTENT_BLOCK';
 export const DELETE_CONTENT_BLOCKS = 'DELETE_CONTENT_BLOCKS';
 
@@ -18,9 +18,9 @@ export function deleteContentBlocks(contentBlocksIds) {
   };
 }
 
-export function addTitle(slideId, contentBlockId) {
+export function addContentBlock(slideId, contentBlockId, type) {
   return {
-    type: ADD_TITLE,
-    payload: { slideId, contentBlockId },
+    type: ADD_CONTENT_BLOCK,
+    payload: { slideId, contentBlockId, type },
   };
 }
