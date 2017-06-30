@@ -5,7 +5,7 @@ import {
   ADD_SLIDE,
   DELETE_SLIDE,
 } from 'actions/slideActions';
-import { ADD_TITLE } from 'actions/contentBlockActions';
+import { ADD_CONTENT_BLOCK } from 'actions/contentBlockActions';
 
 const initialState = {};
 
@@ -22,7 +22,7 @@ function byId(state = initialState, action) {
     case DELETE_SLIDE:
       return _.omit(state, action.payload.slideId);
 
-    case ADD_TITLE:
+    case ADD_CONTENT_BLOCK:
       return {
         ...state,
         [action.payload.slideId]: {

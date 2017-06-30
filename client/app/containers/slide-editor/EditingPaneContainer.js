@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { updateSlide } from 'actions/slideActions';
-import { addTitle } from 'actions/contentBlockActions';
+import { addContentBlock } from 'actions/contentBlockActions';
 
 import EditingPane from 'presentationals/components/slide-editor/EditingPane';
 
@@ -18,7 +18,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addTitle, updateSlide }, dispatch);
+  return bindActionCreators({ addContentBlock, updateSlide }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditingPane);

@@ -8,7 +8,7 @@ export default class EditingPane extends Component {
   constructor() {
     super();
     this.handleToggleInlineStyle = this.handleToggleInlineStyle.bind(this);
-    this.handleAddTitle = this.handleAddTitle.bind(this);
+    this.handleAddContentBlock = this.handleAddContentBlock.bind(this);
   }
 
   handleToggleInlineStyle(e, type) {
@@ -26,11 +26,11 @@ export default class EditingPane extends Component {
     }
   }
 
-  handleAddTitle(e) {
+  handleAddContentBlock(e, type) {
     e.preventDefault();
     const { contentBlockSequence, activeSlideId } = this.props;
 
-    this.props.addTitle(activeSlideId, contentBlockSequence);
+    this.props.addContentBlock(activeSlideId, contentBlockSequence, type);
   }
 
   render() {
@@ -60,7 +60,18 @@ export default class EditingPane extends Component {
       >
         <div className="c_slide-editor__wrapper">
           <div className="c_slide-editor__item c_slide-editor__item--toolbar">
-            <button onMouseDown={this.handleAddTitle}>Add Title</button>
+            <button onMouseDown={e => this.handleAddContentBlock(e, 'H1')}>
+              Add Title
+            </button>
+            <button onMouseDown={e => this.handleAddContentBlock(e, 'P')}>
+              Add Text
+            </button>
+            <button onMouseDown={e => this.handleAddContentBlock(e, 'UL')}>
+              Add UL
+            </button>
+            <button onMouseDown={e => this.handleAddContentBlock(e, 'OL')}>
+              Add OL
+            </button>
             <button onMouseDown={e => this.handleToggleInlineStyle(e, 'BOLD')}>
               Bold
             </button>
@@ -92,7 +103,7 @@ export default class EditingPane extends Component {
 EditingPane.propTypes = {
   activeContentBlock: PropTypes.objectOf(Object),
   activeSlideId: PropTypes.number,
-  addTitle: PropTypes.func.isRequired,
+  addContentBlock: PropTypes.func.isRequired,
   contentBlockSequence: PropTypes.number,
   cssIdentifier: PropTypes.string,
   updateSlide: PropTypes.func.isRequired,
