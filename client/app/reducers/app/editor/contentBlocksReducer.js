@@ -4,7 +4,7 @@ import { FETCH_SLIDES_SUCCESS } from 'actions/slideActions';
 
 import {
   SET_ACTIVE_CONTENT_BLOCK,
-  ADD_TITLE,
+  ADD_CONTENT_BLOCK,
 } from 'actions/contentBlockActions';
 
 const initialState = Immutable({
@@ -14,7 +14,7 @@ const initialState = Immutable({
 
 export default function contentBlocks(state = initialState, action) {
   switch (action.type) {
-    case ADD_TITLE:
+    case ADD_CONTENT_BLOCK:
       return {
         ...state,
         active: state.sequence,
