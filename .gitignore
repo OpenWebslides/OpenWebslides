@@ -27,6 +27,7 @@
 # Webpack files
 node_modules
 /client/public
+/client/dist
 
 # Private files
 *.env
@@ -39,7 +40,6 @@ coverage/
 /.gem
 /.vscode
 
-dist/
 .yarnclean
 jsconfig.json
 

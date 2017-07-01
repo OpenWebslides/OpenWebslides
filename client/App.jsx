@@ -7,6 +7,8 @@ import configureStore from './configureStore';
 import i18n from './i18n';
 import './assets/stylesheets/scss/application.scss';
 
+import 'file-loader?name=index.html!index.html';
+
 const store = configureStore();
 
 export default function App() {
