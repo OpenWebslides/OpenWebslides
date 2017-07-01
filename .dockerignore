@@ -1,12 +1,58 @@
-tmp/
-log/
-data/
-doc/
-lib/assets/
-db/*.sqlite3
-vendor/
-client/node_modules/
-client/coverage/
-*.env
-nginx.conf
+# Docker files
+Dockerfile
 docker-compose.yml
+.dockerignore
+
+ Ignore bundler config.
+/.bundle
+/.gem
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# IDE files
+.idea
+
+# Webpack files
+node_modules
+/client/public
+/client/dist
+
+# Private files
+*.env
+config/*.pem
+config/*.pub
+
+# Coverage report
+coverage/
+
+/.gem
+/.vscode
+
+.yarnclean
+jsconfig.json
+
+# Generated documentation
+doc/
+
+.vscode
+.DS_Store
+
+# Local repositories
+data/*
+
+# Submodules
+lib/assets/
+
+# Volumes
+nginx.conf
