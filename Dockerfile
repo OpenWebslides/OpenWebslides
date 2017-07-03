@@ -36,8 +36,8 @@ RUN bundle install --deployment --without development test
 ##
 # Install Node dependencies
 #
-COPY client/yarn.lock /app/client/
-RUN cd client && yarn install
+COPY client/package.json client/yarn.lock /app/client/
+RUN cd /app/client && yarn install --production=false
 
 ##
 # Add application
