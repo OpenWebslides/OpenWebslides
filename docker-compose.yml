@@ -5,11 +5,12 @@ services:
   # Application container
   #
   app:
-    build: .
+    image: openwebslides/openwebslides:latest
     env_file:
       - openwebslides.env
     environment:
       - RAILS_ENV=production
+      - NODE_ENV=production
     volumes:
       - public:/app/client/dist/
       - data:/app/data/
@@ -34,7 +35,7 @@ services:
   # Sidekiq container
   #
   sidekiq:
-    build: .
+    image: openwebslides/openwebslides:latest
     env_file:
       - openwebslides.env
     volumes:
@@ -57,7 +58,7 @@ services:
     restart: always
 
   ##
-  # Web server
+  # Web server container
   #
   nginx:
     image: nginx:1.13
