@@ -4,7 +4,7 @@ async function requestFeedNotifications(offset = 0) {
   const request = new ApiRequest();
 
   request
-    .setEndpoint('api/notifications')
+    .setEndpoint('notifications')
     .setMethod('GET')
     .addParameter('sort', '-createdAt')
     .addParameter('page[offset]', `${offset}`);

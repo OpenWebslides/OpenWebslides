@@ -3,7 +3,7 @@ import ApiRequest from './helpers/apiHelper';
 async function resetPassword(resetPasswordToken, password) {
   const request = new ApiRequest();
 
-  request.setEndpoint('api/password').setMethod('PUT').setBody({
+  request.setEndpoint('password').setMethod('PUT').setBody({
     data: {
       type: 'passwords',
       id: '',

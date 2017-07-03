@@ -33,8 +33,7 @@ function ApiRequest() {
   }
   that.parameters = {};
 
-  that.port = defaults.port ? parseInt(defaults.port, 10) : undefined;
-  that.host = defaults.host ? defaults.host : undefined;
+  that.url = defaults.url;
 
   /**
    * Set the last part of the url to which to make the request
@@ -47,25 +46,12 @@ function ApiRequest() {
   };
 
   /**
-   * Set the port to which to send the request. Set to whatever is in the API_config file by default.
-   * @param port
+   * Set the URL to which to send the request. Set to whatever is in the API_config file by default.
+   * @param url
    * @returns {{}}
    */
-  that.setPort = port => {
-    if (isNaN(port)) {
-      throw new Error(`Port must be an integer (received ${port} instead).`);
-    }
-    that.port = port;
-    return that;
-  };
-
-  /**
-   * Set the host to which to send the request. Set to whatever is in the API_config file by default.
-   * @param host
-   * @returns {{}}
-   */
-  that.setHost = host => {
-    that.host = host;
+  that.setUrl = url => {
+    that.url = url;
     return that;
   };
 
@@ -153,12 +139,9 @@ function ApiRequest() {
    * @returns {Promise}
    */
   that.executeRequest = async function executeRequest() {
-    let url = `http://${that.host}`;
-    if (that.port) {
-      url += `:${that.port}`;
-    }
+    let url = that.url;
     if (that.endPoint) {
-      url += `/${that.endPoint}`;
+      url += that.endPoint;
     } else {
       throw new Error('Cannot execute request: no endpoint is set!');
     }

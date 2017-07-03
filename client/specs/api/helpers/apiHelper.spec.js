@@ -5,8 +5,7 @@ describe('ApiHelper constructor', () => {
   it('builds a basic request', () => {
     const testEmpty = new ApiRequest();
 
-    expect(testEmpty.host).toEqual('localhost');
-    expect(testEmpty.port).toEqual(3000);
+    expect(testEmpty.url).toEqual('http://localhost:3000/api/');
     expect(testEmpty.headers).toEqual({
       'Content-Type': 'application/vnd.api+json',
     });
@@ -15,22 +14,19 @@ describe('ApiHelper constructor', () => {
   it('Can chain setter calls', () => {
     const testRequest = new ApiRequest();
 
-    const randomPort = faker.random.number();
-    const randomDomain = faker.internet.url();
+    const randomUrl = faker.internet.url();
     const randomBody = faker.lorem.paragraph();
     const randomEndpoint = faker.lorem.word();
     const randomHeaderKey = 'testKey';
     const randomHeaderVal = faker.lorem.word();
     testRequest
-      .setPort(randomPort)
-      .setHost(randomDomain)
+      .setUrl(randomUrl)
       .setEndpoint(randomEndpoint)
       .setMethod('POST')
       .setBody(randomBody)
       .addHeader(randomHeaderKey, randomHeaderVal);
 
-    expect(testRequest.host).toEqual(randomDomain);
-    expect(testRequest.port).toEqual(randomPort);
+    expect(testRequest.url).toEqual(randomUrl);
     expect(testRequest.body).toEqual(JSON.stringify(randomBody));
     expect(testRequest.method).toEqual('POST');
     expect(testRequest.headers).toEqual({
@@ -49,9 +45,6 @@ describe('ApiHelper constructor', () => {
       "Can't add a body to a GET request.",
     );
 
-    expect(() => testRequest.setPort('notANumber')).toThrowError(
-      'Port must be an integer (received notANumber instead).',
-    );
     expect(() => testRequest.addHeader('Authentication', 'bla')).toThrowError(
       `Invalid header 'Authentication': No need to specify an authentication header, it's included by default.`,
     );

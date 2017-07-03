@@ -3,7 +3,7 @@ import ApiRequest from './helpers/apiHelper';
 async function confirmEmail(confirmationToken) {
   const request = new ApiRequest();
 
-  request.setEndpoint('api/confirmation').setMethod('POST').setBody({
+  request.setEndpoint('confirmation').setMethod('POST').setBody({
     data: {
       type: 'confirmations',
       attributes: {

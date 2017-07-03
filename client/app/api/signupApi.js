@@ -3,7 +3,7 @@ import ApiRequest from './helpers/apiHelper';
 async function signup(email, password, firstName, lastName) {
   const request = new ApiRequest();
 
-  request.setEndpoint('api/users').setMethod('POST').setBody({
+  request.setEndpoint('users').setMethod('POST').setBody({
     data: {
       type: 'users',
       attributes: {
