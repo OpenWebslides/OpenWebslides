@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchDeckContent } from 'actions/slideActions';
+import { fetchDeckContent } from 'actions/deckActions';
 
 import PrintView from 'presentationals/components/print-view/PrintView';
 
