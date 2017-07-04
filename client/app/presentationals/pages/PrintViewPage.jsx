@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DefaultLayout from 'presentationals/layouts/DefaultLayout';
-import PrintViewContainer from 'containers/EmailConfirmationContainer';
+import PrintViewContainer from 'containers/PrintViewContainer';
 
 function PrintViewPage(props) {
   return (
