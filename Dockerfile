@@ -36,8 +36,8 @@ RUN bundle install --deployment --without development test
 ##
 # Install Node dependencies
 #
-COPY client/yarn.lock /app/client/
-RUN cd client && yarn install
+COPY client/package.json client/yarn.lock /app/client/
+RUN cd /app/client && yarn install --production=false
 
 ##
 # Add application
@@ -52,7 +52,7 @@ RUN git submodule init && git submodule update && rm -rf .git
 ##
 # Build public assets
 #
-RUN cd client && ./node_modules/.bin/webpack --config webpackConfig/webpack.config.js
+RUN cd client && ./node_modules/.bin/webpack --config config/webpack.js
 
 ##
 # Run application

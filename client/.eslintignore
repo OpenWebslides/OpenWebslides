@@ -3,4 +3,4 @@ node_modules/
 locales/
 dist/
 postcss.config.js
-webpackConfig/
+config/

@@ -33,6 +33,9 @@ gem 'jsonapi-resources'
 # HTML5 parser
 gem 'nokogumbo'
 
+# Asynchronous processing
+gem 'sidekiq'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 # Use Puma as the application server
