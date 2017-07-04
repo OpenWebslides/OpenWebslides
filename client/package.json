@@ -73,9 +73,9 @@
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "build:dev": "webpack --config config/webpack.config.js",
-    "build:prod": "webpack -p --config config/webpack.config.js",
-    "dev": "webpack-dev-server --config config/webpack.config.js"
+    "build:dev": "webpack --config config/webpack.js",
+    "build:prod": "webpack -p --config config/webpack.js",
+    "dev": "webpack-dev-server --config config/webpack.js"
   },
   "jest": {
     "rootDir": "./",
