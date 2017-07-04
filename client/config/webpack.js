@@ -57,6 +57,7 @@ const config = {
       reducers: path.join(__dirname, '..', 'app', 'reducers'),
       actions: path.join(__dirname, '..', 'app', 'actions'),
       containers: path.join(__dirname, '..', 'app', 'containers'),
+      constants: path.join(__dirname, '..', 'app', 'constants'),
       helpers: path.join(__dirname, '..', 'app', 'helpers'),
       sagas: path.join(__dirname, '..', 'app', 'sagas'),
       errors: path.join(__dirname, '..', 'app', 'errors'),
