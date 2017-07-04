@@ -8,6 +8,7 @@ import i18n from './i18n';
 import './assets/stylesheets/scss/application.scss';
 
 import 'file-loader?name=index.html!index.html';
+import 'file-loader?name=config.js!config/config.js';
 
 const store = configureStore();
 
