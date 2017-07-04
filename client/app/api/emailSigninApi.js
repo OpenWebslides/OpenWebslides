@@ -2,7 +2,7 @@ import ApiRequest from './helpers/apiHelper';
 
 async function emailSignin(email, password) {
   const request = new ApiRequest();
-  request.setEndpoint('api/token').setMethod('POST').setBody({
+  request.setEndpoint('token').setMethod('POST').setBody({
     data: {
       type: 'tokens',
       attributes: {

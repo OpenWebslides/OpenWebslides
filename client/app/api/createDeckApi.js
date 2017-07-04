@@ -23,7 +23,7 @@ async function createDeck(title, description, authorID, token) {
 
   request
     .setMethod('POST')
-    .setEndpoint('api/decks')
+    .setEndpoint('decks')
     .addHeader('Accept', 'application/vnd.api+json')
     .setBody(requestBody);
 
