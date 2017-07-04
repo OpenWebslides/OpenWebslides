@@ -12,7 +12,7 @@ import {
 } from 'actions/importDeckActions';
 
 const initialState = Immutable({
-  selectedFile: '',
+  selectedFile: {},
   uploadStarted: false,
   uploadPercent: 0,
   uploadErrorMessage: '',
