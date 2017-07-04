@@ -14,7 +14,7 @@ module Auth
       @resource.save
 
       token = JWT::Auth::Token.from_user @resource
-      redirect_to "/auth/omniauth?token=#{token.to_jwt}"
+      redirect_to "/oauth/omniauth?token=#{token.to_jwt}"
     end
 
     protected
