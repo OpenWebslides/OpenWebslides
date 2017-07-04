@@ -1,5 +1,5 @@
 import { loadState } from '../../../localStorage';
-import defaults from '../../../API_config';
+import defaults from '../../../config/api';
 import asyncFetch from './asyncFetch';
 
 function getAuthToken() {
@@ -46,7 +46,7 @@ function ApiRequest() {
   };
 
   /**
-   * Set the URL to which to send the request. Set to whatever is in the API_config file by default.
+   * Set the URL to which to send the request. Set to whatever is in the API config file by default.
    * @param url
    * @returns {{}}
    */
