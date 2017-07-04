@@ -12,7 +12,7 @@ services:
       - RAILS_ENV=production
       - NODE_ENV=production
     volumes:
-      - public:/app/client/dist/
+      - public:/app/public/
       - data:/app/data/
     depends_on:
       - postgres
