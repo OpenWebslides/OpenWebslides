@@ -1,19 +1,16 @@
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
-import history from 'history';
-
+import { bindActionCreators } from 'redux';
+import { selectUploadFile, startUpload } from 'actions/importDeckActions';
 import ImportDeckForm from 'presentationals/components/deckManagement/ImportDeckForm';
-
-const createDeckReduxForm = reduxForm({
-  form: 'importDeckForm',
-  getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => history.push('/'),
-})(ImportDeckForm);
 
 function mapStateToProps(state) {
   return {
     authState: state.app.authentication,
+    deckImportState: state.app.deckImport,
   };
 }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ selectUploadFile, startUpload }, dispatch);
+}
 
-export default connect(mapStateToProps)(createDeckReduxForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ImportDeckForm);
