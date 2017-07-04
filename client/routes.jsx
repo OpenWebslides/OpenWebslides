@@ -24,7 +24,7 @@ export default (
       <Route path="/signin" component={SigninPage} />
       <Route path="/confirmation" component={ConfirmEmailPage} />
       <Route path="/forgot_password" component={ForgotPasswordPage} />
-      <Route path="/auth/omniauth" component={OauthCallbackPage} />
+      <Route path="/oauth/omniauth" component={OauthCallbackPage} />
       <Route path="/reset_password" component={ResetPasswordPage} />
       <Route path="/editor/slide" component={SlideEditorPage} />
       <Route path="/editortest" component={EditorPage} />
