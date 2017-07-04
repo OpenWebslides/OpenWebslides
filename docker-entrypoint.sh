@@ -15,5 +15,8 @@ su - openwebslides
 # Migrate relational data
 bundle exec rake db:migrate
 
+# Override API URL on runtime
+erb /app/client/config/config.js.erb > /app/client/dist/config.js
+
 # Start app server
 bundle exec puma
