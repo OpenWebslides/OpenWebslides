@@ -52,7 +52,7 @@ RUN git submodule init && git submodule update && rm -rf .git
 ##
 # Build public assets
 #
-RUN cd client && ./node_modules/.bin/webpack --config config/webpack.js
+RUN cd /app/client && ./node_modules/.bin/webpack --config config/webpack.js
 
 ##
 # Run application
