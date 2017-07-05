@@ -4,6 +4,7 @@ import fileSizeDisplay from 'lib/fileSizeDisplay';
 
 import FineUploaderTraditional from 'fine-uploader-wrappers';
 import Gallery from 'react-fine-uploader';
+import { getAuthToken } from 'api/helpers/apiHelper';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
@@ -21,7 +22,15 @@ function ImportDeckForm({ authState, deckImportState }) {
         enabled: false,
       },
       request: {
-        endpoint: '/conversions',
+        endpoint: 'http://localhost:3000/api/conversions',
+        customHeaders: {
+          Authorization: `Bearer ${getAuthToken()}`,
+        },
+      },
+      validation: {
+        allowedExtensions: ['pptx', 'pdf'],
+        itemLimit: 1,
+        sizeLimit: 512000000, // 500mb
       },
       retry: {
         enableAuto: false,
@@ -32,7 +41,7 @@ function ImportDeckForm({ authState, deckImportState }) {
   return (
     <IfAuthHOC
       isAuthenticated={authState}
-      fallback={() => <NeedSigninWarning requestedAction="import a deck" />}
+      fallback={() => <NeedSigninWarning requestedAction="see your imports" />}
     >
       <Gallery uploader={uploader} />
     </IfAuthHOC>
