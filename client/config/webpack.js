@@ -8,15 +8,12 @@ const config = {
 
   devtool: 'cheap-module-eval-source-map',
 
-  entry: [
-    'react-hot-loader/patch',
-    './index.jsx',
-  ],
+  entry: ['react-hot-loader/patch', './index.jsx'],
 
   output: {
     path: path.join(__dirname, '..', 'dist'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
 
   module: {
@@ -30,8 +27,13 @@ const config = {
         },
       },
       {
-        test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        test: /\.s?css$/,
+        loaders: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -39,7 +41,7 @@ const config = {
       },
       {
         test: /locales/,
-        use: ['i18next-resource-store-loader']
+        use: ['i18next-resource-store-loader'],
       },
     ],
   },
@@ -79,7 +81,7 @@ const config = {
     hot: true,
     historyApiFallback: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-  }
+  },
 };
 
 module.exports = config;
