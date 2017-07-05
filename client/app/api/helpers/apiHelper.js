@@ -2,7 +2,7 @@ import { loadState } from '../../../localStorage';
 import defaults from '../../../config/api';
 import asyncFetch from './asyncFetch';
 
-function getAuthToken() {
+export function getAuthToken() {
   // We load it from the local storage.
   const loadedState = loadState();
   if (loadedState) {
