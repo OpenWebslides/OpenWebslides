@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { selectUploadFile, startUpload } from 'actions/importDeckActions';
 import ImportDeckForm from 'presentationals/components/deckManagement/ImportDeckForm';
 
 function mapStateToProps(state) {
@@ -10,7 +9,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectUploadFile, startUpload }, dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImportDeckForm);
