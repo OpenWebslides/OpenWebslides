@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import fileSizeDisplay from 'lib/fileSizeDisplay';
+
+import FineUploaderTraditional from 'fine-uploader-wrappers';
+import Gallery from 'react-fine-uploader';
+
 // Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 
@@ -8,45 +12,30 @@ import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 import IfAuthHOC from '../../../../lib/IfAuthHOC';
 
 function ImportDeckForm({ authState, deckImportState, selectUploadFile }) {
-  let fileInfo;
 
-  if (deckImportState.selectedFile.name) {
-    fileInfo = (
-      <div>
-        <p>
-          You have selected: {deckImportState.selectedFile.name}.
-        </p>
-        <p>
-          File size: {fileSizeDisplay(deckImportState.selectedFile.size)}
-        </p>
-      </div>
-    );
-  } else {
-    fileInfo = (
-      <div>
-        <p>
-          Please select a file to import
-        </p>
-      </div>
-    );
-  }
+  const uploader = new FineUploaderTraditional({
+    options: {
+      chunking: {
+        enabled: false,
+      },
+      deleteFile: {
+        enabled: false,
+      },
+      request: {
+        endpoint: '/conversions',
+      },
+      retry: {
+        enableAuto: false,
+      },
+    },
+  });
 
   return (
     <IfAuthHOC
       isAuthenticated={authState}
       fallback={() => <NeedSigninWarning requestedAction="import a deck" />}
     >
-      <div>
-        <input
-          type="file"
-          accept="pdf/ppt"
-          onChange={e => {
-            selectUploadFile(e.target.files[0]);
-          }}
-        />
-        {fileInfo}
-        <button type="submit"> Upload Deck</button>
-      </div>
+      <Gallery uploader={uploader} />
     </IfAuthHOC>
   );
 }
