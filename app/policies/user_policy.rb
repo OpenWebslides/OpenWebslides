@@ -16,6 +16,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    true
+  end
+
   def update?
     # Users can only update their own account
     !@user.nil? && @user == @record

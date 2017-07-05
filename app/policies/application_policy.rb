@@ -16,6 +16,10 @@ class ApplicationPolicy
     raise OpenWebslides::NotImplementedError
   end
 
+  def show?
+    raise OpenWebslides::NotImplementedError
+  end
+
   def update?
     raise OpenWebslides::NotImplementedError
   end
