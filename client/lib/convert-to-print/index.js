@@ -7,6 +7,8 @@ function htmlToReact(htmlElement) {
       return React.createElement('h1', null, htmlElement.innerText);
     case 'H2':
       return React.createElement('h2', null, htmlElement.innerText);
+    case 'H3':
+      return React.createElement('h3', null, htmlElement.innerText);
     case 'P':
       return React.createElement(
         'p',
@@ -32,11 +34,7 @@ function htmlToReact(htmlElement) {
         Array.from(htmlElement.childNodes).map(htmlToReact),
       );
     case 'A':
-      return React.createElement(
-        'span',
-        { className: 'link' },
-        `${htmlElement.innerText} (Link to: ${htmlElement.href})`,
-      );
+      return React.createElement('a', null, htmlElement.innerText);
     case 'STRONG':
       return React.createElement(
         'strong',
@@ -50,13 +48,28 @@ function htmlToReact(htmlElement) {
         Array.from(htmlElement.childNodes).map(htmlToReact),
       );
     case 'IMG':
-      return React.createElement(
-        'img',
-        { src: htmlElement.src, alt: htmlElement.alt },
-        null,
-      );
+      return React.createElement('div', { className: 'o__print-view-image' }, [
+        React.createElement(
+          'img',
+          {
+            src: htmlElement.src,
+            alt: htmlElement.alt,
+            width: 400,
+            height: 300,
+          },
+          null,
+        ),
+        React.createElement('figcaption', null, `Image: ${htmlElement.alt}`),
+      ]);
+
     case 'IFRAME':
-      return React.createElement('p', null, `Iframe: ${htmlElement.src}`);
+      return React.createElement('p', null, `iFrame: ${htmlElement.alt}`);
+    case 'BLOCKQUOTE':
+      return React.createElement(
+        'blockquote',
+        null,
+        Array.from(htmlElement.childNodes).map(htmlToReact),
+      );
     default:
       return React.createElement(
         'p',
@@ -76,13 +89,11 @@ function convertToPrint(htmlString) {
     node => node.nodeName === 'SECTION' && node.className.includes('slide'),
   );
 
-  const reactElementsArray = slidesArray.reduce((arr, currentSlide) => {
+  return slidesArray.reduce((arr, currentSlide) => {
     const thisSlideChildren = Array.from(currentSlide.children);
     const thisSlideElements = thisSlideChildren.map(htmlToReact);
     return arr.concat(thisSlideElements);
   }, []);
-
-  return reactElementsArray;
 }
 
 export default convertToPrint;
