@@ -11,8 +11,7 @@ import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 // Helpers:
 import IfAuthHOC from '../../../../lib/IfAuthHOC';
 
-function ImportDeckForm({ authState, deckImportState, selectUploadFile }) {
-
+function ImportDeckForm({ authState, deckImportState }) {
   const uploader = new FineUploaderTraditional({
     options: {
       chunking: {
