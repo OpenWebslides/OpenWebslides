@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Api
+  ##
+  # REST resource
+  #
   class ApiResource < JSONAPI::Resource
     abstract
 
