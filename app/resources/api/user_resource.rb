@@ -9,6 +9,7 @@ module Api
 
     has_many :decks
     has_many :collaborations
+    has_many :conversions
 
     ##
     # Filters
@@ -30,11 +31,11 @@ module Api
     end
 
     def self.creatable_fields(context = {})
-      super(context) - %i[decks collaborations]
+      super(context) - %i[decks collaborations conversions]
     end
 
     def self.updatable_fields(context = {})
-      super(context) - %i[email decks collaborations]
+      super(context) - %i[email decks collaborations conversions]
     end
 
     def self.sortable_fields(context)
