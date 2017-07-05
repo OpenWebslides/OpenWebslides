@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :identities, :dependent => :destroy
 
   has_many :decks, :dependent => :destroy
+  has_many :conversions, :dependent => :destroy
 
   has_and_belongs_to_many :collaborations, :class_name => 'Deck'
 
