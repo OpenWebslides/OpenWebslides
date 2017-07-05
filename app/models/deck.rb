@@ -21,7 +21,9 @@ class Deck < ApplicationRecord
 
   has_and_belongs_to_many :collaborators, :class_name => 'User'
 
-  has_many :assets
+  has_many :assets, :dependent => :delete_all
+
+  has_one :conversion, :dependent => :destroy
 
   ##
   # Callbacks
