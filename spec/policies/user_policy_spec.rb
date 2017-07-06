@@ -12,8 +12,19 @@ RSpec.describe UserPolicy do
 
     it { is_expected.to permit_action :index }
     it { is_expected.to permit_action :create }
+    it { is_expected.to permit_action :show }
     it { is_expected.to forbid_action :update }
     it { is_expected.to forbid_action :destroy }
+
+    it { is_expected.to forbid_action :create_decks }
+    it { is_expected.to permit_action :show_decks }
+    it { is_expected.to forbid_action :update_decks }
+    it { is_expected.to forbid_action :destroy_decks }
+
+    it { is_expected.to forbid_action :create_collaborations }
+    it { is_expected.to permit_action :show_collaborations }
+    it { is_expected.to forbid_action :update_collaborations }
+    it { is_expected.to forbid_action :destroy_collaborations }
   end
 
   context 'for a user' do
@@ -21,8 +32,19 @@ RSpec.describe UserPolicy do
 
     it { is_expected.to permit_action :index }
     it { is_expected.to permit_action :create }
+    it { is_expected.to permit_action :show }
     it { is_expected.to forbid_action :update }
     it { is_expected.to forbid_action :destroy }
+
+    it { is_expected.to forbid_action :create_decks }
+    it { is_expected.to permit_action :show_decks }
+    it { is_expected.to forbid_action :update_decks }
+    it { is_expected.to forbid_action :destroy_decks }
+
+    it { is_expected.to forbid_action :create_collaborations }
+    it { is_expected.to permit_action :show_collaborations }
+    it { is_expected.to forbid_action :update_collaborations }
+    it { is_expected.to forbid_action :destroy_collaborations }
   end
 
   context 'for the same user' do
@@ -32,5 +54,15 @@ RSpec.describe UserPolicy do
     it { is_expected.to permit_action :create }
     it { is_expected.to permit_action :update }
     it { is_expected.to permit_action :destroy }
+
+    it { is_expected.to permit_action :create_decks }
+    it { is_expected.to permit_action :show_decks }
+    it { is_expected.to permit_action :update_decks }
+    it { is_expected.to permit_action :destroy_decks }
+
+    it { is_expected.to permit_action :create_collaborations }
+    it { is_expected.to permit_action :show_collaborations }
+    it { is_expected.to permit_action :update_collaborations }
+    it { is_expected.to permit_action :destroy_collaborations }
   end
 end
