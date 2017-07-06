@@ -19,11 +19,11 @@ function renderDeckImportInfo(el) {
 
 class UserImports extends React.Component {
   componentWillMount() {
-    this.props.requestUserImports();
+    this.props.requestUserImports(this.props.authState.id);
   }
 
   render() {
-    const listOfUserImports = this.props.deckImportState.listOfImports;
+    const listOfUserImports = this.props.userImportsState.listOfUserImports;
     const listOfImportElements = listOfUserImports.map(el =>
       renderDeckImportInfo(el),
     );
@@ -43,9 +43,12 @@ class UserImports extends React.Component {
 }
 
 UserImports.propTypes = {
+  authState: PropTypes.shape({
+    id: PropTypes.number,
+  }).isRequired,
   requestUserImports: PropTypes.func.isRequired,
-  deckImportState: PropTypes.shape().isRequired,
-  listOfImports: PropTypes.arrayOf(
+  userImportsState: PropTypes.shape().isRequired,
+  listOfUserImports: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       timestamp: PropTypes.string.isRequired,
