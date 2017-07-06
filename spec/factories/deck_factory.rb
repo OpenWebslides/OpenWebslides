@@ -10,5 +10,9 @@ FactoryGirl.define do
     trait :with_collaborators do
       collaborators { build_list :user, 3 }
     end
+
+    trait :with_assets do
+      assets { build_list :asset, 3 }
+    end
   end
 end
