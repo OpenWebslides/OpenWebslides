@@ -39,7 +39,7 @@ function ImportDeckForm({ authState }) {
   return (
     <IfAuthHOC
       isAuthenticated={authState.isAuthenticated}
-      fallback={() => <NeedSigninWarning requestedAction="see your imports" />}
+      fallback={() => <NeedSigninWarning requestedAction="import a deck" />}
     >
       <Gallery uploader={uploader} />
     </IfAuthHOC>
