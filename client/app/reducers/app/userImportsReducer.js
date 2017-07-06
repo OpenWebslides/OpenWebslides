@@ -26,7 +26,7 @@ function feedReducer(state = initialState, action) {
         sentRequestForList: false,
         receivedList: true,
         errorMessage: '',
-        listOfUserImports: action.payload.listOfUserImports,
+        listOfUserImports: action.payload.listOfImports,
       });
     case REQUEST_USER_IMPORTS_FAILURE:
       return Immutable.merge(state, {
