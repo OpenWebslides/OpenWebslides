@@ -27,6 +27,8 @@ RSpec.describe 'users routing', :type => :routing do
     route = '/api/users/foo/relationships/decks'
     params = { :user_id => 'foo', :relationship => 'decks' }
 
+    expect(:get => '/api/users/foo/decks').to route_to 'api/decks#get_related_resources', params.merge(:source => 'api/users')
+
     expect(:get => route).to route_to 'api/users#show_relationship', params
     expect(:patch => route).to route_to 'api/users#update_relationship', params
     expect(:put => route).to route_to 'api/users#update_relationship', params
@@ -37,6 +39,8 @@ RSpec.describe 'users routing', :type => :routing do
   it 'routes user collaborations relationship endpoint' do
     route = '/api/users/foo/relationships/collaborations'
     params = { :user_id => 'foo', :relationship => 'collaborations' }
+
+    expect(:get => '/api/users/foo/collaborations').to route_to 'api/decks#get_related_resources', params.merge(:source => 'api/users')
 
     expect(:get => route).to route_to 'api/users#show_relationship', params
     expect(:patch => route).to route_to 'api/users#update_relationship', params
