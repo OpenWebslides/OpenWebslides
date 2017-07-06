@@ -10,7 +10,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const userImportsState = state.app.userImports;
-  const authState = state.app.auth;
+  const authState = state.app.authentication;
   return {
     userImportsState,
     authState,
