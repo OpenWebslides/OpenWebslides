@@ -10,7 +10,7 @@ module Api
     ##
     # Properties
     #
-    attributes :status
+    attributes :status, :created_at
 
     has_one :deck
     has_one :user
@@ -24,5 +24,8 @@ module Api
     ##
     # Methods
     #
+    def created_at
+      @model.created_at.to_i.to_s
+    end
   end
 end
