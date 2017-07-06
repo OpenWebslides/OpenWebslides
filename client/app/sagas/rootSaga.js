@@ -18,6 +18,7 @@ import oauthSigninSaga from 'sagas/signin/oauthSigninSaga';
 import emailSigninSaga from 'sagas/signin/emailSigninSaga';
 
 import requestDeckListSaga from 'sagas/deck-management/requestDeckListSaga';
+import requestImportsListSaga from 'sagas/deckManagement/requestImportsListSaga';
 import createDeckSaga from 'sagas/deck-management/createDeckSaga';
 import deleteDeckSaga from 'sagas/deck-management/deleteDeckSaga';
 
@@ -64,6 +65,7 @@ export default function* rootSaga() {
     fetchDeckSaga(),
     createDeckSaga(),
     deleteDeckSaga(),
+    requestImportsListSaga(),
     updateDeckSaga(),
     uploadAssetSaga(),
     addUriSaga(),
