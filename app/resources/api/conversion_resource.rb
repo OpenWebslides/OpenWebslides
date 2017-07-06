@@ -10,7 +10,7 @@ module Api
     ##
     # Properties
     #
-    attributes :status, :created_at
+    attributes :name, :status, :created_at
 
     has_one :deck
     has_one :user
