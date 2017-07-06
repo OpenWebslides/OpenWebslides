@@ -14,7 +14,7 @@ function renderDeckImportInfo(el) {
       timestamp={el.timestamp}
       format={el.format}
       status={el.status}
-      title={el.title}
+      title={el.name}
     />
   );
 }
