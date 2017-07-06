@@ -25,7 +25,9 @@ module RequestHelper
         end
       end
 
-      send method, path, :params => params, :headers => headers.merge(api_headers)
+      # Include headers for request specs
+      request.headers.merge! headers.merge(api_headers)
+      send method, path, :params => params
     end
 
     define_method("#{method}_authenticated") do |user, path, params = {}, headers = {}|
@@ -40,7 +42,8 @@ module RequestHelper
       end
 
       # Include headers for request specs
-      send method, path, :params => params, :headers => headers.merge(auth_headers user)
+      request.headers.merge! headers.merge(auth_headers user)
+      send method, path, :params => params
     end
   end
 
@@ -54,7 +57,9 @@ module RequestHelper
         end
       end
 
-      send method, path, :params => params, :headers => headers.merge(api_headers).except('Content-Type')
+      # Include headers for request specs
+      request.headers.merge! headers.merge(api_headers).except('Content-Type')
+      send method, path, :params => params
     end
 
     define_method("#{method}_authenticated") do |user, path, params = {}, headers = {}|
@@ -68,7 +73,8 @@ module RequestHelper
       end
 
       # Include headers for request specs
-      send method, path, :params => params, :headers => headers.merge(extra_headers).except('Content-Type')
+      request.headers.merge! headers.merge(extra_headers).except('Content-Type')
+      send method, path, :params => params
     end
   end
 
