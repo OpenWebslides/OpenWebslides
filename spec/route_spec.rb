@@ -78,6 +78,28 @@ RSpec.describe 'routing', :type => :routing do
         expect(:post => route).not_to be_routable
         expect(:delete => route).to route_to 'api/users#destroy', :id => 'foo'
       end
+
+      it 'routes user decks relationship endpoint' do
+        route = '/api/users/foo/relationships/decks'
+        params = { :user_id => 'foo', :relationship => 'decks' }
+
+        expect(:get => route).to route_to 'api/users#show_relationship', params
+        expect(:patch => route).to route_to 'api/users#update_relationship', params
+        expect(:put => route).to route_to 'api/users#update_relationship', params
+        expect(:post => route).to route_to 'api/users#create_relationship', params
+        expect(:delete => route).to route_to 'api/users#destroy_relationship', params
+      end
+
+      it 'routes user collaborations relationship endpoint' do
+        route = '/api/users/foo/relationships/collaborations'
+        params = { :user_id => 'foo', :relationship => 'collaborations' }
+
+        expect(:get => route).to route_to 'api/users#show_relationship', params
+        expect(:patch => route).to route_to 'api/users#update_relationship', params
+        expect(:put => route).to route_to 'api/users#update_relationship', params
+        expect(:post => route).to route_to 'api/users#create_relationship', params
+        expect(:delete => route).to route_to 'api/users#destroy_relationship', params
+      end
     end
 
     describe 'assets' do
