@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import convertToPrint from 'lib/convert-to-print/index';
-import { flamesDeck, smallDeck } from 'constants/exampleDecks'; // TODO: only for testing
+import { flamesDeck, smallDeck, jasperDeck } from 'constants/exampleDecks'; // TODO: only for testing
 
 export default class SlideEditor extends Component {
   componentDidMount() {
@@ -10,7 +10,7 @@ export default class SlideEditor extends Component {
   }
 
   render() {
-    const elements = convertToPrint(flamesDeck);
+    const elements = convertToPrint(jasperDeck);
     return (
       <div>
         {elements}
