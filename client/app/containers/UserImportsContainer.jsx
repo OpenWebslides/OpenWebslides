@@ -9,9 +9,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const feedState = state.app.feed;
+  const userImportsState = state.app.userImports;
+  const authState = state.app.auth;
   return {
-    feedState,
+    userImportsState,
+    authState,
   };
 }
 
