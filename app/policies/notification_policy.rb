@@ -8,9 +8,37 @@ class NotificationPolicy < ApplicationPolicy
     @record = record
   end
 
+  ##
+  # Resource
+  #
   def index?
     true
   end
 
-  class Scope < Scope; end
+  def show?
+    true
+  end
+
+  ##
+  # Relationship: user
+  #
+  def show_user?
+    true
+  end
+
+  ##
+  # Relationship: deck
+  #
+  def show_deck?
+    true
+  end
+
+  ##
+  # Scope
+  #
+  class Scope < Scope
+    def resolve
+      @scope.all
+    end
+  end
 end
