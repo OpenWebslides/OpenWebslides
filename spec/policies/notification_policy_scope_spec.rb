@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe UserPolicy::Scope do
+RSpec.describe NotificationPolicy::Scope do
   subject { described_class.new(user, Notification).resolve }
 
   include_context 'policy_sample'

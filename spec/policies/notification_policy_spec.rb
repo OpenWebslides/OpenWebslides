@@ -11,11 +11,17 @@ RSpec.describe NotificationPolicy do
     let(:user) { nil }
 
     it { is_expected.to permit_action :index }
+    it { is_expected.to permit_action :show }
+    it { is_expected.to permit_action :show_user }
+    it { is_expected.to permit_action :show_deck }
   end
 
   context 'for a user' do
     let(:user) { build :user }
 
     it { is_expected.to permit_action :index }
+    it { is_expected.to permit_action :show }
+    it { is_expected.to permit_action :show_user }
+    it { is_expected.to permit_action :show_deck }
   end
 end

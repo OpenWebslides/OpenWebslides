@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     jsonapi_resources :conversions, :only => %i[create show]
 
     # Social feed
-    jsonapi_resources :notifications, :only => %i[index show] do end
+    jsonapi_resources :notifications, :only => %i[index show]
 
     # Authentication
     jsonapi_resource :confirmation, :only => :create do end
