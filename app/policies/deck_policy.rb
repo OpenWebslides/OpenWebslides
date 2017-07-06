@@ -8,6 +8,9 @@ class DeckPolicy < ApplicationPolicy
     @record = record
   end
 
+  ##
+  # Resource
+  #
   def index?
     true
   end
@@ -15,6 +18,20 @@ class DeckPolicy < ApplicationPolicy
   def create?
     # Users can create a deck but only for itself
     !@user.nil? && @record.owner == @user
+  end
+
+  def show?
+    if @record.public_access?
+      # Users and guests can read
+      true
+    elsif @record.protected_access?
+      # Users can read protected deck
+      !@user.nil?
+    elsif @record.private_access?
+      return false if @user.nil?
+      # Owner and collaborators can read private deck
+      @record.owner == @user || @record.collaborators.include?(@user)
+    end
   end
 
   def update?
@@ -31,6 +48,73 @@ class DeckPolicy < ApplicationPolicy
     @record.owner == @user
   end
 
+  ##
+  # Relationship: owner
+  #
+  def show_owner?
+    # Users can only show owner if the record is showable
+    show?
+  end
+
+  def update_owner?
+    # Users can only update owner if the record is destroyable
+    destroy?
+  end
+
+  def destroy_owner?
+    # Owner relationship can never be destroyed
+    false
+  end
+
+  ##
+  # Relationship: collaborators
+  #
+  def create_collaborators?
+    # Users can only create collaborators if the record is destroyable
+    destroy?
+  end
+
+  def show_collaborators?
+    # Users can only show collaborators if the record is showable
+    show?
+  end
+
+  def update_collaborators?
+    # Users can only update collaborators if the record is destroyable
+    destroy?
+  end
+
+  def destroy_collaborators?
+    # Users can only destroy collaborators if the record is destroyable
+    destroy?
+  end
+
+  ##
+  # Relationship: assets
+  #
+  def create_assets?
+    # Users can only create assets if the record is updatable
+    update?
+  end
+
+  def show_assets?
+    # Users can only show assets if the record is showable
+    show?
+  end
+
+  def update_assets?
+    # Users can only update assets if the record is updatable
+    update?
+  end
+
+  def destroy_assets?
+    # Users can only destroy assets if the record is updatable
+    update?
+  end
+
+  ##
+  # Scope
+  #
   class Scope < Scope
     attr_reader :user, :scope
 
