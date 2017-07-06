@@ -8,7 +8,10 @@ const config = {
 
   devtool: 'cheap-module-eval-source-map',
 
-  entry: ['react-hot-loader/patch', './index.jsx'],
+  entry: [
+    'react-hot-loader/patch',
+    './index.jsx',
+  ],
 
   output: {
     path: path.join(__dirname, '..', 'dist'),
@@ -18,6 +21,10 @@ const config = {
 
   module: {
     rules: [
+      {
+        test: /\.(jpe?g|png|gif|svg|tiff)$/i,
+        loader: 'file-loader?name=public/icons/[name].[ext]',
+      },
       {
         test: /\.jsx{0,1}$/,
         exclude: /(node_modules)/,
@@ -57,7 +64,6 @@ const config = {
       reducers: path.join(__dirname, '..', 'app', 'reducers'),
       actions: path.join(__dirname, '..', 'app', 'actions'),
       containers: path.join(__dirname, '..', 'app', 'containers'),
-      constants: path.join(__dirname, '..', 'app', 'constants'),
       helpers: path.join(__dirname, '..', 'app', 'helpers'),
       sagas: path.join(__dirname, '..', 'app', 'sagas'),
       errors: path.join(__dirname, '..', 'app', 'errors'),
