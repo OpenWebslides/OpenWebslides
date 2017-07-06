@@ -9,9 +9,9 @@ import { getAuthToken } from 'api/helpers/apiHelper';
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 
 // Helpers:
-import IfAuthHOC from '../../../../lib/IfAuthHOC';
+import IfAuthHOC from 'lib/IfAuthHOC';
 
-function ImportDeckForm({ authState }) {
+function ImportDeckForm({ authState, importUploadError, userImportState }) {
   const uploader = new FineUploaderTraditional({
     options: {
       chunking: {
@@ -28,20 +28,38 @@ function ImportDeckForm({ authState }) {
       },
       validation: {
         allowedExtensions: ['pptx', 'pdf'],
-        itemLimit: 1,
         sizeLimit: 512000000, // 500mb
       },
       retry: {
         enableAuto: false,
       },
+      callbacks: {
+        onError(id, name, err) {
+          debugger;
+          importUploadError(name, err);
+        },
+      },
     },
   });
+
+  let errorsDisplay = '';
+  if (userImportState.errors.length > 0) {
+    errorsDisplay = userImportState.errors.map(err =>
+      <li>
+        Error: {err}
+      </li>,
+    );
+  }
+
   return (
     <IfAuthHOC
       isAuthenticated={authState.isAuthenticated}
       fallback={() => <NeedSigninWarning requestedAction="import a deck" />}
     >
-      <Gallery uploader={uploader} />
+      <div>
+        <Gallery uploader={uploader} />
+        {errorsDisplay}
+      </div>
     </IfAuthHOC>
   );
 }
