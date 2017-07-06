@@ -1,8 +1,12 @@
+/* eslint-disable no-case-declarations */
 import React from 'react';
 
 function htmlToReact(htmlElement) {
   const type = htmlElement.tagName || 'text';
   switch (type) {
+    case 'FIGURE':
+    case 'DIV':
+      return Array.from(htmlElement.childNodes).map(htmlToReact);
     case 'H1':
       return React.createElement('h1', null, htmlElement.innerText);
     case 'H2':
@@ -52,7 +56,8 @@ function htmlToReact(htmlElement) {
         React.createElement(
           'img',
           {
-            src: htmlElement.src,
+            src: require(`../../assets/images/testPrintView/${htmlElement
+              .attributes[0].nodeValue}`),
             alt: htmlElement.alt,
             width: 400,
             height: 300,
@@ -61,7 +66,12 @@ function htmlToReact(htmlElement) {
         ),
         React.createElement('figcaption', null, `Image: ${htmlElement.alt}`),
       ]);
-
+    case 'VIDEO':
+      return React.createElement(
+        'p',
+        null,
+        `Video: ${htmlElement.children[0].attributes[2].nodeValue}`,
+      );
     case 'IFRAME':
       return React.createElement('p', null, `iFrame: ${htmlElement.alt}`);
     case 'BLOCKQUOTE':
