@@ -28,10 +28,6 @@ class ApplicationPolicy
     raise OpenWebslides::NotImplementedError
   end
 
-  def scope
-    Pundit.policy_scope! user, record.class
-  end
-
   class Scope
     attr_reader :user, :scope
 
@@ -41,7 +37,7 @@ class ApplicationPolicy
     end
 
     def resolve
-      scope.all
+      raise OpenWebslides::NotImplementedError
     end
   end
 end
