@@ -97,6 +97,7 @@
     @import 'theme/components/switcher-menu';
     @import 'theme/components/slide-views-pane';
     @import 'theme/components/slide-container';
+    @import 'theme/components/user-imports';
     @import 'theme/components/feed';
     @import 'theme/components/feed-notification';
     @import 'theme/components/deck-management';
@@ -121,6 +122,3 @@
 
     @import 'theme/other/ows-slide';
 
-// Fine-uploader
-
-    @import '~react-fine-uploader/gallery/gallery';

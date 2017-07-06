@@ -28,9 +28,18 @@ class UserImports extends React.Component {
 
   render() {
     const listOfUserImports = this.props.userImportsState.listOfUserImports;
-    const listOfImportElements = listOfUserImports.map(el =>
-      renderDeckImportInfo(el),
-    );
+    let contentToDisplay = <p> No imports yet! </p>;
+    let listOfImportElements;
+    if (listOfUserImports.length > 0) {
+      listOfImportElements = listOfUserImports.map(el =>
+        renderDeckImportInfo(el),
+      );
+      contentToDisplay = (
+        <ol>
+          {listOfImportElements}
+        </ol>
+      );
+    }
 
     return (
       <IfAuthHOC
@@ -42,9 +51,7 @@ class UserImports extends React.Component {
           <h1> Your imports :</h1>
 
           <div className="c_user-imports">
-            <ol>
-              {listOfImportElements}
-            </ol>
+            {contentToDisplay}
           </div>
         </div>
       </IfAuthHOC>
@@ -55,7 +62,7 @@ class UserImports extends React.Component {
 UserImports.propTypes = {
   authState: PropTypes.shape({
     isAuthenticated: PropTypes.bool.isRequired,
-    id: PropTypes.number,
+    id: PropTypes.strings,
   }).isRequired,
   requestUserImports: PropTypes.func.isRequired,
   userImportsState: PropTypes.shape().isRequired,

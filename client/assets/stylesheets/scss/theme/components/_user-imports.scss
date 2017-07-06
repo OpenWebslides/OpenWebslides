@@ -1,0 +1,19 @@
+.c_deck-import-info{
+
+  list-style-type:none;
+
+  margin: 0;
+
+  &.is_queued{
+    background: rgba(200,200,200,0.6);
+  }
+  &.is_success{
+    background: rgba(0,200,0,0.6);
+  }
+  &.is_error{
+    background: rgba(200,0,0,0.6);
+  }
+  &.is_pending{
+    background: rgba(100,0,200,0.6);
+  }
+}
