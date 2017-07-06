@@ -8,16 +8,16 @@ RSpec.describe ApplicationPolicy::Scope do
   context 'all decks' do
     subject { described_class.new(user, Deck).resolve }
 
-    it 'should return all decks' do
-      expect(subject).to eq Deck.all
+    it 'should raise an error' do
+      expect(-> { subject }).to raise_error OpenWebslides::NotImplementedError
     end
   end
 
   context 'all users' do
     subject { described_class.new(user, User).resolve }
 
-    it 'should return all users' do
-      expect(subject).to eq User.all
+    it 'should raise an error' do
+      expect(-> { subject }).to raise_error OpenWebslides::NotImplementedError
     end
   end
 end
