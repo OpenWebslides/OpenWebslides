@@ -7,7 +7,7 @@ import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 import DeckThumbnail from 'presentationals/components/deckManagement/DeckThumbnail';
 
 // Helpers:
-import IfAuthHOC from '../../../../lib/IfAuthHOC';
+import IfAuthHOC from 'lib/IfAuthHOC';
 
 function renderDeckThumbnail(el, deleteDeck) {
   return (
