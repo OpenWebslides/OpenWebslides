@@ -7,8 +7,9 @@ module Api
     after_action :renew_token, :except => :destroy
 
     # Authorization
-    after_action :verify_authorized, :except => :index
+    after_action :verify_authorized, :except => %i[index show_relationship]
     after_action :verify_policy_scoped, :only => :index
+    # Authorization for #show_relationship is handled in Api::ApiResource
 
     # GET /users
     def index
