@@ -16,10 +16,10 @@ export function* getUserImportsFlow(action) {
     }
     const listOfImports = responseListOfImports.map(responseImport => ({
       id: responseImport.id,
-      timeStamp: responseImport.timeStamp,
-      status: responseImport.status,
+      timeStamp: 5, // TODO: change when the API actually returns one
+      status: responseImport.attributes.status,
       type: 'pptx',
-      name: responseImport.name,
+      name: 'jhonny', //TODO: same
     }));
 
     yield put({
