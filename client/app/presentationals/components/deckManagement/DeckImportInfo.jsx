@@ -14,7 +14,7 @@ export function DeckImportInfo({ timestamp, type, status, title }) {
         <h3>
           {title}
         </h3>
-        <p>
+        <p className="o__deck-import-info-date">
           Uploaded: {displayDate}.
         </p>
         <p>

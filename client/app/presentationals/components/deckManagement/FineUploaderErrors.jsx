@@ -10,7 +10,7 @@ function FineUploaderErrors({ errors }) {
   const errorElements = errors.map(er => renderError(er));
 
   return (
-    <ol>
+    <ol className="c_fine-uploader-errors-containers">
       {errorElements}
     </ol>
   );

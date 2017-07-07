@@ -51,7 +51,7 @@ class UserImports extends React.Component {
           <NeedSigninWarning requestedAction="see your imports" />}
       >
         <div className="c_user-imports-container">
-          <h1> Your imports :</h1>
+          <h1 className="o_user-imports-title"> Your imports :</h1>
 
           <div className="c_user-imports">
             {contentToDisplay}
