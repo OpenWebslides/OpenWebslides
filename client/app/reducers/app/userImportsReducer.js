@@ -5,7 +5,7 @@ import {
   REQUEST_USER_IMPORTS,
   REQUEST_USER_IMPORTS_SUCCESS,
   REQUEST_USER_IMPORTS_FAILURE,
-  IMPORT_UPLOAD_ERROR
+  IMPORT_UPLOAD_ERROR,
 } from 'actions/userImportsActions';
 
 const initialState = Immutable({
@@ -36,7 +36,10 @@ function feedReducer(state = initialState, action) {
       });
     case IMPORT_UPLOAD_ERROR:
       return Immutable.merge(state, {
-        errors: state.errors.concat([`Error: file ${action.payload.name} caused an error: ${action.payload.error}`])
+        errors: state.errors.concat([
+          `file ${action.payload.name} caused an error: ${action.payload
+            .error}`,
+        ]),
       });
     default:
       return state;
