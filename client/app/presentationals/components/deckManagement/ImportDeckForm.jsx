@@ -11,7 +11,7 @@ import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 // Helpers:
 import IfAuthHOC from 'lib/IfAuthHOC';
 
-function ImportDeckForm({ authState, importUploadError, userImportState }) {
+function ImportDeckForm({ authState, fineUploaderState, importUploadError }) {
   const uploader = new FineUploaderTraditional({
     options: {
       chunking: {
@@ -43,8 +43,8 @@ function ImportDeckForm({ authState, importUploadError, userImportState }) {
   });
 
   let errorsDisplay = '';
-  if (userImportState.errors.length > 0) {
-    errorsDisplay = userImportState.errors.map(err =>
+  if (fineUploaderState.errors.length > 0) {
+    errorsDisplay = fineUploaderState.errors.map(err =>
       <li>
         Error: {err}
       </li>,
