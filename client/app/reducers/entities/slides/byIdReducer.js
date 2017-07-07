@@ -1,10 +1,11 @@
 import _ from 'lodash';
 
 import {
-  FETCH_SLIDES_SUCCESS,
   ADD_SLIDE,
   DELETE_SLIDE,
 } from 'actions/slideActions';
+import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
+
 import { ADD_CONTENT_BLOCK } from 'actions/contentBlockActions';
 
 const initialState = {};
@@ -33,7 +34,7 @@ function byId(state = initialState, action) {
         },
       };
 
-    case FETCH_SLIDES_SUCCESS:
+    case FETCH_DECK_SUCCESS:
       return action.payload.slides;
     default:
       return state;

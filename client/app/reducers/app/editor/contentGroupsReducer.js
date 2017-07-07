@@ -1,6 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import { FETCH_SLIDES_SUCCESS } from 'actions/slideActions';
+import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
 
 const initialState = Immutable({
   active: null,
@@ -9,7 +9,7 @@ const initialState = Immutable({
 
 export default function contentGroups(state = initialState, action) {
   switch (action.type) {
-    case FETCH_SLIDES_SUCCESS:
+    case FETCH_DECK_SUCCESS:
       return {
         ...state,
         sequence: action.payload.contentGroupSequence,
