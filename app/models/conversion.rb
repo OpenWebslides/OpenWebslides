@@ -14,13 +14,13 @@ class Conversion < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :deck
-  belongs_to :user
+  belongs_to :deck, :required => true
+  belongs_to :user, :required => true
 
   ##
   # Callbacks
   #
-  after_create :queue_job
+  after_create :queue_job, :unless => :skip_callbacks
 
   ##
   # Methods
@@ -31,7 +31,6 @@ class Conversion < ApplicationRecord
   ##
   # Helpers and callback methods
   #
-
   def queue_job
     ConversionWorker.perform_async id
   end

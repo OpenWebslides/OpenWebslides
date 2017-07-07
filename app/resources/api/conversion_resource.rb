@@ -18,6 +18,8 @@ module Api
     ##
     # Filters
     #
+    filter :status
+
     ##
     # Callbacks
     #
@@ -26,6 +28,10 @@ module Api
     #
     def created_at
       @model.created_at.to_i.to_s
+    end
+
+    def self.creatable_fields(_ = {})
+      []
     end
   end
 end
