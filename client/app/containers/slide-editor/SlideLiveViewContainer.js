@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
-import SlideLiveView
-  from 'presentationals/components/slide-editor/SlideLiveView';
+import SlideLiveView from 'presentationals/components/slide-editor/SlideLiveView';
 
 function mapStateToProps(state) {
   const activeSlide = state.app.editor.slides.active;
