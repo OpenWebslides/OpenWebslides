@@ -1,5 +1,3 @@
-import { EditorState } from 'draft-js';
-import { convertFromHTML } from 'draft-convert';
 import _ from 'lodash';
 
 import contentBlockConfigs from 'lib/content-block-configs';
