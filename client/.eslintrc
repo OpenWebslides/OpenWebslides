@@ -1,11 +1,13 @@
 {
   "extends": [
     "airbnb",
-    "prettier"
+    "prettier",
+    "plugin:flowtype/recommended"
   ],
   "rules": {
     "prettier/prettier": [
-      "error", {
+      "error",
+      {
         "trailingComma": "all",
         "singleQuote": true
       }
@@ -28,7 +30,8 @@
   "plugins": [
     "react",
     "prettier",
-    "import"
+    "import",
+    "flowtype"
   ],
   "settings": {
     "import/parser": "babel-eslint",
