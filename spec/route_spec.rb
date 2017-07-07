@@ -36,28 +36,6 @@ RSpec.describe 'routing', :type => :routing do
       end
     end
 
-    describe 'notifications' do
-      it 'routes notifications endpoint' do
-        route = '/api/notifications'
-
-        expect(:get => route).to route_to 'api/notifications#index'
-        expect(:patch => route).not_to be_routable
-        expect(:put => route).not_to be_routable
-        expect(:post => route).not_to be_routable
-        expect(:delete => route).not_to be_routable
-      end
-
-      it 'routes notification endpoint' do
-        route = '/api/notifications/foo'
-
-        expect(:get => route).to route_to 'api/notifications#show', :id => 'foo'
-        expect(:patch => route).not_to be_routable
-        expect(:put => route).not_to be_routable
-        expect(:post => route).not_to be_routable
-        expect(:delete => route).not_to be_routable
-      end
-    end
-
     describe 'assets' do
       it 'routes assets endpoint' do
         route = '/api/assets'
