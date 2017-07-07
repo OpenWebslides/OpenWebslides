@@ -68,6 +68,10 @@ ImportDeckForm.propTypes = {
   authState: PropTypes.shape({
     id: PropTypes.string,
   }),
+  importUploadError: PropTypes.func.isRequired,
+  fineUploaderState: PropTypes.shape({
+    errors: PropTypes.array,
+  }).isRequired,
 };
 
 ImportDeckForm.defaultProps = {
