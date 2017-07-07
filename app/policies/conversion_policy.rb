@@ -8,19 +8,42 @@ class ConversionPolicy < ApplicationPolicy
     @record = record
   end
 
+  ##
+  # Resource
+  #
+  def index?
+    # Only users can list conversions
+    !@user.nil?
+  end
+
   def create?
     # Users can queue a conversion but only for itself
     !@user.nil? && @record.user == @user
   end
 
+  def show?
+    # Users can show a conversion but only its own
+    !@user.nil? && @record.user == @user
+  end
+
+  ##
+  # Relationship: user
+  #
+  def show_user?
+    show?
+  end
+
+  ##
+  # Relationship: deck
+  #
+  def show_deck?
+    show?
+  end
+
+  ##
+  # Scope
+  #
   class Scope < Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user  = user
-      @scope = scope
-    end
-
     def resolve
       # Users can see its own conversions
       scope.where(:user => @user)
