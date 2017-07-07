@@ -16,9 +16,23 @@ Rails.application.routes.draw do
   # API endpoints
   #
   namespace :api, :constraints => { :format => :json } do
-    # Users and decks
+    # Users
     jsonapi_resources :users
-    jsonapi_resources :decks
+
+    # Decks
+    jsonapi_resources :decks do
+      # Route owner (without :create or :destroy)
+      jsonapi_link :owner, :except => %i[create destroy]
+      jsonapi_related_resource :owner
+
+      # Route other relationships
+      %i[collaborators assets].each do |relationship_name|
+        jsonapi_links relationship_name
+        jsonapi_related_resources relationship_name
+      end
+    end
+
+    # Assets
     jsonapi_resources :assets, :except => :index do
       jsonapi_relationships :only => :show
     end
