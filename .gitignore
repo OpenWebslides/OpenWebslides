@@ -51,6 +51,8 @@ doc/
 
 # Local repositories
 data/*
+client/app/constants/exampleDecks.js
+client/assets/images/
 
 # Production API url override
 client/config/config.js
