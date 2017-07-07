@@ -19,7 +19,9 @@ Rails.application.routes.draw do
     # Users and decks
     jsonapi_resources :users
     jsonapi_resources :decks
-    jsonapi_resources :assets, :except => :index do end
+    jsonapi_resources :assets, :except => :index do
+      jsonapi_relationships :only => :show
+    end
 
     # Conversion tool
     jsonapi_resources :conversions, :only => %i[create show]
