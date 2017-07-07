@@ -1,13 +1,15 @@
 import React from 'react';
 
-import ImportDeckForm from 'containers/ImportDeckFormContainer';
-import UserImports from 'containers/UserImportsContainer';
+import FineUploaderInstanceContainer from 'containers/FineUploaderInstanceContainer';
+import FineUploaderErrorsContainer from 'containers/FineUploaderErrorsContainer';
+import UserImportsContainer from 'containers/UserImportsContainer';
 
 function CreateDeckPage() {
   return (
     <div>
-      <ImportDeckForm />
-      <UserImports />
+      <FineUploaderInstanceContainer />
+      <FineUploaderErrorsContainer />
+      <UserImportsContainer />
     </div>
   );
 }

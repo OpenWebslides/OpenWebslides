@@ -5,13 +5,10 @@ import FineUploaderTraditional from 'fine-uploader-wrappers';
 import Gallery from 'react-fine-uploader';
 import { getAuthToken } from 'api/helpers/apiHelper';
 
-// Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
-
-// Helpers:
 import IfAuthHOC from 'lib/IfAuthHOC';
 
-function ImportDeckForm({ authState, fineUploaderState, importUploadError }) {
+function FineUploaderInstance({ isAuthenticated, importUploadError }) {
   const uploader = new FineUploaderTraditional({
     options: {
       chunking: {
@@ -45,41 +42,18 @@ function ImportDeckForm({ authState, fineUploaderState, importUploadError }) {
       },
     },
   });
-
-  let errorsDisplay = '';
-  if (fineUploaderState.errors.length > 0) {
-    errorsDisplay = fineUploaderState.errors.map(err =>
-      <li>
-        Error: {err}
-      </li>,
-    );
-  }
-
   return (
     <IfAuthHOC
-      isAuthenticated={authState.isAuthenticated}
+      isAuthenticated={isAuthenticated}
       fallback={() => <NeedSigninWarning requestedAction="import a deck" />}
     >
-      <div>
-        <Gallery uploader={uploader} />
-        {errorsDisplay}
-      </div>
+      <Gallery uploader={uploader} />
     </IfAuthHOC>
   );
 }
 
-ImportDeckForm.propTypes = {
-  authState: PropTypes.shape({
-    id: PropTypes.string,
-  }),
+FineUploaderInstance.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   importUploadError: PropTypes.func.isRequired,
-  fineUploaderState: PropTypes.shape({
-    errors: PropTypes.array,
-  }).isRequired,
 };
-
-ImportDeckForm.defaultProps = {
-  authState: null,
-};
-
-export default ImportDeckForm;
+export default FineUploaderInstance;
