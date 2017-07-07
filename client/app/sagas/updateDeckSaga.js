@@ -3,8 +3,6 @@ import updateDeckApi from 'api/updateDeckApi';
 
 import { UPDATE_DECK } from 'actions/deckActions';
 
-import { convertToHTML } from 'draft-convert';
-
 function addWrappingHtml(string) {
   return `
     <header class="caption">

@@ -51,15 +51,13 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "draft-convert": "^1.4.6",
-    "draft-js": "^0.10.1",
-    "draft-js-plugins-editor": "2.0.0-rc2",
     "history": "^4.6.1",
     "i18next": "^8.3.0",
     "i18next-resource-store-loader": "^0.1.1",
     "immutable": "^3.8.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
+    "ows-convert": "^0.0.3",
     "prop-types": "^15.5.8",
     "query-string": "^4.3.4",
     "react": "^15.4.2",
