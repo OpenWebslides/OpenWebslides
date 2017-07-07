@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function FineUploaderError({ error }) {
   return (
-    <li>
+    <li className="c_fine-uploader-error">
       <p>
         Error: {error}
       </p>
