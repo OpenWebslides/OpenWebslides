@@ -22,7 +22,10 @@ function renderDeckImportInfo(el) {
 class UserImports extends React.Component {
   componentWillMount() {
     if (this.props.authState.isAuthenticated) {
-      this.props.requestUserImports(this.props.authState.id);
+      setInterval(
+        () => this.props.requestUserImports(this.props.authState.id),
+        1000,
+      );
     }
   }
 
