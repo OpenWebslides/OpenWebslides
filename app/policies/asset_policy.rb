@@ -32,7 +32,10 @@ class AssetPolicy < ApplicationPolicy
     deck_policy.show?
   end
 
-  # TODO: scope
+  ##
+  # Scope
+  #
+  # No scope was implemented for assets due to no :index action
 
   private
 
