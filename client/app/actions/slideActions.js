@@ -1,8 +1,4 @@
 // Types
-export const FETCH_SLIDES = 'FETCH_SLIDES';
-export const FETCH_SLIDES_SUCCESS = 'FETCH_SLIDES_SUCCESS';
-export const FETCH_SLIDES_FAILURE = 'FETCH_SLIDES_FAILURE';
-
 export const UPDATE_SLIDE = 'UPDATE_SLIDE';
 
 export const ADD_SLIDE = 'ADD_SLIDE';
@@ -12,13 +8,6 @@ export const DELETE_SLIDE_WITH_CONTENT = 'DELETE_SLIDE_WITH_CONTENT';
 export const SET_ACTIVE_SLIDE = 'SET_ACTIVE_SLIDE';
 
 // Creators
-export function fetchSlides(deckId) {
-  return {
-    type: FETCH_SLIDES,
-    meta: { deckId },
-  };
-}
-
 export function updateSlide(id, data) {
   return {
     type: UPDATE_SLIDE,
