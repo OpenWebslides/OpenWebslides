@@ -3,7 +3,10 @@ import ApiRequest from './helpers/apiHelper';
 async function requestUserImports(userID) {
   const request = new ApiRequest();
 
-  request.setMethod('GET').setEndpoint(`api/users/${userID}/conversions`);
+  request
+    .setMethod('GET')
+    .setEndpoint(`api/users/${userID}/conversions`)
+    .addParameter('sort', '-createdAt');
 
   const response = await request.executeRequest();
 
