@@ -7,8 +7,7 @@ import { increaseSlideLevel, decreaseSlideLevel } from 'actions/entities/slides'
 import { getDeckById } from 'selectors/entities/decks';
 import { getActiveDeckId, getActiveSlideId } from 'selectors/app/slide-editor';
 
-import DeckNavigationPane
-  from 'presentationals/components/slide-editor/DeckNavigationPane';
+import DeckNavigationPane from 'presentationals/components/slide-editor/DeckNavigationPane';
 
 function mapStateToProps(state) {
   const activeDeckId = getActiveDeckId(state);
