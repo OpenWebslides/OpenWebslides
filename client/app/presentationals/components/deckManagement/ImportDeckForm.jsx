@@ -35,8 +35,12 @@ function ImportDeckForm({ authState, fineUploaderState, importUploadError }) {
       },
       callbacks: {
         onError(id, name, err) {
-          debugger;
-          importUploadError(name, err);
+          let error = err;
+          if (name.match(/\.ppt$/)) {
+            error =
+              'The converter doesn\'t support ".ppt" files. Please open your presentation in powerpoint and save it as ".pptx" before importing it.';
+          }
+          importUploadError(name, error);
         },
       },
     },
