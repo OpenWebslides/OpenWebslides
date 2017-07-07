@@ -7,6 +7,15 @@ import {
 } from 'actions/userImportsActions';
 import getUserImportsCall from 'api/getUserImportsApi';
 
+function computeType(name) {
+  if (name.match(/\.pptx$/)) {
+    return 'pptx';
+  } else if (name.match(/\.pdf$/)) {
+    return 'pdf';
+  }
+  return 'unknown';
+}
+
 export function* getUserImportsFlow(action) {
   try {
     const userID = action.meta;
@@ -18,7 +27,7 @@ export function* getUserImportsFlow(action) {
       id: responseImport.id,
       timestamp: responseImport.attributes.createdAt,
       status: responseImport.attributes.status,
-      type: 'pptx', // TODO
+      type: computeType(responseImport.attributes.name),
       name: responseImport.attributes.name,
     }));
 

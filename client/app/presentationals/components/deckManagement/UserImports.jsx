@@ -12,7 +12,7 @@ function renderDeckImportInfo(el) {
     <DeckImportInfo
       key={el.id}
       timestamp={el.timestamp}
-      format={el.format}
+      type={el.type}
       status={el.status}
       title={el.name}
     />
