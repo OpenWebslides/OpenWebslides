@@ -1,14 +1,20 @@
 {
   "presets": [
     "react",
-    "env",
+    "flow",
     [
-      "es2015",
+      "env",
       {
-        "modules": false
+        "targets": {
+          "browsers": [
+            "last 2 versions",
+            "ie >= 7"
+          ]
+        }
       }
     ]
   ],
+  "retainLines": true,
   "plugins": [
     "transform-object-rest-spread",
     "transform-runtime",
