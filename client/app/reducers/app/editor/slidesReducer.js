@@ -1,8 +1,8 @@
 import Immutable from 'seamless-immutable';
+import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
 
 import {
   SET_ACTIVE_SLIDE,
-  FETCH_SLIDES_SUCCESS,
   ADD_SLIDE,
 } from 'actions/slideActions';
 
@@ -20,7 +20,7 @@ export default function slides(state = initialState, action) {
         sequence: state.sequence + 1,
       };
 
-    case FETCH_SLIDES_SUCCESS:
+    case FETCH_DECK_SUCCESS:
       return {
         ...state,
         sequence: action.payload.slideSequence,

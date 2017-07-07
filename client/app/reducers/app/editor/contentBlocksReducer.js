@@ -1,6 +1,6 @@
 import Immutable from 'seamless-immutable';
 
-import { FETCH_SLIDES_SUCCESS } from 'actions/slideActions';
+import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
 
 import {
   SET_ACTIVE_CONTENT_BLOCK,
@@ -21,7 +21,7 @@ export default function contentBlocks(state = initialState, action) {
         sequence: state.sequence + 1,
       };
 
-    case FETCH_SLIDES_SUCCESS:
+    case FETCH_DECK_SUCCESS:
       return {
         ...state,
         sequence: action.payload.contentBlockSequence,

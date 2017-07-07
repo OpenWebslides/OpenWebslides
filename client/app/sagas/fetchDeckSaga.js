@@ -1,5 +1,5 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-import { FETCH_SLIDES } from 'actions/slideActions';
+import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/deckActions';
 
 import convertToState from 'lib/convert-to-state';
 import fetchDeckApi from 'api/fetchDeckApi';
@@ -26,7 +26,7 @@ function* doFetchDeck(action) {
 
     const state = yield convertToState(HTMLResponse);
 
-    yield put({ type: 'FETCH_SLIDES_SUCCESS', payload: state });
+    yield put({ type: 'FETCH_DECK_SUCCESS', payload: state });
 
     const activeSlideId = state.slideSequence - 1;
 
@@ -39,8 +39,8 @@ function* doFetchDeck(action) {
   }
 }
 
-function* fetchSlidesWatcher() {
-  yield takeLatest(FETCH_SLIDES, doFetchDeck);
+function* fetchDeckWatcher() {
+  yield takeLatest(FETCH_DECK, doFetchDeck);
 }
 
-export default fetchSlidesWatcher;
+export default fetchDeckWatcher;

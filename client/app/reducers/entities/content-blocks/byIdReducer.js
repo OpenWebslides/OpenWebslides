@@ -2,7 +2,8 @@ import _ from 'lodash';
 
 import contentBlockConfigs from 'lib/content-block-configs';
 
-import { FETCH_SLIDES_SUCCESS, UPDATE_SLIDE } from 'actions/slideActions';
+import { UPDATE_SLIDE } from 'actions/slideActions';
+import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
 import {
   ADD_CONTENT_BLOCK,
   DELETE_CONTENT_BLOCKS,
@@ -37,7 +38,7 @@ function byId(state = initialState, action) {
         },
       };
 
-    case FETCH_SLIDES_SUCCESS:
+    case FETCH_DECK_SUCCESS:
       return action.payload.contentBlocks;
     default:
       return state;
