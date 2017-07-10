@@ -54,10 +54,10 @@
   &.is_pptx{
     &::before {
       @include icon($fa-var-file-powerpoint-o);
-      font-size:6em;
+      font-size:5em;
       float:left;
       margin-right: 0.2em;
-      margin-top: 0.15em;
+      margin-top: 0.1em;
 
     }
 
