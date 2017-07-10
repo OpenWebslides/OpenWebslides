@@ -7,7 +7,7 @@ import {
 } from 'actions/userImportsActions';
 import getUserImportsCall from 'api/getUserImportsApi';
 
-function computeType(name) {
+export function computeType(name) {
   if (name.match(/\.pptx$/)) {
     return 'pptx';
   } else if (name.match(/\.pdf$/)) {
