@@ -1,0 +1,24 @@
+// -------------------------------
+// Common elements for all layouts
+// -------------------------------
+
+.l_page {
+  &__item {
+    &--header {
+      // Header needs to have a fixed height & be absolutely positioned to allow for 100% height layouts based on
+      // viewport units.
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+
+      // Absolutely positioned header needs a fixed height to allow other elements to leave room for it.
+      height: $site__header-height;
+    }
+
+    &--main {
+      // Prevent main from overlapping with absolutely positioned header.
+      padding-top: $site__header-height;
+    }
+  }
+}

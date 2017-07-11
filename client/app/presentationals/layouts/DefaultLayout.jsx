@@ -28,7 +28,9 @@ function DefaultLayout(props) {
   }
 
   return (
-    <div className={`l_page l_page--${props.cssIdentifier}`}>
+    <div
+      className={`l_page l_page--${props.layoutIdentifier} l_page--id_${props.cssIdentifier}`}
+    >
       <div className="l_page__wrapper">
         <div className="l_page__item l_page__item--header">
           <div className="l_page__item__wrapper">
@@ -49,11 +51,13 @@ DefaultLayout.propTypes = {
   cssIdentifier: PropTypes.string.isRequired,
   children: PropTypes.node,
   components: PropTypes.objectOf(PropTypes.element),
+  layoutIdentifier: PropTypes.string.isRequired,
 };
 
 DefaultLayout.defaultProps = {
   children: null,
   components: {},
+  layoutIdentifier: 'default',
 };
 
 export default DefaultLayout;
