@@ -1,24 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function DeckThumbnail(props) {
-  const { deckTitle, deckId, deckIconImage, deleteDeck, history } = props;
+export function DeckThumbnail({
+  deckTitle,
+  deckId,
+  deckIconImage,
+  deckLink,
+  deleteDeck,
+}) {
   const altIconText = `Icon of deck: ${deckTitle}`;
-
   return (
-    <li>
-      <div className="c_deck-thumbnail">
-        <Link to={`/presentation/${deckId}`}>
+    <li className="c_deck-thumbnail">
+      <div>
+        <Link to={`/editor/${deckId}`}>
           <img src={deckIconImage} alt={altIconText} />
-          <p>{deckTitle}</p>
+          <p className="c_deck-thumbnail__deck-name">
+            {deckTitle}
+          </p>
         </Link>
         <button
-          onClick={() => history.push(`/editor/${deckId}`)}
-        >
-          Edit
-        </button>
-        <button
+          className="c_deck-thumbnail__delete-button"
           onClick={() => {
             deleteDeck(deckId);
           }}
@@ -39,8 +41,9 @@ DeckThumbnail.propTypes = {
 };
 
 DeckThumbnail.defaultProps = {
-  deckIconImage: 'https://www.iconfinder.com/data/icons/penthemes-layour-builder/512/slider-128.png', //  TODO : add a dummy image
+  deckIconImage:
+    'https://www.iconfinder.com/data/icons/penthemes-layour-builder/512/slider-128.png', //  TODO : add a dummy image
   deckLink: '#',
 };
 
-export default withRouter(DeckThumbnail);
+export default DeckThumbnail;

@@ -41,10 +41,10 @@ class Feed extends React.Component {
     ) {
       return <li key="0"> There was an error retrieving notifications! </li>;
     }
-    const numOfNotificationsToDisplay = filteredList.length <=
-      this.props.feedState.currentOffset
-      ? filteredList.length
-      : this.props.feedState.currentOffset;
+    const numOfNotificationsToDisplay =
+      filteredList.length <= this.props.feedState.currentOffset
+        ? filteredList.length
+        : this.props.feedState.currentOffset;
     const sortedNotificationsToDisplay = filteredList
       .concat()
       .sort((e1, e2) => e1.timestamp - e2.timeStamp);
@@ -60,6 +60,7 @@ class Feed extends React.Component {
     }
     return (
       <button
+        className="c_feed-notifications-container__more-button"
         onClick={() => {
           this.props.requestFeedNotifications(
             this.props.feedState.currentOffset,

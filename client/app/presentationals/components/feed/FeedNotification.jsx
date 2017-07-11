@@ -25,11 +25,15 @@ export function FeedNotification({
   return (
     <li className={className}>
       <div>
-        <h3>{feedNotificationTypes[type]}: </h3>
+        <h3 className="c_feed-notification__title">
+          {feedNotificationTypes[type]}:{' '}
+        </h3>
         <p>
           {contentsStringBegin} <br /> {contentsStringEnd}
         </p>
-        <p> - {displayDate} </p>
+        <p className="c_feed-notification__date">
+          - {displayDate}
+        </p>
       </div>
     </li>
   );
