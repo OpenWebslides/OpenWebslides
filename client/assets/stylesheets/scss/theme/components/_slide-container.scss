@@ -3,35 +3,82 @@
 // -------------------------
 
 .c_slide-container {
-  // #TODO should it always be white?
-  background-color: white;
+  $slide-ratio-number: convert-string-ratio-to-number($slide__ratio);
+  $slide-height: $slide__number-of-plain-text-lines * $slide__base-line-height * 1em;
+  $slide-width: $slide-height * $slide-ratio-number;
 
-  // set these properties on container element because we do not want them to resize with the slide
-  border: $border-width--subtle $border-style--subtle $color--main__text;
+  // Use inkGrid for aligning slides horizontally & vertically inside their container.
+  @include inkgrid-row(false, false);
+  @include inkgrid-row__h-align(center);
+
+  // Set these properties on container element because we do not want them to resize with the slide.
   margin-top: $spacing--element__v;
 
-  // size to content
-  display: inline-block;
+  // We need this for vertical centering with &::before to work.
+  white-space: nowrap;
 
-  // set font-size on this in order to resize the slide
+  // &::before element is necessary to vertically center slide inside its container.
+  // To do this, &::before needs to have the same height as its container; we only activate this when vertical
+  // centering is required (e.g. fullscreen slides).
+  &::before,
   &__size {
-    // slide width when font-size is normal; i.e. slide size relative to text size
-    width: 30em;
+    @include inkgrid-col(false, false);
+    @include inkgrid-col__v-align(middle);
+  }
 
-    // give slide a fixed ratio; all its contents need to be absolutely positioned for this to work
-    padding-top: 66.7%;
-
-    // container for position: absolute; on &__content
+  // Note: slide can be resized by setting font-size on .c_slide-container__size.
+  &__size {
+    // Container for position: absolute; on &__content.
     position: relative;
+
+    // Slide size when font-size is normal; i.e. slide size relative to text size.
+    height: $slide-height;
+    width: $slide-width;
+
+    // Undo white-space: nowrap; on container.
+    white-space: normal;
   }
 
   &__content {
     @include position-absolute-fill;
     @include padding--x-small;
 
+    // #TODO should it always be white?
+    background-color: white;
+    border: $border-width--subtle $border-style--subtle $color--main__text;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  &--fullscreen {
+    // #TODO delete this test code; fullscreen slide positioning code should come from its containing element
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    background-color: black;
+
+    &::before {
+      content: '';
+      height: 100vh;
+    }
+
+    // #TODO scrollbar throws off aspect ratio calculations; make sure there is no scrollbar on fullscreen slide view
+    .c_slide-container__size {
+      @media screen and (min-aspect-ratio: $slide__ratio) {
+        // size slide to fit to vertical viewport edges
+        font-size: (100vh / $slide__number-of-plain-text-lines / $slide__base-line-height);
+      }
+
+      @media screen and (max-aspect-ratio: $slide__ratio) {
+        // size slide to fit to horizontal viewport edges
+        font-size: (100vw / $slide__number-of-plain-text-lines / $slide__base-line-height / $slide-ratio-number);
+      }
+    }
   }
 }
