@@ -1,0 +1,13 @@
+.c_feed-notification {
+  &__title {
+    margin-top: $spacing--xx-small__v;
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 0.1em;
+    margin-left: $spacing--small__h;
+  }
+
+  border-bottom: 1px solid $color--main__border;
+}
