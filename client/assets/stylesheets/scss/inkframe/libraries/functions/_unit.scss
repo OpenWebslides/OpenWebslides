@@ -28,3 +28,23 @@
 
 
     // ---------- // ---------- // ---------- // ---------- // ---------- //
+
+
+    // Function to convert an aspect ratio defined as a string to a numeric ratio that can be used in calculations.
+
+    @function convert-string-ratio-to-number ($ratio)
+    {
+        $slash-pos: str-index($ratio, '/');
+
+        @if ($slash-pos == null) {
+            @error 'Invalid ratio.';
+        }
+
+        $h: to-number(str-slice($ratio, 0, $slash-pos - 1));
+        $v: to-number(str-slice($ratio, $slash-pos + 1));
+
+        @return $h / $v;
+    }
+
+
+    // ---------- // ---------- // ---------- // ---------- // ---------- //

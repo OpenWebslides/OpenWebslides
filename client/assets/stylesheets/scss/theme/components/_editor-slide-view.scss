@@ -3,11 +3,7 @@
 // ---------------------------
 
 .c_editor-slide-view {
-  text-align: center;
-
   .c_slide-container {
-    &__size {
-      font-size: 2vw;
-    }
+    height: calc(100vh - #{$site__header-height}); // determines max height of the slide
   }
 }
