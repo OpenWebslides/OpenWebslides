@@ -9,10 +9,10 @@ function fineUloaderReducer(state = initialState, action) {
   switch (action.type) {
     case IMPORT_UPLOAD_ERROR:
       return Immutable.merge(state, {
-        errors: state.errors.concat([
+        errors: [
           `file ${action.payload.name} caused an error: ${action.payload
             .error}`,
-        ]),
+        ].concat(state.errors),
       });
     default:
       return state;
