@@ -27,7 +27,7 @@ export function DeckImportInfo({ timestamp, type, status, title }) {
 
 DeckImportInfo.propTypes = {
   timestamp: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['ppt', 'pdf']).isRequired,
+  type: PropTypes.oneOf(['pptx', 'pdf']).isRequired,
   status: PropTypes.oneOf(['queued', 'processing', 'success', 'error'])
     .isRequired,
   title: PropTypes.string.isRequired,
