@@ -1,0 +1,33 @@
+.c_feed-notifications-container {
+  ol {
+      list-style-type: none;
+      padding-left: 0.4em;
+  }
+
+
+  .c_feed-notification {
+    &__title {
+      margin-top: 0.2em;
+      font-weight: bold;
+    }
+
+    p {
+      margin-top: 0.1em;
+      margin-left: 0.5em;
+    }
+
+    border-bottom: 1px solid rgb(230, 230, 230);
+  }
+
+  &__more-button {
+    margin-top: 0.5em;
+    padding: 1em;
+    font-size: xx-large;
+    background-color: transparent;
+    border: 1px solid rgb(230, 230, 230);
+
+    &:hover {
+      background-color: rgba(220, 220, 220, 0.5);
+    }
+  }
+}

@@ -41,9 +41,9 @@ class DeckManagement extends React.Component {
           <NeedSigninWarning requestedAction="display your decks" />}
       >
         <div className="c_deck-management-container">
-          <h1> Your decks </h1>
-          <div className="o_owned-decks-container">
-            <ol>
+          <h1 className="c_deck-management-container__title"> Your decks: </h1>
+          <div className="c_deck-management-container__owned-decks-container">
+            <ol className="c_deck-management-container__owned-decks-list">
               {listOfDeckThumbnails}
               <li key={Number.MAX_SAFE_INTEGER}>
                 <Link to="/create_new_deck"> Add new </Link>
