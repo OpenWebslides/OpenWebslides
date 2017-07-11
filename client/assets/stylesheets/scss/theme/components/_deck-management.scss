@@ -1,36 +1,9 @@
 .c_deck-management-container {
-
   &__title {
-    margin-top: 1em;
+    margin-top: $spacing--large__v;
   }
 
   &__owned-decks-list {
     list-style-type: none;
-  }
-
-  .c_deck-thumbnail {
-    width: 8em;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    margin: 0.5em;
-    text-align: center;
-
-    &__deck-name {
-      text-overflow: ellipsis;
-      padding-left: 0.4em;
-      padding-right: 0.4em;
-      margin-top: 0;
-    }
-
-    &__delete-button {
-      background-color: transparent;
-      padding: 0.5em;
-      border: 1px solid rgb(230, 230, 230);
-
-      &:hover {
-        background-color: rgba(220, 220, 220, 0.5);
-      }
-    }
   }
 }

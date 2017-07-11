@@ -13,8 +13,6 @@ export function FeedNotification({
   targetDeck,
   concernedUser,
 }) {
-  const className = 'c_feed-notification';
-
   const date = new Date(timestamp * 1000);
   const displayDate = intervalFromNow(date);
   const contentsStringBegin = `${concernedUser} has ${inlineFeedNotificationType[
@@ -23,7 +21,7 @@ export function FeedNotification({
   const contentsStringEnd = `"${targetDeck}"`;
 
   return (
-    <li className={className}>
+    <li className="c_feed-notification">
       <div>
         <h3 className="c_feed-notification__title">
           {feedNotificationTypes[type]}:{' '}
