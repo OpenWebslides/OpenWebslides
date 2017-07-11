@@ -1,13 +1,13 @@
 import React from 'react';
 
-import DefaultLayout from 'presentationals/layouts/DefaultLayout';
+import FullViewportLayout from 'presentationals/layouts/FullViewportLayout';
 import SlideEditorContainer from 'containers/slide-editor/SlideEditorContainer';
 
 function SlideEditorPage() {
   return (
-    <DefaultLayout cssIdentifier="slide-editor">
+    <FullViewportLayout cssIdentifier="slide-editor">
       <SlideEditorContainer />
-    </DefaultLayout>
+    </FullViewportLayout>
   );
 }
 
