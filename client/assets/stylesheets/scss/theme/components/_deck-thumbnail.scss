@@ -1,0 +1,25 @@
+.c_deck-thumbnail {
+  width: 8em;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: $spacing--large__h;
+  text-align: center;
+
+  &__deck-name {
+    text-overflow: ellipsis;
+    padding-left: $spacing--small__h;
+    padding-right: $spacing--small__h;
+    margin-top: 0;
+  }
+
+  &__delete-button {
+    background-color: transparent;
+    padding: $spacing--xx-small__v $spacing--small__h $spacing--xx-small__v $spacing--small__h ;
+    border: 1px solid $color--main__border;
+
+    &:hover {
+      background-color: $color--main__border;
+    }
+  }
+}
