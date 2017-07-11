@@ -77,8 +77,14 @@
 
 // Pages
 
-    @import 'theme/pages/base';
-    @import 'theme/pages/slide-editor';
+    // Layouts
+
+        @import 'theme/pages/layouts/base';
+        @import 'theme/pages/layouts/full-viewport';
+
+    // Specific pages
+
+        @import 'theme/pages/slide-editor';
 
 
 // Components

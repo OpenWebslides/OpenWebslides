@@ -3,8 +3,21 @@
 // ---------------------
 
 .c_page-header {
+  &__wrapper {
+    @include color--contrast (true);
+
+    // Container has a fixed height; make sure the background-color completely fills it.
+    @include position-absolute-fill;
+  }
+
   .o_logo--site {
     line-height: 1;
+
+    .o_logo__link {
+      $size: 0.075em;
+
+      text-shadow: -#{$size} -#{$size} black;
+    }
 
     .o_logo__text {
       font-size: 2.5em;
