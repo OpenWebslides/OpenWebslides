@@ -5,7 +5,7 @@ async function requestUserImports(userID) {
 
   request
     .setMethod('GET')
-    .setEndpoint(`api/users/${userID}/conversions`)
+    .setEndpoint(`users/${userID}/conversions`)
     .addParameter('sort', '-createdAt');
 
   const response = await request.executeRequest();
