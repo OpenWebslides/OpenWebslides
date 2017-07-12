@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import byId from 'reducers/entities/content-blocks/byIdReducer';
+import byId from 'reducers/entities/content-groups/byIdReducer';
 
-const contentBlocks = combineReducers({
+const contentItems = combineReducers({
   byId,
 });
 
-export default contentBlocks;
+export default contentItems;

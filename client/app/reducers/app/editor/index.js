@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux';
 
-import contentBlocks from 'reducers/app/editor/contentBlocksReducer';
 import slides from 'reducers/app/editor/slidesReducer';
-import contentGroups from 'reducers/app/editor/contentGroupsReducer';
+import contentItems from 'reducers/app/editor/contentItemsReducer';
 
 const editor = combineReducers({
-  contentBlocks,
+  contentItems,
   slides,
-  contentGroups,
 });
 
 export default editor;
