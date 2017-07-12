@@ -13,8 +13,8 @@ function mapStateToProps(state) {
 
   return {
     activeSlideId,
-    activeContentBlock: state.entities.contentBlocks.byId[activeContentBlock],
-    contentBlockSequence: state.app.editor.contentBlocks.sequence,
+    activeContentBlock: state.entities.contentGroups.byId[activeContentBlock],
+    contentGroupSequence: state.app.editor.contentGroups.sequence,
   };
 }
 

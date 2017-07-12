@@ -8,7 +8,7 @@ import SlideEditingPaneContainer
 
 export default class SlideEditor extends Component {
   componentDidMount() {
-    this.props.fetchSlides(2);
+    this.props.fetchDeck(2);
   }
 
   render() {
@@ -33,5 +33,5 @@ export default class SlideEditor extends Component {
 }
 
 SlideEditor.propTypes = {
-  fetchSlides: PropTypes.func.isRequired,
+  fetchDeck: PropTypes.func.isRequired,
 };
