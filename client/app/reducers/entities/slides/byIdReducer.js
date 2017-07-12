@@ -23,17 +23,6 @@ function byId(state = initialState, action) {
     case DELETE_SLIDE:
       return _.omit(state, action.payload.slideId);
 
-    case ADD_CONTENT_BLOCK:
-      return {
-        ...state,
-        [action.payload.slideId]: {
-          content: state[action.payload.slideId].content.concat({
-            id: action.payload.contentBlockId,
-            type: 'contentBlock',
-          }),
-        },
-      };
-
     case FETCH_DECK_SUCCESS:
       return action.payload.slides;
     default:
