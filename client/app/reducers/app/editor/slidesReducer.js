@@ -23,7 +23,7 @@ export default function slides(state = initialState, action) {
     case FETCH_DECK_SUCCESS:
       return {
         ...state,
-        sequence: action.payload.slideSequence,
+        sequence: action.payload.slides.sequence,
       };
 
     case SET_ACTIVE_SLIDE:
