@@ -7,12 +7,12 @@ const initialState = Immutable({
   sequence: null,
 });
 
-export default function contentGroups(state = initialState, action) {
+export default function contentItems(state = initialState, action) {
   switch (action.type) {
     case FETCH_DECK_SUCCESS:
       return {
         ...state,
-        sequence: action.payload.contentGroupSequence,
+        sequence: action.payload.contentItemSequence,
       };
 
     default:
