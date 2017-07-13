@@ -1,10 +1,7 @@
 import Immutable from 'seamless-immutable';
 import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
 
-import {
-  SET_ACTIVE_SLIDE,
-  ADD_SLIDE,
-} from 'actions/slideActions';
+import { SET_ACTIVE_SLIDE, ADD_SLIDE } from 'actions/slideActions';
 
 const initialState = Immutable({
   active: null,
