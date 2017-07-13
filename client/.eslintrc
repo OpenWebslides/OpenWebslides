@@ -1,8 +1,7 @@
 {
   "extends": [
     "airbnb",
-    "prettier",
-    "plugin:flowtype/recommended"
+    "prettier"
   ],
   "rules": {
     "prettier/prettier": [
@@ -30,8 +29,7 @@
   "plugins": [
     "react",
     "prettier",
-    "import",
-    "flowtype"
+    "import"
   ],
   "settings": {
     "import/parser": "babel-eslint",

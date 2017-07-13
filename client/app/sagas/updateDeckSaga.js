@@ -48,7 +48,7 @@ function* doUpdateDeck() {
     const state = yield select();
     const HTMLString = yield convertSlidesToHtml(
       state.entities.slides.byId,
-      state.entities.contentBlocks.byId,
+      state.entities.contentItems.byId,
     );
 
     yield call(updateDeckApi, 2, HTMLString);

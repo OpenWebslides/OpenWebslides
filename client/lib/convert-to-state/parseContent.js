@@ -10,12 +10,12 @@ export default function convertContentItems(elements: Array<HTMLElement>) {
 
   // Return a deck with one empty slide when no existing slides are present
   if (elements.length === 0) {
-    slides[slideSequence] = { meta: {}, contentItemIds: [] };
+    slides[slideSequence] = { meta: {}, id: slideSequence, contentItemIds: [] };
     slideSequence += 1;
   }
 
   elements.forEach(element => {
-    slides[slideSequence] = { meta: {}, contentItemIds: [] };
+    slides[slideSequence] = { meta: {}, id: slideSequence, contentItemIds: [] };
 
     slides[slideSequence].contentItemIds = (function addcontentItems(nodeList: NodeList<HTMLElement | Node>) {
       const contentItemIds = [];

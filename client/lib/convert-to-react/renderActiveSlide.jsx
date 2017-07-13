@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Slide from 'presentationals/components/slide-editor/Slide';
+import ContentItemContainer from 'lib/content-item/ContentItemContainer';
 
-export default function renderActiveSlide({ content }) {
-  return <h1>Another placeholder</h1>;
+export default function renderActiveSlide({ contentItemIds }) {
+  return (
+    <Slide>
+      {contentItemIds.map(id => <ContentItemContainer key={id} />)}
+    </Slide>
+  );
 }
 
 renderActiveSlide.propTypes = {
-  content: PropTypes.objectOf(Object).isRequired,
+  contentItemIds: PropTypes.arrayOf(Number).isRequired,
 };
