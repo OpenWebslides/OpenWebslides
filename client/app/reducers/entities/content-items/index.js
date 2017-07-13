@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import byId from 'reducers/entities/content-groups/byIdReducer';
+import byId from 'reducers/entities/content-items/byIdReducer';
 
 const contentItems = combineReducers({
   byId,
