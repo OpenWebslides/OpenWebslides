@@ -118,7 +118,7 @@ export default class ContentEditable extends Component {
               <button
                 className="o_content-editable__menu-button o_content-editable__menu-button--id_em"
                 tabIndex="-1"
-                onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.EMPHASIS)}
+                onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.EM)}
               >
                 <span className="o_content-editable__menu-text">
                   Emphasis

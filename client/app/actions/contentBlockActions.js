@@ -35,9 +35,9 @@ export function deleteContentBlocks(contentBlocksIds) {
   };
 }
 
-export function addContentBlock(slideId, contentBlockId, type) {
+export function addContentBlock(contentItemId, contentItemType, slideId) {
   return {
     type: ADD_CONTENT_BLOCK,
-    payload: { slideId, contentBlockId, type },
+    payload: { contentItemId, contentItemType, slideId },
   };
 }
