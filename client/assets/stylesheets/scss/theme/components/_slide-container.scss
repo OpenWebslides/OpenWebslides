@@ -7,24 +7,8 @@
   $slide-height: $slide__number-of-plain-text-lines * $slide__base-line-height * 1em;
   $slide-width: $slide-height * $slide-ratio-number;
 
-  // Use inkGrid for aligning slides horizontally & vertically inside their container.
-  @include inkgrid-row(false, false);
-  @include inkgrid-row__h-align(center);
-
   // Set these properties on container element because we do not want them to resize with the slide.
   margin-top: $spacing--element__v;
-
-  // We need this for vertical centering with &::before to work.
-  white-space: nowrap;
-
-  // &::before element is necessary to vertically center slide inside its container.
-  // To do this, &::before needs to have the same height as its container; we only activate this when vertical
-  // centering is required (e.g. fullscreen slides).
-  &::before,
-  &__size {
-    @include inkgrid-col(false, false);
-    @include inkgrid-col__v-align(middle);
-  }
 
   // Note: slide can be resized by setting font-size on .c_slide-container__size.
   &__size {
@@ -35,8 +19,9 @@
     height: $slide-height;
     width: $slide-width;
 
-    // Undo white-space: nowrap; on container.
-    white-space: normal;
+    // Horizontally center the slide inside of its container.
+    margin-right: auto;
+    margin-left: auto;
   }
 
   &__content {
@@ -47,6 +32,7 @@
     background-color: white;
     border: $border-width--subtle $border-style--subtle $color--main__text;
 
+    // #TODO move this code out of this file
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,13 +49,30 @@
     margin: 0;
     background-color: black;
 
+    // Use inkGrid for aligning slides horizontally & vertically inside their container.
+    @include inkgrid-row(false, false);
+    @include inkgrid-row__h-align(center);
+
+    // &::before element is necessary to vertically center slide inside its container.
+    // To do this, &::before needs to have the same height as its container; we only activate this when vertical
+    // centering is required (e.g. fullscreen slides).
+    &::before,
+    &__size {
+      @include inkgrid-col(false, false);
+      @include inkgrid-col__v-align(middle);
+    }
+
     &::before {
       content: '';
       height: 100vh;
     }
 
-    // #TODO scrollbar throws off aspect ratio calculations; make sure there is no scrollbar on fullscreen slide view
     .c_slide-container__size {
+      // Undo white-space: nowrap; on container.
+      white-space: normal;
+
+      // #TODO scrollbar throws off aspect ratio calculations; make sure there is no scrollbar on fullscreen slide view
+
       @media screen and (min-aspect-ratio: $slide__ratio) {
         // size slide to fit to vertical viewport edges
         font-size: (100vh / $slide__number-of-plain-text-lines / $slide__base-line-height);
