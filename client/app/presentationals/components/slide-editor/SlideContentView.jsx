@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 function SlideContentView(props) {
   return (
-    <div
-      className={`c_editor-content-view c_editor-content-view--${props.cssIdentifier}`}
-    >
+    <div className={`c_editor-content-view c_editor-content-view--${props.cssIdentifier}`}>
       <div className="c_editor-content-view__wrapper">
         <p>[Content view goes here]</p>
       </div>

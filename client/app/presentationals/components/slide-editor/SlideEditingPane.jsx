@@ -16,20 +16,17 @@ export default class SlideEditingPane extends Component {
     const { activeContentBlock } = this.props;
 
     if (activeContentBlock) {
-      const newState = RichUtils.toggleInlineStyle(
-        activeContentBlock.data,
-        type,
-      );
-
-      this.props.updateSlide(activeContentBlock.id, newState);
+      this.props.addContentBlock(activeContentBlock.id, type);
     }
   }
 
-  handleAddContentBlock(e, type) {
+  handleAddContentBlock(e, contentItemType) {
     e.preventDefault();
     const { contentBlockSequence, activeSlideId } = this.props;
 
-    this.props.addContentBlock(activeSlideId, contentBlockSequence, type);
+    const contentItemId = `${activeSlideId}-${contentBlockSequence}`;
+
+    this.props.addContentBlock(contentItemId, contentItemType, activeSlideId);
   }
 
   render() {
@@ -54,15 +51,13 @@ export default class SlideEditingPane extends Component {
     //   );
     // }
     return (
-      <div
-        className={`c_slide-editor c_slide-editor--${this.props.cssIdentifier}`}
-      >
+      <div className={`c_slide-editor c_slide-editor--${this.props.cssIdentifier}`}>
         <div className="c_slide-editor__wrapper">
           <div className="c_slide-editor__item c_slide-editor__item--toolbar">
-            <button onMouseDown={e => this.handleAddContentBlock(e, 'H1')}>
+            <button onMouseDown={e => this.handleAddContentBlock(e, 'TITLE')}>
               Add Title
             </button>
-            <button onMouseDown={e => this.handleAddContentBlock(e, 'P')}>
+            <button onMouseDown={e => this.handleAddContentBlock(e, 'PARAGRAPH')}>
               Add Text
             </button>
             <button onMouseDown={e => this.handleAddContentBlock(e, 'UL')}>
@@ -74,15 +69,8 @@ export default class SlideEditingPane extends Component {
             <button onMouseDown={e => this.handleToggleInlineStyle(e, 'BOLD')}>
               Bold
             </button>
-            <button
-              onMouseDown={e => this.handleToggleInlineStyle(e, 'ITALIC')}
-            >
+            <button onMouseDown={e => this.handleToggleInlineStyle(e, 'ITALIC')}>
               Italic
-            </button>
-            <button
-              onMouseDown={e => this.handleToggleInlineStyle(e, 'UNDERLINE')}
-            >
-              Underline
             </button>
 
           </div>
