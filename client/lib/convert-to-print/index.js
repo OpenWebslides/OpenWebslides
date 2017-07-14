@@ -1,109 +1,86 @@
 /* eslint-disable no-case-declarations */
 import React from 'react';
 
-function htmlToReact(htmlElement) {
-  const type = htmlElement.tagName || 'text';
-  switch (type) {
-    case 'FIGURE':
-    case 'DIV':
-      return Array.from(htmlElement.childNodes).map(htmlToReact);
-    case 'H1':
-      return React.createElement('h1', null, htmlElement.innerText);
-    case 'H2':
-      return React.createElement('h2', null, htmlElement.innerText);
-    case 'H3':
-      return React.createElement('h3', null, htmlElement.innerText);
-    case 'P':
+import cit from 'constants/contentItemTypes';
+import ipt from 'constants/itemPropertyTypes';
+
+const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE } = cit;
+const { EM, STRONG } = ipt;
+
+const levelToTitle = {
+  1: 'h1',
+  2: 'h2',
+  3: 'h3',
+  4: 'h4',
+  5: 'h5',
+  6: 'h6',
+};
+
+function contentItemObjectToReact(state, contentItemObject, currentLevel) {
+  switch (contentItemObject.contentItemType) {
+    case TITLE:
       return React.createElement(
-        'p',
+        levelToTitle[currentLevel],
         null,
-        Array.from(htmlElement.childNodes).map(htmlToReact),
+        contentItemObject.text,
       );
-    case 'SPAN':
-      return React.createElement('span', null, htmlElement.innerText);
-    case 'text':
-      return React.createElement('span', null, htmlElement.data);
-    case 'BR':
-      return React.createElement('br', null, null);
-    case 'UL':
+    case PARAGRAPH:
+      return React.createElement('p', null, contentItemObject.text);
+    case SECTION:
+      const res = contentItemObject.childItemIds.map(itemId => {
+        const itemObject = state.entities.contentItems.byId[itemId];
+        return contentItemObjectToReact(state, itemObject, currentLevel + 1);
+      });
+      return res;
+    case LIST:
+      const childrenObjects = contentItemObject.childItemIds.map(
+        itemId => state.entities.contentItems.byId[itemId],
+      );
       return React.createElement(
-        'ul',
+        contentItemObject.ordered ? 'ol' : 'ul',
         null,
-        Array.from(htmlElement.childNodes).map(htmlToReact),
-      );
-    case 'LI':
-      return React.createElement(
-        'li',
-        null,
-        Array.from(htmlElement.childNodes).map(htmlToReact),
-      );
-    case 'A':
-      return React.createElement('a', null, htmlElement.innerText);
-    case 'STRONG':
-      return React.createElement(
-        'strong',
-        null,
-        Array.from(htmlElement.childNodes).map(htmlToReact),
-      );
-    case 'EM':
-      return React.createElement(
-        'em',
-        null,
-        Array.from(htmlElement.childNodes).map(htmlToReact),
-      );
-    case 'IMG':
-      return React.createElement('div', { className: 'o__print-view-image' }, [
-        React.createElement(
-          'img',
-          {
-            src: require(`../../assets/images/testPrintView/${htmlElement
-              .attributes[0].nodeValue}`),
-            alt: htmlElement.alt,
-            width: 400,
-            height: 300,
-          },
-          null,
+        childrenObjects.map(child =>
+          contentItemObjectToReact(state, child, currentLevel),
         ),
-        React.createElement('figcaption', null, `Image: ${htmlElement.alt}`),
-      ]);
-    case 'VIDEO':
-      return React.createElement(
-        'p',
-        null,
-        `Video: ${htmlElement.children[0].attributes[2].nodeValue}`,
       );
-    case 'IFRAME':
-      return React.createElement('p', null, `iFrame: ${htmlElement.alt}`);
-    case 'BLOCKQUOTE':
+    case LIST_ITEM:
+      return React.createElement('li', null, contentItemObject.text);
+    case IMAGE:
       return React.createElement(
-        'blockquote',
+        'img',
+        { src: contentItemObject.src, alt: contentItemObject.alt },
         null,
-        Array.from(htmlElement.childNodes).map(htmlToReact),
       );
     default:
       return React.createElement(
         'p',
         null,
-        `Unsupported element: ${htmlElement.tagName}`,
+        `Unsupported element: ${contentItemObject.contentItemType}`,
       );
   }
 }
 
-function convertToPrint(htmlString) {
-  const parser = new DOMParser();
-  const document = parser.parseFromString(htmlString, 'text/html');
-
-  // First we just keep a list of 'section' html elements
-  // with class 'slide', so the list of the actual slide elements.
-  const slidesArray = Array.from(document.body.children).filter(
-    node => node.nodeName === 'SECTION' && node.className.includes('slide'),
+function slideObjectToReact(state, slideObject) {
+  const childrenObjects = slideObject.contentItemIds.map(
+    itemId => state.entities.contentItems.byId[itemId],
   );
-
-  return slidesArray.reduce((arr, currentSlide) => {
-    const thisSlideChildren = Array.from(currentSlide.children);
-    const thisSlideElements = thisSlideChildren.map(htmlToReact);
-    return arr.concat(thisSlideElements);
+  const res = childrenObjects.reduce((arr, currentObject) => {
+    const lvl = isNaN(slideObject.level) ? 1 : parseInt(slideObject.level, 10);
+    const res = arr.concat(contentItemObjectToReact(state, currentObject, lvl));
+    return res;
   }, []);
+  return res;
+}
+
+function convertToPrint(state, deckId) {
+  const slideIds = state.entities.decks.byId[deckId].slideIds;
+  const slideObjects = slideIds.map(id => state.entities.slides.byId[id]);
+  const res = slideObjects.reduce(
+    (arr, currentSlideObject) =>
+      arr.concat(slideObjectToReact(state, currentSlideObject)),
+    [],
+  );
+  return res;
 }
 
 export default convertToPrint;
