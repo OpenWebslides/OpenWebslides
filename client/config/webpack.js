@@ -50,6 +50,7 @@ const config = {
       root: path.join(__dirname, '..'),
       presentationals: path.join(__dirname, '..', 'app', 'presentationals'),
       pages: path.join(__dirname, '..', 'app', 'pages'),
+      constants: path.join(__dirname, '..', 'app', 'constants'),
       reducers: path.join(__dirname, '..', 'app', 'reducers'),
       actions: path.join(__dirname, '..', 'app', 'actions'),
       containers: path.join(__dirname, '..', 'app', 'containers'),

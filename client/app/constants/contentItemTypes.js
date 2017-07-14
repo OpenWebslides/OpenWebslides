@@ -1,0 +1,10 @@
+export default {
+  TITLE: 'TITLE',
+  PARAGRAPH: 'PARAGRAPH',
+  LIST: 'LIST',
+  LIST_ITEM: 'LIST_ITEM',
+  IMAGE: 'IMAGE',
+  IFRAME: 'IFRAME',
+  SECTION: 'SECTION',
+  ASIDE: 'ASIDE',
+};
