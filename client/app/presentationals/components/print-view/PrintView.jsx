@@ -2,15 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import convertToPrint from 'lib/convert-to-print/index';
-import { flamesDeck, smallDeck, jasperDeck } from 'constants/exampleDecks'; // TODO: only for testing
 
-export default class SlideEditor extends Component {
+import { flamesState } from 'constants/exampleState';
+
+export default class PrintView extends Component {
   componentDidMount() {
-    this.props.fetchDeckContent(2);
+    const id = this.props.id;
+    if (
+      !(
+        this.props.entities.decks.byId.id &&
+        this.props.entities.decks.byId.id.slides
+      )
+    ) {
+      this.props.fetchDeckContent(id);
+    }
   }
 
   render() {
-    const elements = convertToPrint(jasperDeck);
+    const state = flamesState; // TODO: only until rein parser works
+    let elements;
+    // if (state.entities.decks.byId.id && state.entities.decks.byId.id.slides) {
+    //   elements = convertToPrint(state, this.props.id);
+    // }
+
+    elements = convertToPrint(state, this.props.id);
+    debugger;
     return (
       <div>
         {elements}
@@ -19,6 +35,7 @@ export default class SlideEditor extends Component {
   }
 }
 
-SlideEditor.propTypes = {
+PrintView.propTypes = {
   fetchDeckContent: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
