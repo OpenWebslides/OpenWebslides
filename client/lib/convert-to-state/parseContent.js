@@ -11,26 +11,29 @@ export default function parseContent(deckId, elements) {
 
   // Return a deck with one empty slide when no existing slides are present
   if (elements.length === 0) {
-    slides[slideSequence] = {
+    const slideId = `${deckId}-${slideSequence}`;
+
+    slides[slideId] = {
       meta: {},
-      id: `${deckId}-${slideSequence}`,
+      id: slideId,
       contentItemIds: [],
     };
     slideSequence += 1;
   }
 
   elements.forEach(element => {
-    slides[slideSequence] = {
+    const slideId = `${deckId}-${slideSequence}`;
+    slides[slideId] = {
       meta: {},
-      id: `${deckId}-${slideSequence}`,
+      id: slideId,
       contentItemIds: [],
     };
 
-    slides[slideSequence].contentItemIds = (function addcontentItems(nodeList) {
+    slides[slideId].contentItemIds = (function addcontentItems(nodeList) {
       const contentItemIds = [];
 
-      nodeList.forEach(node => {
-        const id = `${deckId}-${slideSequence}-${contentItemSequence}`;
+      Array.from(nodeList).forEach(node => {
+        const contentItemId = `${deckId}-${slideSequence}-${contentItemSequence}`;
 
         const { nodeName, children, textContent } = node;
 
@@ -38,18 +41,18 @@ export default function parseContent(deckId, elements) {
           return;
         }
 
-        contentItems[id] = { id };
+        contentItems[contentItemId] = { id: contentItemId };
         contentItemSequence += 1;
 
         switch (nodeName) {
           case 'SECTION':
-            contentItems[id] = Object.assign({}, contentItems[id], {
+            contentItems[contentItemId] = Object.assign({}, contentItems[contentItemId], {
               contentItemType: contentItemTypes.SECTION,
               childItemIds: addcontentItems(children),
             });
             break;
           case 'ASIDE':
-            contentItems[id] = Object.assign({}, contentItems[id], {
+            contentItems[contentItemId] = Object.assign({}, contentItems[contentItemId], {
               contentItemType: contentItemTypes.ASIDE,
               childItemIds: addcontentItems(children),
             });
@@ -60,42 +63,42 @@ export default function parseContent(deckId, elements) {
           case 'H4':
           case 'H5':
           case 'H6':
-            contentItems[id] = Object.assign({}, contentItems[id], {
+            contentItems[contentItemId] = Object.assign({}, contentItems[contentItemId], {
               contentItemType: contentItemTypes.TITLE,
               text: textContent,
               inlineProperties: parseInlineProperties(children),
             });
             break;
           case 'P':
-            contentItems[id] = Object.assign({}, contentItems[id], {
+            contentItems[contentItemId] = Object.assign({}, contentItems[contentItemId], {
               contentItemType: contentItemTypes.PARAGRAPH,
               text: textContent,
               inlineProperties: parseInlineProperties(children),
             });
             break;
           case 'OL':
-            contentItems[id] = Object.assign({}, contentItems[id], {
+            contentItems[contentItemId] = Object.assign({}, contentItems[contentItemId], {
               contentItemType: contentItemTypes.LIST,
               ordered: true,
               childItemIds: parseInlineProperties(children),
             });
             break;
           case 'UL':
-            contentItems[id] = Object.assign({}, contentItems[id], {
+            contentItems[contentItemId] = Object.assign({}, contentItems[contentItemId], {
               contentItemType: contentItemTypes.LIST,
               ordered: false,
               childItemIds: parseInlineProperties(children),
             });
             break;
           case 'IMG':
-            contentItems[id] = Object.assign({}, contentItems[id], {
+            contentItems[contentItemId] = Object.assign({}, contentItems[contentItemId], {
               contentItemType: contentItemTypes.IMAGE,
               src: node.src,
               altText: node.alt,
             });
             break;
           case 'IFRAME':
-            contentItems[id] = Object.assign({}, contentItems[id], {
+            contentItems[contentItemId] = Object.assign({}, contentItems[contentItemId], {
               contentItemType: contentItemTypes.IFRAME,
               src: node.src,
             });
@@ -104,7 +107,7 @@ export default function parseContent(deckId, elements) {
             return;
         }
 
-        contentItemIds.push(id);
+        contentItemIds.push(contentItemId);
       });
 
       return contentItemIds;

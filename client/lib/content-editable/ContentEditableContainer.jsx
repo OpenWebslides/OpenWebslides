@@ -1,18 +1,19 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { updateContentBlock } from 'actions/contentBlockActions';
+import { updateContentBlock, setActiveContentBlock, updateSelection } from 'actions/contentBlockActions';
 
 import ContentEditable from './ContentEditable';
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   return {
-    contentBlock: state.entities.contentItems.byId[props.id],
+    activeContentItem: state.app.editor.contentItems.active,
+    selectionOffsets: state.app.editor.selectionOffsets,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateContentBlock }, dispatch);
+  return bindActionCreators({ updateContentBlock, setActiveContentBlock, updateSelection }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentEditable);

@@ -7,9 +7,7 @@ function SlideLiveView(props) {
     const ActiveSlide = renderActiveSlide(props.activeSlide);
 
     return (
-      <div
-        className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}
-      >
+      <div className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}>
         <div className="c_editor-slide-view__wrapper">
           {ActiveSlide}
         </div>

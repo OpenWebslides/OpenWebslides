@@ -1,19 +1,11 @@
-import Immutable from 'seamless-immutable';
-
 import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
 
-const initialState = Immutable({
-  activeDeckId: null,
-});
+const initialState = null;
 
-export default function contentItems(state = initialState, action) {
+export default function activeDeckId(state = initialState, action) {
   switch (action.type) {
     case FETCH_DECK_SUCCESS:
-      return {
-        ...state,
-        activeDeckId: action.payload.activeDeckId,
-      };
-
+      return action.payload.activeDeckId;
     default:
       return state;
   }

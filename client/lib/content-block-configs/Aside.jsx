@@ -14,5 +14,5 @@ export default function Aside(props) {
 }
 
 Aside.propTypes = {
-  contentItem: PropTypes.ObjectOf(Object).isRequired,
+  contentItem: PropTypes.objectOf(Object).isRequired,
 };

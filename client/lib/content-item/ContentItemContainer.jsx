@@ -4,7 +4,7 @@ import ContentItem from './ContentItem';
 
 function mapStateToProps(state, props) {
   return {
-    contentItem: state.entities.contentItems[props.id],
+    contentItem: state.entities.contentItems.byId[props.id],
   };
 }
 

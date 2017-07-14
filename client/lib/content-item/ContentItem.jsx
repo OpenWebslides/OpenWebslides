@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import contentBlockConfigMap from 'lib/content-block-configs';
 
-export default function ContentBlockEditor(props) {
+export default function ContentItem(props) {
   const { contentItem } = props;
 
-  const ContentBlockType = contentBlockConfigMap[contentItem.contentType];
+  const ContentBlockType = contentBlockConfigMap[contentItem.contentItemType];
 
   return <ContentBlockType {...props} />;
 }
 
-ContentBlockEditor.propTypes = {
-  contentItem: PropTypes.ObjectOf(Object).isRequired,
+ContentItem.propTypes = {
+  contentItem: PropTypes.objectOf(Object).isRequired,
 };

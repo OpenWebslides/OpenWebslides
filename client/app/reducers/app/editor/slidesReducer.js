@@ -13,14 +13,14 @@ export default function slides(state = initialState, action) {
     case ADD_SLIDE:
       return {
         ...state,
-        active: state.sequence,
+        active: action.payload.slideId,
         sequence: state.sequence + 1,
       };
 
     case FETCH_DECK_SUCCESS:
       return {
         ...state,
-        sequence: action.payload.slides.sequence,
+        sequence: action.payload.slideSequence,
       };
 
     case SET_ACTIVE_SLIDE:

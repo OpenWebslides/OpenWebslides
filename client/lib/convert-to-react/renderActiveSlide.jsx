@@ -7,7 +7,7 @@ import ContentItemContainer from 'lib/content-item/ContentItemContainer';
 export default function renderActiveSlide({ contentItemIds }) {
   return (
     <Slide>
-      {contentItemIds.map(id => <ContentItemContainer key={id} />)}
+      {contentItemIds.map(id => <ContentItemContainer key={id} id={id} active />)}
     </Slide>
   );
 }
