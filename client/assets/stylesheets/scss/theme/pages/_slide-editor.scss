@@ -2,16 +2,25 @@
 // Slide editor page
 // -----------------
 
-.l_page--slide-editor {
+.l_page--id_slide-editor {
   .l_main {
-    &__wrapper {
-      flex-direction: row;
-    }
-
     &__item {
       &--deck-navigator {
-        flex-basis: 0;
-        flex-grow: 0;
+        @include inkgrid-col__parts (4, 1);
+
+        .l_main__item__wrapper {
+          // Make sure scrollbar is always there, to prevent it from messing up slide resizing.
+          overflow-y: scroll;
+        }
+      }
+
+      &--slide-editor {
+        @include inkgrid-col__parts (4, 3);
+
+        .l_main__item__wrapper {
+          // We use JS to prevent the slide from being larger than its container.
+          overflow-y: visible;
+        }
       }
     }
   }
