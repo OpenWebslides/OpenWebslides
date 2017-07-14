@@ -16,5 +16,5 @@ export default function List(props) {
 }
 
 List.propTypes = {
-  contentItem: PropTypes.ObjectOf(Object).isRequired,
+  contentItem: PropTypes.objectOf(Object).isRequired,
 };
