@@ -25,8 +25,7 @@ export function getSelectionOffsets(containerElement) {
     // the length of its string contents is the start offset of the selected range
     const selectionStartOffset = clonedRange.toString().length;
     // the end offset can be calculated by adding the length of the selected range to the start offset
-    const selectionEndOffset =
-      selectionStartOffset + selectedRange.toString().length;
+    const selectionEndOffset = selectionStartOffset + selectedRange.toString().length;
 
     // verify that the offsets fall inside the container
     if (selectionEndOffset <= containerElement.textContent.length) {
@@ -41,11 +40,7 @@ export function getSelectionOffsets(containerElement) {
   return offsets;
 }
 
-export function setSelectionByOffsets(
-  containerElement,
-  startOffset,
-  endOffset,
-) {
+export function setSelectionByOffsets(containerElement, startOffset, endOffset) {
   /* eslint-disable */
 
   // validate parameters
