@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Immutable from 'seamless-immutable';
 
 import { getSelectionOffsets, setSelectionByOffsets } from 'lib/content-editable/selectionOffsets';
+import inlinePropertyTypes from 'constants/inlinePropertyTypes';
 
 import {
-  inlinePropertyTypes,
   addInlinePropertyToArray,
   updateInlinePropertiesAfterInputAtIndex,
   getHTMLStringFromInlinePropertiesAndText,
@@ -69,14 +70,16 @@ export default class ContentEditable extends Component {
 
   handleMenuButtonClick(inlinePropertyType) {
     // get copy of current inlineProperties
-    const inlineProperties = [].concat(this.props.contentItem.inlineProperties);
+    const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
     // get current selection
     const selectionOffsets = getSelectionOffsets(this.contentEditable);
     // create new inlineProperty object
     const newInlineProperty = {
       type: inlinePropertyType,
-      startsAtChar: selectionOffsets.start,
-      endsAtChar: selectionOffsets.end,
+      offSets: {
+        start: selectionOffsets.start,
+        end: selectionOffsets.end,
+      },
     };
 
     // add the new inline property to the copied array
