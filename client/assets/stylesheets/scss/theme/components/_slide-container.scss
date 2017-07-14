@@ -32,6 +32,9 @@
     background-color: white;
     border: $border-width--subtle $border-style--subtle shade(white, 20%);
 
+    // Make sure default text-align is 'left' no matter the text-align of the containing element.
+    text-align: left;
+
     // #TODO move this code out of this file
     display: flex;
     flex-direction: column;
