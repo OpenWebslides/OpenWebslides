@@ -11,7 +11,7 @@ function NavMenu(props) {
   };
 
   return (
-    <header className={`c_nav-menu c_nav-menu--${props.cssIdentifier}`}>
+    <div className={`c_nav-menu c_nav-menu--${props.cssIdentifier}`}>
       <div className="c_nav-menu__wrapper">
         <ul className="c_nav-menu__list">
           {Object.keys(menuItems).map(route => (
@@ -23,7 +23,7 @@ function NavMenu(props) {
           ))}
         </ul>
       </div>
-    </header>
+    </div>
   );
 }
 
