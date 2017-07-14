@@ -1,5 +1,5 @@
-export const inlinePropertyTypes = {
-  EMPHASIS: {
+export const inlinePropertyTags = {
+  EM: {
     startTag: '<em>',
     endTag: '</em>',
   },
@@ -20,41 +20,41 @@ export function removeOrMergeOverlappingInlineProperties(inlineProperties, newIn
   // since the inlineProperties array is ordered.)
   while (
     i < inlineProperties.length &&
-    newInlineProperty.endsAtChar >= inlineProperties[i].startsAtChar
+    newInlineProperty.offSets.end >= inlineProperties[i].offSets.start
   ) {
     // check for overlap
     // first check the selectionOffset.start
-    if (newInlineProperty.startsAtChar >= inlineProperties[i].startsAtChar) {
+    if (newInlineProperty.offSets.start >= inlineProperties[i].offSets.start) {
       // if selection start overlaps this inlineProperty
-      if (newInlineProperty.startsAtChar < inlineProperties[i].endsAtChar) {
+      if (newInlineProperty.offSets.start < inlineProperties[i].offSets.end) {
         // remove this inlineProperty
         indicesToDelete.push(i);
       }
       // if inlineProperties touch each other
-      else if (newInlineProperty.startsAtChar === inlineProperties[i].endsAtChar) {
+      else if (newInlineProperty.offSets.start === inlineProperties[i].offSets.end) {
         // if they are the same type, they can be merged into one
         if (newInlineProperty.type === inlineProperties[i].type) {
           // remove this inlineProperty
           indicesToDelete.push(i);
           // and change the selectionOffsets to include this inlineProperty
-          newInlineProperty.startsAtChar = inlineProperties[i].startsAtChar;
+          newInlineProperty.offSets.start = inlineProperties[i].offSets.start;
         }
         // if they are not the same type, they can exist next to each other
       }
     }
     // then check the selectionOffset.end; if selection end overlaps this inlineProperty
-    else if (newInlineProperty.endsAtChar > inlineProperties[i].startsAtChar) {
+    else if (newInlineProperty.offSets.end > inlineProperties[i].offSets.start) {
       // remove this inlineProperty
       indicesToDelete.push(i);
     }
     // if selection end touches this inlineProperty
-    else if (newInlineProperty.endsAtChar === inlineProperties[i].startsAtChar) {
+    else if (newInlineProperty.offSets.end === inlineProperties[i].offSets.start) {
       // if they are the same type, they can be merged into one
       if (newInlineProperty.type === inlineProperties[i].type) {
         // remove this inlineProperty
         indicesToDelete.push(i);
         // and change the selectionOffsets to include this inlineProperty
-        newInlineProperty.endsAtChar = inlineProperties[i].endsAtChar;
+        newInlineProperty.offSets.end = inlineProperties[i].offSets.end;
       }
       // if they are not the same type, they can exist next to each other
     }
@@ -75,10 +75,10 @@ export function addInlinePropertyToArray(inlineProperties, newInlineProperty) {
   removeOrMergeOverlappingInlineProperties(inlineProperties, newInlineProperty);
 
   // only add inline property if any text was selected
-  if (newInlineProperty.startsAtChar !== newInlineProperty.endsAtChar) {
+  if (newInlineProperty.offSets.start !== newInlineProperty.offSets.end) {
     // inlineProperties should be sorted by startsAtChar; find correct index
     let i = 0;
-    while (i < inlineProperties.length && newInlineProperty.startsAtChar > inlineProperties[i].startsAtChar) {
+    while (i < inlineProperties.length && newInlineProperty.offSets.start > inlineProperties[i].offSets.start) {
       i += 1;
     }
     // insert new inlineProperty at the correct index
@@ -99,48 +99,51 @@ export function updateInlinePropertiesAfterInputAtIndex(inlineProperties, caretP
     // if characters were added
     if (amount > 0) {
       // if the entire inlineProperty lies after the original caret position
-      if (inlineProperties[i].startsAtChar >= origPosition) {
+      if (inlineProperties[i].offSets.start >= origPosition) {
         // move both start & end by $amount
-        inlineProperties[i].startsAtChar += amount;
-        inlineProperties[i].endsAtChar += amount;
+        inlineProperties[i].offSets.start += amount;
+        inlineProperties[i].offSets.end += amount;
       }
       // if the original caret position lies inside the inlineProperty
-      else if (inlineProperties[i].endsAtChar >= origPosition) {
+      else if (inlineProperties[i].offSets.end >= origPosition) {
         // move only the end by $amount
-        inlineProperties[i].endsAtChar += amount;
+
+        console.log(inlineProperties[i].offSets)
+        console.log(inlineProperties[i])
+        inlineProperties[i].offSets.end += amount;
       }
     }
     // if characters were deleted
     else if (amount < 0) {
       // if the entire inlineProperty lies after the original caret position
-      if (inlineProperties[i].startsAtChar >= origPosition) {
+      if (inlineProperties[i].offSets.start >= origPosition) {
         // move both start & end by $amount
-        inlineProperties[i].startsAtChar += amount;
-        inlineProperties[i].endsAtChar += amount;
+        inlineProperties[i].offSets.start += amount;
+        inlineProperties[i].offSets.end += amount;
       }
       // if the original caret position lies inside the inlineProperty
-      else if (inlineProperties[i].endsAtChar > origPosition) {
+      else if (inlineProperties[i].offSets.end > origPosition) {
         // move the end by $amount
-        inlineProperties[i].endsAtChar += amount;
+        inlineProperties[i].offSets.end += amount;
         // check if the deleted character string overlapped with start
-        if (inlineProperties[i].startsAtChar > caretPosition) {
+        if (inlineProperties[i].offSets.start > caretPosition) {
           // if so, move start to the new caretPosition
-          inlineProperties[i].startsAtChar = caretPosition;
+          inlineProperties[i].offSets.start = caretPosition;
         }
         // if it doesn't overlap, that means the entire deleted string was
         // inside this inlineProperty; start does not need to be moved
       }
       // if the new caret position lies inside or before the inlineProperty
-      else if (inlineProperties[i].endsAtChar >= caretPosition) {
+      else if (inlineProperties[i].offSets.end >= caretPosition) {
         // if the entire inlineProperty lies in de deleted character string
-        if (inlineProperties[i].startsAtChar >= caretPosition) {
+        if (inlineProperties[i].offSets.start >= caretPosition) {
           // delete the inlineProperty
           indicesToDelete.push(i);
         }
         // if the deleted character string only partially overlapped this inlineProperty
         else {
           // move end to the new caretPosition
-          inlineProperties[i].endsAtChar = caretPosition;
+          inlineProperties[i].offSets.end = caretPosition;
         }
       }
     }
@@ -178,9 +181,9 @@ export function getHTMLStringFromInlinePropertiesAndText(inlineProperties, text)
       // if there is a current inlineProperty (meaning: started but not yet ended)
       if (inlineProperty !== null) {
         // check if the current inline property ends at this charIndex
-        if (inlineProperty.endsAtChar === charIndex) {
+        if (inlineProperty.offSets.end === charIndex) {
           // if so, add the end tag to the HTML string
-          textHTML += inlineProperty.type.endTag;
+          textHTML += inlinePropertyTags[inlineProperty.type].endTag;
           // unset the current inline property
           inlineProperty = null;
         }
@@ -192,11 +195,12 @@ export function getHTMLStringFromInlinePropertiesAndText(inlineProperties, text)
         inlinePropertyIndex < inlineProperties.length
       ) {
         // check if the next inlineProperty starts at this charIndex
-        if (inlineProperties[inlinePropertyIndex].startsAtChar === charIndex) {
+        console.log(inlineProperties);
+        if (inlineProperties[inlinePropertyIndex].offSets.start === charIndex) {
           // if so, save it as the current inlineProperty
           inlineProperty = inlineProperties[inlinePropertyIndex];
           // add its start tag to the HTML string
-          textHTML += inlineProperty.type.startTag;
+          textHTML += inlinePropertyTags[inlineProperty.type].startTag;
           // update the next inlineProperty index
           inlinePropertyIndex += 1;
         }
