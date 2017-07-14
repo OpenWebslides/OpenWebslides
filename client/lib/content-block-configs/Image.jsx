@@ -8,5 +8,5 @@ export default function Image(props) {
 }
 
 Image.propTypes = {
-  contentItem: PropTypes.ObjectOf(Object).isRequired,
+  contentItem: PropTypes.objectOf(Object).isRequired,
 };

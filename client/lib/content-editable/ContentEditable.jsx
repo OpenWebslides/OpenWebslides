@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { getSelectionOffsets, setSelectionByOffsets } from 'lib/content-editable/selectionOffsets';
 
@@ -9,19 +10,12 @@ import {
   getHTMLStringFromInlinePropertiesAndText,
 } from 'lib/content-editable/inlineProperties';
 
-import { getFilteredTextContent } from 'lib/content-editable/textContent';
+import getFilteredTextContent from 'lib/content-editable/textContent';
 
 export default class ContentEditable extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      text: this.props.contentBlock.text,
-      inlineProperties: this.props.contentBlock.inlineProperties,
-      selectionOffsets: {
-        start: 0,
-        end: 0,
-      },
       focused: false,
     };
 
@@ -32,15 +26,9 @@ export default class ContentEditable extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.focused) {
-      setSelectionByOffsets(this.contentEditable, this.state.selectionOffsets.start, this.state.selectionOffsets.end);
+    if (this.props.id === this.props.activeContentItem) {
+      setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
     }
-  }
-
-  updateSelectionOffsets() {
-    this.setState({
-      selectionOffsets: getSelectionOffsets(this.contentEditable),
-    });
   }
 
   // Prevent users from inserting newlines in the contenteditable field.
@@ -49,54 +37,39 @@ export default class ContentEditable extends Component {
     if (blacklist.indexOf(e.key) >= 0) {
       // if the pressed key is in the blacklist, don't execute the event
       e.preventDefault();
-      console.log(getSelectionOffsets(this.contentEditable)); // #TODO remove debug
     }
-    // else, proceed as normal
 
-    // keep caret position in the state
-    this.updateSelectionOffsets();
+    this.props.updateSelection(getSelectionOffsets(this.contentEditable));
   }
 
   // Map state to contenteditable innerHTML.
   handleInput() {
     const text = getFilteredTextContent(this.contentEditable);
     const selectionOffsets = getSelectionOffsets(this.contentEditable);
-    // get copy of current inlineProperties
-    const inlineProperties = this.state.inlineProperties.slice();
-    const amount = text.length - this.state.text.length;
 
-    this.updateSelectionOffsets();
+    const inlineProperties = [].concat(this.props.contentItem.inlineProperties);
+    const amount = text.length - this.props.contentItem.text.length;
 
-    console.log(amount);
-    console.log(JSON.stringify(inlineProperties));
+    this.props.updateSelection(getSelectionOffsets(this.contentEditable));
 
     updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
 
-    console.log(JSON.stringify(inlineProperties));
-
-    this.setState({
-      inlineProperties,
-      text,
-    });
+    this.props.updateContentBlock(this.props.id, text, inlineProperties);
   }
 
   handleFocus() {
-    this.updateSelectionOffsets();
-    this.setState({
-      focused: true,
-    });
+    this.props.setActiveContentBlock(this.props.id);
+    this.props.updateSelection(getSelectionOffsets(this.contentEditable));
   }
 
   handleBlur() {
-    this.updateSelectionOffsets();
-    this.setState({
-      focused: false,
-    });
+    this.props.setActiveContentBlock(null);
+    this.props.updateSelection(getSelectionOffsets(this.contentEditable));
   }
 
   handleMenuButtonClick(inlinePropertyType) {
     // get copy of current inlineProperties
-    const inlineProperties = this.state.inlineProperties.slice();
+    const inlineProperties = [].concat(this.props.contentItem.inlineProperties);
     // get current selection
     const selectionOffsets = getSelectionOffsets(this.contentEditable);
     // create new inlineProperty object
@@ -111,12 +84,10 @@ export default class ContentEditable extends Component {
 
     // set the new inlineProperties array in the state
     // and move the caret to the end of the new inlineProperty
-    this.setState({
-      inlineProperties,
-      seletionOffsets: {
-        start: selectionOffsets.end,
-        end: selectionOffsets.end,
-      },
+    this.props.updateContentBlock(this.props.id, this.props.contentItem.text, inlineProperties);
+    this.props.updateSelection({
+      start: selectionOffsets.end,
+      end: selectionOffsets.end,
     });
   }
 
@@ -162,7 +133,10 @@ export default class ContentEditable extends Component {
             onKeyPress={this.handleKeyPress}
             onInput={this.handleInput}
             dangerouslySetInnerHTML={{
-              __html: getHTMLStringFromInlinePropertiesAndText(this.state.inlineProperties, this.state.text),
+              __html: getHTMLStringFromInlinePropertiesAndText(
+                this.props.contentItem.inlineProperties,
+                this.props.contentItem.text,
+              ),
             }}
             placeholder="Type something..."
           />
@@ -171,3 +145,13 @@ export default class ContentEditable extends Component {
     );
   }
 }
+
+ContentEditable.propTypes = {
+  setActiveContentBlock: PropTypes.func.isRequired,
+  updateContentBlock: PropTypes.func.isRequired,
+  activeContentItem: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  updateSelection: PropTypes.func.isRequired,
+  contentItem: PropTypes.objectOf(Object).isRequired,
+  selectionOffsets: PropTypes.objectOf(Object).isRequired,
+};

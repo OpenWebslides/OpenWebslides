@@ -22,9 +22,7 @@ class Slide extends Component {
     if (!this.props.isFullscreen) {
       // note: 'sc' == 'slideContainer'
       // get the slideContainer size wrapper element
-      const scSizeElement = this.slideContainer.getElementsByClassName(
-        'c_slide-container__size',
-      )[0];
+      const scSizeElement = this.slideContainer.getElementsByClassName('c_slide-container__size')[0];
 
       // remove sizing that might have been set by a previous call of this function
       scSizeElement.removeAttribute('style');
@@ -49,11 +47,8 @@ class Slide extends Component {
 
       // get the computed font size of the container, multiply it by the scaling factor,
       // and set it on the size wrapper element so that it will scale to fit its container
-      const scComputedFontSize = window.getComputedStyle(this.slideContainer,
-        null).getPropertyValue('font-size');
-      const scComputedFontSizeFloat = parseFloat(
-        scComputedFontSize.replace('px', ''),
-      );
+      const scComputedFontSize = window.getComputedStyle(this.slideContainer, null).getPropertyValue('font-size');
+      const scComputedFontSizeFloat = parseFloat(scComputedFontSize.replace('px', ''));
       scSizeElement.style.fontSize = `${scComputedFontSizeFloat * factor}px`;
 
       // (Note: this only works because we use exclusively em and % units, allowing
@@ -65,11 +60,14 @@ class Slide extends Component {
   render() {
     return (
       <div
-        className={`c_slide-container c_slide-container--${this.props.cssIdentifier} ${this.props.isFullscreen ? 'c_slide-container--fullscreen' : ''}`}
+        className={`c_slide-container c_slide-container--${this.props.cssIdentifier} ${this.props.isFullscreen
+          ? 'c_slide-container--fullscreen'
+          : ''}`}
         ref={slideContainer => {
           this.slideContainer = slideContainer;
         }}
       >
+
         <div className="c_slide-container__size">
           <div className="c_slide-container__wrapper">
             <div className="c_slide-container__content">

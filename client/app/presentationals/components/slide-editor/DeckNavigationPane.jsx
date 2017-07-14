@@ -12,7 +12,9 @@ export default class DeckNavigationPane extends Component {
   }
 
   handleAddSlide() {
-    this.props.addSlide(this.props.slideSequence);
+    const slideId = `${this.props.activeDeckId}-${this.props.slideSequence}`;
+    console.log(slideId);
+    this.props.addSlide(slideId);
   }
 
   handleDeleteSlide(selectedSlideId) {
@@ -27,20 +29,13 @@ export default class DeckNavigationPane extends Component {
     if (!_.isEmpty(this.props.slides)) {
       const slideComponents = convertToReact(this.props.slides);
       return (
-        <div
-          className={`c_deck-navigator c_deck-navigator--${this.props.cssIdentifier}`}
-        >
+        <div className={`c_deck-navigator c_deck-navigator--${this.props.cssIdentifier}`}>
           <div className="c_deck-navigator__wrapper">
             <ol className="o_list c_deck-navigator__list">
-              {slideComponents.map(slide => (
-                <li
-                  className="o_list__item c_deck-navigator__item"
-                  key={slide.key}
-                >
+              {slideComponents.map(slide =>
+                <li className="o_list__item c_deck-navigator__item" key={slide.key}>
                   <div className="o_list__item__wrapper c_deck-navigator__item__wrapper">
-                    <button
-                      onClick={() => this.handleDeleteSlide(slide.props.id)}
-                    >
+                    <button onClick={() => this.handleDeleteSlide(slide.props.id)}>
                       Delete
                     </button>
                     <button
@@ -51,14 +46,11 @@ export default class DeckNavigationPane extends Component {
                       {slide}
                     </button>
                   </div>
-                </li>
-              ))}
+                </li>,
+              )}
             </ol>
             <p className="c_deck-navigator__controls">
-              <button
-                onClick={this.handleAddSlide}
-                className="c_deck-navigator__add-button o_action o_action--add"
-              >
+              <button onClick={this.handleAddSlide} className="c_deck-navigator__add-button o_action o_action--add">
                 Add slide
               </button>
             </p>
@@ -73,6 +65,7 @@ export default class DeckNavigationPane extends Component {
 
 DeckNavigationPane.propTypes = {
   cssIdentifier: PropTypes.string,
+  activeDeckId: PropTypes.number,
   addSlide: PropTypes.func.isRequired,
   setActiveSlide: PropTypes.func.isRequired,
   deleteSlideWithContent: PropTypes.func.isRequired,
@@ -83,5 +76,6 @@ DeckNavigationPane.propTypes = {
 DeckNavigationPane.defaultProps = {
   cssIdentifier: 'default',
   slideSequence: null,
+  activeDeckId: null,
   slides: null,
 };
