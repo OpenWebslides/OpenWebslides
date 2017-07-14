@@ -11,26 +11,26 @@
   }
 
   .l_main {
-    @include inkgrid-row (false, false);
-
     &__item {
-      @include inkgrid-col (false, false);
-      @include inkgrid-col__parts (1);
+      // The
+      @include inkgrid-col__gutter($spacing--site__v, false);
 
       // Vertically fill the viewport.
-      height: 100vh;
+      height: calc(100vh - #{$site__header-height} - #{$spacing--site__v * 2});
       // Leave some space for the header.
-      padding-top: $site__header-height;
-      // Padding shouldn't influence total height.
-      box-sizing: border-box;
+      margin-top: $site__header-height + $spacing--site__v;
 
-      // Display items next to each other; determine width based on amount of siblings.
-      // Note: this is just setting a sensible default; most pages will need custom widths for their main items.
-      @for $i from 1 through 5 { // Up to five siblings are supported; increase this number if more are necessary.
-        &:first-child:nth-last-child(#{$i}),
-        &:first-child:nth-last-child(#{$i}) ~ .l_main__item {
-          @include inkgrid-col__parts ($i);
-        }
+      // Frame for position: absolute; on children.
+      position: relative;
+
+      &__wrapper {
+        @include position-absolute-fill;
+
+        left: $spacing--site__h / 2;
+        right: $spacing--site__h / 2;
+
+        // Add scrollbar if content doesn't fit on the screen.
+        overflow-y: auto;
       }
     }
   }
