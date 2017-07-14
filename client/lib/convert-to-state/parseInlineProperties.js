@@ -1,7 +1,6 @@
-// @flow
 const SUPPORTED_PROPERTIES = ['EM', 'STRONG'];
 
-export default function addInlineProperties(nodes: NodeList<Node>) {
+export default function addInlineProperties(nodes) {
   const inlinePropertyState = [];
 
   const inlinePropertyNodes = Array.from(nodes);
@@ -17,8 +16,10 @@ export default function addInlineProperties(nodes: NodeList<Node>) {
     } else {
       inlinePropertyState.push({
         type: node.nodeName,
-        startsAtChar: charOffset,
-        endsAtChar,
+        offSets: {
+          start: charOffset,
+          end: endsAtChar,
+        },
       });
 
       charOffset = endsAtChar;

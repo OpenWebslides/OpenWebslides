@@ -1,9 +1,19 @@
 import Title from './Title';
-import TextBlock from './TextBlock';
-import ContentGroup from './ContentGroup';
+import Paragraph from './Paragraph';
+import Section from './Section';
+import Aside from './Aside';
+import Iframe from './Iframe';
+import Image from './Image';
+import List from './List';
+import ListItem from './ListItem';
 
 export default {
-  H1: Title,
-  P: TextBlock,
-  SECTION: ContentGroup,
+  Title,
+  Paragraph,
+  Section,
+  Aside,
+  Iframe,
+  List,
+  ListItem,
+  Image,
 };
