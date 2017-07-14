@@ -3,12 +3,9 @@ import { FETCH_DECK_CONTENT } from 'actions/deckActions';
 
 import convertToPrint from 'lib/convert-to-print';
 
-import { flamesDeck } from '../constants/exampleDecks';
-
-
 function* doFetchDeck() {
   try {
-    const state = yield convertToPrint(flamesDeck);
+    const state = yield convertToPrint();
     yield put({ type: 'FETCH_DECK_CONTENT_SUCCESS', payload: state });
   } catch (e) {
     console.log(e);
