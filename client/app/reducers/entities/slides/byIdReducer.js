@@ -1,11 +1,12 @@
 import _ from 'lodash';
+import Immutable from 'seamless-immutable';
 
 import { ADD_SLIDE, DELETE_SLIDE } from 'actions/slideActions';
 import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
 
 import { ADD_CONTENT_BLOCK } from 'actions/contentBlockActions';
 
-const initialState = {};
+const initialState = Immutable({});
 
 function byId(state = initialState, action) {
   switch (action.type) {
@@ -18,6 +19,14 @@ function byId(state = initialState, action) {
           contentItemIds: [],
         },
       };
+
+    case ADD_CONTENT_BLOCK:
+      console.log(state[action.payload.slideId]);
+      return Immutable.merge(state, {
+        [action.payload.slideId]: {
+          contentItemIds: state[action.payload.slideId].contentItemIds.concat(action.payload.contentItemId),
+        },
+      });
 
     case DELETE_SLIDE:
       return _.omit(state, action.payload.slideId);

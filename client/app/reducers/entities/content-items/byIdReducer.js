@@ -11,6 +11,19 @@ function byId(state = initialState, action) {
     case FETCH_DECK_SUCCESS:
       return action.payload.contentItems;
 
+    case ADD_CONTENT_BLOCK:
+      return Immutable.merge(state, {
+        [action.payload.contentItemId]: {
+          text: '',
+          contentItemType: action.payload.contentItemType,
+          id: action.payload.contentItemId,
+          inlineProperties: [],
+        },
+      });
+
+    case DELETE_CONTENT_BLOCKS:
+      return _.omit(state, action.payload.contentBlocksToDelete);
+
     case UPDATE_CONTENT_BLOCK:
       return Immutable.merge(
         state,
