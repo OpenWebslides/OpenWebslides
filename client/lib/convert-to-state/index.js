@@ -1,7 +1,6 @@
-// @flow
 import parseContent from './parseContent';
 
-export default function convertToState(HTMLString: string) {
+export default function convertToState(deckId, HTMLString) {
   const parser = new DOMParser();
   const document = parser.parseFromString(HTMLString, 'text/html');
 
@@ -13,5 +12,5 @@ export default function convertToState(HTMLString: string) {
     );
   }
 
-  return parseContent(slideNodes);
+  return parseContent(deckId, slideNodes);
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
 
-export default function Title(props) {
+export default function Paragraph(props) {
   return (
-    <h1>
+    <p>
       <ContentEditableContainer {...props} />
-    </h1>
+    </p>
   );
 }
