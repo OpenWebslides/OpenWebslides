@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 
-import ContentBlockEditor from './ContentBlockEditor';
+import ContentItem from './ContentItem';
 
 function mapStateToProps(state, props) {
   return {
-    contentType: state.entities.contentItems[props.id].contentType,
+    contentItem: state.entities.contentItems[props.id],
   };
 }
 
-export default connect(mapStateToProps)(ContentBlockEditor);
+export default connect(mapStateToProps)(ContentItem);

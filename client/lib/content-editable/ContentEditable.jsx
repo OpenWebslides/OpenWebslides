@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
-import {
-  getSelectionOffsets,
-  setSelectionByOffsets,
-} from 'lib/content-editable/selectionOffsets';
+import { getSelectionOffsets, setSelectionByOffsets } from 'lib/content-editable/selectionOffsets';
 
 import {
   inlinePropertyTypes,
@@ -36,11 +33,7 @@ export default class ContentEditable extends Component {
 
   componentDidUpdate() {
     if (this.state.focused) {
-      setSelectionByOffsets(
-        this.contentEditable,
-        this.state.selectionOffsets.start,
-        this.state.selectionOffsets.end,
-      );
+      setSelectionByOffsets(this.contentEditable, this.state.selectionOffsets.start, this.state.selectionOffsets.end);
     }
   }
 
@@ -77,11 +70,7 @@ export default class ContentEditable extends Component {
     console.log(amount);
     console.log(JSON.stringify(inlineProperties));
 
-    updateInlinePropertiesAfterInputAtIndex(
-      inlineProperties,
-      selectionOffsets.start,
-      amount,
-    );
+    updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
 
     console.log(JSON.stringify(inlineProperties));
 
@@ -134,9 +123,7 @@ export default class ContentEditable extends Component {
   render() {
     return (
       <span
-        className={`o_content-editable ${this.state.focused
-          ? 'has_focus'
-          : ''}`}
+        className={`o_content-editable ${this.state.focused ? 'has_focus' : ''}`}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
       >
@@ -146,8 +133,7 @@ export default class ContentEditable extends Component {
               <button
                 className="o_content-editable__menu-button o_content-editable__menu-button--id_strong"
                 tabIndex="-1"
-                onClick={() =>
-                  this.handleMenuButtonClick(inlinePropertyTypes.STRONG)}
+                onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.STRONG)}
               >
                 <span className="o_content-editable__menu-text">
                   Strong
@@ -158,8 +144,7 @@ export default class ContentEditable extends Component {
               <button
                 className="o_content-editable__menu-button o_content-editable__menu-button--id_em"
                 tabIndex="-1"
-                onClick={() =>
-                  this.handleMenuButtonClick(inlinePropertyTypes.EMPHASIS)}
+                onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.EMPHASIS)}
               >
                 <span className="o_content-editable__menu-text">
                   Emphasis
@@ -177,10 +162,7 @@ export default class ContentEditable extends Component {
             onKeyPress={this.handleKeyPress}
             onInput={this.handleInput}
             dangerouslySetInnerHTML={{
-              __html: getHTMLStringFromInlinePropertiesAndText(
-                this.state.inlineProperties,
-                this.state.text,
-              ),
+              __html: getHTMLStringFromInlinePropertiesAndText(this.state.inlineProperties, this.state.text),
             }}
             placeholder="Type something..."
           />
