@@ -1,14 +1,11 @@
 import { call, put } from 'redux-saga/effects';
 import faker from 'faker';
 
-import {
-  REQUEST_DECK_LIST_SUCCESS,
-  REQUEST_DECK_LIST_FAILURE,
-} from 'actions/deckManagementActions';
+import { REQUEST_DECK_LIST_SUCCESS, REQUEST_DECK_LIST_FAILURE } from 'actions/deckManagementActions';
 
 import requestUserDecksCall from 'api/requestUserDecksCall';
 
-import { requestDeckListFlow } from 'sagas/deckManagement/requestDeckListSaga';
+import { requestDeckListFlow } from 'sagas/deck-management/requestDeckListSaga';
 
 function fakeResponseElement() {
   const id = faker.random.number();
@@ -57,9 +54,7 @@ describe('Request for deck list Saga', () => {
       const generator = requestDeckListFlow({
         meta: 'someID',
       });
-      expect(generator.next().value).toEqual(
-        call(requestUserDecksCall, 'someID'),
-      );
+      expect(generator.next().value).toEqual(call(requestUserDecksCall, 'someID'));
 
       const resultListOfDecks = [];
 
@@ -85,13 +80,9 @@ describe('Request for deck list Saga', () => {
       const generator = requestDeckListFlow({
         meta: 'someID',
       });
-      expect(generator.next().value).toEqual(
-        call(requestUserDecksCall, 'someID'),
-      );
+      expect(generator.next().value).toEqual(call(requestUserDecksCall, 'someID'));
 
-      expect(
-        generator.throw(new Error('Received undefined list.')).value,
-      ).toEqual(
+      expect(generator.throw(new Error('Received undefined list.')).value).toEqual(
         put({
           type: REQUEST_DECK_LIST_FAILURE,
           payload: {

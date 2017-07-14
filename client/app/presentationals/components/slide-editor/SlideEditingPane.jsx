@@ -93,7 +93,6 @@ SlideEditingPane.propTypes = {
   addContentBlock: PropTypes.func.isRequired,
   contentBlockSequence: PropTypes.number,
   cssIdentifier: PropTypes.string,
-  updateSlide: PropTypes.func.isRequired,
 };
 
 SlideEditingPane.defaultProps = {
