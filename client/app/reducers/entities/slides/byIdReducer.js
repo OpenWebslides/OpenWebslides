@@ -1,9 +1,6 @@
 import _ from 'lodash';
 
-import {
-  ADD_SLIDE,
-  DELETE_SLIDE,
-} from 'actions/slideActions';
+import { ADD_SLIDE, DELETE_SLIDE } from 'actions/slideActions';
 import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
 
 import { ADD_CONTENT_BLOCK } from 'actions/contentBlockActions';
@@ -15,8 +12,10 @@ function byId(state = initialState, action) {
     case ADD_SLIDE:
       return {
         ...state,
-        [action.payload.slideSequence]: {
-          content: [],
+        [action.payload.slideId]: {
+          id: action.payload.slideId,
+          level: '1',
+          contentItemIds: [],
         },
       };
 

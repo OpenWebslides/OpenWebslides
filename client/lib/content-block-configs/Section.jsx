@@ -14,5 +14,5 @@ export default function Section(props) {
 }
 
 Section.propTypes = {
-  contentItem: PropTypes.ObjectOf(Object).isRequired,
+  contentItem: PropTypes.objectOf(Object).isRequired,
 };

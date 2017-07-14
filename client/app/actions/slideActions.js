@@ -15,10 +15,10 @@ export function updateSlide(id, data) {
   };
 }
 
-export function addSlide(slideSequence) {
+export function addSlide(slideId) {
   return {
     type: ADD_SLIDE,
-    payload: { slideSequence },
+    payload: { slideId },
   };
 }
 

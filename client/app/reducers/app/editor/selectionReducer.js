@@ -1,21 +1,17 @@
 import Immutable from 'seamless-immutable';
 
-import { UPDATE_SELECTION } from 'actions/deckActions';
+import { UPDATE_SELECTION } from 'actions/contentBlockActions';
 
 const initialState = Immutable({
-  selectionOffsets: {
-    start: 0,
-    end: 0,
-  },
+  start: 0,
+  end: 0,
 });
 
-export default function contentItems(state = initialState, action) {
+export default function selectionOffsets(state = initialState, action) {
   switch (action.type) {
     case UPDATE_SELECTION:
-      return {
-        ...state,
-        selectionOffsets: action.payload.selectionOffsets,
-      };
+      console.log(action);
+      return Immutable.merge(state, action.payload.selectionOffsets, { deep: true });
 
     default:
       return state;

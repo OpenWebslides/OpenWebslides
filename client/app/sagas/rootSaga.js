@@ -9,9 +9,9 @@ import deleteSlideSaga from 'sagas/deleteSlideSaga';
 import oauthSigninSaga from 'sagas/signin/oauthSigninSaga';
 import emailSigninSaga from 'sagas/signin/emailSigninSaga';
 
-import requestDeckListSaga from 'sagas/deckManagement/requestDeckListSaga';
-import createDeckSaga from 'sagas/deckManagement/createDeckSaga';
-import deleteDeckSaga from 'sagas/deckManagement/deleteDeckSaga';
+import requestDeckListSaga from 'sagas/deck-management/requestDeckListSaga';
+import createDeckSaga from 'sagas/deck-management/createDeckSaga';
+import deleteDeckSaga from 'sagas/deck-management/deleteDeckSaga';
 
 import updateDeckSaga from 'sagas/updateDeckSaga';
 
