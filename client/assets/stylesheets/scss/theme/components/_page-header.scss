@@ -5,6 +5,7 @@
 .c_page-header {
   &__wrapper {
     @include color--contrast (true);
+    @include padding($spacing--small__v, $site__item-padding__h);
 
     // Container has a fixed height; make sure the background-color completely fills it.
     @include position-absolute-fill;
