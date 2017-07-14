@@ -1,3 +1,5 @@
+import Immutable from 'seamless-immutable';
+
 import { img } from 'constants/printViewOptions';
 
 const initialState = Immutable({
