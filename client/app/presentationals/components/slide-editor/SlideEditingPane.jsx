@@ -89,7 +89,7 @@ export default class SlideEditingPane extends Component {
 
 SlideEditingPane.propTypes = {
   activeContentBlock: PropTypes.objectOf(Object),
-  activeSlideId: PropTypes.number,
+  activeSlideId: PropTypes.string,
   addContentBlock: PropTypes.func.isRequired,
   contentBlockSequence: PropTypes.number,
   cssIdentifier: PropTypes.string,
