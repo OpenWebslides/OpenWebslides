@@ -1,3 +1,16 @@
 // ----------------------------
 // Overrides for framework maps
 // ----------------------------
+
+// Breakpoints
+
+// Font sizes
+
+$map--breakpoints_to_font-sizes: (
+        false: 90%, // base value, no breakpoint
+        $breakpoint--small: 100%,
+        //$breakpoint--average: 110%,
+        //$breakpoint--large: 120%,
+        //$breakpoint--x-large: 140%,
+        //$breakpoint--xx-large: 160%,
+) !default;
