@@ -24,11 +24,7 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
   const prefs = state.app.printView.prefs;
   switch (contentItemObject.contentItemType) {
     case TITLE:
-      return React.createElement(
-        levelToTitle[currentLevel],
-        null,
-        contentItemObject.text,
-      );
+      return React.createElement(levelToTitle[currentLevel], null, contentItemObject.text);
     case PARAGRAPH:
       return React.createElement('p', null, contentItemObject.text);
     case SECTION:
@@ -38,15 +34,11 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
       });
       return res;
     case LIST:
-      const childrenObjects = contentItemObject.childItemIds.map(
-        itemId => state.entities.contentItems.byId[itemId],
-      );
+      const childrenObjects = contentItemObject.childItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
       return React.createElement(
         contentItemObject.ordered ? 'ol' : 'ul',
         null,
-        childrenObjects.map(child =>
-          contentItemObjectToReact(state, child, currentLevel),
-        ),
+        childrenObjects.map(child => contentItemObjectToReact(state, child, currentLevel)),
       );
     case LIST_ITEM:
       return React.createElement('li', null, contentItemObject.text);
@@ -55,18 +47,13 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
     case IFRAME:
       return iframeToReact(contentItemObject, prefs.iframe);
     default:
-      return React.createElement(
-        'p',
-        null,
-        `Unsupported element: ${contentItemObject.contentItemType}`,
-      );
+      return React.createElement('p', null, `Unsupported element: ${contentItemObject.contentItemType}`);
   }
 }
 
 function slideObjectToReact(state, slideObject) {
-  const childrenObjects = slideObject.contentItemIds.map(
-    itemId => state.entities.contentItems.byId[itemId],
-  );
+  debugger;
+  const childrenObjects = slideObject.contentItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
   const res = childrenObjects.reduce((arr, currentObject) => {
     const lvl = isNaN(slideObject.level) ? 1 : parseInt(slideObject.level, 10);
     const res = arr.concat(contentItemObjectToReact(state, currentObject, lvl));
@@ -79,8 +66,7 @@ function convertToPrint(state, deckId) {
   const slideIds = state.entities.decks.byId[deckId].slideIds;
   const slideObjects = slideIds.map(id => state.entities.slides.byId[id]);
   const res = slideObjects.reduce(
-    (arr, currentSlideObject) =>
-      arr.concat(slideObjectToReact(state, currentSlideObject)),
+    (arr, currentSlideObject) => arr.concat(slideObjectToReact(state, currentSlideObject)),
     [],
   );
   return res;
