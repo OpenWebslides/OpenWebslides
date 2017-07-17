@@ -3,30 +3,23 @@ import PropTypes from 'prop-types';
 
 import convertToPrint from 'lib/convert-to-print/index';
 
-import { flamesState } from 'constants/exampleState';
+import { jasperState } from 'constants/exampleState';
 
 export default class PrintView extends Component {
   componentDidMount() {
     const id = this.props.id;
-    if (
-      !(
-        this.props.entities.decks.byId.id &&
-        this.props.entities.decks.byId.id.slides
-      )
-    ) {
+    if (!(this.props.entities.decks.byId.id && this.props.entities.decks.byId.id.slides)) {
       this.props.fetchDeckContent(id);
     }
   }
 
   render() {
-    const state = flamesState; // TODO: only until rein parser works
+    const state = jasperState; // TODO: only until rein parser works
     let elements;
     // if (state.entities.decks.byId.id && state.entities.decks.byId.id.slides) {
     //   elements = convertToPrint(state, this.props.id);
     // }
-
     elements = convertToPrint(state, this.props.id);
-    debugger;
     return (
       <div>
         {elements}
