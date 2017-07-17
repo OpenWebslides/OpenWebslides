@@ -1,10 +1,14 @@
 /* eslint-disable no-case-declarations */
 import React from 'react';
-
 import cit from 'constants/contentItemTypes';
 import ipt from 'constants/itemPropertyTypes';
 
-const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE } = cit;
+// converters:
+
+import imageToReact from './convert-items/imageToReact';
+import iframeToReact from './convert-items/iframeToReact';
+
+const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE, IFRAME } = cit;
 const { EM, STRONG } = ipt;
 
 const levelToTitle = {
@@ -17,6 +21,7 @@ const levelToTitle = {
 };
 
 function contentItemObjectToReact(state, contentItemObject, currentLevel) {
+  const prefs = state.app.printView.prefs;
   switch (contentItemObject.contentItemType) {
     case TITLE:
       return React.createElement(
@@ -46,11 +51,9 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
     case LIST_ITEM:
       return React.createElement('li', null, contentItemObject.text);
     case IMAGE:
-      return React.createElement(
-        'img',
-        { src: contentItemObject.src, alt: contentItemObject.alt },
-        null,
-      );
+      return imageToReact(contentItemObject, prefs.image);
+    case IFRAME:
+      return iframeToReact(contentItemObject, prefs.iframe);
     default:
       return React.createElement(
         'p',
