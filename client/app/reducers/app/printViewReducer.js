@@ -1,7 +1,18 @@
 import Immutable from 'seamless-immutable';
 
-import { img } from 'constants/printViewOptions';
+import { imgOptions } from 'constants/printViewOptions';
 
 const initialState = Immutable({
-  images: img.IMAGES_AND_TEXT,
+  prefs: {
+    images: imgOptions.IMAGES_AND_TEXT,
+  },
 });
+
+function printViewReducer(state = initialState, action) {
+  switch (action.type) {
+    default:
+      return state;
+  }
+}
+
+export default printViewReducer;
