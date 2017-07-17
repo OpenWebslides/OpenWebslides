@@ -107,9 +107,6 @@ export function updateInlinePropertiesAfterInputAtIndex(inlineProperties, caretP
       // if the original caret position lies inside the inlineProperty
       else if (inlineProperties[i].offSets.end >= origPosition) {
         // move only the end by $amount
-
-        console.log(inlineProperties[i].offSets)
-        console.log(inlineProperties[i])
         inlineProperties[i].offSets.end += amount;
       }
     }
@@ -195,7 +192,6 @@ export function getHTMLStringFromInlinePropertiesAndText(inlineProperties, text)
         inlinePropertyIndex < inlineProperties.length
       ) {
         // check if the next inlineProperty starts at this charIndex
-        console.log(inlineProperties);
         if (inlineProperties[inlinePropertyIndex].offSets.start === charIndex) {
           // if so, save it as the current inlineProperty
           inlineProperty = inlineProperties[inlinePropertyIndex];
