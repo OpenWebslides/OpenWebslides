@@ -69,6 +69,7 @@
     "redux": "^3.6.0",
     "redux-form": "^6.5.0",
     "redux-saga": "^0.14.4",
+    "reselect": "^3.0.1",
     "sane-email-validation": "^1.1.0",
     "seamless-immutable": "^7.1.2",
     "shortid": "^2.2.8",
