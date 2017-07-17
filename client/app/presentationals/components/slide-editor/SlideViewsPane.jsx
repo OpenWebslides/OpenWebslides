@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SlideLiveViewContainer from 'containers/slide-editor/SlideLiveViewContainer';
+import SlideDebugViewContainer from 'containers/slide-editor/SlideDebugViewContainer';
 // import ModeMenu from './ViewsMenu';
 
 function SlideViewsPane(props) {
@@ -13,7 +14,7 @@ function SlideViewsPane(props) {
         </div>*/}
         <div className="c_editor-views-panel__views-list">
           <div className="c_editor-views-panel__views-item">
-            <SlideLiveViewContainer />
+            <SlideDebugViewContainer />
           </div>
           {/* #TODO
           <div className="c_editor-views-panel__views-item">
