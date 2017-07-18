@@ -1,0 +1,10 @@
+// -----------------
+// Code block object
+// -----------------
+
+.o_code-block {
+  &__wrapper {
+    max-height: 40em;
+    overflow: auto;
+  }
+}
