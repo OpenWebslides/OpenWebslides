@@ -6,12 +6,12 @@ import ContentItemContainer from 'lib/content-item/ContentItemContainer';
 export default function List(props) {
   const { contentItem } = props;
 
-  const listType = contentItem.ordered ? 'ol' : 'ul';
+  const ListType = contentItem.ordered ? 'ol' : 'ul';
 
   return (
-    <listType>
+    <ListType>
       {contentItem.childItemIds.map(id => <ContentItemContainer key={id} id={id} />)}
-    </listType>
+    </ListType>
   );
 }
 
