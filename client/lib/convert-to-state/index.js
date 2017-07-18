@@ -1,4 +1,4 @@
-import parseContent from './parseContent';
+import parseSlideNodes from './parseContent';
 
 export default function convertToState(deckId, HTMLString) {
   const parser = new DOMParser();
@@ -12,5 +12,5 @@ export default function convertToState(deckId, HTMLString) {
     );
   }
 
-  return parseContent(deckId, slideNodes);
+  return parseSlideNodes(deckId, slideNodes);
 }
