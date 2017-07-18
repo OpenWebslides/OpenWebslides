@@ -6,7 +6,11 @@ function SlideDebugView(props) {
     return (
       <div className={`c_editor-debug-view c_editor-debug-view--${props.cssIdentifier}`}>
         <div className="c_editor-debug-view__wrapper">
-          <pre><code>{JSON.stringify(props.nestedContentItems, null, 2)}</code></pre>
+          <div className="o_code-block">
+            <div className="o_code-block__wrapper">
+              <pre><code>{JSON.stringify(props.nestedContentItems, null, 2)}</code></pre>
+            </div>
+          </div>
         </div>
       </div>
     );
