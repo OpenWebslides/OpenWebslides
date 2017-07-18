@@ -1,4 +1,4 @@
-import parseSlideNodes from './parseContent';
+import parseSlideNodes from './parseSlideNodes';
 
 export default function convertToState(deckId, HTMLString) {
   const parser = new DOMParser();
