@@ -104,7 +104,7 @@
 
     // Lists
 
-        ul, ol
+        ul, ol, menu
         {
             // Override browser defaults & set single-direction top margins on lists.
             margin: 0;
@@ -115,7 +115,8 @@
         }
 
         li ul,
-        li ol
+        li ol,
+        li menu
         {
             // Nested lists should not have extra spacing.
             margin-top: 0;

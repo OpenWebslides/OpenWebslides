@@ -11,19 +11,17 @@ const exampleState = {
       emailConfirmed: 'confirming',
     },
     editor: {
-      activeDeck: 53,
+      activeDeckId: '53',
+      activeSlideId: '53-1',
+      activeContentItemId: null,
       selectionOffsets: {
         start: 0,
         end: 0,
       },
-      contentItems: {
-        active: null,
-        sequence: null,
-      },
-      slides: {
-        active: null,
-        sequence: null,
-      },
+      activeSlideViewTypes: [
+        'CONTENT',
+        'LIVE',
+      ],
     },
     feed: {
       listOfFeedNotifications: [],
@@ -45,10 +43,11 @@ const exampleState = {
   entities: {
     decks: {
       byId: {
-        53: {
-          id: 53,
+        '53': {
+          id: '53',
           slideIds: ['53-1', '53-2', '53-4', '53-5'],
-          metadata: {
+          slideSequence: 6,
+          meta: {
             authorId: 32,
             title: 'Test deck',
             description: 'a really nice deck',
@@ -60,8 +59,10 @@ const exampleState = {
       byId: {
         '53-1': {
           id: '53-1',
-          level: '1',
-          contentItemIds: [],
+          level: 1,
+          contentItemIds: ['53-1-0', '53-1-1', '53-1-2', '53-1-5'],
+          contentItemSequence: 8,
+          meta: {},
         },
       },
     },

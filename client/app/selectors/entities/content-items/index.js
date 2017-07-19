@@ -25,17 +25,17 @@ const nestChildItemsInsideContentItem = (contentItem, contentItemsById) => {
   return result;
 };
 
-// Get the contentItems by id object.
+// Get the contentItems.byId object.
 export const getContentItemsById = (state) => {
   return state.entities.contentItems.byId;
 };
 
-// Get the single contentItem that matches props.contentItemId.
-export const getContentItemById = (state, props) => {
-  return state.entities.contentItems.byId[props.contentItemId];
+// Get the single contentItem that matches $id.
+export const getContentItemById = (state, id) => {
+  return state.entities.contentItems.byId[id];
 };
 
-// Get the single contentItem that matches props.contentItemId, with its child contentItem objects nested inside it.
+// Get the single contentItem that matches $id, with its child contentItem objects nested inside it.
 export const getNestedContentItemObjectById = createSelector(
   [getContentItemsById, getContentItemById],
   (contentItemsById, contentItem) => {

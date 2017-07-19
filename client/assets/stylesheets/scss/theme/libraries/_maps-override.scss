@@ -14,3 +14,24 @@ $map--breakpoints_to_font-sizes: (
         //$breakpoint--x-large: 140%,
         //$breakpoint--xx-large: 160%,
 ) !default;
+
+// Font icons
+
+// Actions
+
+$map--actions_to_icons: (show: $fa-var-arrow-right,
+        add: $fa-var-plus,
+        edit: $fa-var-pencil,
+        trash: $fa-var-trash,
+        delete: $fa-var-remove,
+        save: $fa-var-save,
+        cancel: $fa-var-times,
+        back: $fa-var-arrow-left,
+        post: $fa-var-envelope,
+        read-more: $fa-var-chevron-right,
+        add-title: $fa-var-header,
+        add-paragraph: $fa-var-paragraph,
+        add-list: $fa-var-list,
+        add-image: $fa-var-image,
+        add-iframe: $fa-var-globe, // $fa-var-html5,
+) !default; // #TODO make test page
