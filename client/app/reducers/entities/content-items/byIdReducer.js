@@ -2,16 +2,17 @@ import _ from 'lodash';
 import Immutable from 'seamless-immutable';
 
 import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
-import { ADD_CONTENT_BLOCK, DELETE_CONTENT_BLOCKS, UPDATE_CONTENT_BLOCK } from 'actions/contentBlockActions';
+import { ADD_CONTENT_ITEM, DELETE_CONTENT_BLOCKS, UPDATE_CONTENT_BLOCK } from 'actions/contentBlockActions';
 
 const initialState = Immutable({});
 
 function byId(state = initialState, action) {
   switch (action.type) {
-    case FETCH_DECK_SUCCESS:
-      return action.payload.contentItems;
 
-    case ADD_CONTENT_BLOCK:
+    case FETCH_DECK_SUCCESS:
+      return action.payload.contentItemsById;
+
+    case ADD_CONTENT_ITEM:
       return Immutable.merge(state, {
         [action.payload.contentItemId]: {
           text: '',
@@ -35,6 +36,7 @@ function byId(state = initialState, action) {
         },
         { deep: true },
       );
+
     default:
       return state;
   }

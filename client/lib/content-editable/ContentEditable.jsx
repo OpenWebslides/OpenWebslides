@@ -13,12 +13,9 @@ import {
 
 import getFilteredTextContent from 'lib/content-editable/textContent';
 
-export default class ContentEditable extends Component {
+class ContentEditable extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      focused: false,
-    };
 
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleInput = this.handleInput.bind(this);
@@ -27,7 +24,7 @@ export default class ContentEditable extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.id === this.props.activeContentItem) {
+    if (this.props.contentItem.id === this.props.activeContentItemId) {
       setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
     }
   }
@@ -55,11 +52,11 @@ export default class ContentEditable extends Component {
 
     updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
 
-    this.props.updateContentBlock(this.props.id, text, inlineProperties);
+    this.props.updateContentBlock(this.props.contentItem.id, text, inlineProperties);
   }
 
   handleFocus() {
-    this.props.setActiveContentBlock(this.props.id);
+    this.props.setActiveContentBlock(this.props.contentItem.id);
     this.props.updateSelection(getSelectionOffsets(this.contentEditable));
   }
 
@@ -87,7 +84,7 @@ export default class ContentEditable extends Component {
 
     // set the new inlineProperties array in the state
     // and move the caret to the end of the new inlineProperty
-    this.props.updateContentBlock(this.props.id, this.props.contentItem.text, inlineProperties);
+    this.props.updateContentBlock(this.props.contentItem.id, this.props.contentItem.text, inlineProperties);
     this.props.updateSelection({
       start: selectionOffsets.end,
       end: selectionOffsets.end,
@@ -97,7 +94,7 @@ export default class ContentEditable extends Component {
   render() {
     return (
       <span
-        className={`o_content-editable ${this.state.focused ? 'has_focus' : ''}`}
+        className={`o_content-editable ${this.props.contentItem.id === this.props.activeContentItemId ? 'has_focus' : ''}`}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
       >
@@ -150,11 +147,16 @@ export default class ContentEditable extends Component {
 }
 
 ContentEditable.propTypes = {
+  contentItem: PropTypes.object.isRequired,
+  activeContentItemId: PropTypes.string,
+  selectionOffsets: PropTypes.object.isRequired,
   setActiveContentBlock: PropTypes.func.isRequired,
   updateContentBlock: PropTypes.func.isRequired,
-  activeContentItem: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
   updateSelection: PropTypes.func.isRequired,
-  contentItem: PropTypes.objectOf(Object).isRequired,
-  selectionOffsets: PropTypes.objectOf(Object).isRequired,
 };
+
+ContentEditable.defaultProps = {
+  activecontentItemId: null,
+};
+
+export default ContentEditable;

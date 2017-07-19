@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function SlideDebugView(props) {
-  if (props.activeSlide) {
+  if (props.nestedContentItems.length > 0) {
     return (
       <div className={`c_editor-debug-view c_editor-debug-view--${props.cssIdentifier}`}>
         <div className="c_editor-debug-view__wrapper">
@@ -16,17 +16,17 @@ function SlideDebugView(props) {
     );
   }
 
-  return <h1>Loading...</h1>;
+  return <p>Loading...</p>;
 }
 
 SlideDebugView.propTypes = {
   cssIdentifier: PropTypes.string,
-  activeSlide: PropTypes.objectOf(Object),
+  nestedContentItems: PropTypes.arrayOf(PropTypes.object),
 };
 
 SlideDebugView.defaultProps = {
   cssIdentifier: 'default',
-  activeSlide: null,
+  nestedContentItems: [],
 };
 
 export default SlideDebugView;

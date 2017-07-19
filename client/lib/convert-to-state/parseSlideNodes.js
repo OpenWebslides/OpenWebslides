@@ -1,14 +1,7 @@
-import contentItemTypes from 'constants/contentItemTypes';
+import { contentItemTypes } from 'constants/contentItemTypes';
 
+import { generateSlideId, generateContentItemId } from './generateIds';
 import parseInlineProperties from './parseInlineProperties';
-
-function generateContentItemId(slideId, sequenceValues) {
-  return `${slideId}-${sequenceValues.contentItemSequence}`;
-}
-
-function generateSlideId(deckId, sequenceValues) {
-  return `${deckId}-${sequenceValues.slideSequence}`;
-}
 
 function parseTextContent(textContent, trim = true) {
   if (trim) {
@@ -18,35 +11,33 @@ function parseTextContent(textContent, trim = true) {
   }
 }
 
-function parseContentItemNode(node, contentItems, slideId, sequenceValues) {
-  const { nodeName, children, textContent } = node;
-  const contentItemId = generateContentItemId(slideId, sequenceValues);
-  let contentItem = {
-    id: contentItemId,
-  };
-
-  // We increase this here because otherwise nested children contain a duplicate id.
-  sequenceValues.contentItemSequence += 1;
-
+function parseContentItemNode(node, slideId, contentItemSequence) {
   if (node.outerHTML === undefined) {
-    // No contentItem added; undo raising sequence value.
-    sequenceValues.contentItemSequence -= 1;
-    return -1;
+    return {
+      contentItemId: null,
+      contentItemsById: {},
+    };
   }
+
+  const { nodeName, children, textContent } = node;
+  const contentItemId = generateContentItemId(slideId, contentItemSequence);
+  let contentItem = { id: contentItemId };
+
+  const { contentItemIds: childItemIds, contentItemsById: childItemsById } = parseContentItemNodes(children, slideId, contentItemSequence + 1);
 
   switch (nodeName) {
     case 'SECTION':
       contentItem = {
         ...contentItem,
         contentItemType: contentItemTypes.SECTION,
-        childItemIds: parseContentItemNodes(children, contentItems, slideId, sequenceValues),
+        childItemIds: childItemIds,
       };
       break;
     case 'ASIDE':
       contentItem = {
         ...contentItem,
         contentItemType: contentItemTypes.ASIDE,
-        childItemIds: parseContentItemNodes(children, contentItems, slideId, sequenceValues),
+        childItemIds: childItemIds,
       };
       break;
     case 'H1':
@@ -75,7 +66,7 @@ function parseContentItemNode(node, contentItems, slideId, sequenceValues) {
         ...contentItem,
         contentItemType: contentItemTypes.LIST,
         ordered: true,
-        childItemIds: parseContentItemNodes(children, contentItems, slideId, sequenceValues),
+        childItemIds: childItemIds,
       };
       break;
     case 'UL':
@@ -83,7 +74,7 @@ function parseContentItemNode(node, contentItems, slideId, sequenceValues) {
         ...contentItem,
         contentItemType: contentItemTypes.LIST,
         ordered: false,
-        childItemIds: parseContentItemNodes(children, contentItems, slideId, sequenceValues),
+        childItemIds: childItemIds,
       };
       break;
     case 'LI':
@@ -110,62 +101,93 @@ function parseContentItemNode(node, contentItems, slideId, sequenceValues) {
       };
       break;
     default:
-      // No contentItem added; undo raising sequence value.
-      sequenceValues.contentItemSequence -= 1;
-      return -1;
+      return {
+        contentItemId: null,
+        contentItemsById: {},
+      };
   }
 
-  contentItems[contentItemId] = contentItem;
-  return contentItemId;
+  const contentItemsById = {
+    [contentItemId]: contentItem,
+    ...childItemsById,
+  };
+
+  return {
+    contentItemId,
+    contentItemsById,
+  };
 }
 
-function parseContentItemNodes(nodeList, contentItems, slideId, sequenceValues) {
+function parseContentItemNodes(nodeList, slideId, contentItemSequence) {
   let contentItemIds = [];
-  let contentItemId;
+  let contentItemsById = {};
+  let newContentItemId;
+  let newContentItemsById;
 
   Array.from(nodeList).forEach(node => {
-    contentItemId = parseContentItemNode(node, contentItems, slideId, sequenceValues);
-    if (contentItemId !== -1) {
-      contentItemIds.push(contentItemId);
+    ({ contentItemId: newContentItemId, contentItemsById: newContentItemsById } = parseContentItemNode(node, slideId, contentItemSequence));
+    if (newContentItemId !== null) {
+      contentItemIds.push(newContentItemId);
+      contentItemsById = {
+        ...contentItemsById,
+        ...newContentItemsById,
+      };
+      contentItemSequence += Object.keys(newContentItemsById).length;
     }
   });
 
-  return contentItemIds;
+  return {
+    contentItemIds,
+    contentItemsById,
+  }
 }
 
 export default function parseSlideNodes(deckId, nodes) {
-  const sequenceValues = {
-    slideSequence: 0,
-    contentItemSequence: 0,
-  };
-  const slides = {};
-  let contentItems = {};
+  const slidesById = {};
+  let contentItemsById = {};
+
+  let slideSequence = 0;
+  let slideId;
+
+  let newContentItemIds;
+  let newContentItemsById;
 
   // Return a deck with one empty slide when no existing slides are present
   if (nodes.length === 0) {
-    const slideId = generateSlideId(deckId, sequenceValues);
-    slides[slideId] = {
+    slideId = generateSlideId(deckId, slideSequence);
+    slidesById[slideId] = {
       id: slideId,
       meta: {},
+      level: 0,
       contentItemIds: [],
+      contentItemSequence: 0,
     };
-    sequenceValues.slideSequence += 1;
+    slideSequence += 1;
+  } else {
+    nodes.forEach(node => {
+      slideId = generateSlideId(deckId, slideSequence);
+      ({ contentItemIds: newContentItemIds, contentItemsById: newContentItemsById } = parseContentItemNodes(node.children, slideId, 0));
+
+      slidesById[slideId] = {
+        id: slideId,
+        meta: {},
+        level: 0, // #TODO
+        contentItemIds: newContentItemIds,
+        contentItemSequence: Object.keys(newContentItemsById).length,
+      };
+
+      contentItemsById = {
+        ...contentItemsById,
+        ...newContentItemsById,
+      };
+
+      slideSequence += 1;
+    });
   }
 
-  nodes.forEach(node => {
-    const slideId = generateSlideId(deckId, sequenceValues);
-    slides[slideId] = {
-      id: slideId,
-      meta: {},
-      contentItemIds: parseContentItemNodes(node.children, contentItems, slideId, sequenceValues),
-    };
-    sequenceValues.slideSequence += 1;
-    sequenceValues.contentItemSequence = 0;
-  });
-
   return {
-    slides,
-    contentItems,
-    ...sequenceValues,
+    slidesById,
+    contentItemsById,
+    slideSequence,
   };
 }

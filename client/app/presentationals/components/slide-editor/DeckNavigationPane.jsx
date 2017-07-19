@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
-import convertToReact from 'lib/convert-to-react/renderReadOnlySlides';
+import { generateSlideId } from 'lib/convert-to-state/generateIds';
+
+import SlideContainer from 'containers/slide-editor/SlideContainer';
 
 export default class DeckNavigationPane extends Component {
   constructor(props) {
@@ -12,12 +13,13 @@ export default class DeckNavigationPane extends Component {
   }
 
   handleAddSlide() {
-    const slideId = `${this.props.activeDeckId}-${this.props.slideSequence}`;
-    this.props.addSlide(slideId);
+    const slideId = generateSlideId(this.props.activeDeck.id, this.props.activeDeck.slideSequence);
+    console.log(this.props.activeDeck.slideSequence);
+    this.props.addSlide(this.props.activeDeck.id, slideId);
   }
 
   handleDeleteSlide(selectedSlideId) {
-    this.props.deleteSlideWithContent(selectedSlideId);
+    this.props.deleteSlideWithContent(this.props.activeDeck.id, selectedSlideId);
   }
 
   handleSetActiveSlide(selectedSlideId) {
@@ -25,24 +27,27 @@ export default class DeckNavigationPane extends Component {
   }
 
   render() {
-    if (!_.isEmpty(this.props.slides)) {
-      const slideComponents = convertToReact(this.props.slides);
+    if (this.props.activeDeck) {
       return (
         <div className={`c_deck-navigator c_deck-navigator--${this.props.cssIdentifier}`}>
           <div className="c_deck-navigator__wrapper">
             <ol className="o_list c_deck-navigator__list">
-              {slideComponents.map(slide =>
-                <li className="o_list__item c_deck-navigator__item" key={slide.key}>
+              {this.props.activeDeck.slideIds.map(slideId =>
+                <li className="o_list__item c_deck-navigator__item" key={slideId}>
                   <div className="o_list__item__wrapper c_deck-navigator__item__wrapper">
-                    <button onClick={() => this.handleDeleteSlide(slide.props.id)}>
-                      Delete
+                    <button
+                      onClick={() => this.handleSetActiveSlide(slideId)}
+                      className="c_deck-navigator__slide-button"
+                    >
+                      <SlideContainer id={slideId} />
                     </button>
                     <button
-                      key={slide.key}
-                      onClick={() => this.handleSetActiveSlide(slide.props.id)}
-                      className="c_deck-navigator__button"
+                      className="c_deck-navigator__delete-button o_action o_action--delete"
+                      onClick={() => this.handleDeleteSlide(slideId)}
                     >
-                      {slide}
+                      <span className="c_deck-navigator__delete-button__wrapper o_action__wrapper">
+                        Delete
+                      </span>
                     </button>
                   </div>
                 </li>,
@@ -58,23 +63,24 @@ export default class DeckNavigationPane extends Component {
       );
     }
 
-    return <div>Loading...</div>;
+    return <p>Loading...</p>;
   }
 }
 
 DeckNavigationPane.propTypes = {
   cssIdentifier: PropTypes.string,
-  activeDeckId: PropTypes.number,
+  activeDeck: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    slideIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    slideSequence: PropTypes.number,
+    meta: PropTypes.object,
+  }),
   addSlide: PropTypes.func.isRequired,
   setActiveSlide: PropTypes.func.isRequired,
   deleteSlideWithContent: PropTypes.func.isRequired,
-  slides: PropTypes.objectOf(Object),
-  slideSequence: PropTypes.number,
 };
 
 DeckNavigationPane.defaultProps = {
   cssIdentifier: 'default',
-  slideSequence: null,
-  activeDeckId: null,
-  slides: null,
+  activeDeck: null,
 };

@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import contentBlockConfigMap from 'lib/content-block-configs';
+import { contentItemTypesById } from 'constants/contentItemTypes';
 
 export default function ContentItem(props) {
   const { contentItem } = props;
-
-  const ContentBlockType = contentBlockConfigMap[contentItem.contentItemType];
-
-  return <ContentBlockType {...props} />;
+  const ContentItemType = contentItemTypesById[contentItem.contentItemType].component;
+  return <ContentItemType {...props} />;
 }
 
 ContentItem.propTypes = {
-  contentItem: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.object.isRequired,
 };

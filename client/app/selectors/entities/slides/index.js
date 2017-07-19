@@ -1,9 +1,9 @@
-// Get the slides by id object.
+// Get the slides.byId object.
 export const getSlidesById = (state) => {
   return state.entities.slides.byId;
 };
 
-// Get the single slide that matches props.slideId.
-export const getSlideById = (state, props) => {
-  return state.entities.slides.byId[props.slideId];
+// Get the single slide that matches $id.
+export const getSlideById = (state, id) => {
+  return state.entities.slides.byId[id];
 };
