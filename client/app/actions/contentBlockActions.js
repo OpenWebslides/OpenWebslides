@@ -1,5 +1,5 @@
 // Action types
-export const ADD_CONTENT_BLOCK = 'ADD_CONTENT_BLOCK';
+export const ADD_CONTENT_ITEM = 'ADD_CONTENT_ITEM';
 export const SET_ACTIVE_CONTENT_ITEM = 'SET_ACTIVE_CONTENT_ITEM';
 export const DELETE_CONTENT_BLOCKS = 'DELETE_CONTENT_BLOCKS';
 
@@ -35,9 +35,9 @@ export function deleteContentBlocks(contentBlocksIds) {
   };
 }
 
-export function addContentBlock(contentItemId, contentItemType, slideId) {
+export function addContentItem(contentItemId, contentItemType, slideId) {
   return {
-    type: ADD_CONTENT_BLOCK,
+    type: ADD_CONTENT_ITEM,
     payload: { contentItemId, contentItemType, slideId },
   };
 }

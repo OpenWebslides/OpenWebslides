@@ -158,5 +158,5 @@
   // way around (calculating the font-size from a given height) because we will be resizing the slide to fit its
   // container anyway, making the 'actual' size of a slide irrelevant. By doing it this way, we only resize once
   // instead of twice, which simplifies things when rendering & debugging.
-  $slide__number-of-plain-text-lines: 10 !default;
+  $slide__number-of-plain-text-lines: 12 !default;
   $slide__base-line-height: $line-height--base !default;

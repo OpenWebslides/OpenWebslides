@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import DeckNavigationPaneContainer from 'containers/slide-editor/DeckNavigationPaneContainer';
-import SlideEditingPaneContainer from 'containers/slide-editor/SlideEditingPaneContainer';
+import SlideEditingPane from 'presentationals/components/slide-editor/SlideEditingPane';
 
 export default class SlideEditor extends Component {
   componentDidMount() {
-    this.props.fetchDeck(2);
+    this.props.fetchDeck('2'); // #TODO
   }
 
   render() {
@@ -21,7 +21,7 @@ export default class SlideEditor extends Component {
           </div>
           <div className="l_main__item l_main__item--slide-editor">
             <div className="l_main__item__wrapper">
-              <SlideEditingPaneContainer {...this.props} />
+              <SlideEditingPane {...this.props} />
             </div>
           </div>
         </div>

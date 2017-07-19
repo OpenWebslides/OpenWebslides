@@ -5,16 +5,16 @@ import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/i
 
 import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
 
-export default function ListItem(props) {
-  if (props.active) {
+export default function Paragraph(props) {
+  if (props.editable) {
     return (
-      <li>
-        <ContentEditableContainer {...props} />
-      </li>
+      <p>
+        <ContentEditableContainer contentItem={props.contentItem} />
+      </p>
     );
   }
   return (
-    <li
+    <p
       dangerouslySetInnerHTML={{
         __html: getHTMLStringFromInlinePropertiesAndText(props.contentItem.inlineProperties, props.contentItem.text),
       }}
@@ -22,11 +22,11 @@ export default function ListItem(props) {
   );
 }
 
-ListItem.propTypes = {
-  active: PropTypes.bool,
+Paragraph.propTypes = {
+  editable: PropTypes.bool,
   contentItem: PropTypes.objectOf(Object).isRequired,
 };
 
-ListItem.defaultProps = {
-  active: false,
+Paragraph.defaultProps = {
+  editable: false,
 };

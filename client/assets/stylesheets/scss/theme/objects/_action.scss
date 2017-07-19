@@ -4,10 +4,15 @@
 
 // #TODO move to inkframe folder
 .o_action {
+  &::before {
+    // Set circle as default icon placeholder.
+    @include icon($fa-var-circle, $line-height--base * 1em);
+  }
+
   @each $action, $icon in $map--actions_to_icons {
     &--#{$action} {
       &::before {
-        @include icon ($icon, $line-height--base * 1em);
+        content: $icon;
       }
     }
   }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import ContentItemContainer from 'lib/content-item/ContentItemContainer';
+
 class Slide extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,10 @@ class Slide extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateSlideContainerSize);
+  }
+
+  componentDidUpdate() {
+    this.updateSlideContainerSize();
   }
 
   updateSlideContainerSize() {
@@ -58,6 +64,16 @@ class Slide extends Component {
   }
 
   render() {
+    let slideContent;
+
+    if (this.props.slide) {
+      slideContent = this.props.slide.contentItemIds.map(
+        id => <ContentItemContainer key={id} contentItemId={id} editable={this.props.editable}/>
+      );
+    } else {
+      slideContent = <p>Loading...</p>;
+    }
+
     return (
       <div
         className={`c_slide-container c_slide-container--${this.props.cssIdentifier} ${this.props.isFullscreen
@@ -71,7 +87,7 @@ class Slide extends Component {
         <div className="c_slide-container__size">
           <div className="c_slide-container__wrapper">
             <div className="c_slide-container__content">
-              {this.props.children}
+              {slideContent}
             </div>
           </div>
         </div>
@@ -83,12 +99,20 @@ class Slide extends Component {
 Slide.propTypes = {
   cssIdentifier: PropTypes.string,
   isFullscreen: PropTypes.bool,
-  children: PropTypes.node.isRequired,
+  slide: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    level: PropTypes.number.isRequired,
+    contentItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    contentItemSequence: PropTypes.number.isRequired,
+  }).isRequired,
+  editable: PropTypes.bool.isRequired,
 };
 
 Slide.defaultProps = {
   cssIdentifier: 'default',
   isFullscreen: false,
+  slide: null,
+  editable: false,
 };
 
 export default Slide;
