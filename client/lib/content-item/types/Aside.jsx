@@ -8,11 +8,18 @@ export default function Aside(props) {
 
   return (
     <aside>
-      {contentItem.childItemIds.map(id => <ContentItemContainer key={id} id={id} />)}
+      {contentItem.childItemIds.map(id => (
+        <ContentItemContainer key={id} contentItemId={id} editable={props.editable} />
+      ))}
     </aside>
   );
 }
 
 Aside.propTypes = {
+  editable: PropTypes.bool,
   contentItem: PropTypes.objectOf(Object).isRequired,
+};
+
+Aside.defaultProps = {
+  editable: false,
 };

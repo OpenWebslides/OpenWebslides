@@ -3,10 +3,14 @@ import { takeLatest, put, select } from 'redux-saga/effects';
 import { DELETE_SLIDE, DELETE_SLIDE_WITH_CONTENT, SET_ACTIVE_SLIDE } from 'actions/slideActions';
 import { DELETE_CONTENT_BLOCKS } from 'actions/contentBlockActions';
 
+import { getActiveSlideId } from 'selectors/app/editor';
+import { getSlidesById, getSlideById } from 'selectors/entities/slides';
+import { getContentItemsById } from 'selectors/entities/content-items';
+
 function* getContentBlocksToDelete(contentItemIds) {
   const contentBlocksToDelete = [];
   const state = yield select();
-  const contentItems = state.entities.contentItems.byId;
+  const contentItems = getContentItemsById(state);
 
   (function findContentBlocksToDelete(contentItemsArr) {
     contentItemsArr.forEach(contentItemId => {
@@ -22,13 +26,13 @@ function* getContentBlocksToDelete(contentItemIds) {
 
 function* doDeleteSlide(action) {
   try {
-    const { slideId } = action.meta;
+    const { deckId, slideId } = action.meta;
     const state = yield select();
-    const slide = state.entities.slides.byId[slideId];
+    const slide = getSlideById(state, slideId);
     const contentBlocksToDelete = yield getContentBlocksToDelete(slide.contentItemIds);
 
-    if (state.app.editor.slides.active === slideId) {
-      const slideIds = Object.keys(state.entities.slides.byId);
+    if (getActiveSlideId(state) === slideId) {
+      const slideIds = Object.keys(getSlidesById(state));
 
       const currentSlideIndex = slideIds.indexOf(slideId);
       const previousSlideId = currentSlideIndex === 0
@@ -48,7 +52,7 @@ function* doDeleteSlide(action) {
 
     yield put({
       type: DELETE_SLIDE,
-      payload: { slideId },
+      payload: { deckId, slideId },
     });
   } catch (e) {
     console.log(e);

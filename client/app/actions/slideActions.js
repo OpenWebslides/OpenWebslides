@@ -15,17 +15,17 @@ export function updateSlide(id, data) {
   };
 }
 
-export function addSlide(slideId) {
+export function addSlide(deckId, slideId) {
   return {
     type: ADD_SLIDE,
-    payload: { slideId },
+    payload: { deckId, slideId },
   };
 }
 
-export function deleteSlideWithContent(slideId) {
+export function deleteSlideWithContent(deckId, slideId) {
   return {
     type: DELETE_SLIDE_WITH_CONTENT,
-    meta: { slideId },
+    meta: { deckId, slideId },
   };
 }
 
