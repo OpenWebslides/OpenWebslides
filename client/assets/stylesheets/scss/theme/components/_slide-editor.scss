@@ -5,11 +5,11 @@
 .c_slide-editor {
   &__wrapper {
     // Use inkgrid to create gutter between items.
-    @include inkgrid-row;
+    @include inkgrid-row(false);
   }
 
   &__item {
-    @include inkgrid-col;
+    @include inkgrid-col(false);
 
     &--toolbar {
       float: left;

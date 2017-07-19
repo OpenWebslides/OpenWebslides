@@ -4,22 +4,42 @@
 
 .c_switcher-menu {
   &__list {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
     padding: 0;
   }
 
   &__item {
-    flex: 1 1 0;
+    display: table-cell;
   }
 
   &__button {
     display: block;
     width: 100%;
 
-    &::before {
-      @include icon ($fa-var-file-o, $line-height--base * 1em);
+    &__wrapper {
+      color: gray;
+
+      &::before {
+        @include icon ($fa-var-file-o, $line-height--base * 1em);
+      }
+    }
+
+    &.is_active .c_switcher-menu__button__wrapper {
+      color: inherit;
+    }
+
+    &--id_live .c_switcher-menu__button__wrapper::before {
+      content: $fa-var-file-image-o;
+    }
+
+    &--id_content .c_switcher-menu__button__wrapper::before {
+      content: $fa-var-file-code-o;
+    }
+
+    &--id_debug .c_switcher-menu__button__wrapper::before {
+      content: $fa-var-bug;
     }
   }
 }

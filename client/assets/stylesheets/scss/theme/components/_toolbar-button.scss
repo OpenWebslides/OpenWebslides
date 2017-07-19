@@ -1,0 +1,13 @@
+// ------------------------
+// Toolbar button component
+// ------------------------
+
+.c_toolbar-button {
+  &__widget {
+    padding: 0;
+
+    &__wrapper {
+      @include screenreaders-only;
+    }
+  }
+}

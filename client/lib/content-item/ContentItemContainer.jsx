@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 
+import { getContentItemById } from 'selectors/entities/content-items';
+
 import ContentItem from './ContentItem';
 
 function mapStateToProps(state, props) {
   return {
-    contentItem: state.entities.contentItems.byId[props.id],
+    contentItem: getContentItemById(state, props.contentItemId),
   };
 }
 

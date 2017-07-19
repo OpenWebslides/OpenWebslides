@@ -6,9 +6,7 @@ import { fetchDeck } from 'actions/deckActions';
 import SlideEditor from 'presentationals/components/slide-editor/SlideEditor';
 
 function mapStateToProps(state) {
-  return {
-    activeDeckId: state.app.editor.activeDeckId,
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
