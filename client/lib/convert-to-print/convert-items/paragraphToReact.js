@@ -2,16 +2,8 @@ import React from 'react';
 
 function applyProperty(text, property) {
   return React.createElement('p', null, [
-    React.createElement(
-      'span',
-      null,
-      text.substring(0, property.offsets.start),
-    ),
-    React.createElement(
-      property.type,
-      null,
-      text.substring(property.offsets.start, property.offsets.end),
-    ),
+    React.createElement('span', null, text.substring(0, property.offsets.start)),
+    React.createElement(property.type, null, text.substring(property.offsets.start, property.offsets.end)),
     React.createElement('span', null, text.substring(property.offsets.end)),
   ]);
 }
