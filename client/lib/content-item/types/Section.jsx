@@ -9,7 +9,12 @@ export default function Section(props) {
   return (
     <section>
       {contentItem.childItemIds.map(id => (
-        <ContentItemContainer key={id} contentItemId={id} editable={props.editable} />
+        <ContentItemContainer
+          key={id}
+          contentItemId={id}
+          editable={props.editable}
+          headingLevel={props.headingLevel + 1}
+        />
       ))}
     </section>
   );
