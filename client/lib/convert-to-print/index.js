@@ -5,26 +5,19 @@ import ipt from 'constants/inlinePropertyTypes';
 
 // converters:
 
-import imageToReact from './convert-items/imageToReact';
+import illustrativeImageToReact from './convert-items/illustrativeImageToReact';
+import decorativeImageToReact from './convert-items/decorativeImageToReact';
 import iframeToReact from './convert-items/iframeToReact';
+import titleToReact from './convert-items/titleToReact';
 
-const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE, IFRAME } = contentItemTypes;
+const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, DECORATIVE_IMAGE, ILLUSTRATIVE_IMAGE, IFRAME } = contentItemTypes;
 const { EM, STRONG } = ipt;
 
-const levelToTitle = {
-  1: 'h1',
-  2: 'h2',
-  3: 'h3',
-  4: 'h4',
-  5: 'h5',
-  6: 'h6',
-};
-
-function contentItemObjectToReact(state, contentItemObject, currentLevel) {
+function contentItemObjectToReact(state, contentItemObject, currentLevel, sectionLevels) {
   const prefs = state.app.printView.prefs;
   switch (contentItemObject.contentItemType) {
     case TITLE:
-      return React.createElement(levelToTitle[currentLevel], null, contentItemObject.text);
+      return titleToReact(contentItemObject, currentLevel, sectionLevels);
     case PARAGRAPH:
       return React.createElement('p', null, contentItemObject.text);
     case SECTION:
@@ -42,8 +35,10 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
       );
     case LIST_ITEM:
       return React.createElement('li', null, contentItemObject.text);
-    case IMAGE:
-      return imageToReact(contentItemObject, prefs.image);
+    case ILLUSTRATIVE_IMAGE:
+      return illustrativeImageToReact(contentItemObject, prefs.image);
+    case DECORATIVE_IMAGE:
+      return decorativeImageToReact(contentItemObject, prefs.image);
     case IFRAME:
       return iframeToReact(contentItemObject, prefs.iframe);
     default:
@@ -52,14 +47,17 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
 }
 
 function slideObjectToReact(state, slideObject) {
-  debugger;
   const childrenObjects = slideObject.contentItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
   const res = childrenObjects.reduce((arr, currentObject) => {
     const lvl = isNaN(slideObject.level) ? 1 : parseInt(slideObject.level, 10);
     const res = arr.concat(contentItemObjectToReact(state, currentObject, lvl));
     return res;
   }, []);
-  return res;
+  return React.createElement(
+    'div',
+    { className: 'c_print-view__slide', 'data-level': isNaN(slideObject.level) ? 1 : parseInt(slideObject.level, 10) },
+    res,
+  );
 }
 
 function convertToPrint(state, deckId) {
