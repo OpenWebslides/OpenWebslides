@@ -1,9 +1,9 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 
-import { DELETE_SLIDE, DELETE_SLIDE_WITH_CONTENT, SET_ACTIVE_SLIDE } from 'actions/slideActions';
-import { DELETE_CONTENT_BLOCKS } from 'actions/contentBlockActions';
+import { DELETE_SLIDE, DELETE_SLIDE_WITH_CONTENT, SET_ACTIVE_SLIDE } from 'actions/entities/slides';
+import { DELETE_CONTENT_BLOCKS } from 'actions/entities/content-items';
 
-import { getActiveSlideId } from 'selectors/app/editor';
+import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
 import { getContentItemsById } from 'selectors/entities/content-items';
 

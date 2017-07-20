@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { getActiveSlideId, getActiveSlideViewTypes } from 'selectors/app/editor';
+import { getActiveSlideId, getActiveSlideViewTypes } from 'selectors/app/slide-editor';
 
 import SlideLiveView from 'presentationals/components/slide-editor/SlideLiveView';
 

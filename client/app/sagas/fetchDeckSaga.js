@@ -1,5 +1,5 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/deckActions';
+import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 
 import convertToState from 'lib/convert-to-state';
 import fetchDeckApi from 'api/fetchDeckApi';

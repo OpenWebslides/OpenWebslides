@@ -10,7 +10,7 @@ const exampleState = {
     confirmEmail: {
       emailConfirmed: 'confirming',
     },
-    editor: {
+    slideEditor: {
       activeDeckId: '53',
       activeSlideId: '53-1',
       activeContentItemId: null,
