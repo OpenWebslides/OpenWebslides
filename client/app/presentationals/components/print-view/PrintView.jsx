@@ -21,7 +21,7 @@ export default class PrintView extends Component {
     // }
     elements = convertToPrint(state, this.props.id);
     return (
-      <div>
+      <div className="c_print-view">
         {elements}
       </div>
     );
