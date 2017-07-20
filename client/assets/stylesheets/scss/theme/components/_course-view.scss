@@ -1,0 +1,106 @@
+.c_print-view {
+  width: 21cm;
+  padding: 1cm;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: white;
+
+  &__slide {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0;
+    flex-flow: row wrap;
+
+    ul {
+      flex: 2/3;
+      font-size: 12px;
+      margin-left: $spacing--small__h;
+      align-self: flex-start;
+    }
+  }
+
+  [data-level="1"] {
+    padding-left: 0.5cm;
+  }
+
+  [data-level="2"] {
+    padding-left: 1cm;
+  }
+
+  [data-level="3"] {
+    padding-left: 1.5cm;
+  }
+  [data-level="4"] {
+    padding-left: 2cm;
+  }
+
+  &__main-title {
+    margin-top: 0;
+    font-family: "News Cycle", "Arial Narrow Bold", sans-serif;
+    font-size: 18px;
+    flex: 1 100%;
+    page-break-after: avoid;
+  }
+
+  &__section-title {
+    margin-top: 0;
+    font-size: 16px;
+    flex: 1 100%;
+    page-break-after: avoid;
+  }
+
+  &__subsection-title {
+    margin-top: 0;
+    flex: 1 100%;
+    font-size: 14px;
+    page-break-after: avoid;
+  }
+
+  &__subsubsection-title {
+    margin-top: 0;
+    flex: 1 100%;
+    font-size: 12px;
+    font-weight: bold;
+    page-break-after: avoid;
+  }
+
+  figure img {
+    width: 100%;
+  }
+
+  figure {
+    text-align: center;
+    display: table;
+    flex: 1 30%;
+    max-width: 30%; /* demo; set some amount (px or %) if you can */
+    margin: 10px auto; /* not needed unless you want centered */
+  }
+
+  figcaption{
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  p {
+    flex: 1 100%;
+    padding-left: $spacing--small__h;
+    font-size: 12px;
+  }
+
+
+  li {
+    list-style-type: none;
+
+    &:before{
+        content: "-    ";
+    }
+  }
+
+  &__decorative-image {
+    flex: 1/3;
+    max-width:30%;
+    max-height:100%;
+  }
+}
