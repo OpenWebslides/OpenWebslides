@@ -32,11 +32,11 @@ const HTMLResponse = `
 		<h2>Lorem ipsum</h2>
 		<p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
 		<section>
-		  <h2>Dolor sit</h2>
+		  <h3>Dolor sit</h3>
 		  <p>Quisque faucibus lacus ac eros sagittis, et ultricies dui volutpat. Nulla facilisi. Sed semper porta tortor, in faucibus tortor.</p>
 		</section>
 		<section>
-		  <h2>Amet</h2>
+		  <h3>Amet</h3>
 		  <p>In auctor elementum orci ac pharetra. Sed accumsan, orci id sodales eleifend, nisl risus semper nulla, ut ultrices dolor nulla eu nunc. </p>
 		</section>
 	</section>
@@ -44,9 +44,9 @@ const HTMLResponse = `
 	<section class="slide" id="TestSlideImplicitSections">
 		<h2>Lorem ipsum</h2>
 		<p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
-    <h2>Dolor sit</h2>
+    <h3>Dolor sit</h3>
     <p>Quisque faucibus lacus ac eros sagittis, et ultricies dui volutpat. Nulla facilisi. Sed semper porta tortor, in faucibus tortor.</p>
-    <h2>Amet</h2>
+    <h3>Amet</h3>
     <p>In auctor elementum orci ac pharetra. Sed accumsan, orci id sodales eleifend, nisl risus semper nulla, ut ultrices dolor nulla eu nunc. </p>
 	</section>
 
