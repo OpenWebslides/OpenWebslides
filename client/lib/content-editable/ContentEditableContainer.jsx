@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { updateContentBlock, setActiveContentBlock, updateSelection } from 'actions/contentBlockActions';
+import { updateContentBlock, setActiveContentBlock, updateSelection } from 'actions/entities/content-items';
 
-import { getActiveContentItemId, getSelectionOffsets } from 'selectors/app/editor';
+import { getActiveContentItemId, getSelectionOffsets } from 'selectors/app/slide-editor';
 
 import ContentEditable from './ContentEditable';
 

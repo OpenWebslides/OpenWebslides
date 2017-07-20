@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 
-import { toggleSlideView } from 'actions/slideEditorActions';
+import { toggleSlideView } from 'actions/app/slide-editor';
 
-import { getActiveSlideViewTypes } from 'selectors/app/editor';
+import { getActiveSlideViewTypes } from 'selectors/app/slide-editor';
 
 import SlideViewsMenu from 'presentationals/components/slide-editor/SlideViewsMenu';
 

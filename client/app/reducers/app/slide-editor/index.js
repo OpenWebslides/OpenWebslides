@@ -2,10 +2,10 @@ import _ from 'lodash';
 
 import { slideViewTypes } from 'constants/slideViewTypes';
 
-import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
-import { SET_ACTIVE_SLIDE, ADD_SLIDE } from 'actions/slideActions';
-import { SET_ACTIVE_CONTENT_ITEM, UPDATE_SELECTION } from 'actions/contentBlockActions';
-import { TOGGLE_SLIDE_VIEW } from 'actions/slideEditorActions';
+import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
+import { SET_ACTIVE_SLIDE, ADD_SLIDE } from 'actions/entities/slides';
+import { SET_ACTIVE_CONTENT_ITEM, UPDATE_SELECTION } from 'actions/entities/content-items';
+import { TOGGLE_SLIDE_VIEW } from 'actions/app/slide-editor';
 
 const initialState = {
   activeDeckId: null,
@@ -21,7 +21,7 @@ const initialState = {
   ],
 };
 
-export default function editorReducer(state = initialState, action) {
+export default function slideEditorReducer(state = initialState, action) {
   switch (action.type) {
 
     case FETCH_DECK_SUCCESS:
