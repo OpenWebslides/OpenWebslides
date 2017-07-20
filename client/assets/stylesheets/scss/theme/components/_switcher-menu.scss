@@ -19,7 +19,7 @@
     width: 100%;
 
     &__wrapper {
-      color: gray;
+      opacity: 0.2;
 
       &::before {
         @include icon ($fa-var-file-o, $line-height--base * 1em);
@@ -27,7 +27,7 @@
     }
 
     &.is_active .c_switcher-menu__button__wrapper {
-      color: inherit;
+      opacity: 1;
     }
 
     &--id_live .c_switcher-menu__button__wrapper::before {
