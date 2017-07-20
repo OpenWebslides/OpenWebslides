@@ -79,6 +79,7 @@ export default function slideEditorReducer(state = initialState, action) {
       return {
         ...state,
         activeDeckId: action.payload.activeDeckId,
+        activeSlideId: action.payload.activeSlideId,
       };
 
     case ADD_SLIDE:
