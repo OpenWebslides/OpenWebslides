@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { updateContentBlock, setActiveContentBlock, updateSelection } from 'actions/entities/content-items';
+import { setActiveContentItemId, setSelectionOffsets } from 'actions/app/slide-editor';
+import { updateContentBlock } from 'actions/entities/content-items';
 
 import { getActiveContentItemId, getSelectionOffsets } from 'selectors/app/slide-editor';
 
@@ -15,7 +16,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateContentBlock, setActiveContentBlock, updateSelection }, dispatch);
+  return bindActionCreators({ updateContentBlock, setActiveContentItemId, setSelectionOffsets }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentEditable);
