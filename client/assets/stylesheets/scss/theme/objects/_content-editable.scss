@@ -30,6 +30,9 @@
     z-index: $z-index__hidden-buttons;
     opacity: 0;
 
+    // Never wrap menu buttons onto next line no matter how small container is.
+    white-space: nowrap;
+
     &-item {
       display: inline-block;
       vertical-align: top;
