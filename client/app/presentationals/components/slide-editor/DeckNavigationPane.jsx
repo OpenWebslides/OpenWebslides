@@ -22,8 +22,8 @@ export default class DeckNavigationPane extends Component {
     this.props.deleteSlideWithContent(this.props.activeDeck.id, selectedSlideId);
   }
 
-  handleSetActiveSlide(selectedSlideId) {
-    this.props.setActiveSlide(selectedSlideId);
+  handleSetActiveSlideId(selectedSlideId) {
+    this.props.setActiveSlideId(selectedSlideId);
   }
 
   render() {
@@ -36,7 +36,7 @@ export default class DeckNavigationPane extends Component {
                 <li className="o_list__item c_deck-navigator__item" key={slideId}>
                   <div className="o_list__item__wrapper c_deck-navigator__item__wrapper">
                     <button
-                      onClick={() => this.handleSetActiveSlide(slideId)}
+                      onClick={() => this.handleSetActiveSlideId(slideId)}
                       className="c_deck-navigator__slide-button"
                     >
                       <SlideContainer id={slideId} />
@@ -76,7 +76,7 @@ DeckNavigationPane.propTypes = {
     meta: PropTypes.object,
   }),
   addSlide: PropTypes.func.isRequired,
-  setActiveSlide: PropTypes.func.isRequired,
+  setActiveSlideId: PropTypes.func.isRequired,
   deleteSlideWithContent: PropTypes.func.isRequired,
 };
 

@@ -29,6 +29,10 @@ class ContentEditable extends Component {
     }
   }
 
+  updateSelectionOffsets() {
+    this.props.setSelectionOffsets(getSelectionOffsets(this.contentEditable));
+  }
+
   // Prevent users from inserting newlines in the contenteditable field.
   handleKeyPress(e) {
     const blacklist = ['Enter'];
@@ -37,7 +41,7 @@ class ContentEditable extends Component {
       e.preventDefault();
     }
 
-    this.props.updateSelection(getSelectionOffsets(this.contentEditable));
+    this.updateSelectionOffsets();
   }
 
   // Map state to contenteditable innerHTML.
@@ -48,7 +52,7 @@ class ContentEditable extends Component {
     const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
     const amount = text.length - this.props.contentItem.text.length;
 
-    this.props.updateSelection(getSelectionOffsets(this.contentEditable));
+    this.updateSelectionOffsets();
 
     updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
 
@@ -56,13 +60,13 @@ class ContentEditable extends Component {
   }
 
   handleFocus() {
-    this.props.setActiveContentBlock(this.props.contentItem.id);
-    this.props.updateSelection(getSelectionOffsets(this.contentEditable));
+    this.props.setActiveContentItemId(this.props.contentItem.id);
+    this.updateSelectionOffsets();
   }
 
   handleBlur() {
-    this.props.setActiveContentBlock(null);
-    this.props.updateSelection(getSelectionOffsets(this.contentEditable));
+    this.props.setActiveContentItemId(null);
+    this.updateSelectionOffsets();
   }
 
   handleMenuButtonClick(inlinePropertyType) {
@@ -85,7 +89,7 @@ class ContentEditable extends Component {
     // set the new inlineProperties array in the state
     // and move the caret to the end of the new inlineProperty
     this.props.updateContentBlock(this.props.contentItem.id, this.props.contentItem.text, inlineProperties);
-    this.props.updateSelection({
+    this.props.setSelectionOffsets({
       start: selectionOffsets.end,
       end: selectionOffsets.end,
     });
@@ -150,9 +154,9 @@ ContentEditable.propTypes = {
   contentItem: PropTypes.object.isRequired,
   activeContentItemId: PropTypes.string,
   selectionOffsets: PropTypes.object.isRequired,
-  setActiveContentBlock: PropTypes.func.isRequired,
+  setActiveContentItemId: PropTypes.func.isRequired,
   updateContentBlock: PropTypes.func.isRequired,
-  updateSelection: PropTypes.func.isRequired,
+  setSelectionOffsets: PropTypes.func.isRequired,
 };
 
 ContentEditable.defaultProps = {
