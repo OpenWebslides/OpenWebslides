@@ -11,4 +11,5 @@ export default function ContentItem(props) {
 
 ContentItem.propTypes = {
   contentItem: PropTypes.object.isRequired,
+  headingLevel: PropTypes.number.isRequired,
 };

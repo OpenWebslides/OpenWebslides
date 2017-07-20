@@ -7,10 +7,12 @@ import ContentEditableContainer from 'lib/content-editable/ContentEditableContai
 
 export default function Title(props) {
   if (props.editable) {
+    const TitleTag = `h${props.headingLevel}`;
+
     return (
-      <h1>
+      <TitleTag>
         <ContentEditableContainer contentItem={props.contentItem} />
-      </h1>
+      </TitleTag>
     );
   }
   return (
