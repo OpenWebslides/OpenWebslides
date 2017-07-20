@@ -45,7 +45,7 @@ class ContentEditable extends Component {
     const text = getFilteredTextContent(this.contentEditable);
     const selectionOffsets = getSelectionOffsets(this.contentEditable);
 
-    const inlineProperties = [].concat(this.props.contentItem.inlineProperties);
+    const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
     const amount = text.length - this.props.contentItem.text.length;
 
     this.props.updateSelection(getSelectionOffsets(this.contentEditable));
