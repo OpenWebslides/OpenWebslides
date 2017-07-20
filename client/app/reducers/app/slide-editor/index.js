@@ -1,13 +1,19 @@
 import _ from 'lodash';
+import Immutable from 'seamless-immutable';
 
-import { slideViewTypes } from 'constants/slideViewTypes';
+import {slideViewTypes} from 'constants/slideViewTypes';
 
-import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
-import { SET_ACTIVE_SLIDE, ADD_SLIDE } from 'actions/entities/slides';
-import { SET_ACTIVE_CONTENT_ITEM, UPDATE_SELECTION } from 'actions/entities/content-items';
-import { TOGGLE_SLIDE_VIEW } from 'actions/app/slide-editor';
+import {
+  SET_ACTIVE_DECK_ID,
+  SET_ACTIVE_SLIDE_ID,
+  SET_ACTIVE_CONTENT_ITEM_ID,
+  SET_SELECTION_OFFSETS,
+  TOGGLE_SLIDE_VIEW,
+} from 'actions/app/slide-editor';
+import {FETCH_DECK_SUCCESS} from 'actions/entities/decks';
+import {ADD_SLIDE} from 'actions/entities/slides';
 
-const initialState = {
+const initialState = Immutable({
   activeDeckId: null,
   activeSlideId: null,
   activeContentItemId: null,
@@ -19,36 +25,30 @@ const initialState = {
     slideViewTypes.LIVE,
     slideViewTypes.CONTENT,
   ],
-};
+});
 
 export default function slideEditorReducer(state = initialState, action) {
   switch (action.type) {
 
-    case FETCH_DECK_SUCCESS:
+    case SET_ACTIVE_DECK_ID:
       return {
         ...state,
-        activeDeckId: action.payload.activeDeckId
+        activeDeckId: action.payload.deckId,
       };
 
-    case SET_ACTIVE_SLIDE:
-      return {
-        ...state,
-        activeSlideId: action.payload.slideId
-      };
-
-    case ADD_SLIDE:
+    case SET_ACTIVE_SLIDE_ID:
       return {
         ...state,
         activeSlideId: action.payload.slideId,
       };
 
-    case SET_ACTIVE_CONTENT_ITEM:
+    case SET_ACTIVE_CONTENT_ITEM_ID:
       return {
         ...state,
         activeContentItemId: action.payload.contentItemId,
       };
 
-    case UPDATE_SELECTION:
+    case SET_SELECTION_OFFSETS:
       return {
         ...state,
         selectionOffsets: action.payload.selectionOffsets,
@@ -72,7 +72,19 @@ export default function slideEditorReducer(state = initialState, action) {
 
       return {
         ...state,
-        activeSlideViewTypes
+        activeSlideViewTypes,
+      };
+
+    case FETCH_DECK_SUCCESS:
+      return {
+        ...state,
+        activeDeckId: action.payload.activeDeckId,
+      };
+
+    case ADD_SLIDE:
+      return {
+        ...state,
+        activeSlideId: action.payload.slideId,
       };
 
     default:

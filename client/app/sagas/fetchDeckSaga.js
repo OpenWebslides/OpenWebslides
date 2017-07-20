@@ -1,4 +1,5 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
+import { SET_ACTIVE_SLIDE_ID } from 'actions/app/slide-editor';
 import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 
 import convertToState from 'lib/convert-to-state';
@@ -657,14 +658,14 @@ function* doFetchDeck(action) {
     const entities = yield convertToState(action.meta.deckId, HTMLResponse);
     const state = Object.assign({}, entities, { activeDeckId: action.meta.deckId });
 
-    yield put({ type: 'FETCH_DECK_SUCCESS', payload: state });
+    yield put({ type: FETCH_DECK_SUCCESS, payload: state });
     const slideIds = Object.keys(state.slidesById);
     // Set the first slide of a deck as the default active slide (not the last, because that one might not be visible
     // in the deck navigator if there are many slides).
     const activeSlideId = slideIds[0]; // slideIds[slideIds.length - 1];
 
     yield put({
-      type: 'SET_ACTIVE_SLIDE',
+      type: SET_ACTIVE_SLIDE_ID,
       payload: { slideId: activeSlideId },
     });
   } catch (e) {
