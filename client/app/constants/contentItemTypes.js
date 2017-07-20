@@ -51,15 +51,15 @@ export const contentItemTypesById = {
   [contentItemTypes.ILLUSTRATIVE_IMAGE]: {
     id: contentItemTypes.ILLUSTRATIVE_IMAGE,
     component: Image,
-    name: 'IllustrativeImage',
+    name: 'Illustrative image',
     description: 'TODO: illustrative image description',
     inToolbar: true,
   },
   [contentItemTypes.DECORATIVE_IMAGE]: {
     id: contentItemTypes.DECORATIVE_IMAGE,
     component: Image,
-    name: 'DecorativeImage',
-    description: 'TODO: Decorative image description',
+    name: 'Decorative image',
+    description: 'TODO: decorative image description',
     inToolbar: true,
   },
   [contentItemTypes.IFRAME]: {
