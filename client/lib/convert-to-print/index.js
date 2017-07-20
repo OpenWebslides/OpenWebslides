@@ -1,14 +1,14 @@
 /* eslint-disable no-case-declarations */
 import React from 'react';
-import cit from 'constants/contentItemTypes';
-import ipt from 'constants/itemPropertyTypes';
+import { contentItemTypes } from 'constants/contentItemTypes';
+import ipt from 'constants/inlinePropertyTypes';
 
 // converters:
 
 import imageToReact from './convert-items/imageToReact';
 import iframeToReact from './convert-items/iframeToReact';
 
-const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE, IFRAME } = cit;
+const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE, IFRAME } = contentItemTypes;
 const { EM, STRONG } = ipt;
 
 const levelToTitle = {
