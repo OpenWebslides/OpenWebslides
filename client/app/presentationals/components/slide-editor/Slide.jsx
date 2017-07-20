@@ -68,7 +68,7 @@ class Slide extends Component {
 
     if (this.props.slide) {
       slideContent = this.props.slide.contentItemIds.map(
-        id => <ContentItemContainer key={id} contentItemId={id} editable={this.props.editable}/>
+        id => <ContentItemContainer key={id} contentItemId={id} editable={this.props.editable} headingLevel={0} />
       );
     } else {
       slideContent = <p>Loading...</p>;
