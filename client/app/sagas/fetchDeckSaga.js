@@ -43,7 +43,7 @@ const HTMLResponse = `
 		</section>
 	</section>
 	
-	<section class="slide" id="TestSlideImplicitSections">
+	<section class="slide" id="TestSlideImplicitSections" data-level="1">
 		<h2>Lorem ipsum</h2>
 		<p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
     <h3>Dolor sit</h3>
