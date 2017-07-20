@@ -5,6 +5,15 @@ export const imgOptions = {
   NOTHING: 'NOTHING',
 };
 
+export const decorativeImgOptions = {
+  SHOW: 'SHOW',
+  DONT_SHOW: 'DONT_SHOW',
+}
+export const decorativeImgOptionsText = {
+  SHOW: 'Yes',
+  DONT_SHOW: 'No',
+}
+
 export const imgOptionsText = {
   IMAGES_AND_TEXT: 'Images and caption',
   IMAGES_ONLY: 'Images only',
