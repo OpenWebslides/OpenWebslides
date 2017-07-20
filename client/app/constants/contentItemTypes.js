@@ -12,7 +12,8 @@ export const contentItemTypes = {
   PARAGRAPH: 'PARAGRAPH',
   LIST: 'LIST',
   LIST_ITEM: 'LIST_ITEM',
-  IMAGE: 'IMAGE',
+  ILLUSTRATIVE_IMAGE: 'ILLUSTRATIVE_IMAGE',
+  DECORATIVE_IMAGE: 'DECORATIVE_IMAGE',
   IFRAME: 'IFRAME',
   SECTION: 'SECTION',
   ASIDE: 'ASIDE',
@@ -47,11 +48,18 @@ export const contentItemTypesById = {
     description: 'TODO: list item description',
     inToolbar: false,
   },
-  [contentItemTypes.IMAGE]: {
-    id: contentItemTypes.IMAGE,
+  [contentItemTypes.ILLUSTRATIVE_IMAGE]: {
+    id: contentItemTypes.ILLUSTRATIVE_IMAGE,
     component: Image,
-    name: 'Image',
-    description: 'TODO: image description',
+    name: 'IllustrativeImage',
+    description: 'TODO: illustrative image description',
+    inToolbar: true,
+  },
+  [contentItemTypes.DECORATIVE_IMAGE]: {
+    id: contentItemTypes.DECORATIVE_IMAGE,
+    component: Image,
+    name: 'DecorativeImage',
+    description: 'TODO: Decorative image description',
     inToolbar: true,
   },
   [contentItemTypes.IFRAME]: {
