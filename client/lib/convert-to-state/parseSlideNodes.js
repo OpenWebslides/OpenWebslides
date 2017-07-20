@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { contentItemTypes } from 'constants/contentItemTypes';
 
 import { generateSlideId, generateContentItemId } from './generateIds';
@@ -6,9 +7,8 @@ import parseInlineProperties from './parseInlineProperties';
 function parseTextContent(textContent, trim = true) {
   if (trim) {
     return textContent.replace(/\s+/g, ' ').trim();
-  } else {
-    return textContent;
   }
+  return textContent;
 }
 
 function parseContentItemNode(node, slideId, contentItemSequence) {
@@ -23,21 +23,35 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
   const contentItemId = generateContentItemId(slideId, contentItemSequence);
   let contentItem = { id: contentItemId };
 
-  const { contentItemIds: childItemIds, contentItemsById: childItemsById } = parseContentItemNodes(children, slideId, contentItemSequence + 1);
+  // Parse the child items, but not if it's a <figure> tag
+  const { contentItemIds: childItemIds, contentItemsById: childItemsById } = nodeName !== 'FIGURE'
+    ? parseContentItemNodes(children, slideId, contentItemSequence + 1)
+    : parseContentItemNodes([], slideId, contentItemSequence + 1)
 
   switch (nodeName) {
+    case 'FIGURE':
+      const imgNode = node.children[0];
+      const caption = node.children[1] ? node.children[1].textContent : undefined;
+      contentItem = {
+        ...contentItem,
+        contentItemType: contentItemTypes.ILLUSTRATIVE_IMAGE,
+        src: imgNode.src,
+        alt: imgNode.alt,
+        caption,
+      };
+      break;
     case 'SECTION':
       contentItem = {
         ...contentItem,
         contentItemType: contentItemTypes.SECTION,
-        childItemIds: childItemIds,
+        childItemIds,
       };
       break;
     case 'ASIDE':
       contentItem = {
         ...contentItem,
         contentItemType: contentItemTypes.ASIDE,
-        childItemIds: childItemIds,
+        childItemIds,
       };
       break;
     case 'H1':
@@ -66,7 +80,7 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
         ...contentItem,
         contentItemType: contentItemTypes.LIST,
         ordered: true,
-        childItemIds: childItemIds,
+        childItemIds,
       };
       break;
     case 'UL':
@@ -74,7 +88,7 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
         ...contentItem,
         contentItemType: contentItemTypes.LIST,
         ordered: false,
-        childItemIds: childItemIds,
+        childItemIds,
       };
       break;
     case 'LI':
@@ -88,7 +102,7 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
     case 'IMG':
       contentItem = {
         ...contentItem,
-        contentItemType: contentItemTypes.IMAGE,
+        contentItemType: contentItemTypes.DECORATIVE_IMAGE,
         src: node.src,
         altText: node.alt,
       };
@@ -119,13 +133,17 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
 }
 
 function parseContentItemNodes(nodeList, slideId, contentItemSequence) {
-  let contentItemIds = [];
+  const contentItemIds = [];
   let contentItemsById = {};
   let newContentItemId;
   let newContentItemsById;
 
   Array.from(nodeList).forEach(node => {
-    ({ contentItemId: newContentItemId, contentItemsById: newContentItemsById } = parseContentItemNode(node, slideId, contentItemSequence));
+    ({ contentItemId: newContentItemId, contentItemsById: newContentItemsById } = parseContentItemNode(
+      node,
+      slideId,
+      contentItemSequence,
+    ));
     if (newContentItemId !== null) {
       contentItemIds.push(newContentItemId);
       contentItemsById = {
@@ -139,7 +157,7 @@ function parseContentItemNodes(nodeList, slideId, contentItemSequence) {
   return {
     contentItemIds,
     contentItemsById,
-  }
+  };
 }
 
 export default function parseSlideNodes(deckId, nodes) {
@@ -166,7 +184,11 @@ export default function parseSlideNodes(deckId, nodes) {
   } else {
     nodes.forEach(node => {
       slideId = generateSlideId(deckId, slideSequence);
-      ({ contentItemIds: newContentItemIds, contentItemsById: newContentItemsById } = parseContentItemNodes(node.children, slideId, 0));
+      ({ contentItemIds: newContentItemIds, contentItemsById: newContentItemsById } = parseContentItemNodes(
+        node.children,
+        slideId,
+        0,
+      ));
 
       slidesById[slideId] = {
         id: slideId,
