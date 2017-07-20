@@ -1,9 +1,9 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { addSlide, setActiveSlide, deleteSlideWithContent } from 'actions/slideActions';
+import { addSlide, setActiveSlide, deleteSlideWithContent } from 'actions/entities/slides';
 import { getDeckById } from 'selectors/entities/decks';
-import { getActiveDeckId, getActiveSlideId } from 'selectors/app/editor';
+import { getActiveDeckId, getActiveSlideId } from 'selectors/app/slide-editor';
 
 import DeckNavigationPane from 'presentationals/components/slide-editor/DeckNavigationPane';
 

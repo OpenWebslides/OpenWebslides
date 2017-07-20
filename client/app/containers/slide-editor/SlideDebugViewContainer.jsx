@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import SlideDebugView from 'presentationals/components/slide-editor/SlideDebugView';
-import { getActiveSlideId } from 'selectors/app/editor';
+import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlideById } from 'selectors/entities/slides';
 import { getNestedContentItemObjectById } from 'selectors/entities/content-items';
 
