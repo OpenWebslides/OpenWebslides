@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import { contentItemTypesById } from 'constants/contentItemTypes';
 
-import { getActiveSlideId } from 'selectors/app/editor';
+import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlideById } from 'selectors/entities/slides';
 
-import { addContentItem } from 'actions/contentBlockActions';
+import { addContentItem } from 'actions/entities/content-items';
 
 import { generateContentItemId } from 'lib/convert-to-state/generateIds';
 

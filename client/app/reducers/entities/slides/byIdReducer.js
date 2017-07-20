@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import Immutable from 'seamless-immutable';
 
-import { ADD_SLIDE, DELETE_SLIDE } from 'actions/slideActions';
-import { FETCH_DECK_SUCCESS } from 'actions/deckActions';
+import { ADD_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
+import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 
-import { ADD_CONTENT_ITEM } from 'actions/contentBlockActions';
+import { ADD_CONTENT_ITEM } from 'actions/entities/content-items';
 
 const initialState = Immutable({});
 

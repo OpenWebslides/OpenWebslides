@@ -1,7 +1,7 @@
 import { takeLatest, call, select } from 'redux-saga/effects';
 import updateDeckApi from 'api/updateDeckApi';
 
-import { UPDATE_DECK } from 'actions/deckActions';
+import { UPDATE_DECK } from 'actions/entities/decks';
 
 function addWrappingHtml(string) {
   return `

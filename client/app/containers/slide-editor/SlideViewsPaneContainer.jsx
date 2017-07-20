@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { getActiveSlideViewTypes } from 'selectors/app/editor';
+import { getActiveSlideViewTypes } from 'selectors/app/slide-editor';
 
 import SlideViewsPane from 'presentationals/components/slide-editor/SlideViewsPane';
 

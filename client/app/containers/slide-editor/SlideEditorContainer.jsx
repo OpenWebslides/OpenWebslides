@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchDeck } from 'actions/deckActions';
+import { fetchDeck } from 'actions/entities/decks';
 
 import SlideEditor from 'presentationals/components/slide-editor/SlideEditor';
 
