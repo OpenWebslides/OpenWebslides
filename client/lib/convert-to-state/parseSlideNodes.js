@@ -282,7 +282,7 @@ export default function parseSlideNodes(deckId, nodes) {
   } else {
     nodes.forEach(node => {
       slideId = generateSlideId(deckId, slideSequence);
-      slideLevel = node.dataset.level ? node.dataset.level : 0;
+      slideLevel = node.dataset.level ? parseInt(node.dataset.level) : 0;
       ({ contentItemIds: newContentItemIds, contentItemsById: newContentItemsById } = parseContentItemNodes(
         node.children,
         slideId,
