@@ -10,7 +10,12 @@ export default function List(props) {
   return (
     <ListType>
       {contentItem.childItemIds.map(id => {
-        return <ContentItemContainer key={id} contentItemId={id} editable={props.editable} />
+        return <ContentItemContainer
+          key={id}
+          contentItemId={id}
+          editable={props.editable}
+          headingLevel={props.headingLevel}
+        />
       })}
     </ListType>
   );
