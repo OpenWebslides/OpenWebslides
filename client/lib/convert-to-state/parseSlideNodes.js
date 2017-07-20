@@ -263,6 +263,7 @@ export default function parseSlideNodes(deckId, nodes) {
 
   let slideSequence = 0;
   let slideId;
+  let slideLevel;
 
   let newContentItemIds;
   let newContentItemsById;
@@ -281,6 +282,7 @@ export default function parseSlideNodes(deckId, nodes) {
   } else {
     nodes.forEach(node => {
       slideId = generateSlideId(deckId, slideSequence);
+      slideLevel = node.dataset.level ? node.dataset.level : 0;
       ({ contentItemIds: newContentItemIds, contentItemsById: newContentItemsById } = parseContentItemNodes(
         node.children,
         slideId,
@@ -291,7 +293,7 @@ export default function parseSlideNodes(deckId, nodes) {
       slidesById[slideId] = {
         id: slideId,
         meta: {},
-        level: 0, // #TODO
+        level: slideLevel,
         contentItemIds: newContentItemIds,
         contentItemSequence: Object.keys(newContentItemsById).length,
       };
