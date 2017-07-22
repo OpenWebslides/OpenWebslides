@@ -1,59 +1,47 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 
-import { DELETE_SLIDE, DELETE_SLIDE_WITH_CONTENT, SET_ACTIVE_SLIDE } from 'actions/entities/slides';
-import { DELETE_CONTENT_BLOCKS } from 'actions/entities/content-items';
+import { setActiveSlideId } from 'actions/app/slide-editor';
+import { DELETE_SLIDE_WITH_CONTENT, deleteSlide } from 'actions/entities/slides';
 
 import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
 import { getContentItemsById } from 'selectors/entities/content-items';
 
-function* getContentBlocksToDelete(contentItemIds) {
-  const contentBlocksToDelete = [];
+function* getContentItemIdsToDelete(contentItemIds) {
+  const contentItemsToDelete = [];
   const state = yield select();
   const contentItems = getContentItemsById(state);
 
-  (function findContentBlocksToDelete(contentItemsArr) {
+  (function findContentItemsToDelete(contentItemsArr) {
     contentItemsArr.forEach(contentItemId => {
+      contentItemsToDelete.push(contentItems[contentItemId].id);
       if (contentItems[contentItemId].childItemIds) {
-        findContentBlocksToDelete(contentItems[contentItemId].childItemIds);
-      } else {
-        contentBlocksToDelete.push(contentItems[contentItemId].id);
+        findContentItemsToDelete(contentItems[contentItemId].childItemIds);
       }
     });
   })(contentItemIds);
-  return contentBlocksToDelete;
+  return contentItemsToDelete;
 }
 
 function* doDeleteSlide(action) {
   try {
-    const { deckId, slideId } = action.meta;
+    const { slideId, deckId } = action.meta;
     const state = yield select();
     const slide = getSlideById(state, slideId);
-    const contentBlocksToDelete = yield getContentBlocksToDelete(slide.contentItemIds);
+    const contentItemIdsToDelete = yield getContentItemIdsToDelete(slide.contentItemIds);
 
     if (getActiveSlideId(state) === slideId) {
       const slideIds = Object.keys(getSlidesById(state));
-
       const currentSlideIndex = slideIds.indexOf(slideId);
       const previousSlideId = currentSlideIndex === 0
         ? slideIds[currentSlideIndex + 1]
         : slideIds[currentSlideIndex - 1];
 
-      yield put({
-        type: SET_ACTIVE_SLIDE,
-        payload: { slideId: previousSlideId },
-      });
+      yield put(setActiveSlideId(previousSlideId));
     }
 
-    yield put({
-      type: DELETE_CONTENT_BLOCKS,
-      payload: { contentBlocksToDelete },
-    });
+    yield put(deleteSlide(slideId, deckId, contentItemIdsToDelete));
 
-    yield put({
-      type: DELETE_SLIDE,
-      payload: { deckId, slideId },
-    });
   } catch (e) {
     console.log(e);
   }
