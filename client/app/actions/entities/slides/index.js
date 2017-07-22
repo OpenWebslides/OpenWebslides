@@ -26,9 +26,9 @@ export function deleteSlide(slideId, deckId, contentItemIds = [], newActiveSlide
   }
 }
 
-export function addContentItemToSlide(slideId, contentItemType) {
+export function addContentItemToSlide(slideId, contentItemType, contentItemTypeProps = {}) {
   return {
     type: ADD_CONTENT_ITEM_TO_SLIDE,
-    meta: { slideId, contentItemType },
+    meta: { slideId, contentItemType, contentItemTypeProps },
   };
 }
