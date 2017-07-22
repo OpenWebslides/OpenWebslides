@@ -14,6 +14,16 @@ import {
 import getFilteredTextContent from 'lib/content-editable/textContent';
 
 class ContentEditable extends Component {
+  loadSelectionOffsets() {
+    if (this.props.contentItem.id === this.props.activeContentItemId) {
+      setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
+    }
+  }
+
+  updateSelectionOffsets() {
+    this.props.setSelectionOffsets(getSelectionOffsets(this.contentEditable));
+  }
+
   constructor(props) {
     super(props);
 
@@ -23,14 +33,12 @@ class ContentEditable extends Component {
     this.handleBlur = this.handleBlur.bind(this);
   }
 
-  componentDidUpdate() {
-    if (this.props.contentItem.id === this.props.activeContentItemId) {
-      setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
-    }
+  componentDidMount() {
+    this.loadSelectionOffsets();
   }
 
-  updateSelectionOffsets() {
-    this.props.setSelectionOffsets(getSelectionOffsets(this.contentEditable));
+  componentDidUpdate() {
+    this.loadSelectionOffsets();
   }
 
   // Prevent users from inserting newlines in the contenteditable field.
