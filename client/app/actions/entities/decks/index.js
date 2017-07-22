@@ -37,3 +37,10 @@ export function fetchDeck(deckId) {
     meta: { deckId },
   };
 }
+
+export function fetchDeckSuccess(deckId, slidesById, contentItemsById) {
+  return {
+    type: FETCH_DECK_SUCCESS,
+    payload: { deckId, slidesById, contentItemsById },
+  }
+}
