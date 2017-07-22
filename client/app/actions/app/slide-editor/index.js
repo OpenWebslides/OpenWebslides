@@ -20,10 +20,10 @@ export function setActiveSlideId(slideId) {
   };
 }
 
-export function setActiveContentItemId(contentItemId) {
+export function setActiveContentItemId(contentItemId, selectionOffsets = null) {
   return {
     type: SET_ACTIVE_CONTENT_ITEM_ID,
-    payload: { contentItemId },
+    payload: { contentItemId, selectionOffsets },
   };
 }
 
