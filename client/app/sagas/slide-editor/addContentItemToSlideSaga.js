@@ -94,15 +94,20 @@ function* doAddContentItemToSlide(action) {
     const slide = yield select(getSlideById, action.meta.slideId);
     const contentItemProps = getPropsForContentItemType(action.meta.contentItemType, action.meta.contentItemTypeProps);
     let contentItemId = generateContentItemId(slide.id, slide.contentItemSequence);
-
-    // See if there is an existing section on the slide to which we could add the new contentItem.
-    // Note: this sets parentItemId to null if there is no suitable section.
-    let parentItemId = yield findLastSectionContentItemInListOfContentItemIds(null, slide.contentItemIds);
+    let parentItemId = action.meta.parentItemId;
+    const afterItemId = action.meta.afterItemId;
 
     // Some contentItemTypes require a child element to be automatically added.
     let childItemId = null;
     let childItemType = null;
     let childItemProps = null;
+
+    // If no parentItemId was explicitly passed to the action.
+    if (action.meta.parentItemId === null) {
+      // See if there is an existing section on the slide to which we could add the new contentItem.
+      // Note: this sets parentItemId to null if there is no suitable section.
+      parentItemId = yield findLastSectionContentItemInListOfContentItemIds(null, slide.contentItemIds);
+    }
 
     // If the new contentItem is a title, we need to add a new section for it.
     if (action.meta.contentItemType === contentItemTypes.TITLE) {
@@ -113,7 +118,14 @@ function* doAddContentItemToSlide(action) {
       contentItemId = generateContentItemId(slide.id, slide.contentItemSequence + 1);
 
       // Add the new section to the state.
-      yield put(addContentItem(sectionItemId, contentItemTypes.SECTION, sectionProps, slide.id, parentItemId));
+      yield put(addContentItem(
+        sectionItemId,
+        contentItemTypes.SECTION,
+        sectionProps,
+        slide.id,
+        parentItemId,
+        afterItemId
+      ));
 
       // Use the new section as the parent item for the new contentItem.
       parentItemId = sectionItemId;
@@ -125,10 +137,23 @@ function* doAddContentItemToSlide(action) {
       childItemProps = getPropsForContentItemType(childItemType);
     }
 
-    yield put(addContentItem(contentItemId, action.meta.contentItemType, contentItemProps, slide.id, parentItemId));
+    yield put(addContentItem(
+      contentItemId,
+      action.meta.contentItemType,
+      contentItemProps,
+      slide.id,
+      parentItemId,
+      afterItemId
+    ));
 
     if (childItemId !== null) {
-      yield put(addContentItem(childItemId, childItemType, childItemProps, slide.id, contentItemId));
+      yield put(addContentItem(
+        childItemId,
+        childItemType,
+        childItemProps,
+        slide.id,
+        contentItemId
+      ));
     }
 
   } catch(e) {

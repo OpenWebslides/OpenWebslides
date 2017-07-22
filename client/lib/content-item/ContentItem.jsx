@@ -13,6 +13,7 @@ ContentItem.propTypes = {
   contentItem: PropTypes.object.isRequired,
   headingLevel: PropTypes.number.isRequired,
   editable: PropTypes.bool,
+  handleKeyPress: PropTypes.func.isRequired,
 };
 
 ContentItem.defaultProps = {
