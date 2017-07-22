@@ -27,68 +27,80 @@ const initialState = Immutable({
   ],
 });
 
+function setActiveDeckId(state, action) {
+  return {
+    ...state,
+    activeDeckId: action.payload.deckId,
+  };
+}
+
+function setActiveSlideId(state, action) {
+  return {
+    ...state,
+    activeSlideId: action.payload.slideId,
+  };
+}
+
+function setActiveContentItemId(state, action) {
+  return {
+    ...state,
+    activeContentItemId: action.payload.contentItemId,
+  };
+}
+
+function setSelectionOffsets(state, action) {
+  return {
+    ...state,
+    selectionOffsets: action.payload.selectionOffsets,
+  };
+}
+
+function toggleSlideView(state, action) {
+  const slideViewType = action.payload.slideViewType;
+  const currentActiveSlideViewTypes = state.activeSlideViewTypes;
+
+  let activeSlideViewTypes;
+  if (Array.indexOf(currentActiveSlideViewTypes, slideViewType) !== -1) {
+    // Cannot remove the last active slide view type.
+    if (currentActiveSlideViewTypes.length <= 1) {
+      activeSlideViewTypes = currentActiveSlideViewTypes;
+    } else {
+      activeSlideViewTypes = _.without(currentActiveSlideViewTypes, slideViewType);
+    }
+  } else {
+    activeSlideViewTypes = [...currentActiveSlideViewTypes, slideViewType];
+  }
+
+  return {
+    ...state,
+    activeSlideViewTypes,
+  };
+}
+
+function fetchDeckSuccess(state, action) {
+  return {
+    ...state,
+    activeDeckId: action.payload.activeDeckId,
+    activeSlideId: action.payload.activeSlideId,
+  };
+}
+
+function addSlide(state, action) {
+  return {
+    ...state,
+    activeSlideId: action.payload.slideId,
+  };
+}
+
 export default function slideEditorReducer(state = initialState, action) {
   switch (action.type) {
-
-    case SET_ACTIVE_DECK_ID:
-      return {
-        ...state,
-        activeDeckId: action.payload.deckId,
-      };
-
-    case SET_ACTIVE_SLIDE_ID:
-      return {
-        ...state,
-        activeSlideId: action.payload.slideId,
-      };
-
-    case SET_ACTIVE_CONTENT_ITEM_ID:
-      return {
-        ...state,
-        activeContentItemId: action.payload.contentItemId,
-      };
-
-    case SET_SELECTION_OFFSETS:
-      return {
-        ...state,
-        selectionOffsets: action.payload.selectionOffsets,
-      };
-
-    case TOGGLE_SLIDE_VIEW:
-      const slideViewType = action.payload.slideViewType;
-      const currentActiveSlideViewTypes = state.activeSlideViewTypes;
-
-      let activeSlideViewTypes;
-      if (Array.indexOf(currentActiveSlideViewTypes, slideViewType) !== -1) {
-        // Cannot remove the last active slide view type.
-        if (currentActiveSlideViewTypes.length <= 1) {
-          activeSlideViewTypes = currentActiveSlideViewTypes;
-        } else {
-          activeSlideViewTypes = _.without(currentActiveSlideViewTypes, slideViewType);
-        }
-      } else {
-        activeSlideViewTypes = [...currentActiveSlideViewTypes, slideViewType];
-      }
-
-      return {
-        ...state,
-        activeSlideViewTypes,
-      };
-
-    case FETCH_DECK_SUCCESS:
-      return {
-        ...state,
-        activeDeckId: action.payload.activeDeckId,
-        activeSlideId: action.payload.activeSlideId,
-      };
-
-    case ADD_SLIDE:
-      return {
-        ...state,
-        activeSlideId: action.payload.slideId,
-      };
-
-    default:
-      return state;
+    case SET_ACTIVE_DECK_ID: return setActiveDeckId(state, action);
+    case SET_ACTIVE_SLIDE_ID: return setActiveSlideId(state, action);
+    case SET_ACTIVE_CONTENT_ITEM_ID: return setActiveContentItemId(state, action);
+    case SET_SELECTION_OFFSETS: return setSelectionOffsets(state, action);
+    case TOGGLE_SLIDE_VIEW: return toggleSlideView(state, action);
+    case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
+    case ADD_SLIDE: return addSlide(state, action);
+    default: return state;
   }
 }
