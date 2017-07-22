@@ -40,6 +40,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    // Necessary because slides might be nested inside another list, which unsets the top margin.
+    ul,
+    ol,
+    menu {
+      margin-top: $spacing--element__v;
+    }
   }
 
   &--fullscreen {
