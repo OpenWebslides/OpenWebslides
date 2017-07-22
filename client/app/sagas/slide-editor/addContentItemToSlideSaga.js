@@ -18,7 +18,7 @@ const sectionContentItemTypes = [
   contentItemTypes.ASIDE,
 ];
 
-function getPropsForContentItemType(contentItemType) {
+function getPropsForContentItemType(contentItemType, contentItemTypeProps) {
   let props = {};
 
   if (Array.indexOf(plaintextContentItemTypes, contentItemType) !== -1) {
@@ -32,7 +32,7 @@ function getPropsForContentItemType(contentItemType) {
     };
   } else if (contentItemType === contentItemTypes.LIST) {
     props = {
-      ordered: false,
+      ordered: false, // default value
       childItemIds: [],
     };
   } else if (contentItemType === contentItemTypes.ILLUSTRATIVE_IMAGE) {
@@ -54,6 +54,12 @@ function getPropsForContentItemType(contentItemType) {
   } else {
     console.error(`Unrecognized contentItemType: ${contentItemType}`);
   }
+
+  // Add extra props that have been passed to the action.
+  props = {
+    ...props,
+    ...contentItemTypeProps,
+  };
 
   return props;
 }
@@ -86,7 +92,7 @@ function* findLastSectionContentItemInListOfContentItemIds(contentItemId, childI
 function* doAddContentItemToSlide(action) {
   try {
     const slide = yield select(getSlideById, action.meta.slideId);
-    const contentItemProps = getPropsForContentItemType(action.meta.contentItemType);
+    const contentItemProps = getPropsForContentItemType(action.meta.contentItemType, action.meta.contentItemTypeProps);
     let contentItemId = generateContentItemId(slide.id, slide.contentItemSequence);
 
     // See if there is an existing section on the slide to which we could add the new contentItem.
