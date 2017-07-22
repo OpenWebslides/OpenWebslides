@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { generateSlideId } from 'lib/convert-to-state/generateIds';
-
 import SlideContainer from 'containers/slide-editor/SlideContainer';
 
 export default class DeckNavigationPane extends Component {
@@ -13,12 +11,11 @@ export default class DeckNavigationPane extends Component {
   }
 
   handleAddSlide() {
-    const slideId = generateSlideId(this.props.activeDeck.id, this.props.activeDeck.slideSequence);
-    this.props.addSlide(slideId, this.props.activeDeck.id);
+    this.props.addSlideToDeck(this.props.activeDeck.id);
   }
 
   handleDeleteSlide(selectedSlideId) {
-    this.props.deleteSlideWithContent(selectedSlideId, this.props.activeDeck.id);
+    this.props.deleteSlideFromDeck(this.props.activeDeck.id, selectedSlideId);
   }
 
   handleSetActiveSlideId(selectedSlideId) {
@@ -74,9 +71,9 @@ DeckNavigationPane.propTypes = {
     slideSequence: PropTypes.number,
     meta: PropTypes.object,
   }),
-  addSlide: PropTypes.func.isRequired,
   setActiveSlideId: PropTypes.func.isRequired,
-  deleteSlideWithContent: PropTypes.func.isRequired,
+  addSlideToDeck: PropTypes.func.isRequired,
+  deleteSlideFromDeck: PropTypes.func.isRequired,
 };
 
 DeckNavigationPane.defaultProps = {

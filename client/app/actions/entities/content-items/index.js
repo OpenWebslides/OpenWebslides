@@ -17,9 +17,16 @@ export function updateContentItem(contentItemId, props, selectionOffsets = null)
   };
 }
 
-export function deleteContentItem(contentItemId, slideId, parentItemId = null, descendantItemIds = []) {
+export function deleteContentItem(
+  contentItemId,
+  slideId,
+  parentItemId = null,
+  descendantItemIds = [],
+  newActiveContentItemId = null,
+  newSelectionOffsets = null,
+) {
   return {
     type: DELETE_CONTENT_ITEM,
-    payload: { contentItemId, slideId, parentItemId, descendantItemIds },
+    payload: { contentItemId, slideId, parentItemId, descendantItemIds, newActiveContentItemId, newSelectionOffsets },
   }
 }
