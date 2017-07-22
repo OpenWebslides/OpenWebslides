@@ -12,6 +12,7 @@ import {
 } from 'actions/app/slide-editor';
 import {FETCH_DECK_SUCCESS} from 'actions/entities/decks';
 import {ADD_SLIDE} from 'actions/entities/slides';
+import {ADD_CONTENT_ITEM} from 'actions/entities/content-items';
 
 const initialState = Immutable({
   activeDeckId: null,
@@ -92,6 +93,17 @@ function addSlide(state, action) {
   };
 }
 
+function addContentItem(state, action) {
+  return {
+    ...state,
+    activeContentItemId: action.payload.contentItemId,
+    selectionOffsets: {
+      start: 0,
+      end: 0,
+    }
+  }
+}
+
 export default function slideEditorReducer(state = initialState, action) {
   switch (action.type) {
     case SET_ACTIVE_DECK_ID: return setActiveDeckId(state, action);
@@ -101,6 +113,7 @@ export default function slideEditorReducer(state = initialState, action) {
     case TOGGLE_SLIDE_VIEW: return toggleSlideView(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
     case ADD_SLIDE: return addSlide(state, action);
+    case ADD_CONTENT_ITEM: return addContentItem(state, action);
     default: return state;
   }
 }
