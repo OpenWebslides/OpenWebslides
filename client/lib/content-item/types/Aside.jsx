@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ContentItemContainer from 'lib/content-item/ContentItemContainer';
 
@@ -19,12 +18,3 @@ export default function Aside(props) {
     </aside>
   );
 }
-
-Aside.propTypes = {
-  editable: PropTypes.bool,
-  contentItem: PropTypes.objectOf(Object).isRequired,
-};
-
-Aside.defaultProps = {
-  editable: false,
-};
