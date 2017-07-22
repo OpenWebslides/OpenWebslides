@@ -20,10 +20,6 @@ class ContentEditable extends Component {
     }
   }
 
-  updateSelectionOffsets() {
-    this.props.setSelectionOffsets(getSelectionOffsets(this.contentEditable));
-  }
-
   constructor(props) {
     super(props);
 
@@ -58,8 +54,6 @@ class ContentEditable extends Component {
     const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
     const amount = text.length - this.props.contentItem.text.length;
 
-    this.updateSelectionOffsets();
-
     updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
 
     this.props.updateContentItem(
@@ -67,18 +61,23 @@ class ContentEditable extends Component {
       {
         text,
         inlineProperties,
-      }
+      },
+      getSelectionOffsets(this.contentEditable)
     );
   }
 
   handleFocus() {
-    this.props.setActiveContentItemId(this.props.contentItem.id);
-    this.updateSelectionOffsets();
+    this.props.setActiveContentItemId(
+      this.props.contentItem.id,
+      getSelectionOffsets(this.contentEditable)
+    );
   }
 
   handleBlur() {
-    this.props.setActiveContentItemId(null);
-    this.updateSelectionOffsets();
+    this.props.setActiveContentItemId(
+      null,
+      getSelectionOffsets(this.contentEditable)
+    );
   }
 
   handleMenuButtonClick(inlinePropertyType) {
@@ -106,11 +105,11 @@ class ContentEditable extends Component {
         text: this.props.contentItem.text,
         inlineProperties,
       },
+      {
+        start: selectionOffsets.end,
+        end: selectionOffsets.end,
+      }
     );
-    this.props.setSelectionOffsets({
-      start: selectionOffsets.end,
-      end: selectionOffsets.end,
-    });
   }
 
   render() {

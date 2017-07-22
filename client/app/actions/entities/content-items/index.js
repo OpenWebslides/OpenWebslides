@@ -10,10 +10,10 @@ export function addContentItem(contentItemId, slideId, contentItemType) {
   };
 }
 
-export function updateContentItem(contentItemId, props) {
+export function updateContentItem(contentItemId, props, selectionOffsets = null) {
   return {
     type: UPDATE_CONTENT_ITEM,
-    payload: { contentItemId, props },
+    payload: { contentItemId, props, selectionOffsets },
   };
 }
 
