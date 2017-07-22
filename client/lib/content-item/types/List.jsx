@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import ContentItemContainer from 'lib/content-item/ContentItemContainer';
 
@@ -20,12 +19,3 @@ export default function List(props) {
     </ListType>
   );
 }
-
-List.propTypes = {
-  editable: PropTypes.bool,
-  contentItem: PropTypes.objectOf(Object).isRequired,
-};
-
-List.defaultProps = {
-  editable: false,
-};

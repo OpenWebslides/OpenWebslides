@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 
@@ -22,11 +21,3 @@ export default function ListItem(props) {
   );
 }
 
-ListItem.propTypes = {
-  editable: PropTypes.bool,
-  contentItem: PropTypes.objectOf(Object).isRequired,
-};
-
-ListItem.defaultProps = {
-  editable: false,
-};
