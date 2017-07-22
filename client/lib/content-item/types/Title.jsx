@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 
@@ -24,12 +23,3 @@ export default function Title(props) {
     );
   }
 }
-
-Title.propTypes = {
-  editable: PropTypes.bool,
-  contentItem: PropTypes.object.isRequired,
-};
-
-Title.defaultProps = {
-  editable: false,
-};
