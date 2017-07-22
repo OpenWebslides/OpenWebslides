@@ -3,8 +3,9 @@ import confirmEmailSaga from 'sagas/confirmEmailSaga';
 import requestFeedNorificationsSaga from 'sagas/feed/requestFeedNotificationsSaga';
 import requestResetPasswordSaga from 'sagas/forgotPasswordSaga';
 import resetPasswordSaga from 'sagas/resetPasswordSaga';
-import fetchDeckSaga from 'sagas/fetchDeckSaga';
-import deleteSlideSaga from 'sagas/deleteSlideSaga';
+
+import fetchDeckSaga from 'sagas/slide-editor/fetchDeckSaga';
+import deleteSlideSaga from 'sagas/slide-editor/deleteSlideSaga';
 
 import oauthSigninSaga from 'sagas/signin/oauthSigninSaga';
 import emailSigninSaga from 'sagas/signin/emailSigninSaga';
