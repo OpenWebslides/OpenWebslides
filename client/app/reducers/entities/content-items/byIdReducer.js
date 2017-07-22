@@ -10,14 +10,26 @@ const initialState = Immutable({});
 function addContentItem(state, action) {
   const contentItemId = action.payload.contentItemId;
 
+  // If there is a parent contentItem, add the new contentItem's id to its childItemsIds array.
+  if (action.payload.parentItemId !== null) {
+    const parentItem = state[action.payload.parentItemId];
+    state = Immutable.merge(
+      state,
+      {
+        [parentItem.id]: {
+          childItemIds: parentItem.childItemIds.concat(contentItemId),
+        },
+      },
+      { deep: true },
+    );
+  }
+
   return Immutable.merge(state,
     {
       [contentItemId]: {
         id: contentItemId,
         contentItemType: action.payload.contentItemType,
-        // #TODO diversify based on contentItemType
-        text: '',
-        inlineProperties: [],
+        ...action.payload.props,
       },
     }
   );

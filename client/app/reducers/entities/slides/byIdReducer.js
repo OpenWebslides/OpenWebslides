@@ -42,11 +42,23 @@ function deleteSlide(state, action) {
 function addContentItem(state, action) {
   const slide = state[action.payload.slideId];
 
+  // Only add the new contentItem to the slide's contentItemIds array if there is no parent item.
+  if (action.payload.parentItemId === null) {
+    state = Immutable.merge(
+      state,
+      {
+        [slide.id]: {
+          contentItemIds: slide.contentItemIds.concat(action.payload.contentItemId),
+        },
+      },
+      { deep: true },
+    );
+  }
+
   return Immutable.merge(
     state,
     {
       [slide.id]: {
-        contentItemIds: slide.contentItemIds.concat(action.payload.contentItemId),
         contentItemSequence: slide.contentItemSequence + 1,
       },
     },
