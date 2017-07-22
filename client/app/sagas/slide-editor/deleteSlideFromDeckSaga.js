@@ -23,7 +23,7 @@ function* getContentItemIdsToDelete(contentItemIds) {
   return contentItemsToDelete;
 }
 
-function* doDeleteSlide(action) {
+function* doDeleteSlideFromDeck(action) {
   try {
     const { deckId, slideId } = action.meta;
     const slide = yield select(getSlideById, slideId);
@@ -50,8 +50,8 @@ function* doDeleteSlide(action) {
   }
 }
 
-function* deleteSlideWatcher() {
-  yield takeLatest(DELETE_SLIDE_FROM_DECK, doDeleteSlide);
+function* deleteSlideFromDeckWatcher() {
+  yield takeLatest(DELETE_SLIDE_FROM_DECK, doDeleteSlideFromDeck);
 }
 
-export default deleteSlideWatcher;
+export default deleteSlideFromDeckWatcher;
