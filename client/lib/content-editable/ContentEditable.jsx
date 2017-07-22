@@ -37,12 +37,18 @@ class ContentEditable extends Component {
     this.loadSelectionOffsets();
   }
 
-  // Prevent users from inserting newlines in the contenteditable field.
   handleKeyPress(e) {
+    // Prevent users from inserting newlines in the contenteditable field.
     const blacklist = ['Enter'];
+
     if (blacklist.indexOf(e.key) >= 0) {
-      // if the pressed key is in the blacklist, don't execute the event
+      // If the pressed key is in the blacklist, don't execute the event.
       e.preventDefault();
+    }
+
+    // Containers may add an extra keypress handler.
+    if (this.props.handleKeyPress !== null) {
+      this.props.handleKeyPress(e, this.props.contentItem);
     }
   }
 
@@ -187,10 +193,12 @@ ContentEditable.propTypes = {
   setActiveContentItemId: PropTypes.func.isRequired,
   updateContentItem: PropTypes.func.isRequired,
   setSelectionOffsets: PropTypes.func.isRequired,
+  handleKeyPress: PropTypes.func,
 };
 
 ContentEditable.defaultProps = {
   activecontentItemId: null,
+  handleKeyPress: null,
 };
 
 export default ContentEditable;

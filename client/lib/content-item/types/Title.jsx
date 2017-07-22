@@ -10,7 +10,7 @@ export default function Title(props) {
   if (props.editable) {
     return (
       <TitleTag>
-        <ContentEditableContainer contentItem={props.contentItem} />
+        <ContentEditableContainer contentItem={props.contentItem} handleKeyPress={props.handleKeyPress} />
       </TitleTag>
     );
   } else {
