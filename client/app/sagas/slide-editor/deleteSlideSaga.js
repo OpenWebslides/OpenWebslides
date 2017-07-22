@@ -1,7 +1,7 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 
-import { setActiveSlideId } from 'actions/app/slide-editor';
-import { DELETE_SLIDE_WITH_CONTENT, deleteSlide } from 'actions/entities/slides';
+import { DELETE_SLIDE_FROM_DECK } from 'actions/entities/decks';
+import { deleteSlide } from 'actions/entities/slides';
 
 import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
@@ -25,30 +25,33 @@ function* getContentItemIdsToDelete(contentItemIds) {
 
 function* doDeleteSlide(action) {
   try {
-    const { slideId, deckId } = action.meta;
-    const state = yield select();
-    const slide = getSlideById(state, slideId);
+    const { deckId, slideId } = action.meta;
+    const slide = yield select(getSlideById, slideId);
     const contentItemIdsToDelete = yield getContentItemIdsToDelete(slide.contentItemIds);
 
-    if (getActiveSlideId(state) === slideId) {
-      const slideIds = Object.keys(getSlidesById(state));
+    const activeSlideId = yield select(getActiveSlideId);
+    let newActiveSlideId;
+
+    if (activeSlideId === slideId) {
+      const slides = yield select(getSlidesById);
+      const slideIds = Object.keys(slides);
       const currentSlideIndex = slideIds.indexOf(slideId);
-      const previousSlideId = currentSlideIndex === 0
+      newActiveSlideId = currentSlideIndex === 0
         ? slideIds[currentSlideIndex + 1]
         : slideIds[currentSlideIndex - 1];
-
-      yield put(setActiveSlideId(previousSlideId));
+    } else {
+      newActiveSlideId = null;
     }
 
-    yield put(deleteSlide(slideId, deckId, contentItemIdsToDelete));
+    yield put(deleteSlide(slideId, deckId, contentItemIdsToDelete, newActiveSlideId));
 
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
-function* fetchSlidesWatcher() {
-  yield takeLatest(DELETE_SLIDE_WITH_CONTENT, doDeleteSlide);
+function* deleteSlideWatcher() {
+  yield takeLatest(DELETE_SLIDE_FROM_DECK, doDeleteSlide);
 }
 
-export default fetchSlidesWatcher;
+export default deleteSlideWatcher;

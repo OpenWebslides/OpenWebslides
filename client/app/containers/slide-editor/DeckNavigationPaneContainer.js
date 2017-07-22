@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { setActiveSlideId } from 'actions/app/slide-editor';
-import { addSlide, deleteSlideWithContent } from 'actions/entities/slides';
+import { addSlideToDeck, deleteSlideFromDeck } from 'actions/entities/decks';
 
 import { getDeckById } from 'selectors/entities/decks';
 import { getActiveDeckId, getActiveSlideId } from 'selectors/app/slide-editor';
@@ -21,7 +21,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addSlide, deleteSlideWithContent, setActiveSlideId }, dispatch);
+  return bindActionCreators({ addSlideToDeck, deleteSlideFromDeck, setActiveSlideId }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckNavigationPane);

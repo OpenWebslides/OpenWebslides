@@ -11,8 +11,8 @@ import {
   TOGGLE_SLIDE_VIEW,
 } from 'actions/app/slide-editor';
 import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
-import { ADD_SLIDE } from 'actions/entities/slides';
-import { ADD_CONTENT_ITEM, UPDATE_CONTENT_ITEM } from 'actions/entities/content-items';
+import { ADD_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
+import { ADD_CONTENT_ITEM, UPDATE_CONTENT_ITEM, DELETE_CONTENT_ITEM } from 'actions/entities/content-items';
 
 const initialState = Immutable({
   activeDeckId: null,
@@ -102,6 +102,22 @@ function addSlide(state, action) {
   };
 }
 
+function deleteSlide(state, action) {
+  if (action.payload.newActiveSlideId !== null) {
+    return {
+      ...state,
+      activeSlideId: action.payload.newActiveSlideId,
+    };
+  } else if(action.payload.slideId === state.activeSlideId) {
+    return {
+      ...state,
+      activeSlideId: null,
+    }
+  } else {
+    return state;
+  }
+}
+
 function addContentItem(state, action) {
   return {
     ...state,
@@ -109,8 +125,8 @@ function addContentItem(state, action) {
     selectionOffsets: {
       start: 0,
       end: 0,
-    }
-  }
+    },
+  };
 }
 
 function updateContentItem(state, action) {
@@ -126,6 +142,27 @@ function updateContentItem(state, action) {
   }
 }
 
+function deleteContentItem(state, action) {
+  if (action.payload.newActiveContentItemId !== null) {
+    return {
+      ...state,
+      activeContentItemId: action.payload.newActiveContentItemId,
+      selectionOffsets: action.payload.newSelectionOffsets,
+    };
+  } else if (action.payload.contentItemId === state.activeContentItemId) {
+    return {
+      ...state,
+      activeContentItemId: null,
+      selectionOffsets: {
+        start: 0,
+        end: 0,
+      },
+    };
+  } else {
+    return state;
+  }
+}
+
 export default function slideEditorReducer(state = initialState, action) {
   switch (action.type) {
     case SET_ACTIVE_DECK_ID: return setActiveDeckId(state, action);
@@ -135,8 +172,10 @@ export default function slideEditorReducer(state = initialState, action) {
     case TOGGLE_SLIDE_VIEW: return toggleSlideView(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
     case ADD_SLIDE: return addSlide(state, action);
+    case DELETE_SLIDE: return deleteSlide(state, action);
     case ADD_CONTENT_ITEM: return addContentItem(state, action);
     case UPDATE_CONTENT_ITEM: return updateContentItem(state, action);
+    case DELETE_CONTENT_ITEM: return deleteContentItem(state, action);
     default: return state;
   }
 }
