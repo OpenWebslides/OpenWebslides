@@ -56,7 +56,13 @@ class ContentEditable extends Component {
 
     updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
 
-    this.props.updateContentBlock(this.props.contentItem.id, text, inlineProperties);
+    this.props.updateContentItem(
+      this.props.contentItem.id,
+      {
+        text,
+        inlineProperties,
+      }
+    );
   }
 
   handleFocus() {
@@ -88,7 +94,13 @@ class ContentEditable extends Component {
 
     // set the new inlineProperties array in the state
     // and move the caret to the end of the new inlineProperty
-    this.props.updateContentBlock(this.props.contentItem.id, this.props.contentItem.text, inlineProperties);
+    this.props.updateContentItem(
+      this.props.contentItem.id,
+      {
+        text: this.props.contentItem.text,
+        inlineProperties,
+      },
+    );
     this.props.setSelectionOffsets({
       start: selectionOffsets.end,
       end: selectionOffsets.end,
@@ -151,11 +163,24 @@ class ContentEditable extends Component {
 }
 
 ContentEditable.propTypes = {
-  contentItem: PropTypes.object.isRequired,
+  // ContentItems passed to ContentEditable should always be of the text/inlineProperties type,
+  // so we can explicitly test for this:
+  contentItem: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    contentItemType: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    inlineProperties: PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      offSets: PropTypes.shape({
+        start: PropTypes.number.isRequired,
+        end: PropTypes.number.isRequired,
+      }).isRequired,
+    })).isRequired,
+  }).isRequired,
   activeContentItemId: PropTypes.string,
   selectionOffsets: PropTypes.object.isRequired,
   setActiveContentItemId: PropTypes.func.isRequired,
-  updateContentBlock: PropTypes.func.isRequired,
+  updateContentItem: PropTypes.func.isRequired,
   setSelectionOffsets: PropTypes.func.isRequired,
 };
 
