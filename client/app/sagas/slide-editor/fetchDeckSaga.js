@@ -4,7 +4,7 @@ import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 import convertToState from 'lib/convert-to-state';
 // import fetchDeckApi from 'api/fetchDeckApi';
 
-const HTMLResponse = `
+const testDeckFlames = `
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -646,13 +646,41 @@ const HTMLResponse = `
 	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>
+`;
 
-  `;
+const testDeckEmpty = `
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+	<title>Opening up educational content for debate via Web technology</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="styles/screen-16x10.css" id="style">
+	<link rel="stylesheet" href="styles/custom.css">
+</head>
+
+<body class="shower list">
+	<section class="slide" id="TestSlideSections">
+		
+	</section>
+
+	<div class="progress"></div>
+	<footer class="badge">
+		<a href="https://github.com/OpenWebslides/presentatie_FLAMES">Fork me on GitHub</a>
+	</footer>
+
+	<script src="scripts/shower.min.js"></script>
+	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</body>
+</html>
+`;
 
 function* doFetchDeck(action) {
 
   try {
     // const HTMLResponse = yield call(fetchDeckApi, action.meta.deckId); // #TODO
+    const HTMLResponse = testDeckEmpty; // testDeckFlames;
 
     const entities = yield convertToState(action.meta.deckId, HTMLResponse);
     const payload = {
