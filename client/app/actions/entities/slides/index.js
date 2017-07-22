@@ -26,9 +26,15 @@ export function deleteSlide(slideId, deckId, contentItemIds = [], newActiveSlide
   }
 }
 
-export function addContentItemToSlide(slideId, contentItemType, contentItemTypeProps = {}) {
+export function addContentItemToSlide(
+  slideId,
+  contentItemType,
+  contentItemTypeProps = {},
+  parentItemId = null,
+  afterItemId = null,
+) {
   return {
     type: ADD_CONTENT_ITEM_TO_SLIDE,
-    meta: { slideId, contentItemType, contentItemTypeProps },
+    meta: { slideId, contentItemType, contentItemTypeProps, parentItemId, afterItemId },
   };
 }

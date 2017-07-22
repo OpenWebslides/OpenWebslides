@@ -3,10 +3,17 @@ export const ADD_CONTENT_ITEM = 'ADD_CONTENT_ITEM';
 export const UPDATE_CONTENT_ITEM = 'UPDATE_CONTENT_ITEM';
 export const DELETE_CONTENT_ITEM = 'DELETE_CONTENT_ITEM';
 
-export function addContentItem(contentItemId, contentItemType, props, slideId, parentItemId = null) {
+export function addContentItem(
+  contentItemId,
+  contentItemType,
+  props,
+  slideId,
+  parentItemId = null,
+  afterItemId = null
+) {
   return {
     type: ADD_CONTENT_ITEM,
-    payload: { contentItemId, contentItemType, props, slideId, parentItemId },
+    payload: { contentItemId, contentItemType, props, slideId, parentItemId, afterItemId },
   };
 }
 
