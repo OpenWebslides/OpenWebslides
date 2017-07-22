@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { contentItemTypesById } from 'constants/contentItemTypes';
 
-export default function ContentItem(props) {
+function ContentItem(props) {
   const { contentItem } = props;
   const ContentItemType = contentItemTypesById[contentItem.contentItemType].component;
   return <ContentItemType {...props} />;
@@ -12,4 +12,11 @@ export default function ContentItem(props) {
 ContentItem.propTypes = {
   contentItem: PropTypes.object.isRequired,
   headingLevel: PropTypes.number.isRequired,
+  editable: PropTypes.bool,
 };
+
+ContentItem.defaultProps = {
+  editable: false,
+};
+
+export default ContentItem;

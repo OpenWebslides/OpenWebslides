@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 
@@ -21,12 +20,3 @@ export default function Paragraph(props) {
     />
   );
 }
-
-Paragraph.propTypes = {
-  editable: PropTypes.bool,
-  contentItem: PropTypes.objectOf(Object).isRequired,
-};
-
-Paragraph.defaultProps = {
-  editable: false,
-};
