@@ -1,27 +1,25 @@
-// Action types
+
 export const ADD_CONTENT_ITEM = 'ADD_CONTENT_ITEM';
-export const DELETE_CONTENT_BLOCKS = 'DELETE_CONTENT_BLOCKS';
-export const UPDATE_CONTENT_BLOCK = 'UPDATE_CONTENT_BLOCK';
+export const UPDATE_CONTENT_ITEM = 'UPDATE_CONTENT_ITEM';
+export const DELETE_CONTENT_ITEM = 'DELETE_CONTENT_ITEM';
 
-// Action Creators
-
-export function updateContentBlock(contentBlockId, text, inlineProperties) {
-  return {
-    type: UPDATE_CONTENT_BLOCK,
-    payload: { contentBlockId, text, inlineProperties },
-  };
-}
-
-export function deleteContentBlocks(contentBlocksIds) {
-  return {
-    type: DELETE_CONTENT_BLOCKS,
-    payload: { contentBlocksIds },
-  };
-}
-
-export function addContentItem(contentItemId, contentItemType, slideId) {
+export function addContentItem(contentItemId, slideId, contentItemType) {
   return {
     type: ADD_CONTENT_ITEM,
-    payload: { contentItemId, contentItemType, slideId },
+    payload: { contentItemId, slideId, contentItemType },
   };
+}
+
+export function updateContentItem(contentItemId, props) {
+  return {
+    type: UPDATE_CONTENT_ITEM,
+    payload: { contentItemId, props },
+  };
+}
+
+export function deleteContentItem(contentItemId, slideId, parentItemId = null, descendantItemIds = []) {
+  return {
+    type: DELETE_CONTENT_ITEM,
+    payload: { contentItemId, slideId, parentItemId, descendantItemIds },
+  }
 }

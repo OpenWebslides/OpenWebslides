@@ -14,12 +14,11 @@ export default class DeckNavigationPane extends Component {
 
   handleAddSlide() {
     const slideId = generateSlideId(this.props.activeDeck.id, this.props.activeDeck.slideSequence);
-    console.log(this.props.activeDeck.slideSequence);
-    this.props.addSlide(this.props.activeDeck.id, slideId);
+    this.props.addSlide(slideId, this.props.activeDeck.id);
   }
 
   handleDeleteSlide(selectedSlideId) {
-    this.props.deleteSlideWithContent(this.props.activeDeck.id, selectedSlideId);
+    this.props.deleteSlideWithContent(selectedSlideId, this.props.activeDeck.id);
   }
 
   handleSetActiveSlideId(selectedSlideId) {

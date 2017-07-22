@@ -39,7 +39,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onButtonClick: (button) => {
       const contentItemId = generateContentItemId(button.parameters.slide.id, button.parameters.slide.contentItemSequence);
-      dispatch(addContentItem(contentItemId, button.parameters.contentItemType, button.parameters.slide.id));
+      dispatch(addContentItem(contentItemId, button.parameters.slide.id, button.parameters.contentItemType));
     },
   };
 }
