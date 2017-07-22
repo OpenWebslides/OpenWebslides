@@ -1,4 +1,7 @@
 
+export const ADD_SLIDE_TO_DECK = 'ADD_SLIDE_TO_DECK';
+export const DELETE_SLIDE_FROM_DECK = 'DELETE_SLIDE_FROM_DECK';
+
 export const UPDATE_DECK = 'UPDATE_DECK';
 export const UPDATE_DECK_SUCCESS = 'UPDATE_DECK_SUCCESS';
 export const UPDATE_DECK_FAILURE = 'UPDATE_DECK_FAILURE';
@@ -6,6 +9,21 @@ export const UPDATE_DECK_FAILURE = 'UPDATE_DECK_FAILURE';
 export const FETCH_DECK = 'FETCH_DECK';
 export const FETCH_DECK_SUCCESS = 'FETCH_DECK_SUCCESS';
 export const FETCH_DECK_FAILURE = 'FETCH_DECK_FAILURE';
+
+
+export function addSlideToDeck(deckId) {
+  return {
+    type: ADD_SLIDE_TO_DECK,
+    meta: { deckId },
+  }
+}
+
+export function deleteSlideFromDeck(deckId, slideId) {
+  return {
+    type: DELETE_SLIDE_FROM_DECK,
+    meta: { deckId, slideId },
+  };
+}
 
 export function updateDeck() {
   return {

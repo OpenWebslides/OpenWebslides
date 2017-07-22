@@ -6,9 +6,7 @@ import { contentItemTypesById } from 'constants/contentItemTypes';
 import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlideById } from 'selectors/entities/slides';
 
-import { addContentItem } from 'actions/entities/content-items';
-
-import { generateContentItemId } from 'lib/convert-to-state/generateIds';
+import { addContentItemToSlide } from 'actions/entities/slides';
 
 import Toolbar from 'presentationals/components/shared/Toolbar';
 
@@ -38,8 +36,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onButtonClick: (button) => {
-      const contentItemId = generateContentItemId(button.parameters.slide.id, button.parameters.slide.contentItemSequence);
-      dispatch(addContentItem(contentItemId, button.parameters.slide.id, button.parameters.contentItemType));
+      dispatch(addContentItemToSlide(button.parameters.slide.id, button.parameters.contentItemType));
     },
   };
 }
