@@ -310,6 +310,5 @@ export default function parseSlideNodes(deckId, nodes) {
   return {
     slidesById,
     contentItemsById,
-    slideSequence,
   };
 }

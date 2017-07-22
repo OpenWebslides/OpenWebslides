@@ -75,7 +75,12 @@ function deleteContentItem(state, action) {
 }
 
 function fetchDeckSuccess(state, action) {
-  return action.payload.slidesById;
+  return Immutable.merge(
+    state,
+    {
+      ...action.payload.slidesById,
+    },
+  );
 }
 
 function byId(state = initialState, action) {

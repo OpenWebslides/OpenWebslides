@@ -88,10 +88,12 @@ function toggleSlideView(state, action) {
 }
 
 function fetchDeckSuccess(state, action) {
+  const slides = _.values(action.payload.slidesById);
+
   return {
     ...state,
-    activeDeckId: action.payload.activeDeckId,
-    activeSlideId: action.payload.activeSlideId,
+    activeDeckId: action.payload.deckId,
+    activeSlideId: slides.length > 0 ? slides[0].id : null,
   };
 }
 
