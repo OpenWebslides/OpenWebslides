@@ -22,6 +22,7 @@ ToolbarButton.propTypes = {
   cssIdentifier: PropTypes.string,
   button: PropTypes.shape({
     id: PropTypes.string.isRequired,
+    key: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     title: PropTypes.string,
     actionCode: PropTypes.string.isRequired,
