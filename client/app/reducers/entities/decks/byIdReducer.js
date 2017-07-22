@@ -36,7 +36,7 @@ function deleteSlide(state, action) {
 }
 
 function fetchDeckSuccess(state, action) {
-  const deckId = action.payload.activeDeckId;
+  const deckId = action.payload.deckId;
 
   return Immutable.merge(
     state,
