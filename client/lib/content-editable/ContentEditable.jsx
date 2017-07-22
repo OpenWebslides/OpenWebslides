@@ -48,8 +48,6 @@ class ContentEditable extends Component {
       // if the pressed key is in the blacklist, don't execute the event
       e.preventDefault();
     }
-
-    this.updateSelectionOffsets();
   }
 
   // Map state to contenteditable innerHTML.
