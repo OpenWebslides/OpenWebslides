@@ -6,55 +6,57 @@ import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 
 const initialState = Immutable({});
 
+function addSlide(state, action) {
+  const deck = state[action.payload.deckId];
+
+  return Immutable.merge(
+    state,
+    {
+      [deck.id]: {
+        slideIds: deck.slideIds.concat(action.payload.slideId),
+        slideSequence: deck.slideSequence + 1,
+      },
+    },
+    { deep: true},
+  );
+}
+
+function deleteSlide(state, action) {
+  const deck = state[action.payload.deckId];
+
+  return Immutable.merge(
+    state,
+    {
+      [deck.id]: {
+        slideIds: _.without(deck.slideIds, action.payload.slideId),
+      },
+    },
+    { deep: true },
+  );
+}
+
+function fetchDeckSuccess(state, action) {
+  const deckId = action.payload.activeDeckId;
+
+  return Immutable.merge(
+    state,
+    {
+      [deckId]: {
+        id: deckId,
+        meta: {},
+        slideIds: Object.keys(action.payload.slidesById),
+        slideSequence: Object.keys(action.payload.slidesById).length,
+      },
+    },
+  );
+}
+
 function byId(state = initialState, action) {
-  let deck;
-
   switch (action.type) {
-
-    case ADD_SLIDE:
-      deck = state[action.payload.deckId];
-
-      return Immutable.merge(
-        state,
-        {
-          [deck.id]: {
-            slideIds: deck.slideIds.concat(action.payload.slideId),
-            slideSequence: deck.slideSequence + 1,
-          },
-        },
-        { deep: true},
-      );
-
-    case DELETE_SLIDE:
-      deck = state[action.payload.deckId];
-
-      return Immutable.merge(
-        state,
-        {
-          [deck.id]: {
-            slideIds: _.without(deck.slideIds, action.payload.slideId),
-          },
-        },
-        { deep: true },
-      );
-
-    case FETCH_DECK_SUCCESS:
-      const deckId = action.payload.activeDeckId;
-
-      return Immutable.merge(
-        state,
-        {
-          [deckId]: {
-            id: deckId,
-            meta: {},
-            slideIds: Object.keys(action.payload.slidesById),
-            slideSequence: Object.keys(action.payload.slidesById).length,
-          },
-        },
-      );
-
-    default:
-      return state;
+    case ADD_SLIDE: return addSlide(state, action);
+    case DELETE_SLIDE: return deleteSlide(state, action);
+    case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
+    default: return state;
   }
 }
 
