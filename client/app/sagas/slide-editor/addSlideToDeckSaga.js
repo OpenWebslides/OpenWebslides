@@ -5,7 +5,7 @@ import { addSlide } from 'actions/entities/slides';
 import { getDeckById } from 'selectors/entities/decks';
 import { generateSlideId } from 'lib/convert-to-state/generateIds';
 
-function* doAddSlide(action) {
+function* doAddSlideToDeck(action) {
   try {
     const deck = yield select(getDeckById, action.meta.deckId);
     const slideId = generateSlideId(deck.id, deck.slideSequence);
@@ -17,8 +17,8 @@ function* doAddSlide(action) {
   }
 }
 
-function* addSlideWatcher() {
-  yield takeEvery(ADD_SLIDE_TO_DECK, doAddSlide);
+function* addSlideToDeckWatcher() {
+  yield takeEvery(ADD_SLIDE_TO_DECK, doAddSlideToDeck);
 }
 
-export default addSlideWatcher;
+export default addSlideToDeckWatcher;

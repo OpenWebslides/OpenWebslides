@@ -5,7 +5,7 @@ import { addContentItem } from 'actions/entities/content-items';
 import { getSlideById } from 'selectors/entities/slides';
 import { generateContentItemId } from 'lib/convert-to-state/generateIds';
 
-function* doAddContentItem(action) {
+function* doAddContentItemToSlide(action) {
   try {
     const slide = yield select(getSlideById, action.meta.slideId);
     const contentItemId = generateContentItemId(slide.id, slide.contentItemSequence);
@@ -17,8 +17,8 @@ function* doAddContentItem(action) {
   }
 }
 
-function* addContentItemWatcher() {
-  yield takeEvery(ADD_CONTENT_ITEM_TO_SLIDE, doAddContentItem);
+function* addContentItemToSlideWatcher() {
+  yield takeEvery(ADD_CONTENT_ITEM_TO_SLIDE, doAddContentItemToSlide);
 }
 
-export default addContentItemWatcher;
+export default addContentItemToSlideWatcher;
