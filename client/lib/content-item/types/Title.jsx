@@ -6,22 +6,23 @@ import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/i
 import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
 
 export default function Title(props) {
-  if (props.editable) {
-    const TitleTag = `h${props.headingLevel}`;
+  const TitleTag = `h${props.headingLevel}`;
 
+  if (props.editable) {
     return (
       <TitleTag>
         <ContentEditableContainer contentItem={props.contentItem} />
       </TitleTag>
     );
+  } else {
+    return (
+      <TitleTag
+        dangerouslySetInnerHTML={{
+          __html: getHTMLStringFromInlinePropertiesAndText(props.contentItem.inlineProperties, props.contentItem.text),
+        }}
+      />
+    );
   }
-  return (
-    <h1
-      dangerouslySetInnerHTML={{
-        __html: getHTMLStringFromInlinePropertiesAndText(props.contentItem.inlineProperties, props.contentItem.text),
-      }}
-    />
-  );
 }
 
 Title.propTypes = {
