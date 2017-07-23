@@ -679,13 +679,13 @@ const testDeckEmpty = `
   </section>
   
   <section class="slide" id="TestComplicatedDelete">
-  <h1>Heading level 1</h1>
+  <h1>Heading <strong>level</strong> 1</h1>
   <ul>
     <li>Unordered item 1</li>
     <li>Unordered item 2</li>
     <li>Unordered item 3</li>
   </ul>
-  <h2>Heading level 2</h2>
+  <h2>Heading <strong>level</strong> 2</h2>
   <ol>
     <li>Ordered item 1</li>
     <li>Ordered item 2</li>
