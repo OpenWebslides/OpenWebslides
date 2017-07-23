@@ -32,7 +32,6 @@ Toolbar.propTypes = {
     key: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     title: PropTypes.string,
-    actionCode: PropTypes.string.isRequired,
     onClickArguments: PropTypes.object,
   })).isRequired,
   onButtonClick: PropTypes.func.isRequired,
