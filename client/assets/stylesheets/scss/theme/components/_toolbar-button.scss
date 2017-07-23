@@ -2,12 +2,26 @@
 // Toolbar button component
 // ------------------------
 
-.c_toolbar-button {
-  &__widget {
+.c_toolbar-button--slide-editor {
+  .c_toolbar-button__widget {
     padding: 0;
+
+    &::before {
+      @include icon(false, $line-height--base * 1em);
+    }
 
     &__wrapper {
       @include screenreaders-only;
+    }
+  }
+}
+
+@each $content-item-type, $icon in $map--content-item-types_to_icons {
+  .c_toolbar-button--slide-editor.c_toolbar-button--id_#{$content-item-type} {
+    .c_toolbar-button__widget {
+      &::before {
+        content: $icon;
+      }
     }
   }
 }
