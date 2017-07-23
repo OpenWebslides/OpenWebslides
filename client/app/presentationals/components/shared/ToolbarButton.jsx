@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function ToolbarButton(props) {
+  const key = props.button.key.toLowerCase().replace('_', '-');
+
   return (
-    <span className={ "c_toolbar-button c_toolbar-button--" + props.cssIdentifier }>
-      <button className={ "c_toolbar-button__widget o_button o_action o_action--" + props.button.actionCode }
+    <span className={ `c_toolbar-button c_toolbar-button--${props.cssIdentifier} c_toolbar-button--id_${key}` }>
+      <button className={ "c_toolbar-button__widget o_button" }
               title={ props.button.title !== undefined
                 ? props.button.title
                 : props.button.text }
@@ -25,7 +27,6 @@ ToolbarButton.propTypes = {
     key: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     title: PropTypes.string,
-    actionCode: PropTypes.string.isRequired,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
 };

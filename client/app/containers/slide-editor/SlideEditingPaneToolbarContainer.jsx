@@ -56,7 +56,6 @@ function mapStateToProps(state) {
       id: contentItemType.id,
       key: typeData.key,
       text: contentItemType.name,
-      actionCode: `add-${typeData.key.toLowerCase().replace('_', '-')}`,
       parameters: {
         slide: activeSlide,
         contentItemType: contentItemType.id,
@@ -66,6 +65,7 @@ function mapStateToProps(state) {
   });
 
   return {
+    cssIdentifier: 'slide-editor',
     buttons,
   };
 }
