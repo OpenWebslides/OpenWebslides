@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 
-import { getActiveSlideId, getActiveSlideViewTypes } from 'selectors/app/slide-editor';
+import { getActiveSlideId } from 'selectors/app/slide-editor';
 
 import SlideLiveView from 'presentationals/components/slide-editor/SlideLiveView';
 
 function mapStateToProps(state) {
   return {
     activeSlideId: getActiveSlideId(state),
-    activeSlideViewTypes: getActiveSlideViewTypes(state),
   };
 }
 
