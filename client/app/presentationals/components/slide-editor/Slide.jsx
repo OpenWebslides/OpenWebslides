@@ -72,6 +72,7 @@ class Slide extends Component {
           <ContentItemContainer
             key={id}
             contentItemId={id}
+            ancestorItemIds={[]}
             slideId={this.props.slide.id}
             editable={this.props.editable}
             headingLevel={0}

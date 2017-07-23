@@ -8,7 +8,7 @@ export default function Paragraph(props) {
   if (props.editable) {
     return (
       <p>
-        <ContentEditableContainer contentItem={props.contentItem} handleKeyPress={props.handleKeyPress} />
+        <ContentEditableContainer contentItem={props.contentItem} handleKeyDown={props.handleKeyDown} />
       </p>
     );
   }
