@@ -29,11 +29,16 @@ $map--actions_to_icons: (show: $fa-var-arrow-right,
         back: $fa-var-arrow-left,
         post: $fa-var-envelope,
         read-more: $fa-var-chevron-right,
-        add-title: $fa-var-header,
-        add-paragraph: $fa-var-paragraph,
-        add-unordered-list: $fa-var-list-ul,
-        add-ordered-list: $fa-var-list-ol,
-        add-illustrative-image: $fa-var-image,
-        add-decorative-image: $fa-var-image,
-        add-iframe: $fa-var-globe, // $fa-var-html5,
 ) !default; // #TODO make test page
+
+// ContentItemTypes
+
+$map--content-item-types_to_icons: (
+        title: $fa-var-header,
+        paragraph: $fa-var-paragraph,
+        unordered-list: $fa-var-list-ul,
+        ordered-list: $fa-var-list-ol,
+        illustrative-image: $fa-var-image,
+        decorative-image: $fa-var-image,
+        iframe: $fa-var-globe, // $fa-var-html5,
+) !default;
