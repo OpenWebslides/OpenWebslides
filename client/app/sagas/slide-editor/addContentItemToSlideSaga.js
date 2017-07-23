@@ -1,22 +1,12 @@
 import { takeEvery, select, put } from 'redux-saga/effects';
 
-import { contentItemTypes } from 'constants/contentItemTypes';
+import { contentItemTypes, plaintextContentItemTypes, sectionContentItemTypes } from 'constants/contentItemTypes';
 
 import { ADD_CONTENT_ITEM_TO_SLIDE } from 'actions/entities/slides';
 import { addContentItem } from 'actions/entities/content-items';
 import { getSlideById } from 'selectors/entities/slides';
 import { getContentItemById } from 'selectors/entities/content-items';
 import { generateContentItemId } from 'lib/convert-to-state/generateIds';
-
-const plaintextContentItemTypes = [
-  contentItemTypes.TITLE,
-  contentItemTypes.PARAGRAPH,
-  contentItemTypes.LIST_ITEM,
-];
-const sectionContentItemTypes = [
-  contentItemTypes.SECTION,
-  contentItemTypes.ASIDE,
-];
 
 function getPropsForContentItemType(contentItemType, contentItemTypeProps) {
   let props = {};

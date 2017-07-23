@@ -19,6 +19,20 @@ export const contentItemTypes = {
   ASIDE: 'ASIDE',
 };
 
+export const plaintextContentItemTypes = [
+  contentItemTypes.TITLE,
+  contentItemTypes.PARAGRAPH,
+  contentItemTypes.LIST_ITEM,
+];
+export const sectionContentItemTypes = [
+  contentItemTypes.SECTION,
+  contentItemTypes.ASIDE,
+];
+export const containerContentItemTypes = [
+  ...sectionContentItemTypes,
+  contentItemTypes.LIST,
+];
+
 export const contentItemTypesById = {
   [contentItemTypes.TITLE]: {
     id: contentItemTypes.TITLE,
