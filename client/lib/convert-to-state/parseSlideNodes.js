@@ -52,7 +52,7 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
   };
   if (node.outerHTML === undefined) return emptyResult;
 
-  const { nodeName, children, textContent } = node;
+  const { nodeName, childNodes, children, textContent } = node;
   const contentItemId = generateContentItemId(slideId, contentItemSequence);
   let contentItem = { id: contentItemId };
   let childItemIds = [];
@@ -114,7 +114,7 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
     contentItem = {
       ...contentItem,
       text: parseTextContent(textContent),
-      inlineProperties: parseInlineProperties(children),
+      inlineProperties: parseInlineProperties(childNodes),
     };
   }
   else if (nodeName === 'IMG') {

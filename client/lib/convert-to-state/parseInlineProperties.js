@@ -1,30 +1,28 @@
 const SUPPORTED_PROPERTIES = ['EM', 'STRONG'];
 
-export default function addInlineProperties(nodes) {
-  const inlinePropertyState = [];
-
-  const inlinePropertyNodes = Array.from(nodes);
+export default function parseInlineProperties(nodes) {
+  const inlineProperties = [];
 
   let charOffset = 0;
+  let endsAtChar;
+  let node;
 
-  inlinePropertyNodes.forEach(node => {
-    const textLength = node.textContent.length;
-    const endsAtChar = charOffset + textLength;
+  for (let i = 0; i < nodes.length; i++) {
+    node = nodes[i];
+    endsAtChar = charOffset + node.textContent.length;
 
-    if (SUPPORTED_PROPERTIES.includes(node.nodeName) === false) {
-      charOffset = endsAtChar;
-    } else {
-      inlinePropertyState.push({
-        type: node.nodeName,
+    if (SUPPORTED_PROPERTIES.includes(node.nodeName)) {
+      inlineProperties.push({
+        type: node.nodeName, // #TODO fix this
         offSets: {
           start: charOffset,
           end: endsAtChar,
         },
       });
-
-      charOffset = endsAtChar;
     }
-  });
 
-  return inlinePropertyState;
+    charOffset = endsAtChar;
+  }
+
+  return inlineProperties;
 }
