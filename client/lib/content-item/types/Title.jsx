@@ -5,7 +5,7 @@ import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/i
 import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
 
 export default function Title(props) {
-  const TitleTag = `h${props.headingLevel}`;
+  const TitleTag = `h${props.headingLevel <= 6 ? props.headingLevel : 6}`;
 
   if (props.editable) {
     return (
