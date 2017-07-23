@@ -4,12 +4,19 @@ export default function parseInlineProperties(nodes) {
   const inlineProperties = [];
 
   let charOffset = 0;
+  let textContent;
   let endsAtChar;
   let node;
 
   for (let i = 0; i < nodes.length; i++) {
     node = nodes[i];
-    endsAtChar = charOffset + node.textContent.length;
+    // Trim left side & merge successive whitespace chars into one.
+    textContent = node.textContent.replace(/^\s+/, '').replace(/\s+/g, ' ');
+
+    console.log(`"${node.textContent}"`);
+    console.log(`"${textContent}"`);
+
+    endsAtChar = charOffset + textContent.length;
 
     if (SUPPORTED_PROPERTIES.includes(node.nodeName)) {
       inlineProperties.push({
