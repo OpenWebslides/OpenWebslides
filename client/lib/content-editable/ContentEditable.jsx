@@ -23,7 +23,7 @@ class ContentEditable extends Component {
   constructor(props) {
     super(props);
 
-    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
@@ -37,7 +37,7 @@ class ContentEditable extends Component {
     this.loadSelectionOffsets();
   }
 
-  handleKeyPress(e) {
+  handleKeyDown(e) {
     // Prevent users from inserting newlines in the contenteditable field.
     const blacklist = ['Enter'];
 
@@ -47,8 +47,8 @@ class ContentEditable extends Component {
     }
 
     // Containers may add an extra keypress handler.
-    if (this.props.handleKeyPress !== null) {
-      this.props.handleKeyPress(e, this.props.contentItem);
+    if (this.props.handleKeyDown !== null) {
+      this.props.handleKeyDown(e, this.props.contentItem);
     }
   }
 
@@ -157,7 +157,7 @@ class ContentEditable extends Component {
             ref={contentEditable => {
               this.contentEditable = contentEditable;
             }}
-            onKeyPress={this.handleKeyPress}
+            onKeyDown={this.handleKeyDown}
             onInput={this.handleInput}
             dangerouslySetInnerHTML={{
               __html: getHTMLStringFromInlinePropertiesAndText(
@@ -193,12 +193,12 @@ ContentEditable.propTypes = {
   setActiveContentItemId: PropTypes.func.isRequired,
   updateContentItem: PropTypes.func.isRequired,
   setSelectionOffsets: PropTypes.func.isRequired,
-  handleKeyPress: PropTypes.func,
+  handleKeyDown: PropTypes.func,
 };
 
 ContentEditable.defaultProps = {
   activecontentItemId: null,
-  handleKeyPress: null,
+  handleKeyDown: null,
 };
 
 export default ContentEditable;

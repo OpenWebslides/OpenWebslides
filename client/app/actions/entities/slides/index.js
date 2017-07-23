@@ -4,6 +4,7 @@ export const UPDATE_SLIDE = 'UPDATE_SLIDE';
 export const DELETE_SLIDE = 'DELETE_SLIDE';
 
 export const ADD_CONTENT_ITEM_TO_SLIDE = 'ADD_CONTENT_ITEM_TO_SLIDE';
+export const DELETE_CONTENT_ITEM_FROM_SLIDE = 'DELETE_CONTENT_ITEM_FROM_SLIDE';
 
 export function addSlide(slideId, deckId) {
   return {
@@ -36,5 +37,16 @@ export function addContentItemToSlide(
   return {
     type: ADD_CONTENT_ITEM_TO_SLIDE,
     meta: { slideId, contentItemType, contentItemTypeProps, parentItemId, afterItemId },
+  };
+}
+
+export function deleteContentItemFromSlide(
+  slideId,
+  contentItemId,
+  ancestorItemIds,
+) {
+  return {
+    type: DELETE_CONTENT_ITEM_FROM_SLIDE,
+    meta: { slideId, contentItemId, ancestorItemIds },
   };
 }

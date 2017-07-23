@@ -1,9 +1,10 @@
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
 
-import { addContentItemToSlide } from 'actions/entities/slides';
+import { addContentItemToSlide, deleteContentItemFromSlide } from 'actions/entities/slides';
 import { getContentItemById } from 'selectors/entities/content-items';
 
 import ContentItem from './ContentItem';
@@ -16,7 +17,7 @@ function mapStateToProps(state, props) {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    handleKeyPress: (e, contentItem) => {
+    handleKeyDown: (e, contentItem) => {
       // On enter key press, add new contentItem below the current one.
       if (e.key === 'Enter') {
         let newContentItemType;
@@ -31,9 +32,20 @@ function mapDispatchToProps(dispatch, props) {
           props.slideId,
           newContentItemType,
           {},
-          props.parentItemId,
+          _.last(props.ancestorItemIds),
           props.contentItemId,
         ));
+      }
+      // If backspace is pressed on an empty contentItem, delete the contentItem and jump to the previous one.
+      else if (e.key === 'Backspace') {
+        if (contentItem.text === '') {
+          e.preventDefault();
+          dispatch(deleteContentItemFromSlide(
+            props.slideId,
+            props.contentItemId,
+            props.ancestorItemIds,
+          ));
+        }
       }
     },
   };
@@ -43,12 +55,8 @@ const ContentItemContainer = connect(mapStateToProps, mapDispatchToProps)(Conten
 
 ContentItemContainer.propTypes = {
   contentItemId: PropTypes.string.isRequired,
-  parentItemId: PropTypes.string,
+  ancestorItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   slideId: PropTypes.string.isRequired,
-};
-
-ContentItemContainer.defaultProps = {
-  parentItemId: null,
 };
 
 export default ContentItemContainer;
