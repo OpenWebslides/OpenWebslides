@@ -8,6 +8,7 @@ import fetchDeckSaga from 'sagas/slide-editor/fetchDeckSaga';
 import addSlideToDeckSaga from 'sagas/slide-editor/addSlideToDeckSaga';
 import deleteSlideFromDeckSaga from 'sagas/slide-editor/deleteSlideFromDeckSaga';
 import addContentItemToSlideSaga from 'sagas/slide-editor/addContentItemToSlideSaga';
+import deleteContentItemFromSlideSaga from 'sagas/slide-editor/deleteContentItemFromSlideSaga';
 
 import oauthSigninSaga from 'sagas/signin/oauthSigninSaga';
 import emailSigninSaga from 'sagas/signin/emailSigninSaga';
@@ -31,6 +32,7 @@ export default function* rootSaga() {
     addSlideToDeckSaga(),
     deleteSlideFromDeckSaga(),
     addContentItemToSlideSaga(),
+    deleteContentItemFromSlideSaga(),
     fetchDeckSaga(),
     createDeckSaga(),
     deleteDeckSaga(),

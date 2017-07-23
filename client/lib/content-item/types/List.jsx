@@ -12,7 +12,7 @@ export default function List(props) {
         return <ContentItemContainer
           key={id}
           contentItemId={id}
-          parentItemId={props.contentItem.id}
+          ancestorItemIds={props.ancestorItemIds.concat(props.contentItem.id)}
           slideId={props.slideId}
           editable={props.editable}
           headingLevel={props.headingLevel}

@@ -5,22 +5,19 @@ import { deleteSlide } from 'actions/entities/slides';
 
 import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
-import { getContentItemsById } from 'selectors/entities/content-items';
+import { getContentItemDescendantItemIdsById } from 'selectors/entities/content-items';
 
 function* getContentItemIdsToDelete(contentItemIds) {
-  const contentItemsToDelete = [];
-  const state = yield select();
-  const contentItems = getContentItemsById(state);
+  let result = [];
+  let descendantItemIds;
+  let i;
 
-  (function findContentItemsToDelete(contentItemsArr) {
-    contentItemsArr.forEach(contentItemId => {
-      contentItemsToDelete.push(contentItems[contentItemId].id);
-      if (contentItems[contentItemId].childItemIds) {
-        findContentItemsToDelete(contentItems[contentItemId].childItemIds);
-      }
-    });
-  })(contentItemIds);
-  return contentItemsToDelete;
+  for (i = 0; i < contentItemIds.length; i++) {
+    descendantItemIds = yield select(getContentItemDescendantItemIdsById, contentItemIds[i]);
+    result = result.concat(descendantItemIds);
+  }
+
+  return result;
 }
 
 function* doDeleteSlideFromDeck(action) {
