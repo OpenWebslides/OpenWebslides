@@ -8,7 +8,7 @@ export default function ListItem(props) {
   if (props.editable) {
     return (
       <li>
-        <ContentEditableContainer contentItem={props.contentItem} handleKeyPress={props.handleKeyPress} />
+        <ContentEditableContainer contentItem={props.contentItem} handleKeyDown={props.handleKeyDown} />
       </li>
     );
   }
