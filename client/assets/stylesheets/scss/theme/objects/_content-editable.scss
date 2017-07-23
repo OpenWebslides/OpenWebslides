@@ -24,11 +24,8 @@
   &__menu {
     // position offscreen
     position: absolute;
-    // shift caused bugs in flexbox layout; temporarily switch to different method
-    //top: -$shift;
-    //right: -$shift;
-    z-index: $z-index__hidden-buttons;
-    opacity: 0;
+    top: -$shift;
+    right: -$shift;
 
     // Never wrap menu buttons onto next line no matter how small container is.
     white-space: nowrap;
@@ -74,30 +71,37 @@
     }
   }
 
+  &__wrapper {
+    // Put border on separate, absolutely positioned element, so that it does not effect element size.
+    &::before {
+      @include position-absolute-fill;
+
+      border: 1px solid transparent;
+      content: '';
+    }
+
+    &:hover::before {
+      border-color: lightgray;
+    }
+  }
+
   &.has_focus {
     .o_content-editable__menu {
       // make menu visible again and position it on the top right of the contentEditable 'frame'
       top: -$menu-button-size;
       right: 0;
-      z-index: $z-index__input;
-      opacity: 1;
+    }
+
+    .o_content-editable__wrapper::before {
+      border-color: blue;
     }
   }
 
   &__input {
-    border: 1px solid lightgray;
-
-    // enable z-index
+    // Display on top of &__wrapper.
     position: relative;
-    // make sure input is on top of buttons when they are hidden
-    z-index: $z-index__input;
-
-    &:hover {
-      border-color: gray;
-    }
 
     &:focus {
-      border-color: blue;
       outline: 0;
     }
 

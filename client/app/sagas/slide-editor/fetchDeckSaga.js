@@ -28,7 +28,7 @@ const testDeckFlames = `
 		</p>
 	</header>
 	
-	<section class="slide" id="TestSlideSections">
+	<!--<section class="slide" id="TestSlideSections">
 		<h2>Lorem ipsum</h2>
 		<p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
 		<section>
@@ -41,9 +41,9 @@ const testDeckFlames = `
 		  <!--<h4>Blub</h4>
 		  <p>Let it go, let it go, I'm one with the wind and sky!</p>-->
 		</section>
-	</section>
+	</section>-->
 	
-	<section class="slide" id="TestSlideImplicitSections" data-level="1">
+	<!--<section class="slide" id="TestSlideImplicitSections" data-level="1">
 		<h2>Lorem ipsum</h2>
 		<p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
     <h3>Dolor sit</h3>
@@ -58,7 +58,7 @@ const testDeckFlames = `
       <li>Blob</li>
       <li>Blub</li>
     </ul>-->
-	</section>
+	</section>-->
 
 	<section class="black title slide" id="title">
 		<h2>Open Webslides</h2>
@@ -98,19 +98,6 @@ const testDeckFlames = `
 	<section class="slide" id="projector">
 		<img src="images/projector.jpg" alt="[foto van een diaprojector]" class="cover">
 	</section>
-
-	<!--
-	<section class="slide" id="powerpoint">
-		<h2>PowerPoint slides are today's overhead slides</h2>
-		<ul>
-			<li class="next">Embedding YouTube clips, tweets, interactivity… is complex.</li>
-			<li class="next">Slides require specific software and don't function on all devices.</li>
-			<li class="next">Direct links between courses are technically nonexistent.</li>
-			<li class="next">Processing external feedback is highly time consuming.</li>
-			<li class="next">There is no social layer on top of the course content.</li>
-		</ul>
-	</section>
-	-->
 
 	<section class="black toc slide" id="toc-what">
 		<h2>Webslides: education lives on the Web</h2>
@@ -248,24 +235,20 @@ const testDeckFlames = `
       </g>
     </svg>
   </div>
-
+	
 	<section class="slide" id="future">
 		<h2>Educational content 2.0</h2>
-		<ul>
-			<li class="next">Webslides use <strong>the same technology</strong> as websites.
-				<ul>
-					<li>offers an infinite amount of multimedia possibilities</li>
-					<li>embed YouTube, Twitter, interactive webtools</li>
-					<li class="next"><strong>Linking</strong> to <a href="https://rubenverborgh.github.io/WebFundamentals/architecture/">other courses</a> is simple.</li>
-				</ul>
-			</li>
-			<li class="next">Webslides can be viewed and edited <strong>on each device</strong>
-				<ul>
-					<li>no need to install additional plugins</li>
-					<li>flexibel: teaching on location, at a museum, etc.</li>
-				</ul>
-			</li>
-		</ul>
+		<h3>Webslides use <strong>the same technology</strong> as websites.</h3>
+      <ul>
+        <li>offers an infinite amount of multimedia possibilities</li>
+        <li>embed YouTube, Twitter, interactive webtools</li>
+        <li class="next"><strong>Linking</strong> to <a href="https://rubenverborgh.github.io/WebFundamentals/architecture/">other courses</a> is simple.</li>
+      </ul>
+    <h3>Webslides can be viewed and edited <strong>on each device</strong></h3>
+      <ul>
+        <li>no need to install additional plugins</li>
+        <li>flexibel: teaching on location, at a museum, etc.</li>
+      </ul>
 	</section>
 
 	<div class="slide" id="open-source">
@@ -363,24 +346,6 @@ const testDeckFlames = `
 		</ul>
 	</section>
 
-	<!--
-	<section class="slide" id="multimedia-social">
-		<h2>Lessons to learn from social media</h2>
-		<ul>
-			<li>Highly visual medium: online <strong>video</strong> is on the rise</li>
-			<li>Highly interactive medium: nice opportunities for <strong>data visualization</strong></li>
-			<li>Highly interactive medium: the <strong>comment section</strong> is as important as the content</li>
-		</ul>
-	</section>
-	-->
-
-	<!--
-	<section class="slide" id="Molecules">
-		<h2>View molecules in 3D</h2>
-		<iframe width="800" height="450" src="https://ows.florian.dejonckhee.re/"></iframe>
-	</section>
-	-->
-
 	<section class="slide" id="earthQuake">
 		<h2>Explore data in 3D</h2>
 		<!-- Was: http://labs.gmt.io/quake/ -->
@@ -393,16 +358,9 @@ const testDeckFlames = `
 		<iframe width="800" height="450" src="https://www.gapminder.org/tools/#_chart-type=bubbles"></iframe>
 	</section>
 
-	<!--
-	<section class="slide" id="padlet">
-		<h2>Brainstorm via Padlet</h2>
-		<iframe src="https://padlet.com/openwebslides/FLAMES" frameborder="0" style="width:100%;height:450px;display:block"></iframe>
-	</section>
-	-->
-
 	<section class="slide" id="mentimeter-interest">
 		<iframe src="https://www.mentimeter.com/s/dd4ec8b136ec6826c7b666dd08d1de2a/820fdf2743b8" height="500" width="820"></iframe>
-		<ul class="center">Go to <a href="https://www.menti.com/6f7d25">www.menti.com</a> (code 30 73 6)</ul>
+		<p class="center">Go to <a href="https://www.menti.com/6f7d25">www.menti.com</a> (code 30 73 6)</p>
 	</section>
 
 	<section class="slide" id="experiences">
@@ -453,47 +411,34 @@ const testDeckFlames = `
 
 	<section class="slide" id="open-technologyFB">
 		<h2>Closed technologies on the Web</h2>
+		<h3>Closed or open?</h3>
 		<ul>
-			<li>
-				Closed or open?
-				<ul>
-					<li><strong>closed</strong> Facebook groups or
-							university  <strong>log-in walls</strong></li>
-				</ul>
-			</li>
-			<li class="next">
-				reduced benefits for non-members
-				<ul>
-					<li>creation of knowledge silos</li>
-				</ul>
-			</li>
-			<li class="next">
-				<strong>we choose open</strong>
-				<ul>
-					<li>even compatible with closed systems</li>
-					<li>people will prefer open in the end</li>
-				</ul>
-			</li>
-		</ul>
+      <li><strong>closed</strong> Facebook groups or
+          university  <strong>log-in walls</strong></li>
+    </ul>
+    <h3>reduced benefits for non-members</h3>
+    <ul>
+      <li>creation of knowledge silos</li>
+    </ul>
+    <h3><strong>we choose open</strong></h3>
+    <ul>
+      <li>even compatible with closed systems</li>
+      <li>people will prefer open in the end</li>
+    </ul>
 	</section>
 
 	<section class="slide" id="open-publication">
 		<h2>Slides can easily be published publicly</h2>
-		<ul>
-			<li class="next">The <strong>presenter determines</strong> who can see the slides:
-				<ul>
-					<li>e.g. only <em>UGent students</em> through <a href="https://login.ugent.be">CAS</a></li>
-					<li><em>everyone</em>, just like a typical website</li>
-				</ul>
-			</li>
-			<li class="next">
-				Leverage content as online <strong>networking</strong> tool.
-				<ul>
-					<li>Increased <strong>recognition</strong> for teaching efforts, research, message ...</li>
-				</ul>
-			</li>
-			<li class="next">Be careful with <strong>intellectual property</strong> rights.</li>
-		</ul>
+		<h3>The <strong>presenter determines</strong> who can see the slides:</h3>
+    <ul>
+      <li>e.g. only <em>UGent students</em> through <a href="https://login.ugent.be">CAS</a></li>
+      <li><em>everyone</em>, just like a typical website</li>
+    </ul>
+    <h3>Leverage content as online <strong>networking</strong> tool.</h3>
+    <ul>
+      <li>Increased <strong>recognition</strong> for teaching efforts, research, message ...</li>
+    </ul>
+    <h3>Be careful with <strong>intellectual property</strong> rights.</h3>
 	</section>
 
 	<section class="slide" id="open-exampleRuben">
@@ -529,27 +474,6 @@ const testDeckFlames = `
 			</p>
 		</blockquote>
 	</section>
-
-	<!--
-	<section class="slide" id="open-audience-feedback">
-		<h2>Implementing suggestions should be easier</h2>
-		<ul>
-			<li>PowerPoint slides are stored in a <strong>binary format</strong>.
-				<ul class="next">
-					<li>One adjustment can change the entire document.</li>
-					<li>Comparing different versions is difficult, especially when multiple versions are involved.</li>
-					<li><em>Track changes</em> is often not implemented.</li>
-				</ul>
-			</li>
-			<li>Webslides are stored in <strong>source code</strong>.
-				<ul class="next">
-					<li>One adjustment only applies to the targeted part of the document.</li>
-					<li>Tools to merge source code have been in use for years.</li>
-				</ul>
-			</li>
-		</ul>
-	</section>
-	-->
 
 	<section class="slide" id="open-audience-new">
 		<h2>Opening up slides for audience feedback</h2>
@@ -634,7 +558,7 @@ const testDeckFlames = `
 
 	<section class="slide" id="mentimeter-feedback">
 		<iframe src="https://www.mentimeter.com/s/dd4ec8b136ec6826c7b666dd08d1de2a/c8f94812cff0" height="500" width="820"></iframe>
-		<ul class="center">Go to <a href="https://www.menti.com/6f7d25">www.menti.com</a> (code 30 73 6)</ul>
+		<p class="center">Go to <a href="https://www.menti.com/6f7d25">www.menti.com</a> (code 30 73 6)</p>
 	</section>
 
 	<div class="progress"></div>
@@ -691,6 +615,12 @@ const testDeckEmpty = `
     <li>Ordered item 2</li>
     <li>Ordered item 3</li>
   </ol>
+  <h2>Heading <strong>level</strong> 2</h2>
+  <ol>
+    <li>Ordered item 1</li>
+    <li>Ordered item 2</li>
+    <li>Ordered item 3</li>
+  </ol>
 </section>
 
 	<div class="progress"></div>
@@ -708,7 +638,7 @@ function* doFetchDeck(action) {
 
   try {
     // const HTMLResponse = yield call(fetchDeckApi, action.meta.deckId); // #TODO
-    const HTMLResponse = testDeckEmpty; // testDeckFlames;
+    const HTMLResponse = testDeckFlames;
 
     const entities = yield convertToState(action.meta.deckId, HTMLResponse);
     const payload = {

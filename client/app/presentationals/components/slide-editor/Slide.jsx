@@ -95,7 +95,7 @@ class Slide extends Component {
 
         <div className="c_slide-container__size">
           <div className="c_slide-container__wrapper">
-            <div className="c_slide-container__content">
+            <div className="c_slide-container__content ows-slide">
               {slideContent}
             </div>
           </div>

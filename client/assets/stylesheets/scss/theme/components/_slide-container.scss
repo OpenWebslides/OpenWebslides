@@ -26,27 +26,6 @@
 
   &__content {
     @include position-absolute-fill;
-    @include padding--x-small;
-
-    // #TODO should it always be white?
-    background-color: white;
-    border: $border-width--subtle $border-style--subtle shade(white, 20%);
-
-    // Make sure default text-align is 'left' no matter the text-align of the containing element.
-    text-align: left;
-
-    // #TODO move this code out of this file
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    // Necessary because slides might be nested inside another list, which unsets the top margin.
-    ul,
-    ol,
-    menu {
-      margin-top: $spacing--element__v;
-    }
   }
 
   &--fullscreen {
