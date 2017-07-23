@@ -115,6 +115,8 @@ Slide.propTypes = {
     contentItemSequence: PropTypes.number.isRequired,
   }).isRequired,
   editable: PropTypes.bool.isRequired,
+  // We need to connect these to force a rerender (and thus a resize) when the active slide view types change.
+  activeSlideViewTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 Slide.defaultProps = {

@@ -8,7 +8,7 @@ function SlideLiveView(props) {
     return (
       <div className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}>
         <div className="c_editor-slide-view__wrapper">
-          <SlideContainer id={props.activeSlideId} activeSlideViewtypes={props.activeSlideViewTypes} editable />
+          <SlideContainer id={props.activeSlideId} editable />
         </div>
       </div>
     );
@@ -20,9 +20,6 @@ function SlideLiveView(props) {
 SlideLiveView.propTypes = {
   cssIdentifier: PropTypes.string,
   activeSlideId: PropTypes.string,
-  // We need to pass these to the SlideContainer
-  // to force a rerender (and thus a resize) when the active slide view types change.
-  activeSlideViewTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 SlideLiveView.defaultProps = {
