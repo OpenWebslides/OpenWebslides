@@ -1,0 +1,51 @@
+// -------------------------
+// OpenWebslide slide styles
+// -------------------------
+
+.ows-slide {
+  $heading-base-font-size: 1.4em;
+  $subsection-scaling-factor: 0.8em;
+
+  @include padding--x-small;
+
+  // #TODO should it always be white?
+  background-color: white;
+  border: $border-width--subtle $border-style--subtle shade(white, 20%);
+
+  // Make sure default text-align is 'left' no matter the text-align of the containing element.
+  text-align: left;
+
+  // Necessary because slides might be nested inside another list, which unsets the top margin.
+  ul, ol, menu {
+    margin-top: $spacing--element__v;
+  }
+
+  li {
+    @include wrap-line-height(1.5);
+  }
+
+  img {
+    margin-top: $spacing--element__v;
+  }
+
+  iframe {
+    border: 0;
+    margin-top: $spacing--element__v;
+    height: 15em; // #TODO
+    width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-size: $heading-base-font-size;
+    margin-top: $spacing--element__v / $heading-base-font-size * 1em;
+  }
+
+  section section {
+    font-size: $subsection-scaling-factor;
+
+    ul, ol, menu {
+      // #TODO deeper nesting?
+      padding-left: $text-indent--list / $subsection-scaling-factor * 1em;
+    }
+  }
+}
