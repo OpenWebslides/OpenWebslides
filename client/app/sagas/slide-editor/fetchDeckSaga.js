@@ -73,7 +73,7 @@ const testDeckFlames = `
 		</p>
 
 		<p>
-			WiFi netwerk: <strong>eduroam</strong> or mobile
+			WiFi    netwerk:     <strong>eduroam</strong> or mobile
 		</p>
 	</section>
 
