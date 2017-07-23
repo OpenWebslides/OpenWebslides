@@ -5,6 +5,7 @@
 .ows-slide {
   $heading-base-font-size: 1.4em;
   $subsection-scaling-factor: 0.8em;
+  $subsection-indent: $line-height--base * 1em;
 
   @include padding--x-small;
 
@@ -20,6 +21,7 @@
     margin-top: $spacing--element__v;
   }
 
+  p, // #TODO ?
   li {
     @include wrap-line-height(1.5);
   }
@@ -38,14 +40,17 @@
   h1, h2, h3, h4, h5, h6 {
     font-size: $heading-base-font-size;
     margin-top: $spacing--element__v / $heading-base-font-size * 1em;
+
+    & + section {
+      &,
+      & ~ section {
+        // #TODO deeper nesting?
+        padding-left: $subsection-indent;
+      }
+    }
   }
 
   section section {
     font-size: $subsection-scaling-factor;
-
-    ul, ol, menu {
-      // #TODO deeper nesting?
-      padding-left: $text-indent--list / $subsection-scaling-factor * 1em;
-    }
   }
 }
