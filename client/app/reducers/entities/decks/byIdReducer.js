@@ -9,46 +9,35 @@ const initialState = Immutable({});
 function addSlide(state, action) {
   const deck = state[action.payload.deckId];
 
-  return Immutable.merge(
-    state,
-    {
-      [deck.id]: {
-        slideIds: deck.slideIds.concat(action.payload.slideId),
-        slideSequence: deck.slideSequence + 1,
-      },
+  return state.merge({
+    [deck.id]: {
+      slideIds: deck.slideIds.concat(action.payload.slideId),
+      slideSequence: deck.slideSequence + 1,
     },
-    { deep: true},
-  );
+  }, { deep: true });
 }
 
 function deleteSlide(state, action) {
   const deck = state[action.payload.deckId];
 
-  return Immutable.merge(
-    state,
-    {
-      [deck.id]: {
-        slideIds: _.without(deck.slideIds, action.payload.slideId),
-      },
+  return state.merge({
+    [deck.id]: {
+      slideIds: _.without(deck.slideIds, action.payload.slideId),
     },
-    { deep: true },
-  );
+  }, { deep: true });
 }
 
 function fetchDeckSuccess(state, action) {
   const deckId = action.payload.deckId;
 
-  return Immutable.merge(
-    state,
-    {
-      [deckId]: {
-        id: deckId,
-        meta: {},
-        slideIds: Object.keys(action.payload.slidesById),
-        slideSequence: Object.keys(action.payload.slidesById).length,
-      },
+  return state.merge({
+    [deckId]: {
+      id: deckId,
+      meta: {},
+      slideIds: Object.keys(action.payload.slidesById),
+      slideSequence: Object.keys(action.payload.slidesById).length,
     },
-  );
+  });
 }
 
 function byId(state = initialState, action) {
