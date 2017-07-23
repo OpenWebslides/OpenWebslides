@@ -10,33 +10,26 @@ const initialState = Immutable({});
 function addSlide(state, action) {
   const slideId = action.payload.slideId;
 
-  return Immutable.merge(
-    state,
-    {
-      [slideId]: {
-        id: slideId,
-        level: 0,
-        contentItemIds: [],
-        contentItemSequence: 0,
-      },
+  return state.merge({
+    [slideId]: {
+      id: slideId,
+      level: 0,
+      contentItemIds: [],
+      contentItemSequence: 0,
     },
-  );
+  });
 }
 
 function updateSlide(state, action) {
   const slide = state[action.payload.slideId];
 
-  return Immutable.merge(
-    state,
-    {
-      [slide.id]: action.payload.props,
-    },
-    { deep: true },
-  );
+  return state.merge({
+    [slide.id]: action.payload.props,
+  }, { deep: true });
 }
 
 function deleteSlide(state, action) {
-  return _.omit(state, action.payload.slideId);
+  return state.without(action.payload.slideId);
 }
 
 function addContentItem(state, action) {
@@ -44,7 +37,7 @@ function addContentItem(state, action) {
 
   // Only add the new contentItem to the slide's contentItemIds array if there is no parent item.
   if (action.payload.parentItemId === null) {
-    const contentItemIds = Immutable.asMutable(slide.contentItemIds);
+    const contentItemIds = slide.contentItemIds.asMutable();
     const afterItemId = action.payload.afterItemId;
     const addAtIndex = (afterItemId !== null)
       ? Array.indexOf(contentItemIds, afterItemId) + 1
@@ -52,26 +45,18 @@ function addContentItem(state, action) {
 
     contentItemIds.splice(addAtIndex, 0, action.payload.contentItemId);
 
-    state = Immutable.merge(
-      state,
-      {
-        [slide.id]: {
-          contentItemIds,
-        },
+    state = state.merge({
+      [slide.id]: {
+        contentItemIds,
       },
-      { deep: true },
-    );
+    }, { deep: true });
   }
 
-  return Immutable.merge(
-    state,
-    {
-      [slide.id]: {
-        contentItemSequence: slide.contentItemSequence + 1,
-      },
+  return state.merge({
+    [slide.id]: {
+      contentItemSequence: slide.contentItemSequence + 1,
     },
-    { deep: true },
-  );
+  }, { deep: true });
 }
 
 function deleteContentItem(state, action) {
@@ -82,25 +67,18 @@ function deleteContentItem(state, action) {
   if (Array.indexOf(slide.contentItemIds, action.payload.contentItemId) === -1) {
     return state;
   } else {
-    return Immutable.merge(
-      state,
-      {
-        [slide.id]: {
-          contentItemIds: _.without(slide.contentItemIds, action.payload.contentItemId),
-        },
+    return state.merge({
+      [slide.id]: {
+        contentItemIds: _.without(slide.contentItemIds, action.payload.contentItemId),
       },
-      { deep: true },
-    );
+    }, { deep: true });
   }
 }
 
 function fetchDeckSuccess(state, action) {
-  return Immutable.merge(
-    state,
-    {
-      ...action.payload.slidesById,
-    },
-  );
+  return state.merge({
+    ...action.payload.slidesById,
+  });
 }
 
 function byId(state = initialState, action) {
