@@ -62,18 +62,14 @@ class ContentEditable extends Component {
     };
 
     if (this.props.hasInlineProperties) {
-      const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, {deep: true});
+      const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
       const amount = text.length - this.props.contentItem[this.props.textPropName].length;
       updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
 
       props = { ...props, inlineProperties };
     }
 
-    this.props.updateContentItem(
-      this.props.contentItem.id,
-      props,
-      getSelectionOffsets(this.contentEditable)
-    );
+    this.props.updateContentItem(this.props.contentItem.id, props, getSelectionOffsets(this.contentEditable));
   }
 
   handleFocus() {
@@ -85,11 +81,7 @@ class ContentEditable extends Component {
   }
 
   handleBlur() {
-    this.props.setActiveContentItemId(
-      null,
-      getSelectionOffsets(this.contentEditable),
-      null,
-    );
+    this.props.setActiveContentItemId(null, getSelectionOffsets(this.contentEditable), null);
   }
 
   handleMenuButtonClick(inlinePropertyType) {
@@ -119,7 +111,7 @@ class ContentEditable extends Component {
       {
         start: selectionOffsets.end,
         end: selectionOffsets.end,
-      }
+      },
     );
   }
 
@@ -131,7 +123,7 @@ class ContentEditable extends Component {
         onBlur={this.handleBlur}
       >
         <span className="o_content-editable__wrapper">
-          {this.props.hasInlineProperties && (
+          {this.props.hasInlineProperties &&
             <span className="o_content-editable__menu list" role="toolbar">
               <span className="o_content-editable__menu-item list__item">
                 <button
@@ -155,8 +147,7 @@ class ContentEditable extends Component {
                   </span>
                 </button>
               </span>
-            </span>
-          )}
+            </span>}
           <span
             className="o_content-editable__input"
             contentEditable="true"
