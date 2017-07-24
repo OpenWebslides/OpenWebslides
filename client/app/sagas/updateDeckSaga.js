@@ -29,9 +29,7 @@ function convertSlidesToHtml(slides, contentBlocks) {
 
           HTMLContent += `<section>${childContent}</section>`;
         } else {
-          HTMLContent += convertToHTML(
-            contentBlocks[content.id].data.getCurrentContent(),
-          );
+          HTMLContent += convertToHTML(contentBlocks[content.id].data.getCurrentContent());
         }
       });
       return HTMLContent;
@@ -46,10 +44,7 @@ function convertSlidesToHtml(slides, contentBlocks) {
 function* doUpdateDeck() {
   try {
     const state = yield select();
-    const HTMLString = yield convertSlidesToHtml(
-      state.entities.slides.byId,
-      state.entities.contentItems.byId,
-    );
+    const HTMLString = yield convertSlidesToHtml(state.entities.slides.byId, state.entities.contentItems.byId);
 
     yield call(updateDeckApi, 2, HTMLString);
   } catch (e) {

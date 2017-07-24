@@ -1,28 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-export function DeckThumbnail({
-  deckTitle,
-  deckId,
-  deckIconImage,
-  deckLink,
-  deleteDeck,
-}) {
+export function DeckThumbnail({ deckTitle, deckId, deckIconImage, deleteDeck }) {
   const altIconText = `Icon of deck: ${deckTitle}`;
   return (
     <li>
       <div className="c_deck-thumbnail">
-        <a href={deckLink}>
+        <Link to={`/editor/${deckId}`}>
           <img src={deckIconImage} alt={altIconText} />
           <p>{deckTitle}</p>
-        </a>
+        </Link>
         <button
           onClick={() => {
             deleteDeck(deckId);
           }}
         >
-          {' '}Delete
-          {' '}
+          Delete
         </button>
       </div>
     </li>
@@ -38,8 +32,7 @@ DeckThumbnail.propTypes = {
 };
 
 DeckThumbnail.defaultProps = {
-  deckIconImage:
-    'https://www.iconfinder.com/data/icons/penthemes-layour-builder/512/slider-128.png', //  TODO : add a dummy image
+  deckIconImage: 'https://www.iconfinder.com/data/icons/penthemes-layour-builder/512/slider-128.png', //  TODO : add a dummy image
   deckLink: '#',
 };
 

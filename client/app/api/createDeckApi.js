@@ -21,11 +21,7 @@ async function createDeck(title, description, authorID) {
     },
   };
 
-  request
-    .setMethod('POST')
-    .setEndpoint('decks')
-    .addHeader('Accept', 'application/vnd.api+json')
-    .setBody(requestBody);
+  request.setMethod('POST').setEndpoint('decks').addHeader('Accept', 'application/vnd.api+json').setBody(requestBody);
 
   return request.executeRequest();
 }

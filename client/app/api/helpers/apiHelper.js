@@ -6,9 +6,7 @@ function getAuthToken() {
   // We load it from the local storage.
   const loadedState = loadState();
   if (loadedState) {
-    return loadedState.app.authentication.authToken
-      ? loadedState.app.authentication.authToken
-      : null;
+    return loadedState.app.authentication.authToken ? loadedState.app.authentication.authToken : null;
   }
 
   return null;
@@ -63,23 +61,17 @@ function ApiRequest() {
   that.setMethod = type => {
     // Check it's a valid type:
     if (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].indexOf(type) === -1) {
-      throw new Error(
-        `Invalid request method: '${type}'. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')`,
-      );
+      throw new Error(`Invalid request method: '${type}'. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')`);
     }
 
     // If attempting to set 'GET': check it doesn't have a body
     if (type === 'GET' && that.body) {
-      throw new Error(
-        `Error: Attempting to use a 'GET' request but there is a body.`,
-      );
+      throw new Error(`Error: Attempting to use a 'GET' request but there is a body.`);
     }
 
     // If attempting to set 'GET': check it doesn't have a body
     if (type in ['POST', 'PUT', 'PATCH', 'DELETE'] && that.parameters) {
-      throw new Error(
-        `Error: Attempting to use a '${type}' request but there are url parameters.`,
-      );
+      throw new Error(`Error: Attempting to use a '${type}' request but there are url parameters.`);
     }
 
     that.method = type;
