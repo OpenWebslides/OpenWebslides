@@ -29,7 +29,7 @@ namespace :db do
       ##
       # Users
       #
-      user_count = FACTOR * 10
+      user_count = (FACTOR * 10).to_i
       users = []
 
       user_count.times do |i|
