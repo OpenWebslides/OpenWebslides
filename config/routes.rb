@@ -16,12 +16,12 @@ Rails.application.routes.draw do
   # API endpoints
   #
   namespace :api, :constraints => { :format => :json } do
-    # Users
+    ## Users
     jsonapi_resources :users
 
-    # Decks
+    ## Decks
     jsonapi_resources :decks do
-      # Assets
+      ## Assets
       jsonapi_resources :assets, :except => :index do end
 
       # Route owner (without :create or :destroy)
@@ -35,13 +35,13 @@ Rails.application.routes.draw do
       end
     end
 
-    # Conversion tool
+    ## Conversion tool
     jsonapi_resources :conversions, :only => %i[create show]
 
-    # Social feed
+    ## Social feed
     jsonapi_resources :notifications
 
-    # Authentication
+    ## Authentication
     jsonapi_resource :confirmation, :only => :create do end
     jsonapi_resource :token, :only => %i[create destroy] do end
     jsonapi_resource :password, :only => %i[create update] do end
