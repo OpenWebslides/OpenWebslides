@@ -4,13 +4,12 @@ import { bindActionCreators } from 'redux';
 import { setActiveContentItemId, setSelectionOffsets } from 'actions/app/slide-editor';
 import { updateContentItem } from 'actions/entities/content-items';
 
-import { getActiveContentItemId, getSelectionOffsets } from 'selectors/app/slide-editor';
+import { getSelectionOffsets } from 'selectors/app/slide-editor';
 
 import ContentEditable from './ContentEditable';
 
 function mapStateToProps(state) {
   return {
-    activeContentItemId: getActiveContentItemId(state),
     selectionOffsets: getSelectionOffsets(state),
   };
 }

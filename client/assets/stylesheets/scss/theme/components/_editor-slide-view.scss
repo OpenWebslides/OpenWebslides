@@ -5,6 +5,6 @@
 .c_editor-slide-view {
   .c_slide-container {
     // Determines max height of the slide; necessary to make it fit inside its container.
-    height: calc(100vh - #{$site__header-height} - #{$spacing--site__v * 2} - #{$site__item-padding__v * 2});
+    height: calc(100vh - #{$site__header-height} - #{$spacing--site__v * 2} - #{$site__item-padding__v * 2} - #{$line-height--base * 1em});
   }
 }

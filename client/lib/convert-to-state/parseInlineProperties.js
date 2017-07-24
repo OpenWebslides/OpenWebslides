@@ -12,10 +12,6 @@ export default function parseInlineProperties(nodes) {
     node = nodes[i];
     // Trim left side & merge successive whitespace chars into one.
     textContent = node.textContent.replace(/^\s+/, '').replace(/\s+/g, ' ');
-
-    console.log(`"${node.textContent}"`);
-    console.log(`"${textContent}"`);
-
     endsAtChar = charOffset + textContent.length;
 
     if (SUPPORTED_PROPERTIES.includes(node.nodeName)) {
