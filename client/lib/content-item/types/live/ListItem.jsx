@@ -8,7 +8,14 @@ export default function ListItem(props) {
   if (props.editable) {
     return (
       <li>
-        <ContentEditableContainer contentItem={props.contentItem} handleKeyDown={props.handleKeyDown} />
+        <ContentEditableContainer
+          contentItem={props.contentItem}
+          handleKeyDown={props.handleKeyDown}
+          slideViewType={props.slideViewType}
+          isFocused={props.isFocused}
+          textPropName="text"
+          hasInlineProperties={true}
+        />
       </li>
     );
   }

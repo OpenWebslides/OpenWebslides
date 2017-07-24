@@ -10,6 +10,7 @@ export default function Aside(props) {
       {contentItem.childItemIds.map(id => (
         <ContentItemContainer
           key={id}
+          slideViewType={props.slideViewType}
           contentItemId={id}
           ancestorItemIds={props.ancestorItemIds.concat(props.contentItem.id)}
           slideId={props.slideId}

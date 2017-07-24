@@ -638,7 +638,7 @@ function* doFetchDeck(action) {
 
   try {
     // const HTMLResponse = yield call(fetchDeckApi, action.meta.deckId); // #TODO
-    const HTMLResponse = testDeckEmpty; // testDeckFlames;
+    const HTMLResponse = testDeckFlames; // testDeckEmpty;
 
     const entities = yield convertToState(action.meta.deckId, HTMLResponse);
     const payload = {

@@ -5,13 +5,23 @@ import PropTypes from 'prop-types';
 import { contentItemTypes } from 'constants/contentItemTypes';
 
 import { addContentItemToSlide, deleteContentItemFromSlide } from 'actions/entities/slides';
+import { getActiveContentItemId, getFocusedSlideViewType } from 'selectors/app/slide-editor';
 import { getContentItemById } from 'selectors/entities/content-items';
 
 import ContentItem from './ContentItem';
 
 function mapStateToProps(state, props) {
+  const contentItem = getContentItemById(state, props.contentItemId);
+  const focusedSlideViewType = getFocusedSlideViewType(state);
+  const activeContentItemId = getActiveContentItemId(state);
+  const isFocused = (
+    contentItem.id === activeContentItemId &&
+    props.slideViewType === focusedSlideViewType
+  );
+
   return {
-    contentItem: getContentItemById(state, props.contentItemId),
+    contentItem,
+    isFocused,
   };
 }
 
@@ -54,6 +64,7 @@ function mapDispatchToProps(dispatch, props) {
 const ContentItemContainer = connect(mapStateToProps, mapDispatchToProps)(ContentItem);
 
 ContentItemContainer.propTypes = {
+  slideViewType: PropTypes.string.isRequired,
   contentItemId: PropTypes.string.isRequired,
   ancestorItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   slideId: PropTypes.string.isRequired,
