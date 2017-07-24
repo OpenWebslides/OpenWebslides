@@ -1,6 +1,7 @@
 import parseSlideNodes from './parseSlideNodes';
 
 export default function convertToState(deckId, HTMLString) {
+  const validSlideNodeNames = ['SECTION', 'DIV', 'ASIDE', 'ARTICLE'];
   const parser = new DOMParser();
   const document = parser.parseFromString(HTMLString, 'text/html');
 
@@ -8,7 +9,10 @@ export default function convertToState(deckId, HTMLString) {
 
   if (document.body) {
     slideNodes = Array.from(document.body.children).filter(
-      node => node.nodeName === 'SECTION' && node.className.includes('slide'),
+      node => (
+        Array.indexOf(validSlideNodeNames, node.nodeName) !== -1 &&
+        node.className.includes('slide')
+      ),
     );
   }
 
