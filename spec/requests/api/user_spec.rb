@@ -4,17 +4,18 @@ require 'rails_helper'
 
 RSpec.describe 'User API', :type => :request do
   let(:user) { create :user, :confirmed }
-  let(:attributes) do
-    {
-      :email => Faker::Internet.email,
-      :firstName => Faker::Name.first_name,
-      :password => Faker::Internet.password(6)
-    }
-  end
 
   let(:first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
   let(:password) { Faker::Internet.password 6 }
+
+  let(:attributes) do
+    {
+      :email => Faker::Internet.email,
+      :firstName => first_name,
+      :password => password
+    }
+  end
 
   def request_body(attributes)
     {
@@ -35,143 +36,181 @@ RSpec.describe 'User API', :type => :request do
     }.to_json
   end
 
-  describe 'list of all users' do
-    it 'returns a list of all users' do
-      get_unauthenticated api_users_path
+
+  describe 'GET /' do
+    before do
+      create_list :user, 3
+    end
+
+    it 'returns successful' do
+      get api_users_path
 
       expect(response.status).to eq 200
+
+      json = JSON.parse response.body
+      expect(json['data'].count).to eq 3
     end
   end
 
-  describe 'create a new user' do
-    it 'rejects an email already existing' do
-      post_unauthenticated api_users_path, request_body(attributes.merge :email => user.email)
+  describe 'POST /' do
+    before do
+      add_content_type_header
+      add_accept_header
+    end
+
+    it 'rejects an already existing email' do
+      post api_users_path, :params => request_body(attributes.merge :email => user.email), :headers => headers
 
       expect(response.status).to eq 422
       expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'rejects empty passwords' do
-      post_unauthenticated api_users_path, request_body(attributes.merge :password => '')
+      post api_users_path, :params => request_body(attributes.merge :password => ''), :headers => headers
 
       expect(response.status).to eq 422
       expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'rejects no first name' do
-      post_unauthenticated api_users_path, request_body(attributes.except :firstName)
+      post api_users_path, :params => request_body(attributes.except :firstName), :headers => headers
 
       expect(response.status).to eq 422
       expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
-    it 'creates a new user' do
-      post_unauthenticated api_users_path, request_body(attributes)
+    it 'returns successful' do
+      post api_users_path, :params => request_body(attributes), :headers => headers
 
       expect(response.status).to eq 201
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
       json = JSON.parse response.body
-      expect(json).to include 'data'
-      expect(json['data']).to include 'attributes'
 
       # Email is hidden for unauthenticated users
-      hash = { 'firstName' => attributes[:firstName] }
-      expect(json['data']['attributes']).to match hash
+      expect(json['data']['attributes']).to match({ 'firstName' => attributes[:firstName] })
     end
   end
 
-  describe 'get a user' do
-    it 'rejects non-existant users' do
-      get_unauthenticated api_user_path :id => 999
+  describe 'GET /:id' do
+    before do
+      add_accept_header
+    end
+
+    it 'rejects an invalid id' do
+      get api_user_path(:id => 0), :headers => @headers
 
       expect(response.status).to eq 404
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
-    it 'gets a user' do
-      get_unauthenticated api_user_path :id => user.id
+    it 'returns successful' do
+      get api_user_path(:id => user.id), :headers => @headers
 
       expect(response.status).to eq 200
-
-      json = JSON.parse response.body
-      expect(json).to include 'data'
-      expect(json['data']).to include 'attributes'
-
-      # Email is hidden for unauthenticated users
-      hash = { 'firstName' => user.first_name, 'lastName' => user.last_name }
-      expect(json['data']['attributes']).to match hash
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
   end
 
-  describe 'update a user' do
+  describe 'PUT/PATCH /:id' do
+    before do
+      add_content_type_header
+      add_accept_header
+      add_auth_header
+    end
+
     it 'rejects id not equal to URL' do
-      patch_authenticated user, api_user_path(:id => user.id), update_body(999, :firstName => 'foo')
+      patch api_user_path(:id => user.id), :params => update_body(999, :firstName => 'foo'), :headers => headers
 
       expect(response.status).to eq 400
       expect(jsonapi_error_code(response)).to eq JSONAPI::KEY_NOT_INCLUDED_IN_URL
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'rejects non-existant users' do
-      patch_authenticated user, api_user_path(:id => 999), update_body(999, :firstName => 'foo')
+      patch api_user_path(:id => 999), :params => update_body(999, :firstName => 'foo'), :headers => headers
 
       expect(response.status).to eq 404
       expect(jsonapi_error_code(response)).to eq JSONAPI::RECORD_NOT_FOUND
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'rejects email changes' do
-      patch_authenticated user, api_user_path(:id => user.id), update_body(user.id, :email => user.email)
+      patch api_user_path(:id => user.id), :params => update_body(user.id, :email => user.email), :headers => headers
 
       expect(response.status).to eq 400
       expect(jsonapi_error_code(response)).to eq JSONAPI::PARAM_NOT_ALLOWED
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'rejects empty passwords' do
-      patch_authenticated user, api_user_path(:id => user.id), update_body(user.id, :password => '')
+      patch api_user_path(:id => user.id), :params => update_body(user.id, :password => ''), :headers => headers
 
       expect(response.status).to eq 422
       expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'updates firstName' do
       expect(user.first_name).not_to eq first_name
-      patch_authenticated user, api_user_path(:id => user.id), update_body(user.id, :firstName => first_name)
+      patch api_user_path(:id => user.id), :params => update_body(user.id, :firstName => first_name), :headers => headers
 
       user.reload
       expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
       expect(user.first_name).to eq first_name
     end
 
     it 'updates lastName' do
       expect(user.last_name).not_to eq last_name
-      patch_authenticated user, api_user_path(:id => user.id), update_body(user.id, :lastName => last_name)
+      patch api_user_path(:id => user.id), :params => update_body(user.id, :lastName => last_name), :headers => headers
 
       user.reload
       expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
       expect(user.last_name).to eq last_name
     end
 
     it 'updates password' do
       expect(user.valid_password? password).not_to be true
-      patch_authenticated user, api_user_path(:id => user.id), update_body(user.id, :password => password)
+      patch api_user_path(:id => user.id), :params => update_body(user.id, :password => password), :headers => headers
 
       user.reload
       expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
       expect(user.valid_password? password).to be true
     end
   end
 
-  describe 'delete a user' do
+  describe 'DELETE /:id' do
+    before do
+      add_auth_header
+    end
+
     it 'rejects non-existant users' do
-      delete_authenticated user, api_user_path(:id => 999)
+      delete api_user_path(:id => '0'), :params => api_user_path(:id => 999), :headers => headers
 
       user.reload
       expect(user).not_to be_destroyed
+
+      expect(response.status).to eq 404
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'deletes a user' do
       id = user.id
-      delete_authenticated user, api_user_path(:id => user.id)
+      delete api_user_path(:id => user.id), :params => api_user_path(:id => user.id), :headers => headers
 
       expect(-> { User.find id }).to raise_error ActiveRecord::RecordNotFound
+
+      expect(response.status).to eq 204
     end
   end
+
+  # TODO: decks relationship
+  # TODO: collaborations relationship
+  # TODO: conversions relationship
 end
