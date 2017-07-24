@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function SlideDebugView(props) {
-  if (props.nestedContentItems.length > 0) {
+  if (props.nestedContentItems) {
     return (
       <div className={`c_editor-debug-view c_editor-debug-view--${props.cssIdentifier}`}>
         <div className="c_editor-debug-view__wrapper">

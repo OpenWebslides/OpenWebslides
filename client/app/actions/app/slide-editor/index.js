@@ -3,7 +3,7 @@ export const SET_ACTIVE_DECK_ID = 'SET_ACTIVE_DECK_ID';
 export const SET_ACTIVE_SLIDE_ID = 'SET_ACTIVE_SLIDE_ID';
 export const SET_ACTIVE_CONTENT_ITEM_ID = 'SET_ACTIVE_CONTENT_ITEM_ID';
 export const SET_SELECTION_OFFSETS = 'SET_SELECTION_OFFSETS';
-
+export const SET_FOCUSED_SLIDE_VIEW_TYPE = 'SET_FOCUSED_SLIDE_VIEW_TYPE';
 export const TOGGLE_SLIDE_VIEW = 'TOGGLE_SLIDE_VIEW';
 
 export function setActiveDeckId(deckId) {
@@ -20,10 +20,10 @@ export function setActiveSlideId(slideId) {
   };
 }
 
-export function setActiveContentItemId(contentItemId, selectionOffsets = null) {
+export function setActiveContentItemId(contentItemId, selectionOffsets = null, focusedSlideViewType = null) {
   return {
     type: SET_ACTIVE_CONTENT_ITEM_ID,
-    payload: { contentItemId, selectionOffsets },
+    payload: { contentItemId, selectionOffsets, focusedSlideViewType },
   };
 }
 
@@ -31,6 +31,13 @@ export function setSelectionOffsets(selectionOffsets) {
   return {
     type: SET_SELECTION_OFFSETS,
     payload: { selectionOffsets },
+  };
+}
+
+export function setFocusedSlideViewType(slideViewType) {
+  return {
+    type: SET_FOCUSED_SLIDE_VIEW_TYPE,
+    payload: { slideViewType },
   };
 }
 

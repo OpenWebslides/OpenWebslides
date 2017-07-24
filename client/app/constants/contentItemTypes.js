@@ -1,11 +1,23 @@
-import Title from 'lib/content-item/types/Title';
-import Paragraph from 'lib/content-item/types/Paragraph';
-import Section from 'lib/content-item/types/Section';
-import Aside from 'lib/content-item/types/Aside';
-import Iframe from 'lib/content-item/types/Iframe';
-import Image from 'lib/content-item/types/Image';
-import List from 'lib/content-item/types/List';
-import ListItem from 'lib/content-item/types/ListItem';
+import LiveTitle from 'lib/content-item/types/live/Title';
+import LiveParagraph from 'lib/content-item/types/live/Paragraph';
+import LiveSection from 'lib/content-item/types/live/Section';
+import LiveAside from 'lib/content-item/types/live/Aside';
+import LiveIframe from 'lib/content-item/types/live/Iframe';
+import LiveImage from 'lib/content-item/types/live/Image';
+import LiveList from 'lib/content-item/types/live/List';
+import LiveListItem from 'lib/content-item/types/live/ListItem';
+
+import ContentTitle from 'lib/content-item/types/content/Title';
+import ContentParagraph from 'lib/content-item/types/content/Paragraph';
+import ContentSection from 'lib/content-item/types/content/Section';
+import ContentAside from 'lib/content-item/types/content/Aside';
+import ContentIframe from 'lib/content-item/types/content/Iframe';
+import ContentImage from 'lib/content-item/types/content/Image';
+import ContentList from 'lib/content-item/types/content/List';
+import ContentListItem from 'lib/content-item/types/content/ListItem';
+
+// #TODO this doesn't work, probably because of a circular dependency; refactor
+// import { slideViewTypes } from 'constants/slideViewTypes';
 
 export const contentItemTypes = {
   TITLE: 'TITLE',
@@ -33,59 +45,123 @@ export const containerContentItemTypes = [
   contentItemTypes.LIST,
 ];
 
+export const toolbarContentItemTypes = [
+  {
+    id: contentItemTypes.TITLE,
+    key: contentItemTypes.TITLE,
+    props: {},
+  },
+  {
+    id: contentItemTypes.PARAGRAPH,
+    key: contentItemTypes.PARAGRAPH,
+    props: {},
+  },
+  {
+    id: contentItemTypes.LIST,
+    key: `UNORDERED_${contentItemTypes.LIST}`,
+    props: {
+      ordered: false,
+    },
+  },
+  {
+    id: contentItemTypes.LIST,
+    key: `ORDERED_${contentItemTypes.LIST}`,
+    props: {
+      ordered: true,
+    },
+  },
+  {
+    id: contentItemTypes.ILLUSTRATIVE_IMAGE,
+    key: contentItemTypes.ILLUSTRATIVE_IMAGE,
+    props: {},
+  },
+  {
+    id: contentItemTypes.IFRAME,
+    key: contentItemTypes.IFRAME,
+    props: {},
+  },
+];
+
 export const contentItemTypesById = {
   [contentItemTypes.TITLE]: {
     id: contentItemTypes.TITLE,
-    component: Title,
     name: 'Title',
     description: 'TODO: title description',
+    component: {
+      LIVE: LiveTitle,
+      CONTENT: ContentTitle,
+    },
   },
   [contentItemTypes.PARAGRAPH]: {
     id: contentItemTypes.PARAGRAPH,
-    component: Paragraph,
     name: 'Paragraph',
     description: 'TODO: paragraph description',
+    component: {
+      LIVE: LiveParagraph,
+      CONTENT: ContentParagraph,
+    },
   },
   [contentItemTypes.LIST]: {
     id: contentItemTypes.LIST,
-    component: List,
     name: 'List',
     description: 'TODO: list description',
+    component: {
+      LIVE: LiveList,
+      CONTENT: ContentList,
+    },
   },
   [contentItemTypes.LIST_ITEM]: {
     id: contentItemTypes.LIST_ITEM,
-    component: ListItem,
     name: 'List item',
     description: 'TODO: list item description',
+    component: {
+      LIVE: LiveListItem,
+      CONTENT: ContentListItem,
+    },
   },
   [contentItemTypes.ILLUSTRATIVE_IMAGE]: {
     id: contentItemTypes.ILLUSTRATIVE_IMAGE,
-    component: Image,
     name: 'Illustrative image',
     description: 'TODO: illustrative image description',
+    component: {
+      LIVE: LiveImage,
+      CONTENT: ContentImage,
+    },
   },
   [contentItemTypes.DECORATIVE_IMAGE]: {
     id: contentItemTypes.DECORATIVE_IMAGE,
-    component: Image,
     name: 'Decorative image',
     description: 'TODO: decorative image description',
+    component: {
+      LIVE: LiveImage,
+      CONTENT: ContentImage,
+    },
   },
   [contentItemTypes.IFRAME]: {
     id: contentItemTypes.IFRAME,
-    component: Iframe,
     name: 'Iframe',
     description: 'TODO: iframe description',
+    component: {
+      LIVE: LiveIframe,
+      CONTENT: ContentIframe,
+    },
   },
   [contentItemTypes.SECTION]: {
     id: contentItemTypes.SECTION,
-    component: Section,
     name: 'Section',
     description: 'TODO: section description',
+    component: {
+      LIVE: LiveSection,
+      CONTENT: ContentSection,
+    },
   },
   [contentItemTypes.ASIDE]: {
     id: contentItemTypes.ASIDE,
-    component: Aside,
     name: 'Aside',
     description: 'TODO: aside description',
+    component: {
+      LIVE: LiveAside,
+      CONTENT: ContentAside,
+    },
   }
 };

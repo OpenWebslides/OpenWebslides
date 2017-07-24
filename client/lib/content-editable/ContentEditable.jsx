@@ -15,7 +15,7 @@ import getFilteredTextContent from 'lib/content-editable/textContent';
 
 class ContentEditable extends Component {
   loadSelectionOffsets() {
-    if (this.props.contentItem.id === this.props.activeContentItemId) {
+    if (this.props.isFocused) {
       setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
     }
   }
@@ -57,17 +57,21 @@ class ContentEditable extends Component {
     const text = getFilteredTextContent(this.contentEditable);
     const selectionOffsets = getSelectionOffsets(this.contentEditable);
 
-    const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
-    const amount = text.length - this.props.contentItem.text.length;
+    let props = {
+      [this.props.textPropName]: text,
+    };
 
-    updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
+    if (this.props.hasInlineProperties) {
+      const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, {deep: true});
+      const amount = text.length - this.props.contentItem[this.props.textPropName].length;
+      updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
+
+      props = { ...props, inlineProperties };
+    }
 
     this.props.updateContentItem(
       this.props.contentItem.id,
-      {
-        text,
-        inlineProperties,
-      },
+      props,
       getSelectionOffsets(this.contentEditable)
     );
   }
@@ -75,14 +79,16 @@ class ContentEditable extends Component {
   handleFocus() {
     this.props.setActiveContentItemId(
       this.props.contentItem.id,
-      getSelectionOffsets(this.contentEditable)
+      getSelectionOffsets(this.contentEditable),
+      this.props.slideViewType,
     );
   }
 
   handleBlur() {
     this.props.setActiveContentItemId(
       null,
-      getSelectionOffsets(this.contentEditable)
+      getSelectionOffsets(this.contentEditable),
+      null,
     );
   }
 
@@ -108,7 +114,6 @@ class ContentEditable extends Component {
     this.props.updateContentItem(
       this.props.contentItem.id,
       {
-        text: this.props.contentItem.text,
         inlineProperties,
       },
       {
@@ -121,35 +126,37 @@ class ContentEditable extends Component {
   render() {
     return (
       <span
-        className={`o_content-editable ${this.props.contentItem.id === this.props.activeContentItemId ? 'has_focus' : ''}`}
+        className={`o_content-editable ${this.props.isFocused ? 'has_focus' : ''}`}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
       >
         <span className="o_content-editable__wrapper">
-          <span className="o_content-editable__menu list" role="toolbar">
-            <span className="o_content-editable__menu-item list__item">
-              <button
-                className="o_content-editable__menu-button o_content-editable__menu-button--id_strong"
-                tabIndex="-1"
-                onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.STRONG)}
-              >
-                <span className="o_content-editable__menu-text">
-                  Strong
-                </span>
-              </button>
+          {this.props.hasInlineProperties && (
+            <span className="o_content-editable__menu list" role="toolbar">
+              <span className="o_content-editable__menu-item list__item">
+                <button
+                  className="o_content-editable__menu-button o_content-editable__menu-button--id_strong"
+                  tabIndex="-1"
+                  onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.STRONG)}
+                >
+                  <span className="o_content-editable__menu-text">
+                    Strong
+                  </span>
+                </button>
+              </span>
+              <span className="o_content-editable__menu-item list__item">
+                <button
+                  className="o_content-editable__menu-button o_content-editable__menu-button--id_em"
+                  tabIndex="-1"
+                  onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.EM)}
+                >
+                  <span className="o_content-editable__menu-text">
+                    Emphasis
+                  </span>
+                </button>
+              </span>
             </span>
-            <span className="o_content-editable__menu-item list__item">
-              <button
-                className="o_content-editable__menu-button o_content-editable__menu-button--id_em"
-                tabIndex="-1"
-                onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.EM)}
-              >
-                <span className="o_content-editable__menu-text">
-                  Emphasis
-                </span>
-              </button>
-            </span>
-          </span>
+          )}
           <span
             className="o_content-editable__input"
             contentEditable="true"
@@ -161,8 +168,8 @@ class ContentEditable extends Component {
             onInput={this.handleInput}
             dangerouslySetInnerHTML={{
               __html: getHTMLStringFromInlinePropertiesAndText(
-                this.props.contentItem.inlineProperties,
-                this.props.contentItem.text,
+                this.props.hasInlineProperties ? this.props.contentItem.inlineProperties : {},
+                this.props.contentItem[this.props.textPropName],
               ),
             }}
             placeholder="Type something..."
@@ -174,30 +181,18 @@ class ContentEditable extends Component {
 }
 
 ContentEditable.propTypes = {
-  // ContentItems passed to ContentEditable should always be of the text/inlineProperties type,
-  // so we can explicitly test for this:
-  contentItem: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    contentItemType: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    inlineProperties: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      offSets: PropTypes.shape({
-        start: PropTypes.number.isRequired,
-        end: PropTypes.number.isRequired,
-      }).isRequired,
-    })).isRequired,
-  }).isRequired,
-  activeContentItemId: PropTypes.string,
+  contentItem: PropTypes.object.isRequired,
+  textPropName: PropTypes.string.isRequired,
+  hasInlineProperties: PropTypes.bool.isRequired,
+  isFocused: PropTypes.bool.isRequired,
+  slideViewType: PropTypes.string.isRequired,
   selectionOffsets: PropTypes.object.isRequired,
   setActiveContentItemId: PropTypes.func.isRequired,
   updateContentItem: PropTypes.func.isRequired,
-  setSelectionOffsets: PropTypes.func.isRequired,
   handleKeyDown: PropTypes.func,
 };
 
 ContentEditable.defaultProps = {
-  activecontentItemId: null,
   handleKeyDown: null,
 };
 

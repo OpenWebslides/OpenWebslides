@@ -1,0 +1,12 @@
+// ----------------------------
+// Slide content view component
+// ----------------------------
+
+.c_slide-content-view {
+  //margin-top: $spacing--element__v;
+
+  &__wrapper {
+    height: calc(100vh - #{$site__header-height} - #{$spacing--site__v * 2} - #{$site__item-padding__v * 2} - #{$line-height--base * 1em});
+    overflow-y: auto;
+  }
+}

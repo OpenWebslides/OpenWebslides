@@ -8,7 +8,14 @@ export default function Paragraph(props) {
   if (props.editable) {
     return (
       <p>
-        <ContentEditableContainer contentItem={props.contentItem} handleKeyDown={props.handleKeyDown} />
+        <ContentEditableContainer
+          contentItem={props.contentItem}
+          handleKeyDown={props.handleKeyDown}
+          slideViewType={props.slideViewType}
+          isFocused={props.isFocused}
+          textPropName="text"
+          hasInlineProperties={true}
+        />
       </p>
     );
   }
