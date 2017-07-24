@@ -21,6 +21,9 @@ Rails.application.routes.draw do
 
     # Decks
     jsonapi_resources :decks do
+      # Assets
+      jsonapi_resources :assets, :except => :index do end
+
       # Route owner (without :create or :destroy)
       jsonapi_link :owner, :except => %i[create destroy]
       jsonapi_related_resource :owner
@@ -30,11 +33,6 @@ Rails.application.routes.draw do
         jsonapi_links relationship_name
         jsonapi_related_resources relationship_name
       end
-    end
-
-    # Assets
-    jsonapi_resources :assets, :except => :index do
-      jsonapi_relationships :only => :show
     end
 
     # Conversion tool
