@@ -1,5 +1,6 @@
 import React from 'react';
 import SlideLiveViewContainer from 'containers/slide-editor/SlideLiveViewContainer';
+import SlideContentViewContainer from 'containers/slide-editor/SlideContentViewContainer';
 import SlideDebugViewContainer from 'containers/slide-editor/SlideDebugViewContainer';
 
 export const slideViewTypes = {
@@ -17,7 +18,7 @@ export const slideViewTypesById = {
   [slideViewTypes.CONTENT]: {
     id: slideViewTypes.CONTENT,
     name: 'Content view',
-    component: SlideDebugViewContainer,
+    component: SlideContentViewContainer,
   },
   [slideViewTypes.LIVE]: {
     id: slideViewTypes.LIVE,

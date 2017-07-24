@@ -22,6 +22,7 @@ const exampleState = {
         'CONTENT',
         'LIVE',
       ],
+      focusedSlideViewType: null,
     },
     feed: {
       listOfFeedNotifications: [],
