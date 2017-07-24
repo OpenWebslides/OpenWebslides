@@ -15,13 +15,12 @@ function ContentItem(props) {
   } else if (props.slideViewType === slideViewTypes.CONTENT) {
     if (Array.indexOf(containerContentItemTypes, contentItem.contentItemType) !== -1) {
       return <ContentItemType {...props} />;
-    } else {
-      return (
-        <SlideContentViewItem {...props}>
-          <ContentItemType {...props} />
-        </SlideContentViewItem>
-      );
     }
+    return (
+      <SlideContentViewItem {...props}>
+        <ContentItemType {...props} />
+      </SlideContentViewItem>
+    );
   }
 }
 

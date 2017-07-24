@@ -38,29 +38,20 @@ function SlideContentViewItem(props) {
           </span>
         </div>
         <div className={`${cssClass}__content`}>
-          <div
-            className={`${cssClass}__content-item ${cssClass}__content-item--text`}
-          >
+          <div className={`${cssClass}__content-item ${cssClass}__content-item--text`}>
             {props.children}
           </div>
-          {true && (
-            <div
-              className={`${cssClass}__content-item ${cssClass}__content-item--options`}
-            >
+          {true &&
+            <div className={`${cssClass}__content-item ${cssClass}__content-item--options`}>
               <div className={`${cssClass}__options`}>
                 <div className={`${cssClass}__options__wrapper`}>
-                  {false && (
-                    <div
-                      className={`${cssClass}__options-item ${cssClass}__options-item--on-slide-checkbox`}
-                    >
+                  {false &&
+                    <div className={`${cssClass}__options-item ${cssClass}__options-item--on-slide-checkbox`}>
                       <input type="checkbox" checked tabIndex="-1" />
-                    </div>
-                  )}
-                  <div
-                    className={`${cssClass}__options-item ${cssClass}__options-item--direction-menu`}
-                  >
+                    </div>}
+                  <div className={`${cssClass}__options-item ${cssClass}__options-item--direction-menu`}>
                     <menu className="o_direction-menu">
-                      {directions.map(direction => (
+                      {directions.map(direction =>
                         <li className="o_direction-menu__item" key={direction.id}>
                           <button
                             className={`o_direction-menu__button o_direction-menu__button--${direction.id}`}
@@ -70,14 +61,13 @@ function SlideContentViewItem(props) {
                               {direction.text}
                             </span>
                           </button>
-                        </li>
-                      ))}
+                        </li>,
+                      )}
                     </menu>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            </div>}
         </div>
       </div>
     </div>

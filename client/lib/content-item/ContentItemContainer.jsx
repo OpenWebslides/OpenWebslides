@@ -18,9 +18,7 @@ function generateAttributesObject(contentItem) {
   const attributes = {};
 
   Object.keys(attributesMap).forEach(key => {
-    attributes[attributesMap[key]] = _.isString(contentItem[key])
-      ? contentItem[key].toLowerCase()
-      : contentItem[key];
+    attributes[attributesMap[key]] = _.isString(contentItem[key]) ? contentItem[key].toLowerCase() : contentItem[key];
   });
 
   return attributes;
@@ -30,10 +28,8 @@ function mapStateToProps(state, props) {
   const contentItem = getContentItemById(state, props.contentItemId);
   const focusedSlideViewType = getFocusedSlideViewType(state);
   const activeContentItemId = getActiveContentItemId(state);
-  const isFocused = (
-    contentItem.id === activeContentItemId &&
-    props.slideViewType === focusedSlideViewType
-  );
+
+  const isFocused = contentItem.id === activeContentItemId && props.slideViewType === focusedSlideViewType;
   const attributes = generateAttributesObject(contentItem);
 
   return {
@@ -56,23 +52,20 @@ function mapDispatchToProps(dispatch, props) {
           newContentItemType = contentItemTypes.PARAGRAPH;
         }
 
-        dispatch(addContentItemToSlide(
-          props.slideId,
-          newContentItemType,
-          {},
-          _.last(props.ancestorItemIds),
-          props.contentItemId,
-        ));
-      }
-      // If backspace is pressed on an empty contentItem, delete the contentItem and jump to the previous one.
-      else if (e.key === 'Backspace') {
+        dispatch(
+          addContentItemToSlide(
+            props.slideId,
+            newContentItemType,
+            {},
+            _.last(props.ancestorItemIds),
+            props.contentItemId,
+          ),
+        );
+      } else if (e.key === 'Backspace') {
+        // If backspace is pressed on an empty contentItem, delete the contentItem and jump to the previous one.
         if (contentItem.text === '') {
           e.preventDefault();
-          dispatch(deleteContentItemFromSlide(
-            props.slideId,
-            props.contentItemId,
-            props.ancestorItemIds,
-          ));
+          dispatch(deleteContentItemFromSlide(props.slideId, props.contentItemId, props.ancestorItemIds));
         }
       }
     },
