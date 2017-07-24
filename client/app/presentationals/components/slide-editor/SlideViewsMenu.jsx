@@ -11,7 +11,7 @@ function SlideViewsMenu(props) {
   return (
     <div className={`c_switcher-menu c_switcher-menu--${props.cssIdentifier}`}>
       <menu className="o_list c_switcher-menu__list">
-        {_.values(slideViewTypesById).map((slideViewType) => {
+        {_.values(slideViewTypesById).map(slideViewType => {
           buttonId = slideViewType.id.toLowerCase().replace('_', '-');
           buttonActive = Array.indexOf(
             props.activeSlideViewTypes,
@@ -19,12 +19,10 @@ function SlideViewsMenu(props) {
           ) !== -1;
 
           return (
-            <li
-              className="o_list__item c_switcher-menu__item"
-              key={slideViewType.id}
-            >
+            <li className={`o_list__item c_switcher-menu__item`} key={slideViewType.id}>
               <button
-                className={`c_switcher-menu__button c_switcher-menu__button--id_${buttonId} ${buttonActive && 'is_active'}`}
+                className={`c_switcher-menu__button c_switcher-menu__button--id_${buttonId} ${buttonActive &&
+                  'is_active'}`}
                 onClick={() => props.onButtonClick(slideViewType.id)}
               >
                 <span className="c_switcher-menu__button__wrapper">
