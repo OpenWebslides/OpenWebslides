@@ -10,23 +10,20 @@ function SlideContentView(props) {
     let slideContent;
 
     if (props.slide) {
-      slideContent = props.slide.contentItemIds.map(
-        id => (
-          <ContentItemContainer
-            key={id}
-            slideViewType={slideViewTypes.CONTENT}
-            contentItemId={id}
-            ancestorItemIds={[]}
-            slideId={props.slide.id}
-            headingLevel={1}
-            editable={true}
-          />
-        )
+      slideContent = props.slide.contentItemIds.map(id =>
+        <ContentItemContainer
+          key={id}
+          slideViewType={slideViewTypes.CONTENT}
+          contentItemId={id}
+          ancestorItemIds={[]}
+          slideId={props.slide.id}
+          headingLevel={1}
+          editable
+        />,
       );
     } else {
       slideContent = <p>Loading...</p>;
     }
-
 
     return (
       <div className={`c_slide-content-view c_slide-content-view--${props.cssIdentifier}`}>
