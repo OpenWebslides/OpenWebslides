@@ -25,7 +25,7 @@ export default (
       <Route path="/forgot_password" component={ForgotPasswordPage} />
       <Route path="/oauth/omniauth" component={OauthCallbackPage} />
       <Route path="/reset_password" component={ResetPasswordPage} />
-      <Route path="/editor" component={SlideEditorPage} />
+      <Route path="/editor/:deckId" component={SlideEditorPage} />
       <Route path="/create_new_deck" component={CreateDeckPage} />
     </Switch>
   </Router>
