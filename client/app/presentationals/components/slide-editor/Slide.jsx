@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { slideViewTypes } from 'constants/slideViewTypes';
+
 import ContentItemContainer from 'lib/content-item/ContentItemContainer';
 
 class Slide extends Component {
@@ -71,6 +73,7 @@ class Slide extends Component {
         id => (
           <ContentItemContainer
             key={id}
+            slideViewType={slideViewTypes.LIVE}
             contentItemId={id}
             ancestorItemIds={[]}
             slideId={this.props.slide.id}

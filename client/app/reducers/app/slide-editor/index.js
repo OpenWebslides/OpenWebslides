@@ -8,6 +8,7 @@ import {
   SET_ACTIVE_SLIDE_ID,
   SET_ACTIVE_CONTENT_ITEM_ID,
   SET_SELECTION_OFFSETS,
+  SET_FOCUSED_SLIDE_VIEW_TYPE,
   TOGGLE_SLIDE_VIEW,
 } from 'actions/app/slide-editor';
 import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
@@ -42,10 +43,17 @@ function setActiveSlideId(state, action) {
 
 function setActiveContentItemId(state, action) {
   const selectionOffsets = action.payload.selectionOffsets;
+  const focusedSlideViewType = action.payload.focusedSlideViewType;
 
   if (selectionOffsets !== null) {
     state = state.merge({
       selectionOffsets,
+    });
+  }
+
+  if (focusedSlideViewType !== null) {
+    state = state.merge({
+      focusedSlideViewType,
     });
   }
 
@@ -57,6 +65,12 @@ function setActiveContentItemId(state, action) {
 function setSelectionOffsets(state, action) {
   return state.merge({
     selectionOffsets: action.payload.selectionOffsets,
+  });
+}
+
+function setFocusedSlideViewType(state, action) {
+  return state.merge({
+    focusedSlideViewType: action.payload.slideViewType,
   });
 }
 
@@ -157,6 +171,7 @@ export default function slideEditorReducer(state = initialState, action) {
     case SET_ACTIVE_SLIDE_ID: return setActiveSlideId(state, action);
     case SET_ACTIVE_CONTENT_ITEM_ID: return setActiveContentItemId(state, action);
     case SET_SELECTION_OFFSETS: return setSelectionOffsets(state, action);
+    case SET_FOCUSED_SLIDE_VIEW_TYPE: return setFocusedSlideViewType(state, action);
     case TOGGLE_SLIDE_VIEW: return toggleSlideView(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
     case ADD_SLIDE: return addSlide(state, action);
