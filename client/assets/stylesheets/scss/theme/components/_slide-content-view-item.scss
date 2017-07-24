@@ -141,6 +141,11 @@
     // Start counter.
     counter-reset: slide-content-view-section;
 
+    &--ordered-list,
+    &--unordered-list {
+      border-color: tint(lightgray, 30);
+    }
+
     &--ordered-list .c_slide-content-view-item--type-list-item {
       .c_slide-content-view-item__type-indicator::before {
         @include font--mono;
