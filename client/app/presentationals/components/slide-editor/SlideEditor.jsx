@@ -6,7 +6,8 @@ import SlideEditingPane from 'presentationals/components/slide-editor/SlideEditi
 
 export default class SlideEditor extends Component {
   componentDidMount() {
-    this.props.fetchDeck('2'); // #TODO
+    const { deckId } = this.props.match.params;
+    this.props.fetchDeck(deckId);
   }
 
   render() {
@@ -32,4 +33,5 @@ export default class SlideEditor extends Component {
 
 SlideEditor.propTypes = {
   fetchDeck: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(Object).isRequired,
 };
