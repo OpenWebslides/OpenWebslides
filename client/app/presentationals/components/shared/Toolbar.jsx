@@ -8,11 +8,8 @@ function Toolbar(props) {
     <div className={`c_toolbar c_toolbar--${props.cssIdentifier}`}>
       <div className="c_toolbar__wrapper">
         <menu className="c_toolbar__list o_list">
-          { props.buttons.map(button => (
-            <li
-              className="c_toolbar__item o_list__item"
-              key={button.key}
-            >
+          {props.buttons.map(button =>
+            <li className="c_toolbar__item o_list__item" key={button.key}>
               <div className="c_toolbar__item__wrapper o_list__item__wrapper">
                 <ToolbarButton
                   cssIdentifier={props.cssIdentifier}
@@ -20,8 +17,8 @@ function Toolbar(props) {
                   onClick={() => props.onButtonClick(button)}
                 />
               </div>
-            </li>
-          ))}
+            </li>,
+          )}
         </menu>
       </div>
     </div>
@@ -30,13 +27,15 @@ function Toolbar(props) {
 
 Toolbar.propTypes = {
   cssIdentifier: PropTypes.string,
-  buttons: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    key: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    title: PropTypes.string,
-    onClickArguments: PropTypes.object,
-  })).isRequired,
+  buttons: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      title: PropTypes.string,
+      onClickArguments: PropTypes.object,
+    }),
+  ).isRequired,
   onButtonClick: PropTypes.func.isRequired,
 };
 

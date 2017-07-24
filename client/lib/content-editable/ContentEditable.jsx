@@ -65,27 +65,14 @@ class ContentEditable extends Component {
     };
 
     if (this.props.hasInlineProperties) {
-      const inlineProperties = Immutable.asMutable(
-        this.props.contentItem.inlineProperties,
-        { deep: true },
-      );
-      const amount = text.length - this.props.contentItem[
-        this.props.textPropName
-      ].length;
-      updateInlinePropertiesAfterInputAtIndex(
-        inlineProperties,
-        selectionOffsets.start,
-        amount,
-      );
+      const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
+      const amount = text.length - this.props.contentItem[this.props.textPropName].length;
+      updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
 
       props = { ...props, inlineProperties };
     }
 
-    this.props.updateContentItem(
-      this.props.contentItem.id,
-      props,
-      getSelectionOffsets(this.contentEditable),
-    );
+    this.props.updateContentItem(this.props.contentItem.id, props, getSelectionOffsets(this.contentEditable));
   }
 
   handleFocus() {
@@ -97,15 +84,12 @@ class ContentEditable extends Component {
   }
 
   handleBlur() {
-    this.props.updateDeck();
-    this.props.setActiveContentItemId(
-      null,
-      getSelectionOffsets(this.contentEditable),
-      null,
-    );
+    this.props.setActiveContentItemId(null, getSelectionOffsets(this.contentEditable), null);
   }
 
   handleMenuButtonClick(inlinePropertyType) {
+    if (inlinePropertyType === inlinePropertyTypes.LINK) {
+    }
     // get copy of current inlineProperties
     const inlineProperties = Immutable.asMutable(
       this.props.contentItem.inlineProperties,
@@ -149,6 +133,17 @@ class ContentEditable extends Component {
         <span className="o_content-editable__wrapper">
           {this.props.hasInlineProperties &&
             <span className="o_content-editable__menu list" role="toolbar">
+              <span className="o_content-editable__menu-item list__item">
+                <button
+                  className="o_content-editable__menu-button"
+                  tabIndex="-1"
+                  onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.LINK)}
+                >
+                  <span className="o_content-editable__menu-text">
+                    Link
+                  </span>
+                </button>
+              </span>
               <span className="o_content-editable__menu-item list__item">
                 <button
                   className="o_content-editable__menu-button o_content-editable__menu-button--id_strong"

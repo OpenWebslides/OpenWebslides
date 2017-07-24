@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { slideViewTypes } from 'constants/slideViewTypes';
 
 import ContentItemContainer from 'lib/content-item/ContentItemContainer';
