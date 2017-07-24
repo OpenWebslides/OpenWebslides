@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class PasswordResource < JSONAPI::Resource
+  class PasswordResource < ApiResource
     abstract
 
     ##
