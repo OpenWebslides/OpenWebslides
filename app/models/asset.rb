@@ -4,6 +4,8 @@ class Asset < ApplicationRecord
   ##
   # Properties
   #
+
+  # Asset filename
   validates :filename, :presence => true, :uniqueness => { :scope => :deck }
 
   ##
@@ -19,15 +21,6 @@ class Asset < ApplicationRecord
   #
   def path
     Repository::Asset::Find.new(self).execute
-  end
-
-  def update_file(params)
-    command = Repository::Asset::Update.new self
-
-    command.content = params[:content]
-    command.author = params[:author]
-
-    command.execute
   end
 
   ##
