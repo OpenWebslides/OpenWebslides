@@ -11,7 +11,6 @@ import { testDeckContentItemViewTypes } from 'assets/files/test-decks/contentIte
 function* doFetchDeck(action) {
   try {
     const HTMLResponse = yield call(fetchDeckApi, action.meta.deckId);
-    console.log(HTMLResponse);
     // const HTMLResponse = testDeckFlames; // testDeckEmpty;
 
     const entities = yield convertToState(action.meta.deckId, HTMLResponse);

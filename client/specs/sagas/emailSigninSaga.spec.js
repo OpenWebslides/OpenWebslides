@@ -23,9 +23,7 @@ describe('Email Signin Saga', () => {
         meta: { values: { email, password }, resolve, reject },
       });
 
-      expect(generator.next().value).toEqual(
-        call(emailSigninApi, email, password),
-      );
+      expect(generator.next().value).toEqual(call(emailSigninApi, email, password));
 
       expect(generator.next(fakeResponse).value).toEqual(
         put({
@@ -47,17 +45,13 @@ describe('Email Signin Saga', () => {
         meta: { values: { email, password }, resolve, reject },
       });
 
-      expect(generator.next().value).toEqual(
-        call(emailSigninApi, email, password),
-      );
+      expect(generator.next().value).toEqual(call(emailSigninApi, email, password));
 
       expect(generator.throw({ message, statusCode }).value).toEqual({
         _error: 'Password or email is incorrect.',
       });
 
-      expect(generator.next().value).toEqual(
-        call(reject, new SubmissionError()),
-      );
+      expect(generator.next().value).toEqual(call(reject, new SubmissionError()));
 
       expect(generator.next().done).toBeTruthy();
     });
@@ -70,17 +64,13 @@ describe('Email Signin Saga', () => {
         meta: { values: { email, password }, resolve, reject },
       });
 
-      expect(generator.next().value).toEqual(
-        call(emailSigninApi, email, password),
-      );
+      expect(generator.next().value).toEqual(call(emailSigninApi, email, password));
 
       expect(generator.throw({ message, statusCode }).value).toEqual({
         _error: 'Account had not yet been activated. Please check your email.',
       });
 
-      expect(generator.next().value).toEqual(
-        call(reject, new SubmissionError()),
-      );
+      expect(generator.next().value).toEqual(call(reject, new SubmissionError()));
 
       expect(generator.next().done).toBeTruthy();
     });
@@ -92,17 +82,13 @@ describe('Email Signin Saga', () => {
         meta: { values: { email, password }, resolve, reject },
       });
 
-      expect(generator.next().value).toEqual(
-        call(emailSigninApi, email, password),
-      );
+      expect(generator.next().value).toEqual(call(emailSigninApi, email, password));
 
       expect(generator.next(response).value).toEqual({
         _error: 'Something went wrong on our end.',
       });
 
-      expect(generator.next().value).toEqual(
-        call(reject, new SubmissionError()),
-      );
+      expect(generator.next().value).toEqual(call(reject, new SubmissionError()));
 
       expect(generator.next().done).toBeTruthy();
     });
