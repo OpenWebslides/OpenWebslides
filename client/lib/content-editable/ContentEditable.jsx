@@ -81,6 +81,7 @@ class ContentEditable extends Component {
   }
 
   handleBlur() {
+    this.props.updateDeck();
     this.props.setActiveContentItemId(null, getSelectionOffsets(this.contentEditable), null);
   }
 
@@ -173,6 +174,7 @@ class ContentEditable extends Component {
 
 ContentEditable.propTypes = {
   contentItem: PropTypes.object.isRequired,
+  updateDeck: PropTypes.func.isRequired,
   textPropName: PropTypes.string.isRequired,
   hasInlineProperties: PropTypes.bool.isRequired,
   isFocused: PropTypes.bool.isRequired,
