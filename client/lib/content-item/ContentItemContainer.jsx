@@ -11,7 +11,7 @@ import { getContentItemById } from 'selectors/entities/content-items';
 import ContentItem from './ContentItem';
 
 // #TODO move this code out of here
-function generateAttributesObject(contentItem) {
+export function generateAttributesObject(contentItem) {
   const attributesMap = {
     viewType: 'data-view-type',
   };
