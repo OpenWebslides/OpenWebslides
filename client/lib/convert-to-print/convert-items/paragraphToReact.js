@@ -8,13 +8,14 @@ function applyProperty(text, property) {
   ]);
 }
 
-export default function iframeObjectToReact(paragraph) {
+export default function paragraphObjetToReact(paragraph, level) {
   debugger;
   if (!paragraph.inlineProperties) {
     return React.createElement(
       'p',
       {
         className: 'c_print-view__iframe-description',
+        'data-level': level,
       },
       paragraph.text,
     );

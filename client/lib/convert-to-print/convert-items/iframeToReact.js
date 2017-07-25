@@ -6,7 +6,7 @@ function detectType(srcString) {
   return 'This will contain a description of the iFrame contents';
 }
 
-export default function iframeObjectToReact(iframe, viewType) {
+export default function iframeObjectToReact(iframe, viewType, level) {
   switch (viewType) {
     default:
     case iframeOptions.DESCRIPTION:
@@ -14,6 +14,7 @@ export default function iframeObjectToReact(iframe, viewType) {
         'p',
         {
           className: 'c_print-view__iframe-description',
+          'data-level': level,
         },
         detectType(iframe.src),
       );

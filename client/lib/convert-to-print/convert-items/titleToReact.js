@@ -10,5 +10,9 @@ export default function titleToReact(title, level) {
     6: { tag: 'h6', className: 'c_print-view__subsubsubsubsection-title' },
   };
 
-  return React.createElement(levelToTitle[level].tag, { className: levelToTitle[level].className }, title.text);
+  return React.createElement(
+    levelToTitle[level].tag,
+    { className: levelToTitle[level].className, 'data-level': level },
+    title.text,
+  );
 }
