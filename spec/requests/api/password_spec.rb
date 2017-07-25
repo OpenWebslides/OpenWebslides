@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Password API', :type => :request do
-  let(:unconfirmed_user) { create :user, :password => password }
-  let(:user) { create :user, :confirmed, :password => password }
   let(:password) { Faker::Internet.password 6 }
   let(:new_password) { Faker::Internet.password 6 }
+
+  let(:unconfirmed_user) { create :user, :password => password }
+  let(:user) { create :user, :confirmed, :password => password }
 
   def request_body(email)
     {
@@ -32,27 +33,36 @@ RSpec.describe 'Password API', :type => :request do
     }.to_json
   end
 
-  describe 'request a password reset' do
+  describe 'POST /' do
+    before do
+      add_content_type_header
+    end
+
     it 'accepts unconfirmed users' do
-      post_unauthenticated api_password_path, request_body(unconfirmed_user.email)
+      post api_password_path, :params => request_body(unconfirmed_user.email), :headers => headers
 
       expect(response.status).to eq 204
     end
 
     it 'accepts invalid emails' do
-      post_unauthenticated api_password_path, request_body('foo')
+      post api_password_path, :params => request_body('foo'), :headers => headers
 
       expect(response.status).to eq 204
     end
 
     it 'requests a password reset token' do
-      post_unauthenticated api_password_path, request_body(user.email)
+      post api_password_path, :params => request_body(user.email), :headers => headers
 
       expect(response.status).to eq 204
     end
   end
 
-  describe 'reset a password' do
+  describe 'PUT/PATCH /' do
+    before do
+      add_content_type_header
+      add_accept_header
+    end
+
     it 'rejects invalid reset password tokens' do
       expect(user.valid_password? password).to eql true
       user.send_reset_password_instructions
@@ -60,9 +70,10 @@ RSpec.describe 'Password API', :type => :request do
       new_password = Faker::Internet.password 6
       expect(password).not_to eql new_password
 
-      patch_unauthenticated api_password_path, reset_body('foo', new_password)
+      patch api_password_path, :params => reset_body('foo', new_password), :headers => headers
 
-      expect(response.status).to eq 400
+      expect(response.status).to eq 422
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'resets a password' do
@@ -71,7 +82,7 @@ RSpec.describe 'Password API', :type => :request do
 
       expect(password).not_to eql new_password
 
-      patch_unauthenticated api_password_path, reset_body(token, new_password)
+      patch api_password_path, :params => reset_body(token, new_password), :headers => headers
 
       expect(response.status).to eq 200
 
@@ -86,7 +97,7 @@ RSpec.describe 'Password API', :type => :request do
 
       expect(password).not_to eql new_password
 
-      patch_unauthenticated api_password_path, reset_body(token, new_password)
+      patch api_password_path, :params => reset_body(token, new_password), :headers => headers
 
       expect(response.status).to eq 200
 
