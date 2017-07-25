@@ -10,6 +10,22 @@ import { getContentItemById } from 'selectors/entities/content-items';
 
 import ContentItem from './ContentItem';
 
+// #TODO move this code out of here
+function generateAttributesObject(contentItem) {
+  const attributesMap = {
+    viewType: 'data-view-type',
+  };
+  const attributes = {};
+
+  Object.keys(attributesMap).forEach(key => {
+    attributes[attributesMap[key]] = _.isString(contentItem[key])
+      ? contentItem[key].toLowerCase()
+      : contentItem[key];
+  });
+
+  return attributes;
+}
+
 function mapStateToProps(state, props) {
   const contentItem = getContentItemById(state, props.contentItemId);
   const focusedSlideViewType = getFocusedSlideViewType(state);
@@ -18,9 +34,11 @@ function mapStateToProps(state, props) {
     contentItem.id === activeContentItemId &&
     props.slideViewType === focusedSlideViewType
   );
+  const attributes = generateAttributesObject(contentItem);
 
   return {
     contentItem,
+    attributes,
     isFocused,
   };
 }
