@@ -9,6 +9,8 @@ import { getSlideById } from 'selectors/entities/slides';
 import { getContentItemById } from 'selectors/entities/content-items';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
+import { generateAttributesObject } from 'lib/content-item/ContentItemContainer';
+
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 
 function* convertContentItems(contentItemIds, headingLevel) {
@@ -16,6 +18,9 @@ function* convertContentItems(contentItemIds, headingLevel) {
 
   for (let i = 0; i < contentItemIds.length; i += 1) {
     const contentItemObject = yield select(getContentItemById, contentItemIds[i]);
+
+    const attributes = generateAttributesObject(contentItemObject);
+    const attributeString = Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
 
     switch (contentItemObject.contentItemType) {
       case contentItemTypes.TITLE: {
@@ -26,7 +31,7 @@ function* convertContentItems(contentItemIds, headingLevel) {
           contentItemObject.text,
         );
 
-        string += `<${heading}>${text}</${heading}>`;
+        string += `<${heading} ${attributeString}>${text}</${heading}>`;
         break;
       }
       case contentItemTypes.PARAGRAPH: {
@@ -35,26 +40,26 @@ function* convertContentItems(contentItemIds, headingLevel) {
           contentItemObject.text,
         );
 
-        string += `<p>${text}</p>`;
+        string += `<p ${attributeString}>${text}</p>`;
         break;
       }
       case contentItemTypes.SECTION: {
         const childContent = yield convertContentItems(contentItemObject.childItemIds, headingLevel + 1);
 
-        string += `<section>${childContent}</section>`;
+        string += `<section ${attributeString}>${childContent}</section>`;
         break;
       }
       case contentItemTypes.ASIDE: {
         const childContent = yield convertContentItems(contentItemObject.childItemIds, headingLevel + 1);
 
-        string += `<aside>${childContent}</aside>`;
+        string += `<aside ${attributeString}>${childContent}</aside>`;
         break;
       }
       case contentItemTypes.LIST: {
         const listType = contentItemObject.ordered ? 'ol' : 'ul';
         const listItems = yield convertContentItems(contentItemObject.childItemIds, headingLevel);
 
-        string += `<${listType}>${listItems}</${listType}>`;
+        string += `<${listType} ${attributeString}>${listItems}</${listType}>`;
         break;
       }
       case contentItemTypes.LIST_ITEM: {
@@ -63,25 +68,25 @@ function* convertContentItems(contentItemIds, headingLevel) {
           contentItemObject.text,
         );
 
-        string += `<li>${text}</li>`;
+        string += `<li ${attributeString}>${text}</li>`;
         break;
       }
       case contentItemTypes.IFRAME: {
         const { src, alt } = contentItemObject;
 
-        string += `<iframe src="${src}" alt="${alt}"/>`;
+        string += `<iframe ${attributeString} src="${src}" alt="${alt}"/>`;
         break;
       }
       case contentItemTypes.ILLUSTRATIVE_IMAGE: {
         const { src, alt, caption } = contentItemObject;
 
-        string += `<figure><img src="${src}" alt="${alt}"/><figcaption><a href="${src}">${caption}</a></figcaption></figure>`;
+        string += `<figure><img ${attributeString} src="${src}" alt="${alt}"/><figcaption><a href="${src}">${caption}</a></figcaption></figure>`;
         break;
       }
       case contentItemTypes.DECORATIVE_IMAGE: {
         const { src, alt } = contentItemObject;
 
-        string += `<img src="${src}" alt="${alt}"/>`;
+        string += `<img ${attributeString} src="${src}" alt="${alt}"/>`;
         break;
       }
       default:
