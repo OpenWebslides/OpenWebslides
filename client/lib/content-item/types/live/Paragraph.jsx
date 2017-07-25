@@ -7,7 +7,7 @@ import ContentEditableContainer from 'lib/content-editable/ContentEditableContai
 export default function Paragraph(props) {
   if (props.editable) {
     return (
-      <p>
+      <p {...props.attributes}>
         <ContentEditableContainer
           contentItem={props.contentItem}
           handleKeyDown={props.handleKeyDown}
@@ -21,6 +21,7 @@ export default function Paragraph(props) {
   }
   return (
     <p
+      {...props.attributes}
       dangerouslySetInnerHTML={{
         __html: getHTMLStringFromInlinePropertiesAndText(props.contentItem.inlineProperties, props.contentItem.text),
       }}

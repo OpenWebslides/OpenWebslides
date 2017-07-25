@@ -53,4 +53,9 @@
   section section {
     font-size: $subsection-scaling-factor;
   }
+
+  // Hide elements that have a data-view-type attribute with a value different from 'live'.
+  [data-view-type]:not([data-view-type='live']) {
+    display: none;
+  }
 }

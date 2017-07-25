@@ -6,7 +6,7 @@ export default function Aside(props) {
   const { contentItem } = props;
 
   return (
-    <aside>
+    <aside {...props.attributes}>
       {contentItem.childItemIds.map(id => (
         <ContentItemContainer
           key={id}

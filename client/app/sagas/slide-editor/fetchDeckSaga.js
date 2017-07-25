@@ -6,12 +6,13 @@ import convertToState from 'lib/convert-to-state';
 
 import { testDeckEmpty } from 'assets/files/test-decks/empty';
 import { testDeckFlamesFixed } from 'assets/files/test-decks/flamesFixed';
+import { testDeckContentItemViewTypes } from 'assets/files/test-decks/contentItemViewTypes';
 
 function* doFetchDeck(action) {
 
   try {
     // const HTMLResponse = yield call(fetchDeckApi, action.meta.deckId); // #TODO
-    const HTMLResponse = testDeckFlamesFixed; // testDeckEmpty;
+    const HTMLResponse = testDeckContentItemViewTypes;
 
     const entities = yield convertToState(action.meta.deckId, HTMLResponse);
     const payload = {
