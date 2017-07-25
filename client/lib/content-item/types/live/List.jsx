@@ -7,7 +7,7 @@ export default function List(props) {
   const ListType = contentItem.ordered ? 'ol' : 'ul';
 
   return (
-    <ListType>
+    <ListType {...props.attributes}>
       {contentItem.childItemIds.map(id => {
         return <ContentItemContainer
           key={id}

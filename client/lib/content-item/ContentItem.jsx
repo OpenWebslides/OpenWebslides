@@ -27,12 +27,14 @@ function ContentItem(props) {
 
 ContentItem.propTypes = {
   contentItem: PropTypes.object.isRequired,
+  attributes: PropTypes.object,
   headingLevel: PropTypes.number.isRequired,
   editable: PropTypes.bool,
   handleKeyDown: PropTypes.func.isRequired,
 };
 
 ContentItem.defaultProps = {
+  attributes: {},
   editable: false,
 };
 

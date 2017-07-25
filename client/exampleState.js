@@ -72,6 +72,7 @@ const exampleState = {
         '53-1-0': {
           id: '53-1-0',
           contentItemType: TITLE,
+          viewType: LIVE,
           text: 'sic parvis magna',
           inlineProperties: [
             {
@@ -93,41 +94,55 @@ const exampleState = {
         '53-1-1': {
           id: '53-1-1',
           contentItemType: PARAGRAPH,
+          viewType: LIVE,
           text: 'sic parvis magna',
           inlineProperties: [],
         },
         '53-1-2': {
           id: '53-1-2',
           contentItemType: SECTION,
+          viewType: LIVE,
           childItemIds: ['53-1-3', '53-1-4'],
         },
         '53-1-3': {
           id: '53-1-3',
           contentItemType: TITLE,
+          viewType: LIVE,
           text: 'sic parvis magna',
           inlineProperties: [],
         },
         '53-1-4': {
           id: '53-1-4',
           contentItemType: PARAGRAPH,
+          viewType: LIVE,
           text: 'sic parvis magna',
           inlineProperties: [],
         },
         '53-1-5': {
           id: '53-1-5',
           contentItemType: SECTION,
+          viewType: LIVE,
           childItemIds: ['53-1-6', '53-1-7'],
         },
         '53-1-6': {
           id: '53-1-6',
           contentItemType: TITLE,
+          viewType: LIVE,
           text: 'sic parvis magna',
           inlineProperties: [],
         },
         '53-1-7': {
           id: '53-1-7',
           contentItemType: PARAGRAPH,
+          viewType: LIVE,
           text: 'sic parvis magna',
+          inlineProperties: [],
+        },
+        '53-1-8': {
+          id: '53-1-8',
+          contentItemType: PARAGRAPH,
+          viewType: COURSE,
+          text: 'This paragraph is only visible in course mode.',
           inlineProperties: [],
         },
       },
