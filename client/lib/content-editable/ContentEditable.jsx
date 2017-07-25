@@ -9,7 +9,6 @@ import {
 } from 'lib/content-editable/inlineProperties';
 
 import getFilteredTextContent from 'lib/content-editable/textContent';
-import { setSelectionOffsets } from 'actions/app/slide-editor';
 
 import {
   getSelectionOffsets,
@@ -38,7 +37,6 @@ class ContentEditable extends Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleLinkModalClose = this.handleLinkModalClose.bind(this);
-    this.handleLinkModalOpen = this.handleLinkModalOpen.bind(this);
     this.handleAddLink = this.handleAddLink.bind(this);
 
     this.state = {
@@ -54,10 +52,14 @@ class ContentEditable extends Component {
     this.loadSelectionOffsets();
   }
 
-  loadSelectionOffsets() {
-    if (this.props.isFocused) {
-      setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
+  shouldComponentUpdate(nextProps) {
+    if (
+      this.props.contentItem.id === nextProps.activeContentItemId ||
+      this.state.linkModalOpen
+    ) {
+      return true;
     }
+    return false;
   }
 
   handleKeyDown(e) {
@@ -125,10 +127,10 @@ class ContentEditable extends Component {
 
   handleMenuButtonClick(inlinePropertyType) {
     this.props.setSelectionOffsets(getSelectionOffsets(this.contentEditable));
-
-    if (inlinePropertyType === inlinePropertyType.LINK) {
+    if (inlinePropertyType === inlinePropertyTypes.LINK) {
       this.setState({ linkModalOpen: true });
-    } else {
+    }
+ else {
       this.handleContentItemUpdate(inlinePropertyType, {});
     }
   }
@@ -169,10 +171,6 @@ class ContentEditable extends Component {
     );
   }
 
-  handleLinkModalOpen() {
-    this.setState({ linkModalOpen: true });
-  }
-
   handleLinkModalClose() {
     this.setState({ linkModalOpen: false });
   }
@@ -205,7 +203,8 @@ class ContentEditable extends Component {
                 <button
                   className="o_content-editable__menu-button"
                   tabIndex="-1"
-                  onClick={() => this.handleLinkModalOpen()}
+                  onClick={() =>
+                    this.handleMenuButtonClick(inlinePropertyTypes.LINK)}
                 >
                   <span className="o_content-editable__menu-text">
                     Link
