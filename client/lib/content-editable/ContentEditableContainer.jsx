@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 
 import { setActiveContentItemId, setSelectionOffsets } from 'actions/app/slide-editor';
 import { updateContentItem } from 'actions/entities/content-items';
+import { updateDeck } from 'actions/entities/decks';
 
 import { getSelectionOffsets } from 'selectors/app/slide-editor';
 
@@ -15,7 +16,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateContentItem, setActiveContentItemId, setSelectionOffsets }, dispatch);
+  return bindActionCreators({ updateContentItem, setActiveContentItemId, setSelectionOffsets, updateDeck }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentEditable);
