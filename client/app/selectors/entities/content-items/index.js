@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { createSelector } from 'reselect';
 
-const getContentItemDescendantItemIds = (contentItem, contentItemsById) => {
+function getContentItemDescendantItemIds(contentItem, contentItemsById) {
   let result = [contentItem.id];
 
   if (contentItem.childItemIds instanceof Array &&
@@ -17,10 +17,10 @@ const getContentItemDescendantItemIds = (contentItem, contentItemsById) => {
   }
 
   return result;
-};
+}
 
 // Returns a contentItem object containing its nested children.
-const nestChildItemsInsideContentItem = (contentItem, contentItemsById) => {
+function nestChildItemsInsideContentItem(contentItem, contentItemsById) {
   let result;
 
   // If the contentItem has child items.
@@ -48,7 +48,7 @@ const nestChildItemsInsideContentItem = (contentItem, contentItemsById) => {
   }
 
   return result;
-};
+}
 
 // Get the contentItems.byId object.
 export const getContentItemsById = state => state.entities.contentItems.byId;
