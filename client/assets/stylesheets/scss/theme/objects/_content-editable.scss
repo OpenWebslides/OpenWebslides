@@ -22,10 +22,8 @@
   }
 
   &__menu {
-    // position offscreen
-    position: absolute;
-    top: -$shift;
-    right: -$shift;
+    // #TODO fix this
+    display: none;
 
     // Never wrap menu buttons onto next line no matter how small container is.
     white-space: nowrap;
@@ -88,6 +86,8 @@
   &.has_focus {
     .o_content-editable__menu {
       // make menu visible again and position it on the top right of the contentEditable 'frame'
+      display: block;
+      position: absolute;
       top: -$menu-button-size;
       right: 0;
     }
