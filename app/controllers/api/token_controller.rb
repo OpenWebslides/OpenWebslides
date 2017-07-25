@@ -17,7 +17,7 @@ module Api
       raise Api::UnauthorizedError unless @user.valid_password?(resource_params[:password])
       raise Api::UnconfirmedError unless @user.confirmed?
 
-      authorize @user
+      authorize :token
 
       token = JWT::Auth::Token.from_user @user
       headers['Authorization'] = "Bearer #{token.to_jwt}"
@@ -27,7 +27,7 @@ module Api
 
     # DELETE /token
     def destroy
-      authorize current_user
+      authorize :token
 
       current_user.increment_token_version!
 
