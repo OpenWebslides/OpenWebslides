@@ -3,39 +3,41 @@
 require 'rails_helper'
 
 RSpec.describe 'Token API', :type => :request do
-  let(:unconfirmed_user) { create :user, :password => password }
-  let(:user) { create :user, :confirmed, :password => password }
   let(:password) { Faker::Internet.password 6 }
 
-  describe 'Obtain an authentication token' do
-    def request_body(email, password)
-      {
-        :data => {
-          :type => 'tokens',
-          :attributes => {
-            :email => email,
-            :password => password
-          }
+  let(:unconfirmed_user) { create :user, :password => password }
+  let(:user) { create :user, :confirmed, :password => password }
+
+  def request_body(email, password)
+    {
+      :data => {
+        :type => 'tokens',
+        :attributes => {
+          :email => email,
+          :password => password
         }
-      }.to_json
+      }
+    }.to_json
+  end
+
+  describe 'POST /' do
+    before do
+      add_content_type_header
+      add_accept_header
     end
 
     it 'rejects invalid credentials' do
-      post_unauthenticated api_token_path, request_body(user.email, 'foo')
+      post api_token_path, :params => request_body(user.email, 'foo'), :headers => headers
 
       expect(response.status).to eq 401
-    end
-
-    it 'rejects unconfirmed users' do
-      post_unauthenticated api_token_path, request_body(unconfirmed_user.email, password)
-
-      expect(response.status).to eq 403
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'returns a valid token' do
-      post_unauthenticated api_token_path, request_body(user.email, password)
+      post api_token_path, :params => request_body(user.email, password), :headers => headers
 
       expect(response.status).to eq 201
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
       expect(response.headers['Authorization']).to start_with 'Bearer'
 
       token = JWT::Auth::Token.from_token response.headers['Authorization'].scan(/Bearer (.*)$/).flatten.last
@@ -43,11 +45,16 @@ RSpec.describe 'Token API', :type => :request do
     end
   end
 
-  describe 'Invalidate all tokens' do
+  describe 'DELETE /' do
+    before do
+      add_auth_header
+    end
+
     it 'rejects unauthenticated requests' do
-      delete_unauthenticated api_token_path
+      delete api_token_path
 
       expect(response.status).to eq 401
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'invalidates all tokens' do
@@ -56,7 +63,7 @@ RSpec.describe 'Token API', :type => :request do
 
       expect(JWT::Auth::Token.from_token jwt).to be_valid
 
-      delete_authenticated user, api_token_path
+      delete api_token_path, :headers => headers
 
       expect(response.status).to eq 204
       expect(JWT::Auth::Token.from_token jwt).not_to be_valid

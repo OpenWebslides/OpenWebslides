@@ -4,31 +4,41 @@ module Api
   class TokenController < ApiController
     # Authentication
     before_action :authenticate_user, :only => :destroy
-    before_action :add_dummy_id, :only => :destroy
+    prepend_before_action :add_dummy_id
 
-    after_action :add_token, :only => :create
+    # Authorization
+    after_action :verify_authorized
+
+    # POST /token
+    def create
+      @user = User.find_by :email => resource_params[:email]
+
+      raise Api::UnauthorizedError unless @user
+      raise Api::UnauthorizedError unless @user.valid_password?(resource_params[:password])
+      raise Api::UnconfirmedError unless @user.confirmed?
+
+      authorize @user
+
+      token = JWT::Auth::Token.from_user @user
+      headers['Authorization'] = "Bearer #{token.to_jwt}"
+
+      jsonapi_render :json => @user, :status => :created
+    end
+
+    # DELETE /token
+    def destroy
+      authorize current_user
+
+      current_user.increment_token_version!
+
+      head :no_content
+    end
 
     protected
 
-    def add_token
-      return unless response.status == 201
-
-      # Add JWT header to response
-      token = JWT::Auth::Token.from_user resource
-      headers['Authorization'] = "Bearer #{token.to_jwt}"
-    end
-
     def add_dummy_id
-      # JSONAPI-Resources requires and :id for deletion
+      # JSONAPI::Resources requires an :id attribute
       params[:id] = 0
-    end
-
-    def resource
-      @resource ||= User.find_by :email => auth_params[:email]
-    end
-
-    def auth_params
-      params.require(:data).require(:attributes).permit :email, :password
     end
   end
 end
