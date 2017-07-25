@@ -9,7 +9,7 @@ export default function Title(props) {
 
   if (props.editable) {
     return (
-      <TitleTag>
+      <TitleTag {...props.attributes}>
         <ContentEditableContainer
           contentItem={props.contentItem}
           handleKeyDown={props.handleKeyDown}
@@ -23,6 +23,7 @@ export default function Title(props) {
   } else {
     return (
       <TitleTag
+        {...props.attributes}
         dangerouslySetInnerHTML={{
           __html: getHTMLStringFromInlinePropertiesAndText(props.contentItem.inlineProperties, props.contentItem.text),
         }}

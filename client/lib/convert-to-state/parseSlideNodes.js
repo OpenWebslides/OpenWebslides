@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations */
 import _ from 'lodash';
 import { contentItemTypes } from 'constants/contentItemTypes';
+import { slideViewTypes } from 'constants/slideViewTypes';
 
 import { generateSlideId, generateContentItemId } from './generateIds';
 import parseInlineProperties from './parseInlineProperties';
@@ -58,6 +59,11 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
   let childItemIds = [];
   let childItemsById = {};
   let i;
+
+  const viewType = node.dataset.viewType
+    ? node.dataset.viewType.toUpperCase()
+    : slideViewTypes.LIVE;
+  contentItem.viewType = viewType;
 
   // SECTION, ASIDE, LIST, etc.
   if (Array.indexOf(containerNodeNames, nodeName) !== -1) {

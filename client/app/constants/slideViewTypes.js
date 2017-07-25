@@ -6,6 +6,7 @@ import SlideDebugViewContainer from 'containers/slide-editor/SlideDebugViewConta
 export const slideViewTypes = {
   DEBUG: 'DEBUG',
   CONTENT: 'CONTENT',
+  COURSE: 'COURSE',
   LIVE: 'LIVE',
 };
 

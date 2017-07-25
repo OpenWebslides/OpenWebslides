@@ -6,7 +6,7 @@ export default function Section(props) {
   const { contentItem } = props;
 
   return (
-    <section>
+    <section {...props.attributes}>
       {contentItem.childItemIds.map(id => (
         <ContentItemContainer
           key={id}
