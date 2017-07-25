@@ -31,13 +31,21 @@ const examples = [
     inlineProperties: [],
   },
 
-  // IMAGE
+  // ILLUSTRATIVE_IMAGE
   {
     id: '23-1-1',
-    contentItemType: IMAGE,
+    contentItemType: ILLUSTRATIVE_IMAGE,
     src: 'http://google.com/blbla.jpg',
-    altText: 'blablallb',
+    alt: 'blablallb',
     caption: 'Blbablale',
+  },
+
+  // DECORATIVE_IMAGE
+  {
+    id: '23-1-1',
+    contentItemType: DECORATIVE_IMAGE,
+    src: 'http://google.com/blbla.jpg',
+    alt: 'blablallb',
   },
 
   // BLOCK_QUOTE
@@ -53,7 +61,7 @@ const examples = [
     id: '23-1-1',
     contentItemType: IFRAME,
     src: 'http://google.com/blbla.jpg',
-    altText: 'blablallb',
+    alt: 'blablallb',
   },
 
   // SECTION
