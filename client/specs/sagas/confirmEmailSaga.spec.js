@@ -3,10 +3,7 @@ import faker from 'faker';
 
 import confirmEmailApi from 'api/confirmEmailApi';
 
-import {
-  CONFIRM_EMAIL_SUCCESS,
-  CONFIRM_EMAIL_FAILURE,
-} from 'actions/confirmEmailActions';
+import { CONFIRM_EMAIL_SUCCESS, CONFIRM_EMAIL_FAILURE } from 'actions/confirmEmailActions';
 
 import { doConfirmEmail } from 'sagas/confirmEmailSaga';
 
@@ -19,13 +16,9 @@ describe('Confirm Email Saga', () => {
         meta: { confirmationToken },
       });
 
-      expect(generator.next().value).toEqual(
-        call(confirmEmailApi, confirmationToken),
-      );
+      expect(generator.next().value).toEqual(call(confirmEmailApi, confirmationToken));
 
-      expect(generator.next().value).toEqual(
-        put({ type: CONFIRM_EMAIL_SUCCESS }),
-      );
+      expect(generator.next().value).toEqual(put({ type: CONFIRM_EMAIL_SUCCESS }));
 
       expect(generator.next().done).toBeTruthy();
     });
@@ -38,13 +31,9 @@ describe('Confirm Email Saga', () => {
         meta: { confirmationToken },
       });
 
-      expect(generator.next().value).toEqual(
-        call(confirmEmailApi, confirmationToken),
-      );
+      expect(generator.next().value).toEqual(call(confirmEmailApi, confirmationToken));
 
-      expect(generator.throw({ message, statusCode }).value).toEqual(
-        put({ type: CONFIRM_EMAIL_FAILURE }),
-      );
+      expect(generator.throw({ message, statusCode }).value).toEqual(put({ type: CONFIRM_EMAIL_FAILURE }));
 
       expect(generator.next().done).toBeTruthy();
     });
@@ -57,13 +46,9 @@ describe('Confirm Email Saga', () => {
         meta: { confirmationToken },
       });
 
-      expect(generator.next().value).toEqual(
-        call(confirmEmailApi, confirmationToken),
-      );
+      expect(generator.next().value).toEqual(call(confirmEmailApi, confirmationToken));
 
-      expect(generator.throw({ message, statusCode }).value).toEqual(
-        put({ type: CONFIRM_EMAIL_FAILURE }),
-      );
+      expect(generator.throw({ message, statusCode }).value).toEqual(put({ type: CONFIRM_EMAIL_FAILURE }));
 
       expect(generator.next().done).toBeTruthy();
     });
