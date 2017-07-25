@@ -24,16 +24,15 @@ function checkAddFirstChildHeadingToImplicitSection(nodeList, parentIsSection) {
   // If the first node is not a heading.
   if (!parentIsSection || nodeList.length === 0 || Array.indexOf(headingNodeNames, nodeList[0].nodeName) === -1) {
     addFirstChildHeadingToImplicitSection = true;
-  }
-  // If the first node is a heading.
-  else {
+  } else {
+    // If the first node is a heading.
     // Check if it's the only heading of its level in this nodeList.
     let i = 1;
     while (i < nodeList.length && nodeList[i].nodeName !== nodeList[0].nodeName) {
       i++;
     }
     // If another heading of the same level was found, an implicit section needs to be added.
-    addFirstChildHeadingToImplicitSection = (i !== nodeList.length);
+    addFirstChildHeadingToImplicitSection = i !== nodeList.length;
   }
 
   return addFirstChildHeadingToImplicitSection;
@@ -79,7 +78,7 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
       contentItem = {
         ...contentItem,
         contentItemType: contentItemTypes.LIST,
-        ordered: (nodeName === 'OL'),
+        ordered: nodeName === 'OL',
       };
     } else if (nodeName === 'ASIDE') {
       contentItem = { ...contentItem, contentItemType: contentItemTypes.ASIDE };
@@ -90,11 +89,11 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
     }
 
     // Parse container childrenItems.
-    ({contentItemIds: childItemIds, contentItemsById: childItemsById } = parseContentItemNodes(
+    ({ contentItemIds: childItemIds, contentItemsById: childItemsById } = parseContentItemNodes(
       children,
       slideId,
       contentItemSequence + 1,
-      true
+      true,
     ));
 
     // Add childItemIds to contentItem.
@@ -102,9 +101,8 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
       ...contentItem,
       childItemIds,
     };
-  }
-  // P, LI, H1, H2, ...
-  else if (Array.indexOf(plaintextNodeNames, nodeName) !== -1) {
+  } else if (Array.indexOf(plaintextNodeNames, nodeName) !== -1) {
+    // P, LI, H1, H2, ...
     // Add contentItemType.
     if (Array.indexOf(headingNodeNames, nodeName) !== -1) {
       contentItem = { ...contentItem, contentItemType: contentItemTypes.TITLE };
@@ -122,16 +120,14 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
       text: parseTextContent(textContent),
       inlineProperties: parseInlineProperties(childNodes),
     };
-  }
-  else if (nodeName === 'IMG') {
+  } else if (nodeName === 'IMG') {
     contentItem = {
       ...contentItem,
       contentItemType: contentItemTypes.DECORATIVE_IMAGE,
       src: node.src,
-      altText: node.alt,
+      alt: node.alt,
     };
-  }
-  else if (nodeName === 'FIGURE') {
+  } else if (nodeName === 'FIGURE') {
     const imgNode = node.children[0];
     const caption = node.children[1] ? node.children[1].textContent : undefined;
     contentItem = {
@@ -141,16 +137,14 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
       alt: imgNode.alt,
       caption,
     };
-  }
-  else if (nodeName === 'IFRAME') {
+  } else if (nodeName === 'IFRAME') {
     contentItem = {
       ...contentItem,
       contentItemType: contentItemTypes.IFRAME,
       src: node.src,
     };
-  }
-  // Skip unrecognized nodeNames.
-  else {
+  } else {
+    // Skip unrecognized nodeNames.
     return emptyResult;
   }
 
@@ -179,12 +173,10 @@ function parseContentItemNodes(nodeList, slideId, contentItemSequence, parentIsS
   let headingLevel;
 
   Array.from(nodeList).forEach(node => {
-
     // If the node is a heading
     // (and we are not in the special situation described in 'checkAddFirstChildHeadingToImplicitSection')
     // we need to wrap it + it's contents into a newly created section element (called an 'implicit section').
     if (addFirstChildHeadingToImplicitSection && Array.indexOf(headingNodeNames, node.nodeName) !== -1) {
-
       // Get the heading level.
       headingLevel = parseInt(node.nodeName.slice(-1));
 

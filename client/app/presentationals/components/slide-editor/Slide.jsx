@@ -69,18 +69,16 @@ class Slide extends Component {
     let slideContent;
 
     if (this.props.slide) {
-      slideContent = this.props.slide.contentItemIds.map(
-        id => (
-          <ContentItemContainer
-            key={id}
-            slideViewType={slideViewTypes.LIVE}
-            contentItemId={id}
-            ancestorItemIds={[]}
-            slideId={this.props.slide.id}
-            editable={this.props.editable}
-            headingLevel={1}
-          />
-        )
+      slideContent = this.props.slide.contentItemIds.map(id =>
+        <ContentItemContainer
+          key={id}
+          slideViewType={slideViewTypes.LIVE}
+          contentItemId={id}
+          ancestorItemIds={[]}
+          slideId={this.props.slide.id}
+          editable={this.props.editable}
+          headingLevel={1}
+        />,
       );
     } else {
       slideContent = <p>Loading...</p>;
