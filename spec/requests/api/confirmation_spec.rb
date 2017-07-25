@@ -16,18 +16,24 @@ RSpec.describe 'Confirmation API', :type => :request do
     }.to_json
   end
 
-  it 'rejects invalid confirmation tokens' do
-    post_unauthenticated api_confirmation_path, request_body('foo')
+  before do
+    add_content_type_header
+  end
 
-    expect(response.status).to eq 400
+  it 'rejects invalid confirmation tokens' do
+    post api_confirmation_path, :params => request_body('foo'), :headers => headers
+
+    expect(response.status).to eq 422
+    expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
   end
 
   it 'confirm a user' do
     expect(user.confirmed?).not_to be true
 
-    post_unauthenticated api_confirmation_path, request_body(user.confirmation_token)
+    post api_confirmation_path, :params => request_body(user.confirmation_token), :headers => headers
 
     expect(response.status).to eq 201
+    expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
     user.reload
     expect(user.confirmed?).to be true
