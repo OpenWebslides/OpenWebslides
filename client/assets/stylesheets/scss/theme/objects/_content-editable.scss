@@ -22,8 +22,10 @@
   }
 
   &__menu {
-    // #TODO fix this
-    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
 
     // Never wrap menu buttons onto next line no matter how small container is.
     white-space: nowrap;
@@ -86,10 +88,9 @@
   &.has_focus {
     .o_content-editable__menu {
       // make menu visible again and position it on the top right of the contentEditable 'frame'
-      display: block;
-      position: absolute;
       top: -$menu-button-size;
       right: 0;
+      opacity: 1;
     }
 
     .o_content-editable__wrapper::before {
