@@ -18,10 +18,7 @@ const exampleState = {
         start: 0,
         end: 0,
       },
-      activeSlideViewTypes: [
-        'CONTENT',
-        'LIVE',
-      ],
+      activeSlideViewTypes: ['CONTENT', 'LIVE'],
       focusedSlideViewType: null,
     },
     feed: {
