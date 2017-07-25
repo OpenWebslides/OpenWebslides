@@ -135,15 +135,19 @@
   }
 
   &__section {
-    border-left: $border-width--strong $border-style--strong lightgray;
-    padding-left: $spacing--xx-small__h;
+    $indent: $spacing--xx-small__h;
+    $border-width: $border-width--strong;
+
+    border-left: $border-width solid lightgray;
+    padding-left: $indent;
 
     // Start counter.
     counter-reset: slide-content-view-section;
 
     &--ordered-list,
     &--unordered-list {
-      border-color: tint(lightgray, 30);
+      border-left: $border-width dotted shade(lightgray, 10%);
+      // margin-left: -$indent - $border-width;
     }
 
     &--ordered-list .c_slide-content-view-item--type-list-item {
@@ -158,7 +162,7 @@
 
     &--unordered-list .c_slide-content-view-item--type-list-item {
       .c_slide-content-view-item__type-indicator::before {
-        content: $fa-var-circle-thin; // map-get($map--content-item-types_to_icons, unordered-list);
+        content: '●'; // map-get($map--content-item-types_to_icons, unordered-list);
       }
     }
   }
