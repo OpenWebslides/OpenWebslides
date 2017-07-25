@@ -5,12 +5,17 @@ require 'rails_helper'
 RSpec.describe 'Notification API', :type => :request do
   let(:notification) { create :notification }
 
-  describe 'get all notifications' do
+  describe 'GET /' do
+    before do
+      add_accept_header
+    end
+
     it 'returns a list of all notifications' do
       create :notification
-      get_unauthenticated api_notifications_path
+      get api_notifications_path, :headers => headers
 
       expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
       json = JSON.parse response.body
       expect(json).to include 'data'
@@ -26,17 +31,23 @@ RSpec.describe 'Notification API', :type => :request do
     end
   end
 
-  describe 'get a notification' do
+  describe 'GET /:id' do
+    before do
+      add_accept_header
+    end
+
     it 'rejects non-existant notifications' do
-      get_unauthenticated api_notification_path :id => 999
+      get api_notification_path(:id => 999), :headers => headers
 
       expect(response.status).to eq 404
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'returns a notification' do
-      get_unauthenticated api_notification_path :id => notification.id
+      get api_notification_path(:id => notification.id), :headers => headers
 
       expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
       json = JSON.parse response.body
       expect(json).to include 'data'
