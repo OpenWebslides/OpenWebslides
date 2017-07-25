@@ -15,18 +15,13 @@ const customStyles = {
 export default class LinkModal extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { input: '' };
+    this.state = { value: '' };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleAddLink = this.handleAddLink.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps !== this.props || nextState !== this.state;
-  }
-
-  handleChange(event) {
-    this.setState({ value: event.target.value });
   }
 
   handleAddLink() {
@@ -51,9 +46,10 @@ export default class LinkModal extends React.Component {
         <form>
           <input
             autoFocus
+            type="text"
             value={this.state.value}
             placeholder="Enter URL"
-            onChange={this.handleChange}
+            onChange={event => this.setState({ value: event.target.value })}
           />
         </form>
       </Modal>
