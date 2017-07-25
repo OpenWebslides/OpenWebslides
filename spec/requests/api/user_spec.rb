@@ -101,14 +101,14 @@ RSpec.describe 'User API', :type => :request do
     end
 
     it 'rejects an invalid id' do
-      get api_user_path(:id => 0), :headers => @headers
+      get api_user_path(:id => 0), :headers => headers
 
       expect(response.status).to eq 404
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'returns successful' do
-      get api_user_path(:id => user.id), :headers => @headers
+      get api_user_path(:id => user.id), :headers => headers
 
       expect(response.status).to eq 200
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE

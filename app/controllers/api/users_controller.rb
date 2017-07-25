@@ -9,7 +9,6 @@ module Api
     # Authorization
     after_action :verify_authorized, :except => %i[index show_relationship]
     after_action :verify_policy_scoped, :only => :index
-    # Authorization for #show_relationship is handled in Api::ApiResource
 
     # GET /users
     def index
