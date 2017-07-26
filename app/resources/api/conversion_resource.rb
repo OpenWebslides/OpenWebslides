@@ -10,7 +10,8 @@ module Api
     ##
     # Properties
     #
-    attributes :name, :status, :created_at
+    attribute :created_at, :format => :date
+    attributes :name, :status
 
     has_one :deck
     has_one :user
@@ -26,10 +27,6 @@ module Api
     ##
     # Methods
     #
-    def created_at
-      @model.created_at.to_i.to_s
-    end
-
     def self.creatable_fields(_ = {})
       []
     end

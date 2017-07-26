@@ -8,7 +8,8 @@ module Api
     # Properties
     #
     attribute :event_type, :format => :uppercase
-    attributes :created_at, :user_name, :deck_name
+    attribute :created_at, :format => :date
+    attributes :user_name, :deck_name
 
     has_one :user, :always_include_linkage_data => true
     has_one :deck, :always_include_linkage_data => true
@@ -31,10 +32,6 @@ module Api
 
     def self.default_sort
       [{ :field => 'created_at', :direction => :desc }]
-    end
-
-    def created_at
-      @model.created_at.to_i.to_s
     end
 
     def user_name
