@@ -33,6 +33,8 @@ class Deck < ApplicationRecord
   before_destroy :delete_repository, :unless => :skip_callbacks
   after_initialize :set_default_template
 
+  after_save :generate_notification
+
   ##
   # Methods
   #
@@ -88,5 +90,11 @@ class Deck < ApplicationRecord
 
   def set_default_template
     self.template = OpenWebslides.config.default_template if new_record?
+  end
+
+  def generate_notification
+    Notification.create :user => owner,
+                        :deck => self,
+                        :event_type => (created_at == updated_at ? :deck_created : :deck_updated)
   end
 end

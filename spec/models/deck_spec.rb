@@ -68,5 +68,27 @@ RSpec.describe Deck, :type => :model do
     it 'belongs to a user' do
       expect(deck.owner).to be_instance_of User
     end
+
+    it 'generates a notification on create' do
+      count = Notification.count
+
+      d = create :deck
+
+      expect(Notification.count).to eq (count + 1)
+      expect(Notification.last.event_type).to eq 'deck_created'
+      expect(Notification.last.deck).to eq d
+    end
+
+    it 'generates a notification on update' do
+      d = create :deck
+
+      count = Notification.count
+
+      d.update :name => Faker::Lorem.words(4).join(' ')
+
+      expect(Notification.count).to eq (count + 1)
+      expect(Notification.last.event_type).to eq 'deck_updated'
+      expect(Notification.last.deck).to eq d
+    end
   end
 end
