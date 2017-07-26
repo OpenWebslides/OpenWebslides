@@ -11,8 +11,8 @@ function findNearestValidContentItemId(
   ancestorItemIds,
   slideContentItemIds,
   contentItemsById,
-  validContentItemTypes,
-  customContainerContentItemTypes,
+  contentItemValidator,
+  containerItemValidator,
   checkContainerChildren = false,
 ) {
   const debug = false;
@@ -36,7 +36,7 @@ function findNearestValidContentItemId(
   // (Note: we don't do this on the initial call (original contentItem for which
   // we're looking for a previous contentItem) because then the section children
   // are not actual previous elements.)
-  if (checkContainerChildren && Array.indexOf(customContainerContentItemTypes, contentItem.contentItemType) !== -1) {
+  if (checkContainerChildren && containerItemValidator(contentItem) === true){
     if (debug) console.log(`${contentItemId} isSection`);
     // If it is a container, check its first/last child.
     newContentItemId = direction === directions.UP
@@ -80,16 +80,11 @@ function findNearestValidContentItemId(
   }
   // If a previous contentItemId was found.
   else {
-    // Check if this contentItem is valid.
-    let newContentItemIsValid = Array.indexOf(
-      validContentItemTypes,
-      contentItemsById[newContentItemId].contentItemType
-    ) !== -1;
-    // If it is valid, this is the contentItemId we were looking for.
-    if (newContentItemIsValid) {
+    // If the contentItem is valid, this is the contentItemId we were looking for.
+    if (contentItemValidator(contentItemsById[newContentItemId]) === true) {
       return newContentItemId;
     }
-    // If it is not valid, we need to search further.
+    // If the contentItem is not valid, we need to search further.
     else {
       return findNearestValidContentItemId(
         direction,
@@ -97,8 +92,8 @@ function findNearestValidContentItemId(
         newAncestorItemIds,
         slideContentItemIds,
         contentItemsById,
-        validContentItemTypes,
-        customContainerContentItemTypes,
+        contentItemValidator,
+        containerItemValidator,
         newCheckContainerChildren,
       );
     }
@@ -165,8 +160,8 @@ export function getPreviousValidContentItemId(
   ancestorItemIds,
   slideContentItemIds,
   contentItemsById,
-  validContentItemTypes,
-  customContainerContentItemTypes,
+  contentItemValidator,
+  containerItemValidator,
 ) {
   return findNearestValidContentItemId(
     directions.UP,
@@ -174,8 +169,8 @@ export function getPreviousValidContentItemId(
     ancestorItemIds,
     slideContentItemIds,
     contentItemsById,
-    validContentItemTypes,
-    customContainerContentItemTypes,
+    contentItemValidator,
+    containerItemValidator,
   );
 }
 
@@ -184,8 +179,8 @@ export function getNextValidContentItemId(
   ancestorItemIds,
   slideContentItemIds,
   contentItemsById,
-  validContentItemTypes,
-  customContainerContentItemTypes,
+  contentItemValidator,
+  containerItemValidator,
 ) {
   return findNearestValidContentItemId(
     directions.DOWN,
@@ -193,8 +188,8 @@ export function getNextValidContentItemId(
     ancestorItemIds,
     slideContentItemIds,
     contentItemsById,
-    validContentItemTypes,
-    customContainerContentItemTypes,
+    contentItemValidator,
+    containerItemValidator,
   );
 }
 

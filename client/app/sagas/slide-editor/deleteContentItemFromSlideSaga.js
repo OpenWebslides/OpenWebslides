@@ -115,8 +115,12 @@ function* doDeleteContentItemFromSlide(action) {
       contentItemToDeleteAncestorItemIds,
       slide.contentItemIds,
       contentItemsById,
-      plaintextContentItemTypes,
-      containerContentItemTypes,
+      contentItem => {
+        return Array.indexOf(plaintextContentItemTypes, contentItem.contentItemType) !== -1;
+      },
+      contentItem => {
+        return Array.indexOf(containerContentItemTypes, contentItem.contentItemType) !== -1;
+      },
     );
 
     // If a previous contentItem was found, automatically set the caret position
