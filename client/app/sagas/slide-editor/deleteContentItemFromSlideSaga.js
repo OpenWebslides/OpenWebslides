@@ -5,6 +5,7 @@ import {
   plaintextContentItemTypes,
   containerContentItemTypes,
 } from 'constants/contentItemTypes';
+import { slideViewTypes } from 'constants/slideViewTypes';
 
 import {
   getPreviousValidContentItemId,
@@ -14,6 +15,7 @@ import {
 
 import { DELETE_CONTENT_ITEM_FROM_SLIDE } from 'actions/entities/slides';
 import { deleteContentItem } from 'actions/entities/content-items';
+import { getFocusedSlideViewType } from 'selectors/app/slide-editor';
 import { getSlideById } from 'selectors/entities/slides';
 import {
   getContentItemsById,
@@ -93,8 +95,27 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
   }
 }
 
+function contentItemValidator(contentItem, focusedSlideViewType) {
+  const isContentItemTypeCorrect = Array.indexOf(
+    plaintextContentItemTypes,
+    contentItem.contentItemType
+  ) !== -1;
+
+  // #TODO generalize this for all possible (future) viewtypes
+  const isSlideViewTypeCorrect = !(
+    focusedSlideViewType === slideViewTypes.LIVE &&
+    contentItem.viewType !== slideViewTypes.LIVE);
+
+  return isContentItemTypeCorrect && isSlideViewTypeCorrect;
+}
+
+function containerItemValidator(contentItem) {
+  return Array.indexOf(containerContentItemTypes, contentItem.contentItemType) !== -1;
+}
+
 function* doDeleteContentItemFromSlide(action) {
   try {
+    const focusedSlideViewType = yield select(getFocusedSlideViewType);
     const contentItemsById = yield select(getContentItemsById);
     const slide = yield select(getSlideById, action.meta.slideId);
     let contentItemId = action.meta.contentItemId;
@@ -115,12 +136,8 @@ function* doDeleteContentItemFromSlide(action) {
       contentItemToDeleteAncestorItemIds,
       slide.contentItemIds,
       contentItemsById,
-      contentItem => {
-        return Array.indexOf(plaintextContentItemTypes, contentItem.contentItemType) !== -1;
-      },
-      contentItem => {
-        return Array.indexOf(containerContentItemTypes, contentItem.contentItemType) !== -1;
-      },
+      contentItem => contentItemValidator(contentItem, focusedSlideViewType),
+      contentItem => containerItemValidator(contentItem),
     );
 
     // If a previous contentItem was found, automatically set the caret position
