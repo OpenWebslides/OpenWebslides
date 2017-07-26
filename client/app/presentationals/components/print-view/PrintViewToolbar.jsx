@@ -1,39 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { imgOptionsText, iframeOptionsText } from 'constants/printViewOptions';
+import { imgOptions, iframeOptions } from 'constants/printViewOptions';
 import SelectImageOptions from './SelectImageOptions';
 import SelectIframeOptions from './SelectIframeOptions';
+import SelectDecorativeImageOptions from './SelectDecorativeImageOptions';
 
-function PrintViewToolbar({
-  selectedImagePref,
-  changeImagePref,
-  selectedIframePref,
-  changeIframePref,
-}) {
+function PrintViewToolbar({ printViewState, changeImagePref, changeIframePref, changeDecorativeImagePref }) {
+  const curImagePref = printViewState.images;
+  const curDecorativeImagePref = printViewState.decorativeImages;
+  const curIframePref = printViewState.iframes;
   return (
     <div className="c_print-view-toolbar">
-      <SelectImageOptions
-        changeImagePref={changeImagePref}
-        selectedImagePref={selectedImagePref}
+      <SelectImageOptions changeImagePref={changeImagePref} selectedImagePref={curImagePref} />
+      <SelectIframeOptions changeIframePref={changeIframePref} selectedIframePref={curIframePref} />
+      <SelectDecorativeImageOptions
+        changeDecorativeImagePref={changeDecorativeImagePref}
+        selectedDecorativeImagePref={curDecorativeImagePref}
       />
-      <SelectIframeOptions
-        changeIframePref={changeIframePref}
-        selectedIframePref={selectedIframePref}
-      />
+
     </div>
   );
 }
 
 PrintViewToolbar.propTypes = {
-  selectedImagePref: PropTypes.oneOf(Object.keys(imgOptionsText)),
   changeImagePref: PropTypes.func.isRequired,
-  selectedIframePref: PropTypes.oneOf(Object.keys(iframeOptionsText)),
   changeIframePref: PropTypes.func.isRequired,
+  changeDecorativeImagePref: PropTypes.func.isRequired,
+  printViewState: PropTypes.shape({
+    images: PropTypes.oneOf(Object.keys(imgOptions)),
+    iframes: PropTypes.oneOf(Object.keys(iframeOptions)),
+    decorativeImages: PropTypes.bool,
+  }),
 };
 
 PrintViewToolbar.defaultProps = {
-  selectedImagePref: 'IMAGES_AND_TEXT',
-  selectedIframePref: 'DESCRIPTION',
+  printViewState: {
+    images: 'IMAGES_AND_TEXT',
+    iframes: 'DESCRIPTION',
+    decorativeImages: false,
+  },
 };
 
 export default PrintViewToolbar;
