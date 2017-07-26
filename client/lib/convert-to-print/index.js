@@ -46,7 +46,7 @@ function contentItemObjectToReact(
       const childrenObjects = contentItemObject.childItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
       return React.createElement(
         contentItemObject.ordered ? 'ol' : 'ul',
-        { 'data-level': currentLevel },
+        { 'data-level': currentLevel, className: 'c_print-view__list' },
         childrenObjects.map(child =>
           contentItemObjectToReact(state, child, currentLevel, imagesPref, decorativeImagesPref, iframesPref),
         ),
