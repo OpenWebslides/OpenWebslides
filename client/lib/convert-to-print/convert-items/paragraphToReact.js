@@ -9,7 +9,6 @@ function applyProperty(text, property) {
 }
 
 export default function paragraphObjetToReact(paragraph, level) {
-  debugger;
   if (!paragraph.inlineProperties) {
     return React.createElement(
       'p',

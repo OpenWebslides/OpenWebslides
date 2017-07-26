@@ -7,14 +7,21 @@ export default function imageObjectToReact(img, viewType, level) {
       return null;
     case imgOptions.IMAGES_ONLY:
       return React.createElement(
-        'img',
+        'figure',
         {
-          src: img.src,
-          alt: img.alt,
           className: 'c_print-view__illustrative-image-only',
           'data-level': level,
         },
-        null,
+        React.createElement(
+          'img',
+          {
+            src: img.src,
+            alt: img.alt,
+            className: 'c_print-view__image-only__image',
+            'data-level': level,
+          },
+          null,
+        ),
       );
     case imgOptions.TEXT_ONLY:
       return React.createElement(
@@ -23,7 +30,7 @@ export default function imageObjectToReact(img, viewType, level) {
           className: 'c_print-view__illustrative-image-text-only',
           'data-level': level,
         },
-        img.alt,
+        `Image: ${img.alt}`,
       );
     default:
     case imgOptions.IMAGES_AND_TEXT:
