@@ -13,8 +13,14 @@ import titleToReact from './convert-items/titleToReact';
 const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, DECORATIVE_IMAGE, ILLUSTRATIVE_IMAGE, IFRAME } = contentItemTypes;
 const { EM, STRONG } = ipt;
 
-function contentItemObjectToReact(state, contentItemObject, currentLevel) {
-  const prefs = state.app.printView.prefs;
+function contentItemObjectToReact(
+  state,
+  contentItemObject,
+  currentLevel,
+  imagesPref,
+  decorativeImagesPref,
+  iframesPref,
+) {
   switch (contentItemObject.contentItemType) {
     case TITLE:
       return titleToReact(contentItemObject, currentLevel);
@@ -27,14 +33,23 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
     case SECTION:
       return contentItemObject.childItemIds.map(itemId => {
         const itemObject = state.entities.contentItems.byId[itemId];
-        return contentItemObjectToReact(state, itemObject, currentLevel + 1);
+        return contentItemObjectToReact(
+          state,
+          itemObject,
+          currentLevel + 1,
+          imagesPref,
+          decorativeImagesPref,
+          iframesPref,
+        );
       });
     case LIST:
       const childrenObjects = contentItemObject.childItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
       return React.createElement(
         contentItemObject.ordered ? 'ol' : 'ul',
         { 'data-level': currentLevel },
-        childrenObjects.map(child => contentItemObjectToReact(state, child, currentLevel)),
+        childrenObjects.map(child =>
+          contentItemObjectToReact(state, child, currentLevel, imagesPref, decorativeImagesPref, iframesPref),
+        ),
       );
     case LIST_ITEM:
       return React.createElement(
@@ -43,31 +58,30 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
         contentItemObject.text,
       );
     case ILLUSTRATIVE_IMAGE:
-      return illustrativeImageToReact(contentItemObject, prefs.image, currentLevel);
+      return illustrativeImageToReact(contentItemObject, imagesPref, currentLevel);
     case DECORATIVE_IMAGE:
-      return decorativeImageToReact(contentItemObject, prefs.image, currentLevel);
+      return decorativeImageToReact(contentItemObject, decorativeImagesPref, currentLevel);
     case IFRAME:
-      return iframeToReact(contentItemObject, prefs.iframe, currentLevel);
+      return iframeToReact(contentItemObject, iframesPref, currentLevel);
     default:
       return React.createElement('p', null, `Unsupported element: ${contentItemObject.contentItemType}`);
   }
 }
 
-function slideObjectToReact(state, slideObject) {
-  const childrenObjects = slideObject.contentItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
-  // Reduce the list of childrens to an array of react elements
-  return childrenObjects.reduce((arr, currentObject) => {
-    const lvl = isNaN(slideObject.level) ? 0 : parseInt(slideObject.level, 10);
-    return arr.concat(contentItemObjectToReact(state, currentObject, lvl));
-  }, []);
-}
+// function slideObjectToReact(state, slideObject) {
+//   const childrenObjects = slideObject.contentItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
+//   // Reduce the list of childrens to an array of react elements
+//   return childrenObjects.reduce((arr, currentObject) => {
+//     const lvl = isNaN(slideObject.level) ? 0 : parseInt(slideObject.level, 10);
+//     return arr.concat(contentItemObjectToReact(state, currentObject, lvl));
+//   }, []);
+// }
 
-function convertToPrint(state, deckId) {
+function convertToPrint(state, deckId, imagesPref, decorativeImagesPref, iframesPref) {
   const slideIds = state.entities.decks.byId[deckId].slideIds;
   const slideObjects = slideIds.map(id => state.entities.slides.byId[id]);
 
   let elements = [];
-
   for (let i = 0; i < slideObjects.length; i += 1) {
     const slide = slideObjects[i];
     const level = parseInt(slide.level, 10);
@@ -75,7 +89,10 @@ function convertToPrint(state, deckId) {
     const slideElements = slide.contentItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
 
     const reactElements = slideElements.reduce(
-      (arr, currentObject) => arr.concat(contentItemObjectToReact(state, currentObject, level)),
+      (arr, currentObject) =>
+        arr.concat(
+          contentItemObjectToReact(state, currentObject, level, imagesPref, decorativeImagesPref, iframesPref),
+        ),
       [],
     );
     elements = elements.concat(reactElements);

@@ -1,12 +1,11 @@
 import React from 'react';
-import { decorativeImgOptions } from 'constants/printViewOptions';
 
 export default function imageObjectToReact(img, viewType, level) {
   switch (viewType) {
-    case decorativeImgOptions.DONT_SHOW:
+    case false:
       return null;
     default:
-    case decorativeImgOptions.SHOW:
+    case true:
       return React.createElement(
         'img',
         {
