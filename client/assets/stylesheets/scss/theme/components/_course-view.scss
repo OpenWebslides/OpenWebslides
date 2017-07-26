@@ -29,15 +29,17 @@
 
   &__main-title {
     margin-top: 0;
-    font-size: 36px;
+    font-style: $font-style--heading;
+    font-size: $font-size--h1;
+    font-family: $font-family--heading;
+    font-weight: $font-weight--heading;
     text-align: center;
-    text-decoration: underline;
+    //text-decoration: underline;
     flex: 1 100%;
     page-break-after: avoid;
   }
 
   &__section-title {
-    padding-left: 0.5cm;
     margin-top: 0;
     font-size: 28px;
     flex: 1 100%;
@@ -45,7 +47,6 @@
   }
 
   &__subsection-title {
-    padding-left: 1cm;
     margin-top: 0;
     flex: 1 100%;
     font-size: 24px;
@@ -53,7 +54,6 @@
   }
 
   &__subsubsection-title {
-    padding-left: 1.5cm;
     margin-top: 0;
     flex: 1 100%;
     font-size: 12px;
@@ -65,7 +65,7 @@
     padding-left: 0;
   }
 
-  figure {
+  &__illustrative-image-and-text {
     padding-left: 0;
     text-align: center;
     //display: table;
@@ -74,6 +74,15 @@
     //min-width: 30%; /* demo; set some amount (px or %) if you can */
     flex-shrink: 1/3;
     //margin: 10px auto; /* not needed unless you want centered */
+  }
+
+  &__illustrative-image-text-only {
+    text-align: center;
+    flex-basis: 20%;
+    flex-grow: 1;
+    flex-shrink: 1/3;
+
+    border: 1px solid $color--main__border;
   }
 
   figcaption {
