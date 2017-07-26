@@ -86,6 +86,16 @@ const exampleState = {
                 end: 14,
               },
             },
+            {
+              type: LINK,
+              offSets: {
+                start: 15,
+                end: 20,
+              },
+              attr: {
+                href: 'link',
+              },
+            },
           ],
         },
         '53-1-1': {
