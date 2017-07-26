@@ -40,12 +40,15 @@ RSpec.describe 'User API', :type => :request do
   describe 'GET /' do
     before do
       create_list :user, 3
+
+      add_accept_header
     end
 
     it 'returns successful' do
       get api_users_path
 
       expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
       json = JSON.parse response.body
       expect(json['data'].count).to eq 3

@@ -4,10 +4,11 @@ module Api
   class TokenController < ApiController
     # Authentication
     before_action :authenticate_user, :only => :destroy
-    prepend_before_action :add_dummy_id
 
     # Authorization
     after_action :verify_authorized
+
+    prepend_before_action :add_dummy_id
 
     # POST /token
     def create
