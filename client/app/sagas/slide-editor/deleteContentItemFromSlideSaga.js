@@ -5,92 +5,20 @@ import {
   containerContentItemTypes,
 } from 'constants/contentItemTypes';
 
+import { getPreviousValidContentItemId } from 'lib/state-traversal/contentItems';
+
 import { DELETE_CONTENT_ITEM_FROM_SLIDE } from 'actions/entities/slides';
 import { deleteContentItem } from 'actions/entities/content-items';
 import { getSlideById } from 'selectors/entities/slides';
 import {
+  getContentItemsById,
   getContentItemById,
-  getContentItemDescendantItemIdsById,
+  getContentItemDescendantItemIdsById
 } from 'selectors/entities/content-items';
-
-// #TODO refactor this code
-function* findNewActiveContentItemId(
-  contentItemId,
-  siblingItemIds,
-  parentItemId,
-  ancestorItemIds,
-) {
-  let newActiveContentItemId = null;
-  let indexInSiblingItems = Array.indexOf(siblingItemIds, contentItemId);
-
-  // If there is either a parent or previous siblings.
-  if (parentItemId !== null || indexInSiblingItems !== 0) {
-    let parentItem = yield select(getContentItemById, parentItemId);
-    let siblingItem;
-    let customParentItemSet;
-    let i;
-
-    // Loop through ancestors until a suitable contentItem is found.
-    while (newActiveContentItemId === null && siblingItemIds.length > 0) {
-      customParentItemSet = false;
-
-      // Find the index of the current contentItem inside the parentItem.
-      indexInSiblingItems = contentItemId !== null
-        ? Array.indexOf(siblingItemIds, contentItemId)
-        : siblingItemIds.length;
-
-      // If this isn't the first contentItem inside parentItem.
-      if (indexInSiblingItems !== 0) {
-        // Loop through predecessors in reverse.
-        i = indexInSiblingItems - 1;
-        while (
-          newActiveContentItemId === null &&
-          !customParentItemSet && i >= 0
-        ) {
-          siblingItem = yield select(getContentItemById, siblingItemIds[i]);
-          // If this predecessor is a plaintext item.
-          if (
-            Array.indexOf(
-              plaintextContentItemTypes,
-              siblingItem.contentItemType,
-            ) !== -1
-          ) {
-            // This is a suitable newActiveContentItem.
-            newActiveContentItemId = siblingItem.id;
-          }
-          // If this predecessor is a container contentItem.
-          else if (
-            Array.indexOf(
-              containerContentItemTypes,
-              siblingItem.contentItemType,
-            ) !== -1
-          ) {
-            // Continue searching starting at its last child item; manually set
-            // parentItem.
-            contentItemId = null;
-            parentItem = siblingItem;
-            siblingItemIds = parentItem.childItemIds;
-            customParentItemSet = true;
-          }
-          i -= 1;
-        }
-      }
-
-      // If parentItem wasn't already manually set.
-      if (!customParentItemSet) {
-        // Go up a level.
-        contentItemId = parentItem !== null ? parentItem.id : null;
-        parentItem = yield select(getContentItemById, ancestorItemIds.pop());
-        siblingItemIds = parentItem ? parentItem.childItemIds : [];
-      }
-    }
-  }
-
-  return newActiveContentItemId;
-}
 
 function* doDeleteContentItemFromSlide(action) {
   try {
+    const contentItemsById = yield select(getContentItemsById);
     const slide = yield select(getSlideById, action.meta.slideId);
     let contentItemId = action.meta.contentItemId;
     const ancestorItemIds = action.meta.ancestorItemIds;
@@ -115,22 +43,27 @@ function* doDeleteContentItemFromSlide(action) {
       }
     }
 
-    // Find the descendants, that need to be deleted along with this
-    // contentItem.
-    const descendantItemIds = yield select(
-      getContentItemDescendantItemIdsById,
-      contentItemId,
-    );
+    // Make sure the list of ancestorIds includes parent again.
+    // #TODO refactor this and above code
+    if (parentItem) {
+      ancestorItemIds.push(parentItem.id);
+    }
+
+    // Find the descendants, that need to be deleted along with this contentItem.
+    let descendantItemIds = yield select(getContentItemDescendantItemIdsById, contentItemId);
     descendantItemIds.shift(); // remove contentItem's own id
 
     // Find the contentItem before the deleted one (if there is one) so focus
     // can be moved to it.
-    const newActiveContentItemId = yield findNewActiveContentItemId(
+    const newActiveContentItemId = getPreviousValidContentItemId(
       contentItemId,
-      parentItem !== null ? parentItem.childItemIds : slide.contentItemIds,
-      parentItem !== null ? parentItem.id : null,
       ancestorItemIds,
+      slide.contentItemIds,
+      contentItemsById,
+      plaintextContentItemTypes,
+      containerContentItemTypes,
     );
+
     let newSelectionOffsets = null;
     if (newActiveContentItemId !== null) {
       const newActiveContentItem = yield select(
