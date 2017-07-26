@@ -7,6 +7,10 @@ export const inlinePropertyTags = {
     startTag: '<strong>',
     endTag: '</strong>',
   },
+  LINK: {
+    startTag: '<a>',
+    endTag: '</a>',
+  },
 };
 
 export function removeOrMergeOverlappingInlineProperties(
