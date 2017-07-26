@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -14,39 +13,50 @@ const customStyles = {
 };
 
 export default class LinkModal extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = { input: '' };
 
-    this.state = {
-      modalIsOpen: this.props.modalIsOpen,
-    };
-
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleAddLink = this.handleAddLink.bind(this);
   }
 
-  closeModal() {
-    this.setState({ modalIsOpen: false });
+  shouldComponentUpdate(nextProps) {
+    return nextProps !== this.props;
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleAddLink() {
+    this.setState({ value: '' });
+    this.props.onAdd(this.state.value);
   }
 
   render() {
     return (
-      <div>
-        <button onClick={this.openModal}>Open Modal</button>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
+      <Modal
+        isOpen={this.props.isOpen}
+        onRequestClose={this.props.onClose}
+        style={customStyles}
+        contentLabel="Add URL"
+      >
 
-          <h2 ref={subtitle => (this.subtitle = subtitle)}>Hello</h2>
-          <button onClick={this.closeModal}>close</button>
-          <div>I am a modal</div>
-        </Modal>
-      </div>
+        <h2>Add URL</h2>
+        <button onClick={this.handleAddLink}>
+          Add URL
+        </button>
+        <button onClick={this.props.onClose}>close</button>
+        <form>
+          <input
+            autoFocus
+            value={this.state.value}
+            placeholder="Enter URL"
+            onChange={this.handleChange}
+          />
+        </form>
+      </Modal>
     );
   }
 }
