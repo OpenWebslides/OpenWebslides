@@ -6,43 +6,32 @@
   background-color: white;
 
 
-  p {
+  &__paragraph {
     margin-top: 0;
     font-size: 12px;
     flex: 1 100%;
   }
 
-  li {
+
+  &__list-item {
     font-size: 12px;
     list-style-type: none;
 
-    &:before {
+    &::before {
       content: "-    ";
     }
   }
 
-  img {
+  &__decorative-image {
     align-self: flex-end;
-  }
-
-  [data-level="1"] {
-    padding-left: 0.5cm;
-  }
-
-  [data-level="2"] {
-    padding-left: 1cm;
-  }
-
-  [data-level="3"] {
-    //padding-left: 1.5cm;
-  }
-  [data-level="4"] {
-    padding-left: 2cm;
+    margin: 10px auto; /* not needed unless you want centered */
   }
 
   &__main-title {
     margin-top: 0;
     font-size: 36px;
+    text-align: center;
+    text-decoration: underline;
     flex: 1 100%;
     page-break-after: avoid;
   }

@@ -19,7 +19,11 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
     case TITLE:
       return titleToReact(contentItemObject, currentLevel);
     case PARAGRAPH:
-      return React.createElement('p', { 'data-level': currentLevel }, contentItemObject.text);
+      return React.createElement(
+        'p',
+        { 'data-level': currentLevel, className: 'c_print-view__paragraph' },
+        contentItemObject.text,
+      );
     case SECTION:
       return contentItemObject.childItemIds.map(itemId => {
         const itemObject = state.entities.contentItems.byId[itemId];
@@ -33,7 +37,11 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
         childrenObjects.map(child => contentItemObjectToReact(state, child, currentLevel)),
       );
     case LIST_ITEM:
-      return React.createElement('li', { 'data-level': currentLevel }, contentItemObject.text);
+      return React.createElement(
+        'li',
+        { 'data-level': currentLevel, className: 'c_print-view__list-item' },
+        contentItemObject.text,
+      );
     case ILLUSTRATIVE_IMAGE:
       return illustrativeImageToReact(contentItemObject, prefs.image, currentLevel);
     case DECORATIVE_IMAGE:
@@ -48,15 +56,10 @@ function contentItemObjectToReact(state, contentItemObject, currentLevel) {
 function slideObjectToReact(state, slideObject) {
   const childrenObjects = slideObject.contentItemIds.map(itemId => state.entities.contentItems.byId[itemId]);
   // Reduce the list of childrens to an array of react elements
-  const res = childrenObjects.reduce((arr, currentObject) => {
+  return childrenObjects.reduce((arr, currentObject) => {
     const lvl = isNaN(slideObject.level) ? 0 : parseInt(slideObject.level, 10);
     return arr.concat(contentItemObjectToReact(state, currentObject, lvl));
   }, []);
-  // return React.createElement(
-  //   'div',
-  //   { className: 'c_print-view__slide', 'data-level': isNaN(slideObject.level) ? 0 : parseInt(slideObject.level, 10) },
-  //   res,
-  // );
 }
 
 function convertToPrint(state, deckId) {
