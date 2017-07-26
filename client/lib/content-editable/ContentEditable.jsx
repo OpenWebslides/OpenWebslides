@@ -9,6 +9,7 @@ import {
 } from 'lib/content-editable/inlineProperties';
 
 import getFilteredTextContent from 'lib/content-editable/textContent';
+import { setSelectionOffsets } from 'actions/app/slide-editor';
 
 import {
   getSelectionOffsets,
@@ -123,13 +124,24 @@ class ContentEditable extends Component {
   }
 
   handleMenuButtonClick(inlinePropertyType) {
+    this.props.setSelectionOffsets(getSelectionOffsets(this.contentEditable));
+
+    if (inlinePropertyType === inlinePropertyType.LINK) {
+      this.setState({ linkModalOpen: true });
+    } else {
+      this.handleContentItemUpdate(inlinePropertyType, {});
+    }
+  }
+
+  handleContentItemUpdate(inlinePropertyType, attributes) {
+    const selectionOffsets = this.props.selectionOffsets;
+
     // get copy of current inlineProperties
     const inlineProperties = Immutable.asMutable(
       this.props.contentItem.inlineProperties,
       { deep: true },
     );
-    // get current selection
-    const selectionOffsets = getSelectionOffsets(this.contentEditable);
+
     // create new inlineProperty object
     const newInlineProperty = {
       type: inlinePropertyType,
@@ -137,6 +149,7 @@ class ContentEditable extends Component {
         start: selectionOffsets.start,
         end: selectionOffsets.end,
       },
+      attributes,
     };
 
     // add the new inline property to the copied array
@@ -156,10 +169,6 @@ class ContentEditable extends Component {
     );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps !== this.props || nextState !== this.state;
-  }
-
   handleLinkModalOpen() {
     this.setState({ linkModalOpen: true });
   }
@@ -170,7 +179,8 @@ class ContentEditable extends Component {
 
   handleAddLink(url) {
     this.setState({ linkModalOpen: false });
-    console.log(url);
+
+    this.handleContentItemUpdate(inlinePropertyTypes.LINK, { href: url });
   }
 
   render() {
