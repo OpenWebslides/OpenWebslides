@@ -21,8 +21,8 @@ export default class LinkModal extends React.Component {
     this.handleAddLink = this.handleAddLink.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps !== this.props;
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps !== this.props || nextState !== this.state;
   }
 
   handleChange(event) {
@@ -30,8 +30,8 @@ export default class LinkModal extends React.Component {
   }
 
   handleAddLink() {
-    this.setState({ value: '' });
     this.props.onAdd(this.state.value);
+    this.setState({ value: '' });
   }
 
   render() {
