@@ -37,6 +37,7 @@
     //text-decoration: underline;
     flex: 1 100%;
     page-break-after: avoid;
+    counter-reset: h2counter;
   }
 
   &__section-title {
@@ -47,6 +48,11 @@
     font-weight: $font-weight--heading;
     flex: 1 100%;
     page-break-after: avoid;
+    counter-increment: h2counter;
+    counter-reset: h3counter;
+    &::before{
+      content: counter(h2counter) ".\0000a0\0000a0";
+    }
   }
 
   &__subsection-title {
@@ -57,6 +63,11 @@
     font-family: $font-family--heading;
     font-weight: $font-weight--heading;
     page-break-after: avoid;
+    counter-increment: h3counter;
+    counter-reset: h4counter;
+    &::before {
+      content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+    }
   }
 
   &__subsubsection-title {
@@ -67,6 +78,10 @@
     font-family: $font-family--heading;
     font-weight: $font-weight--heading;
     page-break-after: avoid;
+    counter-increment: h4counter;
+    &::before {
+      content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0";
+    }
   }
 
   &__illustrative-image-and-text {
