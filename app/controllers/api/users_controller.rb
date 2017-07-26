@@ -54,9 +54,11 @@ module Api
 
     # DELETE /users/:id
     def destroy
-      @user = User.find(params[:id]).destroy
+      @user = User.find(params[:id])
 
       authorize @user
+
+      @user.destroy
 
       head :no_content
     end
