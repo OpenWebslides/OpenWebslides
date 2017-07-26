@@ -43,7 +43,7 @@ function findNearestValidContentItemId(
       ? _.last(contentItem.childItemIds)
       : _.first(contentItem.childItemIds);
     if (newContentItemId !== undefined) {
-      newAncestorItemIds = ancestorItemIds.concat(newContentItemId);
+      newAncestorItemIds = ancestorItemIds.concat(contentItemId);
     }
     newCheckContainerChildren = true;
   }
@@ -72,6 +72,11 @@ function findNearestValidContentItemId(
       : siblingItemIds[indexInSiblingItemIds + 1];
     newAncestorItemIds = ancestorItemIds;
     newCheckContainerChildren = true;
+  }
+
+  if (debug) {
+    console.log(`newContentItemId: ${newContentItemId}`);
+    console.log(`newAncestorItemIds: ${newAncestorItemIds}`);
   }
 
   // If no previous contentItemId could be found.
