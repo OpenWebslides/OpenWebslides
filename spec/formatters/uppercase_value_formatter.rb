@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe UppercaseValueFormatter do
   let(:word) { Faker::Lorem.word }
 
-  it 'uppercases' do
+  it 'formats' do
     expect(described_class.format word).to eq word.upcase
   end
 
-  it 'downcases' do
+  it 'unformats' do
     expect(described_class.unformat word.upcase).to eq word
   end
 end
