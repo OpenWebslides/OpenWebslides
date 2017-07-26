@@ -3,3 +3,8 @@
 
 # Add new mime types for use in respond_to blocks:
 # Mime::Type.register "text/richtext", :rtf
+
+module JSONAPI
+  # MIME type for deck contents
+  DECK_MEDIA_TYPE = 'text/html'
+end

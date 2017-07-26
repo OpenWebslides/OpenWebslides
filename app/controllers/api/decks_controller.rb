@@ -2,38 +2,114 @@
 
 module Api
   class DecksController < ApiController
-    MEDIA_TYPE = 'text/html'
-
-    before_action :authenticate_user,
-                  :only => %i[create update destroy]
-
+    # Authentication
+    before_action :authenticate_user, :except => %i[index show]
     after_action :renew_token
 
-    def show
-      return super unless media_types_for('Accept').include? MEDIA_TYPE
+    # Authorization
+    after_action :verify_authorized, :except => :index
+    after_action :verify_policy_scoped, :only => :index
 
-      deck = Deck.find params[:id]
+    skip_before_action :jsonapi_request_handling, :only => :update
 
-      # Authorize show
-      scope = DeckPolicy::Scope.new(current_user, Deck).resolve
-      raise Pundit::NotAuthorizedError unless scope.where(:id => deck.id).exists?
-      context[:policy_used]&.call
+    # GET /decks
+    def index
+      @decks = policy_scope Deck
 
-      render :body => deck.read_repository, :content_type => 'text/html'
+      jsonapi_render :json => @decks
     end
 
+    # POST /decks
+    def create
+      begin
+        @deck = Deck.new deck_params
+      rescue ArgumentError
+        # FIXME: Deck.new throws ArgumentError when :state is invalid
+        # See https://github.com/rails/rails/issues/13971#issuecomment-287030984
+        @deck = Deck.new deck_params.merge :state => ''
+        invalid_state = true
+      end
+
+      authorize @deck
+
+      if @deck.save
+        jsonapi_render :json => @deck, :status => :created
+      else
+        @deck.errors.add :state, 'is invalid' if invalid_state
+        jsonapi_render_errors :json => @deck, :status => :unprocessable_entity
+      end
+    end
+
+    # GET /decks/:id
+    def show
+      @deck = Deck.find params[:id]
+
+      authorize @deck
+
+      if request.accept == JSONAPI::DECK_MEDIA_TYPE
+        # TODO: proper mechanism to skip Commands in test env
+        body = ActiveRecord::Base.skip_callbacks ? '' : @deck.read_repository
+
+        render :body => body, :content_type => 'text/html'
+      else
+        jsonapi_render :json => @deck
+      end
+    end
+
+    # PUT/PATCH /decks/:id
     def update
-      return super unless request.content_type == MEDIA_TYPE
+      @deck = Deck.find params[:id]
 
-      deck = Deck.find params[:id]
+      authorize @deck
 
-      # Authorize update
-      raise Pundit::NotAuthorizedError unless DeckPolicy.new(current_user, deck).update?
-      context[:policy_used]&.call
+      if request.content_type == JSONAPI::DECK_MEDIA_TYPE
+        update_content
+      else
+        update_model
+      end
+    end
 
-      deck.update_repository :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
+    # Update filesystem contents
+    def update_content
+      unless ActiveRecord::Base.skip_callbacks
+        @deck.update_repository :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
+      end
 
       head :no_content
+    end
+
+    # Update database model
+    def update_model
+      setup_request
+      check_request
+
+      if @deck.update resource_params
+        jsonapi_render :json => @deck
+      else
+        jsonapi_render_errors :json => @deck, :status => :unprocessable_entity
+      end
+    rescue ArgumentError
+      # FIXME: Deck.new throws ArgumentError when :state is invalid
+      # See https://github.com/rails/rails/issues/13971#issuecomment-287030984
+      @deck.errors.add :state, 'is invalid'
+      jsonapi_render_errors :json => @deck, :status => :unprocessable_entity
+    end
+
+    # DELETE /decks/:id
+    def destroy
+      @deck = Deck.find params[:id]
+
+      authorize @deck
+
+      @deck.destroy
+
+      head :no_content
+    end
+
+    protected
+
+    def deck_params
+      resource_params.merge :user_id => relationship_params[:owner]
     end
   end
 end
