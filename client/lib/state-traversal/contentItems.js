@@ -1,6 +1,9 @@
 import _ from 'lodash';
 
+import { containerContentItemTypes } from 'constants/contentItemTypes';
 import { directions } from 'constants/directions';
+
+// Helper functions ------------------------------------------------------------
 
 function findNearestValidContentItemId(
   direction,
@@ -9,7 +12,7 @@ function findNearestValidContentItemId(
   slideContentItemIds,
   contentItemsById,
   validContentItemTypes,
-  containerContentItemTypes,
+  customContainerContentItemTypes,
   checkContainerChildren = false,
 ) {
   const debug = false;
@@ -33,7 +36,7 @@ function findNearestValidContentItemId(
   // (Note: we don't do this on the initial call (original contentItem for which
   // we're looking for a previous contentItem) because then the section children
   // are not actual previous elements.)
-  if (checkContainerChildren && Array.indexOf(containerContentItemTypes, contentItem.contentItemType) !== -1) {
+  if (checkContainerChildren && Array.indexOf(customContainerContentItemTypes, contentItem.contentItemType) !== -1) {
     if (debug) console.log(`${contentItemId} isSection`);
     // If it is a container, check its first/last child.
     newContentItemId = direction === directions.UP
@@ -95,12 +98,67 @@ function findNearestValidContentItemId(
         slideContentItemIds,
         contentItemsById,
         validContentItemTypes,
-        containerContentItemTypes,
+        customContainerContentItemTypes,
         newCheckContainerChildren,
       );
     }
   }
 }
+
+function findNearestAncestorIdWithAtLeastAmountOfChildren(
+  ancestorItemIds,
+  contentItemsById,
+  amount,
+) {
+  // If there are no ancestors left.
+  if (ancestorItemIds.length === 0) {
+    return null;
+  }
+  // If there are ancestors left.
+  else {
+    let newAncestorItemIds;
+
+    // Get the parentItem.
+    const parentItemId = _.last(ancestorItemIds);
+    const parentItem = contentItemsById[parentItemId];
+    // Remove the parent from the ancestorItemIds.
+    newAncestorItemIds = _.dropRight(ancestorItemIds, 1);
+
+    // Test if the parent is a valid ancestor.
+    if (parentItem.childItemIds.length >= amount) {
+      return parentItem.id;
+    }
+    // If the parent was not a valid ancestor.
+    else {
+      // Go further up the ancestors list.
+      return findNearestAncestorIdWithAtLeastAmountOfChildren(
+        newAncestorItemIds,
+        contentItemsById,
+        amount,
+      );
+    }
+  }
+}
+
+function findAllContentItemDescendantItemIds(contentItemId, contentItemsById) {
+  const contentItem = contentItemsById[contentItemId];
+  let descendantItemIds = [];
+
+  // If this contentItem is a container.
+  if (Array.indexOf(containerContentItemTypes, contentItem.contentItemType) !== -1) {
+    // Add all of its children and their descendants to the array.
+    contentItem.childItemIds.forEach(childItemId => {
+      descendantItemIds = descendantItemIds.concat(childItemId);
+      descendantItemIds = descendantItemIds.concat(
+        findAllContentItemDescendantItemIds(childItemId, contentItemsById),
+      );
+    });
+  }
+
+  return descendantItemIds;
+}
+
+// Exported functions ----------------------------------------------------------
 
 export function getPreviousValidContentItemId(
   contentItemId,
@@ -108,7 +166,7 @@ export function getPreviousValidContentItemId(
   slideContentItemIds,
   contentItemsById,
   validContentItemTypes,
-  containerContentItemTypes,
+  customContainerContentItemTypes,
 ) {
   return findNearestValidContentItemId(
     directions.UP,
@@ -117,7 +175,7 @@ export function getPreviousValidContentItemId(
     slideContentItemIds,
     contentItemsById,
     validContentItemTypes,
-    containerContentItemTypes,
+    customContainerContentItemTypes,
   );
 }
 
@@ -127,7 +185,7 @@ export function getNextValidContentItemId(
   slideContentItemIds,
   contentItemsById,
   validContentItemTypes,
-  containerContentItemTypes,
+  customContainerContentItemTypes,
 ) {
   return findNearestValidContentItemId(
     directions.DOWN,
@@ -136,6 +194,25 @@ export function getNextValidContentItemId(
     slideContentItemIds,
     contentItemsById,
     validContentItemTypes,
-    containerContentItemTypes,
+    customContainerContentItemTypes,
   );
+}
+
+export function getNearestAncestorIdWithAtLeastAmountOfChildren(
+  ancestorItemIds,
+  contentItemsById,
+  amount = 1,
+) {
+  return findNearestAncestorIdWithAtLeastAmountOfChildren(
+    ancestorItemIds,
+    contentItemsById,
+    amount,
+  );
+}
+
+export function getAllContentItemDescendantItemIds(
+  contentItemId,
+  contentItemsById,
+) {
+  return findAllContentItemDescendantItemIds(contentItemId, contentItemsById);
 }
