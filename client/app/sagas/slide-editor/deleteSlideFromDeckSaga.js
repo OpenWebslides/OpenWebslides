@@ -7,19 +7,17 @@ import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
 import { getContentItemsById } from 'selectors/entities/content-items';
 
-import {
-  getAllContentItemDescendantItemIds
-} from 'lib/state-traversal/contentItems';
+import { getAllContentItemDescendantItemIds } from 'lib/state-traversal/contentItems';
 
 function getContentItemIdsToDelete(contentItemIds, contentItemsById) {
   let result = [];
   let descendantItemIds;
   let i;
 
-  for (i = 0; i < contentItemIds.length; i++) {
+  for (i = 0; i < contentItemIds.length; i += 1) {
     descendantItemIds = getAllContentItemDescendantItemIds(
       contentItemIds[i],
-      contentItemsById
+      contentItemsById,
     );
     result = result.concat(contentItemIds[i]).concat(descendantItemIds);
   }
@@ -33,15 +31,14 @@ function* doDeleteSlideFromDeck(action) {
     const slide = yield select(getSlideById, slideId);
     const contentItemsById = yield select(getContentItemsById);
 
-    // If a slide is deleted, all contentItems that are on the slide should be
-    // deleted as well.
+    // If a slide is deleted, all contentItems that are on the slide should be deleted as well.
     const contentItemIdsToDelete = getContentItemIdsToDelete(
       slide.contentItemIds,
       contentItemsById,
     );
 
-    // After deleting the slide, set the previous slide as the active slide;
-    // if there is no previous slide, set the next one as active instead.
+    // After deleting the slide, set the previous slide as the active slide; if there is no previous
+    // slide, set the next one as active instead.
     const activeSlideId = yield select(getActiveSlideId);
     let newActiveSlideId;
     if (activeSlideId === slideId) {
@@ -60,10 +57,10 @@ function* doDeleteSlideFromDeck(action) {
       slideId,
       deckId,
       contentItemIdsToDelete,
-      newActiveSlideId
+      newActiveSlideId,
     ));
-
-  } catch (e) {
+  }
+  catch (e) {
     console.error(e);
   }
 }
