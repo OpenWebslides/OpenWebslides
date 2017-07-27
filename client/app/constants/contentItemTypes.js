@@ -36,8 +36,14 @@ export const plaintextContentItemTypes = [
   contentItemTypes.PARAGRAPH,
   contentItemTypes.LIST_ITEM,
 ];
-export const sectionContentItemTypes = [contentItemTypes.SECTION, contentItemTypes.ASIDE];
-export const containerContentItemTypes = [...sectionContentItemTypes, contentItemTypes.LIST];
+export const sectionContentItemTypes = [
+  contentItemTypes.SECTION,
+  contentItemTypes.ASIDE,
+];
+export const containerContentItemTypes = [
+  ...sectionContentItemTypes,
+  contentItemTypes.LIST,
+];
 
 export const toolbarContentItemTypes = [
   {

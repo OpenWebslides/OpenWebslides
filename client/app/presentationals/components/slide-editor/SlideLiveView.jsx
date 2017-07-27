@@ -6,7 +6,9 @@ import SlideContainer from 'containers/slide-editor/SlideContainer';
 function SlideLiveView(props) {
   if (props.activeSlideId) {
     return (
-      <div className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}>
+      <div
+        className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}
+      >
         <div className="c_editor-slide-view__wrapper">
           <SlideContainer id={props.activeSlideId} editable />
         </div>

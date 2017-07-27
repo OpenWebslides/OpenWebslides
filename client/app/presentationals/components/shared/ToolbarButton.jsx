@@ -1,20 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function ToolbarButton(props) {
   const key = props.button.key.toLowerCase().replace('_', '-');
 
   return (
-    <span className={ `c_toolbar-button c_toolbar-button--${props.cssIdentifier} c_toolbar-button--id_${key}` }>
-      <button className={ "c_toolbar-button__widget o_button" }
-              title={ props.button.title !== undefined
-                ? props.button.title
-                : props.button.text }
-              onClick={ props.onClick }
+    <span
+      className={`c_toolbar-button c_toolbar-button--${props.cssIdentifier} c_toolbar-button--id_${key}`}
+    >
+      <button
+        className={'c_toolbar-button__widget o_button'}
+        title={props.button.title !== undefined
+          ? props.button.title
+          : props.button.text}
+        onClick={props.onClick}
       >
-          <span className="c_toolbar-button__widget__wrapper o_button__wrapper o_action__wrapper">
-              { props.button.text }
-          </span>
+        <span
+          className="c_toolbar-button__widget__wrapper o_button__wrapper o_action__wrapper"
+        >
+          {props.button.text}
+        </span>
       </button>
     </span>
   );

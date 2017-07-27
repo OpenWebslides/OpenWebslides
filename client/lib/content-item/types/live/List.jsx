@@ -8,8 +8,8 @@ export default function List(props) {
 
   return (
     <ListType {...props.attributes}>
-      {contentItem.childItemIds.map(id => {
-        return <ContentItemContainer
+      {contentItem.childItemIds.map((id) => {
+        return (<ContentItemContainer
           key={id}
           slideViewType={props.slideViewType}
           contentItemId={id}
@@ -17,7 +17,7 @@ export default function List(props) {
           slideId={props.slideId}
           editable={props.editable}
           headingLevel={props.headingLevel}
-        />
+        />);
       })}
     </ListType>
   );

@@ -9,15 +9,26 @@ export function addContentItem(
   props,
   slideId,
   parentItemId = null,
-  afterItemId = null
+  afterItemId = null,
 ) {
   return {
     type: ADD_CONTENT_ITEM,
-    payload: { contentItemId, contentItemType, props, slideId, parentItemId, afterItemId },
+    payload: {
+      contentItemId,
+      contentItemType,
+      props,
+      slideId,
+      parentItemId,
+      afterItemId,
+    },
   };
 }
 
-export function updateContentItem(contentItemId, props, selectionOffsets = null) {
+export function updateContentItem(
+  contentItemId,
+  props,
+  selectionOffsets = null,
+) {
   return {
     type: UPDATE_CONTENT_ITEM,
     payload: { contentItemId, props, selectionOffsets },
@@ -34,6 +45,13 @@ export function deleteContentItem(
 ) {
   return {
     type: DELETE_CONTENT_ITEM,
-    payload: { contentItemId, slideId, parentItemId, descendantItemIds, newActiveContentItemId, newSelectionOffsets },
-  }
+    payload: {
+      contentItemId,
+      slideId,
+      parentItemId,
+      descendantItemIds,
+      newActiveContentItemId,
+      newSelectionOffsets,
+    },
+  };
 }

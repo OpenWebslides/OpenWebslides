@@ -9,7 +9,10 @@ export default function convertToState(deckId, HTMLString) {
 
   if (document.body) {
     slideNodes = Array.from(document.body.children).filter(
-      node => Array.indexOf(validSlideNodeNames, node.nodeName) !== -1 && node.className.includes('slide'),
+      node => Array.indexOf(
+        validSlideNodeNames,
+        node.nodeName,
+      ) !== -1 && node.className.includes('slide'),
     );
   }
 

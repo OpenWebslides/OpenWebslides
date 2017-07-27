@@ -21,12 +21,15 @@ function SlideContentView(props) {
           editable
         />,
       );
-    } else {
+    }
+    else {
       slideContent = <p>Loading...</p>;
     }
 
     return (
-      <div className={`c_slide-content-view c_slide-content-view--${props.cssIdentifier}`}>
+      <div
+        className={`c_slide-content-view c_slide-content-view--${props.cssIdentifier}`}
+      >
         <div className="c_slide-content-view__wrapper">
           {slideContent}
         </div>
@@ -39,7 +42,10 @@ function SlideContentView(props) {
 
 SlideContentView.propTypes = {
   cssIdentifier: PropTypes.string,
-  slide: PropTypes.object,
+  slide: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    contentItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
 };
 
 SlideContentView.defaultProps = {

@@ -1,6 +1,10 @@
 import { takeEvery, select, put } from 'redux-saga/effects';
 
-import { contentItemTypes, plaintextContentItemTypes, sectionContentItemTypes } from 'constants/contentItemTypes';
+import {
+  contentItemTypes,
+  plaintextContentItemTypes,
+  sectionContentItemTypes,
+} from 'constants/contentItemTypes';
 
 import { ADD_CONTENT_ITEM_TO_SLIDE } from 'actions/entities/slides';
 import { addContentItem } from 'actions/entities/content-items';
@@ -16,32 +20,38 @@ function getPropsForContentItemType(contentItemType, contentItemTypeProps) {
       text: '',
       inlineProperties: [],
     };
-  } else if (Array.indexOf(sectionContentItemTypes, contentItemType) !== -1) {
+  }
+  else if (Array.indexOf(sectionContentItemTypes, contentItemType) !== -1) {
     props = {
       childItemIds: [],
     };
-  } else if (contentItemType === contentItemTypes.LIST) {
+  }
+  else if (contentItemType === contentItemTypes.LIST) {
     props = {
       ordered: false, // default value
       childItemIds: [],
     };
-  } else if (contentItemType === contentItemTypes.ILLUSTRATIVE_IMAGE) {
+  }
+  else if (contentItemType === contentItemTypes.ILLUSTRATIVE_IMAGE) {
     props = {
       src: '',
       altText: '',
       caption: '',
     };
-  } else if (contentItemType === contentItemTypes.DECORATIVE_IMAGE) {
+  }
+  else if (contentItemType === contentItemTypes.DECORATIVE_IMAGE) {
     props = {
       src: '',
       altText: '',
     };
-  } else if (contentItemType === contentItemTypes.IFRAME) {
+  }
+  else if (contentItemType === contentItemTypes.IFRAME) {
     props = {
       src: '',
       altText: '',
     };
-  } else {
+  }
+  else {
     console.error(`Unrecognized contentItemType: ${contentItemType}`);
   }
 
@@ -54,25 +64,36 @@ function getPropsForContentItemType(contentItemType, contentItemTypeProps) {
   return props;
 }
 
-function* findLastSectionContentItemInListOfContentItemIds(contentItemId, childItemIds) {
-  // If there are no suitable child items, this is the last possible nested section.
+function* findLastSectionContentItemInListOfContentItemIds(
+  contentItemId,
+  childItemIds,
+) {
+  // If there are no suitable child items, this is the last possible nested
+  // section.
   let lastSectionContentItemId = contentItemId;
 
   if (childItemIds.length > 0) {
     // Get the last childItem in the list.
     const lastChildItem = yield select(
       getContentItemById,
-      childItemIds[childItemIds.length - 1]
+      childItemIds[childItemIds.length - 1],
     );
 
     // If the last childItem in the list is a section.
-    if (Array.indexOf(sectionContentItemTypes, lastChildItem.contentItemType) !== -1) {
+    if (
+      Array.indexOf(
+        sectionContentItemTypes,
+        lastChildItem.contentItemType,
+      ) !== -1
+    ) {
       // See if there is another suitable section nested inside it.
-      // Note: this returns the current lastContentItem.id if no suitable section can be found.
-      lastSectionContentItemId = yield findLastSectionContentItemInListOfContentItemIds(
-        lastChildItem.id,
-        lastChildItem.childItemIds
-      );
+      // Note: this returns the current lastContentItem.id if no suitable
+      // section can be found.
+      lastSectionContentItemId =
+        yield findLastSectionContentItemInListOfContentItemIds(
+          lastChildItem.id,
+          lastChildItem.childItemIds,
+        );
     }
   }
 
@@ -82,8 +103,14 @@ function* findLastSectionContentItemInListOfContentItemIds(contentItemId, childI
 function* doAddContentItemToSlide(action) {
   try {
     const slide = yield select(getSlideById, action.meta.slideId);
-    const contentItemProps = getPropsForContentItemType(action.meta.contentItemType, action.meta.contentItemTypeProps);
-    let contentItemId = generateContentItemId(slide.id, slide.contentItemSequence);
+    const contentItemProps = getPropsForContentItemType(
+      action.meta.contentItemType,
+      action.meta.contentItemTypeProps,
+    );
+    let contentItemId = generateContentItemId(
+      slide.id,
+      slide.contentItemSequence,
+    );
     let parentItemId = action.meta.parentItemId;
     const afterItemId = action.meta.afterItemId;
 
@@ -94,18 +121,26 @@ function* doAddContentItemToSlide(action) {
 
     // If no parentItemId was explicitly passed to the action.
     if (action.meta.parentItemId === null) {
-      // See if there is an existing section on the slide to which we could add the new contentItem.
+      // See if there is an existing section on the slide to which we could add
+      // the new contentItem.
       // Note: this sets parentItemId to null if there is no suitable section.
-      parentItemId = yield findLastSectionContentItemInListOfContentItemIds(null, slide.contentItemIds);
+      parentItemId = yield findLastSectionContentItemInListOfContentItemIds(
+        null,
+        slide.contentItemIds,
+      );
     }
 
     // If the new contentItem is a title, we need to add a new section for it.
     if (action.meta.contentItemType === contentItemTypes.TITLE) {
       const sectionProps = getPropsForContentItemType(contentItemTypes.SECTION);
-      // Since the section should be added first, give it the id we just generated.
+      // Since the section should be added first, give it the id we just
+      // generated.
       const sectionItemId = contentItemId;
       // Generate a new id for the contentItem.
-      contentItemId = generateContentItemId(slide.id, slide.contentItemSequence + 1);
+      contentItemId = generateContentItemId(
+        slide.id,
+        slide.contentItemSequence + 1,
+      );
 
       // Add the new section to the state.
       yield put(addContentItem(
@@ -114,15 +149,19 @@ function* doAddContentItemToSlide(action) {
         sectionProps,
         slide.id,
         parentItemId,
-        afterItemId
+        afterItemId,
       ));
 
       // Use the new section as the parent item for the new contentItem.
       parentItemId = sectionItemId;
     }
-    // If the new contentItem is a list, we need to automatically add the first list item inside it.
+    // If the new contentItem is a list, we need to automatically add the first
+    // list item inside it.
     else if (action.meta.contentItemType === contentItemTypes.LIST) {
-      childItemId = generateContentItemId(slide.id, slide.contentItemSequence + 1);
+      childItemId = generateContentItemId(
+        slide.id,
+        slide.contentItemSequence + 1,
+      );
       childItemType = contentItemTypes.LIST_ITEM;
       childItemProps = getPropsForContentItemType(childItemType);
     }
@@ -133,7 +172,7 @@ function* doAddContentItemToSlide(action) {
       contentItemProps,
       slide.id,
       parentItemId,
-      afterItemId
+      afterItemId,
     ));
 
     if (childItemId !== null) {
@@ -142,11 +181,11 @@ function* doAddContentItemToSlide(action) {
         childItemType,
         childItemProps,
         slide.id,
-        contentItemId
+        contentItemId,
       ));
     }
-
-  } catch(e) {
+  }
+  catch (e) {
     console.error(e);
   }
 }

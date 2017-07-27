@@ -10,7 +10,7 @@ export default function List(props) {
       className={`c_slide-content-view-item__section c_slide-content-view-item__section--${contentItem.ordered ? 'ordered' : 'unordered'}-list`}
     >
       {contentItem.childItemIds.map(id => {
-        return <ContentItemContainer
+        return (<ContentItemContainer
           key={id}
           slideViewType={props.slideViewType}
           contentItemId={id}
@@ -18,7 +18,7 @@ export default function List(props) {
           slideId={props.slideId}
           editable={props.editable}
           headingLevel={props.headingLevel}
-        />
+        />);
       })}
     </div>
   );

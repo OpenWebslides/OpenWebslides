@@ -11,8 +11,8 @@ function* doAddSlideToDeck(action) {
     const slideId = generateSlideId(deck.id, deck.slideSequence);
 
     yield put(addSlide(slideId, deck.id));
-
-  } catch(e) {
+  }
+  catch (e) {
     console.error(e);
   }
 }
