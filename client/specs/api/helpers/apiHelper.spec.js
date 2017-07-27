@@ -27,7 +27,7 @@ describe('ApiHelper constructor', () => {
       .addHeader(randomHeaderKey, randomHeaderVal);
 
     expect(testRequest.url).toEqual(randomUrl);
-    expect(testRequest.body).toEqual(JSON.stringify(randomBody));
+    expect(testRequest.body).toEqual(randomBody);
     expect(testRequest.method).toEqual('POST');
     expect(testRequest.headers).toEqual({
       'Content-Type': 'application/vnd.api+json',
@@ -41,18 +41,14 @@ describe('ApiHelper constructor', () => {
 
     testRequest.setMethod('GET');
 
-    expect(() => testRequest.setBody('body')).toThrowError(
-      "Can't add a body to a GET request.",
-    );
+    expect(() => testRequest.setBody('body')).toThrowError("Can't add a body to a GET request.");
 
     expect(() => testRequest.addHeader('Authentication', 'bla')).toThrowError(
       `Invalid header 'Authentication': No need to specify an authentication header, it's included by default.`,
     );
 
     testRequest.setMethod('POST');
-    expect(() => testRequest.addParameter('name', 'val')).toThrowError(
-      `Can't add url parameters to a POST request!`,
-    );
+    expect(() => testRequest.addParameter('name', 'val')).toThrowError(`Can't add url parameters to a POST request!`);
     expect(() => testRequest.setMethod('wrong')).toThrowError(
       `Invalid request method: 'wrong'. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')`,
     );
