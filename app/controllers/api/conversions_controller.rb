@@ -24,11 +24,11 @@ module Api
 
       # Copy uploaded file to tempfile
       # TODO: sanitize filenames
-      raise Api::ApiError, error_params(:detail => 'Invalid filename') unless params[:qqfilename]
+      raise Api::ApiError, error_params('Invalid filename') unless params[:qqfilename]
       filename = params[:qqfilename]
 
       # Create tempfile with proper extension
-      raise Api::ApiError, error_params(:detail => 'Invalid file') unless params[:qqfile]
+      raise Api::ApiError, error_params('Invalid file') unless params[:qqfile]
       file = Tempfile.new ['', ".#{filename.split('.').last}"]
       file.close
       FileUtils.cp params[:qqfile].path, file.path
@@ -60,8 +60,8 @@ module Api
     def jsonapi_render_upload(json:, status: nil, options: {})
       # Adapted from JSONAPI::Utils::Response::Renders::jsonapi_render
 
-      body = jsonapi_format(json, options)
-      render json: body, status: status || @_response_document.status, success: true # This line changed
+      body = jsonapi_format(json, options).merge success: true # This line changed
+      render json: body, status: status || @_response_document.status
     rescue => e
       handle_exceptions(e)
     ensure
@@ -73,7 +73,7 @@ module Api
 
       body   = jsonapi_format_errors(exception || json)
       status = status || body.try(:first).try(:[], :status)
-      render json: { errors: body, error: exception.params[:detail] }, status: status, success: false # This line changed
+      render json: { errors: body, error: exception.params[:detail], success: false, preventRetry: true }, status: status # This line changed
     ensure
       correct_media_type
     end
