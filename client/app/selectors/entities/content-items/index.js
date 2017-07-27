@@ -29,8 +29,9 @@ const nestChildItemsInsideContentItem = (contentItem, contentItemsById) => {
       ...contentItem,
       children,
     };
-  } else {
-    // If the contentItem does not have child items.
+  }
+  // If the contentItem does not have child items.
+  else {
     // Simply return the contentItem unchanged.
     result = contentItem;
   }
