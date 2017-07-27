@@ -61,8 +61,9 @@ function mapDispatchToProps(dispatch, props) {
             props.contentItemId,
           ),
         );
-      } else if (e.key === 'Backspace') {
-        // If backspace is pressed on an empty contentItem, delete the contentItem and jump to the previous one.
+      }
+      // If backspace is pressed on an empty contentItem, delete the contentItem and jump to the previous one.
+      else if (e.key === 'Backspace') {
         if (contentItem.text === '') {
           e.preventDefault();
           dispatch(deleteContentItemFromSlide(props.slideId, props.contentItemId, props.ancestorItemIds));

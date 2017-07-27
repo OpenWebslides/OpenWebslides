@@ -24,8 +24,9 @@ function checkAddFirstChildHeadingToImplicitSection(nodeList, parentIsSection) {
   // If the first node is not a heading.
   if (!parentIsSection || nodeList.length === 0 || Array.indexOf(headingNodeNames, nodeList[0].nodeName) === -1) {
     addFirstChildHeadingToImplicitSection = true;
-  } else {
-    // If the first node is a heading.
+  }
+  // If the first node is a heading.
+  else {
     // Check if it's the only heading of its level in this nodeList.
     let i = 1;
     while (i < nodeList.length && nodeList[i].nodeName !== nodeList[0].nodeName) {
@@ -101,8 +102,9 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
       ...contentItem,
       childItemIds,
     };
-  } else if (Array.indexOf(plaintextNodeNames, nodeName) !== -1) {
-    // P, LI, H1, H2, ...
+  }
+  // P, LI, H1, H2, ...
+  else if (Array.indexOf(plaintextNodeNames, nodeName) !== -1) {
     // Add contentItemType.
     if (Array.indexOf(headingNodeNames, nodeName) !== -1) {
       contentItem = { ...contentItem, contentItemType: contentItemTypes.TITLE };
@@ -120,14 +122,18 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
       text: parseTextContent(textContent),
       inlineProperties: parseInlineProperties(childNodes),
     };
-  } else if (nodeName === 'IMG') {
+  }
+  // IMG
+  else if (nodeName === 'IMG') {
     contentItem = {
       ...contentItem,
       contentItemType: contentItemTypes.DECORATIVE_IMAGE,
       src: node.src,
       alt: node.alt,
     };
-  } else if (nodeName === 'FIGURE') {
+  }
+  // FIGURE
+  else if (nodeName === 'FIGURE') {
     const imgNode = node.children[0];
     const caption = node.children[1] ? node.children[1].textContent : undefined;
     contentItem = {
@@ -137,14 +143,17 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
       alt: imgNode.alt,
       caption,
     };
-  } else if (nodeName === 'IFRAME') {
+  }
+  // IFRAME
+  else if (nodeName === 'IFRAME') {
     contentItem = {
       ...contentItem,
       contentItemType: contentItemTypes.IFRAME,
       src: node.src,
     };
-  } else {
-    // Skip unrecognized nodeNames.
+  }
+  // Skip unrecognized nodeNames.
+  else {
     return emptyResult;
   }
 
