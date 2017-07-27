@@ -6,7 +6,7 @@
     "linebreak-style": "off",
     "jsx-a11y/label-has-for": "off",
     "brace-style": ["error", "stroustrup"],
-    "max-len": ["error", { "code": 80 }],
+    "max-len": ["error", { "code": 100 }],
     "no-else-return": "off",
     "arrow-body-style": "off",
     "react/no-unused-prop-types": "off",
