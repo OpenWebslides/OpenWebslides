@@ -160,6 +160,37 @@ function findAllContentItemDescendantItemIds(contentItemId, contentItemsById) {
 
 // Exported functions ----------------------------------------------------------
 
+/**
+ * Finds the previous valid contentItem (in terms of tree leaves) as compared
+ * to the contentItem with id $contentItemId. Validity is determined by a
+ * validator function.
+ *
+ * @param contentItemId
+ *        The id of the contentItem where we start searching.
+ * @param ancestorItemIds
+ *        The list of ids of the ancestor items of the contentItem where we
+ *        start searching.
+ * @param slideContentItemIds
+ *        The list of ids of contentItems that are direct children of the
+ *        containing slide of the contentItem where we start searching. (We need
+ *        this because the slide is the highest possible ancestor of a
+ *        contentItem and it can't be included in the ancestorItemIds array.)
+ * @param contentItemsById
+ *        The contentItemsById object.
+ * @param contentItemValidator
+ *        The function that decides if a contentItem is considered 'valid'. It
+ *        is passed a contentItem as an argument and should return TRUE if this
+ *        contentItem is valid, FALSE if it is not.
+ * @param containerItemValidator
+ *        The function that decides if a contentItem is considered a container.
+ *        It is passed a contentItem as an argument and should return TRUE if
+ *        this contentItem is a container, FALSE if it is not.
+ *        (The reason we use a validator function instead of just using the
+ *        containerContentItemTypes constant is that for some applications lists
+ *        should be considered containers, while for others they should not. By
+ *        doing it this way, the caller of this function has full control over
+ *        which contentItems are considered containers and which are not.
+ */
 export function getPreviousValidContentItemId(
   contentItemId,
   ancestorItemIds,
@@ -179,6 +210,37 @@ export function getPreviousValidContentItemId(
   );
 }
 
+/**
+ * Finds the next valid contentItem (in terms of tree leaves) as compared
+ * to the contentItem with id $contentItemId. Validity is determined by a
+ * validator function.
+ *
+ * @param contentItemId
+ *        The id of the contentItem where we start searching.
+ * @param ancestorItemIds
+ *        The list of ids of the ancestor items of the contentItem where we
+ *        start searching.
+ * @param slideContentItemIds
+ *        The list of ids of contentItems that are direct children of the
+ *        containing slide of the contentItem where we start searching. (We need
+ *        this because the slide is the highest possible ancestor of a
+ *        contentItem and it can't be included in the ancestorItemIds array.)
+ * @param contentItemsById
+ *        The contentItemsById object.
+ * @param contentItemValidator
+ *        The function that decides if a contentItem is considered 'valid'. It
+ *        is passed a contentItem as an argument and should return TRUE if this
+ *        contentItem is valid, FALSE if it is not.
+ * @param containerItemValidator
+ *        The function that decides if a contentItem is considered a container.
+ *        It is passed a contentItem as an argument and should return TRUE if
+ *        this contentItem is a container, FALSE if it is not.
+ *        (The reason we use a validator function instead of just using the
+ *        containerContentItemTypes constant is that for some applications lists
+ *        should be considered containers, while for others they should not. By
+ *        doing it this way, the caller of this function has full control over
+ *        which contentItems are considered containers and which are not.
+ */
 export function getNextValidContentItemId(
   contentItemId,
   ancestorItemIds,
@@ -198,6 +260,18 @@ export function getNextValidContentItemId(
   );
 }
 
+/**
+ * Finds the ancestor contentItem that has at least $amount of children.
+ *
+ * @param ancestorItemIds
+ *        The list of ids of the ancestor items of the contentItem where we
+ *        start searching.
+ * @param contentItemsById
+ *        The contentItemsById object.
+ * @param amount
+ *        The amount of children that the ancestor we're looking for should
+ *        at least have.
+ */
 export function getNearestAncestorIdWithAtLeastAmountOfChildren(
   ancestorItemIds,
   contentItemsById,
@@ -210,6 +284,14 @@ export function getNearestAncestorIdWithAtLeastAmountOfChildren(
   );
 }
 
+/**
+ * Finds all descendants of a the contentItem with id $contentItemId.
+ *
+ * @param contentItemId
+ *        The id of the contentItem wher ewe start searching.
+ * @param contentItemsById
+ *        The contentItemsById object.
+ */
 export function getAllContentItemDescendantItemIds(
   contentItemId,
   contentItemsById,
