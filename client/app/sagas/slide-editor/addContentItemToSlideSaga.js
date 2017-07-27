@@ -5,6 +5,7 @@ import {
   plaintextContentItemTypes,
   sectionContentItemTypes,
 } from 'constants/contentItemTypes';
+import { slideViewTypes } from 'constants/slideViewTypes';
 
 import { ADD_CONTENT_ITEM_TO_SLIDE } from 'actions/entities/slides';
 import { addContentItem } from 'actions/entities/content-items';
@@ -146,6 +147,7 @@ function* doAddContentItemToSlide(action) {
       yield put(addContentItem(
         sectionItemId,
         contentItemTypes.SECTION,
+        slideViewTypes.LIVE,
         sectionProps,
         slide.id,
         parentItemId,
@@ -169,6 +171,7 @@ function* doAddContentItemToSlide(action) {
     yield put(addContentItem(
       contentItemId,
       action.meta.contentItemType,
+      slideViewTypes.LIVE,
       contentItemProps,
       slide.id,
       parentItemId,
@@ -179,6 +182,7 @@ function* doAddContentItemToSlide(action) {
       yield put(addContentItem(
         childItemId,
         childItemType,
+        slideViewTypes.LIVE,
         childItemProps,
         slide.id,
         contentItemId,
