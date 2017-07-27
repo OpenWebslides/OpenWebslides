@@ -38,6 +38,7 @@ function addContentItem(state, action) {
     [contentItemId]: {
       id: contentItemId,
       contentItemType: action.payload.contentItemType,
+      viewType: action.payload.viewType,
       ...action.payload.props,
     },
   });

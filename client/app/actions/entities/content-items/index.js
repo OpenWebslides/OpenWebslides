@@ -6,6 +6,7 @@ export const DELETE_CONTENT_ITEM = 'DELETE_CONTENT_ITEM';
 export function addContentItem(
   contentItemId,
   contentItemType,
+  viewType,
   props,
   slideId,
   parentItemId = null,
@@ -16,6 +17,7 @@ export function addContentItem(
     payload: {
       contentItemId,
       contentItemType,
+      viewType,
       props,
       slideId,
       parentItemId,
