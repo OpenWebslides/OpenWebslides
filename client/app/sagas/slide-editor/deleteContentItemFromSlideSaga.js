@@ -98,12 +98,17 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
   }
 }
 
+// Decides which contentItems are valid contentItems in the
+// getPreviousValidContentItemId() function.
 function contentItemValidator(contentItem, focusedSlideViewType) {
+  // Only plaintext contentItems can receive focus (for now). #TODO
   const isContentItemTypeCorrect = Array.indexOf(
     plaintextContentItemTypes,
     contentItem.contentItemType
   ) !== -1;
 
+  // In live view, we want to skip all course-view only contentItems
+  // (because these are invisible in live view and can't receive focus).
   // #TODO generalize this for all possible (future) viewtypes
   const isSlideViewTypeCorrect = !(
     focusedSlideViewType === slideViewTypes.LIVE &&
@@ -112,6 +117,8 @@ function contentItemValidator(contentItem, focusedSlideViewType) {
   return isContentItemTypeCorrect && isSlideViewTypeCorrect;
 }
 
+// Decides which contentItems are considered containers in the
+// getPreviousValidContentItemId() function.
 function containerItemValidator(contentItem) {
   return Array.indexOf(
     containerContentItemTypes,
