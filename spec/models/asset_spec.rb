@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Asset, :type => :model do
-  let(:asset) { create :asset }
+  let(:asset) { create :asset, :with_deck }
   let(:deck) { create :deck }
 
   describe 'attributes' do
