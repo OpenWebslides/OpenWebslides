@@ -1,80 +1,90 @@
 # frozen_string_literal: true
 
-require 'securerandom'
-
 module Api
   class ConversionsController < ApiController
-    MEDIA_TYPE = 'multipart/form-data'
-
+    # Authentication
     before_action :authenticate_user
-
     after_action :renew_token
 
+    # Authorization
+    after_action :verify_authorized
+
+    skip_before_action :jsonapi_request_handling, :only => :create
+
+    # POST /conversions
     def create
-      unless request.content_type == MEDIA_TYPE
-        return handle_exceptions JSONAPI::Exceptions::UnsupportedMediaTypeError.new(request.content_type)
+      # FIXME: implement global method to separate requests based on media type
+      unless request.content_type == JSONAPI::UPLOAD_MEDIA_TYPE
+        raise JSONAPI::Exceptions::UnsupportedUploadMediaTypeError, request.content_type
       end
 
-      conversion = Conversion.new :user => current_user, :status => :queued
+      @conversion = Conversion.new :user => current_user
 
-      # Authorize
-      raise Pundit::NotAuthorizedError unless ConversionPolicy.new(current_user, conversion).create?
-      context[:policy_used]&.call
+      authorize @conversion
 
       # Copy uploaded file to tempfile
+      # TODO: sanitize filenames
+      raise Api::ApiError, error_params(:detail => 'Invalid filename') unless params[:qqfilename]
       filename = params[:qqfilename]
-      raise Api::ApiError, :detail => 'Invalid filename' unless filename
 
       # Create tempfile with proper extension
+      raise Api::ApiError, error_params(:detail => 'Invalid file') unless params[:qqfile]
       file = Tempfile.new ['', ".#{filename.split('.').last}"]
       file.close
       FileUtils.cp params[:qqfile].path, file.path
 
       # Create and queue conversion
-      conversion.filename = file.path
-      conversion.name = filename
-      conversion.save
+      @conversion.status = :queued
+      @conversion.filename = file.path
+      @conversion.name = filename
+      @conversion.save
 
-      resource = ConversionResource.resources_for([conversion], context).first
-
-      results = JSONAPI::OperationResults.new
-      results.add_result JSONAPI::ResourceOperationResult.new :created, resource
-
-      render_upload_results results
+      # Render results
+      setup_request
+      jsonapi_render_upload :json => @conversion, :status => :created
     rescue => e
-      render :json => {
-        :success => false,
-        :error => e.message,
-        :preventRetry => true
-      }
+      jsonapi_render_upload_errors e, :json => @conversion, :status => :unprocessable_entity
     end
 
-    private
+    # GET /conversions/:id
+    def show
+      @conversion = Conversion.find params[:id]
 
-    def render_upload_results(operation_results)
-      # Adapted from ActsAsResourceController#render_results
+      authorize @conversion
 
-      response_doc = create_response_document(operation_results)
-      content = response_doc.contents
+      jsonapi_render :json => @conversion
+    end
 
-      render_options = {}
-      if operation_results.has_errors?
-        render_options[:json] = content
-      else
-        # Bypasing ActiveSupport allows us to use CompiledJson objects for cached response fragments
-        render_options[:body] = JSON.generate(content.merge :success => true)
-      end
+    protected
 
-      render_options[:location] = content[:data]["links"][:self] if (
-      response_doc.status == :created && content[:data].class != Array
-      )
+    def jsonapi_render_upload(json:, status: nil, options: {})
+      # Adapted from JSONAPI::Utils::Response::Renders::jsonapi_render
 
-      # For whatever reason, `render` ignores :status and :content_type when :body is set.
-      # But, we can just set those values directly in the Response object instead.
-      response.status = response_doc.status
-      response.headers['Content-Type'] = JSONAPI::MEDIA_TYPE
+      body = jsonapi_format(json, options)
+      render json: body, status: status || @_response_document.status, success: true # This line changed
+    rescue => e
+      handle_exceptions(e)
+    ensure
+      correct_media_type
+    end
 
-      render(render_options)
+    def jsonapi_render_upload_errors(exception = nil, json: nil, status: nil)
+      # Adapted from JSONAPI::Utils::Response::Renders::jsonapi_render_errors
+
+      body   = jsonapi_format_errors(exception || json)
+      status = status || body.try(:first).try(:[], :status)
+      render json: { errors: body, error: exception.params[:detail] }, status: status, success: false # This line changed
+    ensure
+      correct_media_type
+    end
+
+    def error_params(message)
+      {
+        :title => message,
+        :detail => message,
+        :status => :unprocessable_entity,
+        :code => JSONAPI::PARAM_MISSING
+      }
     end
   end
 end
