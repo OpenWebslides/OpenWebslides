@@ -5,21 +5,23 @@ import { deleteSlide } from 'actions/entities/slides';
 
 import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
-import {
-  getContentItemDescendantItemIdsById,
-} from 'selectors/entities/content-items';
+import { getContentItemsById } from 'selectors/entities/content-items';
 
-function* getContentItemIdsToDelete(contentItemIds) {
+import {
+  getAllContentItemDescendantItemIds
+} from 'lib/state-traversal/contentItems';
+
+function getContentItemIdsToDelete(contentItemIds, contentItemsById) {
   let result = [];
   let descendantItemIds;
   let i;
 
-  for (i = 0; i < contentItemIds.length; i += 1) {
-    descendantItemIds = yield select(
-      getContentItemDescendantItemIdsById,
+  for (i = 0; i < contentItemIds.length; i++) {
+    descendantItemIds = getAllContentItemDescendantItemIds(
       contentItemIds[i],
+      contentItemsById
     );
-    result = result.concat(descendantItemIds);
+    result = result.concat(contentItemIds[i]).concat(descendantItemIds);
   }
 
   return result;
@@ -29,13 +31,19 @@ function* doDeleteSlideFromDeck(action) {
   try {
     const { deckId, slideId } = action.meta;
     const slide = yield select(getSlideById, slideId);
-    const contentItemIdsToDelete = yield getContentItemIdsToDelete(
+    const contentItemsById = yield select(getContentItemsById);
+
+    // If a slide is deleted, all contentItems that are on the slide should be
+    // deleted as well.
+    const contentItemIdsToDelete = getContentItemIdsToDelete(
       slide.contentItemIds,
+      contentItemsById,
     );
 
+    // After deleting the slide, set the previous slide as the active slide;
+    // if there is no previous slide, set the next one as active instead.
     const activeSlideId = yield select(getActiveSlideId);
     let newActiveSlideId;
-
     if (activeSlideId === slideId) {
       const slides = yield select(getSlidesById);
       const slideIds = Object.keys(slides);
@@ -52,10 +60,10 @@ function* doDeleteSlideFromDeck(action) {
       slideId,
       deckId,
       contentItemIdsToDelete,
-      newActiveSlideId,
+      newActiveSlideId
     ));
-  }
-  catch (e) {
+
+  } catch (e) {
     console.error(e);
   }
 }
