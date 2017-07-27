@@ -32,10 +32,14 @@ function nestChildItemsInsideContentItem(contentItem, contentItemsById) {
 }
 
 // Get the contentItems.byId object.
-export const getContentItemsById = state => state.entities.contentItems.byId;
+export const getContentItemsById = (state) => {
+  return state.entities.contentItems.byId;
+};
 
 // Get the single contentItem that matches $id.
-export const getContentItemById = (state, id) => state.entities.contentItems.byId[id];
+export const getContentItemById = (state, id) => {
+  return state.entities.contentItems.byId[id];
+};
 
 // Get the single contentItem that matches $id, with its child contentItem
 // objects nested inside it.
