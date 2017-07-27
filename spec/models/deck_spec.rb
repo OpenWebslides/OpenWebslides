@@ -58,9 +58,6 @@ RSpec.describe Deck, :type => :model do
 
       deck2 = create :deck, :name => 'Foo Bar', :owner => owner
       expect(deck2.canonical_name).to eq 'foo-bar-foo-bar-2'
-
-      deck.destroy
-      deck2.destroy
     end
   end
 
