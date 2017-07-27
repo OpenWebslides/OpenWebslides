@@ -27,22 +27,11 @@ RSpec.describe OpenWebslides do
     expect(subject.config.oauth2).to be_an OpenStruct
 
     expect(subject.config.oauth2).to respond_to :github_id
-    expect(subject.config.oauth2.github_id).to be_a String
-
     expect(subject.config.oauth2).to respond_to :github_secret
-    expect(subject.config.oauth2.github_secret).to be_a String
-
     expect(subject.config.oauth2).to respond_to :google_id
-    expect(subject.config.oauth2.google_id).to be_a String
-
     expect(subject.config.oauth2).to respond_to :google_secret
-    expect(subject.config.oauth2.google_secret).to be_a String
-
     expect(subject.config.oauth2).to respond_to :facebook_id
-    expect(subject.config.oauth2.facebook_id).to be_an Integer
-
     expect(subject.config.oauth2).to respond_to :facebook_secret
-    expect(subject.config.oauth2.facebook_secret).to be_a String
   end
 
   it 'has API configuration' do
@@ -67,16 +56,12 @@ RSpec.describe OpenWebslides do
     expect(subject.config.github.ssh_user).to be_a String
 
     expect(subject.config.github).to respond_to :organization
-    expect(subject.config.github.organization).to be_a String
 
     expect(subject.config.github).to respond_to :private_key
     expect(subject.config.github.private_key).to be_a String
 
     expect(subject.config.github).to respond_to :github_user
-    expect(subject.config.github.github_user).to be_a String
-
     expect(subject.config.github).to respond_to :github_passphrase
-    expect(subject.config.github.github_passphrase).to be_a String
 
     expect(subject.config.github).to respond_to :github_api
     expect(subject.config.github.github_api).to be_a String
