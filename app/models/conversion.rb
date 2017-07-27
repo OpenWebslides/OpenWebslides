@@ -6,15 +6,20 @@ class Conversion < ApplicationRecord
   #
   enum :status => %i[queued processing success error]
 
+  # Absolute path to uploaded file
   validates :filename, :presence => true,
                        :uniqueness => true
+
+  # Destination repository name
   validates :name, :presence => true
+
+  # Job status
   validates :status, :presence => true
 
   ##
   # Associations
   #
-  belongs_to :deck, :required => true
+  belongs_to :deck, :optional => true
   belongs_to :user, :required => true
 
   ##
