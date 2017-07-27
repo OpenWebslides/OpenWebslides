@@ -1,8 +1,11 @@
 import React from 'react';
 
-import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
+import {
+  getHTMLStringFromInlinePropertiesAndText,
+} from 'lib/content-editable/inlineProperties';
 
-import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
+import ContentEditableContainer
+  from 'lib/content-editable/ContentEditableContainer';
 
 export default function Title(props) {
   const TitleTag = `h${props.headingLevel <= 6 ? props.headingLevel : 6}`;
@@ -20,12 +23,16 @@ export default function Title(props) {
         />
       </TitleTag>
     );
-  } else {
+  }
+  else {
     return (
       <TitleTag
         {...props.attributes}
         dangerouslySetInnerHTML={{
-          __html: getHTMLStringFromInlinePropertiesAndText(props.contentItem.inlineProperties, props.contentItem.text),
+          __html: getHTMLStringFromInlinePropertiesAndText(
+            props.contentItem.inlineProperties,
+            props.contentItem.text,
+          ),
         }}
       />
     );

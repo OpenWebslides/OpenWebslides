@@ -1,7 +1,9 @@
-import React from 'react';
-import SlideLiveViewContainer from 'containers/slide-editor/SlideLiveViewContainer';
-import SlideContentViewContainer from 'containers/slide-editor/SlideContentViewContainer';
-import SlideDebugViewContainer from 'containers/slide-editor/SlideDebugViewContainer';
+import SlideLiveViewContainer
+  from 'containers/slide-editor/SlideLiveViewContainer';
+import SlideContentViewContainer
+  from 'containers/slide-editor/SlideContentViewContainer';
+import SlideDebugViewContainer
+  from 'containers/slide-editor/SlideDebugViewContainer';
 
 export const slideViewTypes = {
   DEBUG: 'DEBUG',

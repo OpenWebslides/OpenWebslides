@@ -2,7 +2,10 @@ import _ from 'lodash';
 import Immutable from 'seamless-immutable';
 
 import { ADD_SLIDE, UPDATE_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
-import { ADD_CONTENT_ITEM, DELETE_CONTENT_ITEM } from 'actions/entities/content-items';
+import {
+  ADD_CONTENT_ITEM,
+  DELETE_CONTENT_ITEM,
+} from 'actions/entities/content-items';
 import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 
 const initialState = Immutable({});
@@ -34,8 +37,10 @@ function deleteSlide(state, action) {
 
 function addContentItem(state, action) {
   const slide = state[action.payload.slideId];
+  let newState = state;
 
-  // Only add the new contentItem to the slide's contentItemIds array if there is no parent item.
+  // Only add the new contentItem to the slide's contentItemIds array if there
+  // is no parent item.
   if (action.payload.parentItemId === null) {
     const contentItemIds = slide.contentItemIds.asMutable();
     const afterItemId = action.payload.afterItemId;
@@ -45,14 +50,14 @@ function addContentItem(state, action) {
 
     contentItemIds.splice(addAtIndex, 0, action.payload.contentItemId);
 
-    state = state.merge({
+    newState = newState.merge({
       [slide.id]: {
         contentItemIds,
       },
     }, { deep: true });
   }
 
-  return state.merge({
+  return newState.merge({
     [slide.id]: {
       contentItemSequence: slide.contentItemSequence + 1,
     },
@@ -64,12 +69,21 @@ function deleteContentItem(state, action) {
 
   // The deleted contentItem might not be a direct descendant of a slide,
   // in which case the slide requires no change.
-  if (Array.indexOf(slide.contentItemIds, action.payload.contentItemId) === -1) {
+  if (
+    Array.indexOf(
+      slide.contentItemIds,
+      action.payload.contentItemId,
+    ) === -1
+  ) {
     return state;
-  } else {
+  }
+  else {
     return state.merge({
       [slide.id]: {
-        contentItemIds: _.without(slide.contentItemIds, action.payload.contentItemId),
+        contentItemIds: _.without(
+          slide.contentItemIds,
+          action.payload.contentItemId,
+        ),
       },
     }, { deep: true });
   }

@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import Immutable from 'seamless-immutable';
 
-import { ADD_CONTENT_ITEM, UPDATE_CONTENT_ITEM, DELETE_CONTENT_ITEM } from 'actions/entities/content-items';
+import {
+  ADD_CONTENT_ITEM,
+  UPDATE_CONTENT_ITEM,
+  DELETE_CONTENT_ITEM,
+} from 'actions/entities/content-items';
 import { DELETE_SLIDE } from 'actions/entities/slides';
 import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 
@@ -9,8 +13,10 @@ const initialState = Immutable({});
 
 function addContentItem(state, action) {
   const contentItemId = action.payload.contentItemId;
+  let newState = state;
 
-  // If there is a parent contentItem, add the new contentItem's id to its childItemsIds array.
+  // If there is a parent contentItem, add the new contentItem's id to its
+  // childItemsIds array.
   if (action.payload.parentItemId !== null) {
     const parentItem = state[action.payload.parentItemId];
     const childItemIds = parentItem.childItemIds.asMutable();
@@ -21,19 +27,19 @@ function addContentItem(state, action) {
 
     childItemIds.splice(addAtIndex, 0, contentItemId);
 
-    state = state.merge({
+    newState = newState.merge({
       [parentItem.id]: {
         childItemIds,
       },
     }, { deep: true });
   }
 
-  return state.merge({
+  return newState.merge({
     [contentItemId]: {
       id: contentItemId,
       contentItemType: action.payload.contentItemType,
       ...action.payload.props,
-    }
+    },
   });
 }
 
@@ -47,26 +53,28 @@ function updateContentItem(state, action) {
 
 function deleteContentItem(state, action) {
   const contentItem = state[action.payload.contentItemId];
+  let newState = state;
 
   // Remove the deleted content item from the byId object.
-  state = state.without(contentItem.id);
+  newState = newState.without(contentItem.id);
 
   // If there are descendant items, remove these from the byId object as well.
   if (action.payload.descendantItemIds.length !== 0) {
-    state = state.without(action.payload.descendantItemIds);
+    newState = newState.without(action.payload.descendantItemIds);
   }
 
-  // If there is a parent item, remove the deleted contentItem's id from its childItemIds array.
+  // If there is a parent item, remove the deleted contentItem's id from its
+  // childItemIds array.
   if (action.payload.parentItemId !== null) {
     const parentItem = state[action.payload.parentItemId];
-    state = state.merge({
+    newState = newState.merge({
       [parentItem.id]: {
         childItemIds: _.without(parentItem.childItemIds, contentItem.id),
       },
     }, { deep: true });
   }
 
-  return state;
+  return newState;
 }
 
 function deleteSlide(state, action) {
@@ -75,7 +83,7 @@ function deleteSlide(state, action) {
 
 function fetchDeckSuccess(state, action) {
   return state.merge({
-      ...action.payload.contentItemsById,
+    ...action.payload.contentItemsById,
   });
 }
 

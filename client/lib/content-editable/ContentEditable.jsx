@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 
-import { getSelectionOffsets, setSelectionByOffsets } from 'lib/content-editable/selectionOffsets';
+import {
+  getSelectionOffsets,
+  setSelectionByOffsets,
+} from 'lib/content-editable/selectionOffsets';
 import inlinePropertyTypes from 'constants/inlinePropertyTypes';
 
 import {
@@ -14,12 +17,6 @@ import {
 import getFilteredTextContent from 'lib/content-editable/textContent';
 
 class ContentEditable extends Component {
-  loadSelectionOffsets() {
-    if (this.props.isFocused) {
-      setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
-    }
-  }
-
   constructor(props) {
     super(props);
 
@@ -35,6 +32,12 @@ class ContentEditable extends Component {
 
   componentDidUpdate() {
     this.loadSelectionOffsets();
+  }
+
+  loadSelectionOffsets() {
+    if (this.props.isFocused) {
+      setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
+    }
   }
 
   handleKeyDown(e) {
@@ -62,14 +65,27 @@ class ContentEditable extends Component {
     };
 
     if (this.props.hasInlineProperties) {
-      const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
-      const amount = text.length - this.props.contentItem[this.props.textPropName].length;
-      updateInlinePropertiesAfterInputAtIndex(inlineProperties, selectionOffsets.start, amount);
+      const inlineProperties = Immutable.asMutable(
+        this.props.contentItem.inlineProperties,
+        { deep: true },
+      );
+      const amount = text.length - this.props.contentItem[
+        this.props.textPropName
+      ].length;
+      updateInlinePropertiesAfterInputAtIndex(
+        inlineProperties,
+        selectionOffsets.start,
+        amount,
+      );
 
       props = { ...props, inlineProperties };
     }
 
-    this.props.updateContentItem(this.props.contentItem.id, props, getSelectionOffsets(this.contentEditable));
+    this.props.updateContentItem(
+      this.props.contentItem.id,
+      props,
+      getSelectionOffsets(this.contentEditable)
+    );
   }
 
   handleFocus() {
@@ -82,12 +98,19 @@ class ContentEditable extends Component {
 
   handleBlur() {
     this.props.updateDeck();
-    this.props.setActiveContentItemId(null, getSelectionOffsets(this.contentEditable), null);
+    this.props.setActiveContentItemId(
+      null,
+      getSelectionOffsets(this.contentEditable),
+      null,
+    );
   }
 
   handleMenuButtonClick(inlinePropertyType) {
     // get copy of current inlineProperties
-    const inlineProperties = Immutable.asMutable(this.props.contentItem.inlineProperties, { deep: true });
+    const inlineProperties = Immutable.asMutable(
+      this.props.contentItem.inlineProperties,
+      { deep: true },
+    );
     // get current selection
     const selectionOffsets = getSelectionOffsets(this.contentEditable);
     // create new inlineProperty object
@@ -153,14 +176,16 @@ class ContentEditable extends Component {
             className="o_content-editable__input"
             contentEditable="true"
             role="textbox"
-            ref={contentEditable => {
+            ref={(contentEditable) => {
               this.contentEditable = contentEditable;
             }}
             onKeyDown={this.handleKeyDown}
             onInput={this.handleInput}
             dangerouslySetInnerHTML={{
               __html: getHTMLStringFromInlinePropertiesAndText(
-                this.props.hasInlineProperties ? this.props.contentItem.inlineProperties : {},
+                this.props.hasInlineProperties
+                  ? this.props.contentItem.inlineProperties
+                  : {},
                 this.props.contentItem[this.props.textPropName],
               ),
             }}
@@ -173,13 +198,18 @@ class ContentEditable extends Component {
 }
 
 ContentEditable.propTypes = {
-  contentItem: PropTypes.object.isRequired,
+  contentItem: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
   updateDeck: PropTypes.func.isRequired,
   textPropName: PropTypes.string.isRequired,
   hasInlineProperties: PropTypes.bool.isRequired,
   isFocused: PropTypes.bool.isRequired,
   slideViewType: PropTypes.string.isRequired,
-  selectionOffsets: PropTypes.object.isRequired,
+  selectionOffsets: PropTypes.shape({
+    start: PropTypes.number.isRequired,
+    end: PropTypes.number.isRequired,
+  }).isRequired,
   setActiveContentItemId: PropTypes.func.isRequired,
   updateContentItem: PropTypes.func.isRequired,
   handleKeyDown: PropTypes.func,

@@ -23,7 +23,8 @@ function DefaultLayout(props) {
         </div>
       </main>
     );
-  } else {
+  }
+  else {
     layoutContent = props.children;
   }
 

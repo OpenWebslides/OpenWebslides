@@ -4,9 +4,14 @@ import { createSelector } from 'reselect';
 const getContentItemDescendantItemIds = (contentItem, contentItemsById) => {
   let result = [contentItem.id];
 
-  if (contentItem.childItemIds instanceof Array && contentItem.childItemIds.length > 0) {
+  if (contentItem.childItemIds instanceof Array &&
+    contentItem.childItemIds.length > 0
+  ) {
     const descendantItemIds = contentItem.childItemIds.map(childItemId =>
-      getContentItemDescendantItemIds(contentItemsById[childItemId], contentItemsById),
+      getContentItemDescendantItemIds(
+        contentItemsById[childItemId],
+        contentItemsById,
+      ),
     );
     result = result.concat(_.flatten(descendantItemIds));
   }
@@ -19,10 +24,16 @@ const nestChildItemsInsideContentItem = (contentItem, contentItemsById) => {
   let result;
 
   // If the contentItem has child items.
-  if (contentItem.childItemIds instanceof Array && contentItem.childItemIds.length > 0) {
+  if (
+    contentItem.childItemIds instanceof Array &&
+    contentItem.childItemIds.length > 0
+  ) {
     // Get the nested children + descendants.
     const children = contentItem.childItemIds.map(childItemId =>
-      nestChildItemsInsideContentItem(contentItemsById[childItemId], contentItemsById),
+      nestChildItemsInsideContentItem(
+        contentItemsById[childItemId],
+        contentItemsById,
+      ),
     );
     // Merge the contentItem object with the children array.
     result = {
@@ -45,15 +56,21 @@ export const getContentItemsById = state => state.entities.contentItems.byId;
 // Get the single contentItem that matches $id.
 export const getContentItemById = (state, id) => state.entities.contentItems.byId[id];
 
-// Get an array of ids for the contentItems that are nested within the contentItem with the given id.
-// (Note: this includes the id of the contentItem itself as the first element in the array.)
+// Get an array of ids for the contentItems that are nested within the
+// contentItem with the given id.
+// (Note: this includes the id of the contentItem itself as the first element in
+// the array.)
 // #TODO does this need re-reselect?
 export const getContentItemDescendantItemIdsById = createSelector(
   [getContentItemsById, getContentItemById],
-  (contentItemsById, contentItem) => getContentItemDescendantItemIds(contentItem, contentItemsById),
+  (contentItemsById, contentItem) => getContentItemDescendantItemIds(
+    contentItem,
+    contentItemsById,
+  ),
 );
 
-// Get the single contentItem that matches $id, with its child contentItem objects nested inside it.
+// Get the single contentItem that matches $id, with its child contentItem
+// objects nested inside it.
 export const getNestedContentItemObjectById = createSelector(
   [getContentItemsById, getContentItemById],
   (contentItemsById, contentItem) =>

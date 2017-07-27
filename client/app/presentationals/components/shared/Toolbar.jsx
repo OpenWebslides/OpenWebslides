@@ -1,20 +1,23 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import ToolbarButton from "./ToolbarButton";
+import ToolbarButton from './ToolbarButton';
 
 function Toolbar(props) {
   return (
-    <div className={ "c_toolbar c_toolbar--" + props.cssIdentifier }>
+    <div className={`c_toolbar c_toolbar--${props.cssIdentifier}`}>
       <div className="c_toolbar__wrapper">
         <menu className="c_toolbar__list o_list">
-          { props.buttons.map( button => (
-            <li className="c_toolbar__item o_list__item"
-                key={ button.key }>
+          { props.buttons.map(button => (
+            <li
+              className="c_toolbar__item o_list__item"
+              key={button.key}
+            >
               <div className="c_toolbar__item__wrapper o_list__item__wrapper">
-                <ToolbarButton cssIdentifier={ props.cssIdentifier }
-                               button={button}
-                               onClick={ () => props.onButtonClick(button) }
+                <ToolbarButton
+                  cssIdentifier={props.cssIdentifier}
+                  button={button}
+                  onClick={() => props.onButtonClick(button)}
                 />
               </div>
             </li>

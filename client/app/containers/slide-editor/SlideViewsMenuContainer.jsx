@@ -4,7 +4,8 @@ import { toggleSlideView } from 'actions/app/slide-editor';
 
 import { getActiveSlideViewTypes } from 'selectors/app/slide-editor';
 
-import SlideViewsMenu from 'presentationals/components/slide-editor/SlideViewsMenu';
+import SlideViewsMenu
+  from 'presentationals/components/slide-editor/SlideViewsMenu';
 
 function mapStateToProps(state) {
   return {

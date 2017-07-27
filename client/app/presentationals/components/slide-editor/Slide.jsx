@@ -16,12 +16,12 @@ class Slide extends Component {
     window.addEventListener('resize', this.updateSlideContainerSize);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateSlideContainerSize);
-  }
-
   componentDidUpdate() {
     this.updateSlideContainerSize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateSlideContainerSize);
   }
 
   updateSlideContainerSize() {
@@ -30,9 +30,12 @@ class Slide extends Component {
     if (!this.props.isFullscreen) {
       // note: 'sc' == 'slideContainer'
       // get the slideContainer size wrapper element
-      const scSizeElement = this.slideContainer.getElementsByClassName('c_slide-container__size')[0];
+      const scSizeElement = this.slideContainer.getElementsByClassName(
+        'c_slide-container__size',
+      )[0];
 
-      // remove sizing that might have been set by a previous call of this function
+      // remove sizing that might have been set by a previous call of this
+      // function
       scSizeElement.removeAttribute('style');
 
       // calculate the horizontal & vertical scaling factors
@@ -44,24 +47,32 @@ class Slide extends Component {
 
       // if the vertical factor === 1 (meaning the container has no set height),
       // use the horizontal factor
-      // otherwise, use whichever factor is smallest, so the slide wrapper always
-      // fits in the slide container
+      // otherwise, use whichever factor is smallest, so the slide wrapper
+      // always fits in the slide container
       let factor;
       if (verticalFactor !== 1 && verticalFactor < horizontalFactor) {
         factor = verticalFactor;
-      } else {
+      }
+      else {
         factor = horizontalFactor;
       }
 
-      // get the computed font size of the container, multiply it by the scaling factor,
-      // and set it on the size wrapper element so that it will scale to fit its container
-      const scComputedFontSize = window.getComputedStyle(this.slideContainer, null).getPropertyValue('font-size');
-      const scComputedFontSizeFloat = parseFloat(scComputedFontSize.replace('px', ''));
+      // get the computed font size of the container, multiply it by the scaling
+      // factor, and set it on the size wrapper element so that it will scale to
+      // fit its container
+      const scComputedFontSize = window.getComputedStyle(
+        this.slideContainer,
+        null,
+      ).getPropertyValue('font-size');
+      const scComputedFontSizeFloat = parseFloat(
+        scComputedFontSize.replace('px', ''),
+      );
       scSizeElement.style.fontSize = `${scComputedFontSizeFloat * factor}px`;
 
-      // (Note: this only works because we use exclusively em and % units, allowing
-      // elements to be resizeable by changing their font-size. Anything defined in
-      // other units such as rem or px will not scale with the rest of the slide.)
+      // (Note: this only works because we use exclusively em and % units,
+      // allowing elements to be resizeable by changing their font-size.
+      // Anything defined in other units such as rem or px will not scale with
+      // the rest of the slide.)
     }
   }
 
@@ -80,7 +91,8 @@ class Slide extends Component {
           headingLevel={1}
         />,
       );
-    } else {
+    }
+    else {
       slideContent = <p>Loading...</p>;
     }
 
@@ -89,7 +101,7 @@ class Slide extends Component {
         className={`c_slide-container c_slide-container--${this.props.cssIdentifier} ${this.props.isFullscreen
           ? 'c_slide-container--fullscreen'
           : ''}`}
-        ref={slideContainer => {
+        ref={(slideContainer) => {
           this.slideContainer = slideContainer;
         }}
       >
@@ -116,7 +128,8 @@ Slide.propTypes = {
     contentItemSequence: PropTypes.number.isRequired,
   }).isRequired,
   editable: PropTypes.bool.isRequired,
-  // We need to connect these to force a rerender (and thus a resize) when the active slide view types change.
+  // We need to connect these to force a rerender (and thus a resize) when the
+  // active slide view types change.
   activeSlideViewTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
