@@ -8,7 +8,7 @@ export default function parseInlineProperties(nodes) {
   let endsAtChar;
   let node;
 
-  for (let i = 0; i < nodes.length; i++) {
+  for (let i = 0; i < nodes.length; i += 1) {
     node = nodes[i];
     // Trim left side & merge successive whitespace chars into one.
     textContent = node.textContent.replace(/^\s+/, '').replace(/\s+/g, ' ');

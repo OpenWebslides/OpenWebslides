@@ -4,8 +4,14 @@ import PropTypes from 'prop-types';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
 
-import { addContentItemToSlide, deleteContentItemFromSlide } from 'actions/entities/slides';
-import { getActiveContentItemId, getFocusedSlideViewType } from 'selectors/app/slide-editor';
+import {
+  addContentItemToSlide,
+  deleteContentItemFromSlide,
+} from 'actions/entities/slides';
+import {
+  getActiveContentItemId,
+  getFocusedSlideViewType,
+} from 'selectors/app/slide-editor';
 import { getContentItemById } from 'selectors/entities/content-items';
 
 import ContentItem from './ContentItem';
@@ -17,8 +23,10 @@ export function generateAttributesObject(contentItem) {
   };
   const attributes = {};
 
-  Object.keys(attributesMap).forEach(key => {
-    attributes[attributesMap[key]] = _.isString(contentItem[key]) ? contentItem[key].toLowerCase() : contentItem[key];
+  Object.keys(attributesMap).forEach((key) => {
+    attributes[attributesMap[key]] = _.isString(contentItem[key])
+      ? contentItem[key].toLowerCase()
+      : contentItem[key];
   });
 
   return attributes;
@@ -29,7 +37,9 @@ function mapStateToProps(state, props) {
   const focusedSlideViewType = getFocusedSlideViewType(state);
   const activeContentItemId = getActiveContentItemId(state);
 
-  const isFocused = contentItem.id === activeContentItemId && props.slideViewType === focusedSlideViewType;
+  const isFocused =
+    contentItem.id === activeContentItemId &&
+    props.slideViewType === focusedSlideViewType;
   const attributes = generateAttributesObject(contentItem);
 
   return {
@@ -48,7 +58,8 @@ function mapDispatchToProps(dispatch, props) {
 
         if (contentItem.contentItemType === contentItemTypes.LIST_ITEM) {
           newContentItemType = contentItemTypes.LIST_ITEM;
-        } else {
+        }
+        else {
           newContentItemType = contentItemTypes.PARAGRAPH;
         }
 
@@ -62,18 +73,26 @@ function mapDispatchToProps(dispatch, props) {
           ),
         );
       }
-      // If backspace is pressed on an empty contentItem, delete the contentItem and jump to the previous one.
+      // If backspace is pressed on an empty contentItem, delete the contentItem
+      // and jump to the previous one.
       else if (e.key === 'Backspace') {
         if (contentItem.text === '') {
           e.preventDefault();
-          dispatch(deleteContentItemFromSlide(props.slideId, props.contentItemId, props.ancestorItemIds));
+          dispatch(deleteContentItemFromSlide(
+            props.slideId,
+            props.contentItemId,
+            props.ancestorItemIds,
+          ));
         }
       }
     },
   };
 }
 
-const ContentItemContainer = connect(mapStateToProps, mapDispatchToProps)(ContentItem);
+const ContentItemContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ContentItem);
 
 ContentItemContainer.propTypes = {
   slideViewType: PropTypes.string.isRequired,

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
+import ContentEditableContainer
+  from 'lib/content-editable/ContentEditableContainer';
 
 export default function Image(props) {
   let content;
@@ -16,7 +17,8 @@ export default function Image(props) {
         hasInlineProperties={false}
       />
     );
-  } else {
+  }
+  else {
     content = (
       <p>{props.contentItem.src}</p>
     );

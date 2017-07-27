@@ -7,7 +7,8 @@ import { addSlideToDeck, deleteSlideFromDeck } from 'actions/entities/decks';
 import { getDeckById } from 'selectors/entities/decks';
 import { getActiveDeckId, getActiveSlideId } from 'selectors/app/slide-editor';
 
-import DeckNavigationPane from 'presentationals/components/slide-editor/DeckNavigationPane';
+import DeckNavigationPane
+  from 'presentationals/components/slide-editor/DeckNavigationPane';
 
 function mapStateToProps(state) {
   const activeDeckId = getActiveDeckId(state);
@@ -15,13 +16,17 @@ function mapStateToProps(state) {
   const activeDeck = getDeckById(state, activeDeckId);
 
   return {
-    activeDeck: activeDeck,
-    activeSlideId: activeSlideId,
+    activeDeck,
+    activeSlideId,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addSlideToDeck, deleteSlideFromDeck, setActiveSlideId }, dispatch);
+  return bindActionCreators({
+    addSlideToDeck,
+    deleteSlideFromDeck,
+    setActiveSlideId,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeckNavigationPane);

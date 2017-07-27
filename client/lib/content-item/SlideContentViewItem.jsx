@@ -38,36 +38,43 @@ function SlideContentViewItem(props) {
           </span>
         </div>
         <div className={`${cssClass}__content`}>
-          <div className={`${cssClass}__content-item ${cssClass}__content-item--text`}>
+          <div
+            className={`${cssClass}__content-item ${cssClass}__content-item--text`}
+          >
             {props.children}
           </div>
-          {true &&
-            <div className={`${cssClass}__content-item ${cssClass}__content-item--options`}>
-              <div className={`${cssClass}__options`}>
-                <div className={`${cssClass}__options__wrapper`}>
-                  {false &&
-                    <div className={`${cssClass}__options-item ${cssClass}__options-item--on-slide-checkbox`}>
-                      <input type="checkbox" checked tabIndex="-1" />
-                    </div>}
-                  <div className={`${cssClass}__options-item ${cssClass}__options-item--direction-menu`}>
-                    <menu className="o_direction-menu">
-                      {directions.map(direction =>
-                        <li className="o_direction-menu__item" key={direction.id}>
-                          <button
-                            className={`o_direction-menu__button o_direction-menu__button--${direction.id}`}
-                            tabIndex="-1"
-                          >
-                            <span className="o_direction-menu__button__wrapper">
-                              {direction.text}
-                            </span>
-                          </button>
-                        </li>,
-                      )}
-                    </menu>
-                  </div>
+          <div
+            className={`${cssClass}__content-item ${cssClass}__content-item--options`}
+          >
+            <div className={`${cssClass}__options`}>
+              <div className={`${cssClass}__options__wrapper`}>
+                {false &&
+                  <div
+                    className={`${cssClass}__options-item ${cssClass}__options-item--on-slide-checkbox`}
+                  >
+                    <input type="checkbox" checked tabIndex="-1" />
+                  </div>}
+                <div
+                  className={`${cssClass}__options-item ${cssClass}__options-item--direction-menu`}
+                >
+                  <menu className="o_direction-menu">
+                    {directions.map(direction =>
+                      <li className="o_direction-menu__item" key={direction.id}>
+                        <button
+                          className={`o_direction-menu__button o_direction-menu__button--${direction.id}`}
+                          tabIndex="-1"
+                        >
+                          <span className="o_direction-menu__button__wrapper">
+                            {direction.text}
+                          </span>
+                        </button>
+                      </li>,
+                    )}
+                  </menu>
                 </div>
               </div>
-            </div>}
+            </div>
+          </div>
         </div>
       </div>
     </div>

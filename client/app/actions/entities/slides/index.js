@@ -20,11 +20,16 @@ export function updateSlide(slideId, props) {
   };
 }
 
-export function deleteSlide(slideId, deckId, contentItemIds = [], newActiveSlideId = null) {
+export function deleteSlide(
+  slideId,
+  deckId,
+  contentItemIds = [],
+  newActiveSlideId = null,
+) {
   return {
     type: DELETE_SLIDE,
     payload: { slideId, deckId, contentItemIds, newActiveSlideId },
-  }
+  };
 }
 
 export function addContentItemToSlide(
@@ -36,7 +41,13 @@ export function addContentItemToSlide(
 ) {
   return {
     type: ADD_CONTENT_ITEM_TO_SLIDE,
-    meta: { slideId, contentItemType, contentItemTypeProps, parentItemId, afterItemId },
+    meta: {
+      slideId,
+      contentItemType,
+      contentItemTypeProps,
+      parentItemId,
+      afterItemId,
+    },
   };
 }
 

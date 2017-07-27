@@ -9,7 +9,10 @@ export const inlinePropertyTags = {
   },
 };
 
-export function removeOrMergeOverlappingInlineProperties(inlineProperties, newInlineProperty) {
+export function removeOrMergeOverlappingInlineProperties(
+  inlineProperties,
+  newInlineProperty,
+) {
   /* eslint-disable */
   let i = 0;
   const indicesToDelete = [];
@@ -78,7 +81,10 @@ export function addInlinePropertyToArray(inlineProperties, newInlineProperty) {
   if (newInlineProperty.offSets.start !== newInlineProperty.offSets.end) {
     // inlineProperties should be sorted by startsAtChar; find correct index
     let i = 0;
-    while (i < inlineProperties.length && newInlineProperty.offSets.start > inlineProperties[i].offSets.start) {
+    while (
+      i < inlineProperties.length &&
+      newInlineProperty.offSets.start > inlineProperties[i].offSets.start
+    ) {
       i += 1;
     }
     // insert new inlineProperty at the correct index
@@ -86,7 +92,11 @@ export function addInlinePropertyToArray(inlineProperties, newInlineProperty) {
   }
 }
 
-export function updateInlinePropertiesAfterInputAtIndex(inlineProperties, caretPosition, amount) {
+export function updateInlinePropertiesAfterInputAtIndex(
+  inlineProperties,
+  caretPosition,
+  amount,
+) {
   /* eslint-disable */
 
   let i;
@@ -154,7 +164,10 @@ export function updateInlinePropertiesAfterInputAtIndex(inlineProperties, caretP
   /* eslint-enable */
 }
 
-export function getHTMLStringFromInlinePropertiesAndText(inlineProperties, text) {
+export function getHTMLStringFromInlinePropertiesAndText(
+  inlineProperties,
+  text,
+) {
   /* eslint-disable */
 
   // #TODO maybe this should be moved to a selector instead? (more efficient)

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SlideEditingPaneToolbarContainer from 'containers/slide-editor/SlideEditingPaneToolbarContainer';
-import SlideViewsPaneContainer from 'containers/slide-editor/SlideViewsPaneContainer';
+import SlideEditingPaneToolbarContainer
+  from 'containers/slide-editor/SlideEditingPaneToolbarContainer';
+import SlideViewsPaneContainer
+  from 'containers/slide-editor/SlideViewsPaneContainer';
 
 function SlideEditingPane(props) {
   return (

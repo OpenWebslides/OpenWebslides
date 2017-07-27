@@ -5,15 +5,20 @@ import { deleteSlide } from 'actions/entities/slides';
 
 import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
-import { getContentItemDescendantItemIdsById } from 'selectors/entities/content-items';
+import {
+  getContentItemDescendantItemIdsById,
+} from 'selectors/entities/content-items';
 
 function* getContentItemIdsToDelete(contentItemIds) {
   let result = [];
   let descendantItemIds;
   let i;
 
-  for (i = 0; i < contentItemIds.length; i++) {
-    descendantItemIds = yield select(getContentItemDescendantItemIdsById, contentItemIds[i]);
+  for (i = 0; i < contentItemIds.length; i += 1) {
+    descendantItemIds = yield select(
+      getContentItemDescendantItemIdsById,
+      contentItemIds[i],
+    );
     result = result.concat(descendantItemIds);
   }
 
@@ -24,7 +29,9 @@ function* doDeleteSlideFromDeck(action) {
   try {
     const { deckId, slideId } = action.meta;
     const slide = yield select(getSlideById, slideId);
-    const contentItemIdsToDelete = yield getContentItemIdsToDelete(slide.contentItemIds);
+    const contentItemIdsToDelete = yield getContentItemIdsToDelete(
+      slide.contentItemIds,
+    );
 
     const activeSlideId = yield select(getActiveSlideId);
     let newActiveSlideId;
@@ -36,13 +43,19 @@ function* doDeleteSlideFromDeck(action) {
       newActiveSlideId = currentSlideIndex === 0
         ? slideIds[currentSlideIndex + 1]
         : slideIds[currentSlideIndex - 1];
-    } else {
+    }
+    else {
       newActiveSlideId = null;
     }
 
-    yield put(deleteSlide(slideId, deckId, contentItemIdsToDelete, newActiveSlideId));
-
-  } catch (e) {
+    yield put(deleteSlide(
+      slideId,
+      deckId,
+      contentItemIdsToDelete,
+      newActiveSlideId,
+    ));
+  }
+  catch (e) {
     console.error(e);
   }
 }

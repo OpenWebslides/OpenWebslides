@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import DeckNavigationPaneContainer from 'containers/slide-editor/DeckNavigationPaneContainer';
-import SlideEditingPane from 'presentationals/components/slide-editor/SlideEditingPane';
+import DeckNavigationPaneContainer
+  from 'containers/slide-editor/DeckNavigationPaneContainer';
+import SlideEditingPane
+  from 'presentationals/components/slide-editor/SlideEditingPane';
 
 export default class SlideEditor extends Component {
   componentDidMount() {

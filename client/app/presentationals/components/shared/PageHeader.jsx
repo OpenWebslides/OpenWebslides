@@ -33,7 +33,8 @@ function PageHeader(props) {
         {logoContent}
       </h1>
     );
-  } else {
+  }
+  else {
     logoContainer = (
       <p className="o_logo o_logo--site">
         {logoContent}
