@@ -10,7 +10,8 @@ export function getSelectionOffsets(containerElement) {
   // get the current selection
   const selection = window.getSelection();
 
-  // we need this check to work around a webkit issue where rangecount would sometimes be 0
+  // we need this check to work around a webkit issue where rangecount would
+  // sometimes be 0
   if (selection && selection.rangeCount > 0) {
     // get the current selected range
     const selectedRange = window.getSelection().getRangeAt(0);
@@ -21,11 +22,16 @@ export function getSelectionOffsets(containerElement) {
     // set the end of the cloned range to the start of the selected range
     clonedRange.setEnd(selectedRange.startContainer, selectedRange.startOffset);
 
-    // clonedRange now runs from the start of the container until the start of the selected range
-    // the length of its string contents is the start offset of the selected range
+    // clonedRange now runs from the start of the container until the start of
+    // the selected range
+    // the length of its string contents is the start offset of the selected
+    // range
     const selectionStartOffset = clonedRange.toString().length;
-    // the end offset can be calculated by adding the length of the selected range to the start offset
-    const selectionEndOffset = selectionStartOffset + selectedRange.toString().length;
+    // the end offset can be calculated by adding the length of the selected
+    // range to the start offset
+    const selectionEndOffset =
+      selectionStartOffset +
+      selectedRange.toString().length;
 
     // verify that the offsets fall inside the container
     if (selectionEndOffset <= containerElement.textContent.length) {
@@ -40,7 +46,11 @@ export function getSelectionOffsets(containerElement) {
   return offsets;
 }
 
-export function setSelectionByOffsets(containerElement, startOffset, endOffset) {
+export function setSelectionByOffsets(
+  containerElement,
+  startOffset,
+  endOffset,
+) {
   /* eslint-disable */
 
   // validate parameters

@@ -25,12 +25,18 @@ export default class DeckNavigationPane extends Component {
   render() {
     if (this.props.activeDeck) {
       return (
-        <div className={`c_deck-navigator c_deck-navigator--${this.props.cssIdentifier}`}>
+        <div
+          className={`c_deck-navigator c_deck-navigator--${this.props.cssIdentifier}`}
+        >
           <div className="c_deck-navigator__wrapper">
             <ol className="o_list c_deck-navigator__list">
               {this.props.activeDeck.slideIds.map(slideId =>
-                <li className="o_list__item c_deck-navigator__item" key={slideId}>
-                  <div className="o_list__item__wrapper c_deck-navigator__item__wrapper">
+                <li
+                  className="o_list__item c_deck-navigator__item" key={slideId}
+                >
+                  <div
+                    className="o_list__item__wrapper c_deck-navigator__item__wrapper"
+                  >
                     <button
                       onClick={() => this.handleSetActiveSlideId(slideId)}
                       className="c_deck-navigator__slide-button"
@@ -41,7 +47,9 @@ export default class DeckNavigationPane extends Component {
                       className="c_deck-navigator__delete-button o_action o_action--delete"
                       onClick={() => this.handleDeleteSlide(slideId)}
                     >
-                      <span className="c_deck-navigator__delete-button__wrapper o_action__wrapper">
+                      <span
+                        className="c_deck-navigator__delete-button__wrapper o_action__wrapper"
+                      >
                         Delete
                       </span>
                     </button>
@@ -50,7 +58,10 @@ export default class DeckNavigationPane extends Component {
               )}
             </ol>
             <p className="c_deck-navigator__controls">
-              <button onClick={this.handleAddSlide} className="c_deck-navigator__add-button o_action o_action--add">
+              <button
+                onClick={this.handleAddSlide}
+                className="c_deck-navigator__add-button o_action o_action--add"
+              >
                 Add slide
               </button>
             </p>

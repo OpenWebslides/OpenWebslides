@@ -11,7 +11,8 @@ function InputField(props) {
         {props.meta.extraErrors.map(error => <li>{error}</li>)}
       </ul>
     );
-  } else {
+  }
+  else {
     errors = <p>{props.meta.error}</p>;
   }
   return (

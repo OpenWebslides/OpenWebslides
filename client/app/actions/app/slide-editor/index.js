@@ -10,7 +10,7 @@ export function setActiveDeckId(deckId) {
   return {
     type: SET_ACTIVE_DECK_ID,
     payload: { deckId },
-  }
+  };
 }
 
 export function setActiveSlideId(slideId) {
@@ -20,7 +20,11 @@ export function setActiveSlideId(slideId) {
   };
 }
 
-export function setActiveContentItemId(contentItemId, selectionOffsets = null, focusedSlideViewType = null) {
+export function setActiveContentItemId(
+  contentItemId,
+  selectionOffsets = null,
+  focusedSlideViewType = null,
+  ) {
   return {
     type: SET_ACTIVE_CONTENT_ITEM_ID,
     payload: { contentItemId, selectionOffsets, focusedSlideViewType },
@@ -45,5 +49,5 @@ export function toggleSlideView(slideViewType) {
   return {
     type: TOGGLE_SLIDE_VIEW,
     payload: { slideViewType },
-  }
+  };
 }

@@ -1,8 +1,11 @@
 import React from 'react';
 
-import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
+import {
+  getHTMLStringFromInlinePropertiesAndText,
+} from 'lib/content-editable/inlineProperties';
 
-import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
+import ContentEditableContainer
+  from 'lib/content-editable/ContentEditableContainer';
 
 export default function Paragraph(props) {
   if (props.editable) {
@@ -23,7 +26,10 @@ export default function Paragraph(props) {
     <p
       {...props.attributes}
       dangerouslySetInnerHTML={{
-        __html: getHTMLStringFromInlinePropertiesAndText(props.contentItem.inlineProperties, props.contentItem.text),
+        __html: getHTMLStringFromInlinePropertiesAndText(
+          props.contentItem.inlineProperties,
+          props.contentItem.text,
+        ),
       }}
     />
   );

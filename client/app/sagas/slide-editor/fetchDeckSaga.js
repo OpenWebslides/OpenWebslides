@@ -4,9 +4,17 @@ import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 import convertToState from 'lib/convert-to-state';
 import fetchDeckApi from 'api/fetchDeckApi';
 
-import { testDeckEmpty } from 'assets/files/test-decks/empty';
-import { testDeckFlamesFixed } from 'assets/files/test-decks/flamesFixed';
-import { testDeckContentItemViewTypes } from 'assets/files/test-decks/contentItemViewTypes';
+/* eslint-disable no-unused-vars */
+import {
+  testDeckEmpty,
+} from 'assets/files/test-decks/empty';
+import {
+  testDeckFlamesFixed,
+} from 'assets/files/test-decks/flamesFixed';
+import {
+  testDeckContentItemViewTypes,
+} from 'assets/files/test-decks/contentItemViewTypes';
+/* eslint-enable */
 
 function* doFetchDeck(action) {
   try {
@@ -20,7 +28,8 @@ function* doFetchDeck(action) {
     };
 
     yield put({ type: FETCH_DECK_SUCCESS, payload });
-  } catch (e) {
+  }
+  catch (e) {
     console.log(e);
   }
 }
