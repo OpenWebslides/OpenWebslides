@@ -68,7 +68,10 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
         // Start deleting at the ancestor that is the direct child of the
         // nearest valid ancestor.
         contentItemToDeleteId = ancestorItemIds[nearestValidAncestorIdIndex + 1];
-        contentItemToDeleteAncestorItemIds = _.take(ancestorItemIds, nearestValidAncestorIdIndex + 1);
+        contentItemToDeleteAncestorItemIds = _.take(
+          ancestorItemIds,
+          nearestValidAncestorIdIndex + 1
+        );
         contentItemToDeleteDescendantItemIds = _.drop(
           ancestorItemIds,
           nearestValidAncestorIdIndex + 2
@@ -110,7 +113,10 @@ function contentItemValidator(contentItem, focusedSlideViewType) {
 }
 
 function containerItemValidator(contentItem) {
-  return Array.indexOf(containerContentItemTypes, contentItem.contentItemType) !== -1;
+  return Array.indexOf(
+    containerContentItemTypes,
+    contentItem.contentItemType
+  ) !== -1;
 }
 
 function* doDeleteContentItemFromSlide(action) {
