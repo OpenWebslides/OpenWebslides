@@ -1,10 +1,7 @@
 import _ from 'lodash';
 import { takeEvery, select, put } from 'redux-saga/effects';
 
-import {
-  plaintextContentItemTypes,
-  containerContentItemTypes,
-} from 'constants/contentItemTypes';
+import { plaintextContentItemTypes, containerContentItemTypes } from 'constants/contentItemTypes';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
 import {
@@ -29,12 +26,14 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
 
   // If the contentItem has ancestors.
   if (ancestorItemIds.length > 0) {
-    // If this contentItem is a single child, parent needs to be deleted as well.
-    const nearestValidAncestorId = getNearestAncestorIdWithAtLeastAmountOfChildren(
-      ancestorItemIds,
-      contentItemsById,
-      2, // ancestors with less than two children should be deleted
-    );
+    // If this contentItem is a single child, parent needs to be deleted as
+    // well.
+    const nearestValidAncestorId =
+      getNearestAncestorIdWithAtLeastAmountOfChildren(
+        ancestorItemIds,
+        contentItemsById,
+        2, // ancestors with less than two children should be deleted
+      );
 
     // If no ancestor with more than two children was found.
     if (nearestValidAncestorId === null) {
@@ -43,11 +42,11 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
       contentItemToDeleteAncestorItemIds = [];
       contentItemToDeleteDescendantItemIds = _.drop(
         ancestorItemIds,
-        1
+        1,
       )
       .concat(contentItemId)
       .concat(
-        getAllContentItemDescendantItemIds(contentItemId, contentItemsById)
+        getAllContentItemDescendantItemIds(contentItemId, contentItemsById),
       );
     }
     // If an ancestor with more than two children was found.
@@ -65,20 +64,21 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
       }
       // If the nearest valid ancestor is further up the tree.
       else {
-        // Start deleting at the ancestor that is the direct child of the
-        // nearest valid ancestor.
-        contentItemToDeleteId = ancestorItemIds[nearestValidAncestorIdIndex + 1];
+        // Start deleting at the ancestor that is the direct child of the nearest valid ancestor.
+        contentItemToDeleteId = ancestorItemIds[
+          nearestValidAncestorIdIndex + 1
+        ];
         contentItemToDeleteAncestorItemIds = _.take(
           ancestorItemIds,
-          nearestValidAncestorIdIndex + 1
+          nearestValidAncestorIdIndex + 1,
         );
         contentItemToDeleteDescendantItemIds = _.drop(
           ancestorItemIds,
-          nearestValidAncestorIdIndex + 2
+          nearestValidAncestorIdIndex + 2,
         )
         .concat(contentItemId)
         .concat(
-          getAllContentItemDescendantItemIds(contentItemId, contentItemsById)
+          getAllContentItemDescendantItemIds(contentItemId, contentItemsById),
         );
       }
     }
@@ -95,20 +95,20 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
     contentItemToDeleteId,
     contentItemToDeleteAncestorItemIds,
     contentItemToDeleteDescendantItemIds,
-  }
+  };
 }
 
-// Decides which contentItems are valid contentItems in the
-// getPreviousValidContentItemId() function.
+// Decides which contentItems are valid contentItems in the getPreviousValidContentItemId()
+// function.
 function contentItemValidator(contentItem, focusedSlideViewType) {
   // Only plaintext contentItems can receive focus (for now). #TODO
   const isContentItemTypeCorrect = Array.indexOf(
     plaintextContentItemTypes,
-    contentItem.contentItemType
+    contentItem.contentItemType,
   ) !== -1;
 
-  // In live view, we want to skip all course-view only contentItems
-  // (because these are invisible in live view and can't receive focus).
+  // In live view, we want to skip all course-view only contentItems (because these are invisible
+  // in live view and can't receive focus).
   // #TODO generalize this for all possible (future) viewtypes
   const isSlideViewTypeCorrect = !(
     focusedSlideViewType === slideViewTypes.LIVE &&
@@ -117,12 +117,12 @@ function contentItemValidator(contentItem, focusedSlideViewType) {
   return isContentItemTypeCorrect && isSlideViewTypeCorrect;
 }
 
-// Decides which contentItems are considered containers in the
-// getPreviousValidContentItemId() function.
+// Decides which contentItems are considered containers in the getPreviousValidContentItemId()
+// function.
 function containerItemValidator(contentItem) {
   return Array.indexOf(
     containerContentItemTypes,
-    contentItem.contentItemType
+    contentItem.contentItemType,
   ) !== -1;
 }
 
@@ -131,19 +131,22 @@ function* doDeleteContentItemFromSlide(action) {
     const focusedSlideViewType = yield select(getFocusedSlideViewType);
     const contentItemsById = yield select(getContentItemsById);
     const slide = yield select(getSlideById, action.meta.slideId);
-    let contentItemId = action.meta.contentItemId;
+    const contentItemId = action.meta.contentItemId;
     const ancestorItemIds = action.meta.ancestorItemIds;
 
-    // If this contentItem is a single child, parent (and potentially ancestors
-    // further up the tree) needs to be deleted as well.
+    // If this contentItem is a single child, parent (and potentially ancestors further up the tree)
+    // needs to be deleted as well.
     const {
       contentItemToDeleteId,
       contentItemToDeleteAncestorItemIds,
       contentItemToDeleteDescendantItemIds,
-    } = findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsById);
+    } = findContentItemToDeleteId(
+      contentItemId,
+      ancestorItemIds,
+      contentItemsById,
+    );
 
-    // Find the contentItem before the deleted one (if there is one) so focus
-    // can be moved to it.
+    // Find the contentItem before the deleted one (if there is one) so focus can be moved to it.
     const newActiveContentItemId = getPreviousValidContentItemId(
       contentItemToDeleteId,
       contentItemToDeleteAncestorItemIds,
@@ -153,9 +156,9 @@ function* doDeleteContentItemFromSlide(action) {
       contentItem => containerItemValidator(contentItem),
     );
 
-    // If a previous contentItem was found, automatically set the caret position
-    // after the last char of its text. (This allows the user to continuously
-    // delete contentitems by keeping backspace pressed.)
+    // If a previous contentItem was found, automatically set the caret position after the last char
+    // of its text. (This allows the user to continuously delete contentitems by keeping backspace
+    // pressed.)
     let newSelectionOffsets = null;
     if (newActiveContentItemId !== null) {
       const newActiveContentItem = yield select(
@@ -168,9 +171,8 @@ function* doDeleteContentItemFromSlide(action) {
       };
     }
 
-    // Find the direct parent id (since the deleteContentItem function needs it
-    // so the id of the deleted contentItem can be removed from its parent's
-    // childIds list).
+    // Find the direct parent id (since the deleteContentItem function needs it so the id of the
+    // deleted contentItem can be removed from its parent's childIds list).
     const parentItemId = contentItemToDeleteAncestorItemIds.length > 0
       ? _.last(contentItemToDeleteAncestorItemIds)
       : null;
