@@ -2,6 +2,8 @@
 
 module Api
   class AssetsController < ApiController
+    include Uploadable
+
     # Authentication
     before_action :authenticate_user, :except => :show
     after_action :renew_token
@@ -9,47 +11,31 @@ module Api
     # Authorization
     after_action :verify_authorized
 
-    skip_before_action :jsonapi_request_handling, :only => %i[create show]
+    upload_action :create
 
     # POST /assets
     def create
-      unless request.content_type == JSONAPI::UPLOAD_MEDIA_TYPE
-        raise JSONAPI::Exceptions::UnsupportedUploadMediaTypeError, request.content_type
-      end
-
-      @deck = Deck.find relationship_params[:deck_id]
+      @deck = Deck.find params[:deck_id]
       @asset = Asset.new :deck => @deck
 
       authorize @asset
 
-      # Copy uploaded file to tempfile
-      # TODO: sanitize filenames
-      raise Api::ApiError, error_params('Invalid filename') unless params[:qqfilename]
-      filename = params[:qqfilename]
-
-      # Create tempfile with proper extension
-      raise Api::ApiError, error_params('Invalid file') unless params[:qqfile]
-      file = Tempfile.new ['', ".#{filename.split('.').last}"]
-      file.close
-      FileUtils.cp params[:qqfile].path, file.path
-
       # Create asset
-      @asset.filename = File.basename filename
-      @asset.save
+      @asset.filename = File.basename uploaded_filename
 
-      # Update asset in backing store
-      command = Repository::Asset::UpdateFile.new @asset
+      if @asset.save
+        # Update asset in backing store
+        command = Repository::Asset::UpdateFile.new @asset
 
-      command.author = current_user
-      command.file = file.path
+        command.author = current_user
+        command.file = uploaded_file.path
 
-      command.execute
+        command.execute
 
-      # Render result
-      setup_request
-      jsonapi_render_upload :json => @asset, :status => :created
-    rescue => e
-      jsonapi_render_upload_errors e, :json => @conversion, :status => :unprocessable_entity
+        jsonapi_render_upload :json => @asset, :status => :created
+      else
+        jsonapi_render_upload_errors :json => @asset, :status => :unprocessable_entity
+      end
     end
 
     # GET /assets/:id

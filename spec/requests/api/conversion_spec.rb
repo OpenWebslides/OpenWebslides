@@ -20,14 +20,14 @@ RSpec.describe 'Conversions API', :type => :request do
     it 'rejects without qqfilename' do
       post api_conversions_path, :params => @body.except(:qqfilename), :headers => headers
 
-      expect(response.status).to eq 422
+      expect(response.status).to eq 400
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'rejects without qqfile' do
       post api_conversions_path, :params => @body.except(:qqfile), :headers => headers
 
-      expect(response.status).to eq 422
+      expect(response.status).to eq 400
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
