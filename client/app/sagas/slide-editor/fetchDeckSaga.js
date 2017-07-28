@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { takeLatest, put , call  } from 'redux-saga/effects';
 import { FETCH_DECK, fetchDeckSuccess } from 'actions/entities/decks';
 import { SIGNOUT } from 'actions/signoutActions';
 
