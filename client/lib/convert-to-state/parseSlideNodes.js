@@ -13,6 +13,17 @@ const sectionNodeNames = ['SECTION', 'ASIDE'];
 const containerNodeNames = [...listNodeNames, ...sectionNodeNames];
 let assetLinks;
 
+////// TODO: Needed until we have actual images to load:
+const cache = {};
+
+function importAll(r) {
+  r.keys().forEach(key => (cache[key] = r(key)));
+}
+
+// importAll(require.context('../../assets/images/testPrintView/assets/', false, /\.(jpe?g|png|gif|svg|tiff)/));
+importAll(require.context('../../assets/images/testPrintView/JasperIntroAssets/', false, /\.(jpe?g|png|PNG|gif|svg|tiff)/));
+/////
+
 function checkAddFirstChildHeadingToImplicitSection(nodeList, parentIsSection) {
   // Given a nodelist, it's possible that
   // a) its parent node is an existing section, and
