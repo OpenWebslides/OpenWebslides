@@ -28,6 +28,7 @@ function mapDispatchToProps(dispatch) {
       updateContentItem,
       setActiveContentItemId,
       setSelectionOffsets,
+      updateDeck,
     },
     dispatch,
   );
