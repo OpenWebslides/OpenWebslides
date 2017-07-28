@@ -2,6 +2,8 @@
 
 module Api
   class ConversionsController < ApiController
+    include Uploadable
+
     # Authentication
     before_action :authenticate_user
     after_action :renew_token
@@ -9,41 +11,25 @@ module Api
     # Authorization
     after_action :verify_authorized
 
-    skip_before_action :jsonapi_request_handling, :only => :create
+    # Upload actions
+    upload_action :create
 
     # POST /conversions
     def create
-      # FIXME: implement global method to separate requests based on media type
-      unless request.content_type == JSONAPI::UPLOAD_MEDIA_TYPE
-        raise JSONAPI::Exceptions::UnsupportedUploadMediaTypeError, request.content_type
-      end
-
       @conversion = Conversion.new :user => current_user
 
       authorize @conversion
 
-      # Copy uploaded file to tempfile
-      # TODO: sanitize filenames
-      raise Api::ApiError, error_params('Invalid filename') unless params[:qqfilename]
-      filename = params[:qqfilename]
-
-      # Create tempfile with proper extension
-      raise Api::ApiError, error_params('Invalid file') unless params[:qqfile]
-      file = Tempfile.new ['', ".#{filename.split('.').last}"]
-      file.close
-      FileUtils.cp params[:qqfile].path, file.path
-
       # Create and queue conversion
       @conversion.status = :queued
-      @conversion.filename = file.path
-      @conversion.name = filename
-      @conversion.save
+      @conversion.filename = uploaded_file.path
+      @conversion.name = uploaded_filename
 
-      # Render results
-      setup_request
-      jsonapi_render_upload :json => @conversion, :status => :created
-    rescue => e
-      jsonapi_render_upload_errors e, :json => @conversion, :status => :unprocessable_entity
+      if @conversion.save
+        jsonapi_render_upload :json => @conversion, :status => :created
+      else
+        jsonapi_render_upload_errors :json => @conversion, :status => :unprocessable_entity
+      end
     end
 
     # GET /conversions/:id
@@ -53,38 +39,6 @@ module Api
       authorize @conversion
 
       jsonapi_render :json => @conversion
-    end
-
-    protected
-
-    def jsonapi_render_upload(json:, status: nil, options: {})
-      # Adapted from JSONAPI::Utils::Response::Renders::jsonapi_render
-
-      body = jsonapi_format(json, options).merge success: true # This line changed
-      render json: body, status: status || @_response_document.status
-    rescue => e
-      handle_exceptions(e)
-    ensure
-      correct_media_type
-    end
-
-    def jsonapi_render_upload_errors(exception = nil, json: nil, status: nil)
-      # Adapted from JSONAPI::Utils::Response::Renders::jsonapi_render_errors
-
-      body   = jsonapi_format_errors(exception || json)
-      status = status || body.try(:first).try(:[], :status)
-      render json: { errors: body, error: exception.params[:detail], success: false, preventRetry: true }, status: status # This line changed
-    ensure
-      correct_media_type
-    end
-
-    def error_params(message)
-      {
-        :title => message,
-        :detail => message,
-        :status => :unprocessable_entity,
-        :code => JSONAPI::PARAM_MISSING
-      }
     end
   end
 end

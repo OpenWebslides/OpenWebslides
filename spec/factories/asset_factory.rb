@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :asset do
-    filename { Faker::File.file_name }
+    filename { Faker::File.file_name('')[1..-1] }
 
     trait :with_deck do
       deck { build :deck }
