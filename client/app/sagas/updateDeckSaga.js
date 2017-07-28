@@ -74,7 +74,7 @@ function* convertContentItems(contentItemIds, headingLevel) {
       case contentItemTypes.IFRAME: {
         const { src, alt } = contentItemObject;
 
-        string += `<iframe ${attributeString} src="${src}" alt="${alt}"/>`;
+        string += `<iframe ${attributeString} src="${src}" alt="${alt}"></iframe>`;
         break;
       }
       case contentItemTypes.ILLUSTRATIVE_IMAGE: {
