@@ -1,4 +1,4 @@
-const SUPPORTED_PROPERTIES = ['EM', 'STRONG'];
+const SUPPORTED_PROPERTIES = { EM: 'EM', STRONG: 'STRONG', A: 'LINK' };
 
 export default function parseInlineProperties(nodes) {
   const inlineProperties = [];
@@ -14,13 +14,22 @@ export default function parseInlineProperties(nodes) {
     textContent = node.textContent.replace(/^\s+/, '').replace(/\s+/g, ' ');
     endsAtChar = charOffset + textContent.length;
 
-    if (SUPPORTED_PROPERTIES.includes(node.nodeName)) {
+    if (Object.keys(SUPPORTED_PROPERTIES).includes(node.nodeName)) {
+      const attributes = {};
+
+      if (node.attributes) {
+        Array.from(node.attributes).forEach((attr) => {
+          attributes[attr.name] = attr.value;
+        });
+      }
+
       inlineProperties.push({
-        type: node.nodeName, // #TODO fix this
+        type: SUPPORTED_PROPERTIES[node.nodeName], // #TODO fix this
         offSets: {
           start: charOffset,
           end: endsAtChar,
         },
+        attributes,
       });
     }
 
