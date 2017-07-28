@@ -249,6 +249,7 @@ function parseContentItemNodes(
       sectionContentItem = {
         id: newContentItemId,
         contentItemType: contentItemTypes.SECTION,
+        viewType: slideViewTypes.LIVE,
         childItemIds: [],
       };
 
