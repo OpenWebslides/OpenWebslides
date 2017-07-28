@@ -5,7 +5,7 @@ FactoryGirl.define do
     name { Faker::Lorem.words(4).join ' ' }
     description { Faker::Lorem.words(20).join ' ' }
     state :public_access
-    owner { build :user }
+    owner { build :user, :confirmed }
 
     trait :with_collaborators do
       collaborators { build_list :user, 3 }

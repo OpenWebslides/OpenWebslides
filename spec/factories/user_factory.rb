@@ -21,7 +21,7 @@ FactoryGirl.define do
     end
 
     trait :confirmed do
-      after :create, &:confirm
+      after :build, &:confirm
     end
   end
 end

@@ -5,6 +5,8 @@ module Api
   # A binary asset (image, video, ...)
   #
   class AssetResource < ApiResource
+    immutable
+
     ##
     # Properties
     #

@@ -225,8 +225,8 @@ RSpec.describe 'Deck API', :type => :request do
       add_auth_header
     end
 
-    it 'rejects non-existant users' do
-      delete api_deck_path(:id => '0'), :params => api_deck_path(:id => 999), :headers => headers
+    it 'rejects non-existant decks' do
+      delete api_deck_path(:id => '0'), :headers => headers
 
       deck.reload
       expect(deck).not_to be_destroyed
@@ -237,7 +237,7 @@ RSpec.describe 'Deck API', :type => :request do
 
     it 'deletes a deck' do
       id = deck.id
-      delete api_deck_path(:id => deck.id), :params => api_deck_path(:id => deck.id), :headers => headers
+      delete api_deck_path(:id => deck.id), :headers => headers
 
       expect(-> { Deck.find id }).to raise_error ActiveRecord::RecordNotFound
 

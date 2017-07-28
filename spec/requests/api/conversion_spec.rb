@@ -66,4 +66,7 @@ RSpec.describe 'Conversions API', :type => :request do
       expect(Conversion.statuses.keys).to include data['attributes']['status']
     end
   end
+
+  # TODO: user relationship
+  # TODO: deck relationship
 end
