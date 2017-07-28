@@ -187,7 +187,8 @@ export function getHTMLStringFromInlinePropertiesAndText(
     let charIndex = 0;
 
     // loop over all the chars of text
-    while (charIndex < text.length) {
+    // (+ 1 (because an inlineProperty can end after the last charindex)
+    while (charIndex < text.length + 1) {
       // if there is a current inlineProperty (meaning: started but not yet ended)
       if (inlineProperty !== null) {
         // check if the current inline property ends at this charIndex

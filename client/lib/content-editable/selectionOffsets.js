@@ -60,7 +60,7 @@ export function setSelectionByOffsets(
   }
   if (
     startOffset > containerElement.textContent.length ||
-    endOffset > containerElement.textContent.length
+    endOffset > containerElement.textContent.length + 1
   ) {
     console.error('Offsets out of range.');
     return;
