@@ -17,6 +17,8 @@ function* convertContentItems(contentItemIds, headingLevel) {
   let string = '';
 
   for (let i = 0; i < contentItemIds.length; i += 1) {
+    string += '\n';
+
     const contentItemObject = yield select(getContentItemById, contentItemIds[i]);
 
     const attributes = generateAttributesObject(contentItemObject);
@@ -100,7 +102,9 @@ function* convertSlide(slideId) {
   const slideObject = yield select(getSlideById, slideId);
   const contentItemsString = yield convertContentItems(slideObject.contentItemIds, 1);
 
-  const slideString = `<div class="slide" data-level="${slideObject.level}">${contentItemsString}</div>`;
+  const slideString = `
+      <div class="slide" data-level="${slideObject.level}">${contentItemsString}</div>
+  `;
 
   return slideString;
 }
@@ -126,7 +130,8 @@ function* doUpdateDeck() {
     const htmlString = yield convertToHTML(deck);
 
     yield call(updateDeckApi, deck.id, htmlString);
-  } catch (e) {
+  }
+  catch (e) {
     console.log(e);
   }
 }
