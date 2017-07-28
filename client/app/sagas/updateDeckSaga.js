@@ -27,7 +27,6 @@ function* convertContentItems(contentItemIds, headingLevel) {
     switch (contentItemObject.contentItemType) {
       case contentItemTypes.TITLE: {
         const heading = `h${headingLevel}`;
-
         const text = getHTMLStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
           contentItemObject.text,
