@@ -2,6 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
+import ImageUploaderContainer from 'containers/ImageUploaderContainer';
+
 const customStyles = {
   content: {
     top: '50%',
@@ -39,6 +41,7 @@ export default class ImageModal extends React.Component {
         style={customStyles}
         contentLabel="Add Image"
       >
+        <ImageUploaderContainer onDropAccepted={this.props.onClose} />
         <form onSubmit={this.handleAddContentItem}>
           <input
             type="radio"
