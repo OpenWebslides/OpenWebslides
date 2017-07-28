@@ -65,6 +65,7 @@
     "react": "^15.4.2",
     "react-debounce-render": "^0.0.11",
     "react-dom": "^15.4.2",
+    "react-dropzone": "^3.13.4",
     "react-hot-loader": "next",
     "react-i18next": "^4.1.0",
     "react-modal": "^2.2.2",
