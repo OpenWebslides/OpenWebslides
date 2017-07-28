@@ -1,7 +1,9 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+// Presentationals
 import PrintView from 'presentationals/components/print-view/PrintView';
+// Actions
+import { fetchDeck } from 'actions/entities/decks';
 
 function mapStateToProps(state) {
   const printViewState = state.app.printView;
@@ -12,7 +14,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ fetchDeck }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintView);
