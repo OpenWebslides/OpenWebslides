@@ -11,10 +11,14 @@ export function* doUploadAsset(action) {
     console.log(activeDeckId);
     const { files } = action.meta;
     console.log(files);
-    // yield call(uploadAssetApi, files);
 
+    for (let i = 0; i < files.length; i += 1) {
+      yield call(uploadAssetApi, activeDeckId, files[i]);
+    }
+    console.log('finished');
     // yield put({ type: UPLOAD_ASSETS_SUCCESS });
-  } catch (error) {
+  }
+  catch (error) {
     // yield put({ type: UPLOAD_ASSETS_FAILURE });
   }
 }
