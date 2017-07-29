@@ -1,9 +1,14 @@
 import ApiRequest from './helpers/apiHelper';
 
-async function uploadAssetApi(deckId, file, filename) {
+async function uploadAssetApi(deckId, file) {
   const request = new ApiRequest();
 
-  request.setEndpoint(`deck/${deckId}/assets`).setMethod('POST').setBody(file);
+  request
+    .setEndpoint(`decks/${deckId}/assets`)
+    .setMethod('POST')
+    .addHeader('Content-Type', 'application/octet-stream')
+    .addHeader('Content-Disposition', `attachment; filename="${file.name}"`)
+    .setBody(file);
 
   return request.executeRequest();
 }
