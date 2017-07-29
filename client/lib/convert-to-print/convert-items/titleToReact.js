@@ -10,9 +10,20 @@ export default function titleToReact(title, level) {
     6: { tag: 'h6', className: 'c_print-view__subsubsubsubsection-title' },
   };
 
+  // if it's an h1 or h2, add an horizontal line:
+  const elements = level === 1
+    ? [
+        React.createElement('hr', { className: 'c_print-view__main-title__separator-before' }, null),
+        title.text,
+        React.createElement('hr', { className: 'c_print-view__main-title__separator-after' }, null),
+      ]
+    : level === 2
+      ? [title.text, React.createElement('hr', { className: 'c_print-view__section-title__separator' }, null)]
+      : title.text;
+
   return React.createElement(
     levelToTitle[level].tag,
     { className: levelToTitle[level].className, 'data-level': level },
-    title.text,
+    elements,
   );
 }
