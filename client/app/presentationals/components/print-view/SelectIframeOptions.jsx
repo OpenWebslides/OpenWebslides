@@ -11,7 +11,7 @@ function iframeOptions() {
 function SelectIframeOptions({ selectedIframePref, changeIframePref }) {
   return (
     <p>
-      Choose image behaviour:
+      Choose iframe behaviour:
       <select
         key={selectedIframePref}
         value={selectedIframePref}
