@@ -13,8 +13,10 @@ export function* doUploadAsset(action) {
     console.log(files);
 
     for (let i = 0; i < files.length; i += 1) {
-      yield call(uploadAssetApi, activeDeckId, files[i]);
+      const response = yield call(uploadAssetApi, activeDeckId, files[i]);
+      console.log('response:', response);
     }
+
     console.log('finished');
     // yield put({ type: UPLOAD_ASSETS_SUCCESS });
   }
