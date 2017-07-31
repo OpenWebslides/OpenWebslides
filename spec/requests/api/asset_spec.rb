@@ -73,6 +73,11 @@ RSpec.describe 'Assets API', :type => :request do
   describe 'DELETE /:id' do
     before do
       add_auth_header
+
+      # Stub out Repository::Asset::Destroy
+      Repository::Asset::Destroy.send :define_method,
+                                      :execute,
+                                      -> { true }
     end
 
     it 'rejects non-existant assets' do
