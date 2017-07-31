@@ -13,7 +13,7 @@ import { generateAttributesObject } from 'lib/content-item/ContentItemContainer'
 
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 
-function* convertContentItems(contentItemIds, headingLevel) {
+export function* convertContentItems(contentItemIds, headingLevel) {
   let string = '';
 
   for (let i = 0; i < contentItemIds.length; i += 1) {
@@ -21,30 +21,32 @@ function* convertContentItems(contentItemIds, headingLevel) {
 
     const contentItemObject = yield select(getContentItemById, contentItemIds[i]);
 
-    const attributes = generateAttributesObject(contentItemObject);
-    const attributeString = Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
+    const attributes = yield call(generateAttributesObject, contentItemObject);
+
+    const attributeString = yield Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
 
     switch (contentItemObject.contentItemType) {
       case contentItemTypes.TITLE: {
         const heading = `h${headingLevel}`;
 
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = yield call(getHTMLStringFromInlinePropertiesAndText,
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );
 
-        string += `<${heading} ${attributeString}>${text}</${heading}>`;
+        string += yield `<${heading} ${attributeString}>${text}</${heading}>`;
         break;
       }
       case contentItemTypes.PARAGRAPH: {
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = yield call(getHTMLStringFromInlinePropertiesAndText,
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );
 
-        string += `<p ${attributeString}>${text}</p>`;
+        string += yield `<p ${attributeString}>${text}</p>`;
         break;
       }
+
       case contentItemTypes.SECTION: {
         const childContent = yield convertContentItems(contentItemObject.childItemIds, headingLevel + 1);
 
@@ -98,29 +100,26 @@ function* convertContentItems(contentItemIds, headingLevel) {
   return string;
 }
 
-function* convertSlide(slideId) {
-  const slideObject = yield select(getSlideById, slideId);
-  const contentItemsString = yield convertContentItems(slideObject.contentItemIds, 1);
+export function* convertSlides(slideIds) {
+  let slideString = '';
 
-  const slideString = `
-      <div class="slide" data-level="${slideObject.level}">${contentItemsString}</div>
-  `;
+  for (let i = 0; i < slideIds.length; i += 1) {
+    const slideObject = yield select(getSlideById, slideIds[i]);
+    const contentItemsString = yield call(convertContentItems, slideObject.contentItemIds, 1);
+
+    slideString += `<div class="slide" data-level="${slideObject.level}">${contentItemsString}</div>`;
+  }
 
   return slideString;
 }
 
-function* convertToHTML(deckObject) {
-  const slideStringArray = yield deckObject.slideIds.map(slideId => call(convertSlide, slideId));
-  const deckString = slideStringArray.join('');
+export function* convertToHTML(deckObject) {
+  const { slideIds } = deckObject;
 
-  return `
-    <header class="caption">
-    <h1>Presentation</h1>
-    <p><a href="">Author</a></p>
-    </header>
-    ${deckString}
-    <div class="progress"></div>
-  `;
+  const slideStringArray = yield call(convertSlides, slideIds);
+  const deckString = yield slideStringArray.join('');
+
+  return `<header class="caption"><h1>Presentation</h1><p><a href="">Author</a></p></header>${deckString}<div class="progress"></div>`;
 }
 
 function* doUpdateDeck() {
