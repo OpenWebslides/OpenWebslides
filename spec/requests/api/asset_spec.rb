@@ -12,12 +12,10 @@ RSpec.describe 'Assets API', :type => :request do
   describe 'POST /' do
     before do
       add_auth_header
-      @headers['Content-Type'] = 'multipart/form-data'
+      @headers['Content-Type'] = 'application/octet-stream'
+      @headers['Content-Disposition'] = 'attachment; filename="asset.png"'
 
-      @body = {
-        :qqfilename => 'asset.png',
-        :qqfile => fixture_file_upload(asset_file)
-      }
+      @body = fixture_file_upload(asset_file)
 
       # Stub out Repository::Asset::UpdateFile
       Repository::Asset::UpdateFile.send :define_method,
@@ -25,22 +23,15 @@ RSpec.describe 'Assets API', :type => :request do
                                          -> { true }
     end
 
-    it 'rejects without qqfilename' do
-      post api_deck_assets_path(:deck_id => deck.id), :params => @body.except(:qqfilename), :headers => headers
-
-      expect(response.status).to eq 400
-      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
-    end
-
-    it 'rejects without qqfile' do
-      post api_deck_assets_path(:deck_id => deck.id), :params => @body.except(:qqfile), :headers => headers
+    it 'rejects without Content-Disposition' do
+      post api_deck_assets_path(:deck_id => deck.id), :params => @body, :headers => headers.except('Content-Disposition')
 
       expect(response.status).to eq 400
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'rejects filename already taken' do
-      post api_deck_assets_path(:deck_id => deck.id), :params => @body.merge(:qqfilename => asset.filename), :headers => headers
+      post api_deck_assets_path(:deck_id => deck.id), :params => @body, :headers => headers.merge('Content-Disposition' => "attachment; filename=\"#{asset.filename}\"")
 
       expect(response.status).to eq 422
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
@@ -61,12 +52,7 @@ RSpec.describe 'Assets API', :type => :request do
   describe 'GET /:id' do
     before do
       add_auth_header
-      @headers['Accept'] = '*/*'
-
-      # Stub out Repository::Asset::AssetCommand#asset_file
-      Repository::Asset::AssetCommand.send :define_method,
-                                           :asset_file,
-                                           -> { Rails.root.join 'spec', 'support', 'asset.png' }
+      add_accept_header
     end
 
     it 'rejects an invalid id' do
@@ -80,7 +66,7 @@ RSpec.describe 'Assets API', :type => :request do
       get api_deck_asset_path(:deck_id => deck.id, :id => asset.id), :headers => headers
 
       expect(response.status).to eq 200
-      expect(response.content_type).to eq 'image/png'
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
   end
 

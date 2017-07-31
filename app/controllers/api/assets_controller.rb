@@ -2,7 +2,7 @@
 
 module Api
   class AssetsController < ApiController
-    include Uploadable
+    include BinaryUploadable
 
     # Authentication
     before_action :authenticate_user, :except => :show
@@ -32,9 +32,9 @@ module Api
 
         command.execute
 
-        jsonapi_render_upload :json => @asset, :status => :created
+        jsonapi_render :json => @asset, :status => :created
       else
-        jsonapi_render_upload_errors :json => @asset, :status => :unprocessable_entity
+        jsonapi_render_errors :json => @asset, :status => :unprocessable_entity
       end
     end
 
@@ -44,13 +44,7 @@ module Api
 
       authorize @asset
 
-      # Retrieve asset in backing store
-      command = Repository::Asset::Find.new @asset
-
-      path = command.execute
-
-      # Send file
-      send_file path
+      jsonapi_render :json => @asset
     end
 
     # DELETE /assets/:id

@@ -10,4 +10,7 @@ module JSONAPI
 
   # MIME type for file uploads
   UPLOAD_MEDIA_TYPE = 'multipart/form-data'
+
+  # MIME type for binary file uploads
+  BINARY_UPLOAD_MEDIA_TYPE = 'application/octet-stream'
 end
