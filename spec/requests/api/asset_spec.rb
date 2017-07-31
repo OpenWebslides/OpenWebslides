@@ -68,6 +68,13 @@ RSpec.describe 'Assets API', :type => :request do
       expect(response.status).to eq 200
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
+
+    it 'has a raw link' do
+      get api_asset_path(:id => asset.id), :headers => headers
+
+      links = (JSON.parse response.body)['data']['links']
+      expect(links['raw']).not_to be_nil
+    end
   end
 
   describe 'DELETE /:id' do

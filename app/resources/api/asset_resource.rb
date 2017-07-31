@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Api
+  include Rails.application.routes.url_helpers
+
   ##
   # A binary asset (image, video, ...)
   #
@@ -25,6 +27,13 @@ module Api
     #
     def self.updatable_fields(_ = {})
       []
+    end
+
+    def custom_links(options)
+      token = AssetToken.new :subject => context[:current_user], :object => @model
+
+      url = "#{options[:serializer].link_builder.self_link(self)}/raw?token=#{token.to_jwt}"
+      { :raw => url }
     end
   end
 end
