@@ -5,13 +5,15 @@ module Api
     include BinaryUploadable
 
     # Authentication
-    before_action :authenticate_user, :except => :show
-    after_action :renew_token
+    before_action :authenticate_user, :except => :raw
+    after_action :renew_token, :except => :raw
 
     # Authorization
     after_action :verify_authorized
 
     upload_action :create
+
+    skip_before_action :jsonapi_request_handling, :only => :raw
 
     # POST /assets
     def create
@@ -64,6 +66,29 @@ module Api
       @asset.destroy
 
       head :no_content
+    end
+
+    # GET /assets/:id/raw
+    def raw
+      @asset = Asset.find params[:asset_id]
+      return head :not_found unless @asset
+
+      # Authenticate from ?token=
+      token = AssetToken.from_jwt params[:token]
+
+      # Set @jwt for compatibility with jwt-auth's current_user for #authorize
+      @jwt = JWT::Auth::Token.from_user token.subject
+
+      authorize @asset, :show?
+      return head :unauthorized unless token and token.valid?
+
+      # Retrieve asset in backing store
+      command = Repository::Asset::Find.new @asset
+
+      path = command.execute
+
+      # Send file
+      send_file path
     end
   end
 end

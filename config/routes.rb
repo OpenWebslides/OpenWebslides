@@ -36,7 +36,9 @@ Rails.application.routes.draw do
     end
 
     ## Assets
-    jsonapi_resources :assets, :only => %i[show destroy] do end
+    jsonapi_resources :assets, :only => %i[show destroy] do
+      get '/raw' => 'assets#raw'
+    end
 
     ## Conversion tool
     jsonapi_resources :conversions, :only => %i[create show]

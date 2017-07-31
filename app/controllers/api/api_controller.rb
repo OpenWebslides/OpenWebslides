@@ -18,6 +18,13 @@ module Api
     protected
 
     ##
+    # Request context for resources
+    #
+    def context
+      { :current_user => current_user }
+    end
+
+    ##
     # Handle generic API errors
     #
     def api_error(error)

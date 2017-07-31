@@ -23,4 +23,8 @@ RSpec.describe 'assets routing', :type => :routing do
     expect(:post => route).not_to be_routable
     expect(:delete => route).to route_to 'api/assets#destroy', :id => 'foo'
   end
+
+  it 'routes raw asset endpoint' do
+    expect(:get => 'api/assets/foo/raw').to route_to 'api/assets#raw', :asset_id => 'foo'
+  end
 end
