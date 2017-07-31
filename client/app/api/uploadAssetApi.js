@@ -10,7 +10,10 @@ async function uploadAssetApi(deckId, file) {
     .addHeader('Content-Disposition', `attachment; filename="${file.name}"`)
     .setBody(file);
 
-  return request.executeRequest();
+  const response = await request.executeRequest();
+  const responseBody = await response.json();
+
+  return responseBody;
 }
 
 export default uploadAssetApi;
