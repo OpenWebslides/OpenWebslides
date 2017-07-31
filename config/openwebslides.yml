@@ -35,6 +35,11 @@ api:
   #
   token_lifetime: 24
 
+  ##
+  # Asset signed URL lifetime (in hours)
+  #
+  asset_url_lifetime: 5
+
 ##
 # Default template for new decks
 #
