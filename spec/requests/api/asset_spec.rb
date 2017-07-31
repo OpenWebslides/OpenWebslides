@@ -56,14 +56,14 @@ RSpec.describe 'Assets API', :type => :request do
     end
 
     it 'rejects an invalid id' do
-      get api_deck_asset_path(:deck_id => deck.id, :id => 0), :headers => headers
+      get api_asset_path(:id => 0), :headers => headers
 
       expect(response.status).to eq 404
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'returns successful' do
-      get api_deck_asset_path(:deck_id => deck.id, :id => asset.id), :headers => headers
+      get api_asset_path(:id => asset.id), :headers => headers
 
       expect(response.status).to eq 200
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
@@ -76,7 +76,7 @@ RSpec.describe 'Assets API', :type => :request do
     end
 
     it 'rejects non-existant assets' do
-      delete api_deck_asset_path(:deck_id => deck.id, :id => '0'), :headers => headers
+      delete api_asset_path(:id => '0'), :headers => headers
 
       asset.reload
       expect(asset).not_to be_destroyed
@@ -87,7 +87,7 @@ RSpec.describe 'Assets API', :type => :request do
 
     it 'deletes an asset' do
       id = asset.id
-      delete api_deck_asset_path(:deck_id => deck.id, :id => asset.id), :headers => headers
+      delete api_asset_path(:id => asset.id), :headers => headers
 
       expect(-> { Asset.find id }).to raise_error ActiveRecord::RecordNotFound
 
