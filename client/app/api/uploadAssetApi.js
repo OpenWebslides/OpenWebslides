@@ -6,14 +6,14 @@ async function uploadAssetApi(deckId, file) {
   request
     .setEndpoint(`decks/${deckId}/assets`)
     .setMethod('POST')
-    .addHeader('Content-Type', 'application/octet-stream')
+    .addHeader('Content-Type', 'application/octet-stream') // `${file.type}`
     .addHeader('Content-Disposition', `attachment; filename="${file.name}"`)
     .setBody(file);
 
   const response = await request.executeRequest();
   const responseBody = await response.json();
 
-  return responseBody;
+  return responseBody.data;
 }
 
 export default uploadAssetApi;
