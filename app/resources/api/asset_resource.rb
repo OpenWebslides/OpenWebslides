@@ -30,7 +30,9 @@ module Api
     end
 
     def custom_links(options)
-      token = AssetToken.new :subject => context[:current_user], :object => @model
+      token = AssetToken.new
+      token.subject = context[:current_user]
+      token.object = @model
 
       url = "#{options[:serializer].link_builder.self_link(self)}/raw?token=#{token.to_jwt}"
       { :raw => url }
