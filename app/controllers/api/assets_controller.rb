@@ -74,7 +74,7 @@ module Api
       return head :not_found unless @asset
 
       # Authenticate from ?token=
-      token = AssetToken.from_jwt params[:token]
+      token = AssetToken.from_token params[:token]
 
       # Set @jwt for compatibility with jwt-auth's current_user for #authorize
       @jwt = JWT::Auth::Token.from_user token.subject
