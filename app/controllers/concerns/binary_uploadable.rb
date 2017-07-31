@@ -15,7 +15,6 @@ module BinaryUploadable
   # Define upload request parameters
   #
   def before_upload_action
-    # Ensure media type is 'application/octet-stream'
     ensure_media_type
 
     # Copy uploaded file to tempfile
@@ -32,14 +31,14 @@ module BinaryUploadable
 
     # Set up JSONAPI request handling
     setup_request
-  rescue => e
+  rescue JSONAPI::Exceptions::Error => e
     jsonapi_render_errors :json => e
   end
 
   def ensure_media_type
-    unless request.content_type == JSONAPI::BINARY_UPLOAD_MEDIA_TYPE
-      raise JSONAPI::Exceptions::UnsupportedBinaryUploadMediaTypeError.new request.content_type
-    end
+    return if JSONAPI::ALLOWED_BINARY_MEDIA_TYPES.include? request.content_type
+
+    raise JSONAPI::Exceptions::UnsupportedBinaryUploadMediaTypeError.new request.content_type
   end
 
   module ClassMethods
