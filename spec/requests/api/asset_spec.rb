@@ -106,4 +106,35 @@ RSpec.describe 'Assets API', :type => :request do
       expect(response.status).to eq 204
     end
   end
+
+  describe 'GET /:id/raw' do
+    before do
+      @token = AssetToken.new
+      @token.subject = user
+      @token.object = asset
+
+      # Stub out Repository::Asset::Find
+      Repository::Asset::Find.send :define_method,
+                                   :execute,
+                                   -> { Rails.root.join 'spec', 'support', 'asset.png' }
+    end
+
+    it 'rejects no token' do
+      get api_asset_raw_path(:asset_id => asset.id)
+
+      expect(response.status).to eq 401
+    end
+
+    it 'rejects invalid token' do
+      get api_asset_raw_path :asset_id => asset.id, :token => 'foo'
+
+      expect(response.status).to eq 401
+    end
+
+    it 'returns successful' do
+      get api_asset_raw_path :asset_id => asset.id, :token => @token.to_jwt
+
+      expect(response.status).to eq 200
+    end
+  end
 end
