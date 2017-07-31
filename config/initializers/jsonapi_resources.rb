@@ -11,7 +11,7 @@ JSONAPI.configure do |config|
 end
 
 module JSONAPI
-  module Errors
+  module Exceptions
     class UnsupportedUploadMediaTypeError < Error
       attr_accessor :media_type
 
@@ -46,8 +46,8 @@ module JSONAPI
                              title: I18n.translate('jsonapi-resources.exceptions.unsupported_media_type.title',
                                                    default: 'Unsupported media type'),
                              detail: I18n.translate('jsonapi-resources.exceptions.unsupported_binary_upload_media_type.detail',
-                                                    default: "All requests that upload must use the '#{JSONAPI::BINARY_UPLOAD_MEDIA_TYPE}' Content-Type. This request specified '#{media_type}'.",
-                                                    needed_media_type: JSONAPI::BINARY_UPLOAD_MEDIA_TYPE,
+                                                    default: "All requests that upload must use one of '#{JSONAPI::ALLOWED_BINARY_MEDIA_TYPES.join ' '}' Content-Type. This request specified '#{media_type}'.",
+                                                    needed_media_type: JSONAPI::ALLOWED_BINARY_MEDIA_TYPES,
                                                     media_type: media_type))]
       end
     end

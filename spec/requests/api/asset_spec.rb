@@ -12,7 +12,7 @@ RSpec.describe 'Assets API', :type => :request do
   describe 'POST /' do
     before do
       add_auth_header
-      @headers['Content-Type'] = 'application/octet-stream'
+      @headers['Content-Type'] = 'image/png'
       @headers['Content-Disposition'] = 'attachment; filename="asset.png"'
 
       @body = fixture_file_upload(asset_file)
@@ -36,6 +36,13 @@ RSpec.describe 'Assets API', :type => :request do
       expect(response.status).to eq 422
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
       expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+    end
+
+    it 'rejects media types not allowed' do
+      post api_deck_assets_path(:deck_id => deck.id), :params => @body, :headers => headers.merge('Content-Type' => 'application/octet-stream')
+
+      expect(response.status).to eq 415
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
     it 'returns successful' do
