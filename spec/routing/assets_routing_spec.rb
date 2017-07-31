@@ -15,13 +15,12 @@ RSpec.describe 'assets routing', :type => :routing do
   end
 
   it 'routes asset endpoint' do
-    route = '/api/decks/foo/assets/bar'
-    params = { :id => 'bar', :deck_id => 'foo' }
+    route = '/api/assets/foo'
 
-    expect(:get => route).to route_to 'api/assets#show', params
-    expect(:patch => route).to route_to 'api/assets#update', params
-    expect(:put => route).to route_to 'api/assets#update', params
+    expect(:get => route).to route_to 'api/assets#show', :id => 'foo'
+    expect(:patch => route).not_to be_routable
+    expect(:put => route).not_to be_routable
     expect(:post => route).not_to be_routable
-    expect(:delete => route).to route_to 'api/assets#destroy', params
+    expect(:delete => route).to route_to 'api/assets#destroy', :id => 'foo'
   end
 end
