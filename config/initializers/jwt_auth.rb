@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require_relative 'openwebslides'
+
 JWT::Auth.configure do |config|
   ##
   # Token lifetime (in hours)
   #
-  config.token_lifetime = 24.hours
+  config.token_lifetime = OpenWebslides.config.api.token_lifetime.hours
 
   ##
   # JWT secret
