@@ -53,6 +53,14 @@ module Api
 
       authorize @asset
 
+      # Destroy asset in backing store
+      command = Repository::Asset::Destroy.new @asset
+
+      command.author = current_user
+
+      command.execute
+
+      # Destroy asset in the database
       @asset.destroy
 
       head :no_content
