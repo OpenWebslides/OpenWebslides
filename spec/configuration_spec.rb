@@ -40,6 +40,9 @@ RSpec.describe OpenWebslides do
 
     expect(subject.config.api).to respond_to :token_lifetime
     expect(subject.config.api.token_lifetime).to be_an Integer
+
+    expect(subject.config.api).to respond_to :asset_url_lifetime
+    expect(subject.config.api.asset_url_lifetime).to be_an Integer
   end
 
   it 'has GitHub configuration' do
