@@ -3,78 +3,85 @@
 require 'rails_helper'
 
 RSpec.describe Api::UsersController do
-  let(:user1) { create :user, :confirmed }
-  let(:user2) { create :user, :confirmed }
+  let(:user) { create :user, :confirmed }
 
-  def update_body(id)
-    {
-      :data => {
-        :type => 'users',
-        :id => id,
-        :attributes => { :firstName => 'foo' }
-      }
-    }.to_json
+  describe 'index' do
+    context 'unauthenticated' do
+      before { get :index }
+
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
+    end
+
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        get :index
+      end
+
+      it { is_expected.not_to be_protected }
+      it { is_expected.to return_token }
+    end
   end
 
-  describe 'authorization' do
-    describe 'GET index' do
-      it 'allows requests' do
-        get_authenticated user1, :index
+  describe 'create' do
+    context 'unauthenticated' do
+      before { post :create }
 
-        expect(response.status).not_to eq 403
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'GET show' do
-      it 'allows requests for the same user' do
-        get_authenticated user1, :show, :id => user1.id
-
-        expect(response.status).not_to eq 403
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        post :create
       end
 
-      it 'allows requests for another user' do
-        get_authenticated user1, :show, :id => user2.id
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
+    end
+  end
 
-        expect(response.status).not_to eq 403
-      end
+  describe 'show' do
+    context 'unauthenticated' do
+      before { get :show, :params => { :id => user.id } }
+
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'POST create' do
-      it 'allows requests' do
-        post_authenticated user1, :create
-
-        expect(response.status).not_to eq 403
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        get :show, :params => { :id => user.id }
       end
+
+      it { is_expected.not_to be_protected }
+      it { is_expected.to return_token }
+    end
+  end
+
+  describe 'destroy' do
+    context 'unauthenticated' do
+      before { delete :destroy, :params => { :id => user.id } }
+
+      it { is_expected.to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'PUT/PATCH update' do
-      it 'allows requests for the same user' do
-        @request.env['RAW_POST_DATA'] = update_body(user1.id)
-        patch_authenticated user1, :update, :id => user1.id
-
-        expect(response.status).not_to eq 403
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        delete :destroy, :params => { :id => user.id }
       end
 
-      it 'denies requests for another user' do
-        @request.env['RAW_POST_DATA'] = update_body(user2.id)
-        patch_authenticated user1, :update, :id => user2.id
-
-        expect(response.status).to eq 403
-      end
-    end
-
-    describe 'DELETE destroy' do
-      it 'allows requests for the same user' do
-        delete_authenticated user1, :destroy, :id => user1.id
-
-        expect(response.status).not_to eq 403
-      end
-
-      it 'denies requests for another user' do
-        delete_authenticated user1, :destroy, :id => user2.id
-
-        expect(response.status).to eq 403
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
   end
 end

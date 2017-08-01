@@ -5,31 +5,23 @@ require 'rails_helper'
 RSpec.describe Api::ConfirmationController do
   let(:user) { create :user, :confirmed }
 
-  describe 'authentication' do
-    describe 'POST create' do
-      it 'allows unauthenticated requests but does not return a token' do
-        post_unauthenticated :create
+  describe 'create' do
+    context 'unauthenticated' do
+      before { post :create }
 
-        expect(response.status).not_to eq 401
-        expect(token response).to be_nil
-      end
-
-      it 'allows authenticated requests but does not return a token' do
-        post_authenticated user, :create
-
-        expect(response.status).not_to eq 401
-        expect(token response).to be_nil
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
-  end
 
-  describe 'authorization' do
-    describe 'POST create' do
-      it 'allows requests' do
-        post_authenticated user, :create
-
-        expect(response.status).not_to eq 403
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        post :create
       end
+
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
   end
 end

@@ -10,11 +10,4 @@ module ResponseHelper
     # Return array of codes
     json['errors'].map { |e| e['code'] }
   end
-
-  def token(response)
-    header = response.headers['Authorization']
-    return nil unless header&.match?(/^Bearer/)
-
-    JWT::Auth::Token.from_token header.split(' ').last
-  end
 end
