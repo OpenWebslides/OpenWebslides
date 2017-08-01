@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import modalTypes from 'presentationals/components/slide-editor/content-item-modals';
 import { slideViewTypes } from 'constants/slideViewTypes';
 import ToolbarButton from './ToolbarButton';
-import modalTypes from './modals';
 
 class Toolbar extends Component {
   constructor(props) {
