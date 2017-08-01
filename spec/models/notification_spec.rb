@@ -27,14 +27,4 @@ RSpec.describe Notification, :type => :model do
   it 'has a valid :event_type enum' do
     expect(%w[deck_created deck_updated]).to eq Notification.event_types.keys
   end
-
-  it 'is immutable' do
-    notification = create :notification
-    expect(notification).to be_valid
-
-    new_type = Notification.event_types.keys.reject { |n| n == notification.event_type }.first
-    expect(notification.event_type).not_to eq new_type
-
-    expect(-> { notification.update! :event_type => new_type }).to raise_error ActiveRecord::RecordInvalid
-  end
 end
