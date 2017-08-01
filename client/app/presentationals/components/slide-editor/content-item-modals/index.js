@@ -1,11 +1,11 @@
 import { contentItemTypes } from 'constants/contentItemTypes';
 
-import IframeModal from './IframeModal';
-import ImageModal from './ImageModal';
+import AddIframeModal from './AddIframeModal';
+import AddImageModal from './AddImageModal';
 
 const modalTypes = {
-  [contentItemTypes.ILLUSTRATIVE_IMAGE]: ImageModal,
-  [contentItemTypes.IFRAME]: IframeModal,
+  [contentItemTypes.ILLUSTRATIVE_IMAGE]: AddImageModal,
+  [contentItemTypes.IFRAME]: AddIframeModal,
 };
 
 export default modalTypes;

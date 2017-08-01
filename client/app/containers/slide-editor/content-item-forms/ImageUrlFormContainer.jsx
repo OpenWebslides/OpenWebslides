@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
 
-import ImageUrlForm from 'presentationals/components/slide-editor/asset-forms/ImageUrlForm';
+import ImageUrlForm from 'presentationals/components/slide-editor/content-item-forms/ImageUrlForm';
 import { ADD_URI } from 'actions/app/slide-editor';
 
 
