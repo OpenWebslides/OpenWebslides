@@ -5,6 +5,7 @@ export const SET_ACTIVE_CONTENT_ITEM_ID = 'SET_ACTIVE_CONTENT_ITEM_ID';
 export const SET_SELECTION_OFFSETS = 'SET_SELECTION_OFFSETS';
 export const SET_FOCUSED_SLIDE_VIEW_TYPE = 'SET_FOCUSED_SLIDE_VIEW_TYPE';
 export const TOGGLE_SLIDE_VIEW = 'TOGGLE_SLIDE_VIEW';
+export const ADD_URI = 'ADD_URI';
 
 export function setActiveDeckId(deckId) {
   return {
