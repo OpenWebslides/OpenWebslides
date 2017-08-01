@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 
 # Add new mime types for use in respond_to blocks:
@@ -13,9 +14,9 @@ module JSONAPI
 
   # MIME types allowed for file uploads
   ALLOWED_BINARY_MEDIA_TYPES = %w[
-                                  image/png
-                                  image/jpeg
-                                  image/gif
-                                  image/webp
-                               ].freeze
+    image/png
+    image/jpeg
+    image/gif
+    image/webp
+  ].freeze
 end

@@ -41,7 +41,7 @@ class DeckService < ApplicationService
 
     command.content = params[:content]
     command.author = params[:author]
-    command.message = params[:message ]if params[:message]
+    command.message = params[:message] if params[:message]
 
     command.execute
 
