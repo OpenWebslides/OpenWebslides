@@ -25,7 +25,7 @@ class Conversion < ApplicationRecord
   ##
   # Callbacks
   #
-  after_create :queue_job, :unless => :skip_callbacks
+  after_create :queue_job
 
   ##
   # Methods
