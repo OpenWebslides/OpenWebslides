@@ -6,6 +6,10 @@ RSpec.describe Api::ConversionResource, :type => :resource do
   let(:conversion) { create :conversion }
   let(:context) { {} }
 
+  before do
+    mock_method ConversionWorker, :perform
+  end
+
   subject { described_class.new conversion, context }
 
   it { is_expected.to have_primary_key :id }

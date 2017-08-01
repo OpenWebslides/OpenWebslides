@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe AssetToken, :type => :model do
   let(:user) { create :user, :confirmed }
-  let(:asset) { create :asset }
+  let(:asset) { create :asset, :with_deck }
 
   let(:lifetime) { OpenWebslides.config.api.asset_url_lifetime.hours.from_now.to_i }
 

@@ -19,8 +19,8 @@ RSpec.describe Asset, :type => :model do
       expect(Asset.new :deck => deck).not_to be_valid
     end
 
-    it 'is valid without deck' do
-      expect(Asset.new :filename => 'foo').to be_valid
+    it 'is invalid without deck' do
+      expect(Asset.new :filename => 'foo').not_to be_valid
     end
 
     it 'is unique over decks' do

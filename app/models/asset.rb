@@ -11,7 +11,7 @@ class Asset < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :deck
+  belongs_to :deck, :required => true
 
   ##
   # Callbacks

@@ -111,9 +111,9 @@ RSpec.describe 'Assets API', :type => :request do
       @token.object = asset
 
       # Stub out Repository::Asset::Find
-      Repository::Asset::Find.send :define_method,
-                                   :execute,
-                                   -> { Rails.root.join 'spec', 'support', 'asset.png' }
+      mock_method Repository::Asset::Find, :execute do
+        Rails.root.join 'spec', 'support', 'asset.png'
+      end
     end
 
     it 'rejects no token' do

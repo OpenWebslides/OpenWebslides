@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :conversion do
-    filename { Faker::File.file_name }
-    name { Faker::File.file_name '' }
+    filename { File.basename Faker::File.file_name }
+    name { filename.split('.').first }
     status { %i[queued processing success error].sample }
 
     user { build :user }
