@@ -69,9 +69,10 @@ RSpec.describe Deck, :type => :model do
     it 'generates a notification on create' do
       count = Notification.count
 
-      d = create :deck
+      d = build :deck
+      DeckService.new(d).create
 
-      expect(Notification.count).to eq (count + 1)
+      expect(Notification.count).to eq count + 1
       expect(Notification.last.event_type).to eq 'deck_created'
       expect(Notification.last.deck).to eq d
     end
@@ -81,9 +82,9 @@ RSpec.describe Deck, :type => :model do
 
       count = Notification.count
 
-      d.update :name => Faker::Lorem.words(4).join(' ')
+      DeckService.new(d).update :author => user, :content => 'foo'
 
-      expect(Notification.count).to eq (count + 1)
+      expect(Notification.count).to eq count + 1
       expect(Notification.last.event_type).to eq 'deck_updated'
       expect(Notification.last.deck).to eq d
     end

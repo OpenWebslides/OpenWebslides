@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'erb'
-
 class Deck < ApplicationRecord
   ##
   # Properties
@@ -29,39 +27,11 @@ class Deck < ApplicationRecord
   # Callbacks
   #
   before_save :generate_canonical_name
-  after_save :create_repository, :unless => :skip_callbacks
-  before_destroy :delete_repository, :unless => :skip_callbacks
   after_initialize :set_default_template
-
-  after_save :generate_notification
 
   ##
   # Methods
   #
-  def create_repository
-    # Run only after :save callback on create
-    return unless saved_change_to_id?
-    Repository::Create.new(self).execute
-  end
-
-  def read_repository
-    Repository::Read.new(self).execute
-  end
-
-  def update_repository(params)
-    command = Repository::Update.new self
-
-    command.content = params[:content]
-    command.author = params[:author]
-    command.message = params[:message] if params.key? :message
-
-    command.execute
-  end
-
-  def delete_repository
-    Repository::Delete.new(self).execute
-  end
-
   ##
   # Overrides
   #
@@ -90,11 +60,5 @@ class Deck < ApplicationRecord
 
   def set_default_template
     self.template = OpenWebslides.config.default_template if new_record?
-  end
-
-  def generate_notification
-    Notification.create :user => owner,
-                        :deck => self,
-                        :event_type => (created_at == updated_at ? :deck_created : :deck_updated)
   end
 end

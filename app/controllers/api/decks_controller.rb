@@ -32,9 +32,10 @@ module Api
 
       authorize @deck
 
-      if @deck.save
+      if service.create
         jsonapi_render :json => @deck, :status => :created
       else
+        # Explicitly add errors here, because @deck.errors gets cleared on #save
         @deck.errors.add :state, 'is invalid' if invalid_state
         jsonapi_render_errors :json => @deck, :status => :unprocessable_entity
       end
@@ -48,7 +49,7 @@ module Api
 
       if request.accept == JSONAPI::DECK_MEDIA_TYPE
         # TODO: proper mechanism to skip Commands in test env
-        body = ActiveRecord::Base.skip_callbacks ? '' : @deck.read_repository
+        body = ActiveRecord::Base.skip_callbacks ? '' : service.read
 
         render :body => body, :content_type => 'text/html'
       else
@@ -71,19 +72,22 @@ module Api
 
     # Update filesystem contents
     def update_content
-      unless ActiveRecord::Base.skip_callbacks
-        @deck.update_repository :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
-      end
+      return head :no_content if ActiveRecord::Base.skip_callbacks
+
+      service.update :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
 
       head :no_content
     end
 
     # Update database model
     def update_model
+      # TODO: helper to process requests based on media type
       setup_request
-      check_request
+      unless @request.errors.blank?
+        return jsonapi_render_errors :json => @request
+      end
 
-      if @deck.update resource_params
+      if service.update resource_params
         jsonapi_render :json => @deck
       else
         jsonapi_render_errors :json => @deck, :status => :unprocessable_entity
@@ -101,7 +105,7 @@ module Api
 
       authorize @deck
 
-      @deck.destroy
+      service.delete
 
       head :no_content
     end
@@ -110,6 +114,10 @@ module Api
 
     def deck_params
       resource_params.merge :user_id => relationship_params[:owner]
+    end
+
+    def service
+      DeckService.new @deck
     end
   end
 end

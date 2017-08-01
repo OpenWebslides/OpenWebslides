@@ -70,9 +70,9 @@ class ConversionWorker
     @conversion.deck = Deck.create :owner => @conversion.user, :name => @conversion.name
 
     doc = Nokogiri::HTML5 File.read File.join @output, 'index.html'
-    @conversion.deck.update_repository :author => @conversion.user,
-                                       :message => 'Add converted slides',
-                                       :content => doc.at('body').children.to_html.strip
+    DeckService.new(@conversion.deck).update :author => @conversion.user,
+                                             :message => 'Add converted slides',
+                                             :content => doc.at('body').children.to_html.strip
   end
 
   ##
