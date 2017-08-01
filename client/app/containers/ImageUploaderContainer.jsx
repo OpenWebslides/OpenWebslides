@@ -1,12 +1,41 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 
-import { uploadAssets } from 'actions/other/assetActions';
-
+import { uploadAsset } from 'actions/other/assetActions';
 import ImageUploader from 'presentationals/components/shared/uploaders/ImageUploader';
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ uploadAssets }, dispatch);
+export function validate(values) {
+  const { altText, imageFile, imageType } = values;
+
+  const errors = {};
+
+  if (!altText || altText.trim() === '') {
+    errors.altText = 'Alt text is required';
+  }
+
+  if (!imageFile) {
+    errors.imageFile = 'Please select an image file to upload';
+  }
+
+  if (!imageType) {
+    errors.imageType = 'Please select an image type';
+  }
+
+  return errors;
 }
 
-export default connect(null, mapDispatchToProps)(ImageUploader);
+function validateAndSubmit(values, dispatch) {
+  return new Promise((resolve, reject) => {
+    dispatch(uploadAsset({ assetType: 'IMAGE', values, resolve, reject }));
+  });
+}
+
+const connectedForm = reduxForm({
+  form: 'imageUpload',
+  validate,
+  onSubmit: validateAndSubmit,
+  getFormState: state => state.vendor.forms,
+  initialValues: { imageType: 'ILLUSTRATIVE' },
+})(ImageUploader);
+
+
+export default connectedForm;
