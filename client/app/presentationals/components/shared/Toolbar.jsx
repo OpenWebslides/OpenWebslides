@@ -59,7 +59,7 @@ class Toolbar extends Component {
         <ModalType
           onHandleModal={this.onHandleModal}
           isOpen={this.state.modalIsOpen}
-          onClose={() => this.setState({ modalIsOpen: false })}
+          closeModal={() => this.setState({ modalIsOpen: false })}
         />
       );
     }
