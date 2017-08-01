@@ -28,7 +28,7 @@ export default class IframeModal extends React.Component {
   handleAddContentItem(event) {
     event.preventDefault();
 
-    this.props.onHandleModalSubmit({ src: this.state.iframeSource });
+    this.props.handleModalSubmit({ contentItemType: 'IFRAME', props: { src: this.state.iframeSource } });
     this.setState({ iframeSource: '' });
   }
 
@@ -36,14 +36,14 @@ export default class IframeModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.isOpen}
-        onRequestClose={this.props.onClose}
+        onRequestClose={this.props.closeModal}
         style={customStyles}
         contentLabel="Add Iframe"
       >
         <form onSubmit={this.handleAddContentItem}>
 
           <input
-            autoFocus
+            autoFocus={true}
             type="text"
             value={this.state.iframeSource}
             placeholder="Enter Iframe URL"
@@ -59,6 +59,6 @@ export default class IframeModal extends React.Component {
 
 IframeModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onHandleModalSubmit: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  handleModalSubmit: PropTypes.func.isRequired,
 };

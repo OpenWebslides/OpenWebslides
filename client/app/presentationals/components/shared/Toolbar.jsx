@@ -16,6 +16,7 @@ class Toolbar extends Component {
       modalIsOpen: false,
       modalType: null,
     };
+    this.handleModalSubmit = this.handleModalSubmit.bind(this);
   }
 
   onButtonClick(button) {
@@ -37,6 +38,12 @@ class Toolbar extends Component {
     }
   }
 
+  handleModalSubmit({ contentItemType, props }) {
+    this.addContentItemToSlide(contentItemType, props);
+    this.setState({ modalIsOpen: false });
+  }
+
+
   addContentItemToSlide(contentItemType, contentItemTypeProps) {
     // If no props are given, the props are taken from the button Object itself
     this.props.addContentItemToSlide(this.props.activeSlideId, contentItemType, contentItemTypeProps);
@@ -51,6 +58,7 @@ class Toolbar extends Component {
       modalComponent = (
         <ModalType
           isOpen={this.state.modalIsOpen}
+          handleModalSubmit={this.handleModalSubmit}
           closeModal={() => this.setState({ modalIsOpen: false })}
         />
       );
