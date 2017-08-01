@@ -10,13 +10,11 @@ class Toolbar extends Component {
     super(props);
 
     this.onButtonClick = this.onButtonClick.bind(this);
-    this.onHandleModal = this.onHandleModal.bind(this);
     this.addContentItemToSlide = this.addContentItemToSlide.bind(this);
 
     this.state = {
       modalIsOpen: false,
       modalType: null,
-      contentItemType: null,
     };
   }
 
@@ -32,16 +30,11 @@ class Toolbar extends Component {
       this.setState({
         modalIsOpen: true,
         ModalType,
-        contentItemType: button.parameters.contentItemType,
       });
     }
     else {
       this.addContentItemToSlide(button.parameters.contentItemType, button.parameters.contentItemTypeProps);
     }
-  }
-
-  onHandleModal(props) {
-    this.addContentItemToSlide(this.state.contentItemType, props);
   }
 
   addContentItemToSlide(contentItemType, contentItemTypeProps) {
@@ -57,7 +50,6 @@ class Toolbar extends Component {
 
       modalComponent = (
         <ModalType
-          onHandleModal={this.onHandleModal}
           isOpen={this.state.modalIsOpen}
           closeModal={() => this.setState({ modalIsOpen: false })}
         />
