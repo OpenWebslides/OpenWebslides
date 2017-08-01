@@ -47,6 +47,8 @@ RSpec.describe 'Conversions API', :type => :request do
     before do
       add_accept_header
       add_auth_header
+
+      mock_method ConversionWorker, :perform
     end
 
     it 'rejects an invalid id' do

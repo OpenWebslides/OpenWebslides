@@ -1,9 +1,11 @@
-# Mock IO operations
+def mock_method(klass, method, &block)
+  klass.send :define_method,
+             method,
+             block || ->(*_) { true }
+end
 
 def mock_command(klass)
-  klass.send :define_method,
-             :execute,
-             -> { true }
+  mock_method klass, :execute
 end
 
 mock_command Repository::Git::Commit

@@ -3,15 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe Api::AssetResource, :type => :resource do
-  let(:asset) { create :asset }
+  let(:asset) { create :asset, :with_deck }
   let(:context) { {} }
 
   before do
     create :user
+
     # Stub out context[:current_user]
-    described_class.send :define_method,
-                         :context,
-                         -> { { :current_user => User.first } }
+    mock_method described_class, :context do
+      { :current_user => User.first }
+    end
   end
 
   subject { described_class.new asset, context }
