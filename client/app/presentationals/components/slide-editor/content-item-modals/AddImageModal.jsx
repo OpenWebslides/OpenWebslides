@@ -2,8 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
-import ImageUploadFormContainer from 'containers/ImageUploaderContainer';
-import ImageUrlFormContainer from 'containers/slide-editor/asset-forms/ImageUrlFormContainer';
+import ImageUploadFormContainer from 'containers/slide-editor/content-item-forms/ImageUploadFormContainer';
+import ImageUrlFormContainer from 'containers/slide-editor/content-item-forms/ImageUrlFormContainer';
 
 
 const customStyles = {
