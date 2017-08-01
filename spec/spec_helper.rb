@@ -104,13 +104,4 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
-
-  # Allow disabling ActiveRecord callbacks
-  config.before(:all, :callbacks => true) do
-    ActiveRecord::Base.skip_callbacks = false
-  end
-
-  config.after(:all, :callbacks => true) do
-    ActiveRecord::Base.skip_callbacks = true
-  end
 end

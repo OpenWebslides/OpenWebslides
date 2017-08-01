@@ -48,8 +48,7 @@ module Api
       authorize @deck
 
       if request.accept == JSONAPI::DECK_MEDIA_TYPE
-        # TODO: proper mechanism to skip Commands in test env
-        body = ActiveRecord::Base.skip_callbacks ? '' : service.read
+        body = service.read
 
         render :body => body, :content_type => 'text/html'
       else
@@ -72,8 +71,6 @@ module Api
 
     # Update filesystem contents
     def update_content
-      return head :no_content if ActiveRecord::Base.skip_callbacks
-
       service.update :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
 
       head :no_content
