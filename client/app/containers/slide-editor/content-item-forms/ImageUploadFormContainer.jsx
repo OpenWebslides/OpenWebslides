@@ -1,7 +1,7 @@
 import { reduxForm } from 'redux-form';
 
 import { uploadAsset } from 'actions/other/assetActions';
-import ImageUploader from 'presentationals/components/shared/uploaders/ImageUploader';
+import ImageUploadForm from 'presentationals/components/slide-editor/content-item-forms/ImageUploadForm';
 
 export function validate(values) {
   const { altText, imageFile, imageType } = values;
@@ -35,7 +35,7 @@ const connectedForm = reduxForm({
   onSubmit: validateAndSubmit,
   getFormState: state => state.vendor.forms,
   initialValues: { imageType: 'ILLUSTRATIVE' },
-})(ImageUploader);
+})(ImageUploadForm);
 
 
 export default connectedForm;
