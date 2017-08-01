@@ -6,18 +6,25 @@ RSpec.describe Api::AssetResource, :type => :resource do
   let(:asset) { create :asset }
   let(:context) { {} }
 
+  before do
+    create :user
+    # Stub out context[:current_user]
+    described_class.send :define_method,
+                         :context,
+                         -> { { :current_user => User.first } }
+  end
+
   subject { described_class.new asset, context }
 
   it { is_expected.to have_primary_key :id }
 
   it { is_expected.to have_attribute :filename }
-  it { is_expected.to have_attribute :url }
 
   it { is_expected.to have_one :deck }
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id filename url deck]
+      expect(subject.fetchable_fields).to match_array %i[id filename deck]
     end
 
     it 'should have a valid set of creatable fields' do
@@ -30,6 +37,10 @@ RSpec.describe Api::AssetResource, :type => :resource do
 
     it 'should have a valid set of sortable fields' do
       expect(described_class.sortable_fields context).to match_array %i[id filename]
+    end
+
+    it 'should have a custom link' do
+      expect(subject).to respond_to :custom_links
     end
   end
 end
