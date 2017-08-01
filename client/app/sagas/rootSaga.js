@@ -23,6 +23,7 @@ import deleteDeckSaga from 'sagas/deck-management/deleteDeckSaga';
 
 import updateDeckSaga from 'sagas/updateDeckSaga';
 import uploadAssetSaga from 'sagas/uploadAssetSaga';
+import addUriSaga from 'sagas/slide-editor/addUriSaga';
 
 export default function* rootSaga() {
   yield [
@@ -43,5 +44,6 @@ export default function* rootSaga() {
     deleteDeckSaga(),
     updateDeckSaga(),
     uploadAssetSaga(),
+    addUriSaga(),
   ];
 }
