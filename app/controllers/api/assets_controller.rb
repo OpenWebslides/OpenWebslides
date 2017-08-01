@@ -18,22 +18,12 @@ module Api
     # POST /assets
     def create
       @deck = Deck.find params[:deck_id]
-      @asset = Asset.new :deck => @deck
+      @asset = Asset.new :deck => @deck,
+                         :filename => File.basename(uploaded_filename)
 
       authorize @asset
 
-      # Create asset
-      @asset.filename = File.basename uploaded_filename
-
-      if @asset.save
-        # Update asset in backing store
-        command = Repository::Asset::UpdateFile.new @asset
-
-        command.author = current_user
-        command.file = uploaded_file.path
-
-        command.execute
-
+      if service.create :author => current_user, :file => uploaded_file
         jsonapi_render :json => @asset, :status => :created
       else
         jsonapi_render_errors :json => @asset, :status => :unprocessable_entity
@@ -55,15 +45,7 @@ module Api
 
       authorize @asset
 
-      # Destroy asset in backing store
-      command = Repository::Asset::Destroy.new @asset
-
-      command.author = current_user
-
-      command.execute
-
-      # Destroy asset in the database
-      @asset.destroy
+      service.delete :author => current_user
 
       head :no_content
     end
@@ -82,13 +64,14 @@ module Api
       authorize @asset, :show?
       return head :unauthorized unless token and token.valid?
 
-      # Retrieve asset in backing store
-      command = Repository::Asset::Find.new @asset
-
-      path = command.execute
-
       # Send file
-      send_file path
+      send_file service.find
+    end
+
+    protected
+
+    def service
+      AssetService.new @asset
     end
   end
 end

@@ -19,10 +19,6 @@ class Asset < ApplicationRecord
   ##
   # Methods
   #
-  def path
-    Repository::Asset::Find.new(self).execute
-  end
-
   ##
   # Overrides
   #
