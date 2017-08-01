@@ -19,7 +19,7 @@ function InputField(props) {
     <div className="c_input-field">
       <div className="c_input-field__wrapper">
         <label className="c_input-field__widget">
-          <span className="c_input-field__label">{props.label}</span>
+          {props.label && <span className="c_input-field__label">{props.label}</span>}
           <span className="c_input-field__object">
             <input
               className="c_input-field__element"
@@ -43,7 +43,7 @@ function InputField(props) {
 
 InputField.propTypes = {
   type: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   placeholder: PropTypes.string,
   input: PropTypes.objectOf(String).isRequired,
   meta: PropTypes.shape({
@@ -57,6 +57,7 @@ InputField.propTypes = {
 InputField.defaultProps = {
   type: 'text',
   placeholder: '',
+  label: '',
 };
 
 export default InputField;

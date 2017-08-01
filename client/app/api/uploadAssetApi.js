@@ -6,7 +6,7 @@ async function uploadAssetApi(deckId, file) {
   request
     .setEndpoint(`decks/${deckId}/assets`)
     .setMethod('POST')
-    .addHeader('Content-Type', 'application/octet-stream') // `${file.type}`
+    .addHeader('Content-Type', `${file.type}`)
     .addHeader('Content-Disposition', `attachment; filename="${file.name}"`)
     .setBody(file);
 
