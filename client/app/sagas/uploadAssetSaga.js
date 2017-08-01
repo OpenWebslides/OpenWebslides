@@ -1,40 +1,56 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects';
+import { SubmissionError } from 'redux-form';
 
 import uploadAssetApi from 'api/uploadAssetApi';
-import { getActiveDeckId } from 'selectors/app/slide-editor';
+import { getActiveDeckId, getActiveSlideId } from 'selectors/app/slide-editor';
+
+import { ADD_CONTENT_ITEM_TO_SLIDE } from 'actions/entities/slides';
+
+import { contentItemTypes } from 'constants/contentItemTypes';
 
 import {
-  UPLOAD_ASSETS,
-  UPLOAD_ASSETS_SUCCESS,
-  UPLOAD_ASSETS_FAILURE,
+  UPLOAD_ASSET,
 } from 'actions/other/assetActions';
 
 export function* doUploadAsset(action) {
+  const { resolve, reject } = action.meta;
+
   try {
     const activeDeckId = yield select(getActiveDeckId);
-    console.log(activeDeckId);
-    const { files } = action.meta;
-    console.log(files);
+    const activeSlideId = yield select(getActiveSlideId);
 
+    const { assetType, values: { imageFile, imageType, altText } } = yield action.meta;
 
-    const assetUris = [];
+    const response = yield call(uploadAssetApi, activeDeckId, imageFile[0]);
 
-    for (let i = 0; i < files.length; i += 1) {
-      const response = yield call(uploadAssetApi, activeDeckId, files[i]);
-      console.log(response);
-      assetUris.push(response.attributes.url);
-    }
+    const assetUri = yield response.links.raw;
 
-    yield put({ type: UPLOAD_ASSETS_SUCCESS, payload: { assetUris } });
+    yield put({ type: ADD_CONTENT_ITEM_TO_SLIDE,
+      meta: { slideId: activeSlideId,
+        contentItemType: contentItemTypes.ILLUSTRATIVE_IMAGE,
+        contentItemTypeProps: { src: assetUri, altText } } });
+
+    yield call(resolve);
   }
   catch (error) {
     console.log(error);
-    // yield put({ type: UPLOAD_ASSETS_FAILURE });
+    let errorMessage;
+
+    switch (error.statusCode) {
+      case 422:
+        // TODO: Handle the case where the file already exists
+        yield (errorMessage = { _error: 'This file already exists.' });
+        break;
+      default:
+        yield (errorMessage = { _error: 'Something went wrong on our end.' });
+    }
+
+    yield call(reject, new SubmissionError(errorMessage));
   }
 }
 
 function* uploadAssetWatcher() {
-  yield takeLatest(UPLOAD_ASSETS, doUploadAsset);
+  yield takeLatest(UPLOAD_ASSET, doUploadAsset);
 }
 
 export default uploadAssetWatcher;

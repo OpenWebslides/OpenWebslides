@@ -1,10 +1,8 @@
-export const UPLOAD_ASSETS = 'UPLOAD_ASSET';
-export const UPLOAD_ASSETS_SUCCESS = 'UPLOAD_ASSET_SUCCESS';
-export const UPLOAD_ASSETS_FAILURE = 'UPLOAD_ASSET_FAILURE';
+export const UPLOAD_ASSET = 'UPLOAD_ASSET';
 
-export function uploadAssets(files) {
+export function uploadAsset({ assetType, values, resolve, reject }) {
   return {
-    type: UPLOAD_ASSETS,
-    meta: { files },
+    type: UPLOAD_ASSET,
+    meta: { assetType, values, resolve, reject },
   };
 }
