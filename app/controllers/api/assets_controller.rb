@@ -62,7 +62,7 @@ module Api
       @jwt = JWT::Auth::Token.from_user token.subject
 
       authorize @asset, :show?
-      return head :unauthorized unless token and token.valid?
+      return head :unauthorized unless token && token.valid?
 
       # Send file
       send_file service.find
