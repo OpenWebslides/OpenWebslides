@@ -16,16 +16,14 @@ module Api
 
     # POST /conversions
     def create
-      @conversion = Conversion.new :user => current_user
+      @conversion = Conversion.new :user => current_user,
+                                   :status => :queued,
+                                   :filename => uploaded_file.path,
+                                   :name => uploaded_filename
 
       authorize @conversion
 
-      # Create and queue conversion
-      @conversion.status = :queued
-      @conversion.filename = uploaded_file.path
-      @conversion.name = uploaded_filename
-
-      if @conversion.save
+      if service.create
         jsonapi_render_upload :json => @conversion, :status => :created
       else
         jsonapi_render_upload_errors :json => @conversion, :status => :unprocessable_entity
@@ -39,6 +37,12 @@ module Api
       authorize @conversion
 
       jsonapi_render :json => @conversion
+    end
+
+    protected
+
+    def service
+      ConversionService.new @conversion
     end
   end
 end

@@ -25,8 +25,6 @@ class Conversion < ApplicationRecord
   ##
   # Callbacks
   #
-  after_create :queue_job
-
   ##
   # Methods
   #
@@ -36,7 +34,4 @@ class Conversion < ApplicationRecord
   ##
   # Helpers and callback methods
   #
-  def queue_job
-    ConversionWorker.perform_async id
-  end
 end
