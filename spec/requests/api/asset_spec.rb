@@ -16,11 +16,6 @@ RSpec.describe 'Assets API', :type => :request do
       @headers['Content-Disposition'] = 'attachment; filename="asset.png"'
 
       @body = fixture_file_upload(asset_file)
-
-      # Stub out Repository::Asset::UpdateFile
-      Repository::Asset::UpdateFile.send :define_method,
-                                         :execute,
-                                         -> { true }
     end
 
     it 'rejects without Content-Disposition' do
@@ -87,11 +82,6 @@ RSpec.describe 'Assets API', :type => :request do
   describe 'DELETE /:id' do
     before do
       add_auth_header
-
-      # Stub out Repository::Asset::Destroy
-      Repository::Asset::Destroy.send :define_method,
-                                      :execute,
-                                      -> { true }
     end
 
     it 'rejects non-existant assets' do
