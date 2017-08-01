@@ -6,55 +6,43 @@ RSpec.describe Api::NotificationsController do
   let(:user) { create :user, :confirmed }
   let(:notification) { create :notification }
 
-  describe 'authentication' do
-    describe 'GET index' do
-      it 'allows unauthenticated requests' do
-        get_unauthenticated :index
+  describe 'index' do
+    context 'unauthenticated' do
+      before { get :index }
 
-        expect(response.status).not_to eq 401
-        expect(token response).to be_nil
-      end
-
-      it 'allows authenticated requests and returns token' do
-        get_authenticated user, :index
-
-        expect(response.status).not_to eq 401
-        expect(token response).to be_valid
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'GET show' do
-      it 'allows unauthenticated requests' do
-        get_unauthenticated :show, :id => notification.id
-
-        expect(response.status).not_to eq 401
-        expect(token response).to be_nil
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        get :index
       end
 
-      it 'allows authenticated requests and returns token' do
-        get_authenticated user, :show, :id => notification.id
-
-        expect(response.status).not_to eq 401
-        expect(token response).to be_valid
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.to return_token }
     end
   end
 
-  describe 'authorization' do
-    describe 'GET index' do
-      it 'allows requests' do
-        get_authenticated user, :index
+  describe 'show' do
+    context 'unauthenticated' do
+      before { get :show, :params => { :id => notification.id } }
 
-        expect(response.status).not_to eq 403
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'GET show' do
-      it 'allows requests' do
-        get_authenticated user, :show, :id => notification.id
-
-        expect(response.status).not_to eq 403
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        get :show, :params => { :id => notification.id }
       end
+
+      it { is_expected.not_to be_protected }
+      it { is_expected.to return_token }
     end
   end
 end

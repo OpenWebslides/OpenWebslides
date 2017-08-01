@@ -5,57 +5,43 @@ require 'rails_helper'
 RSpec.describe Api::TokenController do
   let(:user) { create :user, :confirmed }
 
-  describe 'authentication' do
-    describe 'POST create' do
-      it 'denies unauthenticated requests' do
-        post_unauthenticated :create
+  describe 'create' do
+    context 'unauthenticated' do
+      before { post :create }
 
-        expect(response.status).to eq 400
-        expect(token response).to be_nil
-      end
-
-      it 'denies token-authenticated requests' do
-        post_authenticated user, :create
-
-        expect(response.status).to eq 400
-        expect(token response).to be_nil
-      end
-
-      # Proper token creation is tested in spec/requests/api/token_spec.rb
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'DELETE destroy' do
-      it 'denies unauthenticated requests' do
-        delete_unauthenticated :destroy
-
-        expect(response.status).to eq 401
-        expect(token response).to be_nil
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        post :create
       end
 
-      it 'allows authenticated requests and does not return a token' do
-        delete_authenticated user, :destroy
-
-        expect(response.status).not_to be 401
-        expect(token response).to be_nil
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
   end
 
-  describe 'authorization' do
-    describe 'POST create' do
-      it 'allows requests' do
-        post_authenticated user, :create
+  describe 'destroy' do
+    context 'unauthenticated' do
+      before { delete :destroy }
 
-        expect(response.status).not_to eq 403
-      end
+      it { is_expected.to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'DELETE destroy' do
-      it 'allows requests' do
-        delete_authenticated user, :destroy, :id => user.id
-
-        expect(response.status).not_to eq 403
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        delete :destroy
       end
+
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
   end
 end

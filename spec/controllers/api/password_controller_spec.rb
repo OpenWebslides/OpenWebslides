@@ -5,56 +5,43 @@ require 'rails_helper'
 RSpec.describe Api::PasswordController do
   let(:user) { create :user, :confirmed }
 
-  describe 'authentication' do
-    describe 'POST create' do
-      it 'allows unauthenticated requests but does not return a token' do
-        post_unauthenticated :create
+  describe 'create' do
+    context 'unauthenticated' do
+      before { post :create }
 
-        expect(response.status).not_to eq 401
-        expect(token response).to be_nil
-      end
-
-      it 'allows authenticated requests but does not return a token' do
-        post_authenticated user, :create
-
-        expect(response.status).not_to eq 401
-        expect(token response).to be_nil
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'PUT/PATCH update' do
-      it 'allows unauthenticated requests but does not return a token' do
-        patch_unauthenticated :update
-
-        expect(response.status).not_to eq 401
-        expect(token response).to be_nil
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        post :create
       end
 
-      it 'allows authenticated requests but does not return a token' do
-        patch_authenticated user, :update
-
-        expect(response.status).not_to be 401
-        expect(token response).to be_nil
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
   end
 
-  describe 'authorization' do
-    describe 'POST create' do
-      it 'allows requests' do
-        post_authenticated user, :create
+  describe 'update' do
+    context 'unauthenticated' do
+      before { patch :update }
 
-        expect(response.status).not_to eq 403
-      end
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
 
-    describe 'PUT/PATCH update' do
-      it 'allows requests' do
-        patch_unauthenticated :update
-
-        expect(response.status).not_to eq 403
-        expect(token response).to be_nil
+    context 'authenticated' do
+      before do
+        add_auth_header
+        @request.headers.merge! @headers
+        patch :update
       end
+
+      it { is_expected.not_to be_protected }
+      it { is_expected.not_to return_token }
     end
   end
 end
