@@ -1,26 +1,60 @@
-import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
+import React from 'react';
+import { Field } from 'redux-form';
+import PropTypes from 'prop-types';
 
-export default class ImageUploader extends Component {
-  constructor() {
-    super();
-    this.state = { files: [] };
-    this.onDrop = this.onDrop.bind(this);
+import InputField from 'presentationals/objects/form-fields/InputField';
+import ImageInputField from './ImageInputField';
+
+
+export default function ImageUploadForm(props) {
+  if (props.submitSucceeded) {
+    props.handleSubmitSuccess();
   }
 
-  onDrop(acceptedFiles) {
-    this.props.uploadAssets(acceptedFiles);
-  }
+  return (
+    <div>
+      <h3>Add local image file</h3>
+      <hr />
+      <form onSubmit={props.handleSubmit}>
 
-  render() {
-    return (
-      <section>
-        <div className="dropzone">
-          <Dropzone accept="image/jpeg, image/png" onDrop={this.onDrop} onDropAccepted={this.handleDropAccepted}>
-            <p>Try dropping some files here, or click to select files to upload.</p>
-          </Dropzone>
-        </div>
-      </section>
-    );
-  }
+        <Field
+          component={InputField}
+          name="altText"
+          placeholder="Enter image alt text"
+          label="Alt text"
+        />
+
+        <Field
+          component={ImageInputField}
+          name="imageFile"
+        />
+
+        <label>
+          <Field name="imageType" component={InputField} type="radio" value="ILLUSTRATIVE" />
+            Illustrative
+          </label>
+
+        <label>
+          <Field name="imageType" component={InputField} type="radio" value="DECORATIVE" />
+            Decorative
+          </label>
+
+        {props.error && <strong>{props.error}</strong>}
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 }
+
+ImageUploadForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  submitSucceeded: PropTypes.bool.isRequired,
+  handleSubmitSuccess: PropTypes.func.isRequired,
+};
+
+ImageUploadForm.defaultProps = {
+  error: '',
+};
+
