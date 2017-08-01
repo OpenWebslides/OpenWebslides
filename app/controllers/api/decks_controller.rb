@@ -50,7 +50,7 @@ module Api
       if request.accept == JSONAPI::DECK_MEDIA_TYPE
         body = service.read
 
-        render :body => body, :content_type => 'text/html'
+        render :body => body, :content_type => 'text/html', :encoding => 'utf-8'
       else
         jsonapi_render :json => @deck
       end
@@ -71,7 +71,7 @@ module Api
 
     # Update filesystem contents
     def update_content
-      service.update :author => current_user, :content => Nokogiri::HTML5.fragment(request.body.read).to_html
+      service.update :author => current_user, :content => request.body.read
 
       head :no_content
     end
