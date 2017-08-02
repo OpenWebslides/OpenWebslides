@@ -1,0 +1,15 @@
+en:
+  jsonapi-resources:
+    exceptions:
+      unsupported_upload_media_type:
+        title: "Unsupported media type"
+        detail: "All requests that upload must use the '%{needed_media_type}' Content-Type. This request specified '%{media_type}'."
+      unsupported_binary_upload_media_type:
+        title: "Unsupported media type"
+        detail: "All requests that upload must use on of '%{needed_media_type} Content-Type. This request specified '%{media_type}'."
+      unauthorized:
+        title: "%{action} unauthorized"
+        detail: "You don't have permission to %{action} this %{type}."
+      unconfirmed:
+        title: "Account not confirmed"
+        detail: "Your account has not been confirmed yet."

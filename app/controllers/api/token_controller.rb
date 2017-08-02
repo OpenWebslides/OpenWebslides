@@ -14,9 +14,10 @@ module Api
     def create
       @user = User.find_by :email => resource_params[:email]
 
-      raise Api::UnauthorizedError unless @user
-      raise Api::UnauthorizedError unless @user.valid_password?(resource_params[:password])
-      raise Api::UnconfirmedError unless @user.confirmed?
+      unless @user && @user.valid_password?(resource_params[:password])
+        raise JSONAPI::Exceptions::UnauthorizedError.new :create, :token
+      end
+      raise JSONAPI::Exceptions::UnconfirmedError unless @user.confirmed?
 
       authorize :token
 

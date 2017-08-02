@@ -36,7 +36,7 @@ class User < ApplicationRecord
   def self.find_by_token(params)
     user = find_by params
     return nil unless user
-    raise Api::UnconfirmedError unless user.confirmed?
+    raise JSONAPI::Exceptions::UnconfirmedError unless user.confirmed?
     user
   end
 

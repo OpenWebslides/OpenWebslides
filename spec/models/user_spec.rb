@@ -76,7 +76,7 @@ RSpec.describe User, :type => :model do
   it 'does not find unconfirmed users by token' do
     result = proc { User.find_by_token :id => user.id, :token_version => user.token_version }
 
-    expect(result).to raise_error Api::UnconfirmedError
+    expect(result).to raise_error JSONAPI::Exceptions::UnconfirmedError
   end
 
   it 'has many decks' do
