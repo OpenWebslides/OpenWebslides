@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { takeLatest, call, select } from 'redux-saga/effects';
 import updateDeckApi from 'api/updateDeckApi';
 
@@ -23,7 +24,15 @@ export function* convertContentItems(contentItemIds, headingLevel) {
 
     const attributes = yield call(generateAttributesObject, contentItemObject);
 
-    const attributeString = yield Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
+    let attributeString;
+
+    if (!_.isEmpty(attributes)) {
+      attributeString = yield Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
+      attributeString = ` ${attributeString}`;
+    }
+    else {
+      attributeString = '';
+    }
 
     switch (contentItemObject.contentItemType) {
       case contentItemTypes.TITLE: {
@@ -34,7 +43,7 @@ export function* convertContentItems(contentItemIds, headingLevel) {
           contentItemObject.text,
         );
 
-        string += yield `<${heading} ${attributeString}>${text}</${heading}>`;
+        string += yield `<${heading}${attributeString}>${text}</${heading}>`;
         break;
       }
       case contentItemTypes.PARAGRAPH: {
@@ -43,56 +52,60 @@ export function* convertContentItems(contentItemIds, headingLevel) {
           contentItemObject.text,
         );
 
-        string += yield `<p ${attributeString}>${text}</p>`;
+        string += yield `<p${attributeString}>${text}</p>`;
         break;
       }
 
       case contentItemTypes.SECTION: {
-        const childContent = yield convertContentItems(contentItemObject.childItemIds, headingLevel + 1);
+        const childContent = yield call(convertContentItems, contentItemObject.childItemIds, headingLevel + 1);
 
-        string += `<section ${attributeString}>${childContent}</section>`;
+        string += yield `<section${attributeString}>${childContent}</section>`;
         break;
       }
       case contentItemTypes.ASIDE: {
         const childContent = yield convertContentItems(contentItemObject.childItemIds, headingLevel + 1);
 
-        string += `<aside ${attributeString}>${childContent}</aside>`;
+        string += `<aside${attributeString}>${childContent}</aside>`;
         break;
       }
       case contentItemTypes.LIST: {
         const listType = contentItemObject.ordered ? 'ol' : 'ul';
-        const listItems = yield convertContentItems(contentItemObject.childItemIds, headingLevel);
+        const listItems = yield call(convertContentItems, contentItemObject.childItemIds, headingLevel);
 
-        string += `<${listType} ${attributeString}>${listItems}</${listType}>`;
+        string += yield `<${listType}${attributeString}>${listItems}</${listType}>`;
         break;
       }
       case contentItemTypes.LIST_ITEM: {
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = yield call(getHTMLStringFromInlinePropertiesAndText,
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );
 
-        string += `<li ${attributeString}>${text}</li>`;
+        string += yield `<li${attributeString}>${text}</li>`;
         break;
       }
+
       case contentItemTypes.IFRAME: {
         const { src, alt } = contentItemObject;
 
-        string += `<iframe ${attributeString} src="${src}" alt="${alt}"></iframe>`;
+        string += yield `<iframe${attributeString} src="${src}" alt="${alt}"></iframe>`;
         break;
       }
+
       case contentItemTypes.ILLUSTRATIVE_IMAGE: {
         const { src, alt, caption } = contentItemObject;
 
-        string += `<figure><img ${attributeString} src="${src}" alt="${alt}"/><figcaption><a href="${src}">${caption}</a></figcaption></figure>`;
+        string += yield `<figure><img${attributeString} src="${src}" alt="${alt}"/><figcaption><a href="${src}">${caption}</a></figcaption></figure>`;
         break;
       }
+
       case contentItemTypes.DECORATIVE_IMAGE: {
         const { src, alt } = contentItemObject;
 
-        string += `<img ${attributeString} src="${src}" alt="${alt}"/>`;
+        string += yield `<img${attributeString} src="${src}" alt="${alt}"/>`;
         break;
       }
+
       default:
         break;
     }

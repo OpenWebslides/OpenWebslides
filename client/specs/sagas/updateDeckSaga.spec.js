@@ -59,7 +59,7 @@ describe('convertContentItems', () => {
       call(generateAttributesObject, contentItemObject),
     );
 
-    expect(generator.next({}).value).toEqual('');
+    expect(generator.next({ attribute: 'string' }).value).toEqual('attribute="string"');
 
     expect(generator.next('attribute="string"').value).toEqual(
       call(getHTMLStringFromInlinePropertiesAndText,
@@ -87,16 +87,181 @@ describe('convertContentItems', () => {
       call(generateAttributesObject, contentItemObject),
     );
 
-    expect(generator.next({}).value).toEqual('');
-
-    expect(generator.next('attribute="string"').value).toEqual(
+    expect(generator.next({}).value).toEqual(
       call(getHTMLStringFromInlinePropertiesAndText,
           contentItemObject.inlineProperties,
           contentItemObject.text,
         ));
 
-    expect(generator.next('paragraph text').value).toEqual('<p attribute="string">paragraph text</p>');
+    expect(generator.next('paragraph text').value).toEqual('<p>paragraph text</p>');
 
     expect(generator.next().done).toBeTruthy();
+  });
+
+  it('can parse a list item object to HTML', () => {
+    const contentItemObject = {
+      contentItemType: contentItemTypes.LIST_ITEM,
+      text: 'sic parvis magna',
+      inlineProperties: [],
+    };
+
+    const generator = updateDeckSaga.convertContentItems(['1-1-1'], 1);
+
+    expect(generator.next().value).toEqual(select(getContentItemById, '1-1-1'));
+
+    expect(generator.next(contentItemObject).value).toEqual(
+      call(generateAttributesObject, contentItemObject),
+    );
+
+    expect(generator.next({}).value).toEqual(
+      call(getHTMLStringFromInlinePropertiesAndText,
+          contentItemObject.inlineProperties,
+          contentItemObject.text,
+        ));
+
+    expect(generator.next('sic parvis magna').value).toEqual('<li>sic parvis magna</li>');
+
+    expect(generator.next().done).toBeTruthy();
+  });
+
+  it('can parse an iframe object to HTML', () => {
+    const contentItemObject = {
+      contentItemType: contentItemTypes.IFRAME,
+      alt: 'sic parvis magna',
+      src: 'www.youtube.com',
+    };
+
+    const generator = updateDeckSaga.convertContentItems(['1-1-1'], 1);
+
+    expect(generator.next().value).toEqual(select(getContentItemById, '1-1-1'));
+
+    expect(generator.next(contentItemObject).value).toEqual(
+      call(generateAttributesObject, contentItemObject),
+    );
+
+    expect(generator.next({}).value).toEqual('<iframe src="www.youtube.com" alt="sic parvis magna"></iframe>');
+
+    expect(generator.next().done).toBeTruthy();
+  });
+
+  it('can parse an illustrative image object to HTML', () => {
+    const contentItemObject = {
+      contentItemType: contentItemTypes.ILLUSTRATIVE_IMAGE,
+      alt: 'sic parvis magna',
+      src: 'www.url.com/decorative_image.jpg',
+      caption: 'image caption',
+    };
+
+    const generator = updateDeckSaga.convertContentItems(['1-1-1'], 1);
+
+    expect(generator.next().value).toEqual(select(getContentItemById, '1-1-1'));
+
+    expect(generator.next(contentItemObject).value).toEqual(
+      call(generateAttributesObject, contentItemObject),
+    );
+
+    expect(generator.next({}).value).toEqual('<figure><img src="www.url.com/decorative_image.jpg" alt="sic parvis magna"/><figcaption><a href="www.url.com/decorative_image.jpg">image caption</a></figcaption></figure>');
+
+    expect(generator.next().done).toBeTruthy();
+  });
+
+  it('can parse an decorative image object to HTML', () => {
+    const contentItemObject = {
+      contentItemType: contentItemTypes.DECORATIVE_IMAGE,
+      alt: 'sic parvis magna',
+      src: 'www.url.com/illustrative_image.jpg',
+    };
+
+    const generator = updateDeckSaga.convertContentItems(['1-1-1'], 1);
+
+    expect(generator.next().value).toEqual(select(getContentItemById, '1-1-1'));
+
+    expect(generator.next(contentItemObject).value).toEqual(
+      call(generateAttributesObject, contentItemObject),
+    );
+
+    expect(generator.next({}).value).toEqual('<img src="www.url.com/illustrative_image.jpg" alt="sic parvis magna"/>');
+
+    expect(generator.next().done).toBeTruthy();
+  });
+
+  it('can parse an ordered list object to HTML', () => {
+    const contentItemObject = {
+      contentItemType: contentItemTypes.LIST,
+      childItemIds: ['3-1-1', '3-1-2', '3-1-3'],
+      ordered: true,
+    };
+
+    const generator = updateDeckSaga.convertContentItems(['1-1-1'], 1);
+
+    expect(generator.next().value).toEqual(select(getContentItemById, '1-1-1'));
+
+    expect(generator.next(contentItemObject).value).toEqual(
+      call(generateAttributesObject, contentItemObject),
+    );
+
+    expect(generator.next().value).toEqual(call(updateDeckSaga.convertContentItems, ['3-1-1', '3-1-2', '3-1-3'], 1));
+
+    expect(generator.next('<li>this list item 1</li><li>this is list item 2</li>').value).toEqual('<ol><li>this list item 1</li><li>this is list item 2</li></ol>');
+  });
+
+  it('can parse an unordered list object to HTML', () => {
+    const contentItemObject = {
+      contentItemType: contentItemTypes.LIST,
+      childItemIds: ['3-1-1', '3-1-2', '3-1-3'],
+      ordered: false,
+    };
+
+    const generator = updateDeckSaga.convertContentItems(['1-1-1'], 1);
+
+    expect(generator.next().value).toEqual(select(getContentItemById, '1-1-1'));
+
+    expect(generator.next(contentItemObject).value).toEqual(
+      call(generateAttributesObject, contentItemObject),
+    );
+
+    expect(generator.next().value).toEqual(call(updateDeckSaga.convertContentItems, ['3-1-1', '3-1-2', '3-1-3'], 1));
+
+    expect(generator.next('<li>this list item 1</li><li>this is list item 2</li>').value).toEqual('<ul><li>this list item 1</li><li>this is list item 2</li></ul>');
+  });
+
+  it('can parse an section object to HTML', () => {
+    const contentItemObject = {
+      contentItemType: contentItemTypes.SECTION,
+      childItemIds: ['3-1-1', '3-1-2', '3-1-3'],
+      ordered: false,
+    };
+
+    const generator = updateDeckSaga.convertContentItems(['1-1-1'], 1);
+
+    expect(generator.next().value).toEqual(select(getContentItemById, '1-1-1'));
+
+    expect(generator.next(contentItemObject).value).toEqual(
+      call(generateAttributesObject, contentItemObject),
+    );
+
+    expect(generator.next().value).toEqual(call(updateDeckSaga.convertContentItems, ['3-1-1', '3-1-2', '3-1-3'], 2));
+
+    expect(generator.next('<p>this is a paragraph</p>').value).toEqual('<section><p>this is a paragraph</p></section>');
+  });
+
+  it('can parse an unordered list object to HTML', () => {
+    const contentItemObject = {
+      contentItemType: contentItemTypes.LIST,
+      childItemIds: ['3-1-1', '3-1-2', '3-1-3'],
+      ordered: false,
+    };
+
+    const generator = updateDeckSaga.convertContentItems(['1-1-1'], 1);
+
+    expect(generator.next().value).toEqual(select(getContentItemById, '1-1-1'));
+
+    expect(generator.next(contentItemObject).value).toEqual(
+      call(generateAttributesObject, contentItemObject),
+    );
+
+    expect(generator.next().value).toEqual(call(updateDeckSaga.convertContentItems, ['3-1-1', '3-1-2', '3-1-3'], 1));
+
+    expect(generator.next('<li>this list item 1</li><li>this is list item 2</li>').value).toEqual('<ul><li>this list item 1</li><li>this is list item 2</li></ul>');
   });
 });
