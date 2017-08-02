@@ -9,7 +9,7 @@ RSpec.describe 'token routing', :type => :routing do
     expect(:get => route).not_to be_routable
     expect(:patch => route).not_to be_routable
     expect(:put => route).not_to be_routable
-    expect(:post => route).to route_to 'api/token#create'
-    expect(:delete => route).to route_to 'api/token#destroy'
+    expect(:post => route).to route_to 'token#create'
+    expect(:delete => route).to route_to 'token#destroy'
   end
 end

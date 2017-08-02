@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   ##
   # API endpoints
   #
-  namespace :api, :constraints => { :format => :json } do
+  scope :api, :constraints => { :format => :json } do
     ## Users
     jsonapi_resources :users
 

@@ -27,7 +27,7 @@ class DeckService < ApplicationService
   def update(params)
     # Update database
     updatable_params = params.select do |k|
-      Api::DeckResource.updatable_fields.include? k
+      DeckResource.updatable_fields.include? k
     end
 
     if updatable_params.any?

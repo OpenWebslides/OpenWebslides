@@ -7,9 +7,9 @@ RSpec.describe 'password routing', :type => :routing do
     route = '/api/password'
 
     expect(:get => route).not_to be_routable
-    expect(:patch => route).to route_to 'api/password#update'
-    expect(:put => route).to route_to 'api/password#update'
-    expect(:post => route).to route_to 'api/password#create'
+    expect(:patch => route).to route_to 'password#update'
+    expect(:put => route).to route_to 'password#update'
+    expect(:post => route).to route_to 'password#create'
     expect(:delete => route).not_to be_routable
   end
 end
