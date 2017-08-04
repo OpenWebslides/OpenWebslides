@@ -67,7 +67,10 @@ class ConversionWorker
   # Create deck metadata
   #
   def create_deck
-    @conversion.deck = Deck.create :owner => @conversion.user, :name => @conversion.name
+    @deck = Deck.new :owner => @conversion.user, :name => @conversion.name
+    DeckService.new(@deck).create
+
+    @conversion.update :deck => @deck
 
     doc = Nokogiri::HTML5 File.read File.join @output, 'index.html'
     DeckService.new(@conversion.deck).update :author => @conversion.user,
