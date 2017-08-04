@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170623073708) do
+ActiveRecord::Schema.define(version: 20170804124005) do
 
   create_table "assets", force: :cascade do |t|
     t.string "filename"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20170623073708) do
     t.index ["user_id"], name: "index_decks_on_user_id"
   end
 
-  create_table "decks_users", id: false, force: :cascade do |t|
+  create_table "decks_users", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "deck_id", null: false
     t.index ["deck_id", "user_id"], name: "index_decks_users_on_deck_id_and_user_id"
