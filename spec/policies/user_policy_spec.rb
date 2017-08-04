@@ -25,6 +25,11 @@ RSpec.describe UserPolicy do
     it { is_expected.to permit_action :show_collaborations }
     it { is_expected.to forbid_action :update_collaborations }
     it { is_expected.to forbid_action :destroy_collaborations }
+
+    it { is_expected.to forbid_action :create_conversions }
+    it { is_expected.to forbid_action :show_conversions }
+    it { is_expected.to forbid_action :update_conversions }
+    it { is_expected.to forbid_action :destroy_conversions }
   end
 
   context 'for a user' do
@@ -45,6 +50,11 @@ RSpec.describe UserPolicy do
     it { is_expected.to permit_action :show_collaborations }
     it { is_expected.to forbid_action :update_collaborations }
     it { is_expected.to forbid_action :destroy_collaborations }
+
+    it { is_expected.to forbid_action :create_conversions }
+    it { is_expected.to forbid_action :show_conversions }
+    it { is_expected.to forbid_action :update_conversions }
+    it { is_expected.to forbid_action :destroy_conversions }
   end
 
   context 'for the same user' do
@@ -64,5 +74,10 @@ RSpec.describe UserPolicy do
     it { is_expected.to permit_action :show_collaborations }
     it { is_expected.to permit_action :update_collaborations }
     it { is_expected.to permit_action :destroy_collaborations }
+
+    it { is_expected.to forbid_action :create_conversions }
+    it { is_expected.to permit_action :show_conversions }
+    it { is_expected.to forbid_action :update_conversions }
+    it { is_expected.to forbid_action :destroy_conversions }
   end
 end
