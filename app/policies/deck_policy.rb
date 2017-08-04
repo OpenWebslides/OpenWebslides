@@ -5,20 +5,24 @@ class DeckPolicy < ApplicationPolicy
   # Resource
   #
   def index?
+    # Everyone can list decks
     true
   end
 
   def create?
+    return false if @user.nil?
+
     # Users can create a deck but only for itself
-    !@user.nil? && @record.owner == @user
+    @record.owner == @user
   end
 
   def show?
+    # Users can show public decks, collaborations and owned decks
     if @record.public_access?
-      # Users and guests can read
+      # Users and guests can show
       true
     elsif @record.protected_access?
-      # Users can read protected deck
+      # Users can show protected deck
       !@user.nil?
     elsif @record.private_access?
       return false if @user.nil?
@@ -45,17 +49,19 @@ class DeckPolicy < ApplicationPolicy
   # Relationship: owner
   #
   def show_owner?
-    # Users can only show owner if the record is showable
+    # Users can only show owner if the deck is showable
+    # Authorize the user separately in the controller
     show?
   end
 
   def update_owner?
-    # Users can only update owner if the record is destroyable
+    # Users can only update owner if the deck is destroyable
+    # Authorize the user separately in the controller
     destroy?
   end
 
   def destroy_owner?
-    # Owner relationship can never be destroyed
+    # Users cannot destroy owner relationship
     false
   end
 
@@ -63,22 +69,26 @@ class DeckPolicy < ApplicationPolicy
   # Relationship: collaborators
   #
   def create_collaborators?
-    # Users can only create collaborators if the record is destroyable
+    # Users can only create collaborators if the deck is destroyable
+    # Authorize the user separately in the controller
     destroy?
   end
 
   def show_collaborators?
-    # Users can only show collaborators if the record is showable
+    # Users can only show collaborators if the deck is showable
+    # Policy scope separately in the controller
     show?
   end
 
   def update_collaborators?
-    # Users can only update collaborators if the record is destroyable
+    # Users can only update collaborators if the deck is destroyable
+    # Authorize the user separately in the controller
     destroy?
   end
 
   def destroy_collaborators?
-    # Users can only destroy collaborators if the record is destroyable
+    # Users can only destroy collaborators if the deck is destroyable
+    # Authorize the user separately in the controller
     destroy?
   end
 
@@ -86,22 +96,26 @@ class DeckPolicy < ApplicationPolicy
   # Relationship: assets
   #
   def create_assets?
-    # Users can only create assets if the record is updatable
+    # Users can only create assets if the deck is updatable
+    # Authorize the asset separately in the controller
     update?
   end
 
   def show_assets?
-    # Users can only show assets if the record is showable
+    # Users can only show assets if the deck is showable
+    # Policy scope separately in the controller
     show?
   end
 
   def update_assets?
-    # Users can only update assets if the record is updatable
+    # Users can only update assets if the deck is updatable
+    # Authorize the asset separately in the controller
     update?
   end
 
   def destroy_assets?
-    # Users can only destroy assets if the record is updatable
+    # Users can only destroy assets if the deck is updatable
+    # Authorize the asset separately in the controller
     update?
   end
 
@@ -109,13 +123,6 @@ class DeckPolicy < ApplicationPolicy
   # Scope
   #
   class Scope < Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user  = user
-      @scope = scope
-    end
-
     def resolve
       # FIXME: horribly imperformant code
       scope.select { |d| Pundit.policy!(@user, d).show? }
