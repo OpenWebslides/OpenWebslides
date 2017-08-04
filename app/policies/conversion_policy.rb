@@ -23,6 +23,8 @@ class ConversionPolicy < ApplicationPolicy
   # Relationship: user
   #
   def show_user?
+    # Users can only show user relationship if the conversion is showable
+    # Authorize the user separately in the controller
     show?
   end
 
@@ -30,6 +32,8 @@ class ConversionPolicy < ApplicationPolicy
   # Relationship: deck
   #
   def show_deck?
+    # Users can only show user relationship if the conversion is showable
+    # Authorize the deck separately in the controller
     show?
   end
 

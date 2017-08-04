@@ -13,6 +13,7 @@ RSpec.describe ConversionPolicy do
     it { is_expected.to forbid_action :index }
     it { is_expected.to forbid_action :create }
     it { is_expected.to forbid_action :show }
+
     it { is_expected.to forbid_action :show_user }
     it { is_expected.to forbid_action :show_deck }
   end
@@ -23,6 +24,7 @@ RSpec.describe ConversionPolicy do
     it { is_expected.to permit_action :index }
     it { is_expected.to permit_action :create }
     it { is_expected.to permit_action :show }
+
     it { is_expected.to permit_action :show_user }
     it { is_expected.to permit_action :show_deck }
   end
@@ -33,6 +35,7 @@ RSpec.describe ConversionPolicy do
     it { is_expected.to permit_action :index }
     it { is_expected.to forbid_action :create }
     it { is_expected.to forbid_action :show }
+
     it { is_expected.to forbid_action :show_user }
     it { is_expected.to forbid_action :show_deck }
   end
