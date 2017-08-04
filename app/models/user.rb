@@ -23,7 +23,8 @@ class User < ApplicationRecord
   has_many :decks, :dependent => :destroy
   has_many :conversions, :dependent => :destroy
 
-  has_and_belongs_to_many :collaborations, :class_name => 'Deck'
+  has_many :decks_users, :class_name => 'DecksUsers'
+  has_many :collaborations, :class_name => 'Deck', :through => :decks_users, :source => :deck
 
   ##
   # Callbacks
