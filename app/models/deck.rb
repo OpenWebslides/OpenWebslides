@@ -17,8 +17,8 @@ class Deck < ApplicationRecord
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   validates :owner, :presence => true
 
-  has_many :decks_users, :class_name => 'DecksUsers'
-  has_many :collaborators, :class_name => 'User', :through => :decks_users, :source => :user
+  has_many :grants
+  has_many :collaborators, :class_name => 'User', :through => :grants, :source => :user
 
   has_many :assets, :dependent => :delete_all
 

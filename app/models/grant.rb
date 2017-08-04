@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DecksUsers < ApplicationRecord
+class Grant < ApplicationRecord
   ##
   # Properties
   #

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe DecksUsers, :type => :model do
+RSpec.describe Grant, :type => :model do
   let(:deck) { build :deck }
   let(:user) { build :user }
 

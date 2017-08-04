@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Deck, :type => :model do
-  let(:deck) { build :deck }
+  let(:deck) { build :deck, :with_assets }
   let(:user) { build :user }
 
   describe 'attributes' do
