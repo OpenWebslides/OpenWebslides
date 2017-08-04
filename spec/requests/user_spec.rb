@@ -213,7 +213,82 @@ RSpec.describe 'User API', :type => :request do
     end
   end
 
-  # TODO: decks relationship
-  # TODO: collaborations relationship
-  # TODO: conversions relationship
+  describe 'decks relationship' do
+    describe 'GET /relationships/decks' do
+      before do
+        add_accept_header
+        add_auth_header
+
+        create :deck, :owner => user
+      end
+
+      it 'returns successful' do
+        get user_relationships_decks_path(:user_id => user.id), :headers => headers
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        json = JSON.parse response.body
+        expect(json['data'].count).to eq Deck.where(:owner => user).count
+        expect(json['data'].first['type']).to eq 'decks'
+      end
+    end
+
+    # TODO: POST /relationships/decks
+    # TODO: PATCH /relationships/decks
+    # TODO: DELETE /relationships/decks
+  end
+
+  describe 'collaborations relationship' do
+    describe 'GET /relationships/collaborations' do
+      before do
+        add_accept_header
+        add_auth_header
+
+        deck = create :deck
+        deck.collaborators << user
+      end
+
+      it 'returns successful' do
+        get user_relationships_collaborations_path(:user_id => user.id), :headers => headers
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        json = JSON.parse response.body
+        expect(json['data'].count).to eq 1
+        expect(json['data'].first['type']).to eq 'decks'
+      end
+    end
+
+    # TODO: POST /relationships/collaborations
+    # TODO: PATCH /relationships/collaborations
+    # TODO: DELETE /relationships/collaborations
+  end
+
+  describe 'conversions relationship' do
+    describe 'GET /relationships/conversions' do
+      before do
+        add_accept_header
+        add_auth_header
+
+        create :conversion, :user => user
+      end
+
+      it 'returns successful' do
+        get user_relationships_conversions_path(:user_id => user.id), :headers => headers
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        json = JSON.parse response.body
+        expect(json['data'].count).to eq 1
+        expect(json['data'].first['type']).to eq 'conversions'
+      end
+    end
+
+    # TODO: POST /relationships/conversions
+    # TODO: PATCH /relationships/conversions
+    # TODO: DELETE /relationships/conversions
+  end
 end

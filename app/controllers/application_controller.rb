@@ -22,4 +22,12 @@ class ApplicationController < ActionController::API
   def base_url
     @base_url ||= "#{request.protocol}#{request.host_with_port}/api"
   end
+
+  ##
+  # Use Pundit authorize a relationship action
+  #
+  def authorize_relationship(record)
+    query = params[:action].gsub('relationship', params[:relationship]) + '?'
+    authorize record, query
+  end
 end
