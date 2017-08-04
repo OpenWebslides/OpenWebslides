@@ -3,20 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe ConversionPolicy::Scope do
-  subject { described_class.new(user, Conversion).resolve }
+  subject { described_class.new(user, Conversion).resolve.count }
 
-  include_context 'policy_sample'
+  let(:conversion) { create :conversion }
 
   context 'for everyone' do
     let(:user) { nil }
 
-    it { is_expected.to be_empty }
+    it { is_expected.to eq 0 }
   end
 
   context 'for a user' do
-    let(:conversion) { build :conversion }
     let(:user) { conversion.user }
 
-    it { is_expected.to eq Conversion.where(:user => user) }
+    it { is_expected.to eq 1 }
   end
 end
