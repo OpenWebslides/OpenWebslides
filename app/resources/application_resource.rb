@@ -27,7 +27,7 @@ class ApplicationResource < JSONAPI::Resource
     when JSONAPI::Relationship::ToOne
       record_or_records
     when JSONAPI::Relationship::ToMany
-      ::Pundit.policy_scope!(context[:user], record_or_records)
+      ::Pundit.policy_scope!(context[:current_user], record_or_records)
     else
       raise "Unknown relationship type #{relationship.inspect}"
     end
