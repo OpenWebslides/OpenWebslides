@@ -48,4 +48,17 @@ RSpec.describe 'users routing', :type => :routing do
     expect(:post => route).to route_to 'users#create_relationship', params
     expect(:delete => route).to route_to 'users#destroy_relationship', params
   end
+
+  it 'routes user conversions relationship endpoint' do
+    route = '/api/users/foo/relationships/conversions'
+    params = { :user_id => 'foo', :relationship => 'conversions' }
+
+    expect(:get => '/api/users/foo/conversions').to route_to 'conversions#get_related_resources', params.merge(:source => 'users')
+
+    expect(:get => route).to route_to 'users#show_relationship', params
+    expect(:patch => route).to route_to 'users#update_relationship', params
+    expect(:put => route).to route_to 'users#update_relationship', params
+    expect(:post => route).to route_to 'users#create_relationship', params
+    expect(:delete => route).to route_to 'users#destroy_relationship', params
+  end
 end

@@ -7,7 +7,11 @@ class UsersController < ApplicationController
 
   # Authorization
   after_action :verify_authorized, :except => %i[index show_relationship]
-  after_action :verify_policy_scoped, :only => :index
+  after_action :verify_policy_scoped, :only => %i[index show_relationship]
+
+  ##
+  # Resource
+  #
 
   # GET /users
   def index
@@ -53,7 +57,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/:id
   def destroy
-    @user = User.find(params[:id])
+    @user = User.find params[:id]
 
     authorize @user
 
@@ -61,4 +65,60 @@ class UsersController < ApplicationController
 
     head :no_content
   end
+
+  ##
+  # Relationships
+  #
+
+  # GET /users/:user_id/relationships/:relationship
+  def show_relationship
+    @user = User.find params[:user_id]
+
+    authorize_relationship @user
+
+    @resources = policy_scope @user.send params[:relationship]
+
+    super
+  end
+
+  # POST /users/:user_id/relationships/:relationship
+  def create_relationship
+    @user = User.find params[:user_id]
+
+    authorize_relationship @user
+
+    @deck = Deck.find relationship_params[:deck_id]
+
+    authorize_relationship @deck
+
+    super
+  end
+
+  # PATCH /users/:user_id/relationships/:relationship
+  def update_relationship
+    @user = User.find params[:user_id]
+
+    authorize_relationship @user
+
+    @deck = Deck.find relationship_params[:deck_id]
+
+    authorize_relationship @deck
+
+    super
+  end
+
+  # DELETE /users/:user_id/relationships/:relationship
+  def destroy_relationship
+    @user = User.find params[:user_id]
+
+    authorize_relationship @user
+
+    @deck = Deck.find relationship_params[:deck_id]
+
+    authorize_relationship @deck
+
+    super
+  end
+
+  # TODO: related resources
 end
