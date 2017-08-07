@@ -1,16 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 
-function PresentationToolbar(props) {
-  return (
-    <div id="presentation-toolbar">
-      <button onClick={() => props.viewFirstSlide()}>First</button>
-      <button onClick={() => props.viewPreviousSlide()}>Previous</button>
-      <button onClick={() => props.viewNextSlide()}>Next</button>
-      <button onClick={() => props.viewLastSlide()}>Last</button>
-    </div>
-  );
+class PresentationToolbar extends Component {
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleNavigation.bind(this));
+  }
+
+  handleNavigation(e) {
+    switch (e.keyCode) {
+      case 37:
+        this.props.viewPreviousSlide();
+        break;
+      case 39:
+      case 13:
+      case 32:
+        this.props.viewNextSlide();
+        break;
+      default:
+        break;
+    }
+  }
+
+  render() {
+    return (
+      <div id="presentation-toolbar">
+        <button onClick={() => this.props.viewFirstSlide()}>First</button>
+        <button onClick={() => this.props.viewPreviousSlide()}>Previous</button>
+        <button onClick={() => this.props.viewNextSlide()}>Next</button>
+        <button onClick={() => this.props.viewLastSlide()}>Last</button>
+      </div>
+    );
+  }
 }
 
 PresentationToolbar.propTypes = {
