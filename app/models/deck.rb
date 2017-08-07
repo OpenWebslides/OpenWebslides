@@ -14,13 +14,14 @@ class Deck < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
-  validates :owner, :presence => true
+  belongs_to :owner, :required => true, :class_name => 'User', :foreign_key => 'user_id'
 
-  has_many :grants
-  has_many :collaborators, :class_name => 'User', :through => :grants, :source => :user
+  has_many :grants, :dependent => :destroy
+  has_many :collaborators, :through => :grants, :source => :user, :class_name => 'User'
 
-  has_many :assets, :dependent => :delete_all
+  has_many :assets, :dependent => :destroy
+
+  has_many :notifications, :dependent => :destroy
 
   has_one :conversion, :dependent => :destroy
 
