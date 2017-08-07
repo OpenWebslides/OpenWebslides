@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SlideContainer from 'containers/slide-editor/SlideContainer';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
-import PresentationToolbar from './PresentationToolbar';
+import PresentationViewToolbarContainer from 'containers/presentation-view/PresentationViewToolbarContainer';
 
 class PresentationView extends Component {
   componentDidMount() {
@@ -24,7 +24,7 @@ class PresentationView extends Component {
     return (
       <div>
         {this.renderSlide()}
-        <PresentationToolbar />
+        <PresentationViewToolbarContainer />
       </div>
     );
   }
