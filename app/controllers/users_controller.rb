@@ -6,8 +6,8 @@ class UsersController < ApplicationController
   after_action :renew_token, :except => :destroy
 
   # Authorization
-  after_action :verify_authorized, :except => %i[index show_relationship]
-  after_action :verify_policy_scoped, :only => %i[index show_relationship]
+  after_action :verify_authorized, :except => %i[index show_relationship get_related_resources]
+  after_action :verify_policy_scoped, :only => %i[index show_relationship get_related_resources]
 
   ##
   # Resource
@@ -99,6 +99,28 @@ class UsersController < ApplicationController
   end
 
   # TODO: related resources
+
+  # GET /:klass/:klass_id/:relationship (e.g. /decks/:deck_id/owner)
+  def get_related_resource
+    id = params["#{params[:source].singularize}_id"]
+    @resource = User.reflect_on_association(params[:source]).klass.find id
+    @user = @resource.send params[:relationship]
+
+    # Authorize RELATIONSHIP_CLASS#show_RELATIONSHIP? (e.g. DeckPolicy#show_owner?)
+    authorize @resource, "show_#{params[:relationship]}?"
+
+    # Authorize INVERSE_RELATIONSHIP_CLASS#show? (e.g. UserPolicy#show?)
+    authorize @user, :show?
+
+    jsonapi_render :json => @user
+  end
+
+  # GET /:klass/:klass_id/:relationship (e.g. /decks/:deck_id/owner)
+  def get_related_resources
+    skip_policy_scope
+
+    super
+  end
 
   protected
 
