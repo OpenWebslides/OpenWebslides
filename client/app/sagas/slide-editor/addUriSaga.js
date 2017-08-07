@@ -21,7 +21,6 @@ export function* doAddUri(action) {
     yield call(resolve);
   }
   catch (error) {
-    console.log(error);
     let errorMessage;
 
     switch (error.statusCode) {

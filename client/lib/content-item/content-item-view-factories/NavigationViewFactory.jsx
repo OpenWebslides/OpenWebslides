@@ -38,7 +38,8 @@ function LiveViewFactory(props) {
     const ContentItemComponent = contentItemFactories[contentItemType];
 
     switch (contentItemType) {
-      case contentItemTypes.IMAGE:
+      case contentItemTypes.ILLUSTRATIVE_IMAGE:
+      case contentItemTypes.DECORATIVE_IMAGE:
         return <ContentItemComponent contentItem={contentItem} attributes={attributes} />;
 
       case contentItemTypes.IFRAME:
