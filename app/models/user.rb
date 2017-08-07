@@ -21,11 +21,15 @@ class User < ApplicationRecord
   #
   has_many :identities, :dependent => :destroy
 
-  has_many :decks, :dependent => :destroy
+  has_many :decks, :dependent => :destroy,
+                   :inverse_of => :owner
   has_many :conversions, :dependent => :destroy
 
   has_many :grants, :dependent => :destroy
-  has_many :collaborations, :class_name => 'Deck', :through => :grants, :source => :deck
+  has_many :collaborations, :class_name => 'Deck',
+                            :through => :grants,
+                            :source => :deck,
+                            :inverse_of => :collaborators
 
   has_many :notifications, :dependent => :destroy
 

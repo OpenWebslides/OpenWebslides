@@ -57,7 +57,7 @@ RSpec.describe Deck, :type => :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:owner) }
+    it { is_expected.to belong_to(:owner).inverse_of(:decks) }
     it { is_expected.to have_many(:grants).dependent(:destroy) }
     it { is_expected.to have_many(:collaborators).through(:grants) }
     it { is_expected.to have_many(:assets).dependent(:destroy) }

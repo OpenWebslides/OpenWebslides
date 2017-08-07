@@ -14,10 +14,16 @@ class Deck < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :owner, :required => true, :class_name => 'User', :foreign_key => 'user_id'
+  belongs_to :owner, :required => true,
+                     :class_name => 'User',
+                     :foreign_key => 'user_id',
+                     :inverse_of => :decks
 
   has_many :grants, :dependent => :destroy
-  has_many :collaborators, :through => :grants, :source => :user, :class_name => 'User'
+  has_many :collaborators, :through => :grants,
+                           :source => :user,
+                           :class_name => 'User',
+                           :inverse_of => :collaborations
 
   has_many :assets, :dependent => :destroy
 

@@ -65,7 +65,7 @@ RSpec.describe User, :type => :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:identities).dependent(:destroy) }
-    it { is_expected.to have_many(:decks).dependent(:destroy) }
+    it { is_expected.to have_many(:decks).dependent(:destroy).inverse_of(:owner) }
     it { is_expected.to have_many(:conversions).dependent(:destroy) }
     it { is_expected.to have_many(:grants).dependent(:destroy) }
     it { is_expected.to have_many(:collaborations).through(:grants) }
