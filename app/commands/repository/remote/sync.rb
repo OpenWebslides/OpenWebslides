@@ -18,7 +18,7 @@ module Repository
       def credentials
         return @credentials if @credentials
 
-        user = OpenWebslides.config.github.user
+        user = OpenWebslides.config.github.repo_user
         raise OpenWebslides::ConfigurationError, 'No user specified' unless user
 
         private_key = OpenWebslides.config.github.private_key

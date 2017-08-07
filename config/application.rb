@@ -2,7 +2,6 @@
 
 require_relative 'boot'
 
-require 'ostruct'
 require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
@@ -19,9 +18,10 @@ require 'action_view/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+##
+# The Open Webslides platform
+#
 module OpenWebslides
-  mattr_accessor :config
-
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -37,5 +37,9 @@ module OpenWebslides
 
     # Autoload lib
     config.autoload_paths += %W[#{config.root}/lib]
+
+    config.before_initialize do
+      require_relative 'openwebslides'
+    end
   end
 end
