@@ -6,66 +6,69 @@ RSpec.describe User, :type => :model do
   let(:user) { create :user }
   let(:confirmed_user) { create :user, :confirmed }
 
-  it 'is invalid without attributes' do
-    expect(User.new).not_to be_valid
+  describe 'attributes' do
+    it { is_expected.not_to allow_value(nil).for(:first_name) }
+    it { is_expected.not_to allow_value('').for(:first_name) }
+
+    it { is_expected.not_to allow_value(nil).for(:email) }
+    it { is_expected.not_to allow_value('').for(:email) }
+    it { is_expected.not_to allow_value('foo').for(:email) }
+    it { is_expected.not_to allow_value('foo@bar@baz').for(:email) }
+    it { is_expected.not_to allow_value('foo@').for(:email) }
+    it { is_expected.not_to allow_value('@bar').for(:email) }
+
+    it { is_expected.not_to allow_value(nil).for(:password) }
+    it { is_expected.not_to allow_value('').for(:password) }
+
+    it { is_expected.not_to allow_value(nil).for(:token_version) }
+    it { is_expected.not_to allow_value('').for(:token_version) }
+    it { is_expected.not_to allow_value('foo').for(:token_version) }
+    it { is_expected.to allow_value(0).for(:token_version) }
+
+    it 'is invalid without attributes' do
+      expect(User.new).not_to be_valid
+    end
+
+    it 'is valid with valid attributes' do
+      expect(build :user).to be_valid
+    end
+
+    it 'rejects changes to email' do
+      # The readonly_email callback only triggers on :update, so the record has to be persisted
+      expect(user).to be_valid
+
+      user.email = 'bar@foo'
+      expect(user).not_to be_valid
+      user.destroy
+    end
+
+    it 'invalidates tokens on password change' do
+      token_version = user.token_version
+
+      user.update :password => 'abcd1234'
+      expect(user.token_version).to eq token_version + 1
+    end
+
+    it 'increments token version' do
+      token_version = user.token_version
+
+      user.increment_token_version!
+      expect(user.token_version).to eq token_version + 1
+    end
+
+    it 'returns a correct full name' do
+      expect(build(:user, :first_name => 'foo', :last_name => nil).name).to eq 'foo'
+      expect(build(:user, :first_name => 'foo', :last_name => '').name).to eq 'foo'
+      expect(build(:user, :first_name => 'foo', :last_name => 'bar').name).to eq 'foo bar'
+    end
   end
 
-  it 'is valid with valid attributes' do
-    expect(build :user).to be_valid
-  end
-
-  it 'is invalid without first name' do
-    expect(build :user, :first_name => nil).not_to be_valid
-    expect(build :user, :first_name => '').not_to be_valid
-  end
-
-  it 'is invalid without email' do
-    expect(build :user, :email => nil).not_to be_valid
-    expect(build :user, :email => '').not_to be_valid
-  end
-
-  it 'is invalid without password' do
-    expect(build :user, :password => nil).not_to be_valid
-  end
-
-  it 'is invalid without token version' do
-    expect(build :user, :token_version => nil).not_to be_valid
-  end
-
-  it 'rejects invalid email' do
-    expect(build :user, :email => 'foo').not_to be_valid
-    expect(build :user, :email => 'foo@bar@baz').not_to be_valid
-    expect(build :user, :email => 'foo@').not_to be_valid
-    expect(build :user, :email => '@bar').not_to be_valid
-  end
-
-  it 'rejects changes to email' do
-    # The readonly_email callback only triggers on :update, so the record has to be persisted
-    expect(user).to be_valid
-
-    user.email = 'bar@foo'
-    expect(user).not_to be_valid
-    user.destroy
-  end
-
-  it 'invalidates tokens on password change' do
-    token_version = user.token_version
-
-    user.update :password => 'abcd1234'
-    expect(user.token_version).to eq token_version + 1
-  end
-
-  it 'increments token version' do
-    token_version = user.token_version
-
-    user.increment_token_version!
-    expect(user.token_version).to eq token_version + 1
-  end
-
-  it 'returns a correct full name' do
-    expect(build(:user, :first_name => 'foo', :last_name => nil).name).to eq 'foo'
-    expect(build(:user, :first_name => 'foo', :last_name => '').name).to eq 'foo'
-    expect(build(:user, :first_name => 'foo', :last_name => 'bar').name).to eq 'foo bar'
+  describe 'associations' do
+    it { is_expected.to have_many(:identities).dependent(:destroy) }
+    it { is_expected.to have_many(:decks).dependent(:destroy) }
+    it { is_expected.to have_many(:conversions).dependent(:destroy) }
+    it { is_expected.to have_many(:grants).dependent(:destroy) }
+    it { is_expected.to have_many(:collaborations).through(:grants) }
   end
 
   it 'finds confirmed users by token' do
@@ -77,21 +80,5 @@ RSpec.describe User, :type => :model do
     result = proc { User.find_by_token :id => user.id, :token_version => user.token_version }
 
     expect(result).to raise_error JSONAPI::Exceptions::UnconfirmedError
-  end
-
-  it 'has many decks' do
-    user = build :user, :with_decks
-
-    # Use #length instead of #count for unpersisted relations
-    expect(user.decks.length).not_to be 0
-    user.decks.each { |d| expect(d).to be_instance_of Deck }
-  end
-
-  it 'has many identities' do
-    user = build :user, :with_identities
-
-    # Use #length instead of #count for unpersisted relations
-    expect(user.identities.length).not_to be 0
-    user.identities.each { |i| expect(i).to be_instance_of Identity }
   end
 end

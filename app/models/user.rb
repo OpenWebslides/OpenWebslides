@@ -11,7 +11,8 @@ class User < ApplicationRecord
   validates :email, :presence => true,
                     :format => { :with => /\A[^@]+@[^@]+\z/ },
                     :uniqueness => true
-  validates :token_version, :presence => true
+  validates :token_version, :presence => true,
+                            :numericality => { :only_integer => true }
 
   validate :readonly_email, :on => :update
 
@@ -23,8 +24,10 @@ class User < ApplicationRecord
   has_many :decks, :dependent => :destroy
   has_many :conversions, :dependent => :destroy
 
-  has_many :grants
+  has_many :grants, :dependent => :destroy
   has_many :collaborations, :class_name => 'Deck', :through => :grants, :source => :deck
+
+  has_many :notifications, :dependent => :destroy
 
   ##
   # Callbacks
