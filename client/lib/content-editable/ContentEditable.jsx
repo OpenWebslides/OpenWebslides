@@ -84,7 +84,7 @@ class ContentEditable extends Component {
     this.props.updateContentItem(
       this.props.contentItem.id,
       props,
-      getSelectionOffsets(this.contentEditable)
+      getSelectionOffsets(this.contentEditable),
     );
   }
 
