@@ -7,20 +7,15 @@ RSpec.describe Asset, :type => :model do
   let(:deck) { create :deck }
 
   describe 'attributes' do
+    it { is_expected.not_to allow_value(nil).for(:filename) }
+    it { is_expected.not_to allow_value('').for(:filename) }
+
     it 'is invalid without attributes' do
       expect(subject).not_to be_valid
     end
 
     it 'is valid with attributes' do
       expect(asset).to be_valid
-    end
-
-    it 'is invalid without filename' do
-      expect(Asset.new :deck => deck).not_to be_valid
-    end
-
-    it 'is invalid without deck' do
-      expect(Asset.new :filename => 'foo').not_to be_valid
     end
 
     it 'is unique over decks' do
@@ -30,8 +25,6 @@ RSpec.describe Asset, :type => :model do
   end
 
   describe 'associations' do
-    it 'belongs to a deck' do
-      expect(asset.deck).to be_instance_of Deck
-    end
+    it { is_expected.to belong_to(:deck) }
   end
 end

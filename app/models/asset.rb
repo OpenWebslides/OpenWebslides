@@ -6,7 +6,8 @@ class Asset < ApplicationRecord
   #
 
   # Asset filename
-  validates :filename, :presence => true, :uniqueness => { :scope => :deck }
+  validates :filename, :presence => true,
+                       :uniqueness => { :scope => :deck }
 
   ##
   # Associations
