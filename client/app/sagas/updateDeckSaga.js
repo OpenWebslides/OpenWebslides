@@ -9,7 +9,7 @@ import { getSlideById } from 'selectors/entities/slides';
 import { getContentItemById } from 'selectors/entities/content-items';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
-import { generateAttributesObject } from 'lib/content-item/ContentItemContainer';
+import generateAttributesObject from 'lib/content-item/helpers/generateAttributesObject';
 
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 
