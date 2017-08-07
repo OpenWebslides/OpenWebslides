@@ -11,6 +11,7 @@ export const slideViewTypes = {
   COURSE: 'COURSE',
   LIVE: 'LIVE',
   NAVIGATION: 'NAVIGATION',
+  PRESENTATION: 'PRESENTATION',
 };
 
 export const slideViewTypesById = {
