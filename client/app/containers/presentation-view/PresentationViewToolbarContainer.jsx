@@ -1,12 +1,21 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { changeSlide } from 'actions/app/presentation-view';
+import {
+  viewFirstSlide,
+  viewPreviousSlide,
+  viewNextSlide,
+  viewLastSlide,
+} from 'actions/app/presentation-view';
 
 import PresentationViewToolbar from 'presentationals/components/presentation-view/PresentationViewToolbar';
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeSlide }, dispatch);
+  return bindActionCreators({
+    viewFirstSlide,
+    viewPreviousSlide,
+    viewNextSlide,
+    viewLastSlide }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(PresentationViewToolbar);
