@@ -11,7 +11,7 @@ class PresentationView extends Component {
   render() {
     console.log(this.props);
     return (
-      <h1>Getting there</h1>
+      <h1>{this.props.activeDeckId}</h1>
     );
   }
 }
