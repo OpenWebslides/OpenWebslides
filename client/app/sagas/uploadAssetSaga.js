@@ -19,7 +19,7 @@ export function* doUploadAsset(action) {
     const activeDeckId = yield select(getActiveDeckId);
     const activeSlideId = yield select(getActiveSlideId);
 
-    const { assetType, values: { imageFile, imageType, altText } } = yield action.meta;
+    const { assetType, values: { imageFile, imageType, caption, altText } } = yield action.meta;
 
     const response = yield call(uploadAssetApi, activeDeckId, imageFile[0]);
 
@@ -28,12 +28,11 @@ export function* doUploadAsset(action) {
     yield put({ type: ADD_CONTENT_ITEM_TO_SLIDE,
       meta: { slideId: activeSlideId,
         contentItemType: contentItemTypes.ILLUSTRATIVE_IMAGE,
-        contentItemTypeProps: { src: assetUri, altText } } });
+        contentItemTypeProps: { src: assetUri, altText, caption } } });
 
     yield call(resolve);
   }
   catch (error) {
-    console.log(error);
     let errorMessage;
 
     switch (error.statusCode) {

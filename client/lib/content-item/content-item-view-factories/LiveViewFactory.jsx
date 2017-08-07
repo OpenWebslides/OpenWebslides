@@ -34,12 +34,11 @@ function LiveViewFactory(props) {
     );
   }
 
-
   if (Object.keys(contentItemFactories).includes(contentItemType)) {
     const ContentItemComponent = contentItemFactories[contentItemType];
-
     switch (contentItemType) {
-      case contentItemTypes.IMAGE:
+      case contentItemTypes.ILLUSTRATIVE_IMAGE:
+      case contentItemTypes.DECORATIVE_IMAGE:
       case contentItemTypes.IFRAME:
         return <ContentItemComponent contentItem={contentItem} attributes={attributes} />;
 

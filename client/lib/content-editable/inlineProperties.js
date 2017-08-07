@@ -220,7 +220,6 @@ export function getHTMLStringFromInlinePropertiesAndText(
           if (!(_.isEmpty(inlineProperty.attributes))) {
             // Removes the '>' from the start tag so wee can append the attributes
             const openStartTag = inlinePropertyTags[inlineProperty.type].startTag.slice(0, -1);
-            console.log(openStartTag);
 
             // maps over the attributes obj and converts the properties to html attribute key value pairs
             const attributeString = Object.entries(inlineProperty.attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
