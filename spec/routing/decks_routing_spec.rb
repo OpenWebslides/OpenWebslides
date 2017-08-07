@@ -32,8 +32,8 @@ RSpec.describe 'decks routing', :type => :routing do
     expect(:get => route).to route_to 'decks#show_relationship', params
     expect(:patch => route).to route_to 'decks#update_relationship', params
     expect(:put => route).to route_to 'decks#update_relationship', params
-    expect(:post => route).to route_to 'decks#update_relationship', params
-    expect(:delete => route).to route_to 'decks#update_relationship', params
+    expect(:post => route).not_to be_routable
+    expect(:delete => route).to route_to 'decks#destroy_relationship', params
   end
 
   it 'routes deck collaborators relationship endpoint' do
