@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import SlideContainer from 'containers/slide-editor/SlideContainer';
+import { slideViewTypes } from 'constants/slideViewTypes';
 
 
 class PresentationView extends Component {
@@ -10,12 +11,20 @@ class PresentationView extends Component {
     this.props.fetchDeck(deckId);
   }
 
-  render() {
+  renderSlide() {
     if (this.props.activeSlideId) {
-      return <SlideContainer id={this.props.activeSlideId} viewType="PRESENTATION" />;
+      return <SlideContainer id={this.props.activeSlideId} viewType={slideViewTypes.PRESENTATION} />;
     }
 
     return <h1>Loading...</h1>;
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderSlide()}
+      </div>
+    );
   }
 }
 
