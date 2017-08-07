@@ -12,7 +12,7 @@ import ConfirmEmailPage from 'presentationals/pages/ConfirmEmailPage';
 import OauthCallbackPage from 'presentationals/pages/OauthCallbackPage';
 import SlideEditorPage from 'presentationals/pages/SlideEditorPage';
 import CreateDeckPage from 'presentationals/pages/CreateDeckPage';
-import PresentationPage from 'presentationals/pages/PresentationPage';
+import PresentationViewPage from 'presentationals/pages/PresentationViewPage';
 
 import history from './history';
 
@@ -27,7 +27,7 @@ export default (
       <Route path="/oauth/omniauth" component={OauthCallbackPage} />
       <Route path="/reset_password" component={ResetPasswordPage} />
       <Route path="/editor/:deckId" component={SlideEditorPage} />
-      <Route path="/presentation/:deckId" component={PresentationPage} />
+      <Route path="/presentation/:deckId" component={PresentationViewPage} />
       <Route path="/create_new_deck" component={CreateDeckPage} />
     </Switch>
   </Router>
