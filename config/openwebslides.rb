@@ -33,6 +33,14 @@ OpenWebslides.configure do |config|
   config.default_template = 'shower-ows'
 
   #########################################
+  ##       Database configuration        ##
+  #########################################
+
+  ##
+  # Database configuration is stored in `config/database.yml`
+  #
+
+  #########################################
   ##         OAuth2 configuration        ##
   #########################################
 
