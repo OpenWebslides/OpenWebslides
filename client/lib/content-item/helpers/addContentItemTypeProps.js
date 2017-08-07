@@ -7,7 +7,8 @@ export default function addContentItemTypeProps(contentItemType) {
     case contentItemTypes.TITLE:
       return { hasInlineProperties: true, textPropName: 'text' };
 
-    case contentItemTypes.IMAGE:
+    case contentItemTypes.ILLUSTRATIVE_IMAGE:
+    case contentItemTypes.DECORATIVE_IMAGE:
     case contentItemTypes.IFRAME:
       return { hasInlineProperties: false, textPropName: 'src' };
 

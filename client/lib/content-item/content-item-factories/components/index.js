@@ -1,12 +1,14 @@
 import Iframe from './Iframe';
-import Image from './Image';
+import IllustrativeImage from './IllustrativeImage';
+import DecorativeImage from './DecorativeImage';
 import ListItem from './ListItem';
 import Paragraph from './Paragraph';
 import Title from './Title';
 
 export default {
   IFRAME: Iframe,
-  IMAGE: Image,
+  ILLUSTRATIVE_IMAGE: IllustrativeImage,
+  DECORATIVE_IMAGE: DecorativeImage,
   LIST_ITEM: ListItem,
   PARAGRAPH: Paragraph,
   TITLE: Title,
