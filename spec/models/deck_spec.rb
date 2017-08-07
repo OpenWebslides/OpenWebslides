@@ -7,26 +7,21 @@ RSpec.describe Deck, :type => :model do
   let(:user) { build :user }
 
   describe 'attributes' do
+    it { is_expected.not_to allow_value(nil).for(:name) }
+    it { is_expected.not_to allow_value('').for(:name) }
+
+    it { is_expected.not_to allow_value(nil).for(:state) }
+    it { is_expected.not_to allow_value('').for(:state) }
+
+    it { is_expected.not_to allow_value(nil).for(:template) }
+    it { is_expected.not_to allow_value('').for(:template) }
+
     it 'is invalid without attributes' do
       expect(subject).not_to be_valid
     end
 
     it 'is valid with attributes' do
       expect(deck).to be_valid
-    end
-
-    it 'is invalid without name' do
-      expect(Deck.new :state => :public_access, :owner => user).not_to be_valid
-    end
-
-    it 'is valid without state' do
-      expect(Deck.new :name => 'foo', :owner => user).to be_valid
-    end
-
-    it 'is invalid without template' do
-      deck.template = nil
-
-      expect(deck).not_to be_valid
     end
 
     it 'has a valid :status enum' do
@@ -62,9 +57,12 @@ RSpec.describe Deck, :type => :model do
   end
 
   describe 'associations' do
-    it 'belongs to a user' do
-      expect(deck.owner).to be_instance_of User
-    end
+    it { is_expected.to belong_to(:owner) }
+    it { is_expected.to have_many(:grants).dependent(:destroy) }
+    it { is_expected.to have_many(:collaborators).through(:grants) }
+    it { is_expected.to have_many(:assets).dependent(:destroy) }
+    it { is_expected.to have_many(:notifications).dependent(:destroy) }
+    it { is_expected.to have_one(:conversion).dependent(:destroy) }
 
     it 'generates a notification on create' do
       count = Notification.count
