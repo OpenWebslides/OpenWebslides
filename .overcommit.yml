@@ -57,8 +57,6 @@ PreCommit:
     exclude: .gitmodules
   JsonSyntax:
     enabled: true
-  Reek:
-    enabled: true
   RuboCop:
     enabled: true
   TrailingWhitespace:
