@@ -117,9 +117,16 @@ class UsersController < ApplicationController
 
   # GET /:klass/:klass_id/:relationship (e.g. /decks/:deck_id/owner)
   def get_related_resources
-    skip_policy_scope
+    id = params["#{params[:source].singularize}_id"]
+    @resource = User.reflect_on_association(params[:source]).klass.find id
 
-    super
+    # Authorize RELATIONSHIP_CLASS#show_RELATIONSHIP? (e.g. DeckPolicy#show_owner?)
+    authorize @resource, "show_#{params[:relationship]}?"
+
+    # Authorize INVERSE_RELATIONSHIP_CLASS::Policy (e.g. UserPolicy::Scope)
+    @users = policy_scope @resource.send params[:relationship]
+
+    jsonapi_render :json => @users
   end
 
   protected
