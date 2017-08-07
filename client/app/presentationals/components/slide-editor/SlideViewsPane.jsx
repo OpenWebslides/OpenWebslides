@@ -20,21 +20,17 @@ function SlideViewsPane(props) {
           <SlideViewsMenuContainer />
         </div>
         <div className="c_slide-views-pane__views-list">
-          {_.values(slideViewTypes).filter((slideViewTypeId) => {
-            return Array.indexOf(
-              props.activeSlideViewTypes,
-              slideViewTypeId,
-            ) !== -1;
-          }).map((slideViewTypeId) => {
-            slideViewType = slideViewTypesById[slideViewTypeId];
-            SlideViewComponent = slideViewType.component;
-            return (
-              <div
-                className="c_slide-views-pane__views-item" key={slideViewTypeId}
-              >
-                <SlideViewComponent />
-              </div>
-            );
+
+          {_.values(slideViewTypes).map((slideViewTypeId) => {
+            if (Array.indexOf(props.activeSlideViewTypes, slideViewTypeId) !== -1) {
+              slideViewType = slideViewTypesById[slideViewTypeId];
+              SlideViewComponent = slideViewType.component;
+              return (
+                <div className="c_slide-views-pane__views-item" key={slideViewTypeId}>
+                  <SlideViewComponent />
+                </div>
+              );
+            }
           })}
         </div>
       </div>

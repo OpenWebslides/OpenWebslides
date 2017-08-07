@@ -3,20 +3,33 @@ import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
 
 import {
-  getSelectionOffsets,
-  setSelectionByOffsets,
-} from 'lib/content-editable/selectionOffsets';
-import inlinePropertyTypes from 'constants/inlinePropertyTypes';
-
-import {
   addInlinePropertyToArray,
   updateInlinePropertiesAfterInputAtIndex,
   getHTMLStringFromInlinePropertiesAndText,
 } from 'lib/content-editable/inlineProperties';
 
 import getFilteredTextContent from 'lib/content-editable/textContent';
+import { setSelectionOffsets } from 'actions/app/slide-editor';
+
+import {
+  getSelectionOffsets,
+  setSelectionByOffsets,
+} from 'lib/content-editable/selectionOffsets';
+import inlinePropertyTypes from 'constants/inlinePropertyTypes';
+
+import LinkModal from './LinkModal';
 
 class ContentEditable extends Component {
+  loadSelectionOffsets() {
+    if (this.props.isFocused) {
+      setSelectionByOffsets(
+        this.contentEditable,
+        this.props.selectionOffsets.start,
+        this.props.selectionOffsets.end,
+      );
+    }
+  }
+
   constructor(props) {
     super(props);
 
@@ -24,6 +37,13 @@ class ContentEditable extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.handleLinkModalClose = this.handleLinkModalClose.bind(this);
+    this.handleLinkModalOpen = this.handleLinkModalOpen.bind(this);
+    this.handleAddLink = this.handleAddLink.bind(this);
+
+    this.state = {
+      linkModalOpen: false,
+    };
   }
 
   componentDidMount() {
@@ -69,9 +89,8 @@ class ContentEditable extends Component {
         this.props.contentItem.inlineProperties,
         { deep: true },
       );
-      const amount = text.length - this.props.contentItem[
-        this.props.textPropName
-      ].length;
+      const amount =
+        text.length - this.props.contentItem[this.props.textPropName].length;
       updateInlinePropertiesAfterInputAtIndex(
         inlineProperties,
         selectionOffsets.start,
@@ -106,13 +125,25 @@ class ContentEditable extends Component {
   }
 
   handleMenuButtonClick(inlinePropertyType) {
+    this.props.setSelectionOffsets(getSelectionOffsets(this.contentEditable));
+
+    if (inlinePropertyType === inlinePropertyType.LINK) {
+      this.setState({ linkModalOpen: true });
+    }
+    else {
+      this.handleContentItemUpdate(inlinePropertyType, {});
+    }
+  }
+
+  handleContentItemUpdate(inlinePropertyType, attributes) {
+    const selectionOffsets = this.props.selectionOffsets;
+
     // get copy of current inlineProperties
     const inlineProperties = Immutable.asMutable(
       this.props.contentItem.inlineProperties,
       { deep: true },
     );
-    // get current selection
-    const selectionOffsets = getSelectionOffsets(this.contentEditable);
+
     // create new inlineProperty object
     const newInlineProperty = {
       type: inlinePropertyType,
@@ -120,6 +151,7 @@ class ContentEditable extends Component {
         start: selectionOffsets.start,
         end: selectionOffsets.end,
       },
+      attributes,
     };
 
     // add the new inline property to the copied array
@@ -139,21 +171,55 @@ class ContentEditable extends Component {
     );
   }
 
+  handleLinkModalOpen() {
+    this.setState({ linkModalOpen: true });
+  }
+
+  handleLinkModalClose() {
+    this.setState({ linkModalOpen: false });
+  }
+
+  handleAddLink(url) {
+    this.setState({ linkModalOpen: false });
+
+    this.handleContentItemUpdate(inlinePropertyTypes.LINK, { href: url });
+  }
+
   render() {
     return (
       <span
-        className={`o_content-editable ${this.props.isFocused ? 'has_focus' : ''}`}
+        className={`o_content-editable ${this.props.isFocused
+          ? 'has_focus'
+          : ''}`}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
       >
+        <LinkModal
+          isOpen={this.state.linkModalOpen}
+          onAdd={this.handleAddLink}
+          onClose={this.handleLinkModalClose}
+        />
+
         <span className="o_content-editable__wrapper">
           {this.props.hasInlineProperties &&
             <span className="o_content-editable__menu list" role="toolbar">
               <span className="o_content-editable__menu-item list__item">
                 <button
+                  className="o_content-editable__menu-button"
+                  tabIndex="-1"
+                  onClick={() => this.handleLinkModalOpen()}
+                >
+                  <span className="o_content-editable__menu-text">
+                    Link
+                  </span>
+                </button>
+              </span>
+              <span className="o_content-editable__menu-item list__item">
+                <button
                   className="o_content-editable__menu-button o_content-editable__menu-button--id_strong"
                   tabIndex="-1"
-                  onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.STRONG)}
+                  onClick={() =>
+                    this.handleMenuButtonClick(inlinePropertyTypes.STRONG)}
                 >
                   <span className="o_content-editable__menu-text">
                     Strong
@@ -164,7 +230,8 @@ class ContentEditable extends Component {
                 <button
                   className="o_content-editable__menu-button o_content-editable__menu-button--id_em"
                   tabIndex="-1"
-                  onClick={() => this.handleMenuButtonClick(inlinePropertyTypes.EM)}
+                  onClick={() =>
+                    this.handleMenuButtonClick(inlinePropertyTypes.EM)}
                 >
                   <span className="o_content-editable__menu-text">
                     Emphasis

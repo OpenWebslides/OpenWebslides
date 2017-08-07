@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const inlinePropertyTags = {
   EM: {
     startTag: '<em>',
@@ -6,6 +8,10 @@ export const inlinePropertyTags = {
   STRONG: {
     startTag: '<strong>',
     endTag: '</strong>',
+  },
+  LINK: {
+    startTag: '<a>',
+    endTag: '</a>',
   },
 };
 
@@ -210,7 +216,21 @@ export function getHTMLStringFromInlinePropertiesAndText(
           // if so, save it as the current inlineProperty
           inlineProperty = inlineProperties[inlinePropertyIndex];
           // add its start tag to the HTML string
-          textHTML += inlinePropertyTags[inlineProperty.type].startTag;
+
+          if (!(_.isEmpty(inlineProperty.attributes))) {
+            // Removes the '>' from the start tag so wee can append the attributes
+            const openStartTag = inlinePropertyTags[inlineProperty.type].startTag.slice(0, -1);
+            console.log(openStartTag);
+
+            // maps over the attributes obj and converts the properties to html attribute key value pairs
+            const attributeString = Object.entries(inlineProperty.attributes).map(([key, value]) => `${key}="${value}"`).join(' ');
+
+            // adds combined string to the textHTML string
+            textHTML += `${openStartTag} ${attributeString}>`;
+          } else {
+            textHTML += inlinePropertyTags[inlineProperty.type].startTag;
+          }
+
           // update the next inlineProperty index
           inlinePropertyIndex += 1;
         }
