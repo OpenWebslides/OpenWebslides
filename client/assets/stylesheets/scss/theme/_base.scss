@@ -12,3 +12,13 @@ a {
   transition: all $transition-duration--fast ease-in-out;
   transition-property: color;
 }
+
+// TODO: THIS IS TEMPORARY STYLING!!!!!!
+#presentation-toolbar {
+  background-color: black;
+  position: fixed;
+  height: 10%;
+  bottom: 0;
+  width: 30%;
+  left: 35%;
+}
