@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SlideContainer from 'containers/slide-editor/SlideContainer';
+import { slideViewTypes } from 'constants/slideViewTypes';
 
 function SlideLiveView(props) {
   if (props.activeSlideId) {
@@ -10,7 +11,7 @@ function SlideLiveView(props) {
         className={`c_editor-slide-view c_editor-slide-view--${props.cssIdentifier}`}
       >
         <div className="c_editor-slide-view__wrapper">
-          <SlideContainer id={props.activeSlideId} editable />
+          <SlideContainer viewType={slideViewTypes.LIVE} id={props.activeSlideId} editable={true} />
         </div>
       </div>
     );

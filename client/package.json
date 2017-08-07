@@ -102,7 +102,8 @@
       "^errors(.*)$": "<rootDir>/app/errors$1",
       "^api(.*)$": "<rootDir>/app/api$1",
       "^lib(.*)$": "<rootDir>/lib$1",
-      "^constants(.*)$": "<rootDir>/constants$1"
+      "^constants(.*)$": "<rootDir>/app/constants$1",
+      "^selectors(.*)$": "<rootDir>/app/selectors$1"
     },
     "setupTestFrameworkScriptFile": "./jestLocalStorage.js"
   }

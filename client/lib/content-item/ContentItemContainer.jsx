@@ -8,29 +8,17 @@ import {
   addContentItemToSlide,
   deleteContentItemFromSlide,
 } from 'actions/entities/slides';
+
 import {
   getActiveContentItemId,
   getFocusedSlideViewType,
 } from 'selectors/app/slide-editor';
+
 import { getContentItemById } from 'selectors/entities/content-items';
 
 import ContentItem from './ContentItem';
+import generateAttributesObject from './helpers/generateAttributesObject';
 
-// #TODO move this code out of here
-export function generateAttributesObject(contentItem) {
-  const attributesMap = {
-    viewType: 'data-view-type',
-  };
-  const attributes = {};
-
-  Object.keys(attributesMap).forEach((key) => {
-    attributes[attributesMap[key]] = _.isString(contentItem[key])
-      ? contentItem[key].toLowerCase()
-      : contentItem[key];
-  });
-
-  return attributes;
-}
 
 function mapStateToProps(state, props) {
   const contentItem = getContentItemById(state, props.contentItemId);
