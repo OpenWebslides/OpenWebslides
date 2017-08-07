@@ -74,50 +74,37 @@ class UsersController < ApplicationController
   def show_relationship
     @user = User.find params[:user_id]
 
+    # Authorize User#show_relationship?
     authorize_relationship @user
 
-    @resources = policy_scope @user.send params[:relationship]
+    # Authorize Relationship#show_user?
+    policy_scope(@user.send params[:relationship]).each { |resource| authorize_inverse_relationship resource }
 
     super
   end
 
   # POST /users/:user_id/relationships/:relationship
   def create_relationship
-    @user = User.find params[:user_id]
+    skip_authorization
 
-    authorize_relationship @user
-
-    @deck = Deck.find relationship_params[:deck_id]
-
-    authorize_relationship @deck
-
-    super
+    # Don't allow creating a relationship, as creating a deck handles this
+    head :method_not_allowed
   end
 
   # PATCH /users/:user_id/relationships/:relationship
   def update_relationship
-    @user = User.find params[:user_id]
+    skip_authorization
 
-    authorize_relationship @user
-
-    @deck = Deck.find relationship_params[:deck_id]
-
-    authorize_relationship @deck
-
-    super
+    # Don't allow updating a relationship, as modifying a deck's relationship handles this
+    head :method_not_allowed
   end
 
   # DELETE /users/:user_id/relationships/:relationship
   def destroy_relationship
-    @user = User.find params[:user_id]
+    skip_authorization
 
-    authorize_relationship @user
-
-    @deck = Deck.find relationship_params[:deck_id]
-
-    authorize_relationship @deck
-
-    super
+    # Don't allow destroying a relationship, as destroying a deck handles this
+    head :method_not_allowed
   end
 
   # TODO: related resources

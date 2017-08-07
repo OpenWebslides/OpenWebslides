@@ -34,7 +34,7 @@ class UserResource < ApplicationResource
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[email decks collaborations conversions]
+    super(context) - %i[email]
   end
 
   def self.sortable_fields(context)

@@ -30,4 +30,14 @@ class ApplicationController < ActionController::API
     query = params[:action].gsub('relationship', params[:relationship]) + '?'
     authorize record, query
   end
+
+  ##
+  # Use Pundit to authorize an inverse relationship action
+  #
+  def authorize_inverse_relationship(record)
+    # Lookup the inverse association name
+    inverse_name = resource_klass._model_class.reflect_on_association(params[:relationship]).inverse_of.name.to_s
+    query = params[:action].gsub('relationship', inverse_name) + '?'
+    authorize record, query
+  end
 end

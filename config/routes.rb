@@ -21,18 +21,10 @@ Rails.application.routes.draw do
 
     ## Decks
     jsonapi_resources :decks do
+      jsonapi_relationships
+
       ## Assets
       jsonapi_resources :assets, :only => :create do end
-
-      # Route owner (without :create or :destroy)
-      jsonapi_link :owner, :except => %i[create destroy]
-      jsonapi_related_resource :owner
-
-      # Route other relationships
-      %i[collaborators assets].each do |relationship_name|
-        jsonapi_links relationship_name
-        jsonapi_related_resources relationship_name
-      end
     end
 
     ## Assets
@@ -44,7 +36,7 @@ Rails.application.routes.draw do
     jsonapi_resources :conversions, :only => %i[create show]
 
     ## Social feed
-    jsonapi_resources :notifications
+    jsonapi_resources :notifications, :only => %i[index show]
 
     ## Authentication
     jsonapi_resource :confirmation, :only => :create do end
