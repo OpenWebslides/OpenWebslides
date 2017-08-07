@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import SlideContainer from 'containers/slide-editor/SlideContainer';
+import { slideViewTypes } from 'constants/slideViewTypes';
+
 
 export default class DeckNavigationPane extends Component {
   constructor(props) {
@@ -41,7 +43,7 @@ export default class DeckNavigationPane extends Component {
                       onClick={() => this.handleSetActiveSlideId(slideId)}
                       className="c_deck-navigator__slide-button"
                     >
-                      <SlideContainer id={slideId} />
+                      <SlideContainer id={slideId} viewType={slideViewTypes.NAVIGATION} />
                     </button>
                     <button
                       className="c_deck-navigator__delete-button o_action o_action--delete"

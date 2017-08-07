@@ -52,7 +52,7 @@ function SlideContentViewItem(props) {
                   <div
                     className={`${cssClass}__options-item ${cssClass}__options-item--on-slide-checkbox`}
                   >
-                    <input type="checkbox" checked tabIndex="-1" />
+                    <input type="checkbox" checked={true} tabIndex="-1" />
                   </div>}
                 <div
                   className={`${cssClass}__options-item ${cssClass}__options-item--direction-menu`}
@@ -84,6 +84,8 @@ function SlideContentViewItem(props) {
 SlideContentViewItem.propTypes = {
   cssIdentifier: PropTypes.string,
   isFocused: PropTypes.bool.isRequired,
+  contentItem: PropTypes.objectOf(Object).isRequired,
+  children: PropTypes.objectOf(Object).isRequired,
 };
 
 SlideContentViewItem.defaultProps = {

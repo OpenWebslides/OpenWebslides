@@ -1,15 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Iframe(props) {
-  const { attributes, contentItem: { src } } = props;
-
+export default function Image({ attributes, contentItem: { src, altText } }) {
   return (
-    <iframe {...attributes} src={src} />
+    <img {...attributes} src={src} alt={altText} />
   );
 }
 
-Iframe.propTypes = {
+Image.propTypes = {
   attributes: PropTypes.objectOf(Object).isRequired,
   contentItem: PropTypes.objectOf(Object).isRequired,
 };
