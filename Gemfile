@@ -82,6 +82,9 @@ group :test do
   gem 'rspec'
   gem 'rspec-rails'
 
+  # Rails RSpec matchers
+  gem 'shoulda-matchers', :git => 'https://github.com/thoughtbot/shoulda-matchers.git', :branch => 'rails-5'
+
   # Pundit RSpec matchers
   gem 'pundit-matchers'
 
