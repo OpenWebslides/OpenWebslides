@@ -12,13 +12,14 @@ import ConfirmEmailPage from 'presentationals/pages/ConfirmEmailPage';
 import OauthCallbackPage from 'presentationals/pages/OauthCallbackPage';
 import SlideEditorPage from 'presentationals/pages/SlideEditorPage';
 import CreateDeckPage from 'presentationals/pages/CreateDeckPage';
+import PresentationPage from 'presentationals/pages/PresentationPage';
 
 import history from './history';
 
 export default (
   <Router history={history}>
     <Switch>
-      <Route path="/" exact component={Dashboard} />
+      <Route path="/" exact={true} component={Dashboard} />
       <Route path="/signup" component={SignupPage} />
       <Route path="/signin" component={SigninPage} />
       <Route path="/confirmation" component={ConfirmEmailPage} />
@@ -26,6 +27,7 @@ export default (
       <Route path="/oauth/omniauth" component={OauthCallbackPage} />
       <Route path="/reset_password" component={ResetPasswordPage} />
       <Route path="/editor/:deckId" component={SlideEditorPage} />
+      <Route path="/presentation/:deckId" component={PresentationPage} />
       <Route path="/create_new_deck" component={CreateDeckPage} />
     </Switch>
   </Router>
