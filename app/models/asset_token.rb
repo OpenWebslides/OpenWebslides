@@ -13,7 +13,7 @@ class AssetToken < JWT::Auth::Token
   end
 
   def lifetime
-    OpenWebslides.config.api.asset_url_lifetime.hours
+    OpenWebslides.config.api.asset_url_lifetime
   end
 
   def self.from_token(token)
