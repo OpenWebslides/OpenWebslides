@@ -23,6 +23,11 @@ OpenWebslides.configure do |config|
   config.template_path = Rails.root.join 'lib', 'assets', 'templates'
 
   ##
+  # Absolute path to conversion tool JAR
+  #
+  config.conversion_jar_path = Rails.root.join 'lib', 'assets', 'conversion', 'OpenWebslidesConverter.jar'
+
+  ##
   # Default template
   #
   config.default_template = 'shower-ows'

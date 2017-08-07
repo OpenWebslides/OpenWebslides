@@ -10,8 +10,6 @@ class ConversionWorker
 
   sidekiq_options :queue => 'conversion', :retry => false
 
-  JAR = Rails.root.join 'lib', 'assets', 'conversion', 'OpenWebslidesConverter.jar'
-
   def perform(conversion_id)
     @conversion = Conversion.find conversion_id
 
@@ -48,7 +46,7 @@ class ConversionWorker
   # Convert PPTX/PDF to HTML
   #
   def convert_file
-    command = "java -jar #{JAR} -i #{@conversion.filename} -o #{@output} -t raw"
+    command = "java -jar #{OpenWebslides.config.conversion_jar_path} -i #{@conversion.filename} -o #{@output} -t raw"
 
     stdin, stdout, stderr, wait_thr = Open3.popen3 command
     stdin.close
