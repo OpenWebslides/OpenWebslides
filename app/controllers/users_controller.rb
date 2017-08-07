@@ -74,10 +74,10 @@ class UsersController < ApplicationController
   def show_relationship
     @user = User.find params[:user_id]
 
-    # Authorize User#show_relationship?
+    # Authorize User#show_RELATIONSHIP?
     authorize_relationship @user
 
-    # Authorize Relationship#show_user?
+    # Authorize RELATIONSHIP_CLASS#show_INVERSE_RELATIONSHIP?
     policy_scope(@user.send params[:relationship]).each { |resource| authorize_inverse_relationship resource }
 
     super
@@ -85,27 +85,42 @@ class UsersController < ApplicationController
 
   # POST /users/:user_id/relationships/:relationship
   def create_relationship
-    skip_authorization
-
-    # Don't allow creating a relationship, as creating a deck handles this
-    head :method_not_allowed
+    handle_relationship_update
   end
 
   # PATCH /users/:user_id/relationships/:relationship
   def update_relationship
-    skip_authorization
-
-    # Don't allow updating a relationship, as modifying a deck's relationship handles this
-    head :method_not_allowed
+    handle_relationship_update
   end
 
   # DELETE /users/:user_id/relationships/:relationship
   def destroy_relationship
-    skip_authorization
-
-    # Don't allow destroying a relationship, as destroying a deck handles this
-    head :method_not_allowed
+    handle_relationship_update
   end
 
   # TODO: related resources
+
+  protected
+
+  ##
+  # Handle relationship update authorization
+  #
+  def handle_relationship_update
+    @user = User.find params[:user_id]
+
+    # Authorize User#destroy_RELATIONSHIP?
+    authorize_relationship @user
+
+    klass = User.reflect_on_association(params[:relationship]).klass
+
+    # Authorize RELATIONSHIP_CLASS#destroy_INVERSE_RELATIONSHIP?
+    # FIXME: does not support polymorphic relationships (`type` is ignored)
+    params[:data].pluck(:id).each do |id|
+      resource = klass.find id
+
+      authorize_inverse_relationship resource
+    end
+
+    super
+  end
 end
