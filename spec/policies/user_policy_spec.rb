@@ -26,6 +26,11 @@ RSpec.describe UserPolicy do
     it { is_expected.to forbid_action :update_collaborations }
     it { is_expected.to forbid_action :destroy_collaborations }
 
+    it { is_expected.to forbid_action :create_notifications }
+    it { is_expected.to permit_action :show_notifications }
+    it { is_expected.to forbid_action :update_notifications }
+    it { is_expected.to forbid_action :destroy_notifications }
+
     it { is_expected.to forbid_action :create_conversions }
     it { is_expected.to forbid_action :show_conversions }
     it { is_expected.to forbid_action :update_conversions }
@@ -51,6 +56,11 @@ RSpec.describe UserPolicy do
     it { is_expected.to forbid_action :update_collaborations }
     it { is_expected.to forbid_action :destroy_collaborations }
 
+    it { is_expected.to forbid_action :create_notifications }
+    it { is_expected.to permit_action :show_notifications }
+    it { is_expected.to forbid_action :update_notifications }
+    it { is_expected.to forbid_action :destroy_notifications }
+
     it { is_expected.to forbid_action :create_conversions }
     it { is_expected.to forbid_action :show_conversions }
     it { is_expected.to forbid_action :update_conversions }
@@ -74,6 +84,11 @@ RSpec.describe UserPolicy do
     it { is_expected.to permit_action :show_collaborations }
     it { is_expected.to permit_action :update_collaborations }
     it { is_expected.to permit_action :destroy_collaborations }
+
+    it { is_expected.to forbid_action :create_notifications }
+    it { is_expected.to permit_action :show_notifications }
+    it { is_expected.to forbid_action :update_notifications }
+    it { is_expected.to forbid_action :destroy_notifications }
 
     it { is_expected.to forbid_action :create_conversions }
     it { is_expected.to permit_action :show_conversions }
