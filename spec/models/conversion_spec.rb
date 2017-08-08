@@ -27,7 +27,7 @@ RSpec.describe Conversion, :type => :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:deck) }
-    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:deck).inverse_of(:conversion) }
+    it { is_expected.to belong_to(:user).inverse_of(:conversions) }
   end
 end

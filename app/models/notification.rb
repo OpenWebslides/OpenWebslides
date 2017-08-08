@@ -10,8 +10,11 @@ class Notification < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :user, :required => true
-  belongs_to :deck, :required => true
+  belongs_to :user, :required => true,
+                    :inverse_of => :notifications
+
+  belongs_to :deck, :required => true,
+                    :inverse_of => :notifications
 
   ##
   # Callbacks

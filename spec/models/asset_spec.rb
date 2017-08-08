@@ -25,6 +25,6 @@ RSpec.describe Asset, :type => :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:deck) }
+    it { is_expected.to belong_to(:deck).inverse_of(:assets) }
   end
 end
