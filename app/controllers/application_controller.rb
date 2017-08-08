@@ -43,4 +43,14 @@ class ApplicationController < ActionController::API
     query = params[:action].gsub('relationship', inverse_name) + '?'
     authorize record, query
   end
+
+  ##
+  # Raises an error if authorization has not been performed, either through a policy or a policy scope
+  #
+  # Use this as an after_action on `show_relationship`, because either a policy or a policy scope
+  # gets authorized in that method, based on the relationship plurality
+  #
+  def verify_authorized_or_policy_scoped
+    raise AuthorizationNotPerformedError, self.class unless pundit_policy_authorized? || pundit_policy_scoped?
+  end
 end
