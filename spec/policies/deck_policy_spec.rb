@@ -37,6 +37,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to forbid_action :update_assets
         expect(subject).to forbid_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
 
@@ -60,6 +69,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_assets
         expect(subject).to forbid_action :update_assets
         expect(subject).to forbid_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to forbid_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
 
@@ -83,6 +101,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_assets
         expect(subject).to forbid_action :update_assets
         expect(subject).to forbid_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to forbid_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
   end
@@ -117,6 +144,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to forbid_action :update_assets
         expect(subject).to forbid_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
 
@@ -140,6 +176,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to forbid_action :update_assets
         expect(subject).to forbid_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
 
@@ -163,6 +208,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_assets
         expect(subject).to forbid_action :update_assets
         expect(subject).to forbid_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to forbid_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
   end
@@ -198,6 +252,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to permit_action :update_assets
         expect(subject).to permit_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
 
@@ -222,6 +285,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to permit_action :update_assets
         expect(subject).to permit_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
 
@@ -246,6 +318,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to permit_action :update_assets
         expect(subject).to permit_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to forbid_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
   end
@@ -281,6 +362,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to permit_action :update_assets
         expect(subject).to permit_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to permit_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
 
@@ -305,6 +395,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to permit_action :update_assets
         expect(subject).to permit_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to permit_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
 
@@ -329,6 +428,15 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_assets
         expect(subject).to permit_action :update_assets
         expect(subject).to permit_action :destroy_assets
+
+        expect(subject).to forbid_action :create_notifications
+        expect(subject).to permit_action :show_notifications
+        expect(subject).to forbid_action :update_notifications
+        expect(subject).to forbid_action :destroy_notifications
+
+        expect(subject).to permit_action :show_conversion
+        expect(subject).to forbid_action :update_conversion
+        expect(subject).to forbid_action :destroy_conversion
       end
     end
   end
