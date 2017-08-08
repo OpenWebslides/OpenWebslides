@@ -93,6 +93,30 @@ class DeckPolicy < ApplicationPolicy
   end
 
   ##
+  # Relationship: notifications
+  #
+  def create_notifications?
+    # Users can never create notifications relationship
+    false
+  end
+
+  def show_notifications?
+    # Users can only show notifications if the deck is showable
+    # Policy scope separately in the controller
+    show?
+  end
+
+  def update_notifications?
+    # Users can never update notifications relationship
+    false
+  end
+
+  def destroy_notifications?
+    # Users can never destroy notifications relationship
+    false
+  end
+
+  ##
   # Relationship: assets
   #
   def create_assets?
@@ -117,6 +141,25 @@ class DeckPolicy < ApplicationPolicy
     # Users can only destroy assets if the deck is updatable
     # Authorize the asset separately in the controller
     update?
+  end
+
+  ##
+  # Relationship: conversion
+  #
+  def show_conversion?
+    # Users can only show conversion if the deck is destroyable
+    # Authorize the user separately in the controller
+    destroy?
+  end
+
+  def update_conversion?
+    # Users can never update conversion relationship
+    false
+  end
+
+  def destroy_conversion?
+    # Users can never destroy conversion relationship
+    false
   end
 
   ##
