@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
     ## Assets
     jsonapi_resources :assets, :only => %i[show destroy] do
+      jsonapi_relationships
+
       get '/raw' => 'assets#raw'
     end
 
