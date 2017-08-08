@@ -66,9 +66,10 @@ RSpec.describe User, :type => :model do
   describe 'associations' do
     it { is_expected.to have_many(:identities).dependent(:destroy) }
     it { is_expected.to have_many(:decks).dependent(:destroy).inverse_of(:owner) }
-    it { is_expected.to have_many(:conversions).dependent(:destroy) }
+    it { is_expected.to have_many(:conversions).dependent(:destroy).inverse_of(:user) }
     it { is_expected.to have_many(:grants).dependent(:destroy) }
-    it { is_expected.to have_many(:collaborations).through(:grants) }
+    it { is_expected.to have_many(:collaborations).through(:grants).inverse_of(:collaborators) }
+    it { is_expected.to have_many(:notifications).dependent(:destroy).inverse_of(:user) }
   end
 
   it 'finds confirmed users by token' do

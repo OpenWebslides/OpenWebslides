@@ -33,7 +33,8 @@ class User < ApplicationRecord
                             :source => :deck,
                             :inverse_of => :collaborators
 
-  has_many :notifications, :dependent => :destroy
+  has_many :notifications, :dependent => :destroy,
+                           :inverse_of => :user
 
   ##
   # Callbacks
