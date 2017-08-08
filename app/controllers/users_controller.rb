@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  include Relationships
+  include RelatedResources
+
   # Authentication
   before_action :authenticate_user, :only => %i[update destroy]
   after_action :renew_token, :except => :destroy

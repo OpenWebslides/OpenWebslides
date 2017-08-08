@@ -2,16 +2,24 @@
 
 class ConversionsController < ApplicationController
   include Uploadable
+  include Relationships
+  include RelatedResources
 
   # Authentication
   before_action :authenticate_user
   after_action :renew_token
 
   # Authorization
-  after_action :verify_authorized
+  after_action :verify_authorized, :except => %i[show_relationship get_related_resources]
+  after_action :verify_policy_scoped, :only => %i[get_related_resources]
+  after_action :verify_authorized_or_policy_scoped, :only => :show_relationship
 
   # Upload actions
   upload_action :create
+
+  ##
+  # Resource
+  #
 
   # POST /conversions
   def create
@@ -37,6 +45,12 @@ class ConversionsController < ApplicationController
 
     jsonapi_render :json => @conversion
   end
+
+  ##
+  # Relationships
+  #
+  # Relationships and related resource actions are implemented in the respective concerns
+  #
 
   protected
 
