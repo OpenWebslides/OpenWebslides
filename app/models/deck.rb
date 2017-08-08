@@ -29,7 +29,8 @@ class Deck < ApplicationRecord
 
   has_many :notifications, :dependent => :destroy
 
-  has_one :conversion, :dependent => :destroy
+  has_one :conversion, :dependent => :destroy,
+                       :inverse_of => :deck
 
   ##
   # Callbacks
