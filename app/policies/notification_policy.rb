@@ -37,8 +37,8 @@ class NotificationPolicy < ApplicationPolicy
   #
   class Scope < Scope
     def resolve
-      # FIXME: horribly imperformant code
-      scope.select { |n| Pundit.policy!(@user, n).show? }
+      # Defer asset scoping to the respective decks
+      DeckPolicy::Scope.new(@user, scope.joins(:deck)).resolve
     end
   end
 end
