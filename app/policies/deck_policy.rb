@@ -133,7 +133,7 @@ class DeckPolicy < ApplicationPolicy
              .distinct
       else
         # Everyone can see public decks
-        scope.public_access
+        scope.where('decks.state' => 'public_access')
       end
     end
   end
