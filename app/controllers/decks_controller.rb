@@ -1,15 +1,23 @@
 # frozen_string_literal: true
 
 class DecksController < ApplicationController
+  include Relationships
+  include RelatedResources
+
   # Authentication
   before_action :authenticate_user, :except => %i[index show]
   after_action :renew_token
 
   # Authorization
-  after_action :verify_authorized, :except => :index
-  after_action :verify_policy_scoped, :only => :index
+  after_action :verify_authorized, :except => %i[index show_relationship get_related_resources]
+  after_action :verify_policy_scoped, :only => %i[index get_related_resources]
+  after_action :verify_authorized_or_policy_scoped, :only => :show_relationship
 
   skip_before_action :jsonapi_request_handling, :only => :update
+
+  ##
+  # Resource
+  #
 
   # GET /decks
   def index
@@ -79,9 +87,7 @@ class DecksController < ApplicationController
   def update_model
     # TODO: helper to process requests based on media type
     setup_request
-    unless @request.errors.blank?
-      return jsonapi_render_errors :json => @request
-    end
+    return jsonapi_render_errors :json => @request unless @request.errors.blank?
 
     if service.update resource_params
       jsonapi_render :json => @deck
@@ -105,6 +111,12 @@ class DecksController < ApplicationController
 
     head :no_content
   end
+
+  ##
+  # Relationships
+  #
+  # Relationships and related resource actions are implemented in the respective concerns
+  #
 
   protected
 

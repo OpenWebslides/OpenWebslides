@@ -2,13 +2,17 @@
 
 class AssetsController < ApplicationController
   include BinaryUploadable
+  include Relationships
+  include RelatedResources
 
   # Authentication
   before_action :authenticate_user, :except => :raw
   after_action :renew_token, :except => :raw
 
   # Authorization
-  after_action :verify_authorized
+  after_action :verify_authorized, :except => %i[show_relationship get_related_resources]
+  after_action :verify_policy_scoped, :only => %i[get_related_resources]
+  after_action :verify_authorized_or_policy_scoped, :only => :show_relationship
 
   upload_action :create
 
