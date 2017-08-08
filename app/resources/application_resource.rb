@@ -35,7 +35,7 @@ class ApplicationResource < JSONAPI::Resource
 
   class << self
     def records(options = {})
-      ::Pundit.policy_scope!(options[:context][:user], _model_class)
+      ::Pundit.policy_scope!(options[:context][:user] || options[:context][:current_user], _model_class)
     end
   end
 end
