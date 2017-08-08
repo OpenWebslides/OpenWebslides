@@ -84,6 +84,30 @@ class UserPolicy < ApplicationPolicy
   end
 
   ##
+  # Relationship: notifications
+  #
+  def create_notifications?
+    # Users can never create notifications relationship
+    false
+  end
+
+  def show_notifications?
+    # Users can only show notifications if the deck is showable
+    # Policy scope separately in the controller
+    show?
+  end
+
+  def update_notifications?
+    # Users can never update notifications relationship
+    false
+  end
+
+  def destroy_notifications?
+    # Users can never destroy notifications relationship
+    false
+  end
+
+  ##
   # Relationships: conversions
   #
   def create_conversions?
