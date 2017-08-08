@@ -36,7 +36,6 @@ RSpec.describe 'User API', :type => :request do
     }.to_json
   end
 
-
   describe 'GET /' do
     before do
       create_list :user, 3
@@ -94,7 +93,7 @@ RSpec.describe 'User API', :type => :request do
       json = JSON.parse response.body
 
       # Email is hidden for unauthenticated users
-      expect(json['data']['attributes']).to match({ 'firstName' => attributes[:firstName] })
+      expect(json['data']['attributes']).to match 'firstName' => attributes[:firstName]
     end
   end
 
@@ -234,6 +233,26 @@ RSpec.describe 'User API', :type => :request do
       end
     end
 
+    describe 'related resources do' do
+      before do
+        add_accept_header
+        add_auth_header
+
+        user.decks << create(:deck)
+      end
+
+      it 'returns successful' do
+        get user_decks_path(:user_id => user.id), :headers => headers
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        json = JSON.parse response.body
+        expect(json['data'].count).to eq user.decks.count
+        expect(json['data'].first['type']).to eq 'decks'
+      end
+    end
+
     # TODO: POST /relationships/decks
     # TODO: PATCH /relationships/decks
     # TODO: DELETE /relationships/decks
@@ -261,6 +280,26 @@ RSpec.describe 'User API', :type => :request do
       end
     end
 
+    describe 'related resources do' do
+      before do
+        add_accept_header
+        add_auth_header
+
+        user.collaborations << create(:deck)
+      end
+
+      it 'returns successful' do
+        get user_collaborations_path(:user_id => user.id), :headers => headers
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        json = JSON.parse response.body
+        expect(json['data'].count).to eq user.collaborations.count
+        expect(json['data'].first['type']).to eq 'decks'
+      end
+    end
+
     # TODO: POST /relationships/collaborations
     # TODO: PATCH /relationships/collaborations
     # TODO: DELETE /relationships/collaborations
@@ -283,6 +322,26 @@ RSpec.describe 'User API', :type => :request do
 
         json = JSON.parse response.body
         expect(json['data'].count).to eq 1
+        expect(json['data'].first['type']).to eq 'conversions'
+      end
+    end
+
+    describe 'related resources do' do
+      before do
+        add_accept_header
+        add_auth_header
+
+        user.conversions << create(:conversion)
+      end
+
+      it 'returns successful' do
+        get user_conversions_path(:user_id => user.id), :headers => headers
+
+        expect(response.status).to eq 200
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        json = JSON.parse response.body
+        expect(json['data'].count).to eq user.conversions.count
         expect(json['data'].first['type']).to eq 'conversions'
       end
     end
