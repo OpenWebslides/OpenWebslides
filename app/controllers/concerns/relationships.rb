@@ -6,7 +6,7 @@
 module Relationships
   extend ActiveSupport::Concern
 
-  # GET /klass/:klass_id/relationships/:relationship
+  # GET /klass/:klass_id/relationships/:relationship (e.g. /users/:user_id/relationships/collaborations)
   def show_relationship
     model_klass = controller_name.classify.constantize
     @resource = model_klass.find params["#{controller_name.singularize}_id"]
@@ -14,8 +14,14 @@ module Relationships
     # Authorize MODEL#show_RELATIONSHIP? (e.g. UserPolicy#show_collaborations?)
     authorize_relationship @resource
 
-    # Authorize RELATIONSHIP_CLASS#show_INVERSE_RELATIONSHIP? (e.g. DeckPolicy#show_collaborators?)
-    policy_scope(@resource.send params[:relationship]).each { |resource| authorize_inverse_relationship resource }
+    if model_klass.reflect_on_association(params[:relationship]).macro == :has_many
+      # Policy scope RELATIONSHIP_CLASS
+      # Authorize RELATIONSHIP_CLASS#show_INVERSE_RELATIONSHIP? (e.g. DeckPolicy#show_collaborators?)
+      policy_scope(@resource.send params[:relationship]).each { |resource| authorize_inverse_relationship resource }
+    else
+      # Authorize RELATIONSHIP_CLASS#show_INVERSE_RELATIONSHIP? (e.g. DeckPolicy#show_collaborators?)
+      authorize_inverse_relationship @resource.send params[:relationship]
+    end
 
     super
   end

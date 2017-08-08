@@ -38,7 +38,8 @@ class ApplicationController < ActionController::API
   #
   def authorize_inverse_relationship(record)
     # Lookup the inverse association name
-    inverse_name = resource_klass._model_class.reflect_on_association(params[:relationship]).inverse_of.name.to_s
+    model_klass = controller_name.classify.constantize
+    inverse_name = model_klass.reflect_on_association(params[:relationship]).inverse_of.name.to_s
     query = params[:action].gsub('relationship', inverse_name) + '?'
     authorize record, query
   end
