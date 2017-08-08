@@ -124,8 +124,16 @@ class DeckPolicy < ApplicationPolicy
   #
   class Scope < Scope
     def resolve
-      # FIXME: horribly imperformant code
-      scope.select { |d| Pundit.policy!(@user, d).show? }
+      if @user
+        # Users can see public decks, protected decks and collaborations
+        scope.left_outer_joins(:collaborators).where.not(:state => 'private_access')
+             .or(scope.left_outer_joins(:collaborators).where(:owner => @user))
+             .or(scope.left_outer_joins(:collaborators).where('decks_users.user_id = ?', @user.id)).distinct
+      else
+        # Everyone can see public decks
+        scope
+          .where(:state => 'public_access')
+      end
     end
   end
 end
