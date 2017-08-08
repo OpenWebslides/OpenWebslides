@@ -35,7 +35,12 @@ class AssetPolicy < ApplicationPolicy
   ##
   # Scope
   #
-  # No scope was implemented for assets due to no :index action
+  class Scope < Scope
+    def resolve
+      # Defer asset scoping to the respective decks
+      DeckPolicy::Scope.new(@user, scope.joins(:deck)).resolve
+    end
+  end
 
   private
 
