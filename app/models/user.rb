@@ -23,7 +23,9 @@ class User < ApplicationRecord
 
   has_many :decks, :dependent => :destroy,
                    :inverse_of => :owner
-  has_many :conversions, :dependent => :destroy
+
+  has_many :conversions, :dependent => :destroy,
+                         :inverse_of => :user
 
   has_many :grants, :dependent => :destroy
   has_many :collaborations, :class_name => 'Deck',

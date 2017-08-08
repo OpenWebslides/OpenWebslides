@@ -19,8 +19,11 @@ class Conversion < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :deck, :optional => true
-  belongs_to :user, :required => true
+  belongs_to :deck, :optional => true,
+                    :inverse_of => :conversion
+
+  belongs_to :user, :required => true,
+                    :inverse_of => :conversions
 
   ##
   # Callbacks
