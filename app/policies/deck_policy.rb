@@ -126,13 +126,14 @@ class DeckPolicy < ApplicationPolicy
     def resolve
       if @user
         # Users can see public decks, protected decks and collaborations
-        scope.left_outer_joins(:collaborators).where.not(:state => 'private_access')
-             .or(scope.left_outer_joins(:collaborators).where(:owner => @user))
-             .or(scope.left_outer_joins(:collaborators).where('decks_users.user_id = ?', @user.id)).distinct
+        query = 'decks.state != ? OR decks.user_id = ? OR access_grants.user_id = ?'
+
+        scope.joins('LEFT OUTER JOIN grants access_grants ON access_grants.deck_id = decks.id')
+             .where(query, Deck.states['private_access'], @user.id, @user.id)
+             .distinct
       else
         # Everyone can see public decks
-        scope
-          .where(:state => 'public_access')
+        scope.public_access
       end
     end
   end
