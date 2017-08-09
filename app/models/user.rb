@@ -41,6 +41,11 @@ class User < ApplicationRecord
            :dependent => :destroy,
            :inverse_of => :user
 
+  has_many :annotations,
+           :class_name => 'Annotations::Annotation',
+           :dependent => :destroy,
+           :inverse_of => :user
+
   ##
   # Validations
   #
