@@ -36,6 +36,10 @@ ActiveRecord::Schema.define(version: 20170822131444) do
     t.integer "deck_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "text"
+    t.integer "comment_type"
+    t.integer "conversation_id"
+    t.index ["conversation_id"], name: "index_annotations_on_conversation_id"
     t.index ["deck_id"], name: "index_annotations_on_deck_id"
     t.index ["user_id"], name: "index_annotations_on_user_id"
   end
