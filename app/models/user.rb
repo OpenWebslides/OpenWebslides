@@ -17,31 +17,41 @@ class User < ApplicationRecord
   ##
   # Associations
   #
-  has_many :identities, :dependent => :destroy
+  has_many :identities,
+           :dependent => :destroy
 
-  has_many :decks, :dependent => :destroy,
-                   :inverse_of => :owner
+  has_many :decks,
+           :dependent => :destroy,
+           :inverse_of => :owner
 
-  has_many :conversions, :dependent => :destroy,
-                         :inverse_of => :user
+  has_many :conversions,
+           :dependent => :destroy,
+           :inverse_of => :user
 
-  has_many :grants, :dependent => :destroy
-  has_many :collaborations, :class_name => 'Deck',
-                            :through => :grants,
-                            :source => :deck,
-                            :inverse_of => :collaborators
+  has_many :grants,
+           :dependent => :destroy
 
-  has_many :notifications, :dependent => :destroy,
-                           :inverse_of => :user
+  has_many :collaborations,
+           :class_name => 'Deck',
+           :through => :grants,
+           :source => :deck,
+           :inverse_of => :collaborators
+
+  has_many :notifications,
+           :dependent => :destroy,
+           :inverse_of => :user
 
   ##
   # Validations
   #
-  validates :first_name, :presence => true
+  validates :first_name,
+            :presence => true
+
   validates :email,
             :presence => true,
             :format => { :with => /\A[^@]+@[^@]+\z/ },
             :uniqueness => true
+
   validates :token_version,
             :presence => true,
             :numericality => { :only_integer => true }

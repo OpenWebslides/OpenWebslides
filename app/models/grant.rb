@@ -7,8 +7,11 @@ class Grant < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :deck, :required => true
-  belongs_to :user, :required => true
+  belongs_to :deck,
+             :required => true
+
+  belongs_to :user,
+             :required => true
 
   ##
   # Validations

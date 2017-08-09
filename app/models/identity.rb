@@ -14,14 +14,18 @@ class Identity < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :user, :required => true
+  belongs_to :user,
+             :required => true
 
   ##
   # Validations
   #
-  validates :uid, :presence => true,
-                  :uniqueness => { :scope => :provider }
-  validates :provider, :presence => true
+  validates :uid,
+            :presence => true,
+            :uniqueness => { :scope => :provider }
+
+  validates :provider,
+            :presence => true
 
   ##
   # Callbacks
