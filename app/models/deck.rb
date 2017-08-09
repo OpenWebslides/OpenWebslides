@@ -4,12 +4,21 @@ class Deck < ApplicationRecord
   ##
   # Properties
   #
-  validates :name, :presence => true
 
+  # Deck title
+  property :name
+
+  # Deck description
+  property :description
+
+  # Unique name
+  property :canonical_name
+
+  # HTML template
+  property :template
+
+  # Access level
   enum :state => %i[public_access protected_access private_access]
-  validates :state, :presence => true
-
-  validates :template, :presence => true
 
   ##
   # Associations
@@ -33,6 +42,13 @@ class Deck < ApplicationRecord
 
   has_one :conversion, :dependent => :destroy,
                        :inverse_of => :deck
+
+  ##
+  # Validations
+  #
+  validates :name, :presence => true
+  validates :state, :presence => true
+  validates :template, :presence => true
 
   ##
   # Callbacks
