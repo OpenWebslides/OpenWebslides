@@ -24,6 +24,9 @@ module Annotations
     ##
     # Validations
     #
+    validates :content_item_id,
+              :presence => true
+
     ##
     # Callbacks
     #
