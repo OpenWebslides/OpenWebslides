@@ -9,16 +9,19 @@ class Notification < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :user, :required => true,
-                    :inverse_of => :notifications
+  belongs_to :user,
+             :required => true,
+             :inverse_of => :notifications
 
-  belongs_to :deck, :required => true,
-                    :inverse_of => :notifications
+  belongs_to :deck,
+             :required => true,
+             :inverse_of => :notifications
 
   ##
   # Validations
   #
-  validates :event_type, :presence => true
+  validates :event_type,
+            :presence => true
 
   ##
   # Callbacks

@@ -23,25 +23,32 @@ class Deck < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :owner, :required => true,
-                     :class_name => 'User',
-                     :foreign_key => 'user_id',
-                     :inverse_of => :decks
+  belongs_to :owner,
+             :required => true,
+             :class_name => 'User',
+             :foreign_key => 'user_id',
+             :inverse_of => :decks
 
-  has_many :grants, :dependent => :destroy
-  has_many :collaborators, :through => :grants,
-                           :source => :user,
-                           :class_name => 'User',
-                           :inverse_of => :collaborations
+  has_many :grants,
+           :dependent => :destroy
 
-  has_many :assets, :dependent => :destroy,
-                    :inverse_of => :deck
+  has_many :collaborators,
+           :through => :grants,
+           :source => :user,
+           :class_name => 'User',
+           :inverse_of => :collaborations
 
-  has_many :notifications, :dependent => :destroy,
-                           :inverse_of => :deck
+  has_many :assets,
+           :dependent => :destroy,
+           :inverse_of => :deck
 
-  has_one :conversion, :dependent => :destroy,
-                       :inverse_of => :deck
+  has_many :notifications,
+           :dependent => :destroy,
+           :inverse_of => :deck
+
+  has_one :conversion,
+          :dependent => :destroy,
+          :inverse_of => :deck
 
   ##
   # Validations
