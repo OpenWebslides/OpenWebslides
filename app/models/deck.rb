@@ -50,6 +50,11 @@ class Deck < ApplicationRecord
           :dependent => :destroy,
           :inverse_of => :deck
 
+  has_many :annotations,
+           :class_name => 'Annotations::Annotation',
+           :dependent => :destroy,
+           :inverse_of => :deck
+
   ##
   # Validations
   #

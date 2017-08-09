@@ -81,6 +81,7 @@ RSpec.describe User, :type => :model do
     it { is_expected.to have_many(:grants).dependent(:destroy) }
     it { is_expected.to have_many(:collaborations).through(:grants).inverse_of(:collaborators) }
     it { is_expected.to have_many(:notifications).dependent(:destroy).inverse_of(:user) }
+    it { is_expected.to have_many(:annotations).dependent(:destroy).inverse_of(:user) }
   end
 
   it 'finds confirmed users by token' do
