@@ -5,7 +5,6 @@ class Notification < ApplicationRecord
   # Properties
   #
   enum :event_type => %i[deck_created deck_updated]
-  validates :event_type, :presence => true
 
   ##
   # Associations
@@ -15,6 +14,11 @@ class Notification < ApplicationRecord
 
   belongs_to :deck, :required => true,
                     :inverse_of => :notifications
+
+  ##
+  # Validations
+  #
+  validates :event_type, :presence => true
 
   ##
   # Callbacks

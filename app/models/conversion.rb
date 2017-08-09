@@ -4,26 +4,36 @@ class Conversion < ApplicationRecord
   ##
   # Properties
   #
+
+  # Job status
   enum :status => %i[queued processing success error]
 
   # Absolute path to uploaded file
-  validates :filename, :presence => true,
-                       :uniqueness => true
+  property :filename
 
   # Destination repository name
-  validates :name, :presence => true
-
-  # Job status
-  validates :status, :presence => true
+  property :name
 
   ##
   # Associations
   #
-  belongs_to :deck, :optional => true,
-                    :inverse_of => :conversion
+  belongs_to :deck,
+             :optional => true,
+             :inverse_of => :conversion
 
-  belongs_to :user, :required => true,
-                    :inverse_of => :conversions
+  belongs_to :user,
+             :required => true,
+             :inverse_of => :conversions
+
+  ##
+  # Validations
+  #
+  validates :filename, :presence => true,
+                       :uniqueness => true
+
+  validates :name, :presence => true
+
+  validates :status, :presence => true
 
   ##
   # Callbacks

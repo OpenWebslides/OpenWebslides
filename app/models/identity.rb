@@ -4,14 +4,24 @@ class Identity < ApplicationRecord
   ##
   # Properties
   #
-  validates :uid, :presence => true,
-                  :uniqueness => { :scope => :provider }
-  validates :provider, :presence => true
+
+  # Unique user identifier
+  property :uid
+
+  # Identity provider
+  property :provider
 
   ##
   # Associations
   #
   belongs_to :user, :required => true
+
+  ##
+  # Validations
+  #
+  validates :uid, :presence => true,
+                  :uniqueness => { :scope => :provider }
+  validates :provider, :presence => true
 
   ##
   # Callbacks

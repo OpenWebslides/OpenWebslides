@@ -7,14 +7,11 @@ class User < ApplicationRecord
   ##
   # Properties
   #
-  validates :first_name, :presence => true
-  validates :email, :presence => true,
-                    :format => { :with => /\A[^@]+@[^@]+\z/ },
-                    :uniqueness => true
-  validates :token_version, :presence => true,
-                            :numericality => { :only_integer => true }
 
-  validate :readonly_email, :on => :update
+  property :first_name
+  property :last_name
+  property :email
+  property :token_version
 
   ##
   # Associations
@@ -37,6 +34,20 @@ class User < ApplicationRecord
                            :inverse_of => :user
 
   ##
+  # Validations
+  #
+  validates :first_name, :presence => true
+  validates :email,
+            :presence => true,
+            :format => { :with => /\A[^@]+@[^@]+\z/ },
+            :uniqueness => true
+  validates :token_version,
+            :presence => true,
+            :numericality => { :only_integer => true }
+
+  validate :readonly_email, :on => :update
+
+  ##
   # Callbacks
   #
   before_create :create_email_identity
@@ -53,10 +64,6 @@ class User < ApplicationRecord
 
   def name
     last_name? ? "#{first_name} #{last_name}" : first_name
-  end
-
-  def readonly_email
-    errors.add :email, 'cannot be changed' if email_changed?
   end
 
   def increment_token_version
@@ -83,4 +90,7 @@ class User < ApplicationRecord
   ##
   # Helpers and callback methods
   #
+  def readonly_email
+    errors.add :email, 'cannot be changed' if email_changed?
+  end
 end
