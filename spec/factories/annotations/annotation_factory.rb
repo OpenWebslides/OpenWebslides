@@ -14,7 +14,9 @@ FactoryGirl.define do
     factory :comment, :class => Annotations::Comment do
       text { Faker::Lorem.sentence(3) }
 
-      conversation { build :conversation, :deck => deck }
+      conversation do
+        build :conversation, :deck => deck, :content_item_id => content_item_id
+      end
     end
   end
 end
