@@ -11,4 +11,35 @@ RSpec.describe Annotations::Comment, :type => :model do
   describe 'associations' do
     it { is_expected.to belong_to(:conversation).inverse_of(:comments) }
   end
+
+  describe 'scope' do
+    let(:conversation) { create :conversation }
+
+    it 'deck must be equal to its parent conversation' do
+      comment = build :comment,
+                      :conversation => conversation,
+                      :deck => create(:deck),
+                      :content_item_id => conversation.content_item_id
+
+      expect(comment).not_to be_valid
+    end
+
+    it 'content_item_id must be equal to its parent conversation' do
+      comment = build :comment,
+                      :conversation => conversation,
+                      :deck => conversation.deck,
+                      :content_item_id => Faker::Number.number(2)
+
+      expect(comment).not_to be_valid
+    end
+
+    it 'is equal to its parent conversation' do
+      comment = build :comment,
+                      :conversation => conversation,
+                      :deck => conversation.deck,
+                      :content_item_id => conversation.content_item_id
+
+      expect(comment).to be_valid
+    end
+  end
 end
