@@ -9,6 +9,7 @@ class DeckResource < ApplicationResource
   has_one :owner, :foreign_key => 'user_id'
   has_many :collaborators
   has_many :assets
+  has_many :conversations
 
   ##
   # Filters
@@ -23,10 +24,10 @@ class DeckResource < ApplicationResource
   # Methods
   #
   def self.creatable_fields(context = {})
-    super(context) - %i[collaborators assets]
+    super(context) - %i[collaborators assets conversations]
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[collaborators assets]
+    super(context) - %i[collaborators assets conversations]
   end
 end
