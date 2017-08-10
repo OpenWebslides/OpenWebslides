@@ -14,6 +14,7 @@ module Annotations
     # Associations
     #
     belongs_to :conversation,
+               :required => true,
                :inverse_of => :comments
 
     ##
