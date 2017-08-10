@@ -30,6 +30,8 @@ RSpec.describe Annotations::Comment, :type => :model do
                       :deck => conversation.deck,
                       :content_item_id => Faker::Number.number(2)
 
+      expect(comment.content_item_id).not_to eq comment.conversation.content_item_id
+
       expect(comment).not_to be_valid
     end
 
