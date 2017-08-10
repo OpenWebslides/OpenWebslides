@@ -1,0 +1,50 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe Annotations::AnnotationResource, :type => :resource do
+  let(:annotation) { create :annotation }
+  let(:context) { {} }
+
+  before do
+    create :user
+
+    # Stub out context[:current_user]
+    mock_method described_class, :context do
+      { :current_user => User.first }
+    end
+  end
+
+  subject { described_class.new annotation, context }
+
+  it { is_expected.to have_primary_key :id }
+
+  it { is_expected.to have_attribute :content_item_id }
+
+  it { is_expected.to have_one :user }
+  it { is_expected.to have_one :deck }
+
+  describe 'fields' do
+    it 'should have a valid set of fetchable fields' do
+      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck]
+    end
+
+    it 'should have a valid set of creatable fields' do
+      expect(described_class.creatable_fields).to match_array %i[content_item_id user deck]
+    end
+
+    it 'should have a valid set of updatable fields' do
+      expect(described_class.updatable_fields).to be_empty
+    end
+
+    it 'should have a valid set of sortable fields' do
+      expect(described_class.sortable_fields context).to match_array %i[id content_item_id]
+    end
+  end
+
+  describe 'filters' do
+    it 'should have a valid set of filters' do
+      expect(described_class.filters.keys).to match_array %i[id user content_item_id]
+    end
+  end
+end
