@@ -55,6 +55,10 @@ class Deck < ApplicationRecord
            :dependent => :destroy,
            :inverse_of => :deck
 
+  has_many :conversations,
+           :class_name => 'Annotations::Conversation',
+           :inverse_of => :deck
+
   ##
   # Validations
   #
