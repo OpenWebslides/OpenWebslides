@@ -19,7 +19,8 @@ function NavigationViewItem(props) {
 
   if (Object.keys(wrapperFactories).includes(contentItemType)) {
     const ContentItemWrapper = wrapperFactories[contentItemType];
-    const ChildComponents = renderChildrenHOC(childItemIds)(NavigationViewItem);
+
+    const ChildComponents = renderChildrenHOC({ childItemIds, headingLevel })(NavigationViewItem);
 
     return (
       <ContentItemWrapper attributes={attributes}>
