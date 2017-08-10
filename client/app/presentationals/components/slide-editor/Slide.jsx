@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ContentItemContainer from 'lib/content-item/ContentItemContainer';
+import NavigationViewItemContainer from 'lib/content-item/view-items/navigation-view-item';
 
 class Slide extends Component {
   constructor(props) {
@@ -78,17 +79,30 @@ class Slide extends Component {
     let slideContent;
 
     if (this.props.slide) {
-      slideContent = this.props.slide.contentItemIds.map(id =>
-        <ContentItemContainer
-          key={id}
-          slideViewType={this.props.viewType}
-          contentItemId={id}
-          ancestorItemIds={[]}
-          slideId={this.props.slide.id}
-          editable={this.props.editable}
-          headingLevel={1}
-        />,
+      if (this.props.viewType === 'NAVIGATION') {
+        slideContent = this.props.slide.contentItemIds.map(id =>
+          <NavigationViewItemContainer
+            key={id}
+            slideViewType={this.props.viewType}
+            contentItemId={id}
+            ancestorItemIds={[]}
+            slideId={this.props.slide.id}
+            headingLevel={1}
+          />);
+      }
+      else {
+        slideContent = this.props.slide.contentItemIds.map(id =>
+          <ContentItemContainer
+            key={id}
+            slideViewType={this.props.viewType}
+            contentItemId={id}
+            ancestorItemIds={[]}
+            slideId={this.props.slide.id}
+            editable={this.props.editable}
+            headingLevel={1}
+          />,
       );
+      }
     }
     else {
       slideContent = <p>Loading...</p>;
