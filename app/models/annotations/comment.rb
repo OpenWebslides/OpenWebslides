@@ -8,7 +8,7 @@ module Annotations
     ##
     # Properties
     #
-    property :text
+    attribute :text
 
     ##
     # Associations
