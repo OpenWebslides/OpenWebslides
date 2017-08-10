@@ -16,6 +16,7 @@ module Annotations
     # Associations
     #
     has_many :comments,
+             :dependent => :destroy,
              :inverse_of => :conversation
 
     ##

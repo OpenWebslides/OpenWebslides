@@ -9,6 +9,6 @@ RSpec.describe Annotations::Conversation, :type => :model do
   end
 
   describe 'associations' do
-    it { is_expected.to have_many(:comments).inverse_of(:conversation) }
+    it { is_expected.to have_many(:comments).dependent(:destroy).inverse_of(:conversation) }
   end
 end
