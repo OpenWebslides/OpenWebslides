@@ -6,15 +6,6 @@ RSpec.describe Annotations::ConversationResource, :type => :resource do
   let(:conversation) { create :conversation }
   let(:context) { {} }
 
-  before do
-    create :user
-
-    # Stub out context[:current_user]
-    mock_method described_class, :context do
-      { :current_user => User.first }
-    end
-  end
-
   subject { described_class.new conversation, context }
 
   it { is_expected.to have_primary_key :id }
