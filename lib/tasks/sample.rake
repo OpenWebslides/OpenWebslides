@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'faker'
+require 'factory_girl'
+
 namespace :db do
   desc 'Populates the database with sample data'
   task :sample => :environment do
@@ -80,7 +83,8 @@ namespace :db do
 
           # Add some random collaborators
           RANDOM.rand(5).times do
-            deck.collaborators << User.offset(RANDOM.rand user_count).first
+            user = User.offset(RANDOM.rand user_count).first
+            deck.collaborators << user unless deck.collaborators.include? user
           end
 
           deck.save!
