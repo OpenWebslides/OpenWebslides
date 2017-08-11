@@ -9,6 +9,7 @@ module Annotations
     # Properties
     #
     property :content_item_id
+    property :state
 
     ##
     # Associations
@@ -26,6 +27,50 @@ module Annotations
     #
     validates :content_item_id,
               :presence => true
+
+    validates :state,
+              :presence => true
+
+    ##
+    # State
+    #
+    state_machine :initial => :created do
+      state :created, :value => 0
+      state :edited, :value => 1
+      state :secret, :value => 2
+      state :flagged, :value => 3
+      state :hidden, :value => 4
+
+      # Edit an annotation
+      event :edit do
+        transition :created => :edited,
+                   :edited => :edited,
+                   :secret => :secret
+      end
+
+      # Flag an annotation
+      event :flag do
+        transition :created => :flagged,
+                   :edited => :flagged
+      end
+
+      # Hide an annotation
+      event :hide do
+        transition :created => :hidden,
+                   :edited => :hidden,
+                   :flagged => :hidden
+      end
+
+      # Protect (privatize) an annotation
+      event :protect do
+        transition :created => :secret
+      end
+
+      # Publish (publicize) an annotation
+      event :publish do
+        transition :secret => :created
+      end
+    end
 
     ##
     # Callbacks
