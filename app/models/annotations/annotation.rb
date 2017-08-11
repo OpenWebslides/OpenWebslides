@@ -22,6 +22,10 @@ module Annotations
                :required => true,
                :inverse_of => :annotations
 
+    has_many :ratings,
+             :dependent => :destroy,
+             :inverse_of => :annotation
+
     ##
     # Validations
     #
