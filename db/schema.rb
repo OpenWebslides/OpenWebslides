@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170817083704) do
+ActiveRecord::Schema.define(version: 20170822131444) do
+
+  create_table "annotations", force: :cascade do |t|
+    t.string "type"
+    t.string "content_item_id"
+    t.integer "user_id"
+    t.integer "deck_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "text"
+    t.integer "conversation_type"
+    t.integer "conversation_id"
+    t.integer "state"
+    t.string "title"
+    t.index ["conversation_id"], name: "index_annotations_on_conversation_id"
+    t.index ["deck_id"], name: "index_annotations_on_deck_id"
+    t.index ["user_id"], name: "index_annotations_on_user_id"
+  end
 
   create_table "assets", force: :cascade do |t|
     t.string "filename"
@@ -48,8 +65,10 @@ ActiveRecord::Schema.define(version: 20170817083704) do
   create_table "grants", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "deck_id", null: false
-    t.index ["deck_id", "user_id"], name: "index_grants_on_deck_id_and_user_id"
-    t.index ["user_id", "deck_id"], name: "index_grants_on_user_id_and_deck_id"
+    t.index ["deck_id", "user_id"], name: "index_grants_on_deck_id_and_user_id", unique: true
+    t.index ["deck_id"], name: "index_grants_on_deck_id"
+    t.index ["user_id", "deck_id"], name: "index_grants_on_user_id_and_deck_id", unique: true
+    t.index ["user_id"], name: "index_grants_on_user_id"
   end
 
   create_table "identities", force: :cascade do |t|
@@ -70,6 +89,15 @@ ActiveRecord::Schema.define(version: 20170817083704) do
     t.datetime "updated_at", null: false
     t.index ["deck_id"], name: "index_notifications_on_deck_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "annotation_id", null: false
+    t.index ["annotation_id", "user_id"], name: "index_ratings_on_annotation_id_and_user_id", unique: true
+    t.index ["annotation_id"], name: "index_ratings_on_annotation_id"
+    t.index ["user_id", "annotation_id"], name: "index_ratings_on_user_id_and_annotation_id", unique: true
+    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

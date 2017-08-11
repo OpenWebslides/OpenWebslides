@@ -11,6 +11,11 @@ class Grant < ApplicationRecord
   belongs_to :user, :required => true
 
   ##
+  # Validations
+  #
+  validates_uniqueness_of :deck_id, :scope => :user_id
+
+  ##
   # Callbacks
   #
   ##
