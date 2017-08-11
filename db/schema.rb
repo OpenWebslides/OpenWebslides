@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20170822131444) do
     t.string "text"
     t.integer "comment_type"
     t.integer "conversation_id"
+    t.integer "state"
     t.index ["conversation_id"], name: "index_annotations_on_conversation_id"
     t.index ["deck_id"], name: "index_annotations_on_deck_id"
     t.index ["user_id"], name: "index_annotations_on_user_id"
