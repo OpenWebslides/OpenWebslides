@@ -9,6 +9,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# State Machine
+gem 'state_machines'
+gem 'state_machines-activerecord'
+
 # Authentication
 gem 'devise'
 gem 'jwt'
