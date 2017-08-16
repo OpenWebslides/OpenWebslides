@@ -95,6 +95,10 @@ namespace :db do
       end
 
       decks.each_with_index do |deck, i|
+        ##
+        # Notifications
+        #
+
         notification_count = RANDOM.rand 100
 
         puts "Creating #{notification_count + 1} events for deck #{i + 1}/#{decks.size}"
@@ -115,6 +119,29 @@ namespace :db do
                               :deck => deck,
                               :created_at => RANDOM.rand(creation_time).seconds.ago,
                               :updated_at => RANDOM.rand(creation_time).seconds.ago
+        end
+
+        ##
+        # Annotations
+        #
+        conversation_count = RANDOM.rand 10
+
+        puts "Creating #{conversation_count + 1} annotations for deck #{i + 1}/#{decks.size}"
+
+        conversation_count.times do
+          c = Annotations::Conversation.create :content_item_id => RANDOM.rand(100),
+                                               :user => ([deck.owner] + deck.collaborators).sample,
+                                               :deck => deck,
+                                               :comment_type => %i[question note].sample,
+                                               :text => Faker::Lorem.sentences(4).join(' ')
+
+          RANDOM.rand(5).times do
+            Annotations::Comment.create :content_item_id => c.content_item_id,
+                                        :user => ([deck.owner] + deck.collaborators).sample,
+                                        :deck => c.deck,
+                                        :conversation => c,
+                                        :text => Faker::Lorem.sentences(4).join(' ')
+          end
         end
       end
     end
