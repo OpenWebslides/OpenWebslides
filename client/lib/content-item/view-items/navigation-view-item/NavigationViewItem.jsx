@@ -10,12 +10,12 @@ import wrapperFactories from '../../content-item-factories/containers';
 import renderChildrenHOC from '../../hocs/renderChildrenHOC';
 import contentItemHOC from '../../hocs/contentItemHOC';
 
-import generateAttributesObject from './helpers/generateAttributesObject';
+import generateAttributes from '../../helpers/generateAttributes';
 
 
 function NavigationViewItem(props) {
   const { headingLevel, contentItem, contentItem: { contentItemType, childItemIds, ordered } } = props;
-  const attributes = generateAttributesObject(contentItem);
+  const attributes = generateAttributes(contentItem);
 
   if (Object.keys(wrapperFactories).includes(contentItemType)) {
     const ContentItemWrapper = wrapperFactories[contentItemType];
