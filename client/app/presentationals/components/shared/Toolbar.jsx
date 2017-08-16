@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import modalTypes from 'presentationals/components/slide-editor/content-item-modals';
+import { contentItemTypesById } from 'constants/contentItemTypes';
 import { slideViewTypes } from 'constants/slideViewTypes';
 import ToolbarButton from './ToolbarButton';
+
 
 class Toolbar extends Component {
   constructor(props) {
@@ -11,6 +13,19 @@ class Toolbar extends Component {
 
     this.onButtonClick = this.onButtonClick.bind(this);
     this.addContentItemToSlide = this.addContentItemToSlide.bind(this);
+
+    this.buttons = this.props.buttonTypes.map((typeData) => {
+      const contentItemType = contentItemTypesById[typeData.id];
+      return {
+        id: contentItemType.id,
+        key: typeData.key,
+        text: contentItemType.name,
+        parameters: {
+          contentItemType: contentItemType.id,
+          contentItemTypeProps: typeData.props,
+        },
+      };
+    });
 
     this.state = {
       modalIsOpen: false,
@@ -69,7 +84,7 @@ class Toolbar extends Component {
         <div className="c_toolbar__wrapper">
           <menu className="c_toolbar__list o_list">
             {modalComponent}
-            {this.props.buttons.map(button =>
+            {this.buttons.map(button =>
               <li className="c_toolbar__item o_list__item" key={button.key}>
                 <div className="c_toolbar__item__wrapper o_list__item__wrapper">
                   <ToolbarButton
