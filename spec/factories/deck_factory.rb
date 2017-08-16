@@ -14,5 +14,9 @@ FactoryGirl.define do
     trait :with_assets do
       assets { build_list :asset, 3 }
     end
+
+    trait :with_conversations do
+      conversations { build_list :conversation, 3 }
+    end
   end
 end
