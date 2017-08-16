@@ -95,6 +95,8 @@ namespace :db do
       end
 
       decks.each_with_index do |deck, i|
+        editors = [deck.owner] + deck.collaborators
+
         ##
         # Notifications
         #
@@ -115,7 +117,7 @@ namespace :db do
         # Deck updated
         notification_count.times do
           Notification.create :event_type => :deck_updated,
-                              :user => ([deck.owner] + deck.collaborators).sample,
+                              :user => editors.sample,
                               :deck => deck,
                               :created_at => RANDOM.rand(creation_time).seconds.ago,
                               :updated_at => RANDOM.rand(creation_time).seconds.ago
@@ -124,23 +126,44 @@ namespace :db do
         ##
         # Annotations
         #
-        conversation_count = RANDOM.rand 10
+        conversation_count = RANDOM.rand(FACTOR * 10)
 
         puts "Creating #{conversation_count + 1} annotations for deck #{i + 1}/#{decks.size}"
 
         conversation_count.times do
           c = Annotations::Conversation.create :content_item_id => RANDOM.rand(100),
-                                               :user => ([deck.owner] + deck.collaborators).sample,
+                                               :user => editors.sample,
                                                :deck => deck,
                                                :comment_type => %i[question note].sample,
                                                :text => Faker::Lorem.sentences(4).join(' ')
 
-          RANDOM.rand(5).times do
-            Annotations::Comment.create :content_item_id => c.content_item_id,
-                                        :user => ([deck.owner] + deck.collaborators).sample,
-                                        :deck => c.deck,
-                                        :conversation => c,
-                                        :text => Faker::Lorem.sentences(4).join(' ')
+          # 50% of the conversations have a non-zero rating
+          if prob 0.5
+            RANDOM.rand(editors.count).times do
+              user = editors.sample
+              next if c.ratings.where(:user => user).any?
+
+              Annotations::Rating.create :annotation => c,
+                                         :user => user
+            end
+          end
+
+          RANDOM.rand(FACTOR * 5).times do
+            cm = Annotations::Comment.create :content_item_id => c.content_item_id,
+                                             :user => editors.sample,
+                                             :deck => c.deck,
+                                             :conversation => c,
+                                             :text => Faker::Lorem.sentences(4).join(' ')
+
+            # 20% of the conversations have a non-zero rating
+            next unless prob 0.2
+            RANDOM.rand(editors.count).times do
+              user = editors.sample
+              next if c.ratings.where(:user => user).any?
+
+              Annotations::Rating.create :annotation => cm,
+                                         :user => user
+            end
           end
         end
       end
