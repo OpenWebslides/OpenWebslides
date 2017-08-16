@@ -42,14 +42,23 @@ BLACKLIST = {
                                       create_user?
                                       update_user?
                                       destroy_user?
-                                  ]
+                                  ],
+  Annotations::ConversationPolicy => %i[
+                                        create_deck?
+                                        update_deck?
+                                        destroy_deck?
+
+                                        create_user?
+                                        update_user?
+                                        destroy_user?
+                                      ]
 }
 
 # Ensure that every relationship has corresponding policy actions
 RSpec.describe 'relationship policy actions' do
   ObjectSpace.each_object(Class).select { |klass| klass < ApplicationResource }.each do |klass|
     klass._relationships.each do |rel, _|
-      policy = "#{klass._model_name}Policy".constantize
+      policy = klass.to_s.gsub('Resource', 'Policy').constantize
 
       describe policy do
         subject { policy.new nil, nil }
@@ -67,6 +76,8 @@ RSpec.describe 'relationship policy actions' do
         ]
 
         actions.each do |action|
+          # require 'byebug'; byebug if policy == Annotations::AnnotationPolicy && action.to_s.end_with?("_#{rel.to_s}?")
+
           next if BLACKLIST.key?(policy) && BLACKLIST[policy].include?(action)
 
           it { is_expected.to respond_to action }
