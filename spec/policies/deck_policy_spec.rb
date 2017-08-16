@@ -46,6 +46,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
 
@@ -78,6 +83,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to forbid_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
 
@@ -110,6 +120,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to forbid_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
   end
@@ -153,6 +168,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
 
@@ -185,6 +205,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
 
@@ -217,6 +242,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to forbid_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
   end
@@ -261,6 +291,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
 
@@ -294,6 +329,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
 
@@ -327,6 +367,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
   end
@@ -371,6 +416,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
 
@@ -404,6 +454,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
 
@@ -437,6 +492,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversion
         expect(subject).to forbid_action :update_conversion
         expect(subject).to forbid_action :destroy_conversion
+
+        expect(subject).to forbid_action :create_conversations
+        expect(subject).to permit_action :show_conversations
+        expect(subject).to forbid_action :update_conversations
+        expect(subject).to forbid_action :destroy_conversations
       end
     end
   end
