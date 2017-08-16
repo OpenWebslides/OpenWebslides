@@ -136,8 +136,8 @@ RSpec.describe Annotations::ConversationPolicy do
     end
 
     context 'for an owner' do
-      deck.collaborators << annotation.user
-      let(:user) { annotation.user }
+      before { deck.collaborators << conversation.user }
+      let(:user) { conversation.user }
 
       it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
