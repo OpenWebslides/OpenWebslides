@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function List({ children, attributes, contentItem: { ordered } }) {
+export default function List({ children, attributes, ordered }) {
   const ListType = ordered ? 'ol' : 'ul';
 
   return (

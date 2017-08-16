@@ -5,6 +5,19 @@ import modalTypes from 'presentationals/components/slide-editor/content-item-mod
 import { slideViewTypes } from 'constants/slideViewTypes';
 import ToolbarButton from './ToolbarButton';
 
+const buttons = [
+  {
+    id: 'TITLE',
+    key: 'TITLE',
+    props: {},
+  },
+  {
+    id: 'PARAGRAPH',
+    key: 'PARAGRAPH',
+    props: {},
+  },
+];
+
 class Toolbar extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +63,9 @@ class Toolbar extends Component {
   }
 
   render() {
+    console.log(this.props);
+    console.log('bless me father');
+
     let modalComponent = null;
 
     if (this.state.modalIsOpen) {
@@ -69,7 +85,7 @@ class Toolbar extends Component {
         <div className="c_toolbar__wrapper">
           <menu className="c_toolbar__list o_list">
             {modalComponent}
-            {this.props.buttons.map(button =>
+            {buttons.map(button =>
               <li className="c_toolbar__item o_list__item" key={button.key}>
                 <div className="c_toolbar__item__wrapper o_list__item__wrapper">
                   <ToolbarButton

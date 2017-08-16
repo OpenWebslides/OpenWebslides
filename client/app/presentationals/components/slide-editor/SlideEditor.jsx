@@ -19,12 +19,12 @@ export default class SlideEditor extends Component {
         <div className="l_main__wrapper">
           <div className="l_main__item l_main__item--deck-navigator">
             <div className="l_main__item__wrapper">
-              <DeckNavigationPaneContainer {...this.props} />
+              <DeckNavigationPaneContainer />
             </div>
           </div>
           <div className="l_main__item l_main__item--slide-editor">
             <div className="l_main__item__wrapper">
-              <SlideEditingPane {...this.props} />
+              <SlideEditingPane />
             </div>
           </div>
         </div>

@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { getContentItemById } from 'selectors/entities/content-items';
 import generateAttributesObject from 'lib/content-item/helpers/generateAttributesObject';
 
 export default function contentItemHOC(WrappedComponent) {
-  function contentItemContainer(props) {
-    return <WrappedComponent {...props} />;
+  class contentItemContainer extends PureComponent {
+    render() {
+      return <WrappedComponent {...this.props} />;
+    }
   }
 
   function mapStateToProps(state, props) {
-    const contentItem = getContentItemById(state, props.contentItemId);
-    const attributes = generateAttributesObject(contentItem);
+    const contentItem = state.entities.contentItems.byId[props.contentItemId];
+    // const attributes = generateAttributesObject(contentItem);
 
     return ({
       contentItem,
-      attributes,
+
     });
   }
   return connect(mapStateToProps)(contentItemContainer);

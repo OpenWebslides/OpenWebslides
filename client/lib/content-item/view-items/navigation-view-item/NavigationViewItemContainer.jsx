@@ -6,7 +6,7 @@ import generateAttributesObject from '../../helpers/generateAttributesObject';
 
 
 function mapStateToProps(state, props) {
-  const contentItem = getContentItemById(state, props.contentItemId);
+  const contentItem = state.entities.contentItems.byId[props.contentItemId];
   const attributes = generateAttributesObject(contentItem);
 
   return { contentItem, attributes };

@@ -5,12 +5,8 @@ import { fetchDeck } from 'actions/entities/decks';
 
 import SlideEditor from 'presentationals/components/slide-editor/SlideEditor';
 
-function mapStateToProps() {
-  return {};
-}
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchDeck }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SlideEditor);
+export default connect(null, mapDispatchToProps)(SlideEditor);

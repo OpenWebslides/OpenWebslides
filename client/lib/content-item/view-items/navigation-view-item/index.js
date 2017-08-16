@@ -1,3 +1,3 @@
-import NavigationViewItemContainer from './NavigationViewItemContainer';
+import NavigationViewItem from './NavigationViewItem';
 
-export default NavigationViewItemContainer;
+export default NavigationViewItem;

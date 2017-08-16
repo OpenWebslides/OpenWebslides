@@ -11,7 +11,8 @@ function validate(values) {
 
   if (!title || title.trim() === '') {
     errors.title = 'Title is required';
-  } else if (title.trim().length < 6) {
+  }
+  else if (title.trim().length < 6) {
     errors.title = 'Title is too short (min. 6 characters)';
   }
 

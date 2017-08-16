@@ -83,10 +83,7 @@ class Slide extends Component {
         slideContent = this.props.slide.contentItemIds.map(id =>
           <NavigationViewItemContainer
             key={id}
-            slideViewType={this.props.viewType}
             contentItemId={id}
-            ancestorItemIds={[]}
-            slideId={this.props.slide.id}
             headingLevel={1}
           />);
       }
@@ -98,7 +95,7 @@ class Slide extends Component {
             contentItemId={id}
             ancestorItemIds={[]}
             slideId={this.props.slide.id}
-            editable={this.props.editable}
+            editable={true}
             headingLevel={1}
           />,
       );
@@ -139,10 +136,6 @@ Slide.propTypes = {
     contentItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
     contentItemSequence: PropTypes.number.isRequired,
   }).isRequired,
-  editable: PropTypes.bool.isRequired,
-  // We need to connect these to force a rerender (and thus a resize) when the
-  // active slide view types change.
-  activeSlideViewTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 Slide.defaultProps = {
