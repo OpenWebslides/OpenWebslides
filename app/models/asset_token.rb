@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+##
+# A short-lived JWT to fetch an asset
+#
 class AssetToken < JWT::Auth::Token
   attr_accessor :object
 

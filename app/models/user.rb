@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+##
+# A user account
+#
 class User < ApplicationRecord
   devise :database_authenticatable, :confirmable, :recoverable, :trackable, :validatable
   include JWT::Auth::Authenticatable

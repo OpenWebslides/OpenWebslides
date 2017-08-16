@@ -2,7 +2,7 @@
 
 module Annotations
   ##
-  # Conversation (comment thread starter)
+  # A conversation (comment thread starter)
   #
   class Conversation < Annotation
     ##

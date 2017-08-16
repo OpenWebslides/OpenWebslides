@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+##
+# A conversion job
+#
 class Conversion < ApplicationRecord
   ##
   # Properties

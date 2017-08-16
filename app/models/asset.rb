@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+##
+# A binary asset
+#
 class Asset < ApplicationRecord
   ##
   # Properties

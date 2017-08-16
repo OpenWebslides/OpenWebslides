@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+##
+# A notification for the social feed
+#
 class Notification < ApplicationRecord
   ##
   # Properties

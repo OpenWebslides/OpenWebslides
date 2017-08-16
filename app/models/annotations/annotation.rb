@@ -2,7 +2,7 @@
 
 module Annotations
   ##
-  # Annotation base class
+  # Abstract annotation
   #
   class Annotation < ApplicationRecord
     ##
