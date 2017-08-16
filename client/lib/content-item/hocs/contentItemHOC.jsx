@@ -5,7 +5,6 @@ import { getContentItemById } from 'selectors/entities/content-items';
 
 export default function contentItemHOC(WrappedComponent) {
   function contentItemContainer(props) {
-    console.log(props);
     return <WrappedComponent {...props} />;
   }
 
