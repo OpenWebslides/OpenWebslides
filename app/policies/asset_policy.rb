@@ -45,6 +45,6 @@ class AssetPolicy < ApplicationPolicy
   private
 
   def deck_policy
-    @deck_policy ||= DeckPolicy.new @user, @record.deck
+    @deck_policy ||= Pundit.policy! @user, @record.deck
   end
 end
