@@ -34,6 +34,15 @@ BLACKLIST = {
                             update_user?
                             destroy_user?
                           ],
+  Annotations::AnnotationPolicy => %i[
+                                      create_deck?
+                                      update_deck?
+                                      destroy_deck?
+
+                                      create_user?
+                                      update_user?
+                                      destroy_user?
+                                  ]
 }
 
 # Ensure that every relationship has corresponding policy actions
