@@ -175,7 +175,8 @@ RSpec.describe Annotations::AnnotationPolicy do
     end
 
     context 'for an owner' do
-      let(:user) { deck.collaborators << annotation.user; annotation.user }
+      deck.collaborators << annotation.user
+      let(:user) { annotation.user }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
