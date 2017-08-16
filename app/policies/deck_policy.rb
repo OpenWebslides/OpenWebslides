@@ -163,6 +163,30 @@ class DeckPolicy < ApplicationPolicy
   end
 
   ##
+  # Relationship: conversations
+  #
+  def create_conversations?
+    # Users can never create conversations relationship
+    false
+  end
+
+  def show_conversations?
+    # Users can only show conversations if the deck is showable
+    # Policy scope separately in the controller
+    show?
+  end
+
+  def update_conversations?
+    # Users can never update conversations relationship
+    false
+  end
+
+  def destroy_conversations?
+    # Users can never destroy conversations relationship
+    false
+  end
+
+  ##
   # Scope
   #
   class Scope < Scope
