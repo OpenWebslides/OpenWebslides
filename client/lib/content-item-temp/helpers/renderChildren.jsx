@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentItemContainer from 'lib/content-item/ContentItemContainer';
+import ContentItemContainer from 'lib/content-item-temp/ContentItemContainer';
 
 export default function renderChildren(props) {
   const {
