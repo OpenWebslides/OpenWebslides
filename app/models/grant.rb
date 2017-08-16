@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+##
+# Access grant to a deck (collaborators)
+#
 class Grant < ApplicationRecord
   ##
   # Properties

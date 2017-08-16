@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+##
+# A slide deck
+#
 class Deck < ApplicationRecord
   ##
   # Properties

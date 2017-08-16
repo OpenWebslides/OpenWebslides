@@ -2,7 +2,7 @@
 
 module Annotations
   ##
-  # Comment
+  # A comment on a conversation
   #
   class Comment < Annotation
     ##

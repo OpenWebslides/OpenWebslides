@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Annotations
+  ##
+  # A user's rating (approval) on an annotation
+  #
   class Rating < ApplicationRecord
     ##
     # Properties

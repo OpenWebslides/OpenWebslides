@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+##
+# A login identity attached to a user account
+#
 class Identity < ApplicationRecord
   ##
   # Properties
