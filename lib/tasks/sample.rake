@@ -87,7 +87,7 @@ namespace :db do
             deck.collaborators << user unless deck.collaborators.include? user
           end
 
-          deck.save!
+          DeckService.new(deck).create
           decks << deck
         end
       end
