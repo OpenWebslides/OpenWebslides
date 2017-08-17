@@ -1,3 +1,3 @@
 window.config = {
-  API_URL: 'http://azathoth.local:3001/api/'
+  API_URL: 'http://localhost:3000/api/'
 };
