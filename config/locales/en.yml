@@ -19,8 +19,9 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-openwebslides:
-  exceptions:
-    repo_exists:
-      title: "Repo exists"
-      detail: "Repository exists"
+en:
+  openwebslides:
+    exceptions:
+      repo_exists:
+        title: "Repo exists"
+        detail: "Repository exists"
