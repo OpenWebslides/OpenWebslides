@@ -7,7 +7,7 @@ import { signupUser } from 'actions/signupActions';
 import SignupForm from 'presentationals/components/signup/SignupForm';
 
 export function validate(values) {
-  const { email, password, passwordConfirmation, firstName, lastName } = values;
+  const { email, password, passwordConfirmation, firstName, lastName, tosAccepted } = values;
 
   const errors = {};
 
@@ -42,6 +42,11 @@ export function validate(values) {
   ) {
     errors.password = 'Password and password confirmation do not match';
   }
+
+  if (!tosAccepted) {
+    errors.tosAccepted = 'Terms of Service must be accepted';
+  }
+
   return errors;
 }
 

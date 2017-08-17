@@ -11,20 +11,21 @@ describe('Signup Saga', () => {
     const password = faker.internet.password();
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
+    const tosAccepted = true;
     const resolve = jest.fn();
     const reject = jest.fn();
 
     it('has a happy path', () => {
       const generator = signupSaga.doSignup({
         meta: {
-          values: { email, password, firstName, lastName },
+          values: { email, password, firstName, lastName, tosAccepted },
           resolve,
           reject,
         },
       });
 
       expect(generator.next().value).toEqual(
-        call(signupApi, email, password, firstName, lastName),
+        call(signupApi, email, password, firstName, lastName, tosAccepted),
       );
 
       expect(generator.next().value).toEqual(call(resolve));
@@ -39,14 +40,14 @@ describe('Signup Saga', () => {
 
       const generator = signupSaga.doSignup({
         meta: {
-          values: { email, password, firstName, lastName },
+          values: { email, password, firstName, lastName, tosAccepted },
           resolve,
           reject,
         },
       });
 
       expect(generator.next().value).toEqual(
-        call(signupApi, email, password, firstName, lastName),
+        call(signupApi, email, password, firstName, lastName, tosAccepted),
       );
 
       expect(
@@ -66,14 +67,14 @@ describe('Signup Saga', () => {
 
       const generator = signupSaga.doSignup({
         meta: {
-          values: { email, password, firstName, lastName },
+          values: { email, password, firstName, lastName, tosAccepted },
           resolve,
           reject,
         },
       });
 
       expect(generator.next().value).toEqual(
-        call(signupApi, email, password, firstName, lastName),
+        call(signupApi, email, password, firstName, lastName, tosAccepted),
       );
 
       expect(generator.throw({ message, statusCode }).value).toEqual({

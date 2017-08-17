@@ -8,9 +8,9 @@ export function* doSignup(action) {
   const { resolve, reject } = action.meta;
 
   try {
-    const { email, password, firstName, lastName } = action.meta.values;
+    const { email, password, firstName, lastName, tosAccepted } = action.meta.values;
 
-    yield call(signupApi, email, password, firstName, lastName);
+    yield call(signupApi, email, password, firstName, lastName, tosAccepted);
 
     yield call(resolve);
   } catch (error) {
