@@ -85,8 +85,4 @@ $ bundle exec rails 'token:generate[1]'
 
 ## Documentation
 
-Generate API documentation:
-
-```
-bundle exec rails documentation:generate
-```
+The application structure, operations manual and API documentation is located [here](https://openwebslides.github.io/documentation/).
