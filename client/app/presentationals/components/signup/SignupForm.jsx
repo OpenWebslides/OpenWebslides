@@ -45,6 +45,13 @@ function SignupForm(props) {
             type="password"
           />
 
+          <Field
+            component={InputField}
+            name="tosAccepted"
+            label="I accept the Terms of Service"
+            type="checkbox"
+          />
+
           <p className="o_form__buttons o_buttons-row">
             <span className="o_buttons-row__list">
               <span className="o_buttons-row__item">

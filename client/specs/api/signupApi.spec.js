@@ -11,10 +11,11 @@ describe('Signup Api Call', () => {
     const password = faker.internet.password();
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
+    const tosAccepted = true;
 
     asyncFetch.mockReturnValue(200);
 
-    const response = await signup(email, password, firstName, lastName);
+    const response = await signup(email, password, firstName, lastName, tosAccepted);
     expect(response).toEqual(200);
 
     const calledUrl = asyncFetch.mock.calls[0][0];
@@ -28,6 +29,7 @@ describe('Signup Api Call', () => {
           password,
           firstName,
           lastName,
+          tosAccepted,
         },
       },
     });
