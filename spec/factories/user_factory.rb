@@ -7,6 +7,7 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password 6 }
     password_confirmation { password }
+    tos_accepted true
 
     trait :with_decks do
       decks { build_list :deck, 3 }

@@ -12,6 +12,7 @@ class User < ApplicationRecord
   property :last_name
   property :email
   property :token_version
+  property :tos_accepted
 
   ##
   # Associations
@@ -46,6 +47,8 @@ class User < ApplicationRecord
             :numericality => { :only_integer => true }
 
   validate :readonly_email, :on => :update
+
+  validate :accepted_terms
 
   ##
   # Callbacks
@@ -92,5 +95,11 @@ class User < ApplicationRecord
   #
   def readonly_email
     errors.add :email, 'cannot be changed' if email_changed?
+  end
+
+  def accepted_terms
+    return if tos_accepted?
+
+    errors.add :tos_accepted, I18n.t('openwebslides.validations.user.tos_accepted')
   end
 end

@@ -25,3 +25,6 @@ en:
       repo_exists:
         title: "Repo exists"
         detail: "Repository exists"
+    validations:
+      user:
+        tos_accepted: "must be true"
