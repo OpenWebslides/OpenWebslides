@@ -51,3 +51,6 @@ doc/
 
 # Local repositories
 data/*
+
+# Production API url override
+client/config/config.js
