@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ContentItemContainer from 'lib/content-item-temp/ContentItemContainer';
+import { slideViewTypes } from 'constants/slideViewTypes';
+
 import NavigationViewItem from 'lib/content-item/view-items/navigation-view-item';
+import LiveViewItem from 'lib/content-item/view-items/live-view-item';
 
 
 class Slide extends Component {
@@ -80,8 +82,7 @@ class Slide extends Component {
     let slideContent;
 
     if (this.props.slide) {
-      console.log(this.props);
-      if (this.props.viewType === 'NAVIGATION') {
+      if (this.props.viewType === slideViewTypes.NAVIGATION) {
         slideContent = this.props.slide.contentItemIds.map(id =>
           <NavigationViewItem
             key={id}
@@ -91,16 +92,16 @@ class Slide extends Component {
           />,
       );
       }
-      else {
+      if (this.props.viewType === slideViewTypes.LIVE) {
         slideContent = this.props.slide.contentItemIds.map(id =>
-          <ContentItemContainer
+          <LiveViewItem
             key={id}
-            slideViewType={this.props.viewType}
+            slideViewType={slideViewTypes.LIVE}
             contentItemId={id}
             ancestorItemIds={[]}
             slideId={this.props.slide.id}
-            editable={this.props.editable}
             headingLevel={1}
+            editable={true}
           />,
       );
       }

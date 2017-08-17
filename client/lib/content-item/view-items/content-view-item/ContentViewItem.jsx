@@ -3,24 +3,29 @@ import PropTypes from 'prop-types';
 
 import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
 
-import contentItemTypes from '../content-item-factories/components';
-import wrapperTypes from '../content-item-factories/containers';
+import htmlComponents from '../../html-wrappers/components';
+import htmlContainers from '../../html-wrappers/containers';
 
-import renderChildren from '../helpers/renderChildren';
-import SlideContentViewItem from '../helpers/SlideContentViewItem';
+import SlideContentViewItem from './SlideContentViewItem';
+import ContentViewItemContainer from './ContentViewItemContainer';
+import addContentItemTypeProps from 'lib/content-item/helpers/addContentItemTypeProps';
 
 function ContentViewFactory(props) {
   const {
     contentItem,
-    contentItem: { contentItemType, ordered },
+    contentItem: { contentItemType, ordered, childItemIds, id },
     handleKeyDown,
     slideViewType,
     isFocused,
     hasInlineProperties,
     textPropName,
+    headingLevel,
+    viewType,
+    ancestorItemIds,
+    slideId,
   } = props;
 
-  if (Object.keys(wrapperTypes).includes(contentItemType)) {
+  if (Object.keys(htmlContainers).includes(contentItemType)) {
     let className = 'c_slide-content-view-item__section';
 
     if (contentItemType === 'LIST') {
@@ -29,12 +34,24 @@ function ContentViewFactory(props) {
 
     return (
       <div className={className}>
-        {renderChildren(props)}
+        {childItemIds.map(childItemId => (
+          <ContentViewItemContainer
+            key={childItemId}
+            viewType={viewType}
+            slideViewType={slideViewType}
+            contentItemId={childItemId}
+            ancestorItemIds={ancestorItemIds.concat(id)}
+            slideId={slideId}
+            editable={true}
+            headingLevel={headingLevel + 1}
+          />))}
       </div>
     );
   }
 
-  if (Object.keys(contentItemTypes).includes(contentItemType)) {
+  if (Object.keys(htmlComponents).includes(contentItemType)) {
+    const contentItemTypeProps = addContentItemTypeProps(contentItemType);
+
     return (
       <SlideContentViewItem contentItem={contentItem} isFocused={isFocused}>
         <ContentEditableContainer
@@ -44,6 +61,7 @@ function ContentViewFactory(props) {
           slideViewType={slideViewType}
           textPropName={textPropName}
           hasInlineProperties={hasInlineProperties}
+          {...contentItemTypeProps}
         />
       </SlideContentViewItem>
     );

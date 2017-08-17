@@ -24,7 +24,7 @@ function NavigationViewItem(props) {
     const ChildComponents = renderChildrenHOC({ childItemIds, headingLevel, ordered })(NavigationViewItem);
 
     return (
-      <ContentItemWrapper attributes={attributes}>
+      <ContentItemWrapper attributes={attributes} ordered={ordered}>
         <ChildComponents />
       </ContentItemWrapper>);
   }
@@ -50,7 +50,7 @@ function NavigationViewItem(props) {
             attributes={attributes}
             headingLevel={headingLevel}
           >
-            {getHTMLStringFromInlinePropertiesAndText(inlineProperties, text)}
+            <span dangerouslySetInnerHTML={{ __html: getHTMLStringFromInlinePropertiesAndText(inlineProperties, text) }} />
           </ContentItemComponent>
         );
       }
