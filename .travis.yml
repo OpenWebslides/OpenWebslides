@@ -19,6 +19,3 @@ before_script:
 script:
   - bundle exec rspec
   - (cd client && yarn run test)
-after_script:
-  - bundle exec rails documentation:generate
-  - bundle exec rails documentation:deploy
