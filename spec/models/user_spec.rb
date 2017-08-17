@@ -25,12 +25,23 @@ RSpec.describe User, :type => :model do
     it { is_expected.not_to allow_value('foo').for(:token_version) }
     it { is_expected.to allow_value(0).for(:token_version) }
 
+    it { is_expected.not_to allow_value(nil).for(:tos_accepted) }
+    it { is_expected.not_to allow_value('').for(:tos_accepted) }
+    it { is_expected.not_to allow_value(false).for(:tos_accepted) }
+    it { is_expected.to allow_value(true).for(:tos_accepted) }
+    it { is_expected.to allow_value('foo').for(:tos_accepted) }
+    it { is_expected.not_to allow_value('false').for(:tos_accepted) }
+
     it 'is invalid without attributes' do
       expect(User.new).not_to be_valid
     end
 
     it 'is valid with valid attributes' do
       expect(build :user).to be_valid
+    end
+
+    it 'is not valid when terms are not accepted' do
+      expect(build :user, :tos_accepted => false).not_to be_valid
     end
 
     it 'rejects changes to email' do
