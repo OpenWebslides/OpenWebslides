@@ -13,6 +13,7 @@ RSpec.describe UserResource, :type => :resource do
   it { is_expected.to have_attribute :first_name }
   it { is_expected.to have_attribute :last_name }
   it { is_expected.not_to have_attribute :email }
+  it { is_expected.not_to have_attribute :tos_accepted }
 
   it { is_expected.to have_many(:decks).with_class_name 'Deck' }
   it { is_expected.to have_many(:collaborations).with_class_name 'Deck' }
@@ -32,7 +33,7 @@ RSpec.describe UserResource, :type => :resource do
     end
 
     it 'should have a valid set of creatable fields' do
-      expect(described_class.creatable_fields).to match_array %i[first_name last_name email password]
+      expect(described_class.creatable_fields).to match_array %i[first_name last_name email password tos_accepted]
     end
 
     it 'should have a valid set of updatable fields' do

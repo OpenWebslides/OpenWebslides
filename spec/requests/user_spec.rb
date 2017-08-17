@@ -13,7 +13,8 @@ RSpec.describe 'User API', :type => :request do
     {
       :email => Faker::Internet.email,
       :firstName => first_name,
-      :password => password
+      :password => password,
+      :tosAccepted => true
     }
   end
 
@@ -62,6 +63,14 @@ RSpec.describe 'User API', :type => :request do
 
     it 'rejects an already existing email' do
       post users_path, :params => request_body(attributes.merge :email => user.email), :headers => headers
+
+      expect(response.status).to eq 422
+      expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'rejects TOS not accepted' do
+      post users_path, :params => request_body(attributes.merge :tosAccepted => false), :headers => headers
 
       expect(response.status).to eq 422
       expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
