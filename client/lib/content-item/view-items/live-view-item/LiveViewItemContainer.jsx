@@ -16,8 +16,8 @@ import {
 
 import { getContentItemById } from 'selectors/entities/content-items';
 
-import ContentItem from './ContentItem';
-import generateAttributesObject from './helpers/generateAttributesObject';
+import generateAttributesObject from 'lib/content-item/helpers/generateAttributes';
+import LiveViewItem from './LiveViewItem';
 
 
 function mapStateToProps(state, props) {
@@ -77,16 +77,13 @@ function mapDispatchToProps(dispatch, props) {
   };
 }
 
-const ContentItemContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ContentItem);
+const LiveViewItemContainer = connect(mapStateToProps, mapDispatchToProps)(LiveViewItem);
 
-ContentItemContainer.propTypes = {
+LiveViewItemContainer.propTypes = {
   slideViewType: PropTypes.string.isRequired,
   contentItemId: PropTypes.string.isRequired,
   ancestorItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   slideId: PropTypes.string.isRequired,
 };
 
-export default ContentItemContainer;
+export default LiveViewItemContainer;
