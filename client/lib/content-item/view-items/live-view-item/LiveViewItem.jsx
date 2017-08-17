@@ -5,13 +5,14 @@ import ContentEditableContainer from 'lib/content-editable/ContentEditableContai
 
 import { contentItemTypes } from 'constants/contentItemTypes';
 
-import contentItemFactories from '../content-item-factories/components';
-import wrapperFactories from '../content-item-factories/containers';
+import htmlComponents from 'lib/content-item/html-wrappers/components';
+import htmlContainers from 'lib/content-item/html-wrappers/containers';
 
-import renderChildren from '../helpers/renderChildren';
+import LiveViewItemContainer from './LiveViewItemContainer';
+import addContentItemTypeProps from 'lib/content-item/helpers/addContentItemTypeProps';
 
 
-function LiveViewFactory(props) {
+function LiveViewItem(props) {
   const {
     headingLevel,
     contentItem,
@@ -21,26 +22,41 @@ function LiveViewFactory(props) {
     isFocused,
     hasInlineProperties,
     textPropName,
-    contentItem: { contentItemType },
+    contentItem: { contentItemType, childItemIds, id, ordered },
+    viewType,
+    ancestorItemIds,
+    slideId,
   } = props;
 
-  if (Object.keys(wrapperFactories).includes(contentItemType)) {
-    const ContentItemWrapper = wrapperFactories[contentItemType];
+  if (Object.keys(htmlContainers).includes(contentItemType)) {
+    const ContentItemWrapper = htmlContainers[contentItemType];
 
     return (
-      <ContentItemWrapper attributes={attributes} contentItem={contentItem}>
-        {renderChildren(props)}
+      <ContentItemWrapper attributes={attributes} headingLevel={headingLevel} ordered={ordered}>
+        {childItemIds.map(childItemId => (
+          <LiveViewItemContainer
+            key={childItemId}
+            viewType={viewType}
+            slideViewType={slideViewType}
+            contentItemId={childItemId}
+            ancestorItemIds={ancestorItemIds.concat(id)}
+            slideId={slideId}
+            editable={true}
+            headingLevel={headingLevel + 1}
+          />))}
       </ContentItemWrapper>
     );
   }
 
-  if (Object.keys(contentItemFactories).includes(contentItemType)) {
-    const ContentItemComponent = contentItemFactories[contentItemType];
+  if (Object.keys(htmlComponents).includes(contentItemType)) {
+    const ContentItemComponent = htmlComponents[contentItemType];
+    const contentItemTypeProps = addContentItemTypeProps(contentItemType);
+
     switch (contentItemType) {
       case contentItemTypes.ILLUSTRATIVE_IMAGE:
       case contentItemTypes.DECORATIVE_IMAGE:
       case contentItemTypes.IFRAME:
-        return <ContentItemComponent contentItem={contentItem} attributes={attributes} />;
+        return <ContentItemComponent contentItem={contentItem} attributes={attributes} {...contentItemTypeProps} />;
 
       default:
         return (
@@ -52,6 +68,7 @@ function LiveViewFactory(props) {
               slideViewType={slideViewType}
               textPropName={textPropName}
               hasInlineProperties={hasInlineProperties}
+              {...contentItemTypeProps}
             />
           </ContentItemComponent>
         );
@@ -59,7 +76,7 @@ function LiveViewFactory(props) {
   }
 }
 
-LiveViewFactory.propTypes = {
+LiveViewItem.propTypes = {
   contentItem: PropTypes.objectOf(Object).isRequired,
   attributes: PropTypes.objectOf(Object).isRequired,
   handleKeyDown: PropTypes.func.isRequired,
@@ -70,9 +87,9 @@ LiveViewFactory.propTypes = {
   textPropName: PropTypes.string,
 };
 
-LiveViewFactory.defaultProps = {
+LiveViewItem.defaultProps = {
   hasInlineProperties: false,
   textPropName: '',
 };
 
-export default LiveViewFactory;
+export default LiveViewItem;

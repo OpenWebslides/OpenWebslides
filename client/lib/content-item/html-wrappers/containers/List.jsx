@@ -12,7 +12,7 @@ export default function List({ children, attributes, ordered }) {
 }
 
 List.propTypes = {
-  children: PropTypes.arrayOf(Object).isRequired,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(Object), PropTypes.objectOf(Object)]).isRequired,
   attributes: PropTypes.objectOf(Object).isRequired,
   ordered: PropTypes.bool.isRequired,
 };
