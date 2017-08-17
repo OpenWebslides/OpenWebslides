@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::ConversationResource, :type => :resource do
+RSpec.describe ConversationResource, :type => :resource do
   let(:conversation) { create :conversation }
   let(:context) { {} }
 
