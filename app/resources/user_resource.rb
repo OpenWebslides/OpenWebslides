@@ -4,7 +4,7 @@ class UserResource < ApplicationResource
   ##
   # Properties
   #
-  attributes :first_name, :last_name, :email, :password
+  attributes :first_name, :last_name, :email, :password, :tos_accepted
 
   has_many :decks
   has_many :collaborations
@@ -23,9 +23,9 @@ class UserResource < ApplicationResource
   #
   def fetchable_fields
     if context[:current_user]
-      super - [:password]
+      super - %i[password tos_accepted]
     else
-      super - %i[email password]
+      super - %i[email password tos_accepted]
     end
   end
 
@@ -34,10 +34,10 @@ class UserResource < ApplicationResource
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[email]
+    super(context) - %i[email tos_accepted]
   end
 
   def self.sortable_fields(context)
-    super(context) - [:password]
+    super(context) - %i[password tos_accepted]
   end
 end
