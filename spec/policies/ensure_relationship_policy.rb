@@ -34,24 +34,24 @@ BLACKLIST = {
                             update_user?
                             destroy_user?
                           ],
-  Annotations::AnnotationPolicy => %i[
-                                      create_deck?
-                                      update_deck?
-                                      destroy_deck?
+  AnnotationPolicy => %i[
+                          create_deck?
+                          update_deck?
+                          destroy_deck?
 
-                                      create_user?
-                                      update_user?
-                                      destroy_user?
-                                  ],
-  Annotations::ConversationPolicy => %i[
-                                        create_deck?
-                                        update_deck?
-                                        destroy_deck?
+                          create_user?
+                          update_user?
+                          destroy_user?
+                      ],
+  ConversationPolicy => %i[
+                            create_deck?
+                            update_deck?
+                            destroy_deck?
 
-                                        create_user?
-                                        update_user?
-                                        destroy_user?
-                                      ]
+                            create_user?
+                            update_user?
+                            destroy_user?
+                          ]
 }
 
 # Ensure that every relationship has corresponding policy actions
@@ -76,8 +76,6 @@ RSpec.describe 'relationship policy actions' do
         ]
 
         actions.each do |action|
-          # require 'byebug'; byebug if policy == Annotations::AnnotationPolicy && action.to_s.end_with?("_#{rel.to_s}?")
-
           next if BLACKLIST.key?(policy) && BLACKLIST[policy].include?(action)
 
           it { is_expected.to respond_to action }

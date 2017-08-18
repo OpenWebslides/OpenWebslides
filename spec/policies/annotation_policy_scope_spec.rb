@@ -2,12 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::ConversationPolicy::Scope do
-  subject { described_class.new(user, Annotations::Conversation).resolve }
-
-  it 'should inherit AnnotationPolicy' do
-    expect(described_class).to be < Annotations::AnnotationPolicy::Scope
-  end
+RSpec.describe AnnotationPolicy::Scope do
+  subject { described_class.new(user, Annotation).resolve }
 
   include_context 'policy_sample'
 

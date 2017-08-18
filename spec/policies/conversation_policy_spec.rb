@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::ConversationPolicy do
+RSpec.describe ConversationPolicy do
   subject { described_class.new user, conversation }
 
   let(:conversation) { build :conversation, :deck => deck }

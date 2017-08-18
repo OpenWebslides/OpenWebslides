@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::AnnotationPolicy do
+RSpec.describe AnnotationPolicy do
   subject { described_class.new user, annotation }
 
   let(:annotation) { build :annotation, :deck => deck }
@@ -22,10 +22,10 @@ RSpec.describe Annotations::AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for a user' do
+    context 'for another user' do
       let(:user) { build :user }
 
-      it { is_expected.to permit_action :create }
+      it { is_expected.to forbid_action :create }
       it { is_expected.to permit_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
@@ -35,12 +35,13 @@ RSpec.describe Annotations::AnnotationPolicy do
     end
 
     context 'for a collaborator' do
+      before { annotation.user = user }
       let(:user) { deck.collaborators.first }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
-      it { is_expected.to forbid_action :update }
-      it { is_expected.to forbid_action :destroy }
+      it { is_expected.to permit_action :update }
+      it { is_expected.to permit_action :destroy }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -59,12 +60,13 @@ RSpec.describe Annotations::AnnotationPolicy do
     end
 
     context 'for a deck owner' do
+      before { annotation.user = user }
       let(:user) { deck.owner }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
-      it { is_expected.to forbid_action :update }
-      it { is_expected.to forbid_action :destroy }
+      it { is_expected.to permit_action :update }
+      it { is_expected.to permit_action :destroy }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -86,10 +88,10 @@ RSpec.describe Annotations::AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for a user' do
+    context 'for another user' do
       let(:user) { build :user }
 
-      it { is_expected.to permit_action :create }
+      it { is_expected.to forbid_action :create }
       it { is_expected.to permit_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
@@ -99,12 +101,13 @@ RSpec.describe Annotations::AnnotationPolicy do
     end
 
     context 'for a collaborator' do
+      before { annotation.user = user }
       let(:user) { deck.collaborators.first }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
-      it { is_expected.to forbid_action :update }
-      it { is_expected.to forbid_action :destroy }
+      it { is_expected.to permit_action :update }
+      it { is_expected.to permit_action :destroy }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -123,12 +126,13 @@ RSpec.describe Annotations::AnnotationPolicy do
     end
 
     context 'for a deck owner' do
+      before { annotation.user = user }
       let(:user) { deck.owner }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
-      it { is_expected.to forbid_action :update }
-      it { is_expected.to forbid_action :destroy }
+      it { is_expected.to permit_action :update }
+      it { is_expected.to permit_action :destroy }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -150,7 +154,7 @@ RSpec.describe Annotations::AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for a user' do
+    context 'for another user' do
       let(:user) { build :user }
 
       it { is_expected.to forbid_action :create }
@@ -163,12 +167,13 @@ RSpec.describe Annotations::AnnotationPolicy do
     end
 
     context 'for a collaborator' do
+      before { annotation.user = user }
       let(:user) { deck.collaborators.first }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
-      it { is_expected.to forbid_action :update }
-      it { is_expected.to forbid_action :destroy }
+      it { is_expected.to permit_action :update }
+      it { is_expected.to permit_action :destroy }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -188,12 +193,13 @@ RSpec.describe Annotations::AnnotationPolicy do
     end
 
     context 'for a deck owner' do
+      before { annotation.user = user }
       let(:user) { deck.owner }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
-      it { is_expected.to forbid_action :update }
-      it { is_expected.to forbid_action :destroy }
+      it { is_expected.to permit_action :update }
+      it { is_expected.to permit_action :destroy }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
