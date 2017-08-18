@@ -7,7 +7,6 @@ import { slideViewTypes } from 'constants/slideViewTypes';
 import PresentationViewToolbarContainer from 'containers/presentation-view/PresentationViewToolbarContainer';
 import AnnotationSidePanelContainer from 'containers/annotations/AnnotationSidePanelContainer';
 
-
 class PresentationView extends Component {
   componentDidMount() {
     const { deckId } = this.props.match.params;
