@@ -13,6 +13,11 @@ import {
   getActiveContentItemId,
 } from 'selectors/app/slide-editor';
 
+import {
+  addContentItemToSlide,
+  deleteContentItemFromSlide,
+} from 'actions/entities/slides';
+
 import ContentEditable from './ContentEditable';
 
 function mapStateToProps(state) {
@@ -29,6 +34,8 @@ function mapDispatchToProps(dispatch) {
       setActiveContentItemId,
       setSelectionOffsets,
       updateDeck,
+      addContentItemToSlide,
+      deleteContentItemFromSlide,
     },
     dispatch,
   );
