@@ -4,33 +4,38 @@ import PropTypes from 'prop-types';
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 import { contentItemTypes } from 'constants/contentItemTypes';
 
-import contentItemFactories from '../content-item-factories/components';
-import wrapperFactories from '../content-item-factories/containers';
+import htmlComponents from 'lib/content-item/html-wrappers/components';
+import htmlContainers from 'lib/content-item/html-wrappers/containers';
 
-import renderChildren from '../helpers/renderChildren';
+import contentItemHOC from 'lib/content-item/hocs/contentItemHOC';
+import renderChildrenHOC from 'lib/content-item/hocs/renderChildrenHOC';
 
+import generateAttributes from '../../helpers/generateAttributes';
 
-function PresentationViewFactory(props) {
+function PresentationViewItem(props) {
   const {
     headingLevel,
     contentItem,
-    attributes,
-    contentItem: { contentItemType },
+    contentItem: { contentItemType, childItemIds, ordered },
   } = props;
 
-  if (Object.keys(wrapperFactories).includes(contentItemType)) {
-    const ContentItemWrapper = wrapperFactories[contentItemType];
+  const attributes = generateAttributes(contentItem);
+
+
+  if (Object.keys(htmlContainers).includes(contentItemType)) {
+    const ContentItemWrapper = htmlContainers[contentItemType];
+
+    const ChildComponents = renderChildrenHOC({ childItemIds, headingLevel, ordered })(PresentationViewItem);
 
     return (
-      <ContentItemWrapper attributes={attributes} contentItem={contentItem}>
-        {renderChildren(props)}
-      </ContentItemWrapper>
-    );
+      <ContentItemWrapper attributes={attributes} ordered={ordered}>
+        <ChildComponents />
+      </ContentItemWrapper>);
   }
 
 
-  if (Object.keys(contentItemFactories).includes(contentItemType)) {
-    const ContentItemComponent = contentItemFactories[contentItemType];
+  if (Object.keys(htmlComponents).includes(contentItemType)) {
+    const ContentItemComponent = htmlComponents[contentItemType];
 
     switch (contentItemType) {
       case contentItemTypes.ILLUSTRATIVE_IMAGE:
@@ -56,20 +61,15 @@ function PresentationViewFactory(props) {
   }
 }
 
-PresentationViewFactory.propTypes = {
+PresentationViewItem.propTypes = {
   contentItem: PropTypes.objectOf(Object).isRequired,
   attributes: PropTypes.objectOf(Object).isRequired,
-  handleKeyDown: PropTypes.func.isRequired,
   headingLevel: PropTypes.number.isRequired,
-  slideViewType: PropTypes.string.isRequired,
-  isFocused: PropTypes.bool.isRequired,
-  hasInlineProperties: PropTypes.bool,
-  textPropName: PropTypes.string,
 };
 
-PresentationViewFactory.defaultProps = {
+PresentationViewItem.defaultProps = {
   hasInlineProperties: false,
   textPropName: '',
 };
 
-export default PresentationViewFactory;
+export default contentItemHOC(PresentationViewItem);
