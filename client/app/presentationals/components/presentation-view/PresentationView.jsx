@@ -5,6 +5,8 @@ import SlideContainer from 'containers/slide-editor/SlideContainer';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
 import PresentationViewToolbarContainer from 'containers/presentation-view/PresentationViewToolbarContainer';
+import AnnotationSidePanelContainer from 'containers/annotations/AnnotationSidePanelContainer';
+
 
 class PresentationView extends Component {
   componentDidMount() {
@@ -20,11 +22,20 @@ class PresentationView extends Component {
     return <h1>Loading...</h1>;
   }
 
+  renderAnnotationPanel() {
+    const { annotationMode } = this.props;
+    if (annotationMode) {
+      return <AnnotationSidePanelContainer />;
+    }
+    return null;
+  }
+
   render() {
     return (
       <div>
         {this.renderSlide()}
         <PresentationViewToolbarContainer />
+        {this.renderAnnotationPanel()}
       </div>
     );
   }
@@ -34,6 +45,7 @@ PresentationView.propTypes = {
   activeSlideId: PropTypes.string,
   fetchDeck: PropTypes.func.isRequired,
   match: PropTypes.objectOf(Object).isRequired,
+  annotationMode: PropTypes.bool.isRequired,
 };
 
 PresentationView.defaultProps = {
