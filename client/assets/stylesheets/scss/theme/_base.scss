@@ -22,3 +22,26 @@ a {
   width: 30%;
   left: 35%;
 }
+
+.side-nav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  padding-left: 20px;
+  z-index: 1; /* Stay on top */
+  top: 0;
+  right: 0;
+  background-color: white;
+  border-left: 2px solid black;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s;
+}
+
+.side-nav .close-btn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  color: black;
+}
