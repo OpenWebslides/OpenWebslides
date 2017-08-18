@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 import { contentItemTypes } from 'constants/contentItemTypes';
 
-import contentItemFactories from '../../html-wrappers/components';
-import wrapperFactories from '../../html-wrappers/containers';
+import htmlComponents from '../../html-wrappers/components';
+import htmlContainers from '../../html-wrappers/containers';
 
 import renderChildrenHOC from '../../hocs/renderChildrenHOC';
 import contentItemHOC from '../../hocs/contentItemHOC';
@@ -18,8 +18,8 @@ function NavigationViewItem(props) {
 
   const attributes = generateAttributes(contentItem);
 
-  if (Object.keys(wrapperFactories).includes(contentItemType)) {
-    const ContentItemWrapper = wrapperFactories[contentItemType];
+  if (Object.keys(htmlContainers).includes(contentItemType)) {
+    const ContentItemWrapper = htmlContainers[contentItemType];
 
     const ChildComponents = renderChildrenHOC({ childItemIds, headingLevel, ordered })(NavigationViewItem);
 
@@ -30,8 +30,8 @@ function NavigationViewItem(props) {
   }
 
 
-  if (Object.keys(contentItemFactories).includes(contentItemType)) {
-    const ContentItemComponent = contentItemFactories[contentItemType];
+  if (Object.keys(htmlComponents).includes(contentItemType)) {
+    const ContentItemComponent = htmlComponents[contentItemType];
 
     switch (contentItemType) {
       case contentItemTypes.ILLUSTRATIVE_IMAGE:
