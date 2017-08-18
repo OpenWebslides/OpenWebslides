@@ -45,12 +45,10 @@ class User < ApplicationRecord
            :inverse_of => :user
 
   has_many :annotations,
-           :class_name => 'Annotations::Annotation',
            :dependent => :destroy,
            :inverse_of => :user
 
   has_many :ratings,
-           :class_name => 'Annotations::Rating',
            :dependent => :destroy,
            :inverse_of => :user
 

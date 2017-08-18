@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::Rating, :type => :model do
+RSpec.describe Rating, :type => :model do
   describe 'associations' do
     it { is_expected.to belong_to(:user).inverse_of(:ratings) }
     it { is_expected.to belong_to(:annotation).inverse_of(:ratings) }

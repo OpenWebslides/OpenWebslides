@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::Comment, :type => :model do
+RSpec.describe Comment, :type => :model do
   describe 'attributes' do
     it { is_expected.not_to allow_value(nil).for(:text) }
     it { is_expected.not_to allow_value('').for(:text) }
