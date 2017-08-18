@@ -30,10 +30,10 @@ RSpec.describe 'users routing', :type => :routing do
     expect(:get => '/api/users/foo/decks').to route_to 'decks#get_related_resources', params.merge(:source => 'users')
 
     expect(:get => route).to route_to 'users#show_relationship', params
-    expect(:patch => route).to route_to 'users#update_relationship', params
-    expect(:put => route).to route_to 'users#update_relationship', params
-    expect(:post => route).to route_to 'users#create_relationship', params
-    expect(:delete => route).to route_to 'users#destroy_relationship', params
+    expect(:patch => route).not_to be_routable
+    expect(:put => route).not_to be_routable
+    expect(:post => route).not_to be_routable
+    expect(:delete => route).not_to be_routable
   end
 
   it 'routes user collaborations relationship endpoint' do
@@ -43,10 +43,10 @@ RSpec.describe 'users routing', :type => :routing do
     expect(:get => '/api/users/foo/collaborations').to route_to 'decks#get_related_resources', params.merge(:source => 'users')
 
     expect(:get => route).to route_to 'users#show_relationship', params
-    expect(:patch => route).to route_to 'users#update_relationship', params
-    expect(:put => route).to route_to 'users#update_relationship', params
-    expect(:post => route).to route_to 'users#create_relationship', params
-    expect(:delete => route).to route_to 'users#destroy_relationship', params
+    expect(:patch => route).not_to be_routable
+    expect(:put => route).not_to be_routable
+    expect(:post => route).not_to be_routable
+    expect(:delete => route).not_to be_routable
   end
 
   it 'routes user conversions relationship endpoint' do
@@ -56,9 +56,9 @@ RSpec.describe 'users routing', :type => :routing do
     expect(:get => '/api/users/foo/conversions').to route_to 'conversions#get_related_resources', params.merge(:source => 'users')
 
     expect(:get => route).to route_to 'users#show_relationship', params
-    expect(:patch => route).to route_to 'users#update_relationship', params
-    expect(:put => route).to route_to 'users#update_relationship', params
-    expect(:post => route).to route_to 'users#create_relationship', params
-    expect(:delete => route).to route_to 'users#destroy_relationship', params
+    expect(:patch => route).not_to be_routable
+    expect(:put => route).not_to be_routable
+    expect(:post => route).not_to be_routable
+    expect(:delete => route).not_to be_routable
   end
 end
