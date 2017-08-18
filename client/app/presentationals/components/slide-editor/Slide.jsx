@@ -5,6 +5,7 @@ import { slideViewTypes } from 'constants/slideViewTypes';
 
 import NavigationViewItem from 'lib/content-item/view-items/navigation-view-item';
 import LiveViewItem from 'lib/content-item/view-items/live-view-item';
+import PresentationViewItem from 'lib/content-item/view-items/presentation-view-item';
 
 
 class Slide extends Component {
@@ -79,20 +80,29 @@ class Slide extends Component {
   }
 
   render() {
+    const { viewType } = this.props;
     let slideContent;
 
-    if (this.props.slide) {
-      if (this.props.viewType === slideViewTypes.NAVIGATION) {
+    switch (viewType) {
+      case slideViewTypes.NAVIGATION:
         slideContent = this.props.slide.contentItemIds.map(id =>
           <NavigationViewItem
             key={id}
             contentItemId={id}
             slideId={this.props.slide.id}
             headingLevel={1}
-          />,
-      );
-      }
-      if (this.props.viewType === slideViewTypes.LIVE) {
+          />);
+        break;
+      case slideViewTypes.PRESENTATION:
+        slideContent = this.props.slide.contentItemIds.map(id =>
+          <PresentationViewItem
+            key={id}
+            contentItemId={id}
+            slideId={this.props.slide.id}
+            headingLevel={1}
+          />);
+        break;
+      case slideViewTypes.LIVE:
         slideContent = this.props.slide.contentItemIds.map(id =>
           <LiveViewItem
             key={id}
@@ -104,11 +114,12 @@ class Slide extends Component {
             editable={true}
           />,
       );
-      }
+        break;
+      default:
+        slideContent = <p>Loading...</p>;
+        break;
     }
-    else {
-      slideContent = <p>Loading...</p>;
-    }
+
 
     return (
       <div
