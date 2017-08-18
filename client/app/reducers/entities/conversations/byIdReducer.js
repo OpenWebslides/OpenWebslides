@@ -7,8 +7,7 @@ const initialState = Immutable({});
 function byIdReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_CONVERSATIONS_SUCCESS:
-      console.log(action);
-      return state;
+      return state.merge(action.payload);
     default:
       return state;
   }
