@@ -10,11 +10,10 @@ import SlideContentViewItem from './SlideContentViewItem';
 import ContentViewItemContainer from './ContentViewItemContainer';
 import addContentItemTypeProps from 'lib/content-item/helpers/addContentItemTypeProps';
 
-function ContentViewFactory(props) {
+function ContentViewItem(props) {
   const {
     contentItem,
     contentItem: { contentItemType, ordered, childItemIds, id },
-    handleKeyDown,
     slideViewType,
     isFocused,
     hasInlineProperties,
@@ -57,10 +56,11 @@ function ContentViewFactory(props) {
         <ContentEditableContainer
           contentItem={contentItem}
           isFocused={isFocused}
-          handleKeyDown={handleKeyDown}
           slideViewType={slideViewType}
           textPropName={textPropName}
           hasInlineProperties={hasInlineProperties}
+          slideId={slideId}
+          ancestorItemIds={ancestorItemIds}
           {...contentItemTypeProps}
         />
       </SlideContentViewItem>
@@ -68,18 +68,17 @@ function ContentViewFactory(props) {
   }
 }
 
-ContentViewFactory.propTypes = {
+ContentViewItem.propTypes = {
   contentItem: PropTypes.objectOf(Object).isRequired,
-  handleKeyDown: PropTypes.func.isRequired,
   slideViewType: PropTypes.string.isRequired,
   isFocused: PropTypes.bool.isRequired,
   hasInlineProperties: PropTypes.bool,
   textPropName: PropTypes.string,
 };
 
-ContentViewFactory.defaultProps = {
+ContentViewItem.defaultProps = {
   hasInlineProperties: false,
   textPropName: '',
 };
 
-export default ContentViewFactory;
+export default ContentViewItem;
