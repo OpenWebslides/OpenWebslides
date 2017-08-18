@@ -16,29 +16,78 @@ Rails.application.routes.draw do
   # API endpoints
   #
   scope :api, :constraints => { :format => :json } do
-    ## Users
-    jsonapi_resources :users
+    ##
+    # User API
+    #
+    jsonapi_resources :users do
+      # Decks relationship
+      jsonapi_related_resources :decks
+      jsonapi_links :decks
 
-    ## Decks
-    jsonapi_resources :decks do
-      jsonapi_relationships
+      # Collaborations relationship
+      jsonapi_related_resources :collaborations
+      jsonapi_links :collaborations
 
-      ## Assets
-      jsonapi_resources :assets, :only => :create do end
+      # Conversions relationship
+      jsonapi_related_resources :conversions
+      jsonapi_links :conversions
     end
 
-    ## Assets
+    ##
+    # Decks API
+    #
+    jsonapi_resources :decks do
+      # Owner relationship
+      jsonapi_related_resource :owner
+      jsonapi_link :owner
+
+      # Collaborators relationship
+      jsonapi_related_resources :collaborators
+      jsonapi_links :collaborators
+
+      # Assets relationship
+      jsonapi_related_resources :assets
+      jsonapi_links :assets
+
+      jsonapi_resources :assets, :only => %i[create]
+    end
+
+    ##
+    # Assets API
+    #
     jsonapi_resources :assets, :only => %i[show destroy] do
-      jsonapi_relationships
+      # Deck relationship
+      jsonapi_related_resource :deck
+      jsonapi_link :deck
 
       get '/raw' => 'assets#raw'
     end
 
-    ## Conversion tool
-    jsonapi_resources :conversions, :only => %i[create show]
+    ##
+    # Conversions API
+    #
+    jsonapi_resources :conversions, :only => %i[create show] do
+      # Deck relationship
+      jsonapi_related_resource :deck
+      jsonapi_link :deck
 
-    ## Social feed
-    jsonapi_resources :notifications, :only => %i[index show]
+      # User relationship
+      jsonapi_related_resource :user
+      jsonapi_link :user
+    end
+
+    ##
+    # Notifications API
+    #
+    jsonapi_resources :notifications, :only => %i[index show] do
+      # Deck relationship
+      jsonapi_related_resource :deck
+      jsonapi_link :deck
+
+      # User relationship
+      jsonapi_related_resource :user
+      jsonapi_link :user
+    end
 
     ## Authentication
     jsonapi_resource :confirmation, :only => :create do end
