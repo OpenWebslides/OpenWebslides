@@ -5,6 +5,7 @@ export default class AnnotationSidePanel extends Component {
 
   componentDidMount() {
     this.panel.style.width = '400px';
+    this.props.fetchConversations();
   }
 
   render() {
