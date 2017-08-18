@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'seamless-immutable';
+import _ from 'lodash';
+
 
 import {
   addInlinePropertyToArray,
@@ -10,6 +12,8 @@ import {
 
 import getFilteredTextContent from 'lib/content-editable/textContent';
 import { setSelectionOffsets } from 'actions/app/slide-editor';
+
+import { contentItemTypes } from 'constants/contentItemTypes';
 
 import {
   getSelectionOffsets,
@@ -61,17 +65,37 @@ class ContentEditable extends Component {
   }
 
   handleKeyDown(e) {
-    // Prevent users from inserting newlines in the contenteditable field.
-    const blacklist = ['Enter'];
+    const { contentItem, slideId, ancestorItemIds } = this.props;
 
-    if (blacklist.indexOf(e.key) >= 0) {
-      // If the pressed key is in the blacklist, don't execute the event.
-      e.preventDefault();
+    if (e.key === 'Enter') {
+      let newContentItemType;
+
+      if (contentItem.contentItemType === contentItemTypes.LIST_ITEM) {
+        newContentItemType = contentItemTypes.LIST_ITEM;
+      }
+      else {
+        newContentItemType = contentItemTypes.PARAGRAPH;
+      }
+
+      this.props.addContentItemToSlide(
+          slideId,
+          newContentItemType,
+          {},
+          _.last(ancestorItemIds),
+          contentItem.id,
+        );
     }
-
-    // Containers may add an extra keypress handler.
-    if (this.props.handleKeyDown !== null) {
-      this.props.handleKeyDown(e, this.props.contentItem);
+    // If backspace is pressed on an empty contentItem, delete the contentItem
+    // and jump to the previous one.
+    else if (e.key === 'Backspace') {
+      if (contentItem.text === '') {
+        e.preventDefault();
+        this.props.deleteContentItemFromSlide(
+          slideId,
+          contentItem.id,
+          ancestorItemIds,
+        );
+      }
     }
   }
 
