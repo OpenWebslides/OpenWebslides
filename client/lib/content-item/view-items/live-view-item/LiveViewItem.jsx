@@ -17,7 +17,6 @@ function LiveViewItem(props) {
     headingLevel,
     contentItem,
     attributes,
-    handleKeyDown,
     slideViewType,
     isFocused,
     hasInlineProperties,
@@ -64,9 +63,10 @@ function LiveViewItem(props) {
             <ContentEditableContainer
               contentItem={contentItem}
               isFocused={isFocused}
-              handleKeyDown={handleKeyDown}
               slideViewType={slideViewType}
               textPropName={textPropName}
+              slideId={slideId}
+              ancestorItemIds={ancestorItemIds}
               hasInlineProperties={hasInlineProperties}
               {...contentItemTypeProps}
             />
@@ -79,7 +79,6 @@ function LiveViewItem(props) {
 LiveViewItem.propTypes = {
   contentItem: PropTypes.objectOf(Object).isRequired,
   attributes: PropTypes.objectOf(Object).isRequired,
-  handleKeyDown: PropTypes.func.isRequired,
   headingLevel: PropTypes.number.isRequired,
   slideViewType: PropTypes.string.isRequired,
   isFocused: PropTypes.bool.isRequired,
