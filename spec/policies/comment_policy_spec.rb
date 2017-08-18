@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::CommentPolicy do
+RSpec.describe CommentPolicy do
   subject { described_class.new user, comment }
 
   let(:comment) { build :comment, :deck => deck }
