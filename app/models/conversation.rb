@@ -7,7 +7,7 @@ class Conversation < Annotation
   ##
   # Properties
   #
-  enum :comment_type => %i[question note]
+  enum :conversation_type => %i[question note]
 
   property :text
 

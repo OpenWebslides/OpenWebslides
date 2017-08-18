@@ -7,7 +7,7 @@ FactoryGirl.define do
     deck { build :deck }
 
     factory :conversation, :class => Conversation do
-      comment_type { %i[question note].sample }
+      conversation_type { %i[question note].sample }
       text { Faker::Lorem.sentence(3) }
     end
 
