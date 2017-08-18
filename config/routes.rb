@@ -22,15 +22,15 @@ Rails.application.routes.draw do
     jsonapi_resources :users do
       # Decks relationship
       jsonapi_related_resources :decks
-      jsonapi_links :decks
+      jsonapi_links :decks, :only => :show
 
       # Collaborations relationship
       jsonapi_related_resources :collaborations
-      jsonapi_links :collaborations
+      jsonapi_links :collaborations, :only => :show
 
       # Conversions relationship
       jsonapi_related_resources :conversions
-      jsonapi_links :conversions
+      jsonapi_links :conversions, :only => :show
     end
 
     ##
@@ -39,15 +39,15 @@ Rails.application.routes.draw do
     jsonapi_resources :decks do
       # Owner relationship
       jsonapi_related_resource :owner
-      jsonapi_link :owner
+      jsonapi_link :owner, :only => :show
 
       # Collaborators relationship
       jsonapi_related_resources :collaborators
-      jsonapi_links :collaborators
+      jsonapi_links :collaborators, :only => :show
 
       # Assets relationship
       jsonapi_related_resources :assets
-      jsonapi_links :assets
+      jsonapi_links :assets, :only => :show
 
       jsonapi_resources :assets, :only => %i[create]
     end
@@ -58,35 +58,35 @@ Rails.application.routes.draw do
     jsonapi_resources :assets, :only => %i[show destroy] do
       # Deck relationship
       jsonapi_related_resource :deck
-      jsonapi_link :deck
+      jsonapi_link :deck, :only => :show
 
       get '/raw' => 'assets#raw'
     end
 
     ##
-    # Conversions API
+    # Conversions API (immutable)
     #
     jsonapi_resources :conversions, :only => %i[create show] do
       # Deck relationship
       jsonapi_related_resource :deck
-      jsonapi_link :deck
+      jsonapi_link :deck, :only => :show
 
       # User relationship
       jsonapi_related_resource :user
-      jsonapi_link :user
+      jsonapi_link :user, :only => :show
     end
 
     ##
-    # Notifications API
+    # Notifications API (immutable)
     #
     jsonapi_resources :notifications, :only => %i[index show] do
       # Deck relationship
       jsonapi_related_resource :deck
-      jsonapi_link :deck
+      jsonapi_link :deck, :only => :show
 
       # User relationship
       jsonapi_related_resource :user
-      jsonapi_link :user
+      jsonapi_link :user, :only => :show
     end
 
     ## Authentication
