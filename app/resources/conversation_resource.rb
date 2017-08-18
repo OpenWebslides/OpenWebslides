@@ -7,14 +7,14 @@ class ConversationResource < AnnotationResource
   ##
   # Properties
   #
-  attributes :comment_type, :text
+  attributes :conversation_type, :text
 
   has_many :comments
 
   ##
   # Filters
   #
-  filters :comment_type
+  filters :conversation_type
 
   ##
   # Callbacks
@@ -27,6 +27,6 @@ class ConversationResource < AnnotationResource
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[comment_type text comments]
+    super(context) - %i[conversation_type text comments]
   end
 end

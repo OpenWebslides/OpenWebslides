@@ -11,7 +11,7 @@ RSpec.describe ConversationResource, :type => :resource do
   it { is_expected.to have_primary_key :id }
 
   it { is_expected.to have_attribute :content_item_id }
-  it { is_expected.to have_attribute :comment_type }
+  it { is_expected.to have_attribute :conversation_type }
   it { is_expected.to have_attribute :text }
 
   it { is_expected.to have_one :user }
@@ -20,11 +20,11 @@ RSpec.describe ConversationResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck comment_type text comments]
+      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type text comments]
     end
 
     it 'should have a valid set of creatable fields' do
-      expect(described_class.creatable_fields).to match_array %i[content_item_id user deck comment_type text]
+      expect(described_class.creatable_fields).to match_array %i[content_item_id user deck conversation_type text]
     end
 
     it 'should have a valid set of updatable fields' do
@@ -32,13 +32,13 @@ RSpec.describe ConversationResource, :type => :resource do
     end
 
     it 'should have a valid set of sortable fields' do
-      expect(described_class.sortable_fields context).to match_array %i[id content_item_id comment_type text]
+      expect(described_class.sortable_fields context).to match_array %i[id content_item_id conversation_type text]
     end
   end
 
   describe 'filters' do
     it 'should have a valid set of filters' do
-      expect(described_class.filters.keys).to match_array %i[id user content_item_id comment_type]
+      expect(described_class.filters.keys).to match_array %i[id user content_item_id conversation_type]
     end
   end
 end

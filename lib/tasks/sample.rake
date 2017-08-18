@@ -131,11 +131,11 @@ namespace :db do
         puts "Creating #{conversation_count + 1} annotations for deck #{i + 1}/#{decks.size}"
 
         conversation_count.times do
-          c = Annotations::Conversation.create :content_item_id => RANDOM.rand(100),
-                                               :user => editors.sample,
-                                               :deck => deck,
-                                               :comment_type => %i[question note].sample,
-                                               :text => Faker::Lorem.sentences(4).join(' ')
+          c = Conversation.create :content_item_id => RANDOM.rand(100),
+                                  :user => editors.sample,
+                                  :deck => deck,
+                                  :conversation_type => %i[question note].sample,
+                                  :text => Faker::Lorem.sentences(4).join(' ')
 
           # 50% of the conversations have a non-zero rating
           if prob 0.5
@@ -143,17 +143,17 @@ namespace :db do
               user = editors.sample
               next if c.ratings.where(:user => user).any?
 
-              Annotations::Rating.create :annotation => c,
-                                         :user => user
+              Rating.create :annotation => c,
+                            :user => user
             end
           end
 
           RANDOM.rand(FACTOR * 5).times do
-            cm = Annotations::Comment.create :content_item_id => c.content_item_id,
-                                             :user => editors.sample,
-                                             :deck => c.deck,
-                                             :conversation => c,
-                                             :text => Faker::Lorem.sentences(4).join(' ')
+            cm = Comment.create :content_item_id => c.content_item_id,
+                                :user => editors.sample,
+                                :deck => c.deck,
+                                :conversation => c,
+                                :text => Faker::Lorem.sentences(4).join(' ')
 
             # 20% of the conversations have a non-zero rating
             next unless prob 0.2
@@ -161,8 +161,8 @@ namespace :db do
               user = editors.sample
               next if c.ratings.where(:user => user).any?
 
-              Annotations::Rating.create :annotation => cm,
-                                         :user => user
+              Rating.create :annotation => cm,
+                            :user => user
             end
           end
         end
