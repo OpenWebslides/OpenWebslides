@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AssetService
+class AssetService < ApplicationService
   attr_accessor :asset
 
   def initialize(asset)

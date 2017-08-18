@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ConversionService
+class ConversionService < ApplicationService
   attr_accessor :conversion
 
   def initialize(conversion)
