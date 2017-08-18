@@ -49,7 +49,11 @@ Rails.application.routes.draw do
       jsonapi_related_resources :assets
       jsonapi_links :assets, :only => :show
 
-      jsonapi_resources :assets, :only => %i[create]
+      # Conversations relationship
+      jsonapi_related_resources :conversations
+      jsonapi_links :conversations, :only => :show
+
+      jsonapi_resources :assets, :only => :create
     end
 
     ##
@@ -87,6 +91,37 @@ Rails.application.routes.draw do
       # User relationship
       jsonapi_related_resource :user
       jsonapi_link :user, :only => :show
+    end
+
+    ##
+    # Annotations API
+    #
+    jsonapi_resources :conversations, :except => %i[index] do
+      # Deck relationship
+      jsonapi_related_resource :deck
+      jsonapi_link :deck, :only => :show
+
+      # User relationship
+      jsonapi_related_resource :user
+      jsonapi_links :user, :only => :show
+
+      # Comments relationship
+      jsonapi_related_resources :comments
+      jsonapi_links :comments, :only => :show
+    end
+
+    jsonapi_resources :comments, :except => %i[index] do
+      # Deck relationship
+      jsonapi_related_resource :deck
+      jsonapi_links :deck, :only => :show
+
+      # User relationship
+      jsonapi_related_resource :user
+      jsonapi_links :user, :only => :show
+
+      # Conversation relationship
+      jsonapi_related_resource :conversation
+      jsonapi_link :conversation, :only => :show
     end
 
     ## Authentication
