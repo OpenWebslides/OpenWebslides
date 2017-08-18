@@ -54,12 +54,10 @@ class Deck < ApplicationRecord
           :inverse_of => :deck
 
   has_many :annotations,
-           :class_name => 'Annotations::Annotation',
            :dependent => :destroy,
            :inverse_of => :deck
 
   has_many :conversations,
-           :class_name => 'Annotations::Conversation',
            :inverse_of => :deck
 
   ##

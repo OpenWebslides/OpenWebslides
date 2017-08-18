@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::Annotation, :type => :model do
+RSpec.describe Annotation, :type => :model do
   describe 'attributes' do
     it { is_expected.not_to allow_value(nil).for(:content_item_id) }
     it { is_expected.not_to allow_value('').for(:content_item_id) }

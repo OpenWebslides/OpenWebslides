@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Annotations::Conversation, :type => :model do
+RSpec.describe Conversation, :type => :model do
   describe 'attributes' do
     it { is_expected.not_to allow_value(nil).for(:text) }
     it { is_expected.not_to allow_value('').for(:text) }
