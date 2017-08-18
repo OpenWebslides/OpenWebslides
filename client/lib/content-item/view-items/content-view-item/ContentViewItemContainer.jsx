@@ -1,13 +1,5 @@
-import _ from 'lodash';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { contentItemTypes } from 'constants/contentItemTypes';
-
-import {
-  addContentItemToSlide,
-  deleteContentItemFromSlide,
-} from 'actions/entities/slides';
 
 import {
   getActiveContentItemId,
