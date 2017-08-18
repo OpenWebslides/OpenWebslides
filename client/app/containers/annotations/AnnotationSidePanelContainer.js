@@ -1,7 +1,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { closeAnnotationMode, fetchConversations } from 'actions/app/annotations';
+import { closeAnnotationMode } from 'actions/app/annotations';
+import { fetchConversations } from 'actions/entities/conversations';
 
 import AnnotationSidePanel from 'presentationals/components/annotations/AnnotationSidePanel';
 
