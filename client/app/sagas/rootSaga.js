@@ -25,10 +25,14 @@ import updateDeckSaga from 'sagas/updateDeckSaga';
 import uploadAssetSaga from 'sagas/uploadAssetSaga';
 import addUriSaga from 'sagas/slide-editor/addUriSaga';
 
+import fetchConversationsSaga from 'sagas/annotations/fetchConversationsSaga';
+
+
 export default function* rootSaga() {
   yield [
     emailSigninSaga(),
     signupSaga(),
+    fetchConversationsSaga(),
     confirmEmailSaga(),
     requestFeedNorificationsSaga(),
     requestDeckListSaga(),
