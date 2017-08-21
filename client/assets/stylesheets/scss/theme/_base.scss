@@ -27,6 +27,7 @@ a {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
+  padding-right: 20px;
   padding-left: 20px;
   z-index: 1; /* Stay on top */
   top: 0;
@@ -44,4 +45,17 @@ a {
   font-size: 36px;
   margin-left: 50px;
   color: black;
+}
+
+.side-nav .back-btn {
+  position: absolute;
+  top: 10px;
+  left: -30px;
+  font-size: 30px;
+  margin-left: 50px;
+  color: black;
+}
+
+.side-nav .conversations-list {
+  list-style-type: none;
 }
