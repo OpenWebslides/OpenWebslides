@@ -8,6 +8,7 @@ FactoryGirl.define do
 
     factory :conversation, :class => Conversation do
       conversation_type { %i[question note].sample }
+      title { Faker::Lorem.words(5).join(' ') }
       text { Faker::Lorem.sentence(3) }
     end
 

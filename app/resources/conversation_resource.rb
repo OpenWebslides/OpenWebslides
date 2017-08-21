@@ -7,7 +7,7 @@ class ConversationResource < AnnotationResource
   ##
   # Properties
   #
-  attributes :conversation_type, :text
+  attributes :conversation_type, :title, :text
 
   has_many :comments
 

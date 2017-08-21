@@ -9,6 +9,7 @@ class Conversation < Annotation
   #
   enum :conversation_type => %i[question note]
 
+  property :title
   property :text
 
   ##
@@ -21,6 +22,7 @@ class Conversation < Annotation
   ##
   # Validations
   #
+  validates :title, :presence => true
   validates :text, :presence => true
 
   validates :conversation_type, :presence => true
