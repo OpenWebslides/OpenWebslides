@@ -9,8 +9,8 @@ import moreNotificationsCall from 'api/feedApiCall';
 
 export function* getFeedNotificationsFlow(action) {
   const receivedNotificationTypes = {
-    deck_created: 'DECK_CREATED',
-    deck_updated: 'DECK_UPDATED',
+    deck_created: 'deck_created',
+    deck_updated: 'deck_updated',
   };
 
   try {
