@@ -11,7 +11,9 @@ class AnnotationService < ApplicationService
     @annotation.save
   end
 
-  def save
+  def update(params)
+    @annotation.assign_attributes params
+
     # Calling a state machine instance method also persists the object
     @annotation.edit
   end
