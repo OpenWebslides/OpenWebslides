@@ -7,7 +7,6 @@ class NotificationResource < ApplicationResource
   # Properties
   #
   attribute :event_type, :format => :uppercase
-  attribute :created_at, :format => :date
   attributes :user_name, :deck_name
 
   has_one :user, :always_include_linkage_data => true
@@ -39,5 +38,11 @@ class NotificationResource < ApplicationResource
 
   def deck_name
     @model.deck.name
+  end
+
+  def meta(options)
+    {
+      options[:serializer].key_formatter.format(:created_at) => DateValueFormatter.format(_model.created_at)
+    }
   end
 end

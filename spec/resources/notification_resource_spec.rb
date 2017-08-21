@@ -11,7 +11,6 @@ RSpec.describe NotificationResource, :type => :resource do
   it { is_expected.to have_primary_key :id }
 
   it { is_expected.to have_attribute :event_type }
-  it { is_expected.to have_attribute :created_at }
   it { is_expected.to have_attribute :deck_name }
   it { is_expected.to have_attribute :user_name }
 
@@ -20,7 +19,7 @@ RSpec.describe NotificationResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id event_type created_at deck_name user_name deck user]
+      expect(subject.fetchable_fields).to match_array %i[id event_type deck_name user_name deck user]
     end
 
     it 'should have a valid set of sortable fields' do
@@ -31,6 +30,8 @@ RSpec.describe NotificationResource, :type => :resource do
       expect(described_class.default_sort.first[:field]).to eq 'created_at'
       expect(described_class.default_sort.first[:direction]).to eq :desc
     end
+
+    it { is_expected.to respond_to :meta }
   end
 
   describe 'filters' do
