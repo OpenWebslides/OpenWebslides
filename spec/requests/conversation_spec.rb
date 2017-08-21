@@ -112,6 +112,10 @@ RSpec.describe 'Conversations API', :type => :request do
 
       expect(response.status).to eq 200
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+      json = JSON.parse response.body
+
+      expect(json['data']['meta']['createdAt'].to_i).to eq conversation.created_at.to_i
     end
   end
 end
