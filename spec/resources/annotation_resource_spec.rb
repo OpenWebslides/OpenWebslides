@@ -18,7 +18,7 @@ RSpec.describe AnnotationResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck]
+      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck rating]
     end
 
     it 'should have a valid set of creatable fields' do
@@ -30,7 +30,7 @@ RSpec.describe AnnotationResource, :type => :resource do
     end
 
     it 'should have a valid set of sortable fields' do
-      expect(described_class.sortable_fields context).to match_array %i[id content_item_id]
+      expect(described_class.sortable_fields context).to match_array %i[id content_item_id rating]
     end
 
     it { is_expected.to respond_to :meta }

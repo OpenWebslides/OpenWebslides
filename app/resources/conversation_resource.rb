@@ -5,16 +5,21 @@
 #
 class ConversationResource < AnnotationResource
   ##
-  # Properties
+  # Attributes
   #
-  attributes :conversation_type, :title, :text
+  attribute :conversation_type
+  attribute :title
+  attribute :text
 
+  ##
+  # Relationships
+  #
   has_many :comments
 
   ##
   # Filters
   #
-  filters :conversation_type
+  filter :conversation_type
 
   ##
   # Callbacks

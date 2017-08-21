@@ -5,18 +5,22 @@
 #
 class AnnotationResource < ApplicationResource
   ##
-  # Properties
+  # Attributes
   #
   attribute :content_item_id
   attribute :rating
 
+  ##
+  # Relationships
+  #
   has_one :user
   has_one :deck
 
   ##
   # Filters
   #
-  filters :user, :content_item_id
+  filter :user
+  filter :content_item_id
 
   ##
   # Callbacks
@@ -24,8 +28,12 @@ class AnnotationResource < ApplicationResource
   ##
   # Methods
   #
+  def self.creatable_fields(context = {})
+    super(context) - %i[rating]
+  end
+
   def self.updatable_fields(context = {})
-    super(context) - %i[content_item_id user deck]
+    super(context) - %i[content_item_id user deck rating]
   end
 
   def meta(options)

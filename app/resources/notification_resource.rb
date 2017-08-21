@@ -1,22 +1,34 @@
 # frozen_string_literal: true
 
+##
+# Notification feed resource
+#
 class NotificationResource < ApplicationResource
   immutable
 
   ##
-  # Properties
+  # Attributes
   #
   attribute :event_type
-  attributes :user_name, :deck_name
+  attribute :user_name
+  attribute :deck_name
 
-  has_one :user, :always_include_linkage_data => true
-  has_one :deck, :always_include_linkage_data => true
+  ##
+  # Relationships
+  #
+  has_one :user,
+          :always_include_linkage_data => true
+
+  has_one :deck,
+          :always_include_linkage_data => true
 
   ##
   # Filters
   #
-  filters :user, :deck
-  filter :event_type, :verify => ->(values, _) { values.map(&:downcase) & Notification.event_types.keys }
+  filter :user
+  filter :deck
+  filter :event_type,
+         :verify => ->(values, _) { values.map(&:downcase) & Notification.event_types.keys }
 
   ##
   # Callbacks
@@ -25,7 +37,7 @@ class NotificationResource < ApplicationResource
   # Methods
   #
   def self.sortable_fields(_)
-    [:created_at]
+    %i[created_at]
   end
 
   def self.default_sort
