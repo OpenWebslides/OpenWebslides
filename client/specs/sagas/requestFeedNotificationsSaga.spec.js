@@ -20,7 +20,6 @@ function fakeResponseElement() {
       },
       attributes: {
         eventType: faker.random.arrayElement(['DECK_CREATED', 'DECK_UPDATED']),
-        createdAt: faker.random.number(),
         userName: faker.name.findName(),
         deckName: faker.lorem.sentence,
       },
@@ -46,6 +45,9 @@ function fakeResponseElement() {
             id: '1',
           },
         },
+      },
+      meta: {
+        createdAt: faker.random.number(),
       },
     },
   ];
@@ -73,7 +75,7 @@ describe('Feed Saga', () => {
       for (let i = 0; i < 12; i += 1) {
         resultListOfNotifications.push({
           id: dummyResponse[i].id,
-          timestamp: dummyResponse[i].attributes.createdAt,
+          timestamp: dummyResponse[i].meta.createdAt,
           type: dummyResponse[i].attributes.eventType,
           targetDeck: dummyResponse[i].attributes.deckName,
           concernedUser: dummyResponse[i].attributes.userName,

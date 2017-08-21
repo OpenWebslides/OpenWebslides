@@ -24,7 +24,7 @@ export function* getFeedNotificationsFlow(action) {
     const listOfNotifications = responseListOfNotifications.map(
       responseNotification => ({
         id: responseNotification.id,
-        timestamp: responseNotification.attributes.createdAt,
+        timestamp: responseNotification.meta.createdAt,
         type:
           receivedNotificationTypes[
             responseNotification.attributes.eventType.toLowerCase()
