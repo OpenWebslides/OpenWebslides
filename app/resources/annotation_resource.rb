@@ -8,6 +8,7 @@ class AnnotationResource < ApplicationResource
   # Properties
   #
   attribute :content_item_id
+  attribute :rating
 
   has_one :user
   has_one :deck
@@ -31,5 +32,9 @@ class AnnotationResource < ApplicationResource
     {
       options[:serializer].key_formatter.format(:created_at) => DateValueFormatter.format(_model.created_at)
     }
+  end
+
+  def rating
+    _model.ratings.count
   end
 end

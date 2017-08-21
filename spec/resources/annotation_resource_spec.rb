@@ -11,6 +11,7 @@ RSpec.describe AnnotationResource, :type => :resource do
   it { is_expected.to have_primary_key :id }
 
   it { is_expected.to have_attribute :content_item_id }
+  it { is_expected.to have_attribute :rating }
 
   it { is_expected.to have_one :user }
   it { is_expected.to have_one :deck }
