@@ -21,15 +21,15 @@ RSpec.describe AnnotationService do
     end
   end
 
-  describe 'save' do
+  describe 'update' do
     it 'persists' do
-      subject.save
+      subject.update :user => create(:user)
       expect(annotation).to be_persisted
     end
 
     it 'transitions' do
       expect(annotation).to receive :edit
-      subject.save
+      subject.update :user => create(:user)
     end
   end
 
