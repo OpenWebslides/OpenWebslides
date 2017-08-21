@@ -1,13 +1,20 @@
 # frozen_string_literal: true
 
+##
+# Token resource (returns an authentication token)
+#
 class TokenResource < ApplicationResource
   abstract
 
   ##
-  # Properties
+  # Attributes
   #
-  attributes :email, :password
+  attribute :email
+  attribute :password
 
+  ##
+  # Relationships
+  #
   ##
   # Filters
   #

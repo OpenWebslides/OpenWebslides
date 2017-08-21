@@ -1,12 +1,23 @@
 # frozen_string_literal: true
 
+##
+# Slide deck resource
+#
 class DeckResource < ApplicationResource
   ##
-  # Properties
+  # Attributes
   #
-  attributes :name, :state, :description, :template
+  attribute :name
+  attribute :state
+  attribute :description
+  attribute :template
 
-  has_one :owner, :foreign_key => 'user_id'
+  ##
+  # Relationships
+  #
+  has_one :owner,
+          :foreign_key => 'user_id'
+
   has_many :collaborators
   has_many :assets
   has_many :conversations
@@ -14,8 +25,10 @@ class DeckResource < ApplicationResource
   ##
   # Filters
   #
-  filters :name, :description
-  filter :state, :verify => ->(values, _) { values & Deck.states.keys }
+  filter :name
+  filter :description
+  filter :state,
+         :verify => ->(values, _) { values & Deck.states.keys }
 
   ##
   # Callbacks

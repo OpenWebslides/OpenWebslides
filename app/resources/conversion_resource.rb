@@ -1,17 +1,23 @@
 # frozen_string_literal: true
 
 ##
-# A conversion job
+# Conversion resource
 #
 class ConversionResource < ApplicationResource
   immutable
 
   ##
-  # Properties
+  # Attributes
   #
-  attribute :created_at, :format => :date
-  attributes :name, :status
+  attribute :created_at,
+            :format => :date
 
+  attribute :name
+  attribute :status
+
+  ##
+  # Relationships
+  #
   has_one :deck
   has_one :user
 

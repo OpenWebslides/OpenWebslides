@@ -1,11 +1,24 @@
 # frozen_string_literal: true
 
+##
+# User resource
+#
 class UserResource < ApplicationResource
   ##
-  # Properties
+  # Attributes
   #
-  attributes :first_name, :last_name, :email, :password, :tos_accepted
+  attribute :first_name
+  attribute :last_name
+  attribute :email
+  attribute :password
+  attribute :tos_accepted
 
+  ##
+  # Relationships
+  #
+  ##
+  # Relationships
+  #
   has_many :decks
   has_many :collaborations
   has_many :conversions
@@ -13,7 +26,9 @@ class UserResource < ApplicationResource
   ##
   # Filters
   #
-  filters :first_name, :last_name, :email
+  filter :first_name
+  filter :last_name
+  filter :email
 
   ##
   # Callbacks

@@ -5,10 +5,13 @@
 #
 class CommentResource < AnnotationResource
   ##
-  # Properties
+  # Attributes
   #
-  attributes :text
+  attribute :text
 
+  ##
+  # Relationships
+  #
   has_one :conversation
 
   ##

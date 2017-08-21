@@ -9,10 +9,13 @@ class AssetResource < ApplicationResource
   immutable
 
   ##
-  # Properties
+  # Attributes
   #
-  attributes :filename
+  attribute :filename
 
+  ##
+  # Relationships
+  #
   has_one :deck
 
   ##

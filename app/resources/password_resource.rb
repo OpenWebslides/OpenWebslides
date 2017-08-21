@@ -1,13 +1,21 @@
 # frozen_string_literal: true
 
+##
+# Password resource (resets the user's password)
+#
 class PasswordResource < ApplicationResource
   abstract
 
   ##
-  # Properties
+  # Attributes
   #
-  attributes :reset_password_token, :email, :password
+  attribute :reset_password_token
+  attribute :email
+  attribute :password
 
+  ##
+  # Relationships
+  #
   ##
   # Filters
   #

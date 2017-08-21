@@ -1,13 +1,19 @@
 # frozen_string_literal: true
 
+##
+# Confirmation resource (confirms the user's account)
+#
 class ConfirmationResource < ApplicationResource
   abstract
 
   ##
-  # Properties
+  # Attributes
   #
   attribute :confirmation_token
 
+  ##
+  # Relationships
+  #
   ##
   # Filters
   #
