@@ -4,6 +4,9 @@ require 'rails_helper'
 
 RSpec.describe Conversation, :type => :model do
   describe 'attributes' do
+    it { is_expected.not_to allow_value(nil).for(:title) }
+    it { is_expected.not_to allow_value('').for(:title) }
+
     it { is_expected.not_to allow_value(nil).for(:text) }
     it { is_expected.not_to allow_value('').for(:text) }
 

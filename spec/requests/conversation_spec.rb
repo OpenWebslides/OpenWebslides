@@ -8,12 +8,14 @@ RSpec.describe 'Conversations API', :type => :request do
 
   let(:conversation) { create :conversation }
 
+  let(:title) { Faker::Lorem.words(4).join(' ') }
   let(:text) { Faker::Lorem.sentences(4).join(' ') }
   let(:conversation_type) { %i[question note].sample }
   let(:content_item_id) { Faker::Number.number 2 }
 
   let(:attributes) do
     {
+      :title => title,
       :text => text,
       :conversationType => conversation_type,
       :contentItemId => content_item_id
@@ -51,6 +53,14 @@ RSpec.describe 'Conversations API', :type => :request do
 
     it 'rejects no type' do
       post conversations_path, :params => request_body(attributes.merge :conversationType => nil), :headers => headers
+
+      expect(response.status).to eq 422
+      expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'rejects no title' do
+      post conversations_path, :params => request_body(attributes.merge :title => nil), :headers => headers
 
       expect(response.status).to eq 422
       expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
