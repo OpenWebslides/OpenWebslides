@@ -31,6 +31,8 @@ RSpec.describe AnnotationResource, :type => :resource do
     it 'should have a valid set of sortable fields' do
       expect(described_class.sortable_fields context).to match_array %i[id content_item_id]
     end
+
+    it { is_expected.to respond_to :meta }
   end
 
   describe 'filters' do
