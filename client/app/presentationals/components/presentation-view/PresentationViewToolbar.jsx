@@ -19,6 +19,12 @@ class PresentationToolbar extends Component {
   }
 
   handleNavigation(e) {
+    const { annotationMode } = this.props;
+
+    if (annotationMode) {
+      return;
+    }
+
     switch (e.keyCode) {
       case 37:
         this.props.viewPreviousSlide();
@@ -51,6 +57,9 @@ PresentationToolbar.propTypes = {
   viewPreviousSlide: PropTypes.func.isRequired,
   viewNextSlide: PropTypes.func.isRequired,
   viewLastSlide: PropTypes.func.isRequired,
+  closeAnnotationMode: PropTypes.func.isRequired,
+  openAnnotationMode: PropTypes.func.isRequired,
+  annotationMode: PropTypes.bool.isRequired,
 };
 
 
