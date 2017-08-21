@@ -9,6 +9,7 @@ class AnnotationResource < ApplicationResource
   #
   attribute :content_item_id
   attribute :rating
+  attribute :rated
 
   ##
   # Relationships
@@ -21,6 +22,7 @@ class AnnotationResource < ApplicationResource
   #
   filter :user
   filter :content_item_id
+  filter :rated
 
   ##
   # Callbacks
@@ -29,11 +31,11 @@ class AnnotationResource < ApplicationResource
   # Methods
   #
   def self.creatable_fields(context = {})
-    super(context) - %i[rating]
+    super(context) - %i[rating rated]
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[content_item_id user deck rating]
+    super(context) - %i[content_item_id user deck rating rated]
   end
 
   def meta(options)
@@ -44,5 +46,9 @@ class AnnotationResource < ApplicationResource
 
   def rating
     _model.ratings.count
+  end
+
+  def rated
+    _model.ratings.where(:user => context[:current_user]).any?
   end
 end
