@@ -6,6 +6,9 @@ RSpec.describe Conversation, :type => :model do
   describe 'attributes' do
     it { is_expected.not_to allow_value(nil).for(:text) }
     it { is_expected.not_to allow_value('').for(:text) }
+
+    it { is_expected.not_to allow_value(nil).for(:conversation_type) }
+    it { is_expected.not_to allow_value('').for(:conversation_type) }
   end
 
   describe 'associations' do

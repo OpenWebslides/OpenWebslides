@@ -23,6 +23,8 @@ class Conversation < Annotation
   #
   validates :text, :presence => true
 
+  validates :conversation_type, :presence => true
+
   ##
   # Callbacks
   #
