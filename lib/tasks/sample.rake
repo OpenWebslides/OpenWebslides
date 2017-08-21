@@ -55,8 +55,8 @@ namespace :db do
 
         # 50% of the user have sign up with an external provider
         if prob 0.5
-          user.identities.create :uid => Faker::Number.number(4),
-                                 :provider => %i[github google_oauth2 facebook].sample
+          user.identities.create! :uid => Faker::Number.number(4),
+                                  :provider => %i[github google_oauth2 facebook].sample
         end
       end
 
@@ -108,19 +108,19 @@ namespace :db do
         creation_time = RANDOM.rand(1.year)
 
         # Deck created
-        Notification.create :event_type => :deck_created,
-                            :user => deck.owner,
-                            :deck => deck,
-                            :created_at => creation_time.seconds.ago,
-                            :updated_at => creation_time.seconds.ago
+        Notification.create! :event_type => :deck_created,
+                             :user => deck.owner,
+                             :deck => deck,
+                             :created_at => creation_time.seconds.ago,
+                             :updated_at => creation_time.seconds.ago
 
         # Deck updated
         notification_count.times do
-          Notification.create :event_type => :deck_updated,
-                              :user => editors.sample,
-                              :deck => deck,
-                              :created_at => RANDOM.rand(creation_time).seconds.ago,
-                              :updated_at => RANDOM.rand(creation_time).seconds.ago
+          Notification.create! :event_type => :deck_updated,
+                               :user => editors.sample,
+                               :deck => deck,
+                               :created_at => RANDOM.rand(creation_time).seconds.ago,
+                               :updated_at => RANDOM.rand(creation_time).seconds.ago
         end
 
         ##
@@ -131,11 +131,12 @@ namespace :db do
         puts "Creating #{conversation_count + 1} annotations for deck #{i + 1}/#{decks.size}"
 
         conversation_count.times do
-          c = Conversation.create :content_item_id => RANDOM.rand(100),
-                                  :user => editors.sample,
-                                  :deck => deck,
-                                  :conversation_type => %i[question note].sample,
-                                  :text => Faker::Lorem.sentences(4).join(' ')
+          c = Conversation.create! :content_item_id => RANDOM.rand(100),
+                                   :user => editors.sample,
+                                   :deck => deck,
+                                   :conversation_type => %i[question note].sample,
+                                   :title => Faker::Lorem.words(4).join(' '),
+                                   :text => Faker::Lorem.sentences(4).join(' ')
 
           # 50% of the conversations have a non-zero rating
           if prob 0.5
@@ -143,26 +144,26 @@ namespace :db do
               user = editors.sample
               next if c.ratings.where(:user => user).any?
 
-              Rating.create :annotation => c,
-                            :user => user
+              Rating.create! :annotation => c,
+                             :user => user
             end
           end
 
           RANDOM.rand(FACTOR * 5).times do
-            cm = Comment.create :content_item_id => c.content_item_id,
-                                :user => editors.sample,
-                                :deck => c.deck,
-                                :conversation => c,
-                                :text => Faker::Lorem.sentences(4).join(' ')
+            cm = Comment.create! :content_item_id => c.content_item_id,
+                                 :user => editors.sample,
+                                 :deck => c.deck,
+                                 :conversation => c,
+                                 :text => Faker::Lorem.sentences(4).join(' ')
 
             # 20% of the conversations have a non-zero rating
             next unless prob 0.2
             RANDOM.rand(editors.count).times do
               user = editors.sample
-              next if c.ratings.where(:user => user).any?
+              next if cm.ratings.where(:user => user).any?
 
-              Rating.create :annotation => cm,
-                            :user => user
+              Rating.create! :annotation => cm,
+                             :user => user
             end
           end
         end
