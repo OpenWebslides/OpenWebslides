@@ -22,6 +22,7 @@ function InputField(props) {
           {props.label && <span className="c_input-field__label">{props.label}</span>}
           <span className="c_input-field__object">
             <input
+              autoFocus={props.autoFocus}
               className="c_input-field__element"
               {...props.input}
               type={props.type}
@@ -44,6 +45,7 @@ function InputField(props) {
 InputField.propTypes = {
   type: PropTypes.string,
   label: PropTypes.string,
+  autoFocus: PropTypes.bool,
   placeholder: PropTypes.string,
   input: PropTypes.objectOf(String).isRequired,
   meta: PropTypes.shape({
@@ -58,6 +60,7 @@ InputField.defaultProps = {
   type: 'text',
   placeholder: '',
   label: '',
+  autoFocus: false,
 };
 
 export default InputField;
