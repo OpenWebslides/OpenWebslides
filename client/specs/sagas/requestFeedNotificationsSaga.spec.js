@@ -19,7 +19,7 @@ function fakeResponseElement() {
         self: `http://localhost:3000/api/notifications/${id}`,
       },
       attributes: {
-        eventType: faker.random.arrayElement(['DECK_CREATED', 'DECK_UPDATED']),
+        eventType: faker.random.arrayElement(['deck_created', 'deck_updated']),
         userName: faker.name.findName(),
         deckName: faker.lorem.sentence,
       },

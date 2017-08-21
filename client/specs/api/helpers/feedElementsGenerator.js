@@ -2,7 +2,7 @@ export const samples = [
   {
     id: 'ertwc2',
     timestamp: '1000',
-    type: 'DECK_CREATED',
+    type: 'deck_created',
     targetDeck: 'OpenWebSlides',
     concernedUser: 'Florian',
     viewed: false,
@@ -10,7 +10,7 @@ export const samples = [
   {
     id: '5u7g5t',
     timestamp: '1001',
-    type: 'DECK_CREATED',
+    type: 'deck_created',
     targetDeck: 'World Domination',
     concernedUser: 'Rein',
     viewed: true,
@@ -18,7 +18,7 @@ export const samples = [
   {
     id: '2341d',
     timestamp: '1002',
-    type: 'DECK_CREATED',
+    type: 'deck_created',
     targetDeck: 'The greatest deck ever. Bigly.',
     concernedUser: 'Donald Trump',
     viewed: true,
@@ -26,7 +26,7 @@ export const samples = [
   {
     id: '6h245',
     timestamp: '1003',
-    type: 'DECK_UPDATED',
+    type: 'deck_updated',
     targetDeck: 'How to always be on time',
     concernedUser: 'Gandalf',
     viewed: false,
@@ -34,7 +34,7 @@ export const samples = [
   {
     id: 'ew2345',
     timestamp: '1004',
-    type: 'DECK_CREATED',
+    type: 'deck_created',
     targetDeck: 'ts ard to rwtie with onw hnd',
     concernedUser: 'Jamie Lannister ',
     viewed: false,
@@ -42,7 +42,7 @@ export const samples = [
   {
     id: '234rw',
     timestamp: '1005',
-    type: 'DECK_UPDATED',
+    type: 'deck_updated',
     targetDeck: 'You shall not use html tables for a list',
     concernedUser: 'Min',
     viewed: true,
@@ -50,7 +50,7 @@ export const samples = [
   {
     id: '2345rqwd',
     timestamp: '1006',
-    type: 'DECK_CREATED',
+    type: 'deck_created',
     targetDeck:
       "Hey! I'm making a deck! Funny how deck almost sounds like [censured]. Wait, seriously, I can't write" +
         "[censured]? What kind of lame-[censured] app is this? I bet you that the developpers are all dorks. And that they don't have friends. " +
@@ -61,7 +61,7 @@ export const samples = [
   {
     id: 'ef23',
     timestamp: '1007',
-    type: 'DECK_UPDATED',
+    type: 'deck_updated',
     targetDeck: 'How to come up with funny deck names',
     concernedUser: 'Luca',
     viewed: true,
@@ -69,7 +69,7 @@ export const samples = [
   {
     id: '2345',
     timestamp: '1008',
-    type: 'DECK_CREATED',
+    type: 'deck_created',
     targetDeck: 'The way of the Jedi',
     concernedUser: 'Obi-Wan',
     viewed: true,
@@ -77,7 +77,7 @@ export const samples = [
   {
     id: 'r43',
     timestamp: '1009',
-    type: 'DECK_CREATED',
+    type: 'deck_created',
     targetDeck: 'Let it go',
     concernedUser: 'The frozen chick',
     viewed: false,
@@ -85,7 +85,7 @@ export const samples = [
   {
     id: '234',
     timestamp: '1010',
-    type: 'DECK_UPDATED',
+    type: 'deck_updated',
     targetDeck: 'I should really write a generator for deck names',
     concernedUser: 'Luca Dorigo',
     viewed: true,

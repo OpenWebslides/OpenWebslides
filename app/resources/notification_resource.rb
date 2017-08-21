@@ -6,7 +6,7 @@ class NotificationResource < ApplicationResource
   ##
   # Properties
   #
-  attribute :event_type, :format => :uppercase
+  attribute :event_type
   attributes :user_name, :deck_name
 
   has_one :user, :always_include_linkage_data => true

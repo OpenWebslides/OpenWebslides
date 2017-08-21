@@ -1,11 +1,11 @@
 export const feedNotificationTypes = {
-  DECK_CREATED: 'Deck created',
-  DECK_UPDATED: 'Deck updated',
+  deck_created: 'Deck created',
+  deck_updated: 'Deck updated',
   ALL: 'Everything',
 };
 export const inlineFeedNotificationType = {
-  DECK_CREATED: 'created a new deck:',
-  DECK_UPDATED: 'updated the deck:',
+  deck_created: 'created a new deck:',
+  deck_updated: 'updated the deck:',
 };
 
 export default feedNotificationTypes;
