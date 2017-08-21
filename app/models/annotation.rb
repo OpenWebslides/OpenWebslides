@@ -60,6 +60,7 @@ class Annotation < ApplicationRecord
     # Hide an annotation
     event :hide do
       transition :created => :hidden,
+                 :secret => :hidden,
                  :edited => :hidden,
                  :flagged => :hidden
     end

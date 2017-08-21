@@ -45,8 +45,8 @@ RSpec.describe Annotation, :type => :model do
     end
 
     context 'secret' do
-      it { is_expected.to handle_events :edit, :publish, :when => :secret }
-      it { is_expected.to reject_events :protect, :flag, :hide, :when => :secret }
+      it { is_expected.to handle_events :edit, :publish, :hide, :when => :secret }
+      it { is_expected.to reject_events :protect, :flag, :when => :secret }
 
       it { is_expected.to transition_from :secret, :to_state => :secret, :on_event => :edit }
       it { is_expected.to transition_from :secret, :to_state => :created, :on_event => :publish }
