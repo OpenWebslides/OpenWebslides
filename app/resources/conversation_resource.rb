@@ -27,6 +27,6 @@ class ConversationResource < AnnotationResource
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[conversation_type text comments]
+    super(context) - %i[conversation_type comments]
   end
 end

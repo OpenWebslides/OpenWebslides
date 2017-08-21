@@ -21,6 +21,6 @@ class CommentResource < AnnotationResource
   # Methods
   #
   def self.updatable_fields(context = {})
-    super(context) - %i[text conversation]
+    super(context) - %i[conversation]
   end
 end
