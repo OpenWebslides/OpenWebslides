@@ -21,7 +21,7 @@ class Rating < ApplicationRecord
   ##
   # Validations
   #
-  validates_uniqueness_of :annotation_id, :scope => :user_id
+  validates_uniqueness_of :user_id, :scope => :annotation_id
 
   ##
   # Callbacks
