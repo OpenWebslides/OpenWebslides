@@ -26,4 +26,9 @@ class CommentResource < AnnotationResource
   def self.updatable_fields(context = {})
     super(context) - %i[conversation]
   end
+
+  # Omit text when annotation is deleted
+  def text
+    _model.hidden? ? nil : _model.text
+  end
 end

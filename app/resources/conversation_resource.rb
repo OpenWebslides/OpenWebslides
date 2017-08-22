@@ -34,4 +34,14 @@ class ConversationResource < AnnotationResource
   def self.updatable_fields(context = {})
     super(context) - %i[conversation_type comments]
   end
+
+  # Omit title when annotation is deleted
+  def title
+    _model.hidden? ? nil : _model.title
+  end
+
+  # Omit text when annotation is deleted
+  def text
+    _model.hidden? ? nil : _model.text
+  end
 end

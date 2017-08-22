@@ -11,6 +11,9 @@ class AnnotationResource < ApplicationResource
   attribute :rating
   attribute :rated
 
+  # State
+  attribute :state
+
   ##
   # Relationships
   #
@@ -31,11 +34,11 @@ class AnnotationResource < ApplicationResource
   # Methods
   #
   def self.creatable_fields(context = {})
-    super(context) - %i[rating rated]
+    super(context) - %i[rating rated state]
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[content_item_id user deck rating rated]
+    super(context) - %i[content_item_id user deck rating rated state]
   end
 
   def meta(options)
@@ -50,5 +53,16 @@ class AnnotationResource < ApplicationResource
 
   def rated
     _model.ratings.where(:user => context[:current_user]).any?
+  end
+
+  # Map state name to API state name
+  def state
+    {
+      :created => nil,
+      :edited => 'edited',
+      :flagged => 'flagged',
+      :secret => 'private',
+      :hidden => 'deleted'
+    }[_model.state_name]
   end
 end
