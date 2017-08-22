@@ -19,7 +19,7 @@ RSpec.describe CommentResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck text conversation]
+      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck text conversation rating rated]
     end
 
     it 'should have a valid set of creatable fields' do
@@ -31,7 +31,13 @@ RSpec.describe CommentResource, :type => :resource do
     end
 
     it 'should have a valid set of sortable fields' do
-      expect(described_class.sortable_fields context).to match_array %i[id content_item_id text]
+      expect(described_class.sortable_fields context).to match_array %i[id content_item_id text rating rated]
+    end
+  end
+
+  describe 'filters' do
+    it 'should have a valid set of filters' do
+      expect(described_class.filters.keys).to match_array %i[id user content_item_id rated]
     end
   end
 end
