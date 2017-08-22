@@ -14,9 +14,7 @@ class ApplicationResource < JSONAPI::Resource
   #
   def fetchable_fields
     # Omit null values
-    super.collect do |field|
-      field unless self.class._attributes.key?(field) && public_send(field).nil?
-    end
+    super.reject { |f| self.class._attributes.key?(f) && public_send(f).nil? }
   end
 
   def records_for(relation_name)
