@@ -17,8 +17,8 @@ export function* doDeleteConversation(action) {
   }
 }
 
-function* fetchConversationsWatcher() {
+function* deleteConversationWatcher() {
   yield takeLatest(DELETE_CONVERSATION, doDeleteConversation);
 }
 
-export default fetchConversationsWatcher;
+export default deleteConversationWatcher;
