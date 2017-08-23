@@ -108,6 +108,9 @@ Rails.application.routes.draw do
       # Comments relationship
       jsonapi_related_resources :comments
       jsonapi_links :comments, :only => :show
+
+      # Rating
+      jsonapi_resource :rating, :only => %i[create destroy] do end
     end
 
     jsonapi_resources :comments, :except => %i[index] do
@@ -122,6 +125,9 @@ Rails.application.routes.draw do
       # Conversation relationship
       jsonapi_related_resource :conversation
       jsonapi_link :conversation, :only => :show
+
+      # Rating
+      jsonapi_resource :rating, :only => %i[create destroy] do end
     end
 
     ## Authentication

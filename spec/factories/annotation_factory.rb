@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryGirl.define do
-  factory :annotation, :class => Annotation do
+  factory :annotation do
     content_item_id { Faker::Number.number 2 }
     user { build :user }
     deck { build :deck }
@@ -19,5 +19,10 @@ FactoryGirl.define do
         build :conversation, :deck => deck, :content_item_id => content_item_id
       end
     end
+  end
+
+  factory :rating do
+    annotation { build :annotation }
+    user { build :user }
   end
 end
