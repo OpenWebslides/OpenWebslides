@@ -8,14 +8,12 @@
 # Read more: https://github.com/cyu/rack-cors
 
 # Cross Origin Resource Sharing
-unless Rails.env.production?
-  Rails.application.config.middleware.insert_before 0, Rack::Cors do
-    allow do
-      origins '*'
-      resource '*', :headers => :any,
-                    :methods => %i[get post put patch delete options head],
-                    :expose => ['Authorization'],
-                    :debug => true
-    end
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins '*'
+    resource '*', :headers => :any,
+                  :methods => %i[get post put patch delete options head],
+                  :expose => ['Authorization'],
+                  :debug => true
   end
 end
