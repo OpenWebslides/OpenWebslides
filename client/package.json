@@ -57,6 +57,7 @@
     "immutable": "^3.8.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "ows-convert": "^0.0.3",
     "prop-types": "^15.5.8",
     "query-string": "^4.3.4",
