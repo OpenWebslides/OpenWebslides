@@ -18,18 +18,8 @@ RSpec.describe AnnotationResource, :type => :resource do
   it { is_expected.to have_one :deck }
 
   describe 'fields' do
-    context 'normal state' do
-      it 'should have a valid set of fetchable fields' do
-        expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck rating rated]
-      end
-    end
-
-    context 'abnormal state' do
-      before { annotation.edit }
-
-      it 'should have a valid set of fetchable fields' do
-        expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck rating rated state]
-      end
+    it 'should have a valid set of fetchable fields' do
+      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck rating rated secret edited flagged deleted]
     end
 
     it 'should have a valid set of creatable fields' do
@@ -41,7 +31,7 @@ RSpec.describe AnnotationResource, :type => :resource do
     end
 
     it 'should have a valid set of sortable fields' do
-      expect(described_class.sortable_fields context).to match_array %i[id content_item_id rating rated state]
+      expect(described_class.sortable_fields context).to match_array %i[id content_item_id rating rated secret edited flagged deleted]
     end
 
     it { is_expected.to respond_to :meta }
