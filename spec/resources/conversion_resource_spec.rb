@@ -16,19 +16,20 @@ RSpec.describe ConversionResource, :type => :resource do
 
   it { is_expected.to have_attribute :name }
   it { is_expected.to have_attribute :status }
-  it { is_expected.to have_attribute :created_at }
 
   it { is_expected.to have_one(:user) }
   it { is_expected.to have_one(:deck) }
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id name status created_at user deck]
+      expect(subject.fetchable_fields).to match_array %i[id name status user deck]
     end
 
     it 'should have a valid set of creatable fields' do
       expect(described_class.creatable_fields).to be_empty
     end
+
+    it { is_expected.to respond_to :meta }
   end
 
   describe 'filters' do
