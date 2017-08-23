@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import SlideConversationList from 'presentationals/components/annotations/conversations/SlideConversationList';
+import ConversationList from 'presentationals/components/annotations/conversations/ConversationList';
 
 import getConversationsForActiveSlide from 'selectors/entities/conversations';
 import { fetchConversations } from 'actions/entities/conversations';
@@ -16,4 +16,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchConversations }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SlideConversationList);
+export default connect(mapStateToProps, mapDispatchToProps)(ConversationList);
