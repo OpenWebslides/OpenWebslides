@@ -29,6 +29,7 @@ import fetchConversationsSaga from 'sagas/annotations/fetchConversationsSaga';
 import fetchConversationCommentsSaga from 'sagas/annotations/fetchConversationCommentsSaga';
 import addConversationSaga from 'sagas/annotations/addConversationSaga';
 import addConversationCommentSaga from 'sagas/annotations/addConversationCommentSaga';
+import deleteConversationSaga from 'sagas/annotations/deleteConversationSaga';
 
 
 export default function* rootSaga() {
@@ -36,6 +37,7 @@ export default function* rootSaga() {
     addConversationSaga(),
     emailSigninSaga(),
     signupSaga(),
+    deleteConversationSaga(),
     addConversationCommentSaga(),
     fetchConversationCommentsSaga(),
     fetchConversationsSaga(),
