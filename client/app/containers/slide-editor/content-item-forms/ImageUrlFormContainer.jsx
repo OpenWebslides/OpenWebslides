@@ -3,6 +3,15 @@ import { reduxForm } from 'redux-form';
 import ImageUrlForm from 'presentationals/components/slide-editor/content-item-forms/ImageUrlForm';
 import { ADD_URI } from 'actions/app/slide-editor';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { updateDeck } from 'actions/entities/decks';
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ updateDeck }, dispatch);
+}
+
 
 export function validate(values) {
   const { altText, imageUrl, imageType } = values;
@@ -40,5 +49,4 @@ const connectedForm = reduxForm({
   initialValues: { imageType: 'ILLUSTRATIVE' },
 })(ImageUrlForm);
 
-
-export default connectedForm;
+export default connect(null, mapDispatchToProps)(connectedForm);
