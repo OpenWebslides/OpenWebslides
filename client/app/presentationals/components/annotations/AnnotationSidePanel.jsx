@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SlideConversationListContainer from 'containers/annotations/conversations/SlideConversationListContainer';
-import AddConversationFormContainer from 'containers/annotations/conversations/AddConversationFormContainer';
+import ConversationListContainer from 'containers/annotations/conversations/ConversationListContainer';
+import ConversationFormContainer from 'containers/annotations/conversations/ConversationFormContainer';
 import ConversationCommentListContainer from 'containers/annotations/conversation-comments/ConversationCommentListContainer';
 
 
@@ -44,7 +44,7 @@ export default class AnnotationSidePanel extends Component {
   renderContent() {
     if (this.state.showAddConversationPanel) {
       return (
-        <AddConversationFormContainer closeAddConversationPanel={this.closeAddConversationPanel} />
+        <ConversationFormContainer closeAddConversationPanel={this.closeAddConversationPanel} />
       );
     }
 
@@ -61,7 +61,7 @@ export default class AnnotationSidePanel extends Component {
         <a href="#" className="close-btn" onClick={() => this.props.closeAnnotationMode()}>&times;</a>
         <h3><strong>Conversations for current slide</strong></h3>
         <button onClick={this.openAddConversationPanel}>Add conversation</button>
-        <SlideConversationListContainer showConversationComments={this.showConversationComments} />
+        <ConversationListContainer showConversationComments={this.showConversationComments} />
       </div>
     );
   }
