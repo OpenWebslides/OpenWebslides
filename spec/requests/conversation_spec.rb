@@ -116,6 +116,7 @@ RSpec.describe 'Conversations API', :type => :request do
       json = JSON.parse response.body
 
       expect(json['data']['meta']['createdAt'].to_i).to eq conversation.created_at.to_i
+      expect(json['data']['meta']['commentCount']).to eq conversation.comments.count
     end
   end
 end

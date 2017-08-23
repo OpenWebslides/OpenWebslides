@@ -35,6 +35,14 @@ class ConversationResource < AnnotationResource
     super(context) - %i[conversation_type comments]
   end
 
+  def meta(options)
+    meta = {
+      options[:serializer].key_formatter.format(:comment_count) => _model.comments.count
+    }
+
+    super.merge meta
+  end
+
   # Omit title when annotation is deleted
   def title
     _model.hidden? ? nil : _model.title
