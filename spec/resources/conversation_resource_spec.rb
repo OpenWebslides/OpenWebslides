@@ -20,25 +20,15 @@ RSpec.describe ConversationResource, :type => :resource do
   it { is_expected.to have_many :comments }
 
   describe 'fields' do
-    context 'normal state' do
-      it 'should have a valid set of fetchable fields' do
-        expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type title text comments rating rated]
-      end
-    end
-
-    context 'abnormal state' do
-      before { conversation.edit }
-
-      it 'should have a valid set of fetchable fields' do
-        expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type title text comments rating rated state]
-      end
+    it 'should have a valid set of fetchable fields' do
+      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type title text comments rating rated secret edited flagged deleted]
     end
 
     context 'hidden state' do
       before { conversation.hide }
 
       it 'should have a valid set of fetchable fields' do
-        expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type comments rating rated state]
+        expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type comments rating rated secret edited flagged deleted]
       end
     end
 
@@ -47,7 +37,7 @@ RSpec.describe ConversationResource, :type => :resource do
     end
 
     it 'should have a valid set of sortable fields' do
-      expect(described_class.sortable_fields context).to match_array %i[id content_item_id conversation_type title text rating rated state]
+      expect(described_class.sortable_fields context).to match_array %i[id content_item_id conversation_type title text rating rated secret edited flagged deleted]
     end
   end
 
