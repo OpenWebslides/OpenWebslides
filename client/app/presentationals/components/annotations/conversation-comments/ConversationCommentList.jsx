@@ -21,7 +21,7 @@ export default class ConversationCommentsList extends Component {
   }
 
   renderComments() {
-    const { conversationComments, activeConversationId } = this.props;
+    const { conversationComments, activeConversationId, editableConversationCommentId } = this.props;
 
     if (conversationComments) {
       return (
@@ -29,9 +29,13 @@ export default class ConversationCommentsList extends Component {
           <ul className="list-style-none">
             { Object.keys(conversationComments).map((commentId) => {
               const { rating, text, user, createdTimeAgo, byCurrentUser, deleted, edited, flagged, secret } = conversationComments[commentId];
+              if (editableConversationCommentId === commentId) {
+                return <h3>THIS IS EDITABLE YO</h3>;
+              }
+
               return (
                 <li key={commentId}>
-                  <span> <p>{rating} </p> {byCurrentUser && !deleted && <div><button>Edit</button><button onClick={() => this.props.deleteConversationComment(commentId, activeConversationId)}>Delete</button></div>}</span>
+                  <span> <p>{rating} </p> {byCurrentUser && !deleted && <div><button onClick={() => this.props.setEditableConversationComment(commentId)}>Edit</button><button onClick={() => this.props.deleteConversationComment(commentId, activeConversationId)}>Delete</button></div>}</span>
                   <p><strong>{user.firstName} {user.lastName} {edited ? '(Edited)' : ''} </strong> wrote:</p>
                   <p>{deleted ? '(Deleted)' : text}</p>
                   <p><em>Written <strong>{createdTimeAgo}</strong></em></p>
@@ -78,6 +82,8 @@ export default class ConversationCommentsList extends Component {
 ConversationCommentsList.propTypes = {
   activeConversationId: PropTypes.number.isRequired,
   fetchConversationComments: PropTypes.func.isRequired,
+  editableConversationCommentId: PropTypes.string,
+  setEditableConversationComment: PropTypes.func.isRequired,
   deleteConversationComment: PropTypes.func.isRequired,
   conversationComments: PropTypes.objectOf(Object),
   activeConversation: PropTypes.objectOf(Object).isRequired,
@@ -86,5 +92,6 @@ ConversationCommentsList.propTypes = {
 
 ConversationCommentsList.defaultProps = {
   conversationComments: null,
+  editableConversationCommentId: null,
 };
 
