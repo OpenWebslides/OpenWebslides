@@ -23,7 +23,7 @@ export default class SlideConversationList extends Component {
 
               return (
                 <li key={id}>
-                  {byCurrentUser && <div><button>Edit</button><button>Delete</button></div>}
+                  {byCurrentUser && <div><button>Edit</button><button onClick={() => this.props.deleteConversation(id)}>Delete</button></div>}
                   <a href="#" onClick={() => this.props.showConversationComments(id)}><i className={`fa ${iconClass}`} aria-hidden="true" /> {_.truncate(title, { length: 80, separator: '.' })}</a>
                   <p>by <strong> {user.firstName} {user.lastName}</strong></p>
                   <hr />
@@ -48,6 +48,7 @@ export default class SlideConversationList extends Component {
 SlideConversationList.propTypes = {
   conversations: PropTypes.arrayOf(Object),
   fetchConversations: PropTypes.func.isRequired,
+  deleteConversation: PropTypes.func.isRequired,
   showConversationComments: PropTypes.func.isRequired,
 };
 
