@@ -8,6 +8,7 @@ import ImageInputField from './ImageInputField';
 
 export default function ImageUploadForm(props) {
   if (props.submitSucceeded) {
+    props.updateDeck();
     props.handleSubmitSuccess();
   }
 
@@ -48,8 +49,9 @@ export default function ImageUploadForm(props) {
 }
 
 ImageUploadForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
+  handleSubmit: PropTypes.func.isRequired,
+  updateDeck: PropTypes.func.isRequired,
   submitSucceeded: PropTypes.bool.isRequired,
   handleSubmitSuccess: PropTypes.func.isRequired,
 };

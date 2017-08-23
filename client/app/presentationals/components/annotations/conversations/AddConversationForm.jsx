@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Field } from 'redux-form';
 import PropTypes from 'prop-types';
 
 import InputField from 'presentationals/objects/form-fields/InputField';
-
+import TextAreaField from 'presentationals/objects/form-fields/TextAreaField';
 
 function AddConversationPanel(props) {
+  if (props.submitSucceeded) {
+    props.closeAddConversationPanel();
+  }
+
   return (
     <div>
       <a href="#" className="back-btn" onClick={props.closeAddConversationPanel}><i className="fa fa-chevron-left fa-6" aria-hidden="true" /></a>
@@ -34,14 +38,14 @@ function AddConversationPanel(props) {
           <label>Text</label>
           <div>
             <Field
-              component="textarea"
-              style={{ overflow: 'auto', resize: 'none' }}
+              component={TextAreaField}
               rows="13"
               cols="40"
               name="text"
             />
           </div>
         </div>
+        {props.error && <strong>{props.error}</strong>}
         <div>
           <button type="submit">Add Conversation</button>
         </div>
@@ -49,6 +53,7 @@ function AddConversationPanel(props) {
     </div>
   );
 }
+
 
 AddConversationPanel.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
