@@ -18,8 +18,8 @@ import {
 
 function* doFetchDeck(action) {
   try {
-    // const HTMLResponse = yield call(fetchDeckApi, action.meta.deckId);
-    const HTMLResponse = testDeckFlamesFixed; // testDeckEmpty;
+    const HTMLResponse = yield call(fetchDeckApi, action.meta.deckId);
+    // const HTMLResponse = testDeckFlamesFixed; // testDeckEmpty;
 
     const entities = yield convertToState(action.meta.deckId, HTMLResponse);
     const payload = {
