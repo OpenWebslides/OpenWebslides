@@ -26,12 +26,18 @@ import uploadAssetSaga from 'sagas/uploadAssetSaga';
 import addUriSaga from 'sagas/slide-editor/addUriSaga';
 
 import fetchConversationsSaga from 'sagas/annotations/fetchConversationsSaga';
+import fetchConversationCommentsSaga from 'sagas/annotations/fetchConversationCommentsSaga';
+import addConversationSaga from 'sagas/annotations/addConversationSaga';
+import addConversationCommentSaga from 'sagas/annotations/addConversationCommentSaga';
 
 
 export default function* rootSaga() {
   yield [
+    addConversationSaga(),
     emailSigninSaga(),
     signupSaga(),
+    addConversationCommentSaga(),
+    fetchConversationCommentsSaga(),
     fetchConversationsSaga(),
     confirmEmailSaga(),
     requestFeedNorificationsSaga(),
