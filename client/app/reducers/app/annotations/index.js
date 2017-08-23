@@ -1,6 +1,11 @@
 import Immutable from 'seamless-immutable';
 
-import { OPEN_ANNOTATION_MODE, CLOSE_ANNOTATION_MODE, SET_ACTIVE_CONVERSATION_ID } from 'actions/app/annotations';
+import {
+  OPEN_ANNOTATION_MODE,
+  CLOSE_ANNOTATION_MODE,
+  SET_ACTIVE_CONVERSATION_ID,
+  SET_EDITABLE_CONVERSATION_COMMENT,
+} from 'actions/app/annotations';
 
 const initialState = Immutable({
   annotationMode: false,
@@ -15,6 +20,8 @@ export default function annotationReducer(state = initialState, action) {
       return state.merge({ annotationMode: false });
     case SET_ACTIVE_CONVERSATION_ID:
       return state.merge({ activeConversationId: action.payload.conversationId });
+    case SET_EDITABLE_CONVERSATION_COMMENT:
+      return state.merge({ editableConversationCommentId: action.payload.conversationCommentId });
     default:
       return state;
   }
