@@ -9,6 +9,8 @@ import {
 } from 'actions/entities/conversation-comments';
 
 import fetchConversationCommentsApi from 'api/fetchConversationCommentsApi';
+import { getCurrentUserId } from 'selectors/app/auth';
+
 
 const mockConversationComments = {
   1: {
@@ -62,6 +64,8 @@ const mockConversationComments = {
 export function* doFetchConversations(action) {
   try {
     const { conversationId } = action.meta;
+    const currentUserId = yield select(getCurrentUserId);
+
 
     const conversationComments = yield call(fetchConversationCommentsApi, conversationId);
     const payload = {};
@@ -70,11 +74,12 @@ export function* doFetchConversations(action) {
       const { id, attributes, relationships, meta: { createdAt } } = conversationComment;
 
       const userId = relationships.user.data.id;
+      const byCurrentUser = userId === currentUserId;
 
       const userAttributes = conversationComments.included.find(user => user.id === userId).attributes;
       const createdTimeAgo = moment.unix(createdAt).fromNow();
 
-      payload[id] = { id, ...attributes, user: { ...userAttributes }, createdTimeAgo };
+      payload[id] = { id, ...attributes, byCurrentUser, user: { ...userAttributes }, createdTimeAgo };
     });
 
     yield put({ type: FETCH_CONVERSATION_COMMENTS_SUCCESS, payload });
