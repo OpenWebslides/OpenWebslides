@@ -17,14 +17,16 @@ export default class SlideConversationList extends Component {
           <ul className="list-style-none">
             {conversations.map((conversation) => {
               console.log(conversation);
-              const { id, conversationType, title, user, byCurrentUser } = conversation;
+              const { id, conversationType, title, user, byCurrentUser, flagged, deleted, secret, edited } = conversation;
 
               const iconClass = conversationType === 'question' ? 'fa-question' : 'fa-comment';
 
+              const visibleTitle = _.truncate(title, { length: 80, separator: '.' });
+
               return (
                 <li key={id}>
-                  {byCurrentUser && <div><button>Edit</button><button onClick={() => this.props.deleteConversation(id)}>Delete</button></div>}
-                  <a href="#" onClick={() => this.props.showConversationComments(id)}><i className={`fa ${iconClass}`} aria-hidden="true" /> {_.truncate(title, { length: 80, separator: '.' })}</a>
+                  {byCurrentUser && !deleted && <div><button>Edit</button><button onClick={() => this.props.deleteConversation(id)}>Delete</button></div>}
+                  <a href="#" onClick={() => this.props.showConversationComments(id)}><i className={`fa ${iconClass}`} aria-hidden="true" /> {visibleTitle}</a>
                   <p>by <strong> {user.firstName} {user.lastName}</strong></p>
                   <hr />
                 </li>);
