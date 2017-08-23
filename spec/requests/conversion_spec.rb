@@ -37,9 +37,10 @@ RSpec.describe 'Conversions API', :type => :request do
       expect(response.status).to eq 201
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
-      attributes = (JSON.parse response.body)['data']['attributes']
-      expect(attributes['name']).to eq 'presentation.pptx'
-      expect(attributes['status']).to eq 'queued'
+      data = JSON.parse(response.body)['data']
+      expect(data['attributes']['name']).to eq 'presentation.pptx'
+      expect(data['attributes']['status']).to eq 'queued'
+      expect(data['meta']).to include 'createdAt'
     end
   end
 
@@ -66,6 +67,7 @@ RSpec.describe 'Conversions API', :type => :request do
 
       data = (JSON.parse response.body)['data']
       expect(Conversion.statuses.keys).to include data['attributes']['status']
+      expect(data['meta']).to include 'createdAt'
     end
   end
 
