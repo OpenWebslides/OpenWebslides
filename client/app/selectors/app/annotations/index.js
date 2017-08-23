@@ -5,3 +5,7 @@ export const getActiveDeckId = (state) => {
 export const getActiveSlideId = (state) => {
   return state.app.presentationView.activeSlideId;
 };
+
+export const getActiveConversationId = (state) => {
+  return state.app.annotations.activeConversationId;
+};
