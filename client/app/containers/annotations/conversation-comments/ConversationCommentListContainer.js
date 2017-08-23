@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import ConversationCommentList from 'presentationals/components/annotations/conversation-comments/ConversationCommentList';
 import { getConversationById } from 'selectors/entities/conversations';
 
-import { fetchConversationComments } from 'actions/entities/conversation-comments';
+import { fetchConversationComments, deleteConversationComment } from 'actions/entities/conversation-comments';
 
 function mapStateToProps(state) {
   const activeConversationId = state.app.annotations.activeConversationId;
@@ -17,7 +17,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchConversationComments }, dispatch);
+  return bindActionCreators({ fetchConversationComments, deleteConversationComment }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConversationCommentList);

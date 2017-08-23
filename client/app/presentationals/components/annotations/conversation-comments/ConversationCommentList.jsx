@@ -21,7 +21,7 @@ export default class ConversationCommentsList extends Component {
   }
 
   renderComments() {
-    const { conversationComments } = this.props;
+    const { conversationComments, activeConversationId } = this.props;
 
     if (conversationComments) {
       return (
@@ -29,10 +29,9 @@ export default class ConversationCommentsList extends Component {
           <ul className="list-style-none">
             { Object.keys(conversationComments).map((commentId) => {
               const { rating, text, user, createdTimeAgo, byCurrentUser, deleted, edited, flagged, secret } = conversationComments[commentId];
-
               return (
-                <li>
-                  <span> <p>{rating} </p> {byCurrentUser && <div><button>Edit</button><button>Delete</button></div>}</span>
+                <li key={commentId}>
+                  <span> <p>{rating} </p> {byCurrentUser && !deleted && <div><button>Edit</button><button onClick={() => this.props.deleteConversationComment(commentId, activeConversationId)}>Delete</button></div>}</span>
                   <p><strong>{user.firstName} {user.lastName} {edited ? '(Edited)' : ''} </strong> wrote:</p>
                   <p>{deleted ? '(Deleted)' : text}</p>
                   <p><em>Written <strong>{createdTimeAgo}</strong></em></p>
@@ -79,6 +78,7 @@ export default class ConversationCommentsList extends Component {
 ConversationCommentsList.propTypes = {
   activeConversationId: PropTypes.number.isRequired,
   fetchConversationComments: PropTypes.func.isRequired,
+  deleteConversationComment: PropTypes.func.isRequired,
   conversationComments: PropTypes.objectOf(Object),
   activeConversation: PropTypes.objectOf(Object).isRequired,
   closeConversationCommentList: PropTypes.func.isRequired,
