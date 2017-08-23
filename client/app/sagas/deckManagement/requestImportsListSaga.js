@@ -25,7 +25,7 @@ export function* getUserImportsFlow(action) {
     }
     const listOfImports = responseListOfImports.map(responseImport => ({
       id: responseImport.id,
-      timestamp: responseImport.attributes.createdAt,
+      timestamp: responseImport.meta.createdAt,
       status: responseImport.attributes.status,
       type: computeType(responseImport.attributes.name),
       name: responseImport.attributes.name,
