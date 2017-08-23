@@ -45,7 +45,6 @@ export default class ConversationCommentsList extends Component {
   }
 
   scrollToForm() {
-    console.log(this);
     this.conversationCommentForm.scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -59,7 +58,7 @@ export default class ConversationCommentsList extends Component {
           <p><strong>{activeConversation.user.firstName} {activeConversation.user.lastName}</strong> wrote:</p>
           <p>{activeConversation.text}</p>
           <hr />
-          <button onClick={() => this.scrollToForm()}>Add comment</button>
+          { activeConversation.deleted ? <p> Adding comments is disabled for deleted conversations.</p> : <button onClick={() => this.scrollToForm()}>Add comment</button>}
         </div>
         {this.renderComments()}
         <div
@@ -67,7 +66,7 @@ export default class ConversationCommentsList extends Component {
             this.conversationCommentForm = conversationCommentForm;
           }}
         >
-          <ConversationCommentFormContainer />
+          { activeConversation.deleted ? <p> Adding comments is disabled for deleted conversations.</p> : <ConversationCommentFormContainer />}
         </div>
 
       </div>
