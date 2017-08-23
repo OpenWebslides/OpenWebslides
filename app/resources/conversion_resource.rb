@@ -9,9 +9,12 @@ class ConversionResource < ApplicationResource
   ##
   # Properties
   #
-  attribute :created_at, :format => :date
-  attributes :name, :status
+  attribute :name
+  attribute :status
 
+  ##
+  # Relationships
+  #
   has_one :deck
   has_one :user
 
@@ -28,5 +31,11 @@ class ConversionResource < ApplicationResource
   #
   def self.creatable_fields(_ = {})
     []
+  end
+
+  def meta(options)
+    {
+      options[:serializer].key_formatter.format(:created_at) => DateValueFormatter.format(_model.created_at)
+    }
   end
 end
