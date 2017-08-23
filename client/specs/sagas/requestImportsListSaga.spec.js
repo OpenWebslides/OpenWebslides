@@ -31,7 +31,6 @@ function fakeResponseElement() {
     },
     attributes: {
       status: type,
-      createdAt: timestamp,
       name,
     },
     relationships: {
@@ -48,6 +47,9 @@ function fakeResponseElement() {
         },
       },
     },
+    meta: {
+      createdAt: timestamp,
+    }
   };
 }
 function fakeResponseList(amount) {
@@ -75,7 +77,7 @@ describe('Request for imports list Saga', () => {
         resultListOfImports.push({
           id: dummyResponse[i].id,
           name: dummyResponse[i].attributes.name,
-          timestamp: dummyResponse[i].attributes.createdAt,
+          timestamp: dummyResponse[i].meta.createdAt,
           status: dummyResponse[i].attributes.status,
           type: computeType(dummyResponse[i].attributes.name),
         });
