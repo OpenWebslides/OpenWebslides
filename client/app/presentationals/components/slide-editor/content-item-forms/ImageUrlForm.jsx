@@ -6,6 +6,7 @@ import InputField from 'presentationals/objects/form-fields/InputField';
 
 export default function ImageUrlForm(props) {
   if (props.submitSucceeded) {
+    props.updateDeck();
     props.handleSubmitSuccess();
   }
 
@@ -50,6 +51,7 @@ export default function ImageUrlForm(props) {
 
 ImageUrlForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  updateDeck: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitSucceeded: PropTypes.bool.isRequired,
   handleSubmitSuccess: PropTypes.func.isRequired,
