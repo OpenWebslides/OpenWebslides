@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
 
-import AddConversationForm from 'presentationals/components/annotations/conversations/AddConversationForm';
+import ConversationForm from 'presentationals/components/annotations/conversations/ConversationForm';
 import { addConversation } from 'actions/entities/conversations';
 
 function validateAndSubmit(values, dispatch) {
@@ -31,5 +31,5 @@ export default reduxForm({
   onSubmit: validateAndSubmit,
   initialValues: { conversationType: 'question' },
   getFormState: state => state.vendor.forms,
-})(AddConversationForm);
+})(ConversationForm);
 
