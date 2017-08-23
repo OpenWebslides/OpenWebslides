@@ -1,7 +1,7 @@
 export const OPEN_ANNOTATION_MODE = 'OPEN_ANNOTATION_MODE';
 export const CLOSE_ANNOTATION_MODE = 'CLOSE_ANNOTATION_MODE';
 export const SET_ACTIVE_CONVERSATION_ID = 'SET_ACTIVE_CONVERSATION_ID';
-
+export const SET_EDITABLE_CONVERSATION_COMMENT = 'SET_EDITABLE_CONVERSATION_ID';
 
 export function openAnnotationMode() {
   return { type: OPEN_ANNOTATION_MODE };
@@ -13,5 +13,9 @@ export function closeAnnotationMode() {
 
 export function setActiveConversationId(conversationId) {
   return { type: SET_ACTIVE_CONVERSATION_ID, payload: { conversationId } };
+}
+
+export function setEditableConversationComment(conversationCommentId) {
+  return { type: SET_EDITABLE_CONVERSATION_COMMENT, payload: { conversationCommentId } };
 }
 

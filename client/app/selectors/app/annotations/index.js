@@ -9,3 +9,8 @@ export const getActiveSlideId = (state) => {
 export const getActiveConversationId = (state) => {
   return state.app.annotations.activeConversationId;
 };
+
+export const getEditableConversationCommentId = (state) => {
+  return state.app.annotations.editableConversationCommentId;
+};
+
