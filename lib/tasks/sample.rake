@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'faker'
-require 'factory_girl'
-
 namespace :db do
   desc 'Populates the database with sample data'
   task :sample => :environment do
+    # Because this file gets eagerly loaded in production,
+    # test environment-only dependencies need to be required on runtime only
+    require 'faker'
+    require 'factory_girl'
+
     ##
     # Database size factor (10 =~ 100 users)
     #
