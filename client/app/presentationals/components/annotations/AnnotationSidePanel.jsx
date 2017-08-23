@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SlideConversationListContainer from 'containers/annotations/SlideConversationListContainer';
-import AddConversationPanelContainer from 'containers/annotations/AddConversationPanelContainer';
+import SlideConversationListContainer from 'containers/annotations/conversations/SlideConversationListContainer';
+import AddConversationFormContainer from 'containers/annotations/conversations/AddConversationFormContainer';
+import ConversationCommentListContainer from 'containers/annotations/conversation-comments/ConversationCommentListContainer';
 
 
 export default class AnnotationSidePanel extends Component {
@@ -10,17 +11,20 @@ export default class AnnotationSidePanel extends Component {
 
     this.openAddConversationPanel = this.openAddConversationPanel.bind(this);
     this.closeAddConversationPanel = this.closeAddConversationPanel.bind(this);
+    this.showConversationComments = this.showConversationComments.bind(this);
+    this.closeConversationCommentList = this.closeConversationCommentList.bind(this);
 
     this.state = {
       showAddConversationPanel: false,
+      showConversationCommentList: false,
     };
   }
   componentDidMount() {
     this.panel.style.width = '450px';
-    this.props.fetchConversations();
   }
 
   openAddConversationPanel() {
+    this.setState({ showConversationCommentList: false });
     this.setState({ showAddConversationPanel: true });
   }
 
@@ -28,23 +32,38 @@ export default class AnnotationSidePanel extends Component {
     this.setState({ showAddConversationPanel: false });
   }
 
+  closeConversationCommentList() {
+    this.setState({ showConversationCommentList: false });
+  }
+
+  showConversationComments(conversationId) {
+    this.props.setActiveConversationId(conversationId);
+    this.setState({ showConversationCommentList: true });
+  }
+
   renderContent() {
     if (this.state.showAddConversationPanel) {
       return (
-        <AddConversationPanelContainer closeAddConversationPanel={this.closeAddConversationPanel} />
+        <AddConversationFormContainer closeAddConversationPanel={this.closeAddConversationPanel} />
       );
     }
-    else {
-      return (
-        <div>
-          <a href="#" className="close-btn" onClick={() => this.props.closeAnnotationMode()}>&times;</a>
-          <h3><strong>Conversations for current slide</strong></h3>
-          <button onClick={this.openAddConversationPanel}>Add conversation</button>
-          <SlideConversationListContainer />
-        </div>
 
+    if (this.state.showConversationCommentList) {
+      return (
+        <ConversationCommentListContainer
+          closeConversationCommentList={this.closeConversationCommentList}
+        />
       );
     }
+
+    return (
+      <div>
+        <a href="#" className="close-btn" onClick={() => this.props.closeAnnotationMode()}>&times;</a>
+        <h3><strong>Conversations for current slide</strong></h3>
+        <button onClick={this.openAddConversationPanel}>Add conversation</button>
+        <SlideConversationListContainer showConversationComments={this.showConversationComments} />
+      </div>
+    );
   }
 
   render() {
@@ -63,9 +82,5 @@ export default class AnnotationSidePanel extends Component {
 
 AnnotationSidePanel.propTypes = {
   closeAnnotationMode: PropTypes.func.isRequired,
+  setActiveConversationId: PropTypes.func.isRequired,
 };
-
-AnnotationSidePanel.propTypes = {
-  fetchConversations: PropTypes.func.isRequired,
-}
-;

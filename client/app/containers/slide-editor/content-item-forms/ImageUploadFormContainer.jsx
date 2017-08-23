@@ -1,7 +1,15 @@
 import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { uploadAsset } from 'actions/other/assetActions';
+import { updateDeck } from 'actions/entities/decks';
+
 import ImageUploadForm from 'presentationals/components/slide-editor/content-item-forms/ImageUploadForm';
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ updateDeck }, dispatch);
+}
 
 export function validate(values) {
   const { altText, imageFile, imageType } = values;
@@ -38,4 +46,4 @@ const connectedForm = reduxForm({
 })(ImageUploadForm);
 
 
-export default connectedForm;
+export default connect(null, mapDispatchToProps)(connectedForm);
