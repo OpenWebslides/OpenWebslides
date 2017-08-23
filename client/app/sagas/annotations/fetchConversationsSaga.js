@@ -33,13 +33,17 @@ export function* doFetchConversations() {
     const payload = {};
 
     conversations.data.forEach((conversation) => {
-      const { id, attributes, relationships } = conversation;
+      const { id, attributes, attributes: { deleted }, relationships } = conversation;
       const userId = relationships.user.data.id;
       const byCurrentUser = userId === currentUserId;
 
+      const title = deleted ? '(Deleted)' : attributes.title;
+      const text = deleted ? 'Conversation has been deleted, comments are still visible.' : attributes.text;
+
+
       const userAttributes = conversations.included.find(user => user.id === userId).attributes;
 
-      payload[id] = { id, ...attributes, byCurrentUser, user: { ...userAttributes } };
+      payload[id] = { id, text, title, ...attributes, byCurrentUser, user: { ...userAttributes } };
     });
 
     yield put({ type: FETCH_CONVERSATIONS_SUCCESS, payload });
