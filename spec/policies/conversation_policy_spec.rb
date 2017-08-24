@@ -13,46 +13,31 @@ RSpec.describe ConversationPolicy do
     context 'for a guest' do
       let(:user) { nil }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a user' do
       let(:user) { build :user }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a collaborator' do
       let(:user) { deck.collaborators.first }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for an owner' do
       let(:user) { conversation.user }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a deck owner' do
       let(:user) { deck.owner }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
   end
 
@@ -62,46 +47,31 @@ RSpec.describe ConversationPolicy do
     context 'for a guest' do
       let(:user) { nil }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to forbid_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a user' do
       let(:user) { build :user }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a collaborator' do
       let(:user) { deck.collaborators.first }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for an owner' do
       let(:user) { conversation.user }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a deck owner' do
       let(:user) { deck.owner }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
   end
 
@@ -111,47 +81,32 @@ RSpec.describe ConversationPolicy do
     context 'for a guest' do
       let(:user) { nil }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to forbid_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a user' do
       let(:user) { build :user }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to forbid_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a collaborator' do
       let(:user) { deck.collaborators.first }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for an owner' do
       before { deck.collaborators << conversation.user }
       let(:user) { conversation.user }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
 
     context 'for a deck owner' do
       let(:user) { deck.owner }
 
-      it { is_expected.to forbid_action :create_comments }
       it { is_expected.to permit_action :show_comments }
-      it { is_expected.to forbid_action :update_comments }
-      it { is_expected.to forbid_action :destroy_comments }
     end
   end
 end
