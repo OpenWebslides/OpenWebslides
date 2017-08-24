@@ -12,10 +12,16 @@ class AnnotationService < ApplicationService
   end
 
   def update(params)
-    @annotation.assign_attributes params
-
-    # Calling a state machine instance method also persists the object
-    @annotation.edit
+    if params.key? :secret
+      if params[:secret] == 'true' || params[:secret] == true
+        @annotation.protect
+      else
+        @annotation.publish
+      end
+    else
+      @annotation.assign_attributes params.except :secret
+      @annotation.edit
+    end
   end
 
   def protect
