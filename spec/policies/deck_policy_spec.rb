@@ -51,6 +51,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
 
@@ -88,6 +90,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to forbid_action :show_annotations
       end
     end
 
@@ -125,6 +129,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to forbid_action :show_annotations
       end
     end
   end
@@ -173,6 +179,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
 
@@ -210,6 +218,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
 
@@ -247,6 +257,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to forbid_action :show_annotations
       end
     end
   end
@@ -296,6 +308,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
 
@@ -334,6 +348,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
 
@@ -372,6 +388,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
   end
@@ -421,6 +439,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
 
@@ -459,6 +479,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
 
@@ -497,6 +519,8 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :show_conversations
         expect(subject).to forbid_action :update_conversations
         expect(subject).to forbid_action :destroy_conversations
+
+        expect(subject).to permit_action :show_annotations
       end
     end
   end
