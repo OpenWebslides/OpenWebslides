@@ -111,6 +111,9 @@ Rails.application.routes.draw do
 
       # Rating
       jsonapi_resource :rating, :only => %i[create destroy] do end
+
+      # Flag
+      jsonapi_resource :flag, :only => %i[create] do end
     end
 
     jsonapi_resources :comments, :except => %i[index] do
@@ -128,6 +131,9 @@ Rails.application.routes.draw do
 
       # Rating
       jsonapi_resource :rating, :only => %i[create destroy] do end
+
+      # Flag
+      jsonapi_resource :flag, :only => %i[create] do end
     end
 
     ## Authentication
