@@ -25,33 +25,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to forbid_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to forbid_action :update_assets
-        expect(subject).to forbid_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end
@@ -64,33 +42,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to forbid_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to forbid_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to forbid_action :create_assets
         expect(subject).to forbid_action :show_assets
-        expect(subject).to forbid_action :update_assets
-        expect(subject).to forbid_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to forbid_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to forbid_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to forbid_action :show_annotations
       end
     end
@@ -103,33 +59,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to forbid_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to forbid_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to forbid_action :create_assets
         expect(subject).to forbid_action :show_assets
-        expect(subject).to forbid_action :update_assets
-        expect(subject).to forbid_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to forbid_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to forbid_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to forbid_action :show_annotations
       end
     end
@@ -153,33 +87,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to forbid_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to forbid_action :update_assets
-        expect(subject).to forbid_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end
@@ -192,33 +104,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to forbid_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to forbid_action :update_assets
-        expect(subject).to forbid_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end
@@ -231,33 +121,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to forbid_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to forbid_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to forbid_action :create_assets
         expect(subject).to forbid_action :show_assets
-        expect(subject).to forbid_action :update_assets
-        expect(subject).to forbid_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to forbid_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to forbid_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to forbid_action :show_annotations
       end
     end
@@ -282,33 +150,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to permit_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to permit_action :update_assets
-        expect(subject).to permit_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end
@@ -322,33 +168,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to permit_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to permit_action :update_assets
-        expect(subject).to permit_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end
@@ -362,33 +186,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to forbid_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to forbid_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to forbid_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to forbid_action :update_collaborators
-        expect(subject).to forbid_action :destroy_collaborators
-
-        expect(subject).to permit_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to permit_action :update_assets
-        expect(subject).to permit_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to forbid_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end
@@ -413,33 +215,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to permit_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to permit_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to permit_action :update_collaborators
-        expect(subject).to permit_action :destroy_collaborators
-
-        expect(subject).to permit_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to permit_action :update_assets
-        expect(subject).to permit_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to permit_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end
@@ -453,33 +233,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to permit_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to permit_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to permit_action :update_collaborators
-        expect(subject).to permit_action :destroy_collaborators
-
-        expect(subject).to permit_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to permit_action :update_assets
-        expect(subject).to permit_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to permit_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end
@@ -493,33 +251,11 @@ RSpec.describe DeckPolicy do
         expect(subject).to permit_action :destroy
 
         expect(subject).to permit_action :show_owner
-        expect(subject).to permit_action :update_owner
-        expect(subject).to forbid_action :destroy_owner
-
-        expect(subject).to permit_action :create_collaborators
         expect(subject).to permit_action :show_collaborators
-        expect(subject).to permit_action :update_collaborators
-        expect(subject).to permit_action :destroy_collaborators
-
-        expect(subject).to permit_action :create_assets
         expect(subject).to permit_action :show_assets
-        expect(subject).to permit_action :update_assets
-        expect(subject).to permit_action :destroy_assets
-
-        expect(subject).to forbid_action :create_notifications
         expect(subject).to permit_action :show_notifications
-        expect(subject).to forbid_action :update_notifications
-        expect(subject).to forbid_action :destroy_notifications
-
         expect(subject).to permit_action :show_conversion
-        expect(subject).to forbid_action :update_conversion
-        expect(subject).to forbid_action :destroy_conversion
-
-        expect(subject).to forbid_action :create_conversations
         expect(subject).to permit_action :show_conversations
-        expect(subject).to forbid_action :update_conversations
-        expect(subject).to forbid_action :destroy_conversations
-
         expect(subject).to permit_action :show_annotations
       end
     end

@@ -54,93 +54,31 @@ class DeckPolicy < ApplicationPolicy
     show?
   end
 
-  def update_owner?
-    # Users can only update owner if the deck is destroyable
-    # Authorize the user separately in the controller
-    destroy?
-  end
-
-  def destroy_owner?
-    # Users cannot destroy owner relationship
-    false
-  end
-
   ##
   # Relationship: collaborators
   #
-  def create_collaborators?
-    # Users can only create collaborators if the deck is destroyable
-    # Authorize the user separately in the controller
-    destroy?
-  end
-
   def show_collaborators?
     # Users can only show collaborators if the deck is showable
     # Policy scope separately in the controller
     show?
   end
 
-  def update_collaborators?
-    # Users can only update collaborators if the deck is destroyable
-    # Authorize the user separately in the controller
-    destroy?
-  end
-
-  def destroy_collaborators?
-    # Users can only destroy collaborators if the deck is destroyable
-    # Authorize the user separately in the controller
-    destroy?
-  end
-
   ##
   # Relationship: notifications
   #
-  def create_notifications?
-    # Users can never create notifications relationship
-    false
-  end
-
   def show_notifications?
     # Users can only show notifications if the deck is showable
     # Policy scope separately in the controller
     show?
   end
 
-  def update_notifications?
-    # Users can never update notifications relationship
-    false
-  end
-
-  def destroy_notifications?
-    # Users can never destroy notifications relationship
-    false
-  end
-
   ##
   # Relationship: assets
   #
-  def create_assets?
-    # Users can only create assets if the deck is updatable
-    # Authorize the asset separately in the controller
-    update?
-  end
-
   def show_assets?
     # Users can only show assets if the deck is showable
     # Policy scope separately in the controller
     show?
-  end
-
-  def update_assets?
-    # Users can only update assets if the deck is updatable
-    # Authorize the asset separately in the controller
-    update?
-  end
-
-  def destroy_assets?
-    # Users can only destroy assets if the deck is updatable
-    # Authorize the asset separately in the controller
-    update?
   end
 
   ##
@@ -152,38 +90,13 @@ class DeckPolicy < ApplicationPolicy
     destroy?
   end
 
-  def update_conversion?
-    # Users can never update conversion relationship
-    false
-  end
-
-  def destroy_conversion?
-    # Users can never destroy conversion relationship
-    false
-  end
-
   ##
   # Relationship: conversations
   #
-  def create_conversations?
-    # Users can never create conversations relationship
-    false
-  end
-
   def show_conversations?
     # Users can only show conversations if the deck is showable
     # Policy scope separately in the controller
     show?
-  end
-
-  def update_conversations?
-    # Users can never update conversations relationship
-    false
-  end
-
-  def destroy_conversations?
-    # Users can never destroy conversations relationship
-    false
   end
 
   ##
