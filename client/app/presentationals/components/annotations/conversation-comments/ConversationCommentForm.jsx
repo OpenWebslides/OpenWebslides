@@ -7,7 +7,6 @@ import TextAreaField from 'presentationals/objects/form-fields/TextAreaField';
 
 export default function ConversationCommentForm(props) {
   if (props.submitSucceeded) {
-    console.log(props);
     props.reset();
   }
 
