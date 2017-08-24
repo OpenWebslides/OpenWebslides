@@ -31,6 +31,7 @@ import addConversationSaga from 'sagas/annotations/addConversationSaga';
 import addConversationCommentSaga from 'sagas/annotations/addConversationCommentSaga';
 import deleteConversationSaga from 'sagas/annotations/deleteConversationSaga';
 import deleteConversationCommentSaga from 'sagas/annotations/deleteConversationCommentSaga';
+import updateConversationCommentSaga from 'sagas/annotations/updateConversationCommentSaga';
 
 
 export default function* rootSaga() {
@@ -38,6 +39,7 @@ export default function* rootSaga() {
     addConversationSaga(),
     emailSigninSaga(),
     signupSaga(),
+    updateConversationCommentSaga(),
     deleteConversationCommentSaga(),
     deleteConversationSaga(),
     addConversationCommentSaga(),
