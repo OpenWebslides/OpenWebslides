@@ -5,6 +5,7 @@ import {
   CLOSE_ANNOTATION_MODE,
   SET_ACTIVE_CONVERSATION_ID,
   SET_EDITABLE_CONVERSATION_COMMENT,
+  UNSET_EDITABLE_CONVERSATION_COMMENT,
 } from 'actions/app/annotations';
 
 const initialState = Immutable({
@@ -22,6 +23,8 @@ export default function annotationReducer(state = initialState, action) {
       return state.merge({ activeConversationId: action.payload.conversationId });
     case SET_EDITABLE_CONVERSATION_COMMENT:
       return state.merge({ editableConversationCommentId: action.payload.conversationCommentId });
+    case UNSET_EDITABLE_CONVERSATION_COMMENT:
+      return state.merge({ editableConversationCommentId: null });
     default:
       return state;
   }
