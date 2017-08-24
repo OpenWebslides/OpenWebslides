@@ -16,7 +16,6 @@ export default class SlideConversationList extends Component {
         <div>
           <ul className="list-style-none">
             {conversations.map((conversation) => {
-              console.log(conversation);
               const { id, conversationType, title, user, byCurrentUser, flagged, deleted, secret, edited } = conversation;
 
               const iconClass = conversationType === 'question' ? 'fa-question' : 'fa-comment';
