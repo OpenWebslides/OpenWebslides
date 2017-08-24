@@ -33,7 +33,11 @@ export default class ConversationCommentsList extends Component {
 
               let component = [];
               if (editableConversationCommentId === commentId) {
-                component = <InlineEditConversationCommentFormContainer form={`ConversationCommentForm${commentId}`} key={commentId} initialValues={{ text }} />;
+                component = (<InlineEditConversationCommentFormContainer
+                  form={`ConversationCommentForm${commentId}`}
+                  key={commentId}
+                  initialValues={{ text }}
+                />);
               }
               else {
                 component = (
