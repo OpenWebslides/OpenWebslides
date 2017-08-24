@@ -17,6 +17,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
+      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -29,6 +30,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
+      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -42,6 +44,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -54,6 +57,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -67,6 +71,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -83,6 +88,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
+      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to forbid_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -95,6 +101,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
+      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -108,6 +115,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -120,6 +128,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -133,6 +142,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -149,6 +159,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
+      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to forbid_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -161,6 +172,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
+      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to forbid_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -174,6 +186,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -187,6 +200,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
@@ -200,6 +214,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
+      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }

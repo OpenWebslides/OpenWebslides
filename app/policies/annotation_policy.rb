@@ -34,6 +34,13 @@ class AnnotationPolicy < ApplicationPolicy
     deck_policy.show? && user_policy.update?
   end
 
+  def flag?
+    return false if @user.nil?
+
+    # Users can flag but only for updatable deck
+    deck_policy.update?
+  end
+
   ##
   # Relationship: user
   #
