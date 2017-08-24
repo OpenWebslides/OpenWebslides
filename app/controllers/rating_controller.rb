@@ -24,7 +24,7 @@ class RatingController < ApplicationController
     authorize @rating
 
     if @rating.save
-      head :created, :content_type => JSONAPI::MEDIA_TYPE
+      jsonapi_render :json => @annotation, :options => { :resource => annotation_resource }
     else
       jsonapi_render_errors :json => @rating, :status => :unprocessable_entity
     end
@@ -38,12 +38,18 @@ class RatingController < ApplicationController
 
     authorize @rating
 
-    @rating.destroy
-
-    head :no_content
+    if @rating.destroy
+      jsonapi_render :json => @annotation, :options => { :resource => annotation_resource }
+    else
+      jsonapi_render_errors :json => @rating, :status => :unprocessable_entity
+    end
   end
 
   protected
+
+  def annotation_resource
+    ApplicationResource.resource_for @annotation.type
+  end
 
   def add_dummy_id
     # JSONAPI::Resources requires an :id attribute

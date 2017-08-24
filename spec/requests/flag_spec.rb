@@ -39,8 +39,12 @@ RSpec.describe 'Flags API', :type => :request do
       it 'flags' do
         post conversation_flag_path(:conversation_id => annotation.id), :params => params, :headers => headers
 
-        expect(response.status).to eq 201
+        expect(response.status).to eq 200
         expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        attrs = JSON.parse(response.body)['data']['attributes']
+
+        expect(attrs['flagged']).to be true
 
         annotation.reload
         expect(annotation).to be_flagged
@@ -72,8 +76,12 @@ RSpec.describe 'Flags API', :type => :request do
       it 'flags' do
         post comment_flag_path(:comment_id => annotation.id), :params => params, :headers => headers
 
-        expect(response.status).to eq 201
+        expect(response.status).to eq 200
         expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        attrs = JSON.parse(response.body)['data']['attributes']
+
+        expect(attrs['flagged']).to be true
 
         annotation.reload
         expect(annotation).to be_flagged
