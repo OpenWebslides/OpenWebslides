@@ -19,9 +19,15 @@ class FlagController < ApplicationController
     authorize @annotation, :flag?
 
     if @annotation.flag
-      head :created, :content_type => JSONAPI::MEDIA_TYPE
+      jsonapi_render :json => @annotation, :options => { :resource => annotation_resource }
     else
       jsonapi_render_errors :json => @annotation, :status => :unprocessable_entity
     end
+  end
+
+  protected
+
+  def annotation_resource
+    ApplicationResource.resource_for @annotation.type
   end
 end

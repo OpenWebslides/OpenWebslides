@@ -41,8 +41,12 @@ RSpec.describe 'Ratings API', :type => :request do
       it 'creates a rating' do
         post conversation_rating_path(:conversation_id => annotation.id), :params => params, :headers => headers
 
-        expect(response.status).to eq 201
+        expect(response.status).to eq 200
         expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        attrs = JSON.parse(response.body)['data']['attributes']
+
+        expect(attrs['rated']).to be true
       end
     end
 
@@ -53,12 +57,28 @@ RSpec.describe 'Ratings API', :type => :request do
         @rating = create :rating, :annotation => annotation, :user => user
       end
 
+      context 'not yet rated' do
+        before { @rating.destroy }
+
+        it 'rejects not yet rated' do
+          delete conversation_rating_path(:conversation_id => annotation.id), :headers => headers
+
+          expect(response.status).to eq 404
+          expect(jsonapi_error_code(response)).to eq JSONAPI::RECORD_NOT_FOUND
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
       it 'deletes a rating' do
         delete conversation_rating_path(:conversation_id => annotation.id), :headers => headers
 
         expect(-> { @rating.reload }).to raise_error ActiveRecord::RecordNotFound
 
-        expect(response.status).to eq 204
+        expect(response.status).to eq 200
+
+        attrs = JSON.parse(response.body)['data']['attributes']
+
+        expect(attrs['rated']).to be false
       end
     end
   end
@@ -87,8 +107,12 @@ RSpec.describe 'Ratings API', :type => :request do
       it 'creates a rating' do
         post comment_rating_path(:comment_id => annotation.id), :params => params, :headers => headers
 
-        expect(response.status).to eq 201
+        expect(response.status).to eq 200
         expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+        attrs = JSON.parse(response.body)['data']['attributes']
+
+        expect(attrs['rated']).to be true
       end
     end
 
@@ -99,12 +123,28 @@ RSpec.describe 'Ratings API', :type => :request do
         @rating = create :rating, :annotation => annotation, :user => user
       end
 
+      context 'not yet rated' do
+        before { @rating.destroy }
+
+        it 'rejects not yet rated' do
+          delete comment_rating_path(:comment_id => annotation.id), :headers => headers
+
+          expect(response.status).to eq 404
+          expect(jsonapi_error_code(response)).to eq JSONAPI::RECORD_NOT_FOUND
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
       it 'deletes a rating' do
         delete comment_rating_path(:comment_id => annotation.id), :headers => headers
 
         expect(-> { @rating.reload }).to raise_error ActiveRecord::RecordNotFound
 
-        expect(response.status).to eq 204
+        expect(response.status).to eq 200
+
+        attrs = JSON.parse(response.body)['data']['attributes']
+
+        expect(attrs['rated']).to be false
       end
     end
   end
