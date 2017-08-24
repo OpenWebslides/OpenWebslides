@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Ratings API', :type => :request do
   let(:user) { create :user, :confirmed }
   let(:deck) { create :deck, :owner => user }
-  let(:annotation) { create :conversation, :deck => deck }
+  let(:conversation) { create :conversation, :deck => deck }
 
   let(:rating) { create :rating, :annotation => annotation, :user => user }
 
@@ -17,45 +17,95 @@ RSpec.describe 'Ratings API', :type => :request do
     }.to_json
   end
 
-  describe 'POST /' do
-    before do
-      add_content_type_header
-      add_auth_header
-    end
+  context 'conversations' do
+    let(:annotation) { conversation }
 
-    context 'duplicate rating' do
-      before { create :rating, :user => user, :annotation => annotation }
+    describe 'POST /' do
+      before do
+        add_content_type_header
+        add_auth_header
+      end
 
-      it 'rejects duplicate ratings' do
+      context 'duplicate rating' do
+        before { create :rating, :user => user, :annotation => annotation }
+
+        it 'rejects duplicate ratings' do
+          post conversation_rating_path(:conversation_id => annotation.id), :params => params, :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
+      it 'creates a rating' do
         post conversation_rating_path(:conversation_id => annotation.id), :params => params, :headers => headers
 
-        expect(response.status).to eq 422
-        expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+        expect(response.status).to eq 201
         expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
       end
     end
 
-    it 'creates a rating' do
-      post conversation_rating_path(:conversation_id => annotation.id), :params => params, :headers => headers
+    describe 'DELETE /' do
+      before do
+        add_auth_header
 
-      expect(response.status).to eq 201
-      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        @rating = create :rating, :annotation => annotation, :user => user
+      end
+
+      it 'deletes a rating' do
+        delete conversation_rating_path(:conversation_id => annotation.id), :headers => headers
+
+        expect(-> { @rating.reload }).to raise_error ActiveRecord::RecordNotFound
+
+        expect(response.status).to eq 204
+      end
     end
   end
 
-  describe 'DELETE /' do
-    before do
-      add_auth_header
+  context 'comments' do
+    let(:annotation) { create :comment, :conversation => conversation, :deck => conversation.deck, :content_item_id => conversation.content_item_id }
 
-      @rating = create :rating, :annotation => annotation, :user => user
+    describe 'POST /' do
+      before do
+        add_content_type_header
+        add_auth_header
+      end
+
+      context 'duplicate rating' do
+        before { create :rating, :user => user, :annotation => annotation }
+
+        it 'rejects duplicate ratings' do
+          post comment_rating_path(:comment_id => annotation.id), :params => params, :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
+      it 'creates a rating' do
+        post comment_rating_path(:comment_id => annotation.id), :params => params, :headers => headers
+
+        expect(response.status).to eq 201
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      end
     end
 
-    it 'deletes a rating' do
-      delete conversation_rating_path(:conversation_id => annotation.id), :headers => headers
+    describe 'DELETE /' do
+      before do
+        add_auth_header
 
-      expect(-> { @rating.reload }).to raise_error ActiveRecord::RecordNotFound
+        @rating = create :rating, :annotation => annotation, :user => user
+      end
 
-      expect(response.status).to eq 204
+      it 'deletes a rating' do
+        delete comment_rating_path(:comment_id => annotation.id), :headers => headers
+
+        expect(-> { @rating.reload }).to raise_error ActiveRecord::RecordNotFound
+
+        expect(response.status).to eq 204
+      end
     end
   end
 end
