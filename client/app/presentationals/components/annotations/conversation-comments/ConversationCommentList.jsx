@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 
 import ConversationCommentFormContainer from 'containers/annotations/conversation-comments/ConversationCommentFormContainer';
+import InlineEditConversationCommentFormContainer from 'containers/annotations/conversation-comments/InlineEditConversationCommentFormContainer';
+
 
 export default class ConversationCommentsList extends Component {
   constructor() {
@@ -20,7 +21,7 @@ export default class ConversationCommentsList extends Component {
     this.conversationCommentForm.scrollIntoView({ behavior: 'smooth' });
   }
 
-  renderComments() {
+  renderCommentList() {
     const { conversationComments, activeConversationId, editableConversationCommentId } = this.props;
 
     if (conversationComments) {
@@ -29,16 +30,25 @@ export default class ConversationCommentsList extends Component {
           <ul className="list-style-none">
             { Object.keys(conversationComments).map((commentId) => {
               const { rating, text, user, createdTimeAgo, byCurrentUser, deleted, edited, flagged, secret } = conversationComments[commentId];
+
+              let component = [];
               if (editableConversationCommentId === commentId) {
-                return <h3>THIS IS EDITABLE YO</h3>;
+                component = <InlineEditConversationCommentFormContainer form={`ConversationCommentForm${commentId}`} key={commentId} initialValues={{ text }} />;
+              }
+              else {
+                component = (
+                  <div>
+                    <span> <p>{rating} </p> {byCurrentUser && !deleted && <div><button onClick={() => this.props.setEditableConversationComment(commentId)}>Edit</button><button onClick={() => this.props.deleteConversationComment(commentId, activeConversationId)}>Delete</button></div>}</span>
+                    <p><strong>{user.firstName} {user.lastName} {edited ? '(Edited)' : ''} </strong> wrote:</p>
+                    <p>{deleted ? '(Deleted)' : text}</p>
+                    <p><em>Written <strong>{createdTimeAgo}</strong></em></p>
+                  </div>
+                  );
               }
 
               return (
                 <li key={commentId}>
-                  <span> <p>{rating} </p> {byCurrentUser && !deleted && <div><button onClick={() => this.props.setEditableConversationComment(commentId)}>Edit</button><button onClick={() => this.props.deleteConversationComment(commentId, activeConversationId)}>Delete</button></div>}</span>
-                  <p><strong>{user.firstName} {user.lastName} {edited ? '(Edited)' : ''} </strong> wrote:</p>
-                  <p>{deleted ? '(Deleted)' : text}</p>
-                  <p><em>Written <strong>{createdTimeAgo}</strong></em></p>
+                  {component}
                   <hr />
                 </li>
               );
@@ -64,7 +74,7 @@ export default class ConversationCommentsList extends Component {
           <hr />
           { activeConversation.deleted ? <p> Adding comments is disabled for deleted conversations.</p> : <button onClick={() => this.scrollToForm()}>Add comment</button>}
         </div>
-        {this.renderComments()}
+        {this.renderCommentList()}
         <div
           ref={(conversationCommentForm) => {
             this.conversationCommentForm = conversationCommentForm;
@@ -80,7 +90,7 @@ export default class ConversationCommentsList extends Component {
 
 
 ConversationCommentsList.propTypes = {
-  activeConversationId: PropTypes.number.isRequired,
+  activeConversationId: PropTypes.string.isRequired,
   fetchConversationComments: PropTypes.func.isRequired,
   editableConversationCommentId: PropTypes.string,
   setEditableConversationComment: PropTypes.func.isRequired,
