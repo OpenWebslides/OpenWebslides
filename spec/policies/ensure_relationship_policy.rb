@@ -4,54 +4,7 @@ require 'rails_helper'
 
 # Skip certain policy actions
 BLACKLIST = {
-  ConversionPolicy => %i[
-                          create_deck?
-                          update_deck?
-                          destroy_deck?
-
-                          create_user?
-                          update_user?
-                          destroy_user?
-                        ],
-  AssetPolicy => %i[
-                    create_deck?
-                    update_deck?
-                    destroy_deck?
-                  ],
-  DeckPolicy => %i[
-                    create_owner?
-
-                    create_conversations?
-                    update_conversations?
-                    destroy_conversations?
-                  ],
-  NotificationPolicy => %i[
-                            create_deck?
-                            update_deck?
-                            destroy_deck?
-
-                            create_user?
-                            update_user?
-                            destroy_user?
-                          ],
-  AnnotationPolicy => %i[
-                          create_deck?
-                          update_deck?
-                          destroy_deck?
-
-                          create_user?
-                          update_user?
-                          destroy_user?
-                      ],
-  ConversationPolicy => %i[
-                            create_deck?
-                            update_deck?
-                            destroy_deck?
-
-                            create_user?
-                            update_user?
-                            destroy_user?
-                          ]
+  RatingPolicy => %i[show_annotation show_user]
 }
 
 # Ensure that every relationship has corresponding policy actions
@@ -60,7 +13,7 @@ RSpec.describe 'relationship policy actions' do
     klass._relationships.each do |rel, _|
       policy = klass.to_s.gsub('Resource', 'Policy').constantize
 
-      describe policy do
+      describe 'relationship policy' do
         subject { policy.new nil, nil }
 
         actions = %I[
@@ -69,10 +22,7 @@ RSpec.describe 'relationship policy actions' do
                       update?
                       destroy?
 
-                      create_#{rel.to_s}?
                       show_#{rel.to_s}?
-                      update_#{rel.to_s}?
-                      destroy_#{rel.to_s}?
         ]
 
         actions.each do |action|
