@@ -35,6 +35,8 @@ RSpec.describe UserPolicy do
     it { is_expected.to forbid_action :show_conversions }
     it { is_expected.to forbid_action :update_conversions }
     it { is_expected.to forbid_action :destroy_conversions }
+
+    it { is_expected.to permit_action :show_annotations }
   end
 
   context 'for a user' do
@@ -65,6 +67,8 @@ RSpec.describe UserPolicy do
     it { is_expected.to forbid_action :show_conversions }
     it { is_expected.to forbid_action :update_conversions }
     it { is_expected.to forbid_action :destroy_conversions }
+
+    it { is_expected.to permit_action :show_annotations }
   end
 
   context 'for the same user' do
@@ -94,5 +98,7 @@ RSpec.describe UserPolicy do
     it { is_expected.to permit_action :show_conversions }
     it { is_expected.to forbid_action :update_conversions }
     it { is_expected.to forbid_action :destroy_conversions }
+
+    it { is_expected.to permit_action :show_annotations }
   end
 end
