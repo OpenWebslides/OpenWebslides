@@ -35,7 +35,7 @@ RSpec.describe CommentResource, :type => :resource do
     end
 
     it 'should have a valid set of updatable fields' do
-      expect(described_class.updatable_fields).to match_array %i[text]
+      expect(described_class.updatable_fields).to match_array %i[text secret]
     end
 
     it 'should have a valid set of sortable fields' do

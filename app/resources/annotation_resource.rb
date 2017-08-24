@@ -41,7 +41,7 @@ class AnnotationResource < ApplicationResource
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[content_item_id user deck rating rated secret edited flagged deleted]
+    super(context) - %i[content_item_id user deck rating rated edited flagged deleted]
   end
 
   def meta(options)

@@ -6,7 +6,7 @@ RSpec.describe 'Conversations API', :type => :request do
   let(:user) { create :user, :confirmed }
   let(:deck) { create :deck }
 
-  let(:conversation) { create :conversation }
+  let(:conversation) { create :conversation, :user => user }
 
   let(:title) { Faker::Lorem.words(4).join(' ') }
   let(:text) { Faker::Lorem.sentences(4).join(' ') }
@@ -89,9 +89,83 @@ RSpec.describe 'Conversations API', :type => :request do
       expect(response.status).to eq 201
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
-      json = JSON.parse response.body
+      attr = JSON.parse(response.body)['data']['attributes']
 
-      expect(json['data']['attributes']['text']).to match attributes[:text]
+      expect(attr['text']).to match attributes[:text]
+      expect(attr['secret']).to eq false
+    end
+  end
+
+  describe 'PATCH /:id' do
+    before do
+      add_auth_header
+      add_content_type_header
+    end
+
+    it 'updates text' do
+      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :text => 'foo'), :headers => headers
+
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+      attr = JSON.parse(response.body)['data']['attributes']
+
+      expect(attr['text']).to eq 'foo'
+    end
+
+    it 'updates title' do
+      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :title => 'foo'), :headers => headers
+
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+      attr = JSON.parse(response.body)['data']['attributes']
+
+      expect(attr['title']).to eq 'foo'
+    end
+
+    it 'protects public annotation' do
+      expect(conversation).not_to be_secret
+
+      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :secret => true), :headers => headers
+
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+      attr = JSON.parse(response.body)['data']['attributes']
+
+      expect(attr['secret']).to eq true
+    end
+
+    it 'publishes protected annotation' do
+      conversation.protect
+      expect(conversation).to be_secret
+
+      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :secret => false), :headers => headers
+
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+      attr = JSON.parse(response.body)['data']['attributes']
+
+      expect(attr['secret']).to eq false
+    end
+
+    it 'does not protect protected annotation' do
+      conversation.protect
+      expect(conversation).to be_secret
+
+      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :secret => true), :headers => headers
+
+      expect(response.status).to eq 422
+    end
+
+    it 'does not publish published annotation' do
+      expect(conversation).not_to be_secret
+
+      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :secret => false), :headers => headers
+
+      expect(response.status).to eq 422
     end
   end
 
