@@ -193,4 +193,31 @@ RSpec.describe 'Conversations API', :type => :request do
       expect(json['data']['meta']['commentCount']).to eq conversation.comments.count
     end
   end
+
+  describe 'DELETE /:id' do
+    before do
+      add_auth_header
+      add_accept_header
+    end
+
+    it 'rejects an invalid id' do
+      delete conversation_path(:id => '0'), :headers => headers
+
+      conversation.reload
+      expect(conversation).not_to be_destroyed
+
+      expect(response.status).to eq 404
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'returns successful' do
+      delete conversation_path(:id => conversation.id), :headers => headers
+
+      conversation.reload
+      expect(conversation).not_to be_destroyed
+      expect(conversation).to be_hidden
+
+      expect(response.status).to eq 204
+    end
+  end
 end
