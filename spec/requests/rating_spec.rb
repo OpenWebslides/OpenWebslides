@@ -26,6 +26,30 @@ RSpec.describe 'Ratings API', :type => :request do
         add_auth_header
       end
 
+      context 'hidden conversation' do
+        before { annotation.hide }
+
+        it 'rejects create' do
+          post conversation_rating_path(:conversation_id => annotation.id), :params => params, :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
+      context 'flagged conversation' do
+        before { annotation.flag }
+
+        it 'rejects create' do
+          post conversation_rating_path(:conversation_id => annotation.id), :params => params, :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
       context 'duplicate rating' do
         before { create :rating, :user => user, :annotation => annotation }
 
@@ -55,6 +79,30 @@ RSpec.describe 'Ratings API', :type => :request do
         add_auth_header
 
         @rating = create :rating, :annotation => annotation, :user => user
+      end
+
+      context 'hidden conversation' do
+        before { annotation.hide }
+
+        it 'rejects delete' do
+          delete conversation_rating_path(:conversation_id => annotation.id), :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
+      context 'flagged conversation' do
+        before { annotation.flag }
+
+        it 'rejects delete' do
+          delete conversation_rating_path(:conversation_id => annotation.id), :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
       end
 
       context 'not yet rated' do
@@ -92,6 +140,30 @@ RSpec.describe 'Ratings API', :type => :request do
         add_auth_header
       end
 
+      context 'hidden comment' do
+        before { annotation.hide }
+
+        it 'rejects create' do
+          post comment_rating_path(:comment_id => annotation.id), :params => params, :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
+      context 'flagged comment' do
+        before { annotation.flag }
+
+        it 'rejects create' do
+          post comment_rating_path(:comment_id => annotation.id), :params => params, :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
       context 'duplicate rating' do
         before { create :rating, :user => user, :annotation => annotation }
 
@@ -121,6 +193,30 @@ RSpec.describe 'Ratings API', :type => :request do
         add_auth_header
 
         @rating = create :rating, :annotation => annotation, :user => user
+      end
+
+      context 'hidden comment' do
+        before { annotation.hide }
+
+        it 'rejects delete' do
+          delete comment_rating_path(:comment_id => annotation.id), :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
+      context 'flagged comment' do
+        before { annotation.flag }
+
+        it 'rejects delete' do
+          delete comment_rating_path(:comment_id => annotation.id), :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
       end
 
       context 'not yet rated' do

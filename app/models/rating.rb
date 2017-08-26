@@ -23,9 +23,17 @@ class Rating < ApplicationRecord
   #
   validates_uniqueness_of :user_id, :scope => :annotation_id
 
+  validate :annotation_unlocked
+
   ##
   # Callbacks
   #
+  before_destroy do
+    annotation_unlocked
+
+    throw(:abort) if errors.present?
+  end
+
   ##
   # Methods
   #
@@ -35,4 +43,13 @@ class Rating < ApplicationRecord
   ##
   # Helpers and callback methods
   #
+
+  ##
+  # Validate whether the annotation is not hidden or flagged
+  #
+  def annotation_unlocked
+    return unless annotation.hidden? || annotation.flagged?
+
+    errors.add :base, 'annotation cannot be hidden or flagged'
+  end
 end
