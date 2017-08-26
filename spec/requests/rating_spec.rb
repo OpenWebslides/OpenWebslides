@@ -140,6 +140,30 @@ RSpec.describe 'Ratings API', :type => :request do
         add_auth_header
       end
 
+      context 'hidden parent conversation' do
+        before { annotation.conversation.hide }
+
+        it 'rejects create' do
+          post comment_rating_path(:comment_id => annotation.id), :params => params, :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
+      context 'flagged parent conversation' do
+        before { annotation.conversation.flag }
+
+        it 'rejects create' do
+          post comment_rating_path(:comment_id => annotation.id), :params => params, :headers => headers
+
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
+      end
+
       context 'hidden comment' do
         before { annotation.hide }
 
