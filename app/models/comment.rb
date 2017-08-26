@@ -22,6 +22,7 @@ class Comment < Annotation
   validates :text, :presence => true
 
   validate :conversation_scope
+  validate :conversation_unlocked
 
   ##
   # Callbacks
@@ -42,6 +43,15 @@ class Comment < Annotation
   def conversation_scope
     return if conversation && deck == conversation.deck && content_item_id == conversation.content_item_id
 
-    errors.add(:base, 'deck and content_item_id must be equal to the parent conversation')
+    errors.add :base, 'deck and content_item_id must be equal to the parent conversation'
+  end
+
+  ##
+  # Validate whether the record's parent conversation is not hidden or flagged
+  #
+  def conversation_unlocked
+    return unless conversation.hidden? || conversation.flagged?
+
+    errors.add :base, 'parent conversation cannot be hidden or flagged'
   end
 end

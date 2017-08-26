@@ -62,6 +62,30 @@ RSpec.describe 'Comments API', :type => :request do
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
     end
 
+    context 'flagged conversation' do
+      before { conversation.flag }
+
+      it 'rejects create' do
+        post comments_path, :params => request_body(attributes), :headers => headers
+
+        expect(response.status).to eq 422
+        expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      end
+    end
+
+    context 'hidden conversation' do
+      before { conversation.hide }
+
+      it 'rejects create' do
+        post comments_path, :params => request_body(attributes), :headers => headers
+
+        expect(response.status).to eq 422
+        expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      end
+    end
+
     it 'creates a comment' do
       post comments_path, :params => request_body(attributes), :headers => headers
 
@@ -79,6 +103,30 @@ RSpec.describe 'Comments API', :type => :request do
     before do
       add_auth_header
       add_content_type_header
+    end
+
+    context 'flagged conversation' do
+      before { comment.conversation.flag }
+
+      it 'rejects update' do
+        patch comment_path(:id => comment.id), :params => update_body(comment.id, :text => 'foo'), :headers => headers
+
+        expect(response.status).to eq 422
+        expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      end
+    end
+
+    context 'hidden conversation' do
+      before { comment.conversation.hide }
+
+      it 'rejects hidden conversation' do
+        patch comment_path(:id => comment.id), :params => update_body(comment.id, :text => 'foo'), :headers => headers
+
+        expect(response.status).to eq 422
+        expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      end
     end
 
     it 'updates text' do
