@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import ConversationList from 'presentationals/components/annotations/conversations/ConversationList';
 
 import getConversationsForActiveSlide from 'selectors/entities/conversations';
-import { fetchConversations, deleteConversation } from 'actions/entities/conversations';
+import { fetchConversations, deleteConversation, rateConversation } from 'actions/entities/conversations';
 
 function mapStateToProps(state) {
   const conversations = getConversationsForActiveSlide(state);
@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchConversations, deleteConversation }, dispatch);
+  return bindActionCreators({ fetchConversations, deleteConversation, rateConversation }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConversationList);
