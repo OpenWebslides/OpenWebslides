@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ConversationCommentItem from './ConversationCommentItem';
 
 import ConversationCommentFormContainer from 'containers/annotations/conversation-comments/ConversationCommentFormContainer';
 import InlineEditConversationCommentFormContainer from 'containers/annotations/conversation-comments/InlineEditConversationCommentFormContainer';
@@ -23,14 +24,14 @@ export default class ConversationCommentsList extends Component {
   }
 
   renderCommentList() {
-    const { conversationComments, activeConversationId, editableConversationCommentId } = this.props;
+    const { conversationComments, deleteConversationComment, rateConversationComment, setEditableConversationComment, activeConversationId, editableConversationCommentId } = this.props;
 
     if (conversationComments) {
       return (
         <div>
           <ul className="list-style-none">
             { Object.keys(conversationComments).map((commentId) => {
-              const { rating, text, rated, user, createdTimeAgo, byCurrentUser, deleted, edited, flagged, secret } = conversationComments[commentId];
+              const { text } = conversationComments[commentId];
 
               let component = [];
               if (editableConversationCommentId === commentId) {
@@ -41,23 +42,16 @@ export default class ConversationCommentsList extends Component {
                 />);
               }
               else {
-                let RateButton;
-                if (rated) {
-                  RateButton = <button onClick={() => this.props.rateConversationComment(commentId, rated)}>Take the star awaaay!</button>;
-                }
-                else {
-                  RateButton = <button onClick={() => this.props.rateConversationComment(commentId, rated)}>Give a star!</button>;
-                }
                 component = (
-                  <div>
-                    <p>Rating: {rating} {RateButton}</p>
-                    <span>{byCurrentUser && !deleted && <div><button onClick={() => this.props.setEditableConversationComment(commentId)}>Edit</button><button onClick={() => this.props.deleteConversationComment(commentId, activeConversationId)}>Delete</button></div>}</span>
-                    <p><strong>{user.firstName} {user.lastName} {edited ? '(Edited)' : ''} </strong> wrote:</p>
-                    <p>{deleted ? '(Deleted)' : text}</p>
-                    <p><em>Written <strong>{createdTimeAgo}</strong></em></p>
-                  </div>
-                  );
+                  <ConversationCommentItem
+                    {...conversationComments[commentId]}
+                    rateConversationComment={rateConversationComment}
+                    setEditableConversationComment={setEditableConversationComment}
+                    deleteConversationComment={deleteConversationComment}
+                    conversationId={activeConversationId}
+                  />);
               }
+
 
               return (
                 <li key={commentId}>
