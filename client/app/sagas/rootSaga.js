@@ -28,6 +28,9 @@ import addUriSaga from 'sagas/slide-editor/addUriSaga';
 import fetchConversationsSaga from 'sagas/annotations/fetchConversationsSaga';
 import fetchConversationCommentsSaga from 'sagas/annotations/fetchConversationCommentsSaga';
 import addConversationSaga from 'sagas/annotations/addConversationSaga';
+import updateConversationSaga from 'sagas/annotations/updateConversationSaga';
+import rateConversationSaga from 'sagas/annotations/rateConversationSaga';
+import rateConversationCommentSaga from 'sagas/annotations/rateConversationCommentSaga';
 import addConversationCommentSaga from 'sagas/annotations/addConversationCommentSaga';
 import deleteConversationSaga from 'sagas/annotations/deleteConversationSaga';
 import deleteConversationCommentSaga from 'sagas/annotations/deleteConversationCommentSaga';
@@ -39,6 +42,9 @@ export default function* rootSaga() {
     addConversationSaga(),
     emailSigninSaga(),
     signupSaga(),
+    updateConversationSaga(),
+    rateConversationCommentSaga(),
+    rateConversationSaga(),
     updateConversationCommentSaga(),
     deleteConversationCommentSaga(),
     deleteConversationSaga(),
