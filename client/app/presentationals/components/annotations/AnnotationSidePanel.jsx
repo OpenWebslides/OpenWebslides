@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ConversationListContainer from 'containers/annotations/conversations/ConversationListContainer';
-import ConversationFormContainer from 'containers/annotations/conversations/ConversationFormContainer';
 
 import ConversationPanel from './conversations/ConversationPanel';
+import AddConversationPanel from './conversations/AddConversationPanel';
 
 export default class AnnotationSidePanel extends Component {
   constructor() {
@@ -19,6 +19,7 @@ export default class AnnotationSidePanel extends Component {
       showConversationPanel: false,
     };
   }
+
   componentDidMount() {
     this.panel.style.width = '450px';
   }
@@ -46,7 +47,11 @@ export default class AnnotationSidePanel extends Component {
   renderContent() {
     if (this.state.showAddConversationPanel) {
       return (
-        <ConversationFormContainer closeAddConversationPanel={this.closeAddConversationPanel} />
+        <AddConversationPanel
+          closeAddConversationPanel={this.closeAddConversationPanel}
+          showConversationPanel={this.showConversationPanel}
+        />
+
       );
     }
 
