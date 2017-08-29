@@ -22,6 +22,10 @@ export function setEditableConversationComment(conversationCommentId) {
   return { type: SET_EDITABLE_CONVERSATION_COMMENT, payload: { conversationCommentId } };
 }
 
+export function unsetEditableConversationComment() {
+  return { type: UNSET_EDITABLE_CONVERSATION_COMMENT, payload: { conversationCommentId: null } };
+}
+
 export function setEditingConversation() {
   return { type: SET_EDITING_CONVERSATION };
 }
