@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ConversationListContainer from 'containers/annotations/conversations/ConversationListContainer';
 import ConversationFormContainer from 'containers/annotations/conversations/ConversationFormContainer';
-import ConversationCommentListContainer from 'containers/annotations/conversation-comments/ConversationCommentListContainer';
 
+import ConversationPanel from './conversations/ConversationPanel';
 
 export default class AnnotationSidePanel extends Component {
   constructor() {
@@ -11,12 +11,12 @@ export default class AnnotationSidePanel extends Component {
 
     this.openAddConversationPanel = this.openAddConversationPanel.bind(this);
     this.closeAddConversationPanel = this.closeAddConversationPanel.bind(this);
-    this.showConversationComments = this.showConversationComments.bind(this);
-    this.closeConversationCommentList = this.closeConversationCommentList.bind(this);
+    this.showConversationPanel = this.showConversationPanel.bind(this);
+    this.closeConversationPanel = this.closeConversationPanel.bind(this);
 
     this.state = {
       showAddConversationPanel: false,
-      showConversationCommentList: false,
+      showConversationPanel: false,
     };
   }
   componentDidMount() {
@@ -24,7 +24,7 @@ export default class AnnotationSidePanel extends Component {
   }
 
   openAddConversationPanel() {
-    this.setState({ showConversationCommentList: false });
+    this.setState({ showConversationPanel: false });
     this.setState({ showAddConversationPanel: true });
   }
 
@@ -32,13 +32,15 @@ export default class AnnotationSidePanel extends Component {
     this.setState({ showAddConversationPanel: false });
   }
 
-  closeConversationCommentList() {
-    this.setState({ showConversationCommentList: false });
+  closeConversationPanel() {
+    console.log('HELLO');
+
+    this.setState({ showConversationPanel: false });
   }
 
-  showConversationComments(conversationId) {
+  showConversationPanel(conversationId) {
     this.props.setActiveConversationId(conversationId);
-    this.setState({ showConversationCommentList: true });
+    this.setState({ showConversationPanel: true });
   }
 
   renderContent() {
@@ -48,10 +50,10 @@ export default class AnnotationSidePanel extends Component {
       );
     }
 
-    if (this.state.showConversationCommentList) {
+    if (this.state.showConversationPanel) {
       return (
-        <ConversationCommentListContainer
-          closeConversationCommentList={this.closeConversationCommentList}
+        <ConversationPanel
+          closeConversationPanel={this.closeConversationPanel}
         />
       );
     }
@@ -61,7 +63,7 @@ export default class AnnotationSidePanel extends Component {
         <a href="#" className="close-btn" onClick={() => this.props.closeAnnotationMode()}>&times;</a>
         <h3><strong>Conversations for current slide</strong></h3>
         <button onClick={this.openAddConversationPanel}>Add conversation</button>
-        <ConversationListContainer showConversationComments={this.showConversationComments} />
+        <ConversationListContainer showConversationPanel={this.showConversationPanel} />
       </div>
     );
   }
