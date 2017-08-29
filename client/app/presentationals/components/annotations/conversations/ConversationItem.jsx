@@ -17,8 +17,10 @@ export default function ConversationItem(props) {
     createdTimeAgo,
     rateConversation,
     deleteConversation,
-    showConversationComments,
+    showConversationPanel,
   } = props;
+
+  console.log(props);
 
   const iconClass = conversationType === 'question' ? 'fa-question' : 'fa-comment';
   const visibleTitle = _.truncate(title, { length: 80, separator: '.' });
@@ -36,7 +38,7 @@ export default function ConversationItem(props) {
           <button onClick={() => deleteConversation(id)}>Delete</button>
         </div>}
 
-      <a href="#" onClick={() => showConversationComments(id)}>
+      <a href="#" onClick={() => showConversationPanel(id)}>
         <i className={`fa ${iconClass}`} aria-hidden="true" /> {visibleTitle} {edited ? '(Edited)' : ''}
       </a>
 
@@ -64,5 +66,5 @@ ConversationItem.propTypes = {
   createdTimeAgo: PropTypes.string.isRequired,
   rateConversation: PropTypes.func.isRequired,
   deleteConversation: PropTypes.func.isRequired,
-  showConversationComments: PropTypes.func.isRequired,
+  showConversationPanel: PropTypes.func.isRequired,
 };
