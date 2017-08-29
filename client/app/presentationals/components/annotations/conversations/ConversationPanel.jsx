@@ -12,7 +12,6 @@ import ConversationCommentList from './ConversationCommentList';
 import ConversationCommentForm from './ConversationCommentForm';
 import ConversationHeader from './ConversationHeader';
 
-
 function ConversationPanel(props) {
   const { activeConversation, editingConversation, closeConversationPanel } = props;
 
@@ -22,7 +21,7 @@ function ConversationPanel(props) {
         <i className="fa fa-chevron-left fa-6" aria-hidden="true" />
       </button>
 
-      <ConversationHeader {...activeConversation} editingConversation={editingConversation} />
+      <ConversationHeader {...activeConversation} editingConversation={editingConversation} closeConversationPanel={closeConversationPanel} />
 
       <ConversationCommentList activeConversationId={activeConversation.id} />
 
