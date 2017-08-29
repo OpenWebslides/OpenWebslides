@@ -30,7 +30,7 @@ function InputField(props) {
             />
           </span>
         </label>
-        {props.meta.touched &&
+        {props.meta.touched && !props.meta.pristine &&
           props.meta.error &&
           <span className="c_input-field__error">
             <span className="c_input-field__error__wrapper">
@@ -52,6 +52,7 @@ InputField.propTypes = {
     touched: PropTypes.bool,
     active: PropTypes.bool,
     error: PropTypes.string,
+    pristine: PropTypes.bool,
     extraErrors: PropTypes.arrayOf(String),
   }).isRequired,
 };
