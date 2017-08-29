@@ -32,7 +32,7 @@ function TextAreaField(props) {
             />
           </span>
         </label>
-        {props.meta.touched &&
+        {props.meta.touched && !props.meta.pristine &&
           props.meta.error &&
           <span className="c_input-field__error">
             <span className="c_input-field__error__wrapper">
@@ -54,6 +54,7 @@ TextAreaField.propTypes = {
   meta: PropTypes.shape({
     touched: PropTypes.bool,
     active: PropTypes.bool,
+    pristine: PropTypes.bool,
     error: PropTypes.string,
     extraErrors: PropTypes.arrayOf(String),
   }).isRequired,
