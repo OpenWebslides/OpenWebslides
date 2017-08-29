@@ -30,3 +30,7 @@ export function setEditingConversation() {
   return { type: SET_EDITING_CONVERSATION };
 }
 
+export function unsetEditingConversation() {
+  return { type: UNSET_EDITING_CONVERSATION };
+}
+
