@@ -1,59 +1,98 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 
 import InputField from 'presentationals/objects/form-fields/InputField';
 import TextAreaField from 'presentationals/objects/form-fields/TextAreaField';
 
 function ConversationForm(props) {
-  const { includeTypeChoice, rows, cols, cancelAction, submitText } = props;
+  const {
+    submitSucceeded,
+    submitSucceededAction,
+    includeTypeChoice,
+    rows,
+    cols,
+    submitText,
+    cancelAction,
+  } = props;
+
+  if (submitSucceeded && submitSucceededAction) {
+    submitSucceededAction();
+  }
+
   return (
-    <form onSubmit={props.handleSubmit}>
+    <div>
 
-      { includeTypeChoice && <div>
-        <label>Type</label>
-        <label><Field name="conversationType" component={InputField} type="radio" value="question" />Question</label>
-        <label><Field name="conversationType" component={InputField} type="radio" value="note" />Note</label>
-      </div> }
+      <form onSubmit={props.handleSubmit}>
 
-      <div>
-        <Field
-          autoFocus={true}
-          component={InputField}
-          name="title"
-        />
-      </div>
+        { includeTypeChoice && <div>
+          <label>Type</label>
+          <label><Field name="conversationType" component={InputField} type="radio" value="question" />Question</label>
+          <label><Field name="conversationType" component={InputField} type="radio" value="note" />Note</label>
+        </div> }
 
-      <div>
-        <Field
-          component={TextAreaField}
-          rows={rows}
-          cols={cols}
-          name="text"
-        />
-      </div>
+        <div>
+          <Field
+            autoFocus={true}
+            component={InputField}
+            name="title"
+          />
+        </div>
 
-      {props.error && <strong>{props.error}</strong>}
+        <div>
+          <Field
+            component={TextAreaField}
+            rows={rows}
+            cols={cols}
+            name="text"
+          />
+        </div>
 
-      <div>
-        <button type="submit">{submitText}</button>
-        { cancelAction && <button onClick={cancelAction}>Cancel</button>}
-      </div>
-    </form>
+        {props.error && <strong>{props.error}</strong>}
+
+        <div>
+          <button type="submit">{submitText}</button>
+          <button type="button" onClick={cancelAction}>Cancel</button>
+        </div>
+      </form>
+    </div>
+
   );
 }
+
+function validate(values) {
+  const { text, title } = values;
+
+  const errors = {};
+
+  if (!text || text.trim() === '') {
+    errors.text = 'Text is required.';
+  }
+
+  if (!title || title.trim() === '') {
+    errors.title = 'Title is required.';
+  }
+
+  return errors;
+}
+
+export default reduxForm({
+  form: 'conversationForm',
+  validate,
+  getFormState: state => state.vendor.forms,
+})(ConversationForm);
 
 
 ConversationForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitSucceeded: PropTypes.bool.isRequired,
-  cooseCOnversationForm: PropTypes.func.isRequired,
   includeTypeChoice: PropTypes.bool,
   rows: PropTypes.number,
   cols: PropTypes.number,
-  cancelAction: PropTypes.number,
-  submitText: PropTypes.number,
+  cancelAction: PropTypes.func.isRequired,
+  submitSucceededAction: PropTypes.func,
+  submitText: PropTypes.string,
 
 };
 
@@ -62,8 +101,6 @@ ConversationForm.defaultProps = {
   includeTypeChoice: true,
   cols: 40,
   rows: 13,
-  cancelAction: null,
+  submitSucceededAction: null,
   submitText: 'Submit',
 };
-
-export default ConversationForm;

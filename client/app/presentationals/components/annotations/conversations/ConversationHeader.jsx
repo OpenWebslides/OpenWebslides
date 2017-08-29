@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { SET_EDITING_CONVERSATION } from 'actions/app/annotations';
-import InlineEditConversationFormContainer from
-  'containers/annotations/conversation-comments/InlineEditConversationFormContainer';
+import { setEditingConversation, unsetEditingConversation } from 'actions/app/annotations';
+import { updateConversation } from 'actions/entities/conversations';
+import ConversationForm from './ConversationForm';
 
 function ConversationHeader(props) {
   const {
@@ -15,16 +16,23 @@ function ConversationHeader(props) {
     text,
     byCurrentUser,
     deleted,
-    setEditingConversation,
     scrollToForm,
     conversationType,
   } = props;
 
-  console.log(props);
   if (editingConversation) {
     return (
-      <InlineEditConversationFormContainer
+      <ConversationForm
         initialValues={{ title, text, conversationType }}
+        submitText="Save"
+        cancelAction={props.unsetEditingConversation}
+        rows={4}
+        includeTypeChoice={false}
+        onSubmit={(values, dispatch) => {
+          return new Promise((resolve, reject) => {
+            dispatch(updateConversation({ values, resolve, reject }));
+          });
+        }}
       />
     );
   }
@@ -37,7 +45,7 @@ function ConversationHeader(props) {
       <p>{text}</p>
 
       {byCurrentUser && !deleted &&
-        <button onClick={setEditingConversation}>Edit</button>}
+        <button onClick={props.setEditingConversation}>Edit</button>}
 
       { deleted ?
         <p> Adding comments is disabled for deleted conversations.</p> :
@@ -53,7 +61,7 @@ export default compose(
       return { editingConversation: state.app.annotations.editingConversation };
     },
     (dispatch) => {
-      return { setEditingConversation: () => dispatch({ type: SET_EDITING_CONVERSATION }) };
+      return bindActionCreators({ setEditingConversation, unsetEditingConversation }, dispatch);
     },
   ),
 )(ConversationHeader);
@@ -69,6 +77,7 @@ ConversationHeader.propTypes = {
   byCurrentUser: PropTypes.bool.isRequired,
   deleted: PropTypes.bool.isRequired,
   setEditingConversation: PropTypes.func.isRequired,
+  unsetEditingConversation: PropTypes.func.isRequired,
   scrollToForm: PropTypes.func.isRequired,
   closeConversationCommentList: PropTypes.func.isRequired,
   conversationType: PropTypes.string.isRequired,
