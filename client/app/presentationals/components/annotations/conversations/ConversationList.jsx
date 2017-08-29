@@ -10,7 +10,7 @@ export default class SlideConversationList extends Component {
   }
 
   render() {
-    const { conversations, rateConversation, deleteConversation, showConversationComments } = this.props;
+    const { conversations, rateConversation, deleteConversation, showConversationPanel } = this.props;
 
     if (conversations.length !== 0) {
       return (
@@ -24,7 +24,7 @@ export default class SlideConversationList extends Component {
                   {...conversation}
                   rateConversation={rateConversation}
                   deleteConversation={deleteConversation}
-                  showConversationComments={showConversationComments}
+                  showConversationPanel={showConversationPanel}
                 />
               </li>);
           })}
@@ -49,7 +49,7 @@ SlideConversationList.propTypes = {
   fetchConversations: PropTypes.func.isRequired,
   deleteConversation: PropTypes.func.isRequired,
   rateConversation: PropTypes.func.isRequired,
-  showConversationComments: PropTypes.func.isRequired,
+  showConversationPanel: PropTypes.func.isRequired,
 };
 
 SlideConversationList.defaultProps = {

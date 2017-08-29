@@ -1,6 +1,7 @@
 import { reduxForm } from 'redux-form';
 
-import ConversationForm from 'presentationals/components/annotations/conversations/ConversationForm';
+import ConversationForm from
+  'presentationals/components/annotations/conversations/ConversationForm';
 import { addConversation } from 'actions/entities/conversations';
 
 function validateAndSubmit(values, dispatch) {
