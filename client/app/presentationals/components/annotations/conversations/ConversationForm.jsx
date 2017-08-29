@@ -5,65 +5,65 @@ import PropTypes from 'prop-types';
 import InputField from 'presentationals/objects/form-fields/InputField';
 import TextAreaField from 'presentationals/objects/form-fields/TextAreaField';
 
-function AddConversationPanel(props) {
-  if (props.submitSucceeded) {
-    props.closeAddConversationPanel();
-  }
-
+function ConversationForm(props) {
+  const { includeTypeChoice, rows, cols, cancelAction, submitText } = props;
   return (
-    <div>
-      <a href="#" className="back-btn" onClick={props.closeAddConversationPanel}><i className="fa fa-chevron-left fa-6" aria-hidden="true" /></a>
-      <h3><strong>Add conversation</strong></h3>
+    <form onSubmit={props.handleSubmit}>
 
-      <form onSubmit={props.handleSubmit}>
+      { includeTypeChoice && <div>
+        <label>Type</label>
+        <label><Field name="conversationType" component={InputField} type="radio" value="question" />Question</label>
+        <label><Field name="conversationType" component={InputField} type="radio" value="note" />Note</label>
+      </div> }
 
-        <div>
-          <label>Type</label>
-          <label><Field name="conversationType" component={InputField} type="radio" value="question" />Question</label>
-          <label><Field name="conversationType" component={InputField} type="radio" value="note" />Note</label>
-        </div>
+      <div>
+        <Field
+          autoFocus={true}
+          component={InputField}
+          name="title"
+        />
+      </div>
 
-        <div>
-          <label>Title</label>
-          <div>
-            <Field
-              autoFocus={true}
-              component={InputField}
-              name="title"
-            />
-          </div>
-        </div>
+      <div>
+        <Field
+          component={TextAreaField}
+          rows={rows}
+          cols={cols}
+          name="text"
+        />
+      </div>
 
-        <div>
-          <label>Text</label>
-          <div>
-            <Field
-              component={TextAreaField}
-              rows="13"
-              cols="40"
-              name="text"
-            />
-          </div>
-        </div>
-        {props.error && <strong>{props.error}</strong>}
-        <div>
-          <button type="submit">Add Conversation</button>
-        </div>
-      </form>
-    </div>
+      {props.error && <strong>{props.error}</strong>}
+
+      <div>
+        <button type="submit">{submitText}</button>
+        { cancelAction && <button onClick={cancelAction}>Cancel</button>}
+      </div>
+    </form>
   );
 }
 
 
-AddConversationPanel.propTypes = {
+ConversationForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitSucceeded: PropTypes.bool.isRequired,
-  closeAddConversationPanel: PropTypes.func.isRequired,
+  cooseCOnversationForm: PropTypes.func.isRequired,
+  includeTypeChoice: PropTypes.bool,
+  rows: PropTypes.number,
+  cols: PropTypes.number,
+  cancelAction: PropTypes.number,
+  submitText: PropTypes.number,
+
 };
 
-AddConversationPanel.defaultProps = {
+ConversationForm.defaultProps = {
   error: '',
+  includeTypeChoice: true,
+  cols: 40,
+  rows: 13,
+  cancelAction: null,
+  submitText: 'Submit',
 };
 
-export default AddConversationPanel;
+export default ConversationForm;
