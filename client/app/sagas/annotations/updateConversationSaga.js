@@ -5,7 +5,7 @@ import {
   UPDATE_CONVERSATION,
   UPDATE_CONVERSATION_SUCCESS,
 } from 'actions/entities/conversations';
-import { UNSET_EDITING_CONVERSATION } from 'actions/app/annotations';
+import { UNSET_IS_EDITING_CONVERSATION } from 'actions/app/annotations';
 
 import updateConversationApi from 'api/updateConversationApi';
 import { getActiveConversationId } from 'selectors/app/annotations';
@@ -23,7 +23,7 @@ export function* doUpdateConversation(action) {
     const { id, attributes } = yield response.data;
 
     yield put({ type: UPDATE_CONVERSATION_SUCCESS, payload: { id, attributes } });
-    yield put({ type: UNSET_EDITING_CONVERSATION });
+    yield put({ type: UNSET_IS_EDITING_CONVERSATION });
 
     yield call(resolve);
   }

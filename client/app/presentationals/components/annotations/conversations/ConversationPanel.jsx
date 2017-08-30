@@ -13,7 +13,7 @@ import ConversationCommentForm from './ConversationCommentForm';
 import ConversationHeader from './ConversationHeader';
 
 function ConversationPanel(props) {
-  const { activeConversation, editingConversation, closeConversationPanel } = props;
+  const { activeConversation, isEditingConversation, closeConversationPanel } = props;
 
   return (
     <div>
@@ -21,7 +21,7 @@ function ConversationPanel(props) {
         <i className="fa fa-chevron-left fa-6" aria-hidden="true" />
       </button>
 
-      <ConversationHeader {...activeConversation} editingConversation={editingConversation} closeConversationPanel={closeConversationPanel} />
+      <ConversationHeader {...activeConversation} isEditingConversation={isEditingConversation} closeConversationPanel={closeConversationPanel} />
 
       <ConversationCommentList activeConversationId={activeConversation.id} />
 
@@ -52,14 +52,14 @@ export default compose(
 
       return ({
         activeConversation: getConversationById(state, activeConversationId),
-        editingConversation: state.app.annotations.editingConversation,
+        isEditingConversation: state.app.annotations.isEditingConversation,
       });
     },
   ),
 )(ConversationPanel);
 
 ConversationPanel.propTypes = {
-  editingConversation: PropTypes.bool.isRequired,
+  isEditingConversation: PropTypes.bool.isRequired,
   closeConversationPanel: PropTypes.func.isRequired,
   activeConversation: PropTypes.shape({
     user: PropTypes.shape({
