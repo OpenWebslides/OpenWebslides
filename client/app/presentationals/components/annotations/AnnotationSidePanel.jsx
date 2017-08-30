@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ConversationListContainer from
-  'containers/annotations/conversations/ConversationListContainer';
+import ConversationList from './conversations/ConversationList';
 
 import ConversationPanel from './conversations/ConversationPanel';
 import AddConversationPanel from './conversations/AddConversationPanel';
@@ -69,7 +68,7 @@ export default class AnnotationSidePanel extends Component {
         <a href="#" className="close-btn" onClick={() => this.props.closeAnnotationMode()}>&times;</a>
         <h3><strong>Conversations for current slide</strong></h3>
         <button onClick={this.openAddConversationPanel}>Add conversation</button>
-        <ConversationListContainer showConversationPanel={this.showConversationPanel} />
+        <ConversationList showConversationPanel={this.showConversationPanel} />
       </div>
     );
   }
