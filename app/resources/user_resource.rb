@@ -22,7 +22,7 @@ class UserResource < ApplicationResource
   # Methods
   #
   def fetchable_fields
-    if context[:current_user]
+    if context[:current_user] == _model
       super - %i[password tos_accepted]
     else
       super - %i[email password tos_accepted]
