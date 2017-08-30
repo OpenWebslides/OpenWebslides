@@ -4,13 +4,13 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { setEditingConversation, unsetEditingConversation } from 'actions/app/annotations';
+import { setIsEditingConversation, unsetIsEditingConversation } from 'actions/app/annotations';
 import { updateConversation } from 'actions/entities/conversations';
 import ConversationForm from './ConversationForm';
 
 function ConversationHeader(props) {
   const {
-    editingConversation,
+    isEditingConversation,
     user,
     title,
     text,
@@ -20,12 +20,12 @@ function ConversationHeader(props) {
     conversationType,
   } = props;
 
-  if (editingConversation) {
+  if (isEditingConversation) {
     return (
       <ConversationForm
         initialValues={{ title, text, conversationType }}
         submitText="Save"
-        cancelAction={props.unsetEditingConversation}
+        cancelAction={props.unsetIsEditingConversation}
         rows={4}
         includeTypeChoice={false}
         onSubmit={(values, dispatch) => {
@@ -45,7 +45,7 @@ function ConversationHeader(props) {
       <p>{text}</p>
 
       {byCurrentUser && !deleted &&
-        <button onClick={props.setEditingConversation}>Edit</button>}
+        <button onClick={props.setIsEditingConversation}>Edit</button>}
 
       { deleted ?
         <p> Adding comments is disabled for deleted conversations.</p> :
@@ -61,13 +61,13 @@ export default compose(
       return { editingConversation: state.app.annotations.editingConversation };
     },
     (dispatch) => {
-      return bindActionCreators({ setEditingConversation, unsetEditingConversation }, dispatch);
+      return bindActionCreators({ setIsEditingConversation, unsetIsEditingConversation }, dispatch);
     },
   ),
 )(ConversationHeader);
 
 ConversationHeader.propTypes = {
-  editingConversation: PropTypes.bool.isRequired,
+  isEditingConversation: PropTypes.bool.isRequired,
   user: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
@@ -76,8 +76,8 @@ ConversationHeader.propTypes = {
   text: PropTypes.string.isRequired,
   byCurrentUser: PropTypes.bool.isRequired,
   deleted: PropTypes.bool.isRequired,
-  setEditingConversation: PropTypes.func.isRequired,
-  unsetEditingConversation: PropTypes.func.isRequired,
+  setIsEditingConversation: PropTypes.func.isRequired,
+  unsetIsEditingConversation: PropTypes.func.isRequired,
   scrollToForm: PropTypes.func.isRequired,
   closeConversationCommentList: PropTypes.func.isRequired,
   conversationType: PropTypes.string.isRequired,
