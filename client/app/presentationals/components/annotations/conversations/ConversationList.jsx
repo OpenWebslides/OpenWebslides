@@ -1,50 +1,52 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { compose, lifecycle } from 'recompose';
 
 import ConversationItem from './ConversationItem';
 
-export default class SlideConversationList extends Component {
 
-  componentDidMount() {
-    this.props.fetchConversations();
-  }
+function ConversationList(props) {
+  const { conversations, rateConversation, deleteConversation, showConversationPanel } = props;
 
-  render() {
-    const { conversations, rateConversation, deleteConversation, showConversationPanel } = this.props;
-
-    if (conversations.length !== 0) {
-      return (
-        <ul className="list-style-none">
-          {conversations.map((conversation) => {
-            const { id } = conversation;
-
-            return (
-              <li key={id}>
-                <ConversationItem
-                  {...conversation}
-                  rateConversation={rateConversation}
-                  deleteConversation={deleteConversation}
-                  showConversationPanel={showConversationPanel}
-                />
-              </li>);
-          })}
-        </ul>
-      );
-    }
-
+  if (conversations.length !== 0) {
     return (
-      <h4>
-        No conversations have been added on this slide.
-        <br />
-        Be the first one!
-        </h4>
+      <ul className="list-style-none">
+        {conversations.map((conversation) => {
+          const { id } = conversation;
+
+          return (
+            <li key={id}>
+              <ConversationItem
+                {...conversation}
+                rateConversation={rateConversation}
+                deleteConversation={deleteConversation}
+                showConversationPanel={showConversationPanel}
+              />
+            </li>);
+        })}
+      </ul>
     );
   }
 
-
+  return (
+    <h4>
+      No conversations have been added on this slide.
+      <br />
+      Be the first one!
+    </h4>
+  );
 }
 
-SlideConversationList.propTypes = {
+export default compose(
+  lifecycle({
+    componentDidMount() {
+      this.props.fetchConversations();
+    },
+  }),
+)(ConversationList);
+
+
+ConversationList.propTypes = {
   conversations: PropTypes.arrayOf(Object),
   fetchConversations: PropTypes.func.isRequired,
   deleteConversation: PropTypes.func.isRequired,
@@ -52,7 +54,7 @@ SlideConversationList.propTypes = {
   showConversationPanel: PropTypes.func.isRequired,
 };
 
-SlideConversationList.defaultProps = {
+ConversationList.defaultProps = {
   conversations: null,
 };
 
