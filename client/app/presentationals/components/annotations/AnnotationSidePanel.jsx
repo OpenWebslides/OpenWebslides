@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ConversationListContainer from 'containers/annotations/conversations/ConversationListContainer';
+import ConversationListContainer from
+  'containers/annotations/conversations/ConversationListContainer';
 
 import ConversationPanel from './conversations/ConversationPanel';
 import AddConversationPanel from './conversations/AddConversationPanel';

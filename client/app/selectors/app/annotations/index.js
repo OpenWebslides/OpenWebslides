@@ -10,11 +10,15 @@ export const getActiveConversationId = (state) => {
   return state.app.annotations.activeConversationId;
 };
 
-export const getActiveConversation = (state, id) => {
+export const getActiveConversation = (state) => {
   return state.app.annotations.activeConversationId;
 };
 
 export const getEditableConversationCommentId = (state) => {
   return state.app.annotations.editableConversationCommentId;
+};
+
+export const getIsEditingConversation = (state) => {
+  return state.app.annotations.isEditingConversation;
 };
 
