@@ -26,7 +26,6 @@ function AddConversationPanel(props) {
   );
 }
 
-
 AddConversationPanel.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   showConversationPanel: PropTypes.func.isRequired,

@@ -1,8 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default function ConversationItem(props) {
+import { deleteConversation, rateConversation } from 'actions/entities/conversations';
+
+function ConversationItem(props) {
   const {
     id,
     conversationType,
@@ -15,12 +19,8 @@ export default function ConversationItem(props) {
     rating,
     commentCount,
     createdTimeAgo,
-    rateConversation,
-    deleteConversation,
     showConversationPanel,
   } = props;
-
-  console.log(props);
 
   const iconClass = conversationType === 'question' ? 'fa-question' : 'fa-comment';
   const visibleTitle = _.truncate(title, { length: 80, separator: '.' });
@@ -30,12 +30,12 @@ export default function ConversationItem(props) {
       <p>
         Rating: {rating}
         { !deleted &&
-          <button onClick={() => rateConversation(id, rated)}>{ rated ? '</3' : '<3'}</button> }
+          <button onClick={() => props.rateConversation(id, rated)}>{ rated ? '</3' : '<3'}</button> }
       </p>
 
       {byCurrentUser && !deleted &&
         <div>
-          <button onClick={() => deleteConversation(id)}>Delete</button>
+          <button onClick={() => props.deleteConversation(id)}>Delete</button>
         </div>}
 
       <a href="#" onClick={() => showConversationPanel(id)}>
@@ -48,6 +48,13 @@ export default function ConversationItem(props) {
     </div>
   );
 }
+
+export default connect(
+  null,
+  (dispatch) => {
+    return bindActionCreators({ deleteConversation, rateConversation }, dispatch);
+  },
+  )(ConversationItem);
 
 ConversationItem.propTypes = {
   id: PropTypes.number.isRequired,
