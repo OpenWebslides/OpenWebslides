@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { setIsEditingConversation, unsetIsEditingConversation } from 'actions/app/annotations';
+import { getIsEditingConversation } from 'selectors/app/annotations';
+
 import { updateConversation } from 'actions/entities/conversations';
 import ConversationForm from './ConversationForm';
 
@@ -58,7 +60,7 @@ function ConversationHeader(props) {
 export default compose(
   connect(
     (state) => {
-      return { editingConversation: state.app.annotations.editingConversation };
+      return { isEditingConversation: getIsEditingConversation(state) };
     },
     (dispatch) => {
       return bindActionCreators({ setIsEditingConversation, unsetIsEditingConversation }, dispatch);
