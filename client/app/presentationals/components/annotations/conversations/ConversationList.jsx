@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, lifecycle } from 'recompose';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import getConversationsForActiveSlide from 'selectors/entities/conversations';
+import { fetchConversations } from 'actions/entities/conversations';
 import ConversationItem from './ConversationItem';
 
-
 function ConversationList(props) {
-  const { conversations, rateConversation, deleteConversation, showConversationPanel } = props;
+  const { conversations, showConversationPanel } = props;
 
   if (conversations.length !== 0) {
     return (
@@ -18,8 +21,6 @@ function ConversationList(props) {
             <li key={id}>
               <ConversationItem
                 {...conversation}
-                rateConversation={rateConversation}
-                deleteConversation={deleteConversation}
                 showConversationPanel={showConversationPanel}
               />
             </li>);
@@ -38,13 +39,22 @@ function ConversationList(props) {
 }
 
 export default compose(
+  connect(
+    (state) => {
+      return { conversations: getConversationsForActiveSlide(state) };
+    },
+    (dispatch) => {
+      return bindActionCreators({
+        fetchConversations,
+      }, dispatch);
+    },
+  ),
   lifecycle({
     componentDidMount() {
       this.props.fetchConversations();
     },
   }),
 )(ConversationList);
-
 
 ConversationList.propTypes = {
   conversations: PropTypes.arrayOf(Object),
