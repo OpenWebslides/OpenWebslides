@@ -7,9 +7,9 @@ import { getConversationById } from 'selectors/entities/conversations';
 import { getActiveConversationId } from 'selectors/app/annotations';
 import { addConversationComment } from 'actions/entities/conversation-comments';
 
-import ConversationCommentList from './ConversationCommentList';
+import ConversationCommentList from '../conversation-comments/ConversationCommentList';
 
-import ConversationCommentForm from './ConversationCommentForm';
+import ConversationCommentForm from '../conversation-comments/ConversationCommentForm';
 import ConversationHeader from './ConversationHeader';
 
 function ConversationPanel(props) {
