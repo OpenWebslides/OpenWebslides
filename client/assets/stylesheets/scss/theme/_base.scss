@@ -23,22 +23,32 @@ a {
   left: 35%;
 }
 
-.side-nav {
-  height: 100%; /* 100% Full-height */
-  width: 0; /* 0 width - change this with JavaScript */
-  position: fixed; /* Stay in place */
-  padding-right: 20px;
-  padding-left: 20px;
-  z-index: 1; /* Stay on top */
+
+.annotations-side-bar {
+  display: block;
+  height: 100%;
+  right: -470px;
+  width: 440px;
+  padding-left: 40px;
+  padding-right: 30px;
+  position: absolute;
+  z-index: 2;
   top: 0;
-  right: 0;
   background-color: white;
   border-left: 2px solid black;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  transition: 0.5s;
+  overflow-x: hidden;
+  transition: transform ease 250ms;
 }
 
-.side-nav .close-btn {
+.annotations-side-bar.visible {
+  transform: translate3d(-470px, 0, 0);
+  -ms-transform: translate3d(-470px, 0, 0);
+  -webkit-transform: translate3d(-470px, 0, 0);
+  -o-transform: translate3d(-470px, 0, 0);
+  -moz-transform: translate3d(-470px, 0, 0);
+}
+
+.annotations-side-bar .close-btn {
   position: absolute;
   top: 0;
   right: 25px;
@@ -47,7 +57,7 @@ a {
   color: black;
 }
 
-.side-nav .back-btn {
+.annotations-side-bar .back-btn {
   position: absolute;
   top: 10px;
   left: -30px;

@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ConversationList from './conversations/ConversationList';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
+import { toggleAnnotationMode, setActiveConversationId } from 'actions/app/annotations';
+import { getAnnotationMode } from 'selectors/app/annotations';
+import ConversationList from './conversations/ConversationList';
 import ConversationPanel from './conversations/ConversationPanel';
 import AddConversationPanel from './conversations/AddConversationPanel';
 
-export default class AnnotationSidePanel extends Component {
+
+class AnnotationSidePanel extends Component {
   constructor() {
     super();
 
@@ -15,14 +20,16 @@ export default class AnnotationSidePanel extends Component {
     this.closeConversationPanel = this.closeConversationPanel.bind(this);
 
     this.state = {
+
       showAddConversationPanel: false,
       showConversationPanel: false,
     };
   }
 
-  componentDidMount() {
-    this.panel.style.width = '450px';
+  toggleAnnotationMode() {
+    this.props.toggleAnnotationMode();
   }
+
 
   openAddConversationPanel() {
     this.setState({ showConversationPanel: false });
@@ -34,8 +41,6 @@ export default class AnnotationSidePanel extends Component {
   }
 
   closeConversationPanel() {
-    console.log('HELLO');
-
     this.setState({ showConversationPanel: false });
   }
 
@@ -65,7 +70,7 @@ export default class AnnotationSidePanel extends Component {
 
     return (
       <div>
-        <a href="#" className="close-btn" onClick={() => this.props.closeAnnotationMode()}>&times;</a>
+        <a href="#" className="close-btn" onClick={() => this.props.toggleAnnotationMode()}>&times;</a>
         <h3><strong>Conversations for current slide</strong></h3>
         <button onClick={this.openAddConversationPanel}>Add conversation</button>
         <ConversationList showConversationPanel={this.showConversationPanel} />
@@ -74,20 +79,27 @@ export default class AnnotationSidePanel extends Component {
   }
 
   render() {
+    const { annotationMode } = this.props;
+
     return (
-      <div
-        className="side-nav"
-        ref={(panel) => {
-          this.panel = panel;
-        }}
-      >
+      <div className={`${annotationMode ? 'visible' : ''} annotations-side-bar`}>
         {this.renderContent()}
       </div>
     );
   }
 }
 
+export default connect(
+  (state) => {
+    return { annotationMode: getAnnotationMode(state) };
+  },
+  (dispatch) => {
+    return bindActionCreators({ toggleAnnotationMode, setActiveConversationId }, dispatch);
+  },
+)(AnnotationSidePanel);
+
 AnnotationSidePanel.propTypes = {
-  closeAnnotationMode: PropTypes.func.isRequired,
+  annotationMode: PropTypes.bool.isRequired,
+  toggleAnnotationMode: PropTypes.func.isRequired,
   setActiveConversationId: PropTypes.func.isRequired,
 };

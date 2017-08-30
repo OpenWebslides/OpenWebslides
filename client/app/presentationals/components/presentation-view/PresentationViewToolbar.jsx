@@ -5,17 +5,6 @@ import PropTypes from 'prop-types';
 class PresentationToolbar extends Component {
   componentDidMount() {
     window.addEventListener('keydown', this.handleNavigation.bind(this));
-    this.toggleAnnotationMode = this.toggleAnnotationMode.bind(this);
-  }
-
-  toggleAnnotationMode() {
-    const { annotationMode } = this.props;
-    if (annotationMode) {
-      this.props.closeAnnotationMode();
-    }
-    else {
-      this.props.openAnnotationMode();
-    }
   }
 
   handleNavigation(e) {
@@ -46,7 +35,7 @@ class PresentationToolbar extends Component {
         <button onClick={() => this.props.viewPreviousSlide()}>Previous</button>
         <button onClick={() => this.props.viewNextSlide()}>Next</button>
         <button onClick={() => this.props.viewLastSlide()}>Last</button>
-        <button onClick={() => this.toggleAnnotationMode()}>Toggle Annotation Mode</button>
+        <button onClick={() => this.props.toggleAnnotationMode()}>Toggle Annotation Mode</button>
       </div>
     );
   }
@@ -57,8 +46,7 @@ PresentationToolbar.propTypes = {
   viewPreviousSlide: PropTypes.func.isRequired,
   viewNextSlide: PropTypes.func.isRequired,
   viewLastSlide: PropTypes.func.isRequired,
-  closeAnnotationMode: PropTypes.func.isRequired,
-  openAnnotationMode: PropTypes.func.isRequired,
+  toggleAnnotationMode: PropTypes.func.isRequired,
   annotationMode: PropTypes.bool.isRequired,
 };
 
