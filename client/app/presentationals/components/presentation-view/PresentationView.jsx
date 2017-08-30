@@ -5,7 +5,7 @@ import SlideContainer from 'containers/slide-editor/SlideContainer';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
 import PresentationViewToolbarContainer from 'containers/presentation-view/PresentationViewToolbarContainer';
-import AnnotationSidePanelContainer from 'containers/annotations/AnnotationSidePanelContainer';
+import AnnotationSidePanel from 'presentationals/components/annotations/AnnotationSidePanel';
 
 class PresentationView extends Component {
   componentDidMount() {
@@ -15,18 +15,15 @@ class PresentationView extends Component {
 
   renderSlide() {
     if (this.props.activeSlideId) {
-      return <SlideContainer id={this.props.activeSlideId} viewType={slideViewTypes.PRESENTATION} />;
+      return (
+        <div>
+          <SlideContainer id={this.props.activeSlideId} viewType={slideViewTypes.PRESENTATION} />
+          <AnnotationSidePanel />
+        </div>
+      );
     }
 
     return <h1>Loading...</h1>;
-  }
-
-  renderAnnotationPanel() {
-    const { annotationMode } = this.props;
-    if (annotationMode) {
-      return <AnnotationSidePanelContainer />;
-    }
-    return null;
   }
 
   render() {
@@ -34,7 +31,6 @@ class PresentationView extends Component {
       <div>
         {this.renderSlide()}
         <PresentationViewToolbarContainer />
-        {this.renderAnnotationPanel()}
       </div>
     );
   }

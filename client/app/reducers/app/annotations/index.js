@@ -1,8 +1,7 @@
 import Immutable from 'seamless-immutable';
 
 import {
-  OPEN_ANNOTATION_MODE,
-  CLOSE_ANNOTATION_MODE,
+  TOGGLE_ANNOTATION_MODE,
   SET_ACTIVE_CONVERSATION_ID,
   SET_IS_EDITING_CONVERSATION,
   UNSET_IS_EDITING_CONVERSATION,
@@ -18,10 +17,10 @@ const initialState = Immutable({
 
 export default function annotationReducer(state = initialState, action) {
   switch (action.type) {
-    case OPEN_ANNOTATION_MODE:
-      return state.merge({ annotationMode: true });
-    case CLOSE_ANNOTATION_MODE:
-      return state.merge({ annotationMode: false });
+    case TOGGLE_ANNOTATION_MODE: {
+      const annotationModeCurrent = state.annotationMode;
+      return state.merge({ annotationMode: !annotationModeCurrent });
+    }
     case SET_IS_EDITING_CONVERSATION:
       return state.merge({ isEditingConversation: true });
     case UNSET_IS_EDITING_CONVERSATION:

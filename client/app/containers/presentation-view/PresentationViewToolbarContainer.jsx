@@ -8,7 +8,7 @@ import {
   viewLastSlide,
 } from 'actions/app/presentation-view';
 
-import { openAnnotationMode, closeAnnotationMode } from 'actions/app/annotations';
+import { toggleAnnotationMode } from 'actions/app/annotations';
 
 import PresentationViewToolbar from 'presentationals/components/presentation-view/PresentationViewToolbar';
 
@@ -22,8 +22,8 @@ function mapDispatchToProps(dispatch) {
     viewPreviousSlide,
     viewNextSlide,
     viewLastSlide,
-    openAnnotationMode,
-    closeAnnotationMode }, dispatch);
+    toggleAnnotationMode,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PresentationViewToolbar);

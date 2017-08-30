@@ -22,3 +22,6 @@ export const getIsEditingConversation = (state) => {
   return state.app.annotations.isEditingConversation;
 };
 
+export const getAnnotationMode = (state) => {
+  return state.app.annotations.annotationMode;
+};
