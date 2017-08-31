@@ -21,7 +21,7 @@ class PasswordController < ApplicationController
     @user = User.reset_password_by_token resource_params
 
     if @user.errors.empty?
-      jsonapi_render :json => @user, :status => :ok
+      jsonapi_render :json => @user, :status => :ok, :options => { :resource => UserResource }
     else
       jsonapi_render_errors :json => @user, :status => :unprocessable_entity
     end
