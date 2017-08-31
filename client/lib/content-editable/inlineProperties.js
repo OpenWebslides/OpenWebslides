@@ -10,7 +10,7 @@ export const inlinePropertyTags = {
     endTag: '</strong>',
   },
   LINK: {
-    startTag: '<a>',
+    startTag: '<a target="_blank">',
     endTag: '</a>',
   },
 };
