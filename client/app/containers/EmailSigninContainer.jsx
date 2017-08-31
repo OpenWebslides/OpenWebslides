@@ -8,8 +8,6 @@ import EmailSigninForm from 'presentationals/components/email-signin/EmailSignin
 
 import { emailSigninUser } from 'actions/signinActions';
 
-import history from '../../history';
-
 export function validate(values) {
   const { email, password } = values;
 
@@ -17,7 +15,8 @@ export function validate(values) {
 
   if (!email || email.trim() === '') {
     errors.email = i18n.t('formErrors:emailRequired');
-  } else if (!isEmail(email.trim())) {
+  }
+  else if (!isEmail(email.trim())) {
     errors.email = i18n.t('formErrors:emailInvalid');
   }
 
@@ -39,7 +38,6 @@ const connectedForm = reduxForm({
   validate,
   onSubmit: validateAndSubmit,
   getFormState: state => state.vendor.forms,
-  onSubmitSuccess: () => history.push('/'),
 })(translate()(EmailSigninForm));
 
 function mapStateToProps(state) {
