@@ -23,7 +23,7 @@ class TokenController < ApplicationController
     token = JWT::Auth::Token.from_user @user
     headers['Authorization'] = "Bearer #{token.to_jwt}"
 
-    jsonapi_render :json => @user, :status => :created
+    jsonapi_render :json => @user, :status => :created, :options => { :resource => UserResource }
   end
 
   # DELETE /token

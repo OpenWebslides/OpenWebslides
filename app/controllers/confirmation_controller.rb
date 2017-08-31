@@ -10,7 +10,7 @@ class ConfirmationController < ApplicationController
     @user = User.confirm_by_token resource_params[:confirmation_token]
 
     if @user.errors.empty?
-      jsonapi_render :json => @user, :status => :created
+      jsonapi_render :json => @user, :status => :created, :options => { :resource => UserResource }
     else
       jsonapi_render_errors :json => @user, :status => :unprocessable_entity
     end
