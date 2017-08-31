@@ -233,20 +233,10 @@ RSpec.describe 'Comments API', :type => :request do
 
         comment.reload
         expect(comment).not_to be_destroyed
-        expect(comment).to be_hidden
+        expect(comment).not_to be_hidden
 
         expect(response.status).to eq 204
       end
-    end
-
-    it 'returns successful' do
-      delete comment_path(:id => comment.id), :headers => headers
-
-      comment.reload
-      expect(comment).not_to be_destroyed
-      expect(comment).to be_hidden
-
-      expect(response.status).to eq 204
     end
   end
 end
