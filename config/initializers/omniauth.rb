@@ -9,6 +9,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     env['rack.session']['omniauth.state'] = query_params['state']
   end
 
+  provider :cas,
+           :host => 'login.ugent.be'
+
   provider :github, oauth_config.github_id, oauth_config.github_secret, :scope => 'user:email'
   provider :google_oauth2, oauth_config.google_id, oauth_config.google_secret
   provider :facebook, oauth_config.facebook_id, oauth_config.facebook_secret, :scope => 'email'
