@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Auth
-  class OmniauthController < ApplicationController
+  class OmniauthController < ActionController::API
     include JWT::Auth::Authentication
 
     ##
