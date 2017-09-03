@@ -9,7 +9,7 @@ RSpec.describe 'users routing', :type => :routing do
     expect(:get => route).to route_to 'users#index'
     expect(:patch => route).not_to be_routable
     expect(:put => route).not_to be_routable
-    expect(:post => route).to route_to 'users#create'
+    expect(:post => route).not_to be_routable
     expect(:delete => route).not_to be_routable
   end
 
@@ -17,8 +17,8 @@ RSpec.describe 'users routing', :type => :routing do
     route = '/api/users/foo'
 
     expect(:get => route).to route_to 'users#show', :id => 'foo'
-    expect(:patch => route).to route_to 'users#update', :id => 'foo'
-    expect(:put => route).to route_to 'users#update', :id => 'foo'
+    expect(:patch => route).not_to be_routable
+    expect(:put => route).not_to be_routable
     expect(:post => route).not_to be_routable
     expect(:delete => route).to route_to 'users#destroy', :id => 'foo'
   end
