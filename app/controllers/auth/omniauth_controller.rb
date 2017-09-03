@@ -40,7 +40,8 @@ module Auth
       # New user
       attrs = {
         :first_name => auth_hash['info']['name'],
-        :email => auth_hash['info']['email']
+        :email => auth_hash['info']['email'],
+        :tos_accepted => true
       }
       @resource = User.new attrs
 
