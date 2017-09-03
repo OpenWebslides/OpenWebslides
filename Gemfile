@@ -138,4 +138,8 @@ gem 'tzinfo-data', :platforms => %i[mingw mswin x64_mingw jruby]
 group :production do
   # Use PostgreSQL as database
   gem 'pg'
+
+  # Notify ops team of exceptions
+  gem 'exception_notification'
+  gem 'slack-notifier'
 end
