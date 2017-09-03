@@ -24,7 +24,7 @@ module Auth
     end
 
     def retrieve_identity
-      raise unless auth_hash['info']['email']
+      raise unless email
 
       find_or_create_user
       find_or_create_identity
@@ -33,14 +33,15 @@ module Auth
     end
 
     def find_or_create_user
-      @resource = User.find_by :email => auth_hash['info']['email']
+      @resource = User.find_by :email => email
 
       return if @resource
 
       # New user
       attrs = {
-        :first_name => auth_hash['info']['name'],
-        :email => auth_hash['info']['email'],
+        :first_name => first_name,
+        :last_name => last_name,
+        :email => email,
         :tos_accepted => true
       }
       @resource = User.new attrs
@@ -72,7 +73,20 @@ module Auth
     end
 
     def sync_information
-      @resource.first_name ||= auth_hash['info']['name']
+      @resource.first_name ||= first_name
+      @resource.last_name ||= last_name
+    end
+
+    def email
+      auth_hash['info']['email'] || (auth_hash['extra'] && auth_hash['extra']['mail'])
+    end
+
+    def first_name
+      auth_hash['info']['name'] || (auth_hash['extra'] && auth_hash['extra']['givenname'])
+    end
+
+    def last_name
+      auth_hash['extra'] && auth_hash['extra']['surname']
     end
   end
 end
