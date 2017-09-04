@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { imgOptions, iframeOptions } from 'constants/printViewOptions';
-import { jasperState } from 'constants/exampleState';
+// import { jasperState } from 'constants/exampleState';
 
 import convertToPrint from 'lib/convert-to-print/index';
 
