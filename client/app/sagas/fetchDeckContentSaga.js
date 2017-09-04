@@ -1,12 +1,13 @@
 import { takeLatest, put } from 'redux-saga/effects';
 
-import { jasperState } from 'constants/exampleState';
+// import { jasperState } from 'constants/exampleState';
 
 function* doFetchDeckContent() {
   try {
-    const state = jasperState;
+    // const state = jasperState;
     yield put({ type: 'FETCH_DECK_CONTENT_SUCCESS', payload: state }); // TODO: make some actual actions for this...
-  } catch (e) {
+  }
+  catch (e) {
     console.log(e);
   }
 }
