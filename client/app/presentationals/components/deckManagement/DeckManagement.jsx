@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
-import { DeckThumbnail } from 'presentationals/components/deckManagement/DeckThumbnail';
+import DeckThumbnail from 'presentationals/components/deckManagement/DeckThumbnail';
 
 // Helpers:
 import IfAuthHOC from '../../../../lib/IfAuthHOC';

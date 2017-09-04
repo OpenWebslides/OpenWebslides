@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import SlideContainer from 'containers/slide-editor/SlideContainer';
 import { slideViewTypes } from 'constants/slideViewTypes';
-
-import PresentationViewToolbarContainer from 'containers/presentation-view/PresentationViewToolbarContainer';
+import PresentationViewToolbarContainer from
+  'containers/presentation-view/PresentationViewToolbarContainer';
 import AnnotationSidePanel from 'presentationals/components/annotations/AnnotationSidePanel';
 
 class PresentationView extends Component {
