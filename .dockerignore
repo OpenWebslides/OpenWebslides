@@ -56,3 +56,4 @@ lib/assets/
 
 # Volumes
 nginx.conf
+nginx-proxy.conf
