@@ -43,12 +43,10 @@ class DeckManagement extends React.Component {
         <div className="c_deck-management-container">
           <h1 className="c_deck-management-container__title"> Your decks: </h1>
           <div className="c_deck-management-container__owned-decks-container">
-            <ol className="c_deck-management-container__owned-decks-list">
+            <table className="c_deck-management-container__owned-decks-table">
               {listOfDeckThumbnails}
-              <li key={Number.MAX_SAFE_INTEGER}>
-                <Link to="/create_new_deck"> Add new </Link>
-              </li>
-            </ol>
+            </table>
+            <Link to="/create_new_deck"> Add new </Link>
           </div>
         </div>
       </IfAuthHOC>
