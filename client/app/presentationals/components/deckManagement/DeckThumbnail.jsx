@@ -1,16 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-export function DeckThumbnail({ deckTitle, deckId, deckIconImage, deleteDeck }) {
+function DeckThumbnail(props) {
+  const { deckTitle, deckId, deckIconImage, deleteDeck, history } = props;
   const altIconText = `Icon of deck: ${deckTitle}`;
+
   return (
     <li>
       <div className="c_deck-thumbnail">
-        <Link to={`/editor/${deckId}`}>
+        <Link to={`/presentation/${deckId}`}>
           <img src={deckIconImage} alt={altIconText} />
           <p>{deckTitle}</p>
         </Link>
+        <button
+          onClick={() => history.push(`/editor/${deckId}`)}
+        >
+          Edit
+        </button>
         <button
           onClick={() => {
             deleteDeck(deckId);
@@ -36,4 +43,4 @@ DeckThumbnail.defaultProps = {
   deckLink: '#',
 };
 
-export default DeckThumbnail;
+export default withRouter(DeckThumbnail);

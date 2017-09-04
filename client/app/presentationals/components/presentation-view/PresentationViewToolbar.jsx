@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { withRouter } from 'react-router-dom';
 
 class PresentationToolbar extends Component {
   componentDidMount() {
@@ -35,6 +35,7 @@ class PresentationToolbar extends Component {
         <button onClick={() => this.props.viewPreviousSlide()}>Previous</button>
         <button onClick={() => this.props.viewNextSlide()}>Next</button>
         <button onClick={() => this.props.viewLastSlide()}>Last</button>
+        <button onClick={() => this.props.history.push('/')}>Dashboard</button>
         <button onClick={() => this.props.toggleAnnotationMode()}>Toggle Annotation Mode</button>
       </div>
     );
@@ -51,4 +52,4 @@ PresentationToolbar.propTypes = {
 };
 
 
-export default PresentationToolbar;
+export default withRouter(PresentationToolbar);
