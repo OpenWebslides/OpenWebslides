@@ -1,3 +1,3 @@
 export default {
-  url: (window.config ? window.config.API_URL : 'http://owsdev.ugent.be/api/')
+  url: (window.config ? window.config.API_URL : 'http://owsqas.ugent.be/api/')
 }
