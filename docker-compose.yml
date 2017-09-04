@@ -86,3 +86,11 @@ volumes:
 
   # Redis volume
   redis:
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.8.1/24
+
