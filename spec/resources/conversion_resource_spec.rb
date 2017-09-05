@@ -29,6 +29,10 @@ RSpec.describe ConversionResource, :type => :resource do
       expect(described_class.creatable_fields).to be_empty
     end
 
+    it 'should have a valid set of sortable fields' do
+      expect(described_class.sortable_fields context).to match_array %i[id name status created_at]
+    end
+
     it { is_expected.to respond_to :meta }
   end
 

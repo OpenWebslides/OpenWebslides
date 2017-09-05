@@ -33,6 +33,10 @@ class ConversionResource < ApplicationResource
     []
   end
 
+  def self.sortable_fields(context = {})
+    super(context) + %i[created_at]
+  end
+
   def meta(options)
     {
       options[:serializer].key_formatter.format(:created_at) => DateValueFormatter.format(_model.created_at)
