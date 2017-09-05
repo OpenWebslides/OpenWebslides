@@ -25,9 +25,7 @@ module Uploadable
 
     # Create tempfile with proper extension
     raise JSONAPI::Exceptions::BadRequest, 'Invalid file' unless params[:qqfile]
-    @uploaded_file = Tempfile.new ['', ".#{@uploaded_filename.split('.').last}"]
-    @uploaded_file.close
-    FileUtils.cp params[:qqfile].path, @uploaded_file.path
+    @uploaded_file = params[:qqfile]
   rescue => e
     if @resource
       jsonapi_render_upload_errors e, :json => @resource
