@@ -7,6 +7,8 @@ import { getAuthToken } from 'api/helpers/apiHelper';
 
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
 import IfAuthHOC from 'lib/IfAuthHOC';
+import defaults from 'config/api';
+
 
 function FineUploaderInstance({ isAuthenticated, importUploadError }) {
   const uploader = new FineUploaderTraditional({
@@ -18,7 +20,7 @@ function FineUploaderInstance({ isAuthenticated, importUploadError }) {
         enabled: false,
       },
       request: {
-        endpoint: 'http://localhost:3000/api/conversions',
+        endpoint: `${defaults.url}conversions/`,
         customHeaders: {
           Authorization: `Bearer ${getAuthToken()}`,
         },
