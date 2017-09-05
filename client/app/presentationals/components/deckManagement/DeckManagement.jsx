@@ -44,7 +44,9 @@ class DeckManagement extends React.Component {
           <h1 className="c_deck-management-container__title"> Your decks: </h1>
           <div className="c_deck-management-container__owned-decks-container">
             <table className="c_deck-management-container__owned-decks-table">
-              {listOfDeckThumbnails}
+              <tbody>
+                {listOfDeckThumbnails}
+              </tbody>
             </table>
             <Link to="/create_new_deck"> Add new </Link>
             <Link to="/import_deck"> Import Deck </Link>
