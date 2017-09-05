@@ -32,6 +32,11 @@ OpenWebslides.configure do |config|
   #
   config.default_template = 'shower-ows'
 
+  ##
+  # Temporary directory for uploads
+  #
+  config.tmpdir = Rails.root.join 'tmp', 'uploads'
+
   #########################################
   ##       Database configuration        ##
   #########################################

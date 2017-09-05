@@ -23,5 +23,9 @@ mkdir -p /app/public/
 rm -rf /app/public/*
 cp -r /app/client/dist/* /app/public/
 
+# Clear temporary files
+rm -rf /app/tmp/uploads/*
+mkdir /app/tmp/uploads/
+
 # Start app server
 bundle exec puma

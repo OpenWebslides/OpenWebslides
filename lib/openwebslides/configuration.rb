@@ -25,6 +25,7 @@ module OpenWebslides
                   :template_path,
                   :conversion_jar_path,
                   :default_template,
+                  :tmpdir,
                   :oauth2,
                   :api,
                   :github
