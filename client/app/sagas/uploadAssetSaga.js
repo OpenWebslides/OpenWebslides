@@ -19,7 +19,7 @@ export function* doUploadAsset(action) {
     const activeDeckId = yield select(getActiveDeckId);
     const activeSlideId = yield select(getActiveSlideId);
 
-    const { assetType, values: { imageFile, imageType, imageCaption, altText } } = yield action.meta;
+    const { assetType, values: { imageFile, imageCaption, altText } } = yield action.meta;
 
     const response = yield call(uploadAssetApi, activeDeckId, imageFile[0]);
 
