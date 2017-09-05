@@ -7,20 +7,23 @@ import ImageInputField from './ImageInputField';
 
 
 export default function ImageUploadForm(props) {
-  if (props.submitSucceeded) {
-    props.updateDeck();
-    props.handleSubmitSuccess();
+  const { submitSucceeded, error, updateDeck, handleSubmitSuccess, handleSubmit, imageTypeValue } = props;
+
+  if (submitSucceeded) {
+    updateDeck();
+    handleSubmitSuccess();
   }
 
   return (
     <div>
       <h3>Add local image file</h3>
       <hr />
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={handleSubmit}>
 
         <Field
           component={InputField}
           name="altText"
+          errorOnPristine={true}
           placeholder="Enter image alt text"
           label="Alt text"
         />
@@ -30,17 +33,31 @@ export default function ImageUploadForm(props) {
           name="imageFile"
         />
 
+
         <label>
-          <Field name="imageType" component={InputField} type="radio" value="ILLUSTRATIVE" />
+          <Field name="imageType" component={InputField} type="radio" value="ILLUSTRATIVE_IMAGE" />
             Illustrative
           </label>
 
+        { (imageTypeValue === 'ILLUSTRATIVE_IMAGE') &&
+          <Field
+            component={InputField}
+            label="Caption"
+            errorOnPristine={true}
+            placeholder="Enter image caption"
+            name="imageCaption"
+          />}
+
         <label>
-          <Field name="imageType" component={InputField} type="radio" value="DECORATIVE" />
+          <Field
+            name="imageType"
+            errorOnPristine={true}
+            component={InputField} type="radio" value="DECORATIVE_IMAGE"
+          />
             Decorative
           </label>
 
-        {props.error && <strong>{props.error}</strong>}
+        {error && <strong>{error}</strong>}
 
         <button type="submit">Submit</button>
       </form>

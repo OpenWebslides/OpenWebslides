@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 function InputField(props) {
   // #TODO test this
+
+  const { errorOnPristine } = props;
   let errors;
   if (props.meta.extraErrors) {
     errors = (
@@ -30,7 +32,7 @@ function InputField(props) {
             />
           </span>
         </label>
-        {props.meta.touched && !props.meta.pristine &&
+        {props.meta.touched && (errorOnPristine ? true : !props.meta.pristine) &&
           props.meta.error &&
           <span className="c_input-field__error">
             <span className="c_input-field__error__wrapper">
