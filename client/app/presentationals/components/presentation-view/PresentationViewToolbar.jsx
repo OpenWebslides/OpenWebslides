@@ -16,11 +16,15 @@ class PresentationToolbar extends Component {
 
     switch (e.keyCode) {
       case 37:
+      case 34:
+        e.preventDefault();
         this.props.viewPreviousSlide();
         break;
       case 39:
       case 13:
       case 32:
+      case 33:
+        e.preventDefault();
         this.props.viewNextSlide();
         break;
       default:
