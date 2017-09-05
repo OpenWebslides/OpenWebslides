@@ -7,6 +7,19 @@ export const getActiveDeckId = (state) => {
 export const getActiveSlideId = (state) => {
   return state.app.slideEditor.activeSlideId;
 };
+// Get the id of the previous slide than the one that is currently active in the slide editing pane.
+export const getPreviousSlideId = (state) => {
+  const activeDeckId = getActiveDeckId(state);
+  const activeDeck = state.entities.decks.byId[activeDeckId];
+  const activeSlideId = getActiveSlideId(state);
+  const activeSlideIndex = activeDeck.slideIds.indexOf(activeSlideId);
+  if (activeSlideIndex === 0) {
+    return null;
+  }
+  else {
+    return activeDeck.slideIds[activeSlideIndex - 1];
+  }
+};
 
 // Get the id of the content item that is currently being edited.
 export const getActiveContentItemId = (state) => {
