@@ -7,17 +7,16 @@ export const getActiveDeckId = (state) => {
 export const getActiveSlideId = (state) => {
   return state.app.slideEditor.activeSlideId;
 };
-// Get the id of the previous slide than the one that is currently active in the slide editing pane.
-export const getPreviousSlideId = (state) => {
+// Get the id of the previous slide than the one that is given as parameter.
+export const getPreviousSlideId = (state, slideId) => {
   const activeDeckId = getActiveDeckId(state);
   const activeDeck = state.entities.decks.byId[activeDeckId];
-  const activeSlideId = getActiveSlideId(state);
-  const activeSlideIndex = activeDeck.slideIds.indexOf(activeSlideId);
-  if (activeSlideIndex === 0) {
+  const slideIndex = activeDeck.slideIds.indexOf(slideId);
+  if (slideIndex === 0) {
     return null;
   }
   else {
-    return activeDeck.slideIds[activeSlideIndex - 1];
+    return activeDeck.slideIds[slideIndex - 1];
   }
 };
 

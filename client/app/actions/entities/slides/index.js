@@ -6,6 +6,9 @@ export const DELETE_SLIDE = 'DELETE_SLIDE';
 export const ADD_CONTENT_ITEM_TO_SLIDE = 'ADD_CONTENT_ITEM_TO_SLIDE';
 export const DELETE_CONTENT_ITEM_FROM_SLIDE = 'DELETE_CONTENT_ITEM_FROM_SLIDE';
 
+export const INCREASE_SLIDE_LEVEL = 'INCREASE_SLIDE_LEVEL';
+export const DECREASE_SLIDE_LEVEL = 'DECREASE_SLIDE_LEVEL';
+
 export function addSlide(slideId, deckId) {
   return {
     type: ADD_SLIDE,
@@ -30,6 +33,15 @@ export function deleteSlide(
     type: DELETE_SLIDE,
     payload: { slideId, deckId, contentItemIds, newActiveSlideId },
   };
+}
+
+export function increaseSlideLevel(selectedSlideId, previousSlideId) {
+  return { type: INCREASE_SLIDE_LEVEL,
+    payload: { selectedSlideId, previousSlideId } };
+}
+export function decreaseSlideLevel(selectedSlideId, nextSlideId) {
+  return { type: DECREASE_SLIDE_LEVEL,
+    payload: { selectedSlideId, nextSlideId } };
 }
 
 export function addContentItemToSlide(
