@@ -120,7 +120,6 @@ class Slide extends Component {
         break;
     }
 
-
     return (
       <div
         className={`c_slide-container c_slide-container--${this.props.cssIdentifier} ${this.props.isFullscreen
@@ -138,7 +137,9 @@ class Slide extends Component {
             </div>
           </div>
         </div>
+        <p>{this.props.slide.level}</p> {/* TODO: Only for debugging*/}
       </div>
+
     );
   }
 }

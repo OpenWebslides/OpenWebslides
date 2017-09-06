@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import Immutable from 'seamless-immutable';
 
-import { ADD_SLIDE, UPDATE_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
+import { ADD_SLIDE, UPDATE_SLIDE,
+  DELETE_SLIDE, INCREASE_SLIDE_LEVEL, DECREASE_SLIDE_LEVEL } from 'actions/entities/slides';
 import {
   ADD_CONTENT_ITEM,
   DELETE_CONTENT_ITEM,
@@ -29,6 +30,30 @@ function updateSlide(state, action) {
   return state.merge({
     [slide.id]: action.payload.props,
   }, { deep: true });
+}
+
+function increaseLevel(state, action) {
+  const selectedSlide = state[action.payload.selectedSlideId];
+  const previousSlide = action.payload.previousSlideId !== null ? state[action.payload.previousSlideId] : null;
+  if (previousSlide !== null && selectedSlide.level <= previousSlide.level) {
+    return state.merge({
+      [action.payload.selectedSlideId]: { level: selectedSlide.level + 1 } }, { deep: true });
+  }
+  else {
+    return state;
+  }
+}
+
+function decreaseLevel(state, action) {
+  const selectedSlide = state[action.payload.selectedSlideId];
+  const nextSlide = action.payload.nextSlideId !== null ? state[action.payload.nextSlideId] : null;
+  if (selectedSlide.level > 0 && (nextSlide === null || selectedSlide.level >= nextSlide.level)) {
+    return state.merge({
+      [action.payload.selectedSlideId]: { level: selectedSlide.level - 1 } }, { deep: true });
+  }
+  else {
+    return state;
+  }
 }
 
 function deleteSlide(state, action) {
@@ -101,6 +126,8 @@ function byId(state = initialState, action) {
     case UPDATE_SLIDE: return updateSlide(state, action);
     case DELETE_SLIDE: return deleteSlide(state, action);
     case ADD_CONTENT_ITEM: return addContentItem(state, action);
+    case INCREASE_SLIDE_LEVEL: return increaseLevel(state, action);
+    case DECREASE_SLIDE_LEVEL: return decreaseLevel(state, action);
     case DELETE_CONTENT_ITEM: return deleteContentItem(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
     default: return state;
