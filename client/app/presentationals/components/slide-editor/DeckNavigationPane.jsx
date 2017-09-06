@@ -10,6 +10,8 @@ export default class DeckNavigationPane extends Component {
     super(props);
     this.handleAddSlide = this.handleAddSlide.bind(this);
     this.handleDeleteSlide = this.handleDeleteSlide.bind(this);
+    this.handleIncreaseSlideLevel = this.handleIncreaseSlideLevel.bind(this);
+    this.handleDecreaseSlideLevel = this.handleDecreaseSlideLevel.bind(this);
   }
 
   handleAddSlide() {
@@ -22,6 +24,21 @@ export default class DeckNavigationPane extends Component {
 
   handleSetActiveSlideId(selectedSlideId) {
     this.props.setActiveSlideId(selectedSlideId);
+  }
+
+  handleIncreaseSlideLevel(selectedSlideId) {
+    const selectedSlideIndex = this.props.activeDeck.slideIds.indexOf(selectedSlideId);
+    // If the selected slide is the first one, there's no previous ID:
+    const previousSlideId = selectedSlideIndex === 0 ?
+      null : this.props.activeDeck.slideIds[selectedSlideIndex - 1];
+    this.props.increaseSlideLevel(selectedSlideId, previousSlideId);
+  }
+  handleDecreaseSlideLevel(selectedSlideId) {
+    const selectedSlideIndex = this.props.activeDeck.slideIds.indexOf(selectedSlideId);
+    // If the selected slide is the last one, there's no previous ID:
+    const nextSlideId = selectedSlideIndex === this.props.activeDeck.slideIds.length - 1 ?
+      null : this.props.activeDeck.slideIds[selectedSlideIndex + 1];
+    this.props.decreaseSlideLevel(selectedSlideId, nextSlideId);
   }
 
   render() {
@@ -53,6 +70,30 @@ export default class DeckNavigationPane extends Component {
                         className="c_deck-navigator__delete-button__wrapper o_action__wrapper"
                       >
                         Delete
+                      </span>
+                    </button>
+                    <button
+                      className="c_deck-navigator__increase-slide-level-button
+                      o_action o_action--increase-slide-level"
+                      onClick={() => this.handleIncreaseSlideLevel(slideId)}
+                    >
+                      <span
+                        className="c_deck-navigator__increase-slide-level-button__wrapper
+                        o_action__wrapper"
+                      >
+                        Increase level
+                      </span>
+                    </button>
+                    <button
+                      className="c_deck-navigator__decrease-slide-level-button
+                      o_action o_action--decrease-slide-level"
+                      onClick={() => this.handleDecreaseSlideLevel(slideId)}
+                    >
+                      <span
+                        className="c_deck-navigator__decrease-slide-level-button__wrapper
+                        o_action__wrapper"
+                      >
+                        Decrease level
                       </span>
                     </button>
                   </div>
@@ -87,6 +128,8 @@ DeckNavigationPane.propTypes = {
   setActiveSlideId: PropTypes.func.isRequired,
   addSlideToDeck: PropTypes.func.isRequired,
   deleteSlideFromDeck: PropTypes.func.isRequired,
+  increaseSlideLevel: PropTypes.func.isRequired,
+  decreaseSlideLevel: PropTypes.func.isRequired,
 };
 
 DeckNavigationPane.defaultProps = {
