@@ -13,11 +13,12 @@ const initialState = Immutable({});
 
 function addSlide(state, action) {
   const slideId = action.payload.slideId;
-
+  const previousSlideId = action.payload.previousSlideId;
+  const previousSlideLevel = state[previousSlideId].level;
   return state.merge({
     [slideId]: {
       id: slideId,
-      level: 0,
+      level: previousSlideLevel,
       contentItemIds: [],
       contentItemSequence: 0,
     },

@@ -9,10 +9,10 @@ export const DELETE_CONTENT_ITEM_FROM_SLIDE = 'DELETE_CONTENT_ITEM_FROM_SLIDE';
 export const INCREASE_SLIDE_LEVEL = 'INCREASE_SLIDE_LEVEL';
 export const DECREASE_SLIDE_LEVEL = 'DECREASE_SLIDE_LEVEL';
 
-export function addSlide(slideId, deckId) {
+export function addSlide(slideId, previousSlideId, deckId) {
   return {
     type: ADD_SLIDE,
-    payload: { slideId, deckId },
+    payload: { slideId, previousSlideId, deckId },
   };
 }
 

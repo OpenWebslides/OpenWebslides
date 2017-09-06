@@ -15,7 +15,9 @@ export default class DeckNavigationPane extends Component {
   }
 
   handleAddSlide() {
-    this.props.addSlideToDeck(this.props.activeDeck.id);
+    const numberOfSlides = this.props.activeDeck.slideIds.length;
+    const lastSlideId = this.props.activeDeck.slideIds[numberOfSlides - 1];
+    this.props.addSlideToDeck(this.props.activeDeck.id, lastSlideId);
   }
 
   handleDeleteSlide(selectedSlideId) {

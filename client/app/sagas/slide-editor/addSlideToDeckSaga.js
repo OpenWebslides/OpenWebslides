@@ -10,7 +10,7 @@ function* doAddSlideToDeck(action) {
     const deck = yield select(getDeckById, action.meta.deckId);
     const slideId = generateSlideId(deck.id, deck.slideSequence);
 
-    yield put(addSlide(slideId, deck.id));
+    yield put(addSlide(slideId, action.meta.previousSlideId, deck.id));
   }
   catch (e) {
     console.error(e);
