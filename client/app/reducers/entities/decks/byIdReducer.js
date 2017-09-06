@@ -8,7 +8,7 @@ const initialState = Immutable({});
 
 function addSlide(state, action) {
   const deck = state[action.payload.deckId];
-
+  debugger;
   return state.merge({
     [deck.id]: {
       slideIds: deck.slideIds.concat(action.payload.slideId),

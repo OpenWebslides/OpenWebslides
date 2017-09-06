@@ -9,10 +9,10 @@ export const FETCH_DECK = 'FETCH_DECK';
 export const FETCH_DECK_SUCCESS = 'FETCH_DECK_SUCCESS';
 export const FETCH_DECK_FAILURE = 'FETCH_DECK_FAILURE';
 
-export function addSlideToDeck(deckId) {
+export function addSlideToDeck(deckId, previousSlideId) {
   return {
     type: ADD_SLIDE_TO_DECK,
-    meta: { deckId },
+    meta: { deckId, previousSlideId },
   };
 }
 
