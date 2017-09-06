@@ -7,9 +7,7 @@ module Repository
     #
     class Init < RepoCommand
       def execute
-        # Create local repo
-        raise OpenWebslides::RepoExistsError if Dir.exist? repo_path
-        FileUtils.mkdir_p repo_path
+        exec Filesystem::Create
 
         # Populate local repo
         raise OpenWebslides::NoTemplateError, "No template found for #{template_path}" unless Dir.exist? template_path
