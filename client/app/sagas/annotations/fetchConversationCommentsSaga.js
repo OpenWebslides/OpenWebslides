@@ -7,6 +7,7 @@ import {
   FETCH_CONVERSATION_COMMENTS_SUCCESS,
   FETCH_CONVERSATION_COMMENTS_FAILURE,
 } from 'actions/entities/conversation-comments';
+import { SIGNOUT } from 'actions/signoutActions';
 
 import fetchConversationCommentsApi from 'api/fetchConversationCommentsApi';
 import { getCurrentUserId } from 'selectors/app/auth';
@@ -85,6 +86,9 @@ export function* doFetchConversations(action) {
     yield put({ type: FETCH_CONVERSATION_COMMENTS_SUCCESS, payload });
   }
   catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+    }
     yield put({ type: FETCH_CONVERSATION_COMMENTS_FAILURE });
   }
 }

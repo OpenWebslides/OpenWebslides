@@ -6,11 +6,13 @@ import {
   REQUEST_USER_IMPORTS_FAILURE,
 } from 'actions/userImportsActions';
 import getUserImportsCall from 'api/getUserImportsApi';
+import { SIGNOUT } from 'actions/signoutActions';
 
 export function computeType(name) {
   if (name.match(/\.pptx$/)) {
     return 'pptx';
-  } else if (name.match(/\.pdf$/)) {
+  }
+  else if (name.match(/\.pdf$/)) {
     return 'pdf';
   }
   return 'unknown';
@@ -37,13 +39,25 @@ export function* getUserImportsFlow(action) {
         listOfImports,
       },
     });
-  } catch (error) {
-    yield put({
-      type: REQUEST_USER_IMPORTS_FAILURE,
-      payload: {
-        message: error.message,
-      },
-    });
+  }
+  catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+      yield put({
+        type: REQUEST_USER_IMPORTS_FAILURE,
+        payload: {
+          message: 'You are not signed in!',
+        },
+      });
+    }
+    else {
+      yield put({
+        type: REQUEST_USER_IMPORTS_FAILURE,
+        payload: {
+          message: error.message,
+        },
+      });
+    }
   }
 }
 

@@ -4,6 +4,8 @@ import { SubmissionError } from 'redux-form';
 import { getActiveSlideId, getActiveDeckId } from 'selectors/app/annotations';
 import { getCurrentUserId } from 'selectors/app/auth';
 import { ADD_CONVERSATION } from 'actions/entities/conversations';
+import { SIGNOUT } from 'actions/signoutActions';
+
 import createConversationApi from 'api/createConversationApi';
 
 
@@ -23,6 +25,9 @@ export function* doAddConversation(action) {
     yield call(resolve);
   }
   catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+    }
     const errorMessage = yield { _error: 'Something went wrong on our end.' };
     yield call(reject, new SubmissionError(errorMessage));
   }
