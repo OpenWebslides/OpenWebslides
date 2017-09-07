@@ -69,3 +69,11 @@ a {
 .list-style-none {
   list-style-type: none;
 }
+
+.delete-button-live-view {
+  display: none;
+}
+
+.deletion-wrapper:hover .delete-button-live-view {
+  display: block;
+}
