@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 
 import {
   getActiveContentItemId,
@@ -7,10 +8,11 @@ import {
 } from 'selectors/app/slide-editor';
 
 import { getContentItemById } from 'selectors/entities/content-items';
+import { deleteContentItemFromSlide } from 'actions/entities/slides';
+import { deleteAssetContentItem } from 'actions/other/assetActions';
 
 import generateAttributesObject from 'lib/content-item/helpers/generateAttributes';
 import LiveViewItem from './LiveViewItem';
-
 
 function mapStateToProps(state, props) {
   const contentItem = getContentItemById(state, props.contentItemId);
@@ -29,7 +31,11 @@ function mapStateToProps(state, props) {
   };
 }
 
-const LiveViewItemContainer = connect(mapStateToProps)(LiveViewItem);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ deleteContentItemFromSlide, deleteAssetContentItem }, dispatch);
+}
+
+const LiveViewItemContainer = connect(mapStateToProps, mapDispatchToProps)(LiveViewItem);
 
 LiveViewItemContainer.propTypes = {
   slideViewType: PropTypes.string.isRequired,
