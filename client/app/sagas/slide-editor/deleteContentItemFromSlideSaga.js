@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { takeEvery, select, put } from 'redux-saga/effects';
+import { takeEvery, select, put, call } from 'redux-saga/effects';
 
 import { plaintextContentItemTypes, containerContentItemTypes } from 'constants/contentItemTypes';
 import { slideViewTypes } from 'constants/slideViewTypes';
@@ -11,13 +11,12 @@ import {
 } from 'lib/state-traversal/contentItems';
 
 import { DELETE_CONTENT_ITEM_FROM_SLIDE } from 'actions/entities/slides';
+import { UPDATE_DECK } from 'actions/entities/decks';
 import { deleteContentItem } from 'actions/entities/content-items';
+import deleteAssetApi from 'api/deleteAssetApi';
 import { getFocusedSlideViewType } from 'selectors/app/slide-editor';
 import { getSlideById } from 'selectors/entities/slides';
-import {
-  getContentItemsById,
-  getContentItemById,
-} from 'selectors/entities/content-items';
+import { getContentItemsById, getContentItemById } from 'selectors/entities/content-items';
 
 function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsById) {
   let contentItemToDeleteId;
@@ -131,8 +130,11 @@ function* doDeleteContentItemFromSlide(action) {
     const focusedSlideViewType = yield select(getFocusedSlideViewType);
     const contentItemsById = yield select(getContentItemsById);
     const slide = yield select(getSlideById, action.meta.slideId);
-    const contentItemId = action.meta.contentItemId;
-    const ancestorItemIds = action.meta.ancestorItemIds;
+    const { contentItemId, ancestorItemIds, assetId } = action.meta;
+
+    if (assetId) {
+      yield call(deleteAssetApi, assetId);
+    }
 
     // If this contentItem is a single child, parent (and potentially ancestors further up the tree)
     // needs to be deleted as well.
@@ -187,6 +189,8 @@ function* doDeleteContentItemFromSlide(action) {
       newActiveContentItemId,
       newSelectionOffsets,
     ));
+
+    yield put({ type: UPDATE_DECK });
   }
   catch (e) {
     console.error(e);

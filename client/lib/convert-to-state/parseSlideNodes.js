@@ -156,29 +156,47 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
   }
   // IMG
   else if (nodeName === 'IMG') {
-    contentItem = {
-      ...contentItem,
-      contentItemType: contentItemTypes.DECORATIVE_IMAGE,
-      src: assetLinks[node.dataset.id].src,
-      filename: assetLinks[node.dataset.id].filename,
-      alt: node.alt,
-      dataId: node.dataset.id,
-    };
+    const assetId = assetLinks[node.dataset.id];
+    const contentItemType = contentItemTypes.DECORATIVE_IMAGE;
+    const alt = node.alt;
+    let properties;
+
+    if (assetId) {
+      properties = {
+        src: assetLinks[node.dataset.id].src,
+        filename: assetLinks[node.dataset.id].filename,
+        dataId: node.dataset.id };
+    }
+    else {
+      properties = {
+        src: node.src,
+      };
+    }
+
+    contentItem = { ...contentItem, ...properties, alt, contentItemType };
   }
   // FIGURE
   else if (nodeName === 'FIGURE') {
     const imgNode = node.children[0];
     const caption = node.children[1] ? node.children[1].textContent : '';
+    const assetId = assetLinks[imgNode.dataset.id];
+    const contentItemType = contentItemTypes.ILLUSTRATIVE_IMAGE;
+    const alt = imgNode.alt;
+    let properties;
 
-    contentItem = {
-      ...contentItem,
-      contentItemType: contentItemTypes.ILLUSTRATIVE_IMAGE,
-      src: assetLinks[imgNode.dataset.id].src,
-      filename: assetLinks[imgNode.dataset.id].filename,
-      alt: imgNode.alt,
-      dataId: imgNode.dataset.id,
-      caption,
-    };
+    if (assetId) {
+      properties = {
+        src: assetLinks[imgNode.dataset.id].src,
+        filename: assetLinks[imgNode.dataset.id].filename,
+        dataId: imgNode.dataset.id };
+    }
+    else {
+      properties = {
+        src: imgNode.src,
+      };
+    }
+
+    contentItem = { ...contentItem, ...properties, alt, contentItemType, caption };
   }
   // IFRAME
   else if (nodeName === 'IFRAME') {
