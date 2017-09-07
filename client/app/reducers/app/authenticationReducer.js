@@ -2,7 +2,7 @@ import Immutable from 'seamless-immutable';
 
 import { SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 import { SIGNOUT } from 'actions/signoutActions';
-import { UPDATE_AUTH_TOKEN } from 'actions/updateTokenActions';
+import { UPDATE_TOKEN } from 'actions/updateTokenActions';
 
 const initialState = Immutable({
   isAuthenticated: false,
@@ -26,7 +26,7 @@ function authentication(state = initialState, action) {
         id: null,
         firstName: null,
       });
-    case UPDATE_AUTH_TOKEN:
+    case UPDATE_TOKEN:
       return Immutable.merge(state, {
         authToken: action.payload,
       });
