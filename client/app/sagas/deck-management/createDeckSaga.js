@@ -1,7 +1,9 @@
-import { takeLatest, call, select } from 'redux-saga/effects';
+import { takeLatest, call, select, put } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
 import { DECK_CREATION_REQUEST } from 'actions/createDeckActions';
+import { SIGNOUT } from 'actions/signoutActions';
+
 import createDeckApi from 'api/createDeckApi';
 
 const authState = state => state.app.authentication;
@@ -15,10 +17,15 @@ export function* createDeckFlow(action) {
     yield call(createDeckApi, title, description, id, authToken);
 
     yield call(resolve);
-  } catch (error) {
+  }
+  catch (error) {
     let errorMessage;
 
     switch (error.statusCode) {
+      case 401:
+        yield put(SIGNOUT);
+        yield (errorMessage = 'You are not signed in');
+        break;
       case 422:
         yield (errorMessage = error.validationErrors);
         break;

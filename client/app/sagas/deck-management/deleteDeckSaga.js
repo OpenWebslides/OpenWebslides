@@ -5,6 +5,8 @@ import {
   DECK_DELETION_REQUEST_FAILURE,
   DECK_DELETION_REQUEST_SUCCESS,
 } from 'actions/deckManagementActions';
+import { SIGNOUT } from 'actions/signoutActions';
+
 import deleteDeckApi from 'api/deleteDeckApi';
 
 export function* deleteDeckFlow(action) {
@@ -12,8 +14,15 @@ export function* deleteDeckFlow(action) {
     const deckId = action.payload;
     yield call(deleteDeckApi, deckId);
     yield put({ type: DECK_DELETION_REQUEST_SUCCESS });
-  } catch (error) {
-    yield put({ type: DECK_DELETION_REQUEST_FAILURE, payload: error.message });
+  }
+  catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+      yield put({ type: DECK_DELETION_REQUEST_FAILURE, payload: error.message });
+    }
+    else {
+      yield put({ type: DECK_DELETION_REQUEST_FAILURE, payload: error.message });
+    }
   }
 }
 

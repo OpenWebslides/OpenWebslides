@@ -5,6 +5,7 @@ import uploadAssetApi from 'api/uploadAssetApi';
 import { getActiveDeckId, getActiveSlideId } from 'selectors/app/slide-editor';
 
 import { ADD_CONTENT_ITEM_TO_SLIDE } from 'actions/entities/slides';
+import { SIGNOUT } from 'actions/signoutActions';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
 
@@ -37,6 +38,9 @@ export function* doUploadAsset(action) {
     let errorMessage;
 
     switch (error.statusCode) {
+      case 401:
+        yield put(SIGNOUT);
+        break;
       case 422:
         // TODO: Handle the case where the file already exists
         yield (errorMessage = { _error: 'This file already exists.' });

@@ -6,6 +6,8 @@ import {
   REQUEST_DECK_LIST_FAILURE,
   REQUEST_DECK_LIST_SUCCESS,
 } from 'actions/deckManagementActions';
+import { SIGNOUT } from 'actions/signoutActions';
+
 
 function mapJsonDeckToDeck(jsonDeck) {
   const deck = {};
@@ -31,13 +33,25 @@ export function* requestDeckListFlow(action) {
         listOfDecks,
       },
     });
-  } catch (error) {
-    yield put({
-      type: REQUEST_DECK_LIST_FAILURE,
-      payload: {
-        message: error.message,
-      },
-    });
+  }
+  catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+      yield put({
+        type: REQUEST_DECK_LIST_FAILURE,
+        payload: {
+          message: 'You are not signed in',
+        },
+      });
+    }
+    else {
+      yield put({
+        type: REQUEST_DECK_LIST_FAILURE,
+        payload: {
+          message: error.message,
+        },
+      });
+    }
   }
 }
 

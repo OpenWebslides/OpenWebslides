@@ -1,6 +1,8 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 import { DELETE_CONVERSATION, FETCH_CONVERSATIONS } from 'actions/entities/conversations';
+import { SIGNOUT } from 'actions/signoutActions';
+
 import deleteConversationApi from 'api/deleteConversationApi';
 
 
@@ -13,6 +15,9 @@ export function* doDeleteConversation(action) {
     yield put({ type: FETCH_CONVERSATIONS });
   }
   catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+    }
     console.log(error);
   }
 }
