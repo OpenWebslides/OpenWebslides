@@ -81,15 +81,30 @@ function* convertContentItems(contentItemIds, headingLevel) {
         break;
       }
       case contentItemTypes.ILLUSTRATIVE_IMAGE: {
-        const { alt, caption, dataId, filename } = contentItemObject;
+        const { src, alt, caption, dataId, filename } = contentItemObject;
 
-        string += `<figure><img ${attributeString} data-id="${dataId}" src="assets/${filename}" alt="${alt}"/><figcaption><a href="assets/${filename}">${caption}</a></figcaption></figure>`;
+        const source = dataId ? `assets/${filename}` : src;
+        const assetId = dataId ? `data-id="${dataId}"` : '';
+
+        string +=
+          `<figure><img ${attributeString} 
+            ${assetId}
+            src="${source}" 
+            alt="${alt}"/>
+            <figcaption><a href="${source}">${caption}</a></figcaption></figure>`;
         break;
       }
       case contentItemTypes.DECORATIVE_IMAGE: {
-        const { alt, dataId, filename } = contentItemObject;
+        const { src, alt, dataId, filename } = contentItemObject;
 
-        string += `<img ${attributeString} data-id="${dataId}" src="assets/${filename}" alt="${alt}"/>`;
+        const source = dataId ? `assets/${filename}` : src;
+        const assetId = dataId ? `data-id="${dataId}"` : '';
+
+        string += `<img 
+          ${attributeString}             
+          ${assetId}
+          src="${source}" 
+          alt="${alt}"/>`;
         break;
       }
       default:
