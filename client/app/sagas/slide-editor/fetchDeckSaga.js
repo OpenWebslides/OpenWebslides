@@ -2,7 +2,8 @@ import { takeLatest, put, call } from 'redux-saga/effects';
 import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 
 import convertToState from 'lib/convert-to-state';
-import fetchDeckApi from 'api/fetchDeckApi';
+import fetchDeckHtmlApi from 'api/fetchDeckHtmlApi';
+import fetchDeckJsonApi from 'api/fetchDeckJsonApi';
 
 /* eslint-disable no-unused-vars */
 import {
@@ -18,12 +19,24 @@ import {
 
 function* doFetchDeck(action) {
   try {
-    const HTMLResponse = yield call(fetchDeckApi, action.meta.deckId);
-    // const HTMLResponse = testDeckFlamesFixed; // testDeckEmpty;
+    const htmlString = yield call(fetchDeckHtmlApi, action.meta.deckId);
+    const metadata = yield call(fetchDeckJsonApi, action.meta.deckId);
 
-    const entities = yield convertToState(action.meta.deckId, HTMLResponse);
+    const { included } = metadata;
+
+    const assetLinks = {};
+
+    if (included) {
+      included.forEach((asset) => {
+        const { id, filename, links: { raw } } = asset;
+        assetLinks[id] = { src: raw, filename };
+      });
+    }
+
+    const entities = yield convertToState(action.meta.deckId, htmlString, assetLinks);
     const payload = {
       deckId: action.meta.deckId,
+      metadata,
       ...entities,
     };
 
