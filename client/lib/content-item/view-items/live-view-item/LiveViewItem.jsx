@@ -8,9 +8,8 @@ import { contentItemTypes } from 'constants/contentItemTypes';
 import htmlComponents from 'lib/content-item/html-wrappers/components';
 import htmlContainers from 'lib/content-item/html-wrappers/containers';
 
-import LiveViewItemContainer from './LiveViewItemContainer';
 import addContentItemTypeProps from 'lib/content-item/helpers/addContentItemTypeProps';
-
+import LiveViewItemContainer from './LiveViewItemContainer';
 
 function LiveViewItem(props) {
   const {
@@ -20,8 +19,9 @@ function LiveViewItem(props) {
     slideViewType,
     isFocused,
     hasInlineProperties,
+    deleteContentItemFromSlide,
     textPropName,
-    contentItem: { contentItemType, childItemIds, id, ordered },
+    contentItem: { contentItemType, childItemIds, id, ordered, dataId },
     viewType,
     ancestorItemIds,
     slideId,
@@ -55,22 +55,36 @@ function LiveViewItem(props) {
       case contentItemTypes.ILLUSTRATIVE_IMAGE:
       case contentItemTypes.DECORATIVE_IMAGE:
       case contentItemTypes.IFRAME:
-        return <ContentItemComponent contentItem={contentItem} attributes={attributes} {...contentItemTypeProps} />;
+        return (
+          <div className="deletion-wrapper">
+            <button
+              className="delete-button-live-view"
+              onClick={() => deleteContentItemFromSlide(slideId, id, ancestorItemIds, dataId)}
+
+            >X</button>
+            <ContentItemComponent contentItem={contentItem} attributes={attributes} {...contentItemTypeProps} />
+          </div>);
 
       default:
         return (
-          <ContentItemComponent contentItem={contentItem} attributes={attributes} headingLevel={headingLevel}>
-            <ContentEditableContainer
-              contentItem={contentItem}
-              isFocused={isFocused}
-              slideViewType={slideViewType}
-              textPropName={textPropName}
-              slideId={slideId}
-              ancestorItemIds={ancestorItemIds}
-              hasInlineProperties={hasInlineProperties}
-              {...contentItemTypeProps}
-            />
-          </ContentItemComponent>
+          <div className="deletion-wrapper">
+            <button
+              onClick={() => deleteContentItemFromSlide(slideId, id, ancestorItemIds)}
+              className="delete-button-live-view"
+            >X</button>
+            <ContentItemComponent contentItem={contentItem} attributes={attributes} headingLevel={headingLevel}>
+              <ContentEditableContainer
+                contentItem={contentItem}
+                isFocused={isFocused}
+                slideViewType={slideViewType}
+                textPropName={textPropName}
+                slideId={slideId}
+                ancestorItemIds={ancestorItemIds}
+                hasInlineProperties={hasInlineProperties}
+                {...contentItemTypeProps}
+              />
+            </ContentItemComponent>
+          </div>
         );
     }
   }
