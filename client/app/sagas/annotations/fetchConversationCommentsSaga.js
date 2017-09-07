@@ -87,7 +87,7 @@ export function* doFetchConversations(action) {
   }
   catch (error) {
     if (error.statusCode === 401) {
-      yield put(SIGNOUT);
+      yield put({ type: SIGNOUT });
     }
     yield put({ type: FETCH_CONVERSATION_COMMENTS_FAILURE });
   }

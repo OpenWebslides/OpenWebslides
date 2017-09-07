@@ -41,8 +41,11 @@ export function* requestDeckListFlow(action) {
     });
   }
   catch (error) {
+    debugger;
+    console.log(error);
+    console.log(error.statusCode);
     if (error.statusCode === 401) {
-      yield put(SIGNOUT);
+      yield put({ type: SIGNOUT });
       yield put({
         type: REQUEST_DECK_LIST_FAILURE,
         payload: {

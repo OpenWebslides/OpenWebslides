@@ -1,4 +1,4 @@
-import { takeLatest, select, call } from 'redux-saga/effects';
+import { takeLatest, select, call, put } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
 import { getActiveSlideId, getActiveDeckId } from 'selectors/app/annotations';
@@ -26,7 +26,7 @@ export function* doAddConversation(action) {
   }
   catch (error) {
     if (error.statusCode === 401) {
-      yield put(SIGNOUT);
+      yield put({ type: SIGNOUT });
     }
     const errorMessage = yield { _error: 'Something went wrong on our end.' };
     yield call(reject, new SubmissionError(errorMessage));

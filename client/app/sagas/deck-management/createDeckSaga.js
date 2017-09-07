@@ -23,7 +23,7 @@ export function* createDeckFlow(action) {
 
     switch (error.statusCode) {
       case 401:
-        yield put(SIGNOUT);
+        yield put({ type: SIGNOUT });
         yield (errorMessage = 'You are not signed in');
         break;
       case 422:

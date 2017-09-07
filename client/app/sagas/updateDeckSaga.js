@@ -133,7 +133,7 @@ function* doUpdateDeck() {
   }
   catch (e) {
     if (e.statusCode === 401) {
-      yield put(SIGNOUT);
+      yield put({ type: SIGNOUT });
     }
     console.log(e);
   }
