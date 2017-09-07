@@ -35,6 +35,7 @@ function* convertContentItems(contentItemIds, headingLevel) {
         string += `<${heading} ${attributeString}>${text}</${heading}>`;
         break;
       }
+
       case contentItemTypes.PARAGRAPH: {
         const text = getHTMLStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
@@ -79,15 +80,15 @@ function* convertContentItems(contentItemIds, headingLevel) {
         break;
       }
       case contentItemTypes.ILLUSTRATIVE_IMAGE: {
-        const { src, alt, caption } = contentItemObject;
+        const { alt, caption, dataId, filename } = contentItemObject;
 
-        string += `<figure><img ${attributeString} src="${src}" alt="${alt}"/><figcaption><a href="${src}">${caption}</a></figcaption></figure>`;
+        string += `<figure><img ${attributeString} data-id="${dataId}" src="assets/${filename}" alt="${alt}"/><figcaption><a href="assets/${filename}">${caption}</a></figcaption></figure>`;
         break;
       }
       case contentItemTypes.DECORATIVE_IMAGE: {
-        const { src, alt } = contentItemObject;
+        const { alt, dataId, filename } = contentItemObject;
 
-        string += `<img ${attributeString} src="${src}" alt="${alt}"/>`;
+        string += `<img ${attributeString} data-id="${dataId}" src="assets/${filename}" alt="${alt}"/>`;
         break;
       }
       default:
