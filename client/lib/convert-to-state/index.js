@@ -1,6 +1,6 @@
 import parseSlideNodes from './parseSlideNodes';
 
-export default function convertToState(deckId, HTMLString) {
+export default function convertToState(deckId, HTMLString, assetLinks) {
   const validSlideNodeNames = ['SECTION', 'DIV', 'ASIDE', 'ARTICLE'];
   const parser = new DOMParser();
   const document = parser.parseFromString(HTMLString, 'text/html');
@@ -16,5 +16,5 @@ export default function convertToState(deckId, HTMLString) {
     );
   }
 
-  return parseSlideNodes(deckId, slideNodes);
+  return parseSlideNodes(deckId, slideNodes, assetLinks);
 }

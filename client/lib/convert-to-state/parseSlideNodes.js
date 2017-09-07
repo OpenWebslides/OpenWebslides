@@ -11,6 +11,7 @@ const plaintextNodeNames = [...headingNodeNames, 'P', 'LI'];
 const listNodeNames = ['UL', 'OL'];
 const sectionNodeNames = ['SECTION', 'ASIDE'];
 const containerNodeNames = [...listNodeNames, ...sectionNodeNames];
+let assetLinks;
 
 function checkAddFirstChildHeadingToImplicitSection(nodeList, parentIsSection) {
   // Given a nodelist, it's possible that
@@ -158,19 +159,24 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
     contentItem = {
       ...contentItem,
       contentItemType: contentItemTypes.DECORATIVE_IMAGE,
-      src: node.src,
+      src: assetLinks[node.dataset.id].src,
+      filename: assetLinks[node.dataset.id].filename,
       alt: node.alt,
+      dataId: node.dataset.id,
     };
   }
   // FIGURE
   else if (nodeName === 'FIGURE') {
     const imgNode = node.children[0];
-    const caption = node.children[1] ? node.children[1].textContent : undefined;
+    const caption = node.children[1] ? node.children[1].textContent : '';
+
     contentItem = {
       ...contentItem,
       contentItemType: contentItemTypes.ILLUSTRATIVE_IMAGE,
-      src: imgNode.src,
+      src: assetLinks[imgNode.dataset.id].src,
+      filename: assetLinks[imgNode.dataset.id].filename,
       alt: imgNode.alt,
+      dataId: imgNode.dataset.id,
       caption,
     };
   }
@@ -319,7 +325,8 @@ function parseContentItemNodes(
   };
 }
 
-export default function parseSlideNodes(deckId, nodes) {
+export default function parseSlideNodes(deckId, nodes, assets) {
+  assetLinks = assets;
   const slidesById = {};
   let contentItemsById = {};
 
