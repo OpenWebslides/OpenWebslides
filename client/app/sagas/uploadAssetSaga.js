@@ -24,11 +24,12 @@ export function* doUploadAsset(action) {
     const response = yield call(uploadAssetApi, activeDeckId, imageFile[0]);
 
     const assetUri = yield response.links.raw;
+    const { filename } = yield response.attributes;
 
     yield put({ type: ADD_CONTENT_ITEM_TO_SLIDE,
       meta: { slideId: activeSlideId,
         contentItemType: assetType,
-        contentItemTypeProps: { src: assetUri, alt: altText, caption: imageCaption } } });
+        contentItemTypeProps: { src: assetUri, alt: altText, filename, caption: imageCaption, dataId: response.id } } });
 
     yield call(resolve);
   }
@@ -41,7 +42,7 @@ export function* doUploadAsset(action) {
         yield (errorMessage = { _error: 'This file already exists.' });
         break;
       default:
-        yield (errorMessage = { _error: 'Something went wrong on our end.' });
+        yield (errorMessage = { _error: 'Something wrong on our end.' });
     }
 
     yield call(reject, new SubmissionError(errorMessage));
