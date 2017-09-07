@@ -18,10 +18,12 @@ export default class DeckNavigationPane extends Component {
     const numberOfSlides = this.props.activeDeck.slideIds.length;
     const lastSlideId = this.props.activeDeck.slideIds[numberOfSlides - 1];
     this.props.addSlideToDeck(this.props.activeDeck.id, lastSlideId);
+    this.props.updateDeck();
   }
 
   handleDeleteSlide(selectedSlideId) {
     this.props.deleteSlideFromDeck(this.props.activeDeck.id, selectedSlideId);
+    this.props.updateDeck();
   }
 
   handleSetActiveSlideId(selectedSlideId) {
@@ -34,13 +36,16 @@ export default class DeckNavigationPane extends Component {
     const previousSlideId = selectedSlideIndex === 0 ?
       null : this.props.activeDeck.slideIds[selectedSlideIndex - 1];
     this.props.increaseSlideLevel(selectedSlideId, previousSlideId);
+
+    this.props.updateDeck();
   }
   handleDecreaseSlideLevel(selectedSlideId) {
     const selectedSlideIndex = this.props.activeDeck.slideIds.indexOf(selectedSlideId);
-    // If the selected slide is the last one, there's no previous ID:
+    // If the selected slide is the last one, there's no next ID:
     const nextSlideId = selectedSlideIndex === this.props.activeDeck.slideIds.length - 1 ?
       null : this.props.activeDeck.slideIds[selectedSlideIndex + 1];
     this.props.decreaseSlideLevel(selectedSlideId, nextSlideId);
+    this.props.updateDeck();
   }
 
   render() {
@@ -132,6 +137,7 @@ DeckNavigationPane.propTypes = {
   deleteSlideFromDeck: PropTypes.func.isRequired,
   increaseSlideLevel: PropTypes.func.isRequired,
   decreaseSlideLevel: PropTypes.func.isRequired,
+  updateDeck: PropTypes.func.isRequired,
 };
 
 DeckNavigationPane.defaultProps = {
