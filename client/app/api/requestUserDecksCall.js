@@ -8,8 +8,9 @@ async function requestUserDecks(userID) {
   const response = await request.executeRequest();
 
   const responseBody = await response.json();
+  const newToken = response.headers.get('Authorization');
 
-  return responseBody.data;
+  return { responseListOfDecks: responseBody.data, newToken };
 }
 
 export default requestUserDecks;
