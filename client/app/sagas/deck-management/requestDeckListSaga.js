@@ -7,7 +7,7 @@ import {
   REQUEST_DECK_LIST_SUCCESS,
 } from 'actions/deckManagementActions';
 import { SIGNOUT } from 'actions/signoutActions';
-
+import { updateToken } from 'actions/updateTokenActions';
 
 function mapJsonDeckToDeck(jsonDeck) {
   const deck = {};
@@ -20,7 +20,13 @@ function mapJsonDeckToDeck(jsonDeck) {
 export function* requestDeckListFlow(action) {
   try {
     const userID = action.meta;
-    const responseListOfDecks = yield call(getDecksCall, userID);
+    const { responseListOfDecks, newToken } = yield call(getDecksCall, userID);
+
+    if (newToken) {
+      const strippedToken = newToken.replace(/Bearer /, '');
+      yield put(updateToken(strippedToken));
+    }
+
     if (!responseListOfDecks) {
       throw new Error('Received undefined list.');
     }
