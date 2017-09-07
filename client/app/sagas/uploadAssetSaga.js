@@ -39,7 +39,7 @@ export function* doUploadAsset(action) {
 
     switch (error.statusCode) {
       case 401:
-        yield put(SIGNOUT);
+        yield put({ type: SIGNOUT });
         break;
       case 422:
         // TODO: Handle the case where the file already exists

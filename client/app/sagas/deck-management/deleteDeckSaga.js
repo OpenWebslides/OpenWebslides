@@ -17,7 +17,7 @@ export function* deleteDeckFlow(action) {
   }
   catch (error) {
     if (error.statusCode === 401) {
-      yield put(SIGNOUT);
+      yield put({ type: SIGNOUT });
       yield put({ type: DECK_DELETION_REQUEST_FAILURE, payload: error.message });
     }
     else {

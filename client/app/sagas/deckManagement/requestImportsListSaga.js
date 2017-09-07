@@ -42,7 +42,7 @@ export function* getUserImportsFlow(action) {
   }
   catch (error) {
     if (error.statusCode === 401) {
-      yield put(SIGNOUT);
+      yield put({ type: SIGNOUT });
       yield put({
         type: REQUEST_USER_IMPORTS_FAILURE,
         payload: {

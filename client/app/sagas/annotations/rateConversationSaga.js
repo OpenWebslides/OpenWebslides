@@ -26,7 +26,7 @@ export function* doRateConversation(action) {
   }
   catch (error) {
     if (error.statusCode === 401) {
-      yield put(SIGNOUT);
+      yield put({type: SIGNOUT});
     }
     console.log(error);
   }
