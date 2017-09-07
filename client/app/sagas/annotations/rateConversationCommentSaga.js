@@ -1,6 +1,8 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 import { RATE_CONVERSATION_COMMENT, RATE_CONVERSATION_COMMENT_SUCCESS } from 'actions/entities/conversation-comments';
+import { SIGNOUT } from 'actions/signoutActions';
+
 import rateConversationCommentApi from 'api/rateConversationCommentApi';
 import unrateConversationCommentApi from 'api/unrateConversationCommentApi';
 
@@ -23,6 +25,9 @@ export function* doRateConversationComment(action) {
     yield put({ type: RATE_CONVERSATION_COMMENT_SUCCESS, payload: { id, attributes } });
   }
   catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+    }
     console.log(error);
   }
 }

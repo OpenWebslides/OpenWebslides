@@ -5,6 +5,8 @@ import {
   REQUEST_FEED_NOTIFICATIONS,
   REQUEST_FEED_NOTIFICATIONS_FAILURE,
 } from 'actions/feedActions';
+import { SIGNOUT } from 'actions/signoutActions';
+
 import moreNotificationsCall from 'api/feedApiCall';
 
 export function* getFeedNotificationsFlow(action) {
@@ -40,13 +42,25 @@ export function* getFeedNotificationsFlow(action) {
         listOfNotifications,
       },
     });
-  } catch (error) {
-    yield put({
-      type: REQUEST_FEED_NOTIFICATIONS_FAILURE,
-      payload: {
-        message: error.message,
-      },
-    });
+  }
+  catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+      yield put({
+        type: REQUEST_FEED_NOTIFICATIONS_FAILURE,
+        payload: {
+          message: 'You are not signed in!',
+        },
+      });
+    }
+    else {
+      yield put({
+        type: REQUEST_FEED_NOTIFICATIONS_FAILURE,
+        payload: {
+          message: error.message,
+        },
+      });
+    }
   }
 }
 

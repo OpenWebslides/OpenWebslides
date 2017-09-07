@@ -1,7 +1,8 @@
-import { takeLatest, call, select } from 'redux-saga/effects';
+import { takeLatest, call, select, put } from 'redux-saga/effects';
 import updateDeckApi from 'api/updateDeckApi';
 
 import { UPDATE_DECK } from 'actions/entities/decks';
+import { SIGNOUT } from 'actions/signoutActions';
 
 import { getActiveDeckId } from 'selectors/app/slide-editor';
 import { getDeckById } from 'selectors/entities/decks';
@@ -128,10 +129,12 @@ function* doUpdateDeck() {
     const activeDeckId = yield select(getActiveDeckId);
     const deck = yield select(getDeckById, activeDeckId);
     const htmlString = yield convertToHTML(deck);
-
     yield call(updateDeckApi, deck.id, htmlString);
   }
   catch (e) {
+    if (e.statusCode === 401) {
+      yield put(SIGNOUT);
+    }
     console.log(e);
   }
 }

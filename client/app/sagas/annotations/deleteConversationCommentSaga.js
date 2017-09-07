@@ -1,6 +1,8 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 import { DELETE_CONVERSATION_COMMENT, FETCH_CONVERSATION_COMMENTS } from 'actions/entities/conversation-comments';
+import { SIGNOUT } from 'actions/signoutActions';
+
 import deleteConversationCommentApi from 'api/deleteConversationCommentApi';
 
 
@@ -13,6 +15,9 @@ export function* doDeleteConversationComment(action) {
     yield put({ type: FETCH_CONVERSATION_COMMENTS, meta: { conversationId } });
   }
   catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+    }
     console.log(error);
   }
 }

@@ -1,5 +1,6 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/entities/decks';
+import { SIGNOUT } from 'actions/signoutActions';
 
 import convertToState from 'lib/convert-to-state';
 import fetchDeckHtmlApi from 'api/fetchDeckHtmlApi';
@@ -43,6 +44,9 @@ function* doFetchDeck(action) {
     yield put({ type: FETCH_DECK_SUCCESS, payload });
   }
   catch (e) {
+    if (e.statusCode === 401) {
+      yield put(SIGNOUT);
+    }
     console.log(e);
   }
 }

@@ -7,6 +7,7 @@ import {
   FETCH_CONVERSATIONS_SUCCESS,
   FETCH_CONVERSATIONS_FAILURE,
 } from 'actions/entities/conversations';
+import { SIGNOUT } from 'actions/signoutActions';
 
 import { getActiveDeckId } from 'selectors/app/annotations';
 import { getCurrentUserId } from 'selectors/app/auth';
@@ -52,6 +53,9 @@ export function* doFetchConversations() {
     yield put({ type: FETCH_CONVERSATIONS_SUCCESS, payload });
   }
   catch (error) {
+    if (error.statusCode === 401) {
+      yield put(SIGNOUT);
+    }
     yield put({ type: FETCH_CONVERSATIONS_FAILURE });
   }
 }
