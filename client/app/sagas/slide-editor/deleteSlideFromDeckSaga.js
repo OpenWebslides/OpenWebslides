@@ -1,6 +1,6 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 
-import { DELETE_SLIDE_FROM_DECK } from 'actions/entities/decks';
+import { DELETE_SLIDE_FROM_DECK, UPDATE_DECK } from 'actions/entities/decks';
 import { deleteSlide } from 'actions/entities/slides';
 
 import { getActiveSlideId } from 'selectors/app/slide-editor';
