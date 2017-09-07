@@ -3,6 +3,7 @@ import { SubmissionError } from 'redux-form';
 
 import { EMAIL_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 import emailSigninApi from 'api/emailSigninApi';
+import { loadState, saveState } from '../../../localStorage';
 
 export function* doEmailSignin(action) {
   const { resolve, reject } = action.meta;
@@ -23,6 +24,17 @@ export function* doEmailSignin(action) {
         firstName: userEmail,
         id,
       },
+    });
+
+    saveState({
+      app: {
+        authentication: {
+          authToken,
+          firstName: userEmail,
+          id,
+        },
+      },
+      // entities: store.getState().entities,
     });
 
     yield call(resolve);

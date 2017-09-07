@@ -32,7 +32,7 @@ function deckManagementReducer(state = initialState, action) {
         sentRequestForDecksList: false,
         receivedList: true,
         listErrorMessage: '',
-        listOfDecks: _.unionWith(state.listOfDecks, action.payload.listOfDecks, (a, b) => a.id === b.id),
+        listOfDecks: action.payload.listOfDecks,
       });
     case REQUEST_DECK_LIST_FAILURE:
       return Immutable.merge(state, {
