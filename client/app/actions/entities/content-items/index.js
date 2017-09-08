@@ -10,7 +10,7 @@ export function addContentItem(
   props,
   slideId,
   parentItemId = null,
-  afterItemId = null,
+  previousItemId = null,
 ) {
   return {
     type: ADD_CONTENT_ITEM,
@@ -21,7 +21,7 @@ export function addContentItem(
       props,
       slideId,
       parentItemId,
-      afterItemId,
+      previousItemId,
     },
   };
 }

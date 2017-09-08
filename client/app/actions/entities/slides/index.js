@@ -49,7 +49,7 @@ export function addContentItemToSlide(
   contentItemType,
   contentItemTypeProps = {},
   parentItemId = null,
-  afterItemId = null,
+  previousItemId = null,
 ) {
   return {
     type: ADD_CONTENT_ITEM_TO_SLIDE,
@@ -58,7 +58,7 @@ export function addContentItemToSlide(
       contentItemType,
       contentItemTypeProps,
       parentItemId,
-      afterItemId,
+      previousItemId,
     },
   };
 }
