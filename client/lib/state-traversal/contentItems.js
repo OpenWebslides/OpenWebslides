@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { containerContentItemTypes } from 'constants/contentItemTypes';
+import { contentItemTypes, containerContentItemTypes } from 'constants/contentItemTypes';
 import { directions } from 'constants/directions';
 
 // Helper functions ------------------------------------------------------------
@@ -13,7 +13,7 @@ function findNearestValidContentItemId(
   contentItemsById,
   contentItemValidator,
   containerItemValidator,
-  checkContainerChildren = false,
+  checkContainerChildren,
 ) {
   let siblingItemIds;
 
@@ -80,7 +80,13 @@ function findNearestValidContentItemId(
   }
   // If a previous contentItemId was found, & it was valid, this is the contentItemId we were
   // looking for.
-  else if (contentItemValidator(contentItemsById[newContentItemId], newAncestorItemIds) === true) {
+  else if (
+    // Note: if we just went up a level, don't check this contentItem for validity; it is not a true
+    // prev/next candidate, but rather an extra step we have to take to get to the actual prev/next
+    // item.
+    newCheckContainerChildren === true &&
+    contentItemValidator(contentItemsById[newContentItemId], newAncestorItemIds) === true
+  ) {
     return {
       contentItemId: newContentItemId,
       ancestorItemIds: newAncestorItemIds,
@@ -296,6 +302,9 @@ function findContentItemDescendantItemIds(contentItemId, contentItemsById) {
  *        lists should be considered containers, while for others they should not. By doing it this
  *        way, the caller of this function has full control over which contentItems are considered
  *        containers and which are not.
+ * @param checkInitialContainerChildren
+ *        If the contentItem with id $contentItemId is a container, this argument decides if its
+ *        children are considered valid previous contentItems.
  *
  * @returns {{contentItemId, ancestorItemIds}}
  */
@@ -304,8 +313,13 @@ export function getPreviousValidContentItemId(
   ancestorItemIds,
   slideContentItemIds,
   contentItemsById,
-  contentItemValidator,
-  containerItemValidator,
+  contentItemValidator = (
+    contentItem => _.includes(contentItemTypes, contentItem.contentItemType)
+  ),
+  containerItemValidator = (
+    contentItem => _.includes(containerContentItemTypes, contentItem.contentItemType)
+  ),
+  checkInitialContainerChildren = false,
 ) {
   return findNearestValidContentItemId(
     directions.UP,
@@ -315,6 +329,7 @@ export function getPreviousValidContentItemId(
     contentItemsById,
     contentItemValidator,
     containerItemValidator,
+    checkInitialContainerChildren,
   );
 }
 
@@ -344,6 +359,9 @@ export function getPreviousValidContentItemId(
  *        lists should be considered containers, while for others they should not. By doing it this
  *        way, the caller of this function has full control over which contentItems are considered
  *        containers and which are not.
+ * @param checkInitialContainerChildren
+ *        If the contentItem with id $contentItemId is a container, this argument decides if its
+ *        children are considered valid previous contentItems.
  *
  * @returns {{contentItemId, ancestorItemIds}}
  */
@@ -352,8 +370,13 @@ export function getNextValidContentItemId(
   ancestorItemIds,
   slideContentItemIds,
   contentItemsById,
-  contentItemValidator,
-  containerItemValidator,
+  contentItemValidator = (
+    contentItem => _.includes(contentItemTypes, contentItem.contentItemType)
+  ),
+  containerItemValidator = (
+    contentItem => _.includes(containerContentItemTypes, contentItem.contentItemType)
+  ),
+  checkInitialContainerChildren = false,
 ) {
   return findNearestValidContentItemId(
     directions.DOWN,
@@ -363,6 +386,7 @@ export function getNextValidContentItemId(
     contentItemsById,
     contentItemValidator,
     containerItemValidator,
+    checkInitialContainerChildren,
   );
 }
 
