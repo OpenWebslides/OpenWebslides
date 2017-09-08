@@ -6,7 +6,7 @@ import { slideViewTypes } from 'constants/slideViewTypes';
 
 import {
   getPreviousValidContentItemId,
-  getNearestAncestorIdWithAtLeastAmountOfChildren,
+  getNearestValidAncestorItemId,
   getAllContentItemDescendantItemIds,
 } from 'lib/state-traversal/contentItems';
 
@@ -27,15 +27,19 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
   if (ancestorItemIds.length > 0) {
     // If this contentItem is a single child, parent needs to be deleted as
     // well.
-    const nearestValidAncestorId =
-      getNearestAncestorIdWithAtLeastAmountOfChildren(
+    const nearestValidAncestorItemId =
+      getNearestValidAncestorItemId(
         ancestorItemIds,
         contentItemsById,
-        2, // ancestors with less than two children should be deleted
+        (contentItem) => {
+          // Ancestors with less than two children should be deleted, so we're looking for the
+          // nearest ancestor with two or more children.
+          return contentItem.childItemIds.length >= 2;
+        },
       );
 
     // If no ancestor with more than two children was found.
-    if (nearestValidAncestorId === null) {
+    if (nearestValidAncestorItemId === null) {
       // Delete all of the ancestors.
       contentItemToDeleteId = ancestorItemIds[0];
       contentItemToDeleteAncestorItemIds = [];
@@ -50,12 +54,12 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
     }
     // If an ancestor with more than two children was found.
     else {
-      const nearestValidAncestorIdIndex = Array.indexOf(
+      const nearestValidAncestorItemIdIndex = Array.indexOf(
         ancestorItemIds,
-        nearestValidAncestorId,
+        nearestValidAncestorItemId,
       );
       // If the nearest valid ancestor is the parent of contentItem.
-      if (nearestValidAncestorIdIndex === ancestorItemIds.length - 1) {
+      if (nearestValidAncestorItemIdIndex === ancestorItemIds.length - 1) {
         // Just delete contentItem.
         contentItemToDeleteId = contentItemId;
         contentItemToDeleteAncestorItemIds = ancestorItemIds;
@@ -65,15 +69,15 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
       else {
         // Start deleting at the ancestor that is the direct child of the nearest valid ancestor.
         contentItemToDeleteId = ancestorItemIds[
-          nearestValidAncestorIdIndex + 1
+          nearestValidAncestorItemIdIndex + 1
         ];
         contentItemToDeleteAncestorItemIds = _.take(
           ancestorItemIds,
-          nearestValidAncestorIdIndex + 1,
+          nearestValidAncestorItemIdIndex + 1,
         );
         contentItemToDeleteDescendantItemIds = _.drop(
           ancestorItemIds,
-          nearestValidAncestorIdIndex + 2,
+          nearestValidAncestorItemIdIndex + 2,
         )
         .concat(contentItemId)
         .concat(
