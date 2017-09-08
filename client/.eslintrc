@@ -22,7 +22,9 @@
       "error",
       "always"
     ],
-    "no-console": "off"
+    "no-console": "off",
+    "no-empty": "off",
+    "no-multiple-empty-lines": "off"
   },
   "parserOptions": {
     "ecmaVersion": 8,
