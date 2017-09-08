@@ -15,7 +15,6 @@ function findNearestValidContentItemId(
   containerItemValidator,
   checkContainerChildren = false,
 ) {
-  const debug = false;
   let siblingItemIds;
 
   let newContentItemId;
@@ -34,10 +33,9 @@ function findNearestValidContentItemId(
   const contentItem = contentItemsById[contentItemId];
 
   // First check if the contentItem is a container element.
-  // (Note: we don't do this on the initial call (original contentItem for which we're looking for a
-  // previous contentItem) because then the section children are not actual previous elements.)
+  // (Note: we only do this if checkContainerChildren is set to TRUE to indicate that the container
+  // children are possible nearestValidContentItem candidates.)
   if (checkContainerChildren && containerItemValidator(contentItem) === true) {
-    if (debug) console.log(`${contentItemId} isSection`);
     // If it is a container, check its first/last child.
     newContentItemId = direction === directions.UP
       ? _.last(contentItem.childItemIds)
@@ -49,16 +47,9 @@ function findNearestValidContentItemId(
   }
   // If the contentItem is the first/last in its list of siblings.
   else if (
-    (
-      direction === directions.UP &&
-      indexInSiblingItemIds === 0
-    ) ||
-    (
-      direction === directions.DOWN &&
-      indexInSiblingItemIds === siblingItemIds.length - 1
-    )
+    (direction === directions.UP && indexInSiblingItemIds === 0) ||
+    (direction === directions.DOWN && indexInSiblingItemIds === siblingItemIds.length - 1)
   ) {
-    if (debug) console.log(`${contentItemId} isFirst/Last`);
     // Go up a level.
     newContentItemId = _.last(ancestorItemIds);
     if (newContentItemId !== undefined) {
@@ -72,18 +63,12 @@ function findNearestValidContentItemId(
   }
   // If the contentItem is not the first/last in its list of siblings.
   else {
-    if (debug) console.log(`${contentItemId} isNotFirst/Last`);
     // Check the previous/next sibling.
     newContentItemId = direction === directions.UP
       ? siblingItemIds[indexInSiblingItemIds - 1]
       : siblingItemIds[indexInSiblingItemIds + 1];
     newAncestorItemIds = ancestorItemIds;
     newCheckContainerChildren = true;
-  }
-
-  if (debug) {
-    console.log(`newContentItemId: ${newContentItemId}`);
-    console.log(`newAncestorItemIds: ${newAncestorItemIds}`);
   }
 
   // If no previous contentItemId could be found.
@@ -107,6 +92,47 @@ function findNearestValidContentItemId(
       containerItemValidator,
       newCheckContainerChildren,
     );
+  }
+}
+
+function findFurthestValidContentItemId(
+  direction,
+  contentItemIds,
+  contentItemsById,
+  contentItemValidator,
+  containerItemValidator,
+) {
+  if (contentItemIds.length === 0) {
+    return null;
+  }
+  else {
+    // Get the first/last element in the list of contentItemIds.
+    const contentItem = direction === directions.UP
+      ? contentItemsById[_.first(contentItemIds)]
+      : contentItemsById[_.last(contentItemIds)];
+    let validContentItemId = null;
+
+    // If the first/last contentItem is a container item.
+    if (containerItemValidator(contentItem) === true) {
+      // Search its children for the furthest valid contentItemId.
+      validContentItemId = findFurthestValidContentItemId(
+        direction,
+        contentItem.childItemIds,
+        contentItemsById,
+        contentItemValidator,
+        containerItemValidator,
+      );
+    }
+
+    // If no further valid contentItem was found in the list of children (or if the current
+    // contentItem is not a container and there is no list of children) but the current contentItem
+    // is a valid one.
+    if (validContentItemId === null && contentItemValidator(contentItem) === true) {
+      // The current contentItem is the one we're looking for.
+      validContentItemId = contentItem.id;
+    }
+
+    return validContentItemId;
   }
 }
 
@@ -315,6 +341,82 @@ export function getNextValidContentItemId(
 }
 
 /**
+ * Finds the first valid contentItemId in a list of contentItems. The 'first' valid contentItem is
+ * a valid contentItem that lies on the 'first' path of the contentItem tree (the path that consists
+ * of the first child of the first child of the first child...) and is as far as possible removed
+ * from the root of the tree. Validity is determined by a validator function.
+ *
+ * @param contentItemIds
+ *        The list of contentItemIds in which we start searching.
+ * @param contentItemsById
+ *        The contentItemsById object.
+ * @param contentItemValidator
+ *        The function that decides if a contentItem is considered 'valid'. It is passed a
+ *        contentItem as an argument and should return TRUE if this contentItem is valid, FALSE if
+ *        it is not.
+ * @param containerItemValidator
+ *        The function that decides if a contentItem is considered a container. It is passed a
+ *        contentItem as an argument and should return TRUE if this contentItem is a container,
+ *        FALSE if it is not. (The reason we use a validator function instead of just using the
+ *        containerContentItemTypes constant is that for some applications lists should be
+ *        considered containers, while for others they should not. By doing it this way, the caller
+ *        of this function has full control over which contentItems are considered containers and
+ *        which are not.
+ */
+export function getFirstValidContentItemId(
+  contentItemIds,
+  contentItemsById,
+  contentItemValidator,
+  containerItemValidator,
+) {
+  return findFurthestValidContentItemId(
+    directions.UP,
+    contentItemIds,
+    contentItemsById,
+    contentItemValidator,
+    containerItemValidator,
+  );
+}
+
+/**
+ * Finds the last valid contentItemId in a list of contentItems. The 'last' valid contentItem is
+ * a valid contentItem that lies on the 'last' path of the contentItem tree (the path that consists
+ * of the last child of the last child of the last child...) and is as far as possible removed from
+ * the root of the tree. Validity is determined by a validator function.
+ *
+ * @param contentItemIds
+ *        The list of contentItemIds in which we start searching.
+ * @param contentItemsById
+ *        The contentItemsById object.
+ * @param contentItemValidator
+ *        The function that decides if a contentItem is considered 'valid'. It is passed a
+ *        contentItem as an argument and should return TRUE if this contentItem is valid, FALSE if
+ *        it is not.
+ * @param containerItemValidator
+ *        The function that decides if a contentItem is considered a container. It is passed a
+ *        contentItem as an argument and should return TRUE if this contentItem is a container,
+ *        FALSE if it is not. (The reason we use a validator function instead of just using the
+ *        containerContentItemTypes constant is that for some applications lists should be
+ *        considered containers, while for others they should not. By doing it this way, the caller
+ *        of this function has full control over which contentItems are considered containers and
+ *        which are not.
+ */
+export function getLastValidContentItemId(
+  contentItemIds,
+  contentItemsById,
+  contentItemValidator,
+  containerItemValidator,
+) {
+  return findFurthestValidContentItemId(
+    directions.DOWN,
+    contentItemIds,
+    contentItemsById,
+    contentItemValidator,
+    containerItemValidator,
+  );
+}
+
+/**
  * Finds the ancestor items array of the contentItem with $contentItemId.
  * Note: avoid using this function if other methods to get the ancestorItemIds are available (for
  * example by saving them while creating the contentItem and then passing them to the function that
@@ -334,7 +436,11 @@ export function getContentItemAncestorItemIds(
   slideContentItemIds,
   contentItemsById,
 ) {
-  return findContentItemAncestorItemIds(contentItemId, slideContentItemIds, contentItemsById);
+  return findContentItemAncestorItemIds(
+    contentItemId,
+    slideContentItemIds,
+    contentItemsById,
+  );
 }
 
 /**
@@ -374,5 +480,8 @@ export function getAllContentItemDescendantItemIds(
   contentItemId,
   contentItemsById,
 ) {
-  return findAllContentItemDescendantItemIds(contentItemId, contentItemsById);
+  return findAllContentItemDescendantItemIds(
+    contentItemId,
+    contentItemsById,
+  );
 }
