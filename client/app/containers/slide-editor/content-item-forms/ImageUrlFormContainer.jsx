@@ -1,4 +1,4 @@
-import { reduxForm } from 'redux-form';
+import { reduxForm, formValueSelector } from 'redux-form';
 
 import ImageUrlForm from 'presentationals/components/slide-editor/content-item-forms/ImageUrlForm';
 import { ADD_URI } from 'actions/app/slide-editor';
@@ -12,9 +12,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ updateDeck }, dispatch);
 }
 
-
 export function validate(values) {
-  const { altText, imageUrl, imageType } = values;
+  const { altText, imageUrl, imageType, imageCaption } = values;
 
   const errors = {};
 
@@ -30,6 +29,10 @@ export function validate(values) {
     errors.imageType = 'Please select an image type';
   }
 
+  if (imageType === 'ILLUSTRATIVE_IMAGE' && (!imageCaption || imageCaption.trim() === '')) {
+    errors.imageCaption = 'Please add a caption for your image';
+  }
+
   return errors;
 }
 
@@ -37,16 +40,26 @@ function validateAndSubmit(values, dispatch) {
   const { imageType } = values;
 
   return new Promise((resolve, reject) => {
-    dispatch({ type: ADD_URI, meta: { contentItemType: `${imageType}_IMAGE`, values, resolve, reject } });
+    dispatch({ type: ADD_URI, meta: { contentItemType: imageType, values, resolve, reject } });
   });
 }
+
+const selector = formValueSelector('imageUrl', state => state.vendor.forms);
 
 const connectedForm = reduxForm({
   form: 'imageUrl',
   validate,
   onSubmit: validateAndSubmit,
   getFormState: state => state.vendor.forms,
-  initialValues: { imageType: 'ILLUSTRATIVE' },
+  initialValues: { imageType: 'ILLUSTRATIVE_IMAGE' },
+  onSubmitSuccess: (result, dispatch, props) => {
+    props.updateDeck();
+    props.handleSubmitSuccess();
+  },
 })(ImageUrlForm);
 
-export default connect(null, mapDispatchToProps)(connectedForm);
+export default connect(
+  (state) => {
+    return { imageTypeValue: selector(state, 'imageType') };
+  },
+  mapDispatchToProps)(connectedForm);
