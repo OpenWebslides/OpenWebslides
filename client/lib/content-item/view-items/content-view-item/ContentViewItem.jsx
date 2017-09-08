@@ -22,6 +22,7 @@ function ContentViewItem(props) {
     viewType,
     ancestorItemIds,
     slideId,
+    handleDirectionButtonClick,
   } = props;
 
   if (Object.keys(htmlContainers).includes(contentItemType)) {
@@ -52,7 +53,13 @@ function ContentViewItem(props) {
     const contentItemTypeProps = addContentItemTypeProps(contentItemType);
 
     return (
-      <SlideContentViewItem contentItem={contentItem} isFocused={isFocused}>
+      <SlideContentViewItem
+        contentItem={contentItem}
+        isFocused={isFocused}
+        handleDirectionButtonClick={handleDirectionButtonClick}
+        slideId={slideId}
+        ancestorItemIds={ancestorItemIds}
+      >
         <ContentEditableContainer
           contentItem={contentItem}
           isFocused={isFocused}
@@ -74,6 +81,7 @@ ContentViewItem.propTypes = {
   isFocused: PropTypes.bool.isRequired,
   hasInlineProperties: PropTypes.bool,
   textPropName: PropTypes.string,
+  handleDirectionButtonClick: PropTypes.func.isRequired,
 };
 
 ContentViewItem.defaultProps = {
