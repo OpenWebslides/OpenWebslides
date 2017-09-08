@@ -11,12 +11,14 @@ export function* doAddUri(action) {
   try {
     const activeSlideId = yield select(getActiveSlideId);
 
-    const { contentItemType, values: { imageUrl, altText } } = yield action.meta;
+    const { contentItemType, values: { imageUrl, altText, imageCaption } } = yield action.meta;
+
+    console.log(action.meta);
 
     yield put({ type: ADD_CONTENT_ITEM_TO_SLIDE,
       meta: { slideId: activeSlideId,
         contentItemType,
-        contentItemTypeProps: { src: imageUrl, altText } } });
+        contentItemTypeProps: { src: imageUrl, altText, caption: imageCaption } } });
 
     yield call(resolve);
   }
