@@ -6,6 +6,7 @@ import { ADD_SLIDE, UPDATE_SLIDE,
 import {
   ADD_CONTENT_ITEM,
   DELETE_CONTENT_ITEM,
+  MOVE_CONTENT_ITEM,
 } from 'actions/entities/content-items';
 import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 
@@ -115,6 +116,36 @@ function deleteContentItem(state, action) {
   }
 }
 
+function moveContentItem(state, action) {
+  let contentItemIds = state[action.payload.slideId].contentItemIds;
+
+  // If the contentItem previously was a direct child of the slide.
+  if (action.payload.oldParentItemId === null) {
+    // Remove its id from its previous location in the contentItemIds array.
+    contentItemIds = _.without(contentItemIds, action.payload.contentItemId);
+  }
+
+  // If the contentItem is moved directly onto the slide.
+  if (action.payload.newParentItemId === null) {
+    // Get the index to which to move the contentItemId.
+    const moveToIndex = (action.payload.newPreviousItemId !== null)
+      ? _.indexOf(contentItemIds, action.payload.newPreviousItemId) + 1
+      : 0;
+    // Insert the contentItemId into the contentItemIds array at that index.
+    contentItemIds = [
+      ...contentItemIds.slice(0, moveToIndex),
+      action.payload.contentItemId,
+      ...contentItemIds.slice(moveToIndex),
+    ];
+  }
+
+  return state.merge({
+    [action.payload.slideId]: {
+      contentItemIds,
+    },
+  }, { deep: true });
+}
+
 function fetchDeckSuccess(state, action) {
   return state.merge({
     ...action.payload.slidesById,
@@ -130,6 +161,7 @@ function byId(state = initialState, action) {
     case INCREASE_SLIDE_LEVEL: return increaseLevel(state, action);
     case DECREASE_SLIDE_LEVEL: return decreaseLevel(state, action);
     case DELETE_CONTENT_ITEM: return deleteContentItem(state, action);
+    case MOVE_CONTENT_ITEM: return moveContentItem(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
     default: return state;
   }
