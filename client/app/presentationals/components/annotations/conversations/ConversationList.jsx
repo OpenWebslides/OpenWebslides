@@ -59,8 +59,6 @@ export default compose(
 ConversationList.propTypes = {
   conversations: PropTypes.arrayOf(Object),
   fetchConversations: PropTypes.func.isRequired,
-  deleteConversation: PropTypes.func.isRequired,
-  rateConversation: PropTypes.func.isRequired,
   showConversationPanel: PropTypes.func.isRequired,
 };
 
