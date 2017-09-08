@@ -12,6 +12,7 @@ function ConversationForm(props) {
     includeTypeChoice,
     rows,
     cols,
+    secret,
     submitText,
     cancelAction,
   } = props;
@@ -25,7 +26,7 @@ function ConversationForm(props) {
 
       <form onSubmit={props.handleSubmit}>
 
-        { includeTypeChoice && <div>
+        { includeTypeChoice && !secret && <div>
           <label>Type</label>
           <label><Field name="conversationType" component={InputField} type="radio" value="question" />Question</label>
           <label><Field name="conversationType" component={InputField} type="radio" value="note" />Note</label>
