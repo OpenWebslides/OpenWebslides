@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
 import {
-  getActiveContentItemId,
+  getFocusedContentItemId,
   getFocusedSlideViewType,
 } from 'selectors/app/slide-editor';
 
@@ -17,10 +17,10 @@ import LiveViewItem from './LiveViewItem';
 function mapStateToProps(state, props) {
   const contentItem = getContentItemById(state, props.contentItemId);
   const focusedSlideViewType = getFocusedSlideViewType(state);
-  const activeContentItemId = getActiveContentItemId(state);
+  const focusedContentItemId = getFocusedContentItemId(state);
 
   const isFocused =
-    contentItem.id === activeContentItemId &&
+    contentItem.id === focusedContentItemId &&
     props.slideViewType === focusedSlideViewType;
   const attributes = generateAttributesObject(contentItem);
 

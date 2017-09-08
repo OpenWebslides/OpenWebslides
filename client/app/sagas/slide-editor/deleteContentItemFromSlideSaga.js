@@ -149,7 +149,7 @@ function* doDeleteContentItemFromSlide(action) {
     );
 
     // Find the contentItem before the deleted one (if there is one) so focus can be moved to it.
-    const newActiveContentItemId = getPreviousValidContentItemId(
+    const newFocusedContentItemId = getPreviousValidContentItemId(
       contentItemToDeleteId,
       contentItemToDeleteAncestorItemIds,
       slide.contentItemIds,
@@ -162,14 +162,14 @@ function* doDeleteContentItemFromSlide(action) {
     // of its text. (This allows the user to continuously delete contentitems by keeping backspace
     // pressed.)
     let newSelectionOffsets = null;
-    if (newActiveContentItemId !== null) {
-      const newActiveContentItem = yield select(
+    if (newFocusedContentItemId !== null) {
+      const newFocusedContentItem = yield select(
         getContentItemById,
-        newActiveContentItemId,
+        newFocusedContentItemId,
       );
       newSelectionOffsets = {
-        start: newActiveContentItem.text.length,
-        end: newActiveContentItem.text.length,
+        start: newFocusedContentItem.text.length,
+        end: newFocusedContentItem.text.length,
       };
     }
 
@@ -186,7 +186,7 @@ function* doDeleteContentItemFromSlide(action) {
       slide.id,
       parentItemId,
       contentItemToDeleteDescendantItemIds,
-      newActiveContentItemId,
+      newFocusedContentItemId,
       newSelectionOffsets,
     ));
 

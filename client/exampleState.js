@@ -1,3 +1,4 @@
+/* eslint-disable */
 const exampleState = {
   app: {
     authentication: {
@@ -14,6 +15,7 @@ const exampleState = {
       activeDeckId: '53',
       activeSlideId: '53-1',
       activeContentItemId: null,
+      focusedContentItemId: null,
       selectionOffsets: {
         start: 0,
         end: 0,
@@ -159,3 +161,4 @@ const exampleState = {
     forms: {},
   },
 };
+/* eslint-enable */
