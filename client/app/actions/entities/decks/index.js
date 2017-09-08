@@ -36,9 +36,9 @@ export function fetchDeck(deckId) {
   };
 }
 
-export function fetchDeckSuccess(deckId, slidesById, contentItemsById) {
+export function fetchDeckSuccess(deckId, meta, slidesById, contentItemsById) {
   return {
     type: FETCH_DECK_SUCCESS,
-    payload: { deckId, slidesById, contentItemsById },
+    payload: { deckId, meta, slidesById, contentItemsById },
   };
 }
