@@ -60,4 +60,17 @@ class DeckService < ApplicationService
     # Delete database
     @deck.destroy
   end
+
+  def import(repository)
+    if @deck.save
+      Repository::Import.new(@deck).execute repository
+      Notification.create :user => @deck.owner,
+                          :deck => @deck,
+                          :event_type => :deck_created
+
+      true
+    else
+      false
+    end
+  end
 end
