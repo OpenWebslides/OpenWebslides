@@ -110,6 +110,60 @@ function findNearestValidContentItemId(
   }
 }
 
+function findContentItemAncestorItemIds(
+  contentItemId,
+  slideContentItemIds,
+  contentItemsById,
+  ancestorItemIds = [],
+) {
+  let newAncestorItemIds;
+  let siblingItem;
+  let findResult;
+
+  // Find the list of contentItems in which we're currently searching. If we're deeper in the
+  // recursion and there is already a list of ancestorItemids, use the children of the last
+  // ancestor; else use the list of contentItems that are direct children of the slide.
+  const siblingItemIds = ancestorItemIds.length > 0
+    ? contentItemsById[_.last(ancestorItemIds)].childItemIds
+    : slideContentItemIds;
+
+  // Iterate over the current list of contentItems and search the each of them + their descendants
+  // for the contentItem with id $contentItemId.
+  for (let i = 0; i < siblingItemIds.length; i += 1) {
+    siblingItem = contentItemsById[siblingItemIds[i]];
+
+    // If this item is the contentItem for which we're generating the ancestorItemIds array.
+    if (siblingItem.id === contentItemId) {
+      // The current ancestorItemsIds is the correct one, so return it.
+      return ancestorItemIds;
+    }
+    // If this is a container item.
+    else if (_.includes(containerContentItemTypes, siblingItem.contentItemType)) {
+      // See if this is an ancestor; add it to the ancestorItemIds array...
+      newAncestorItemIds = ancestorItemIds.concat(siblingItemIds[i]);
+      // ... and search further.
+      findResult = findContentItemAncestorItemIds(
+        contentItemId,
+        slideContentItemIds,
+        contentItemsById,
+        newAncestorItemIds,
+      );
+      // If the search returned a value different from null, we know that this siblingItem was
+      // indeed an ancestor of the contentItem with id $contentItemId. The value in findResult now
+      // equals the full ancestorItemIds array.
+      if (findResult !== null) {
+        return findResult;
+      }
+      // If the return value was null, we know that this siblingItem was not an ancestor of the
+      // contentItem with id $contentItemId. We move on to the next siblingItem.
+    }
+  }
+
+  // If the function hasn't returned by now, contentItem was not found in the current list of
+  // contentItems.
+  return null;
+}
+
 function findNearestAncestorIdWithAtLeastAmountOfChildren(
   ancestorItemIds,
   contentItemsById,
@@ -260,6 +314,29 @@ export function getNextValidContentItemId(
     contentItemValidator,
     containerItemValidator,
   );
+}
+
+/**
+ * Finds the ancestor items array of the contentItem with $contentItemId.
+ * Note: avoid using this function if other methods to get the ancestorItemIds are available (for
+ * example by saving them while creating the contentItem and then passing them to the function that
+ * needs them) since it is very inefficient to traverse the contentItems tree every time an ancestor
+ * item is needed.
+ *
+ * @param contentItemId
+ *        The id of the contentItem for which we need to find the ancestor item ids.
+ * @param slideContentItemIds
+ *        The list of ids of contentItems that are direct children of the containing slide of the
+ *        contentItem with id $contentItemId.
+ * @param contentItemsById
+ *        The contentItemsById object.
+ */
+export function getContentItemAncestorItemIds(
+  contentItemId,
+  slideContentItemIds,
+  contentItemsById,
+) {
+  return findContentItemAncestorItemIds(contentItemId, slideContentItemIds, contentItemsById);
 }
 
 /**
