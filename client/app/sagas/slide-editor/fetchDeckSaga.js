@@ -1,22 +1,10 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-import { FETCH_DECK, FETCH_DECK_SUCCESS } from 'actions/entities/decks';
+import { FETCH_DECK, fetchDeckSuccess } from 'actions/entities/decks';
 import { SIGNOUT } from 'actions/signoutActions';
 
 import convertToState from 'lib/convert-to-state';
 import fetchDeckHtmlApi from 'api/fetchDeckHtmlApi';
 import fetchDeckJsonApi from 'api/fetchDeckJsonApi';
-
-/* eslint-disable no-unused-vars */
-import {
-  testDeckEmpty,
-} from 'assets/files/test-decks/empty';
-import {
-  testDeckFlamesFixed,
-} from 'assets/files/test-decks/flamesFixed';
-import {
-  testDeckContentItemViewTypes,
-} from 'assets/files/test-decks/contentItemViewTypes';
-/* eslint-enable */
 
 function* doFetchDeck(action) {
   try {
@@ -34,14 +22,12 @@ function* doFetchDeck(action) {
       });
     }
 
-    const entities = yield convertToState(action.meta.deckId, htmlString, assetLinks);
-    const payload = {
-      deckId: action.meta.deckId,
-      metadata,
-      ...entities,
-    };
+    const {
+      slidesById,
+      contentItemsById,
+    } = yield convertToState(action.meta.deckId, htmlString, assetLinks);
 
-    yield put({ type: FETCH_DECK_SUCCESS, payload });
+    yield put(fetchDeckSuccess(action.meta.deckId, metadata, slidesById, contentItemsById));
   }
   catch (e) {
     if (e.statusCode === 401) {
