@@ -69,10 +69,10 @@ function addContentItem(state, action) {
   // is no parent item.
   if (action.payload.parentItemId === null) {
     const contentItemIds = slide.contentItemIds.asMutable();
-    const afterItemId = action.payload.afterItemId;
-    const addAtIndex = (afterItemId !== null)
-      ? Array.indexOf(contentItemIds, afterItemId) + 1
-      : contentItemIds.length;
+    const previousItemId = action.payload.previousItemId;
+    const addAtIndex = (previousItemId !== null)
+      ? _.indexOf(contentItemIds, previousItemId) + 1
+      : 0;
 
     contentItemIds.splice(addAtIndex, 0, action.payload.contentItemId);
 
