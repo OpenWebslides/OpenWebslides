@@ -11,7 +11,6 @@ import {
 } from 'lib/content-editable/inlineProperties';
 
 import getFilteredTextContent from 'lib/content-editable/textContent';
-import { setSelectionOffsets } from 'actions/app/slide-editor';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
 
@@ -24,15 +23,6 @@ import inlinePropertyTypes from 'constants/inlinePropertyTypes';
 import LinkModal from './LinkModal';
 
 class ContentEditable extends Component {
-  loadSelectionOffsets() {
-    if (this.props.isFocused) {
-      setSelectionByOffsets(
-        this.contentEditable,
-        this.props.selectionOffsets.start,
-        this.props.selectionOffsets.end,
-      );
-    }
-  }
 
   constructor(props) {
     super(props);
@@ -60,7 +50,11 @@ class ContentEditable extends Component {
 
   loadSelectionOffsets() {
     if (this.props.isFocused) {
-      setSelectionByOffsets(this.contentEditable, this.props.selectionOffsets.start, this.props.selectionOffsets.end);
+      setSelectionByOffsets(
+        this.contentEditable,
+        this.props.selectionOffsets.start,
+        this.props.selectionOffsets.end,
+      );
     }
   }
 
@@ -132,7 +126,7 @@ class ContentEditable extends Component {
   }
 
   handleFocus() {
-    this.props.setActiveContentItemId(
+    this.props.setFocusedContentItemId(
       this.props.contentItem.id,
       getSelectionOffsets(this.contentEditable),
       this.props.slideViewType,
@@ -141,7 +135,7 @@ class ContentEditable extends Component {
 
   handleBlur() {
     this.props.updateDeck();
-    this.props.setActiveContentItemId(
+    this.props.setFocusedContentItemId(
       null,
       getSelectionOffsets(this.contentEditable),
       null,
@@ -301,7 +295,7 @@ ContentEditable.propTypes = {
     start: PropTypes.number.isRequired,
     end: PropTypes.number.isRequired,
   }).isRequired,
-  setActiveContentItemId: PropTypes.func.isRequired,
+  setFocusedContentItemId: PropTypes.func.isRequired,
   updateContentItem: PropTypes.func.isRequired,
   handleKeyDown: PropTypes.func,
 };

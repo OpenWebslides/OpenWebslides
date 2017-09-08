@@ -20,9 +20,14 @@ export const getPreviousSlideId = (state, slideId) => {
   }
 };
 
-// Get the id of the content item that is currently being edited.
+// Get the id of the content item that is currently active.
 export const getActiveContentItemId = (state) => {
   return state.app.slideEditor.activeContentItemId;
+};
+
+// Get the id of the content item that is currently being edited.
+export const getFocusedContentItemId = (state) => {
+  return state.app.slideEditor.focusedContentItemId;
 };
 
 // Get the offset values of the current selection in the currently active
@@ -31,12 +36,12 @@ export const getSelectionOffsets = (state) => {
   return state.app.slideEditor.selectionOffsets;
 };
 
-// Get the slide view type in which content is currently being edited.
-export const getFocusedSlideViewType = (state) => {
-  return state.app.slideEditor.focusedSlideViewType;
-};
-
 // Get the list of slide view types that are currently active in the editor.
 export const getActiveSlideViewTypes = (state) => {
   return state.app.slideEditor.activeSlideViewTypes;
+};
+
+// Get the slide view type in which content is currently being edited.
+export const getFocusedSlideViewType = (state) => {
+  return state.app.slideEditor.focusedSlideViewType;
 };

@@ -7,18 +7,24 @@ import {
   SET_ACTIVE_DECK_ID,
   SET_ACTIVE_SLIDE_ID,
   SET_ACTIVE_CONTENT_ITEM_ID,
+  SET_FOCUSED_CONTENT_ITEM_ID,
   SET_SELECTION_OFFSETS,
   SET_FOCUSED_SLIDE_VIEW_TYPE,
   TOGGLE_SLIDE_VIEW,
 } from 'actions/app/slide-editor';
 import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
 import { ADD_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
-import { ADD_CONTENT_ITEM, UPDATE_CONTENT_ITEM, DELETE_CONTENT_ITEM } from 'actions/entities/content-items';
+import {
+  ADD_CONTENT_ITEM,
+  UPDATE_CONTENT_ITEM,
+  DELETE_CONTENT_ITEM,
+} from 'actions/entities/content-items';
 
 const initialState = Immutable({
   activeDeckId: null,
   activeSlideId: null,
   activeContentItemId: null,
+  focusedContentItemId: null,
   selectionOffsets: {
     start: 0,
     end: 0,
@@ -38,27 +44,45 @@ function setActiveDeckId(state, action) {
 function setActiveSlideId(state, action) {
   return state.merge({
     activeSlideId: action.payload.slideId,
+    activeContentItemId: null,
   });
 }
 
 function setActiveContentItemId(state, action) {
+  return state.merge({
+    activeContentItemId: action.payload.contentItemId,
+  });
+}
+
+function setFocusedContentItemId(state, action) {
+  let newState = state;
+  const focusedContentItemId = action.payload.contentItemId;
   const selectionOffsets = action.payload.selectionOffsets;
   const focusedSlideViewType = action.payload.focusedSlideViewType;
 
   if (selectionOffsets !== null) {
-    state = state.merge({
+    newState = newState.merge({
       selectionOffsets,
     });
   }
 
   if (focusedSlideViewType !== null) {
-    state = state.merge({
+    newState = newState.merge({
       focusedSlideViewType,
     });
   }
 
-  return state.merge({
-    activeContentItemId: action.payload.contentItemId,
+  // If we're focusing on a new contentItem, set the activeContentItem as well.
+  // (If we're blurring the focused contentItem by setting it to null, keep the active contentItem
+  // for reference.)
+  if (focusedContentItemId !== null) {
+    newState = newState.merge({
+      activeContentItemId: focusedContentItemId,
+    });
+  }
+
+  return newState.merge({
+    focusedContentItemId: action.payload.contentItemId,
   });
 }
 
@@ -83,10 +107,12 @@ function toggleSlideView(state, action) {
     // Cannot remove the last active slide view type.
     if (currentActiveSlideViewTypes.length <= 1) {
       activeSlideViewTypes = currentActiveSlideViewTypes;
-    } else {
+    }
+    else {
       activeSlideViewTypes = _.without(currentActiveSlideViewTypes, slideViewType);
     }
-  } else {
+  }
+  else {
     activeSlideViewTypes = [...currentActiveSlideViewTypes, slideViewType];
   }
 
@@ -101,12 +127,14 @@ function fetchDeckSuccess(state, action) {
   return state.merge({
     activeDeckId: action.payload.deckId,
     activeSlideId: slides.length > 0 ? slides[0].id : null,
+    activeContentItemId: null,
   });
 }
 
 function addSlide(state, action) {
   return state.merge({
     activeSlideId: action.payload.slideId,
+    activeContentItemId: null,
   });
 }
 
@@ -114,12 +142,16 @@ function deleteSlide(state, action) {
   if (action.payload.newActiveSlideId !== null) {
     return state.merge({
       activeSlideId: action.payload.newActiveSlideId,
+      activeContentItemId: null,
     });
-  } else if(action.payload.slideId === state.activeSlideId) {
+  }
+  else if (action.payload.slideId === state.activeSlideId) {
     return state.merge({
       activeSlideId: null,
+      activeContentItemId: null,
     });
-  } else {
+  }
+  else {
     return state;
   }
 }
@@ -127,6 +159,7 @@ function deleteSlide(state, action) {
 function addContentItem(state, action) {
   return state.merge({
     activeContentItemId: action.payload.contentItemId,
+    focusedContentItemId: action.payload.contentItemId,
     selectionOffsets: {
       start: 0,
       end: 0,
@@ -141,26 +174,31 @@ function updateContentItem(state, action) {
     return state.merge({
       selectionOffsets,
     });
-  } else {
+  }
+  else {
     return state;
   }
 }
 
 function deleteContentItem(state, action) {
-  if (action.payload.newActiveContentItemId !== null) {
+  if (action.payload.newFocusedContentItemId !== null) {
     return state.merge({
-      activeContentItemId: action.payload.newActiveContentItemId,
+      activeContentItemId: action.payload.newFocusedContentItemId,
+      focusedContentItemId: action.payload.newFocusedContentItemId,
       selectionOffsets: action.payload.newSelectionOffsets,
     });
-  } else if (action.payload.contentItemId === state.activeContentItemId) {
+  }
+  else if (action.payload.contentItemId === state.focusedContentItemId) {
     return state.merge({
       activeContentItemId: null,
+      focusedContentItemId: null,
       selectionOffsets: {
         start: 0,
         end: 0,
       },
     });
-  } else {
+  }
+  else {
     return state;
   }
 }
@@ -170,6 +208,7 @@ export default function slideEditorReducer(state = initialState, action) {
     case SET_ACTIVE_DECK_ID: return setActiveDeckId(state, action);
     case SET_ACTIVE_SLIDE_ID: return setActiveSlideId(state, action);
     case SET_ACTIVE_CONTENT_ITEM_ID: return setActiveContentItemId(state, action);
+    case SET_FOCUSED_CONTENT_ITEM_ID: return setFocusedContentItemId(state, action);
     case SET_SELECTION_OFFSETS: return setSelectionOffsets(state, action);
     case SET_FOCUSED_SLIDE_VIEW_TYPE: return setFocusedSlideViewType(state, action);
     case TOGGLE_SLIDE_VIEW: return toggleSlideView(state, action);
