@@ -5,16 +5,13 @@ import { Field } from 'redux-form';
 import InputField from 'presentationals/objects/form-fields/InputField';
 
 export default function ImageUrlForm(props) {
-  if (props.submitSucceeded) {
-    props.updateDeck();
-    props.handleSubmitSuccess();
-  }
+  const { error, handleSubmit, imageTypeValue } = props;
 
   return (
     <div>
       <h3>Add Image URL</h3>
       <hr />
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={handleSubmit}>
 
         <Field
           type="text"
@@ -31,16 +28,25 @@ export default function ImageUrlForm(props) {
         />
 
         <label>
-          <Field name="imageType" component={InputField} type="radio" value="ILLUSTRATIVE" />
+          <Field name="imageType" component={InputField} type="radio" value="ILLUSTRATIVE_IMAGE" />
             Illustrative
           </label>
 
+        { (imageTypeValue === 'ILLUSTRATIVE_IMAGE') &&
+          <Field
+            component={InputField}
+            label="Caption"
+            errorOnPristine={true}
+            placeholder="Enter image caption"
+            name="imageCaption"
+          />}
+
         <label>
-          <Field name="imageType" component={InputField} type="radio" value="DECORATIVE" />
+          <Field name="imageType" component={InputField} type="radio" value="DECORATIVE_IMAGE" />
             Decorative
           </label>
 
-        {props.error && <strong>{props.error}</strong>}
+        {error && <strong>{error}</strong>}
 
         <button type="submit">Submit</button>
       </form>
@@ -51,12 +57,11 @@ export default function ImageUrlForm(props) {
 
 ImageUrlForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  updateDeck: PropTypes.func.isRequired,
   error: PropTypes.string,
-  submitSucceeded: PropTypes.bool.isRequired,
-  handleSubmitSuccess: PropTypes.func.isRequired,
+  imageTypeValue: PropTypes.string,
 };
 
 ImageUrlForm.defaultProps = {
   error: '',
+  imageTypeValue: '',
 };
