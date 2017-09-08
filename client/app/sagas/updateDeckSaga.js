@@ -14,11 +14,11 @@ import generateAttributesObject from 'lib/content-item/helpers/generateAttribute
 
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 
-function* convertContentItems(contentItemIds, headingLevel) {
+function* convertContentItems(contentItemIds, headingLevel, indent = '') {
   let string = '';
 
   for (let i = 0; i < contentItemIds.length; i += 1) {
-    string += '\n';
+    string += `\n${indent}`;
 
     const contentItemObject = yield select(getContentItemById, contentItemIds[i]);
 
@@ -27,7 +27,7 @@ function* convertContentItems(contentItemIds, headingLevel) {
 
     switch (contentItemObject.contentItemType) {
       case contentItemTypes.TITLE: {
-        const heading = `h${headingLevel}`;
+        const heading = `h${headingLevel <= 6 ? headingLevel : 6}`;
         const text = getHTMLStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
           contentItemObject.text,
@@ -47,22 +47,34 @@ function* convertContentItems(contentItemIds, headingLevel) {
         break;
       }
       case contentItemTypes.SECTION: {
-        const childContent = yield convertContentItems(contentItemObject.childItemIds, headingLevel + 1);
+        const childContent = yield convertContentItems(
+          contentItemObject.childItemIds,
+          headingLevel + 1,
+          `${indent}  `,
+        );
 
-        string += `<section ${attributeString}>${childContent}</section>`;
+        string += `<section ${attributeString}>${childContent}\n${indent}</section>`;
         break;
       }
       case contentItemTypes.ASIDE: {
-        const childContent = yield convertContentItems(contentItemObject.childItemIds, headingLevel + 1);
+        const childContent = yield convertContentItems(
+          contentItemObject.childItemIds,
+          headingLevel + 1,
+          `${indent}  `,
+        );
 
-        string += `<aside ${attributeString}>${childContent}</aside>`;
+        string += `<aside ${attributeString}>${childContent}\n${indent}</aside>`;
         break;
       }
       case contentItemTypes.LIST: {
         const listType = contentItemObject.ordered ? 'ol' : 'ul';
-        const listItems = yield convertContentItems(contentItemObject.childItemIds, headingLevel);
+        const listItems = yield convertContentItems(
+          contentItemObject.childItemIds,
+          headingLevel,
+          `${indent}  `,
+        );
 
-        string += `<${listType} ${attributeString}>${listItems}</${listType}>`;
+        string += `<${listType} ${attributeString}>${listItems}\n${indent}</${listType}>`;
         break;
       }
       case contentItemTypes.LIST_ITEM: {
