@@ -153,7 +153,7 @@ function* doDeleteContentItemFromSlide(action) {
     );
 
     // Find the contentItem before the deleted one (if there is one) so focus can be moved to it.
-    const newFocusedContentItemId = getPreviousValidContentItemId(
+    const { contentItemId: newFocusedContentItemId } = getPreviousValidContentItemId(
       contentItemToDeleteId,
       contentItemToDeleteAncestorItemIds,
       slide.contentItemIds,

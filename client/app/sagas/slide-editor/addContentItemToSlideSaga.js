@@ -93,7 +93,7 @@ function findParentItemIdAndPreviousItemId(slide, activeContentItemId, contentIt
     // i.e. the deepest nested section that doesn't have any contentItems come after it.
     // #TODO make exception for titles
     // Note: this sets parentItemId to null if there is no suitable section.
-    parentItemId = getLastValidContentItemId(
+    ({ contentItemId: parentItemId } = getLastValidContentItemId(
       slide.contentItemIds,
       contentItemsById,
       (contentItem) => {
@@ -105,7 +105,7 @@ function findParentItemIdAndPreviousItemId(slide, activeContentItemId, contentIt
         // Only search the children of actual sections; lists cannot contain a valid section anyway.
         return _.includes(sectionContentItemTypes, contentItem.contentItemType);
       },
-    );
+    ));
     previousItemId = (parentItemId !== null &&
                       contentItemsById[parentItemId].childItemIds.length > 0)
       ? _.last(contentItemsById[parentItemId].childItemIds)
