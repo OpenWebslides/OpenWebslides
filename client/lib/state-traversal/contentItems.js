@@ -506,7 +506,7 @@ export function getNearestValidAncestorItemId(
  * Finds all descendants of a the contentItem with id $contentItemId.
  *
  * @param contentItemId
- *        The id of the contentItem wher ewe start searching.
+ *        The id of the contentItem where we start searching.
  * @param contentItemsById
  *        The contentItemsById object.
  *
@@ -520,4 +520,37 @@ export function getContentItemDescendantItemIds(
     contentItemId,
     contentItemsById,
   );
+}
+
+/**
+ * Finds the list of siblingItemIds for the contentItem with id $contentItemId, and the index of
+ * this contentItem's id in this list.
+ *
+ * @param contentItemId
+ *        The id of the contentItem for which we want the siblingItemIds & index.
+ * @param ancestorItemIds
+ *        The list of ids of the ancestor items of the contentItem with id $contentItemId.
+ * @param slideContentItemIds
+ *        The list of ids of contentItems that are direct children of the containing slide of the
+ *        contentItem with id $contentItemId. (We need this because the slide is the highest
+ *        possible ancestor of a contentItem and it can't be included in the ancestorItemIds array.)
+ * @param contentItemsById
+ *        The contentItemsById object.
+ *
+ * @returns {{siblingItemIds: (Array|*), indexInSiblingItemIds}}
+ */
+export function getContentItemSiblingItemIdsAndIndex(
+  contentItemId,
+  ancestorItemIds,
+  slideContentItemIds,
+  contentItemsById,
+) {
+  // Get the siblingItemIds array from either the parent item or the slide.
+  const siblingItemIds = (ancestorItemIds.length !== 0)
+    ? contentItemsById[_.last(ancestorItemIds)].childItemIds
+    : slideContentItemIds;
+  // Find the index of the contentItemId in the siblingItemIds array.
+  const indexInSiblingItemIds = _.indexOf(siblingItemIds, contentItemId);
+
+  return { siblingItemIds, indexInSiblingItemIds };
 }
