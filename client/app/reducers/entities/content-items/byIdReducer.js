@@ -20,10 +20,10 @@ function addContentItem(state, action) {
   if (action.payload.parentItemId !== null) {
     const parentItem = state[action.payload.parentItemId];
     const childItemIds = parentItem.childItemIds.asMutable();
-    const afterItemId = action.payload.afterItemId;
-    const addAtIndex = (afterItemId !== null)
-      ? Array.indexOf(childItemIds, afterItemId) + 1
-      : childItemIds.length;
+    const previousItemId = action.payload.previousItemId;
+    const addAtIndex = (previousItemId !== null)
+      ? _.indexOf(childItemIds, previousItemId) + 1
+      : 0;
 
     childItemIds.splice(addAtIndex, 0, contentItemId);
 
