@@ -181,14 +181,24 @@ function updateContentItem(state, action) {
 }
 
 function deleteContentItem(state, action) {
-  if (action.payload.newFocusedContentItemId !== null) {
+  const {
+    contentItemId,
+    descendantItemIds,
+    newFocusedContentItemId,
+    newSelectionOffsets,
+  } = action.payload;
+
+  if (newFocusedContentItemId !== null) {
     return state.merge({
-      activeContentItemId: action.payload.newFocusedContentItemId,
-      focusedContentItemId: action.payload.newFocusedContentItemId,
-      selectionOffsets: action.payload.newSelectionOffsets,
+      activeContentItemId: newFocusedContentItemId,
+      focusedContentItemId: newFocusedContentItemId,
+      selectionOffsets: newSelectionOffsets,
     });
   }
-  else if (action.payload.contentItemId === state.focusedContentItemId) {
+  else if (
+    (contentItemId === state.focusedContentItemId) ||
+    (descendantItemIds.length > 0 && _.includes(descendantItemIds, state.activeContentItemId))
+  ) {
     return state.merge({
       activeContentItemId: null,
       focusedContentItemId: null,
