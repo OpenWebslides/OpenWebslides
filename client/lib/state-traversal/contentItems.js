@@ -35,7 +35,7 @@ function findNearestValidContentItemId(
   // First check if the contentItem is a container element.
   // (Note: we only do this if checkContainerChildren is set to TRUE to indicate that the container
   // children are possible nearestValidContentItem candidates.)
-  if (checkContainerChildren && containerItemValidator(contentItem) === true) {
+  if (checkContainerChildren && containerItemValidator(contentItem, ancestorItemIds) === true) {
     // If it is a container, check its first/last child.
     newContentItemId = direction === directions.UP
       ? _.last(contentItem.childItemIds)
@@ -80,7 +80,7 @@ function findNearestValidContentItemId(
   }
   // If a previous contentItemId was found, & it was valid, this is the contentItemId we were
   // looking for.
-  else if (contentItemValidator(contentItemsById[newContentItemId]) === true) {
+  else if (contentItemValidator(contentItemsById[newContentItemId], newAncestorItemIds) === true) {
     return {
       contentItemId: newContentItemId,
       ancestorItemIds: newAncestorItemIds,
@@ -124,7 +124,7 @@ function findFurthestValidContentItemId(
     let newAncestorItemIds = [];
 
     // If the first/last contentItem is a container item.
-    if (containerItemValidator(contentItem) === true) {
+    if (containerItemValidator(contentItem, ancestorItemIds) === true) {
       // Search its children for the furthest valid contentItemId.
       ({
         contentItemId: validContentItemId,
@@ -142,7 +142,10 @@ function findFurthestValidContentItemId(
     // If no further valid contentItem was found in the list of children (or if the current
     // contentItem is not a container and there is no list of children) but the current contentItem
     // is a valid one.
-    if (validContentItemId === null && contentItemValidator(contentItem) === true) {
+    if (
+      validContentItemId === null &&
+      contentItemValidator(contentItem, ancestorItemIds) === true
+    ) {
       // The current contentItem is the one we're looking for.
       validContentItemId = contentItem.id;
       newAncestorItemIds = ancestorItemIds;
@@ -227,7 +230,7 @@ function findNearestValidAncestorItemId(
     const newAncestorItemIds = _.dropRight(ancestorItemIds, 1);
 
     // Test if the parent is a valid ancestor.
-    if (ancestorItemValidator(parentItem) === true) {
+    if (ancestorItemValidator(parentItem, newAncestorItemIds) === true) {
       return parentItem.id;
     }
     // If the parent was not a valid ancestor.
@@ -283,16 +286,16 @@ function findContentItemDescendantItemIds(contentItemId, contentItemsById) {
  *        The contentItemsById object.
  * @param contentItemValidator
  *        The function that decides if a contentItem is considered 'valid'. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is valid, FALSE if
- *        it is not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is valid, FALSE if it is not.
  * @param containerItemValidator
  *        The function that decides if a contentItem is considered a container. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is a container,
- *        FALSE if it is not. (The reason we use a validator function instead of just using the
- *        containerContentItemTypes constant is that for some applications lists should be
- *        considered containers, while for others they should not. By doing it this way, the caller
- *        of this function has full control over which contentItems are considered containers and
- *        which are not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is a container, FALSE if it is not. (The reason we use a validator function
+ *        instead of just using the containerContentItemTypes constant is that for some applications
+ *        lists should be considered containers, while for others they should not. By doing it this
+ *        way, the caller of this function has full control over which contentItems are considered
+ *        containers and which are not.
  *
  * @returns {{contentItemId, ancestorItemIds}}
  */
@@ -331,16 +334,16 @@ export function getPreviousValidContentItemId(
  *        The contentItemsById object.
  * @param contentItemValidator
  *        The function that decides if a contentItem is considered 'valid'. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is valid, FALSE if
- *        it is not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is valid, FALSE if it is not.
  * @param containerItemValidator
  *        The function that decides if a contentItem is considered a container. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is a container,
- *        FALSE if it is not. (The reason we use a validator function instead of just using the
- *        containerContentItemTypes constant is that for some applications lists should be
- *        considered containers, while for others they should not. By doing it this way, the caller
- *        of this function has full control over which contentItems are considered containers and
- *        which are not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is a container, FALSE if it is not. (The reason we use a validator function
+ *        instead of just using the containerContentItemTypes constant is that for some applications
+ *        lists should be considered containers, while for others they should not. By doing it this
+ *        way, the caller of this function has full control over which contentItems are considered
+ *        containers and which are not.
  *
  * @returns {{contentItemId, ancestorItemIds}}
  */
@@ -375,16 +378,16 @@ export function getNextValidContentItemId(
  *        The contentItemsById object.
  * @param contentItemValidator
  *        The function that decides if a contentItem is considered 'valid'. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is valid, FALSE if
- *        it is not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is valid, FALSE if it is not.
  * @param containerItemValidator
  *        The function that decides if a contentItem is considered a container. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is a container,
- *        FALSE if it is not. (The reason we use a validator function instead of just using the
- *        containerContentItemTypes constant is that for some applications lists should be
- *        considered containers, while for others they should not. By doing it this way, the caller
- *        of this function has full control over which contentItems are considered containers and
- *        which are not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is a container, FALSE if it is not. (The reason we use a validator function
+ *        instead of just using the containerContentItemTypes constant is that for some applications
+ *        lists should be considered containers, while for others they should not. By doing it this
+ *        way, the caller of this function has full control over which contentItems are considered
+ *        containers and which are not.
  *
  * @returns {{contentItemId, ancestorItemIds}}
  */
@@ -415,16 +418,16 @@ export function getFirstValidContentItemId(
  *        The contentItemsById object.
  * @param contentItemValidator
  *        The function that decides if a contentItem is considered 'valid'. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is valid, FALSE if
- *        it is not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is valid, FALSE if it is not.
  * @param containerItemValidator
  *        The function that decides if a contentItem is considered a container. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is a container,
- *        FALSE if it is not. (The reason we use a validator function instead of just using the
- *        containerContentItemTypes constant is that for some applications lists should be
- *        considered containers, while for others they should not. By doing it this way, the caller
- *        of this function has full control over which contentItems are considered containers and
- *        which are not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is a container, FALSE if it is not. (The reason we use a validator function
+ *        instead of just using the containerContentItemTypes constant is that for some applications
+ *        lists should be considered containers, while for others they should not. By doing it this
+ *        way, the caller of this function has full control over which contentItems are considered
+ *        containers and which are not.
  *
  * @returns {{contentItemId, ancestorItemIds}}
  */
@@ -482,8 +485,8 @@ export function getContentItemAncestorItemIds(
  *        The contentItemsById object.
  * @param ancestorItemValidator
  *        The function that decides if an ancestorItem is considered 'valid'. It is passed a
- *        contentItem as an argument and should return TRUE if this contentItem is valid, FALSE if
- *        it is not.
+ *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
+ *        contentItem is valid, FALSE if it is not.
  *
  * @returns {string|null}
  */
