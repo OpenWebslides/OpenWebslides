@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { takeEvery, select, put } from 'redux-saga/effects';
 
 import {
@@ -9,80 +10,138 @@ import { slideViewTypes } from 'constants/slideViewTypes';
 
 import { ADD_CONTENT_ITEM_TO_SLIDE } from 'actions/entities/slides';
 import { addContentItem } from 'actions/entities/content-items';
+import { getActiveContentItemId } from 'selectors/app/slide-editor';
 import { getSlideById } from 'selectors/entities/slides';
-import { getContentItemById } from 'selectors/entities/content-items';
+import { getContentItemsById } from 'selectors/entities/content-items';
 import { generateContentItemId } from 'lib/convert-to-state/generateIds';
+
+import {
+  getLastValidContentItemId,
+  getContentItemAncestorItemIds,
+  getNearestValidAncestorItemId,
+} from 'lib/state-traversal/contentItems';
 
 function getPropsForContentItemType(contentItemType, contentItemTypeProps) {
   // Get the default props for this contentItemType.
   const defaultProps = contentItemTypesById[contentItemType].defaultProps;
   // Add extra props that have been passed to the action.
-  const props = {
+  return {
     ...defaultProps,
     ...contentItemTypeProps,
   };
-
-  return props;
 }
 
-function* findLastSectionContentItemInListOfContentItemIds(contentItemId, childItemIds) {
-  // If there are no suitable child items, this is the last possible nested section.
-  let lastSectionContentItemId = contentItemId;
+function findParentItemIdAndPreviousItemId(slide, activeContentItemId, contentItemsById) {
+  let parentItemId;
+  let previousItemId;
 
-  if (childItemIds.length > 0) {
-    // Get the last childItem in the list.
-    const lastChildItem = yield select(
-      getContentItemById,
-      childItemIds[childItemIds.length - 1],
+  // If there is an active contentItem, we should put the new contentItem after it.
+  if (activeContentItemId !== null) {
+    // Get the ancestorItemIds for the active contentItem.
+    const activeContentItemAncestorItemIds = getContentItemAncestorItemIds(
+      activeContentItemId,
+      slide.contentItemIds,
+      contentItemsById,
     );
 
-    // If the last childItem in the list is a section.
-    if (
-      Array.indexOf(
-        sectionContentItemTypes,
-        lastChildItem.contentItemType,
-      ) !== -1
-    ) {
-      // See if there is another suitable section nested inside it.
-      // Note: this returns the current lastContentItem.id if no suitable section can be found.
-      lastSectionContentItemId =
-        yield findLastSectionContentItemInListOfContentItemIds(
-          lastChildItem.id,
-          lastChildItem.childItemIds,
+    // If the activeContentItem is a direct child of the slide.
+    if (activeContentItemAncestorItemIds.length === 0) {
+      // A slide can accommodate all kinds of contentItems, so just add the new contentItem
+      // after the active one on the slide.
+      parentItemId = null;
+      previousItemId = activeContentItemId;
+    }
+    // If the activeContentItem has ancestorItems.
+    else {
+      // Find the nearest ancestorItem to which we can add the new contentItem. (This is not
+      // always simply the parent; for example, a list can be a parentItem, but we shouldn't be
+      // able to manually add random new items to it; it should only contain list items.)
+      const validAncestorItemId = getNearestValidAncestorItemId(
+        activeContentItemAncestorItemIds,
+        contentItemsById,
+        (contentItem) => {
+          return _.includes(sectionContentItemTypes, contentItem.contentItemType);
+        },
+      );
+
+      // If a valid ancestor was found.
+      if (validAncestorItemId !== null) {
+        const validAncestorItemIdIndex = _.indexOf(
+          activeContentItemAncestorItemIds,
+          validAncestorItemId,
         );
+
+        // Add the new contentItem to this valid ancestor...
+        parentItemId = validAncestorItemId;
+        // ...right after the 'subtree' that led up to it.
+        previousItemId = validAncestorItemIdIndex === activeContentItemAncestorItemIds.length - 1
+          ? activeContentItemId
+          : activeContentItemAncestorItemIds[validAncestorItemIdIndex + 1];
+      }
+      // If no valid ancestor was found.
+      else {
+        // Add the new directly to the slide, right after the uppermost invalid ancestor.
+        parentItemId = null;
+        previousItemId = _.first(activeContentItemAncestorItemIds);
+      }
     }
   }
+  // If there is no active contentItem.
+  else {
+    // See if there is an existing section on the slide to which we could add the new contentItem.
+    // In case of nested sections, we're adding the new contentItem to the 'bottom-most' section,
+    // i.e. the deepest nested section that doesn't have any contentItems come after it.
+    // #TODO make exception for titles
+    // Note: this sets parentItemId to null if there is no suitable section.
+    parentItemId = getLastValidContentItemId(
+      slide.contentItemIds,
+      contentItemsById,
+      (contentItem) => {
+        // We're looking for a section that lies on the 'last' path of the contentItems tree; so
+        // only sections are valid contentItems in this case.
+        return _.includes(sectionContentItemTypes, contentItem.contentItemType);
+      },
+      (contentItem) => {
+        // Only search the children of actual sections; lists cannot contain a valid section anyway.
+        return _.includes(sectionContentItemTypes, contentItem.contentItemType);
+      },
+    );
+    previousItemId = (parentItemId !== null &&
+                      contentItemsById[parentItemId].childItemIds.length > 0)
+      ? _.last(contentItemsById[parentItemId].childItemIds)
+      : null;
+  }
 
-  return lastSectionContentItemId;
+  return {
+    parentItemId,
+    previousItemId,
+  };
 }
 
 function* doAddContentItemToSlide(action) {
   try {
+    const contentItemsById = yield select(getContentItemsById);
+    const activeContentItemId = yield select(getActiveContentItemId);
     const slide = yield select(getSlideById, action.meta.slideId);
-    const contentItemProps = getPropsForContentItemType(
-      action.meta.contentItemType,
-      action.meta.contentItemTypeProps,
-    );
+    let { parentItemId, previousItemId } = action.meta;
+
+    // Generate an id for the contentItem that we're going to add.
     let contentItemId = generateContentItemId(
       slide.id,
       slide.contentItemSequence,
     );
-    let parentItemId = action.meta.parentItemId;
-    const afterItemId = action.meta.afterItemId;
 
-    // Some contentItemTypes require a child element to be automatically added.
-    let childItemId = null;
-    let childItemType = null;
-    let childItemProps = null;
-
-    // If no parentItemId was explicitly passed to the action.
-    if (action.meta.parentItemId === null) {
-      // See if there is an existing section on the slide to which we could add the new contentItem.
-      // Note: this sets parentItemId to null if there is no suitable section.
-      parentItemId = yield findLastSectionContentItemInListOfContentItemIds(
-        null,
-        slide.contentItemIds,
-      );
+    // If no parentItemId or previousItemId was explicitly passed to the action.
+    if (
+      action.meta.parentItemId === null &&
+      action.meta.previousItemId === null
+    ) {
+      // Find an appropriate location on the slide to add the new contentItem.
+      ({ parentItemId, previousItemId } = findParentItemIdAndPreviousItemId(
+        slide,
+        activeContentItemId,
+        contentItemsById,
+      ));
     }
 
     // If the new contentItem is a title, we need to add a new section for it.
@@ -104,33 +163,39 @@ function* doAddContentItemToSlide(action) {
         sectionProps,
         slide.id,
         parentItemId,
-        afterItemId,
+        previousItemId,
       ));
 
       // Use the new section as the parent item for the new contentItem.
       parentItemId = sectionItemId;
-    }
-    // If the new contentItem is a list, we need to automatically add the first list item inside it.
-    else if (action.meta.contentItemType === contentItemTypes.LIST) {
-      childItemId = generateContentItemId(
-        slide.id,
-        slide.contentItemSequence + 1,
-      );
-      childItemType = contentItemTypes.LIST_ITEM;
-      childItemProps = getPropsForContentItemType(childItemType);
+      previousItemId = null;
     }
 
+    // Add the new contentItem to the state.
     yield put(addContentItem(
       contentItemId,
       action.meta.contentItemType,
       slideViewTypes.LIVE,
-      contentItemProps,
+      getPropsForContentItemType(
+        action.meta.contentItemType,
+        action.meta.contentItemTypeProps,
+      ),
       slide.id,
       parentItemId,
-      afterItemId,
+      previousItemId,
     ));
 
-    if (childItemId !== null) {
+    // If the new contentItem is a list, we need to automatically add the first list item inside it.
+    if (action.meta.contentItemType === contentItemTypes.LIST) {
+      // Generate contentItem props for the new list item.
+      const childItemId = generateContentItemId(
+        slide.id,
+        slide.contentItemSequence + 1,
+      );
+      const childItemType = contentItemTypes.LIST_ITEM;
+      const childItemProps = getPropsForContentItemType(childItemType);
+
+      // Add the new list item to the state.
       yield put(addContentItem(
         childItemId,
         childItemType,
@@ -138,6 +203,7 @@ function* doAddContentItemToSlide(action) {
         childItemProps,
         slide.id,
         contentItemId,
+        null,
       ));
     }
   }
