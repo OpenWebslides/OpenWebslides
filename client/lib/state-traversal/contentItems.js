@@ -223,7 +223,7 @@ function findNearestValidAncestorItemId(
   }
 }
 
-function findAllContentItemDescendantItemIds(contentItemId, contentItemsById) {
+function findContentItemDescendantItemIds(contentItemId, contentItemsById) {
   const contentItem = contentItemsById[contentItemId];
   let descendantItemIds = [];
 
@@ -238,7 +238,7 @@ function findAllContentItemDescendantItemIds(contentItemId, contentItemsById) {
     contentItem.childItemIds.forEach((childItemId) => {
       descendantItemIds = descendantItemIds.concat(childItemId);
       descendantItemIds = descendantItemIds.concat(
-        findAllContentItemDescendantItemIds(childItemId, contentItemsById),
+        findContentItemDescendantItemIds(childItemId, contentItemsById),
       );
     });
   }
@@ -476,11 +476,11 @@ export function getNearestValidAncestorItemId(
  * @param contentItemsById
  *        The contentItemsById object.
  */
-export function getAllContentItemDescendantItemIds(
+export function getContentItemDescendantItemIds(
   contentItemId,
   contentItemsById,
 ) {
-  return findAllContentItemDescendantItemIds(
+  return findContentItemDescendantItemIds(
     contentItemId,
     contentItemsById,
   );

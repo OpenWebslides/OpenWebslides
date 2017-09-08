@@ -7,7 +7,7 @@ import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
 import { getContentItemsById } from 'selectors/entities/content-items';
 
-import { getAllContentItemDescendantItemIds } from 'lib/state-traversal/contentItems';
+import { getContentItemDescendantItemIds } from 'lib/state-traversal/contentItems';
 
 function getContentItemIdsToDelete(contentItemIds, contentItemsById) {
   let result = [];
@@ -15,7 +15,7 @@ function getContentItemIdsToDelete(contentItemIds, contentItemsById) {
   let i;
 
   for (i = 0; i < contentItemIds.length; i += 1) {
-    descendantItemIds = getAllContentItemDescendantItemIds(
+    descendantItemIds = getContentItemDescendantItemIds(
       contentItemIds[i],
       contentItemsById,
     );

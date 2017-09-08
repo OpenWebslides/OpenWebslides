@@ -7,7 +7,7 @@ import { slideViewTypes } from 'constants/slideViewTypes';
 import {
   getPreviousValidContentItemId,
   getNearestValidAncestorItemId,
-  getAllContentItemDescendantItemIds,
+  getContentItemDescendantItemIds,
 } from 'lib/state-traversal/contentItems';
 
 import { DELETE_CONTENT_ITEM_FROM_SLIDE } from 'actions/entities/slides';
@@ -49,7 +49,7 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
       )
       .concat(contentItemId)
       .concat(
-        getAllContentItemDescendantItemIds(contentItemId, contentItemsById),
+        getContentItemDescendantItemIds(contentItemId, contentItemsById),
       );
     }
     // If an ancestor with more than two children was found.
@@ -81,7 +81,7 @@ function findContentItemToDeleteId(contentItemId, ancestorItemIds, contentItemsB
         )
         .concat(contentItemId)
         .concat(
-          getAllContentItemDescendantItemIds(contentItemId, contentItemsById),
+          getContentItemDescendantItemIds(contentItemId, contentItemsById),
         );
       }
     }
