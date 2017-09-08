@@ -57,12 +57,12 @@ export default connect(
   )(ConversationItem);
 
 ConversationItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   conversationType: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   user: PropTypes.shape({
     firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
+    lastName: PropTypes.string,
   }).isRequired,
   byCurrentUser: PropTypes.bool.isRequired,
   deleted: PropTypes.bool.isRequired,
