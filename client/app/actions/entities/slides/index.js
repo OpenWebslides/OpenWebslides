@@ -5,6 +5,7 @@ export const DELETE_SLIDE = 'DELETE_SLIDE';
 
 export const ADD_CONTENT_ITEM_TO_SLIDE = 'ADD_CONTENT_ITEM_TO_SLIDE';
 export const DELETE_CONTENT_ITEM_FROM_SLIDE = 'DELETE_CONTENT_ITEM_FROM_SLIDE';
+export const MOVE_CONTENT_ITEM_ON_SLIDE = 'MOVE_CONTENT_ITEM_ON_SLIDE';
 
 export const INCREASE_SLIDE_LEVEL = 'INCREASE_SLIDE_LEVEL';
 export const DECREASE_SLIDE_LEVEL = 'DECREASE_SLIDE_LEVEL';
@@ -72,5 +73,17 @@ export function deleteContentItemFromSlide(
   return {
     type: DELETE_CONTENT_ITEM_FROM_SLIDE,
     meta: { slideId, contentItemId, ancestorItemIds, assetId },
+  };
+}
+
+export function moveContentItemOnSlide(
+  slideId,
+  contentItemId,
+  ancestorItemIds,
+  direction,
+) {
+  return {
+    type: MOVE_CONTENT_ITEM_ON_SLIDE,
+    meta: { slideId, contentItemId, ancestorItemIds, direction },
   };
 }

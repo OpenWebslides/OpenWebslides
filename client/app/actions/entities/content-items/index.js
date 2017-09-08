@@ -2,6 +2,7 @@
 export const ADD_CONTENT_ITEM = 'ADD_CONTENT_ITEM';
 export const UPDATE_CONTENT_ITEM = 'UPDATE_CONTENT_ITEM';
 export const DELETE_CONTENT_ITEM = 'DELETE_CONTENT_ITEM';
+export const MOVE_CONTENT_ITEM = 'MOVE_CONTENT_ITEM';
 
 export function addContentItem(
   contentItemId,
@@ -37,10 +38,24 @@ export function updateContentItem(
   };
 }
 
+export function moveContentItem(
+  contentItemId,
+  slideId,
+  oldParentItemId,
+  newParentItemId,
+  newPreviousItemId = null,
+) {
+  return {
+    type: MOVE_CONTENT_ITEM,
+    payload: { contentItemId, slideId, oldParentItemId, newParentItemId, newPreviousItemId },
+  };
+}
+
+
 export function deleteContentItem(
   contentItemId,
   slideId,
-  parentItemId = null,
+  parentItemId,
   descendantItemIds = [],
   newFocusedContentItemId = null,
   newSelectionOffsets = null,
