@@ -42,7 +42,7 @@ export function deleteContentItem(
   slideId,
   parentItemId = null,
   descendantItemIds = [],
-  newActiveContentItemId = null,
+  newFocusedContentItemId = null,
   newSelectionOffsets = null,
 ) {
   return {
@@ -52,7 +52,7 @@ export function deleteContentItem(
       slideId,
       parentItemId,
       descendantItemIds,
-      newActiveContentItemId,
+      newFocusedContentItemId,
       newSelectionOffsets,
     },
   };
