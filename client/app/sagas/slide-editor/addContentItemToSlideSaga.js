@@ -2,8 +2,8 @@ import { takeEvery, select, put } from 'redux-saga/effects';
 
 import {
   contentItemTypes,
-  plaintextContentItemTypes,
   sectionContentItemTypes,
+  contentItemTypesById,
 } from 'constants/contentItemTypes';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
@@ -14,63 +14,19 @@ import { getContentItemById } from 'selectors/entities/content-items';
 import { generateContentItemId } from 'lib/convert-to-state/generateIds';
 
 function getPropsForContentItemType(contentItemType, contentItemTypeProps) {
-  let props = {};
-
-  if (Array.indexOf(plaintextContentItemTypes, contentItemType) !== -1) {
-    props = {
-      text: '',
-      inlineProperties: [],
-    };
-  }
-  else if (Array.indexOf(sectionContentItemTypes, contentItemType) !== -1) {
-    props = {
-      childItemIds: [],
-    };
-  }
-  else if (contentItemType === contentItemTypes.LIST) {
-    props = {
-      ordered: false, // default value
-      childItemIds: [],
-    };
-  }
-  else if (contentItemType === contentItemTypes.ILLUSTRATIVE_IMAGE) {
-    props = {
-      src: '',
-      altText: '',
-      caption: '',
-    };
-  }
-  else if (contentItemType === contentItemTypes.DECORATIVE_IMAGE) {
-    props = {
-      src: '',
-      altText: '',
-    };
-  }
-  else if (contentItemType === contentItemTypes.IFRAME) {
-    props = {
-      src: '',
-      altText: '',
-    };
-  }
-  else {
-    console.error(`Unrecognized contentItemType: ${contentItemType}`);
-  }
-
+  // Get the default props for this contentItemType.
+  const defaultProps = contentItemTypesById[contentItemType].defaultProps;
   // Add extra props that have been passed to the action.
-  props = {
-    ...props,
+  const props = {
+    ...defaultProps,
     ...contentItemTypeProps,
   };
 
   return props;
 }
 
-function* findLastSectionContentItemInListOfContentItemIds(
-  contentItemId,
-  childItemIds,
-) {
-  // If there are no suitable child items, this is the last possible nested
-  // section.
+function* findLastSectionContentItemInListOfContentItemIds(contentItemId, childItemIds) {
+  // If there are no suitable child items, this is the last possible nested section.
   let lastSectionContentItemId = contentItemId;
 
   if (childItemIds.length > 0) {
@@ -88,8 +44,7 @@ function* findLastSectionContentItemInListOfContentItemIds(
       ) !== -1
     ) {
       // See if there is another suitable section nested inside it.
-      // Note: this returns the current lastContentItem.id if no suitable
-      // section can be found.
+      // Note: this returns the current lastContentItem.id if no suitable section can be found.
       lastSectionContentItemId =
         yield findLastSectionContentItemInListOfContentItemIds(
           lastChildItem.id,
@@ -122,8 +77,7 @@ function* doAddContentItemToSlide(action) {
 
     // If no parentItemId was explicitly passed to the action.
     if (action.meta.parentItemId === null) {
-      // See if there is an existing section on the slide to which we could add
-      // the new contentItem.
+      // See if there is an existing section on the slide to which we could add the new contentItem.
       // Note: this sets parentItemId to null if there is no suitable section.
       parentItemId = yield findLastSectionContentItemInListOfContentItemIds(
         null,
@@ -134,8 +88,7 @@ function* doAddContentItemToSlide(action) {
     // If the new contentItem is a title, we need to add a new section for it.
     if (action.meta.contentItemType === contentItemTypes.TITLE) {
       const sectionProps = getPropsForContentItemType(contentItemTypes.SECTION);
-      // Since the section should be added first, give it the id we just
-      // generated.
+      // Since the section should be added first, give it the id we just generated.
       const sectionItemId = contentItemId;
       // Generate a new id for the contentItem.
       contentItemId = generateContentItemId(
@@ -157,8 +110,7 @@ function* doAddContentItemToSlide(action) {
       // Use the new section as the parent item for the new contentItem.
       parentItemId = sectionItemId;
     }
-    // If the new contentItem is a list, we need to automatically add the first
-    // list item inside it.
+    // If the new contentItem is a list, we need to automatically add the first list item inside it.
     else if (action.meta.contentItemType === contentItemTypes.LIST) {
       childItemId = generateContentItemId(
         slide.id,

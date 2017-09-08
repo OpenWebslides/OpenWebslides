@@ -69,45 +69,80 @@ export const contentItemTypesById = {
     id: contentItemTypes.TITLE,
     name: 'Title',
     description: 'TODO: title description',
+    defaultProps: {
+      text: '',
+      inlineProperties: [],
+    },
   },
   [contentItemTypes.PARAGRAPH]: {
     id: contentItemTypes.PARAGRAPH,
     name: 'Paragraph',
     description: 'TODO: paragraph description',
+    defaultProps: {
+      text: '',
+      inlineProperties: [],
+    },
   },
   [contentItemTypes.LIST]: {
     id: contentItemTypes.LIST,
     name: 'List',
     description: 'TODO: list description',
+    defaultProps: {
+      ordered: false,
+      childItemIds: [],
+    },
   },
   [contentItemTypes.LIST_ITEM]: {
     id: contentItemTypes.LIST_ITEM,
     name: 'List item',
     description: 'TODO: list item description',
+    defaultProps: {
+      text: '',
+      inlineProperties: [],
+    },
   },
   [contentItemTypes.ILLUSTRATIVE_IMAGE]: {
     id: contentItemTypes.ILLUSTRATIVE_IMAGE,
     name: 'Illustrative image',
     description: 'TODO: illustrative image description',
+    defaultProps: {
+      src: '',
+      alt: '',
+      caption: '',
+    },
   },
   [contentItemTypes.DECORATIVE_IMAGE]: {
     id: contentItemTypes.DECORATIVE_IMAGE,
     name: 'Decorative image',
     description: 'TODO: decorative image description',
+    defaultProps: {
+      src: '',
+      alt: '',
+    },
   },
   [contentItemTypes.IFRAME]: {
     id: contentItemTypes.IFRAME,
     name: 'Iframe',
     description: 'TODO: iframe description',
+    defaultProps: {
+      src: '',
+      alt: '',
+    },
   },
   [contentItemTypes.SECTION]: {
     id: contentItemTypes.SECTION,
     name: 'Section',
     description: 'TODO: section description',
+    defaultProps: {
+      childItemIds: [],
+    },
   },
   [contentItemTypes.ASIDE]: {
     id: contentItemTypes.ASIDE,
     name: 'Aside',
     description: 'TODO: aside description',
+    defaultProps: {
+      childItemIds: [],
+    },
   },
 };
