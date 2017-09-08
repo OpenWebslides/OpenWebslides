@@ -1,24 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const directions = [
-  {
-    id: 'up',
-    text: 'Up',
-  },
-  {
-    id: 'right',
-    text: 'Right',
-  },
-  {
-    id: 'left',
-    text: 'Left',
-  },
-  {
-    id: 'down',
-    text: 'Down',
-  },
-];
+import { directions } from 'constants/directions';
+
+const directionsMenu = {
+  [directions.UP]: 'Up',
+  [directions.RIGHT]: 'Right',
+  [directions.LEFT]: 'Left',
+  [directions.DOWN]: 'Down',
+};
 
 function SlideContentViewItem(props) {
   const contentItem = props.contentItem;
@@ -58,14 +48,20 @@ function SlideContentViewItem(props) {
                   className={`${cssClass}__options-item ${cssClass}__options-item--direction-menu`}
                 >
                   <menu className="o_direction-menu">
-                    {directions.map(direction =>
-                      <li className="o_direction-menu__item" key={direction.id}>
+                    {Object.keys(directionsMenu).map(direction =>
+                      <li className="o_direction-menu__item" key={direction}>
                         <button
-                          className={`o_direction-menu__button o_direction-menu__button--${direction.id}`}
+                          className={`o_direction-menu__button o_direction-menu__button--${direction.toLowerCase()}`}
                           tabIndex="-1"
+                          onClick={() => props.handleDirectionButtonClick(
+                            direction,
+                            props.contentItem,
+                            props.ancestorItemIds,
+                            props.slideId,
+                          )}
                         >
                           <span className="o_direction-menu__button__wrapper">
-                            {direction.text}
+                            {directionsMenu[direction]}
                           </span>
                         </button>
                       </li>,
@@ -86,6 +82,7 @@ SlideContentViewItem.propTypes = {
   isFocused: PropTypes.bool.isRequired,
   contentItem: PropTypes.objectOf(Object).isRequired,
   children: PropTypes.objectOf(Object).isRequired,
+  handleDirectionButtonClick: PropTypes.func.isRequired,
 };
 
 SlideContentViewItem.defaultProps = {

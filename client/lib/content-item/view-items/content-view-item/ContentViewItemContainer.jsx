@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { moveContentItemOnSlide } from 'actions/entities/slides';
 import {
   getFocusedContentItemId,
   getFocusedSlideViewType,
@@ -29,7 +30,18 @@ function mapStateToProps(state, props) {
   };
 }
 
-const ContentItemContainer = connect(mapStateToProps)(ContentViewItem);
+
+function mapDispatchToProps(dispatch) {
+  return {
+    handleDirectionButtonClick: (direction, contentItem, ancestorItemIds, slideId) => {
+      dispatch(
+        moveContentItemOnSlide(slideId, contentItem.id, ancestorItemIds, direction),
+      );
+    },
+  };
+}
+
+const ContentItemContainer = connect(mapStateToProps, mapDispatchToProps)(ContentViewItem);
 
 ContentItemContainer.propTypes = {
   slideViewType: PropTypes.string.isRequired,
