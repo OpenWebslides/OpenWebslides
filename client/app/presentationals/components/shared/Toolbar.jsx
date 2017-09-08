@@ -112,11 +112,12 @@ Toolbar.propTypes = {
       title: PropTypes.string,
       onClickArguments: PropTypes.object,
     }),
-  ).isRequired,
+  ),
 };
 
 Toolbar.defaultProps = {
   cssIdentifier: 'default',
+  buttons: [],
 };
 
 export default Toolbar;
