@@ -81,6 +81,8 @@ SlideContentViewItem.propTypes = {
   cssIdentifier: PropTypes.string,
   isFocused: PropTypes.bool.isRequired,
   contentItem: PropTypes.objectOf(Object).isRequired,
+  ancestorItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  slideId: PropTypes.string.isRequired,
   children: PropTypes.objectOf(Object).isRequired,
   handleDirectionButtonClick: PropTypes.func.isRequired,
 };
