@@ -31,7 +31,7 @@ function contentItemObjectToReact(
         contentItemObject.text,
       );
     case SECTION:
-      return contentItemObject.childItemIds.map(itemId => {
+      return contentItemObject.childItemIds.map((itemId) => {
         const itemObject = entities.contentItems.byId[itemId];
         return contentItemObjectToReact(
           entities,
@@ -43,12 +43,16 @@ function contentItemObjectToReact(
         );
       });
     case LIST:
-      const childrenObjects = contentItemObject.childItemIds.map(itemId => entities.contentItems.byId[itemId]);
+      const childrenObjects = contentItemObject.childItemIds.map(
+        itemId => entities.contentItems.byId[itemId],
+      );
       return React.createElement(
         contentItemObject.ordered ? 'ol' : 'ul',
         { 'data-level': currentLevel, className: 'c_print-view__list' },
         childrenObjects.map(child =>
-          contentItemObjectToReact(entities, child, currentLevel, imagesPref, decorativeImagesPref, iframesPref),
+          contentItemObjectToReact(
+            entities, child, currentLevel, imagesPref, decorativeImagesPref, iframesPref,
+          ),
         ),
       );
     case LIST_ITEM:
@@ -64,31 +68,85 @@ function contentItemObjectToReact(
     case IFRAME:
       return iframeToReact(contentItemObject, iframesPref, currentLevel);
     default:
-      return React.createElement('p', null, `Unsupported element: ${contentItemObject.contentItemType}`);
+      return React.createElement(
+        'p',
+        null,
+        `Unsupported element: ${contentItemObject.contentItemType}`,
+      );
   }
 }
 
+
+function convertSlideToContentItems(slide, entities, imagesPref, decorativeImagesPref, iframesPref) {
+  const slideElements = slide.contentItemIds.map(itemId => entities.contentItems.byId[itemId]);
+  const level = parseInt(slide.level, 10);
+
+  return slideElements.reduce(
+    (arr, currentObject) =>
+      arr.concat(
+        contentItemObjectToReact(
+          entities, currentObject, level, imagesPref, decorativeImagesPref, iframesPref,
+        ),
+      ),
+    [],
+  );
+}
+
+// Returns a <section> element containing all nested sections
+function convertSection(slides, currentLevel, entities, imagesPref, decorativeImagesPref, iframesPref) {
+  let thisSectionElements = [];
+  for (let i = 0; i < slides.length; i += 1) {
+    if (slides[i].level === currentLevel) {
+      if (!slides[i + 1] || slides[i + 1].level === currentLevel) {
+        // there is no subsection, so add the content directly to the current section
+        thisSectionElements = thisSectionElements.concat(
+          convertSlideToContentItems(
+            slides[i], entities, imagesPref, decorativeImagesPref, iframesPref,
+          ),
+        );
+      }
+      else {
+        // Add the current slide to the section:
+        thisSectionElements = thisSectionElements.concat(
+          convertSlideToContentItems(
+            slides[i], entities, imagesPref, decorativeImagesPref, iframesPref,
+          ),
+        );
+        i += 1;
+        let subsectionSlides = [];
+        while (i < slides.length && slides[i].level > currentLevel) {
+          subsectionSlides = subsectionSlides.concat(slides[i]);
+          i += 1;
+        }
+        // Then convert the subsection:
+        thisSectionElements = thisSectionElements.concat(
+          convertSection(
+            subsectionSlides,
+            currentLevel + 1,
+            entities,
+            imagesPref,
+            decorativeImagesPref,
+            iframesPref,
+          ),
+        );
+      }
+    }
+  }
+
+  return React.createElement(
+    'section',
+    null,
+    thisSectionElements,
+  );
+}
 function convertToPrint(entities, deckId, imagesPref, decorativeImagesPref, iframesPref) {
   const slideIds = entities.decks.byId[deckId].slideIds;
   const slideObjects = slideIds.map(id => entities.slides.byId[id]);
 
-  let elements = [];
-  for (let i = 0; i < slideObjects.length; i += 1) {
-    const slide = slideObjects[i];
-    const level = parseInt(slide.level, 10);
+  const elements = convertSection(
+    slideObjects, 1, entities, imagesPref, decorativeImagesPref, iframesPref,
+  );
 
-    const slideElements = slide.contentItemIds.map(itemId => entities.contentItems.byId[itemId]);
-
-    const reactElements = slideElements.reduce(
-      (arr, currentObject) =>
-        arr.concat(
-          contentItemObjectToReact(entities, currentObject, level, imagesPref, decorativeImagesPref, iframesPref),
-        ),
-      [],
-    );
-    elements = elements.concat(reactElements);
-  }
   return elements;
 }
-
 export default convertToPrint;
