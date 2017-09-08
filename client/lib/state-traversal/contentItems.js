@@ -164,10 +164,10 @@ function findContentItemAncestorItemIds(
   return null;
 }
 
-function findNearestAncestorIdWithAtLeastAmountOfChildren(
+function findNearestValidAncestorItemId(
   ancestorItemIds,
   contentItemsById,
-  amount,
+  ancestorItemValidator,
 ) {
   // If there are no ancestors left.
   if (ancestorItemIds.length === 0) {
@@ -182,16 +182,16 @@ function findNearestAncestorIdWithAtLeastAmountOfChildren(
     const newAncestorItemIds = _.dropRight(ancestorItemIds, 1);
 
     // Test if the parent is a valid ancestor.
-    if (parentItem.childItemIds.length >= amount) {
+    if (ancestorItemValidator(parentItem) === true) {
       return parentItem.id;
     }
     // If the parent was not a valid ancestor.
     else {
       // Go further up the ancestors list.
-      return findNearestAncestorIdWithAtLeastAmountOfChildren(
+      return findNearestValidAncestorItemId(
         newAncestorItemIds,
         contentItemsById,
-        amount,
+        ancestorItemValidator,
       );
     }
   }
@@ -224,8 +224,7 @@ function findAllContentItemDescendantItemIds(contentItemId, contentItemsById) {
 
 /**
  * Finds the previous valid contentItem (in terms of tree leaves) as compared to the contentItem
- * with id $contentItemId. Validity is determined by a
- * validator function.
+ * with id $contentItemId. Validity is determined by a validator function.
  *
  * @param contentItemId
  *        The id of the contentItem where we start searching.
@@ -270,9 +269,8 @@ export function getPreviousValidContentItemId(
 }
 
 /**
- * Finds the next valid contentItem (in terms of tree leaves) as compared to the contentItem
- * with id $contentItemId. Validity is determined by a
- * validator function.
+ * Finds the next valid contentItem (in terms of tree leaves) as compared to the contentItem with id
+ * $contentItemId. Validity is determined by a validator function.
  *
  * @param contentItemId
  *        The id of the contentItem where we start searching.
@@ -340,24 +338,27 @@ export function getContentItemAncestorItemIds(
 }
 
 /**
- * Finds the ancestor contentItem that has at least $amount of children.
+ * Finds the nearest valid ancestorItem starting from the parentItem and progressively moving up in
+ * the tree. Validity is determined by a validator function.
  *
  * @param ancestorItemIds
  *        The list of ids of the ancestor items of the contentItem where we start searching.
  * @param contentItemsById
  *        The contentItemsById object.
- * @param amount
- *        The amount of children that the ancestor we're looking for should at least have.
+ * @param ancestorItemValidator
+ *        The function that decides if an ancestorItem is considered 'valid'. It is passed a
+ *        contentItem as an argument and should return TRUE if this contentItem is valid, FALSE if
+ *        it is not.
  */
-export function getNearestAncestorIdWithAtLeastAmountOfChildren(
+export function getNearestValidAncestorItemId(
   ancestorItemIds,
   contentItemsById,
-  amount = 1,
+  ancestorItemValidator,
 ) {
-  return findNearestAncestorIdWithAtLeastAmountOfChildren(
+  return findNearestValidAncestorItemId(
     ancestorItemIds,
     contentItemsById,
-    amount,
+    ancestorItemValidator,
   );
 }
 
