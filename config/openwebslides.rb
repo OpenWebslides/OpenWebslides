@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'openwebslides/configuration'
+require 'open_webslides/configuration'
 
 ##
 # Open Webslides configuration

@@ -1,11 +1,32 @@
 # frozen_string_literal: true
 
+require 'open_webslides/version'
+
 class ApplicationController < ActionController::API
   include JSONAPI::Utils
   include JWT::Auth::Authentication
   include Pundit
 
   include ErrorHandling
+
+  def version
+    version = OpenWebslides::Version.new
+
+    info = {
+      :data => {
+        :type => 'apps',
+        :links => {
+          :self => root_url
+        },
+        :attributes => {
+          :version => version.build,
+          :version_string => version.version_string
+        }
+      }
+    }
+
+    render :json => info, :status => :ok
+  end
 
   protected
 

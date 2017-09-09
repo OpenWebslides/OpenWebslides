@@ -8,6 +8,6 @@ RSpec.describe 'app routing', :type => :routing do
   end
 
   it 'routes api root' do
-    expect(:get => '/api').not_to be_routable
+    expect(:get => '/api').to route_to 'application#version'
   end
 end
