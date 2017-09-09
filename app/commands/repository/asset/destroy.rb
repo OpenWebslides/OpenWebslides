@@ -9,7 +9,7 @@ module Repository
       attr_accessor :author
 
       def execute
-        raise ArgumentError 'No author specified' unless @author
+        raise ArgumentError, 'No author specified' unless @author
 
         File.delete asset_file
 
