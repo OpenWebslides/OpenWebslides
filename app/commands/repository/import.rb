@@ -35,7 +35,7 @@ module Repository
         end
 
         exec Filesystem::Render do |c|
-          c.content = doc.to_html
+          c.content = doc.at('body').children.to_html
         end
 
         # Commit
