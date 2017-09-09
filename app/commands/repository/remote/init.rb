@@ -15,7 +15,7 @@ module Repository
           :has_issues => false,
           :has_wiki => false,
           :has_downloads => false,
-          :organization => config.path
+          :organization => OpenWebslides.config.github.organization
         }
 
         Octokit.create_repository @receiver.canonical_name, options
