@@ -63,7 +63,12 @@ class DeckService < ApplicationService
 
   def import(repository)
     if @deck.save
-      Repository::Import.new(@deck).execute repository
+      command = Repository::Import.new @deck
+
+      command.repository = repository
+
+      command.execute
+
       Notification.create :user => @deck.owner,
                           :deck => @deck,
                           :event_type => :deck_created
