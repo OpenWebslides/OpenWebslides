@@ -5,104 +5,262 @@ import { directions } from 'constants/directions';
 
 // Helper functions ------------------------------------------------------------
 
-function findNearestValidContentItemId(
-  direction,
+function findContentItemSiblingItemIdsAndIndex(
   contentItemId,
   ancestorItemIds,
   slideContentItemIds,
   contentItemsById,
+) {
+  // Get the siblingItemIds array from either the parent item or the slide.
+  const siblingItemIds = (ancestorItemIds.length !== 0)
+    ? contentItemsById[_.last(ancestorItemIds)].childItemIds
+    : slideContentItemIds;
+  // Find the index of the contentItemId in the siblingItemIds array.
+  const indexInSiblingItemIds = _.indexOf(siblingItemIds, contentItemId);
+
+  return { siblingItemIds, indexInSiblingItemIds };
+}
+
+function findPreviousValidContentItemId(
+  contentItemId,
+  ancestorItemIds,
+  slideContentItemIds,
+  contentItemsById,
+  checkContainerChildren,
   contentItemValidator,
   containerItemValidator,
-  checkContainerChildren,
 ) {
-  let siblingItemIds;
+  const debug = true;
 
   let newContentItemId;
   let newAncestorItemIds;
   let newCheckContainerChildren;
+  let checkNewContentItem;
 
-  const parentItemId = _.last(ancestorItemIds);
-  if (parentItemId !== undefined) {
-    siblingItemIds = contentItemsById[parentItemId].childItemIds;
-  }
-  else {
-    siblingItemIds = slideContentItemIds;
-  }
-
-  const indexInSiblingItemIds = Array.indexOf(siblingItemIds, contentItemId);
   const contentItem = contentItemsById[contentItemId];
+  const { siblingItemIds, indexInSiblingItemIds } = findContentItemSiblingItemIdsAndIndex(
+    contentItemId,
+    ancestorItemIds,
+    slideContentItemIds,
+    contentItemsById,
+  );
 
-  // First check if the contentItem is a container element.
-  // (Note: we only do this if checkContainerChildren is set to TRUE to indicate that the container
-  // children are possible nearestValidContentItem candidates.)
-  if (checkContainerChildren && containerItemValidator(contentItem, ancestorItemIds) === true) {
-    // If it is a container, check its first/last child.
-    newContentItemId = direction === directions.UP
-      ? _.last(contentItem.childItemIds)
-      : _.first(contentItem.childItemIds);
-    if (newContentItemId !== undefined) {
-      newAncestorItemIds = ancestorItemIds.concat(contentItemId);
-    }
-    newCheckContainerChildren = true;
+  if (debug) {
+    console.log('Find prev call -------------------------');
+    console.log(`contentItemId: ${contentItemId}`);
+    console.log(`ancestorItemIds: ${ancestorItemIds}`);
+    console.log(`checkContainerChildren: ${checkContainerChildren}`);
   }
-  // If the contentItem is the first/last in its list of siblings.
-  else if (
-    (direction === directions.UP && indexInSiblingItemIds === 0) ||
-    (direction === directions.DOWN && indexInSiblingItemIds === siblingItemIds.length - 1)
+
+  // First check if the contentItem is a (non-empty) container element.
+  // (Note: we only do this if checkContainerChildren is set to TRUE to indicate that the container
+  // children are possible previousValidContentItem candidates.)
+  if (
+    checkContainerChildren &&
+    containerItemValidator(contentItem, ancestorItemIds) === true &&
+    contentItem.childItemIds.length > 0
   ) {
+    if (debug) console.log('Check container last child');
+    // If it is a (non-empty) container, check its last child.
+    newContentItemId = _.last(contentItem.childItemIds);
+    newAncestorItemIds = ancestorItemIds.concat(contentItemId);
+    // If the last child is a container, its children are possible previousValidContentItems.
+    newCheckContainerChildren = true;
+    // Check this newContentItem for validity.
+    checkNewContentItem = true;
+  }
+  // If the contentItem is the first in its list of siblings.
+  else if (indexInSiblingItemIds === 0) {
+    if (debug) console.log('Go up a level');
     // Go up a level.
-    newContentItemId = _.last(ancestorItemIds);
-    if (newContentItemId !== undefined) {
+    if (ancestorItemIds.length > 0) {
+      newContentItemId = _.last(ancestorItemIds);
       newAncestorItemIds = _.dropRight(ancestorItemIds, 1);
+      // Don't go back down this container.
+      newCheckContainerChildren = false;
+      // Don't check this newContentItem for validity (this check has already happened right before
+      // we entered it and we don't want to check the same contentItem twice) but directly move on
+      // to the next.
+      checkNewContentItem = false;
     }
+    // If there are no higher levels, then this was the first contentItem on the slide.
     else {
+      // A previousValidContentItem cannot be found.
       newContentItemId = null;
     }
-    // Don't go back down this section.
-    newCheckContainerChildren = false;
   }
-  // If the contentItem is not the first/last in its list of siblings.
+  // If the contentItem is not a checkable container and not the first in its list of siblings.
   else {
-    // Check the previous/next sibling.
-    newContentItemId = direction === directions.UP
-      ? siblingItemIds[indexInSiblingItemIds - 1]
-      : siblingItemIds[indexInSiblingItemIds + 1];
+    if (debug) console.log('Check prev sibling');
+    // There must be a previous sibling then; check that one.
+    newContentItemId = siblingItemIds[indexInSiblingItemIds - 1];
     newAncestorItemIds = ancestorItemIds;
+    // If this previous sibling is a container, its children are possible previousValidContentItems.
     newCheckContainerChildren = true;
+    // Check this newContentItem for validity.
+    checkNewContentItem = true;
   }
 
-  // If no previous contentItemId could be found.
+  if (debug) {
+    console.log(`newContentItemId: ${newContentItemId}`);
+    console.log(`newAncestorItemIds: ${newAncestorItemIds}`);
+    console.log(`newCheckContainerChildren: ${newCheckContainerChildren}`);
+    console.log('End find prev call ---------------------');
+  }
+
+  // If no possible previousValidContentItem candidate could be found, return null.
   if (newContentItemId === null) {
     return {
       contentItemId: null,
       ancestorItemIds: [],
+      checkContainerChildren: false,
     };
   }
-  // If a previous contentItemId was found, & it was valid, this is the contentItemId we were
-  // looking for.
+  // If a checkable previous contentItemId was found, and it was valid, this is the contentItemId we
+  // were looking for.
   else if (
-    // Note: if we just went up a level, don't check this contentItem for validity; it is not a true
-    // prev/next candidate, but rather an extra step we have to take to get to the actual prev/next
-    // item.
-    newCheckContainerChildren === true &&
+    checkNewContentItem &&
     contentItemValidator(contentItemsById[newContentItemId], newAncestorItemIds) === true
   ) {
     return {
       contentItemId: newContentItemId,
       ancestorItemIds: newAncestorItemIds,
+      checkContainerChildren: newCheckContainerChildren,
     };
   }
-  // If the contentItem is not valid, we need to search further.
+  // Otherwise, we need to search further.
   else {
-    return findNearestValidContentItemId(
-      direction,
+    return findPreviousValidContentItemId(
       newContentItemId,
       newAncestorItemIds,
       slideContentItemIds,
       contentItemsById,
+      newCheckContainerChildren,
       contentItemValidator,
       containerItemValidator,
+    );
+  }
+}
+
+function findNextValidContentItemId(
+  contentItemId,
+  ancestorItemIds,
+  slideContentItemIds,
+  contentItemsById,
+  checkContainerChildren,
+  contentItemValidator,
+  containerItemValidator,
+) {
+  const debug = true;
+
+  let newContentItemId;
+  let newAncestorItemIds;
+  let newCheckContainerChildren;
+  let checkNewContentItem;
+
+  const contentItem = contentItemsById[contentItemId];
+  const { siblingItemIds, indexInSiblingItemIds } = findContentItemSiblingItemIdsAndIndex(
+    contentItemId,
+    ancestorItemIds,
+    slideContentItemIds,
+    contentItemsById,
+  );
+
+  if (debug) {
+    console.log('Find next call -------------------------');
+    console.log(`contentItemId: ${contentItemId}`);
+    console.log(`ancestorItemIds: ${ancestorItemIds}`);
+    console.log(`checkContainerChildren: ${checkContainerChildren}`);
+  }
+
+  // First check if the contentItem is a (non-empty) container element.
+  // (Note: we only do this if checkContainerChildren is set to TRUE to indicate that the container
+  // children are possible nextValidContentItem candidates.)
+  if (
+    checkContainerChildren &&
+    containerItemValidator(contentItem, ancestorItemIds) === true &&
+    contentItem.childItemIds.length > 0
+  ) {
+    if (debug) console.log('Check container first child');
+    // If it is a (non-empty) container, check its first child.
+    newContentItemId = _.first(contentItem.childItemIds);
+    newAncestorItemIds = ancestorItemIds.concat(contentItemId);
+    // If the last child is a container, its children are possible nextValidContentItems.
+    newCheckContainerChildren = true;
+    // Check this newContentItem for validity.
+    checkNewContentItem = true;
+  }
+  // If the contentItem is the last in its list of siblings.
+  else if (indexInSiblingItemIds === siblingItemIds.length - 1) {
+    if (debug) console.log('Go up a level');
+    // Go up a level.
+    if (ancestorItemIds.length > 0) {
+      newContentItemId = _.last(ancestorItemIds);
+      newAncestorItemIds = _.dropRight(ancestorItemIds, 1);
+      // Don't go back down this container.
+      newCheckContainerChildren = false;
+      // Check the upper level container for validity.
+      checkNewContentItem = true;
+    }
+    // If there are no higher levels, then this was the last contentItem on the slide.
+    else {
+      // A nextValidContentItem cannot be found.
+      newContentItemId = null;
+    }
+  }
+  // If the contentItem is not a checkable container and not the last in its list of siblings.
+  else {
+    if (debug) console.log('Check next sibling');
+    // There must be a next sibling then; check that one.
+    newContentItemId = siblingItemIds[indexInSiblingItemIds + 1];
+    newAncestorItemIds = ancestorItemIds;
+    // If this next sibling is a container, its children are possible nextValidContentItems.
+    newCheckContainerChildren = true;
+
+    // Only check the new item for validity if it is not a container; containers should be checked
+    // only when they are 'exited' (when moving up a level), not when they are entered. This
+    // prevents the same item from being checked twice.
+    checkNewContentItem =
+      (containerItemValidator(contentItemsById[newContentItemId], newAncestorItemIds) === false);
+  }
+
+  if (debug) {
+    console.log(`newContentItemId: ${newContentItemId}`);
+    console.log(`newAncestorItemIds: ${newAncestorItemIds}`);
+    console.log(`newCheckContainerChildren: ${newCheckContainerChildren}`);
+    console.log('End find next call ---------------------');
+  }
+
+  // If no possible nextValidContentItem candidate could be found, return null.
+  if (newContentItemId === null) {
+    return {
+      contentItemId: null,
+      ancestorItemIds: [],
+      checkContainerChildren: false,
+    };
+  }
+  // If a checkable next contentItemId was found, and it was valid, this is the contentItemId we
+  // were looking for.
+  else if (
+    checkNewContentItem &&
+    contentItemValidator(contentItemsById[newContentItemId], newAncestorItemIds) === true
+  ) {
+    return {
+      contentItemId: newContentItemId,
+      ancestorItemIds: newAncestorItemIds,
+      checkContainerChildren: newCheckContainerChildren,
+    };
+  }
+  // Otherwise, we need to search further.
+  else {
+    return findNextValidContentItemId(
+      newContentItemId,
+      newAncestorItemIds,
+      slideContentItemIds,
+      contentItemsById,
       newCheckContainerChildren,
+      contentItemValidator,
+      containerItemValidator,
     );
   }
 }
@@ -290,6 +448,9 @@ function findContentItemDescendantItemIds(contentItemId, contentItemsById) {
  *        possible ancestor of a contentItem and it can't be included in the ancestorItemIds array.)
  * @param contentItemsById
  *        The contentItemsById object.
+ * @param checkInitialContainerChildren
+ *        If the contentItem with id $contentItemId is a container, this argument decides if its
+ *        children are considered valid previous contentItems.
  * @param contentItemValidator
  *        The function that decides if a contentItem is considered 'valid'. It is passed a
  *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
@@ -302,34 +463,30 @@ function findContentItemDescendantItemIds(contentItemId, contentItemsById) {
  *        lists should be considered containers, while for others they should not. By doing it this
  *        way, the caller of this function has full control over which contentItems are considered
  *        containers and which are not.
- * @param checkInitialContainerChildren
- *        If the contentItem with id $contentItemId is a container, this argument decides if its
- *        children are considered valid previous contentItems.
  *
- * @returns {{contentItemId, ancestorItemIds}}
+ * @returns {{contentItemId, ancestorItemIds, checkContainerChildren}}
  */
 export function getPreviousValidContentItemId(
   contentItemId,
   ancestorItemIds,
   slideContentItemIds,
   contentItemsById,
+  checkInitialContainerChildren = false,
   contentItemValidator = (
     contentItem => _.includes(contentItemTypes, contentItem.contentItemType)
   ),
   containerItemValidator = (
     contentItem => _.includes(containerContentItemTypes, contentItem.contentItemType)
   ),
-  checkInitialContainerChildren = false,
 ) {
-  return findNearestValidContentItemId(
-    directions.UP,
+  return findPreviousValidContentItemId(
     contentItemId,
     ancestorItemIds,
     slideContentItemIds,
     contentItemsById,
+    checkInitialContainerChildren,
     contentItemValidator,
     containerItemValidator,
-    checkInitialContainerChildren,
   );
 }
 
@@ -347,6 +504,9 @@ export function getPreviousValidContentItemId(
  *        possible ancestor of a contentItem and it can't be included in the ancestorItemIds array.)
  * @param contentItemsById
  *        The contentItemsById object.
+ * @param checkInitialContainerChildren
+ *        If the contentItem with id $contentItemId is a container, this argument decides if its
+ *        children are considered valid previous contentItems.
  * @param contentItemValidator
  *        The function that decides if a contentItem is considered 'valid'. It is passed a
  *        contentItem and its ancestorItemIds as arguments and should return TRUE if this
@@ -359,34 +519,30 @@ export function getPreviousValidContentItemId(
  *        lists should be considered containers, while for others they should not. By doing it this
  *        way, the caller of this function has full control over which contentItems are considered
  *        containers and which are not.
- * @param checkInitialContainerChildren
- *        If the contentItem with id $contentItemId is a container, this argument decides if its
- *        children are considered valid previous contentItems.
  *
- * @returns {{contentItemId, ancestorItemIds}}
+ * @returns {{contentItemId, ancestorItemIds, checkContainerChildren}}
  */
 export function getNextValidContentItemId(
   contentItemId,
   ancestorItemIds,
   slideContentItemIds,
   contentItemsById,
+  checkInitialContainerChildren = false,
   contentItemValidator = (
     contentItem => _.includes(contentItemTypes, contentItem.contentItemType)
   ),
   containerItemValidator = (
     contentItem => _.includes(containerContentItemTypes, contentItem.contentItemType)
   ),
-  checkInitialContainerChildren = false,
 ) {
-  return findNearestValidContentItemId(
-    directions.DOWN,
+  return findNextValidContentItemId(
     contentItemId,
     ancestorItemIds,
     slideContentItemIds,
     contentItemsById,
+    checkInitialContainerChildren,
     contentItemValidator,
     containerItemValidator,
-    checkInitialContainerChildren,
   );
 }
 
@@ -569,12 +725,10 @@ export function getContentItemSiblingItemIdsAndIndex(
   slideContentItemIds,
   contentItemsById,
 ) {
-  // Get the siblingItemIds array from either the parent item or the slide.
-  const siblingItemIds = (ancestorItemIds.length !== 0)
-    ? contentItemsById[_.last(ancestorItemIds)].childItemIds
-    : slideContentItemIds;
-  // Find the index of the contentItemId in the siblingItemIds array.
-  const indexInSiblingItemIds = _.indexOf(siblingItemIds, contentItemId);
-
-  return { siblingItemIds, indexInSiblingItemIds };
+  return findContentItemSiblingItemIdsAndIndex(
+    contentItemId,
+    ancestorItemIds,
+    slideContentItemIds,
+    contentItemsById,
+  );
 }
