@@ -7,7 +7,7 @@ import {
   sectionContentItemTypes,
 } from 'constants/contentItemTypes';
 
-import { MOVE_CONTENT_ITEM_ON_SLIDE } from 'actions/entities/slides';
+import { MOVE_CONTENT_ITEM_ON_SLIDE, deleteContentItemFromSlide } from 'actions/entities/slides';
 import { moveContentItem } from 'actions/entities/content-items';
 import { getSlideById } from 'selectors/entities/slides';
 import { getContentItemsById } from 'selectors/entities/content-items';
@@ -427,7 +427,9 @@ function processMove(direction, contentItemId, ancestorItemIds, slide, contentIt
 
 function* doMoveContentItemOnSlide(action) {
   try {
-    console.log('New move -------------------------------');
+    const debug = true;
+
+    if (debug) console.log('New move -------------------------------');
 
     const { slideId, contentItemId, ancestorItemIds, direction } = action.meta;
     const slide = yield select(getSlideById, slideId);
@@ -463,11 +465,21 @@ function* doMoveContentItemOnSlide(action) {
       contentItemsById,
     );
 
-    console.log(`isMoveOk: ${isMoveOk}`);
-    console.log(`newParentItemId: ${newParentItemId}`);
-    console.log(`newPreviousItemId: ${newPreviousItemId}`);
+    if (debug) console.log(`isMoveOk: ${isMoveOk}`);
+    if (debug) console.log(`newParentItemId: ${newParentItemId}`);
+    if (debug) console.log(`newPreviousItemId: ${newPreviousItemId}`);
 
     if (isMoveOk) {
+      let deleteParentItem = false;
+      // If the move is ok, check if the move causes $contentItemToMove's old parent to become
+      // empty. If so, delete the parent from the slide.
+      if (
+        oldParentItemId !== null &&
+        contentItemsById[oldParentItemId].childItemIds.length === 1
+      ) {
+        deleteParentItem = true;
+      }
+
       yield put(moveContentItem(
         contentItemToMoveId,
         slideId,
@@ -475,6 +487,14 @@ function* doMoveContentItemOnSlide(action) {
         newParentItemId,
         newPreviousItemId,
       ));
+
+      if (deleteParentItem) {
+        yield put(deleteContentItemFromSlide(
+          slideId,
+          oldParentItemId,
+          _.dropRight(newAncestorItemIds, 1),
+        ));
+      }
     }
     else {
       console.error(
