@@ -30,7 +30,7 @@ function findPreviousValidContentItemId(
   contentItemValidator,
   containerItemValidator,
 ) {
-  const debug = true;
+  const debug = false;
 
   let newContentItemId;
   let newAncestorItemIds;
@@ -151,7 +151,7 @@ function findNextValidContentItemId(
   contentItemValidator,
   containerItemValidator,
 ) {
-  const debug = true;
+  const debug = false;
 
   let newContentItemId;
   let newAncestorItemIds;
@@ -280,9 +280,16 @@ function findPreviousValidContentItemPosition(
 
   let skippedItemsCounter = 0;
   let validPositionFound = false;
+  let checkTopmostPosition = false;
 
   // Iterate over all previous contentItems, starting at the item with id $contentItemId.
-  while (!validPositionFound && positionItemId !== null) {
+  while (!validPositionFound && (positionItemId !== null || checkTopmostPosition === false)) {
+    // If positionItemId equals NULL (meaning no previous contentItem could be found) we only need
+    // to check for the NULL position on the slide itself; after that we have to stop the loop.
+    if (positionItemId === null) {
+      checkTopmostPosition = true;
+    }
+
     // If the item we last checked was the first item in its container, see if we can move the
     // contentItem to the first position in the section (i.e. positionItemId === null) before
     // moving on to the parent container.
@@ -294,8 +301,9 @@ function findPreviousValidContentItemPosition(
       slideContentItemIds,
       contentItemsById,
     ));
-    if (positionItemIndexInSiblingItemIds === 0) {
+    if (positionItemIndexInSiblingItemIds === 0 || checkTopmostPosition) {
       if (
+        skippedItemsCounter === amountOfItemsToSkip &&
         positionValidator(
           contentItemId,
           ancestorItemIds,
@@ -305,19 +313,16 @@ function findPreviousValidContentItemPosition(
           contentItemsById,
         )
       ) {
-        if (skippedItemsCounter < amountOfItemsToSkip) {
-          skippedItemsCounter += 1;
-        }
-        else {
-          validPositionFound = true;
-          positionItemId = null;
-        }
+        validPositionFound = true;
+        positionItemId = null;
       }
+
+      if (skippedItemsCounter < amountOfItemsToSkip) skippedItemsCounter += 1;
     }
 
     // If no valid position was found in the above step, get a new previous contentItem and try to
     // validate that one.
-    if (!validPositionFound) {
+    if (!validPositionFound && !checkTopmostPosition) {
       ({
         contentItemId: positionItemId,
         ancestorItemIds: positionItemAncestorItemIds,
@@ -334,6 +339,7 @@ function findPreviousValidContentItemPosition(
 
       if (
         positionItemId !== null &&
+        skippedItemsCounter === amountOfItemsToSkip &&
         positionValidator(
           contentItemId,
           ancestorItemIds,
@@ -341,14 +347,12 @@ function findPreviousValidContentItemPosition(
           positionItemAncestorItemIds,
           slideContentItemIds,
           contentItemsById,
-        )) {
-        if (skippedItemsCounter < amountOfItemsToSkip) {
-          skippedItemsCounter += 1;
-        }
-        else {
-          validPositionFound = true;
-        }
+        )
+      ) {
+        validPositionFound = true;
       }
+
+      if (skippedItemsCounter < amountOfItemsToSkip) skippedItemsCounter += 1;
     }
   }
 
@@ -403,6 +407,7 @@ function findNextValidContentItemPosition(
     // Check if the next contentItem is a valid position.
     if (
       positionItemId !== null &&
+      skippedItemsCounter === amountOfItemsToSkip &&
       positionValidator(
         contentItemId,
         ancestorItemIds,
@@ -412,13 +417,10 @@ function findNextValidContentItemPosition(
         contentItemsById,
       )
     ) {
-      if (skippedItemsCounter < amountOfItemsToSkip) {
-        skippedItemsCounter += 1;
-      }
-      else {
-        validPositionFound = true;
-      }
+      validPositionFound = true;
     }
+
+    if (skippedItemsCounter < amountOfItemsToSkip) skippedItemsCounter += 1;
 
     // If the positionItem is the first child in a container, and we didn't just move up a
     // container, see if we can move the contentItem to the top of the container
@@ -437,6 +439,7 @@ function findNextValidContentItemPosition(
       positionItemIndexInSiblingItemIds === 0
     ) {
       if (
+        skippedItemsCounter === amountOfItemsToSkip &&
         positionValidator(
           contentItemId,
           ancestorItemIds,
@@ -446,14 +449,11 @@ function findNextValidContentItemPosition(
           contentItemsById,
         )
       ) {
-        if (skippedItemsCounter < amountOfItemsToSkip) {
-          skippedItemsCounter += 1;
-        }
-        else {
-          validPositionFound = true;
-          positionItemId = null;
-        }
+        validPositionFound = true;
+        positionItemId = null;
       }
+
+      if (skippedItemsCounter < amountOfItemsToSkip) skippedItemsCounter += 1;
     }
   }
 
