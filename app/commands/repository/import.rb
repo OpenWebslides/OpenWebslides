@@ -17,32 +17,12 @@ module Repository
           c.repository = repository
         end
 
-        # Create assets in database and reference them
-        assets = {}
-
+        # Create assets in database
         Dir[File.join repo_path, 'assets', '*'].each do |asset|
-          asset_model = @receiver.assets.create :filename => File.basename(asset)
-
-          assets[File.basename asset] = asset_model.id
+          @receiver.assets.create :filename => File.basename(asset)
         end
 
-        # Fix the `data-id` attribute
-        doc = Nokogiri::HTML5(exec Filesystem::Read)
-        doc.css('img').each do |img|
-          filename = File.basename img.attr 'src'
-
-          img['data-id'] = assets[filename] if assets.include? filename
-        end
-
-        exec Filesystem::Render do |c|
-          c.content = doc.at('body').children.to_html
-        end
-
-        # Commit
-        exec Git::Commit do |c|
-          c.author = @receiver.owner
-          c.message = 'Fix asset references'
-        end
+        exec Filesystem::Rebuild
 
         return unless OpenWebslides.config.github.enabled
 
