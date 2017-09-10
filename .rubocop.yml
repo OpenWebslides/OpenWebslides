@@ -33,3 +33,6 @@ Style/NestedParenthesizedCalls:
 Style/BlockDelimiters:
   Exclude:
     - config/routes.rb
+
+Style/SafeNavigation:
+  Enabled: false
