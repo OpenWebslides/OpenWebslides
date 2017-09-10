@@ -94,5 +94,8 @@ class ConversionWorker
 
       command.execute
     end
+
+    # Rebuild asset references
+    Repository::Filesystem::Rebuild.new(@deck).execute
   end
 end
