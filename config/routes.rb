@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   devise_for :users, :only => []
 
-  root :to => 'application#index'
+  root :to => proc { [404, {}, []] }
 
   ##
   # OAuth2 endpoints
@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   # API endpoints
   #
   scope :api, :constraints => { :format => :json } do
+    root :to => proc { [404, {}, []] }
+
     ##
     # User API
     #
