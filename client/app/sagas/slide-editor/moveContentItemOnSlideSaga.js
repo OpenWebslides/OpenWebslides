@@ -330,159 +330,70 @@ function isMoveRightValid(
   return true;
 }
 
-function processMoveUp(contentItemId, ancestorItemIds, slide, contentItemsById) {
-  const {
-    validPositionFound,
-    positionItemId,
-    positionItemAncestorItemIds,
-  } = getPreviousValidContentItemPosition(
-    contentItemId,
-    ancestorItemIds,
-    slide.contentItemIds,
-    contentItemsById,
-    isMoveUpValid,
-  );
-
-  // If no valid previous item was found, this item cannot be moved up.
-  if (!validPositionFound) {
-    return {
-      isMoveOk: false,
-      newPreviousItemId: null,
-      newParentItemId: null,
-    };
-  }
-  // Otherwise, move the item to directly below the item with id $positionItemId.
-  else {
-    return {
-      isMoveOk: true,
-      newPreviousItemId: positionItemId,
-      newParentItemId: (positionItemAncestorItemIds.length > 0)
-        ? _.last(positionItemAncestorItemIds)
-        : null,
-    };
-  }
-}
-
-function processMoveDown(contentItemId, ancestorItemIds, slide, contentItemsById) {
-  const {
-    validPositionFound,
-    positionItemId,
-    positionItemAncestorItemIds,
-  } = getNextValidContentItemPosition(
-    contentItemId,
-    ancestorItemIds,
-    slide.contentItemIds,
-    contentItemsById,
-    isMoveDownValid,
-  );
-
-  // If no valid previous item was found, this item cannot be moved down.
-  if (!validPositionFound) {
-    return {
-      isMoveOk: false,
-      newPreviousItemId: null,
-      newParentItemId: null,
-    };
-  }
-  // Otherwise, move the item to directly below the item with id $positionItemId.
-  else {
-    return {
-      isMoveOk: true,
-      newPreviousItemId: positionItemId,
-      newParentItemId: (positionItemAncestorItemIds.length > 0)
-        ? _.last(positionItemAncestorItemIds)
-        : null,
-    };
-  }
-}
-
-function processMoveLeft(contentItemId, ancestorItemIds, slide, contentItemsById) {
-  const {
-    validPositionFound,
-    positionItemId,
-    positionItemAncestorItemIds,
-  } = getNextValidContentItemPosition(
-    contentItemId,
-    ancestorItemIds,
-    slide.contentItemIds,
-    contentItemsById,
-    isMoveLeftValid,
-  );
-
-  // If no valid previous item was found, this item cannot be moved left.
-  if (!validPositionFound) {
-    return {
-      isMoveOk: false,
-      newPreviousItemId: null,
-      newParentItemId: null,
-    };
-  }
-  // Otherwise, move the item to directly below the item with id $positionItemId.
-  else {
-    return {
-      isMoveOk: true,
-      newPreviousItemId: positionItemId,
-      newParentItemId: (positionItemAncestorItemIds.length > 0)
-        ? _.last(positionItemAncestorItemIds)
-        : null,
-    };
-  }
-}
-
-function processMoveRight(contentItemId, ancestorItemIds, slide, contentItemsById) {
-  // #TODO
-  // If the contentItem to be moved-RIGHT is not a section itself, create a new section with a
-  // generic title and place the contentItem into that section (as opposed to moving it around in a
-  // very non-intuitive way, which is how it is handled right now).
-
-  const {
-    validPositionFound,
-    positionItemId,
-    positionItemAncestorItemIds,
-  } = getPreviousValidContentItemPosition(
-    contentItemId,
-    ancestorItemIds,
-    slide.contentItemIds,
-    contentItemsById,
-    isMoveRightValid,
-  );
-
-  // If no valid previous item was found, this item cannot be moved right.
-  if (!validPositionFound) {
-    return {
-      isMoveOk: false,
-      newPreviousItemId: null,
-      newParentItemId: null,
-    };
-  }
-  // Otherwise, move the item to directly below the item with id $positionItemId.
-  else {
-    return {
-      isMoveOk: true,
-      newPreviousItemId: positionItemId,
-      newParentItemId: (positionItemAncestorItemIds.length > 0)
-        ? _.last(positionItemAncestorItemIds)
-        : null,
-    };
-  }
-}
-
 function processMove(direction, contentItemId, ancestorItemIds, slide, contentItemsById) {
+  let validPositionFound;
+  let positionItemId;
+  let positionItemAncestorItemIds;
+
   // Move contentItem above its predecessor.
   if (direction === directions.UP) {
-    return processMoveUp(contentItemId, ancestorItemIds, slide, contentItemsById);
+    ({
+      validPositionFound,
+      positionItemId,
+      positionItemAncestorItemIds,
+    } = getPreviousValidContentItemPosition(
+      contentItemId,
+      ancestorItemIds,
+      slide.contentItemIds,
+      contentItemsById,
+      isMoveUpValid,
+    ));
   }
   // Move contentItem below its successor.
   else if (direction === directions.DOWN) {
-    return processMoveDown(contentItemId, ancestorItemIds, slide, contentItemsById);
+    ({
+      validPositionFound,
+      positionItemId,
+      positionItemAncestorItemIds,
+    } = getNextValidContentItemPosition(
+      contentItemId,
+      ancestorItemIds,
+      slide.contentItemIds,
+      contentItemsById,
+      isMoveDownValid,
+    ));
   }
   // Move contentItem up one indent level.
   else if (direction === directions.LEFT) {
-    return processMoveLeft(contentItemId, ancestorItemIds, slide, contentItemsById);
+    ({
+      validPositionFound,
+      positionItemId,
+      positionItemAncestorItemIds,
+    } = getNextValidContentItemPosition(
+      contentItemId,
+      ancestorItemIds,
+      slide.contentItemIds,
+      contentItemsById,
+      isMoveLeftValid,
+    ));
   }
   // Move contentItem down one indent level.
   else if (direction === directions.RIGHT) {
-    return processMoveRight(contentItemId, ancestorItemIds, slide, contentItemsById);
+    // #TODO
+    // If the contentItem to be moved-RIGHT is not a section itself, create a new section with a
+    // generic title and place the contentItem into that section (as opposed to moving it around in
+    // a very non-intuitive way, which is how it is handled right now).
+    ({
+      validPositionFound,
+      positionItemId,
+      positionItemAncestorItemIds,
+    } = getPreviousValidContentItemPosition(
+      contentItemId,
+      ancestorItemIds,
+      slide.contentItemIds,
+      contentItemsById,
+      isMoveRightValid,
+    ));
   }
   else {
     console.error('Invalid direction.');
@@ -490,6 +401,26 @@ function processMove(direction, contentItemId, ancestorItemIds, slide, contentIt
       isMoveOk: false,
       newParentItemId: null,
       newPreviousItemId: null,
+    };
+  }
+
+  // If no valid positionItem was found, this item cannot be moved in the given direction.
+  if (!validPositionFound) {
+    return {
+      isMoveOk: false,
+      newPreviousItemId: null,
+      newParentItemId: null,
+    };
+  }
+  // Otherwise, move the item to directly below the item with id $positionItemId (or to the start of
+  // the container if positionItemId is NULL).
+  else {
+    return {
+      isMoveOk: true,
+      newPreviousItemId: positionItemId,
+      newParentItemId: (positionItemAncestorItemIds.length > 0)
+        ? _.last(positionItemAncestorItemIds)
+        : null,
     };
   }
 }
