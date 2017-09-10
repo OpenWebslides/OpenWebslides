@@ -113,7 +113,7 @@ function findPreviousValidContentItemId(
     return {
       contentItemId: null,
       ancestorItemIds: [],
-      checkContainerChildren: false,
+      checkContainerChildren: true,
     };
   }
   // If a checkable previous contentItemId was found, and it was valid, this is the contentItemId we
@@ -236,7 +236,7 @@ function findNextValidContentItemId(
     return {
       contentItemId: null,
       ancestorItemIds: [],
-      checkContainerChildren: false,
+      checkContainerChildren: true,
     };
   }
   // If a checkable next contentItemId was found, and it was valid, this is the contentItemId we
@@ -262,6 +262,214 @@ function findNextValidContentItemId(
       contentItemValidator,
       containerItemValidator,
     );
+  }
+}
+
+function findPreviousValidContentItemPosition(
+  contentItemId,
+  ancestorItemIds,
+  slideContentItemIds,
+  contentItemsById,
+  positionValidator,
+  amountOfItemsToSkip,
+) {
+  let positionItemId = contentItemId;
+  let positionItemAncestorItemIds = ancestorItemIds;
+  let positionItemCheckContainerChildren = false;
+  let positionItemIndexInSiblingItemIds;
+
+  let skippedItemsCounter = 0;
+  let validPositionFound = false;
+
+  // Iterate over all previous contentItems, starting at the item with id $contentItemId.
+  while (!validPositionFound && positionItemId !== null) {
+    // If the item we last checked was the first item in its container, see if we can move the
+    // contentItem to the first position in the section (i.e. positionItemId === null) before
+    // moving on to the parent container.
+    ({
+      indexInSiblingItemIds: positionItemIndexInSiblingItemIds,
+    } = findContentItemSiblingItemIdsAndIndex(
+      positionItemId,
+      positionItemAncestorItemIds,
+      slideContentItemIds,
+      contentItemsById,
+    ));
+    if (positionItemIndexInSiblingItemIds === 0) {
+      if (
+        positionValidator(
+          contentItemId,
+          ancestorItemIds,
+          null,
+          positionItemAncestorItemIds,
+          slideContentItemIds,
+          contentItemsById,
+        )
+      ) {
+        if (skippedItemsCounter < amountOfItemsToSkip) {
+          skippedItemsCounter += 1;
+        }
+        else {
+          validPositionFound = true;
+          positionItemId = null;
+        }
+      }
+    }
+
+    // If no valid position was found in the above step, get a new previous contentItem and try to
+    // validate that one.
+    if (!validPositionFound) {
+      ({
+        contentItemId: positionItemId,
+        ancestorItemIds: positionItemAncestorItemIds,
+        checkContainerChildren: positionItemCheckContainerChildren,
+      } = findPreviousValidContentItemId(
+        positionItemId,
+        positionItemAncestorItemIds,
+        slideContentItemIds,
+        contentItemsById,
+        positionItemCheckContainerChildren,
+        contentItem => _.includes(contentItemTypes, contentItem.contentItemType),
+        contentItem => _.includes(containerContentItemTypes, contentItem.contentItemType),
+      ));
+
+      if (
+        positionItemId !== null &&
+        positionValidator(
+          contentItemId,
+          ancestorItemIds,
+          positionItemId,
+          positionItemAncestorItemIds,
+          slideContentItemIds,
+          contentItemsById,
+        )) {
+        if (skippedItemsCounter < amountOfItemsToSkip) {
+          skippedItemsCounter += 1;
+        }
+        else {
+          validPositionFound = true;
+        }
+      }
+    }
+  }
+
+  if (!validPositionFound) {
+    return {
+      validPositionFound: false,
+      positionItemId: null,
+      positionItemAncestorItemIds: [],
+    };
+  }
+  else {
+    return {
+      validPositionFound: true,
+      positionItemId,
+      positionItemAncestorItemIds,
+    };
+  }
+}
+
+function findNextValidContentItemPosition(
+  contentItemId,
+  ancestorItemIds,
+  slideContentItemIds,
+  contentItemsById,
+  positionValidator,
+  amountOfItemsToSkip,
+) {
+  let positionItemId = contentItemId;
+  let positionItemAncestorItemIds = ancestorItemIds;
+  let positionItemCheckContainerChildren = false;
+  let positionItemIndexInSiblingItemIds;
+
+  let skippedItemsCounter = 0;
+  let validPositionFound = false;
+
+  // Iterate over all next contentItems, starting at the item with id $contentItemId.
+  while (!validPositionFound && positionItemId !== null) {
+    ({
+      contentItemId: positionItemId,
+      ancestorItemIds: positionItemAncestorItemIds,
+      checkContainerChildren: positionItemCheckContainerChildren,
+    } = findNextValidContentItemId(
+      positionItemId,
+      positionItemAncestorItemIds,
+      slideContentItemIds,
+      contentItemsById,
+      positionItemCheckContainerChildren,
+      contentItem => _.includes(contentItemTypes, contentItem.contentItemType),
+      contentItem => _.includes(containerContentItemTypes, contentItem.contentItemType),
+    ));
+
+    // Check if the next contentItem is a valid position.
+    if (
+      positionItemId !== null &&
+      positionValidator(
+        contentItemId,
+        ancestorItemIds,
+        positionItemId,
+        positionItemAncestorItemIds,
+        slideContentItemIds,
+        contentItemsById,
+      )
+    ) {
+      if (skippedItemsCounter < amountOfItemsToSkip) {
+        skippedItemsCounter += 1;
+      }
+      else {
+        validPositionFound = true;
+      }
+    }
+
+    // If the positionItem is the first child in a container, and we didn't just move up a
+    // container, see if we can move the contentItem to the top of the container
+    // (i.e. positionItemId === null) first. (If so, override the valid  positionItemId that might
+    // have been set in the previous step.)
+    ({
+      indexInSiblingItemIds: positionItemIndexInSiblingItemIds,
+    } = findContentItemSiblingItemIdsAndIndex(
+      positionItemId,
+      positionItemAncestorItemIds,
+      slideContentItemIds,
+      contentItemsById,
+    ));
+    if (
+      positionItemCheckContainerChildren === true &&
+      positionItemIndexInSiblingItemIds === 0
+    ) {
+      if (
+        positionValidator(
+          contentItemId,
+          ancestorItemIds,
+          null,
+          positionItemAncestorItemIds,
+          slideContentItemIds,
+          contentItemsById,
+        )
+      ) {
+        if (skippedItemsCounter < amountOfItemsToSkip) {
+          skippedItemsCounter += 1;
+        }
+        else {
+          validPositionFound = true;
+          positionItemId = null;
+        }
+      }
+    }
+  }
+
+  if (!validPositionFound) {
+    return {
+      validPositionFound: false,
+      positionItemId: null,
+      positionItemAncestorItemIds: [],
+    };
+  }
+  else {
+    return {
+      validPositionFound: true,
+      positionItemId,
+      positionItemAncestorItemIds,
+    };
   }
 }
 
@@ -543,6 +751,99 @@ export function getNextValidContentItemId(
     checkInitialContainerChildren,
     contentItemValidator,
     containerItemValidator,
+  );
+}
+
+/**
+ * Find the previous valid position to where the contentItem with id $contentItemId may be moved.
+ * A position is defined by the id of the contentItem that precedes it ($positionItemId) and the
+ * array of ids of its ancestors. If $positionItemId is NULL but $validPositionFound is TRUE, the
+ * contentItem may be moved to index 0 in its parent (the last item in $positionItemAncestorIds).
+ *
+ * @param contentItemId
+ *        The id of the contentItem we want to move to a new position.
+ * @param ancestorItemIds
+ *        The list of ids of the ancestor items of the contentItem with id $contentItemId.
+ * @param slideContentItemIds
+ *        The list of ids of contentItems that are direct children of the containing slide of the
+ *        contentItem with id $contentItemId. (We need this because the slide is the highest
+ *        possible ancestor of a contentItem and it can't be included in the ancestorItemIds array.)
+ * @param contentItemsById
+ *        The contentItemsById object.
+ * @param positionValidator
+ *        The function that decides if a position is a valid one. It is passed $contentItemId,
+ *        $ancestorItemIds, $positionItemId, $positionItemAncestorItemIds, $slideContentItemIds and
+ *        $contentItemsById as arguments and should return TRUE if the given position is a valid
+ *        position for the contentItem with id $contentItemId, FALSE if it is not.
+ * @param amountOfItemsToSkip
+ *        An optional amount of items that the iterator should skip before returning a valid
+ *        position. When seeking a previous valid position the default value is 1; this is necessery
+ *        because if the id of the contentItem that directly precedes the contentItem with id
+ *        $contentItemId is a valid one and we returned it, the contentItem would end up being moved
+ *        directly after it (and thus end up not moving at all).
+ *
+ * @returns {{validPositionFound, positionItemId, positionItemAncestorItemIds}}
+ */
+export function getPreviousValidContentItemPosition(
+  contentItemId,
+  ancestorItemIds,
+  slideContentItemIds,
+  contentItemsById,
+  positionValidator,
+  amountOfItemsToSkip = 1,
+) {
+  return findPreviousValidContentItemPosition(
+    contentItemId,
+    ancestorItemIds,
+    slideContentItemIds,
+    contentItemsById,
+    positionValidator,
+    amountOfItemsToSkip,
+  );
+}
+
+/**
+ * Find the previous valid position to where the contentItem with id $contentItemId may be moved.
+ * A position is defined by the id of the contentItem that precedes it ($positionItemId) and the
+ * array of ids of its ancestors. If $positionItemId is NULL but $validPositionFound is TRUE, the
+ * contentItem may be moved to index 0 in its parent (the last item in $positionItemAncestorIds).
+ *
+ * @param contentItemId
+ *        The id of the contentItem we want to move to a new position.
+ * @param ancestorItemIds
+ *        The list of ids of the ancestor items of the contentItem with id $contentItemId.
+ * @param slideContentItemIds
+ *        The list of ids of contentItems that are direct children of the containing slide of the
+ *        contentItem with id $contentItemId. (We need this because the slide is the highest
+ *        possible ancestor of a contentItem and it can't be included in the ancestorItemIds array.)
+ * @param contentItemsById
+ *        The contentItemsById object.
+ * @param positionValidator
+ *        The function that decides if a position is a valid one. It is passed $contentItemId,
+ *        $ancestorItemIds, $positionItemId, $positionItemAncestorItemIds, $slideContentItemIds and
+ *        $contentItemsById as arguments and should return TRUE if the given position is a valid
+ *        position for the contentItem with id $contentItemId, FALSE if it is not.
+ * @param amountOfItemsToSkip
+ *        An optional amount of items that the iterator should skip before returning a valid
+ *        position. When seeking a next valid position, the default value is 0.
+ *
+ * @returns {{validPositionFound, positionItemId, positionItemAncestorItemIds}}
+ */
+export function getNextValidContentItemPosition(
+  contentItemId,
+  ancestorItemIds,
+  slideContentItemIds,
+  contentItemsById,
+  positionValidator,
+  amountOfItemsToSkip = 0,
+) {
+  return findNextValidContentItemPosition(
+    contentItemId,
+    ancestorItemIds,
+    slideContentItemIds,
+    contentItemsById,
+    positionValidator,
+    amountOfItemsToSkip,
   );
 }
 
