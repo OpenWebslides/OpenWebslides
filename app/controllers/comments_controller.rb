@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   include RelatedResources
 
   # Authentication
-  before_action :authenticate_user, :except => %i[show show_relationship get_related_resources]
+  before_action :authenticate_user, :only => %i[create update destroy]
   after_action :renew_token
 
   # Authorization

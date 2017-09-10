@@ -9,8 +9,8 @@ module Repository
       attr_accessor :author, :content
 
       def execute
-        raise ArgumentError 'No author specified' unless @author
-        raise ArgumentError 'No content specified' unless @content
+        raise ArgumentError, 'No author specified' unless @author
+        raise ArgumentError, 'No content specified' unless @content
 
         exists = File.exist? asset_file
 
