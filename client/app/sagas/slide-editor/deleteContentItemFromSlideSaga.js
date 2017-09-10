@@ -158,6 +158,7 @@ function* doDeleteContentItemFromSlide(action) {
       contentItemToDeleteAncestorItemIds,
       slide.contentItemIds,
       contentItemsById,
+      false,
       contentItem => contentItemValidator(contentItem, focusedSlideViewType),
       contentItem => containerItemValidator(contentItem),
     );
