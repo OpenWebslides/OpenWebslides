@@ -21,6 +21,9 @@ module Repository
 
           # Fix `data-id` attribute (imports and conversions)
           img['data-id'] = asset.id if asset
+
+          # Fix `src` attribute (conversions)
+          img['src'] = "assets/#{filename}"
         end
 
         update doc.at('body').children.to_html, 'Fix asset references'
