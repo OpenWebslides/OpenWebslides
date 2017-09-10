@@ -13,8 +13,8 @@ import { getSlideById } from 'selectors/entities/slides';
 import { getContentItemsById } from 'selectors/entities/content-items';
 
 import {
-  getPreviousValidContentItemId,
-  getNextValidContentItemId,
+  getPreviousValidContentItemPosition,
+  getNextValidContentItemPosition,
   getContentItemSiblingItemIdsAndIndex,
 } from 'lib/state-traversal/contentItems';
 
@@ -23,7 +23,7 @@ function getMoveParameters(
   ancestorItemIds,
   previousItemId,
   previousItemAncestorItemIds,
-  slide,
+  slideContentItemIds,
   contentItemsById,
 ) {
   // Take 'raw' parameters such as item ids, ancestor items, etc. and convert them to directly
@@ -48,7 +48,7 @@ function getMoveParameters(
   } = getContentItemSiblingItemIdsAndIndex(
     previousItemId,
     previousItemAncestorItemIds,
-    slide.contentItemIds,
+    slideContentItemIds,
     contentItemsById,
   );
 
@@ -82,7 +82,7 @@ function isMoveValid(
   ancestorItemIds,
   previousItemId,
   previousItemAncestorItemIds,
-  slide,
+  slideContentItemIds,
   contentItemsById,
 ) {
   const debug = true;
@@ -91,7 +91,7 @@ function isMoveValid(
     ancestorItemIds,
     previousItemId,
     previousItemAncestorItemIds,
-    slide,
+    slideContentItemIds,
     contentItemsById,
   );
 
@@ -170,7 +170,7 @@ function isMoveUpValid(
   ancestorItemIds,
   previousItemId,
   previousItemAncestorItemIds,
-  slide,
+  slideContentItemIds,
   contentItemsById,
 ) {
   const debug = true;
@@ -183,7 +183,7 @@ function isMoveUpValid(
       ancestorItemIds,
       previousItemId,
       previousItemAncestorItemIds,
-      slide,
+      slideContentItemIds,
       contentItemsById,
     )
   ) {
@@ -213,7 +213,7 @@ function isMoveDownValid(
   ancestorItemIds,
   previousItemId,
   previousItemAncestorItemIds,
-  slide,
+  slideContentItemIds,
   contentItemsById,
 ) {
   const debug = true;
@@ -226,7 +226,7 @@ function isMoveDownValid(
       ancestorItemIds,
       previousItemId,
       previousItemAncestorItemIds,
-      slide,
+      slideContentItemIds,
       contentItemsById,
     )
   ) {
@@ -257,7 +257,7 @@ function isMoveLeftValid(
   ancestorItemIds,
   previousItemId,
   previousItemAncestorItemIds,
-  slide,
+  slideContentItemIds,
   contentItemsById,
 ) {
   const debug = true;
@@ -269,7 +269,7 @@ function isMoveLeftValid(
       ancestorItemIds,
       previousItemId,
       previousItemAncestorItemIds,
-      slide,
+      slideContentItemIds,
       contentItemsById,
     )
   ) {
@@ -296,7 +296,7 @@ function isMoveRightValid(
   ancestorItemIds,
   previousItemId,
   previousItemAncestorItemIds,
-  slide,
+  slideContentItemIds,
   contentItemsById,
 ) {
   const debug = true;
@@ -308,7 +308,7 @@ function isMoveRightValid(
       ancestorItemIds,
       previousItemId,
       previousItemAncestorItemIds,
-      slide,
+      slideContentItemIds,
       contentItemsById,
     )
   ) {
@@ -331,287 +331,100 @@ function isMoveRightValid(
 }
 
 function processMoveUp(contentItemId, ancestorItemIds, slide, contentItemsById) {
-  // #TODO move out common code in processMoveUp/Down/Left/Right; create proper iterators
+  const {
+    validPositionFound,
+    positionItemId,
+    positionItemAncestorItemIds,
+  } = getPreviousValidContentItemPosition(
+    contentItemId,
+    ancestorItemIds,
+    slide.contentItemIds,
+    contentItemsById,
+    isMoveUpValid,
+  );
 
-  let previousItemId = contentItemId;
-  let previousItemAncestorItemIds = ancestorItemIds;
-  let previousItemCheckContainerChildren = false;
-  let previousItemIndexInSiblingItemIds;
-  // Note: we need to 'skip' at least one item because we're looking for the id of the contentItem
-  // *after* which this contentItem will be placed. So if we simple use the first valid
-  // $previousItem, the contentItem could end up not moving at all.
-  let skippedAtLeastOneItem = false;
-  let skippedItemId = null;
-  let validPreviousItemFound = false;
-
-  // Iterate over all previous contentItems, starting at the item with id $contentItemId.
-  while (!validPreviousItemFound && previousItemId !== null) {
-    // If the item we last checked was the first item in its section, see if we can move the
-    // contentItem to the first position in the section (i.e. previousItemId === null) before
-    // moving on to the parent section.
-    ({
-      indexInSiblingItemIds: previousItemIndexInSiblingItemIds,
-    } = getContentItemSiblingItemIdsAndIndex(
-      previousItemId,
-      previousItemAncestorItemIds,
-      slide.contentItemIds,
-      contentItemsById,
-    ));
-    if (previousItemIndexInSiblingItemIds === 0) {
-      if (
-        isMoveUpValid(
-          contentItemId,
-          ancestorItemIds,
-          null,
-          previousItemAncestorItemIds,
-          slide,
-          contentItemsById,
-        )
-      ) {
-        if (skippedAtLeastOneItem) {
-          validPreviousItemFound = true;
-          previousItemId = null;
-        }
-        else {
-          skippedAtLeastOneItem = true;
-          skippedItemId = null;
-        }
-      }
-    }
-
-    // If no valid previous item was found in the above step, get a new previous item and try to
-    // validate that one.
-    if (!validPreviousItemFound) {
-      ({
-        contentItemId: previousItemId,
-        ancestorItemIds: previousItemAncestorItemIds,
-        checkContainerChildren: previousItemCheckContainerChildren,
-      } = getPreviousValidContentItemId(
-        previousItemId,
-        previousItemAncestorItemIds,
-        slide.contentItemIds,
-        contentItemsById,
-        previousItemCheckContainerChildren,
-      ));
-
-      if (
-        isMoveUpValid(
-          contentItemId,
-          ancestorItemIds,
-          previousItemId,
-          previousItemAncestorItemIds,
-          slide,
-          contentItemsById,
-      )) {
-        if (skippedAtLeastOneItem) {
-          validPreviousItemFound = true;
-        }
-        else {
-          skippedAtLeastOneItem = true;
-          skippedItemId = previousItemId;
-        }
-      }
-    }
-  }
-
-  // If this item was already the first item, it cannot be moved up.
-  // (Note: we need this separate check because NULL is a valid previousItem (it indicates moving
-  // the contentItem to the start of the parent section) and so the above code could erroneously
-  // return isMoveOk: TRUE when in reality the contentItem cannot be moved up because it is already
-  // at the top.)
-  if (previousItemId === null && skippedItemId === null && ancestorItemIds.length === 0) {
-    return {
-      isMoveOk: false,
-      newParentItemId: null,
-      newPreviousItemId: null,
-    };
-  }
   // If no valid previous item was found, this item cannot be moved up.
-  else if (!validPreviousItemFound) {
+  if (!validPositionFound) {
     return {
       isMoveOk: false,
-      newParentItemId: null,
       newPreviousItemId: null,
+      newParentItemId: null,
     };
   }
-  // Otherwise, move the item to directly below the item with id $prevousItemId
+  // Otherwise, move the item to directly below the item with id $positionItemId.
   else {
     return {
       isMoveOk: true,
-      newParentItemId: (previousItemAncestorItemIds.length > 0)
-        ? _.last(previousItemAncestorItemIds)
+      newPreviousItemId: positionItemId,
+      newParentItemId: (positionItemAncestorItemIds.length > 0)
+        ? _.last(positionItemAncestorItemIds)
         : null,
-      newPreviousItemId: previousItemId,
     };
   }
 }
 
 function processMoveDown(contentItemId, ancestorItemIds, slide, contentItemsById) {
-  let previousItemId = contentItemId;
-  let previousItemAncestorItemIds = ancestorItemIds;
-  let previousItemCheckContainerChildren = false;
-  let validPreviousItemFound = false;
-  let previousItemIndexInSiblingItemIds;
+  const {
+    validPositionFound,
+    positionItemId,
+    positionItemAncestorItemIds,
+  } = getNextValidContentItemPosition(
+    contentItemId,
+    ancestorItemIds,
+    slide.contentItemIds,
+    contentItemsById,
+    isMoveDownValid,
+  );
 
-  // Iterate over all next contentItems, starting at the item with id $contentItemId.
-  while (!validPreviousItemFound && previousItemId !== null) {
-    ({
-      contentItemId: previousItemId,
-      ancestorItemIds: previousItemAncestorItemIds,
-      checkContainerChildren: previousItemCheckContainerChildren,
-    } = getNextValidContentItemId(
-      previousItemId,
-      previousItemAncestorItemIds,
-      slide.contentItemIds,
-      contentItemsById,
-      previousItemCheckContainerChildren,
-    ));
-
-    if (
-      isMoveDownValid(
-        contentItemId,
-        ancestorItemIds,
-        previousItemId,
-        previousItemAncestorItemIds,
-        slide,
-        contentItemsById,
-      )) {
-      validPreviousItemFound = true;
-    }
-
-    // If the previousItem is the first child in a container, see if we can move the contentItem to
-    // the top of the container (i.e. previousItemId === null) first. (If so, override the valid
-    // previousItemId that might have been set in the previous step.)
-    ({
-      indexInSiblingItemIds: previousItemIndexInSiblingItemIds,
-    } = getContentItemSiblingItemIdsAndIndex(
-      previousItemId,
-      previousItemAncestorItemIds,
-      slide.contentItemIds,
-      contentItemsById,
-    ));
-    if (previousItemIndexInSiblingItemIds === 0) {
-      if (
-        isMoveDownValid(
-          contentItemId,
-          ancestorItemIds,
-          null,
-          previousItemAncestorItemIds,
-          slide,
-          contentItemsById,
-        )
-      ) {
-        validPreviousItemFound = true;
-        previousItemId = null;
-      }
-    }
-  }
-
-  // If this item was already the last item, it cannot be moved down.
-  if (previousItemId === null && previousItemAncestorItemIds.length === 0) {
-    return {
-      isMoveOk: false,
-      newParentItemId: null,
-      newPreviousItemId: null,
-    };
-  }
   // If no valid previous item was found, this item cannot be moved down.
-  else if (!validPreviousItemFound) {
+  if (!validPositionFound) {
     return {
       isMoveOk: false,
-      newParentItemId: null,
       newPreviousItemId: null,
+      newParentItemId: null,
     };
   }
-  // Otherwise, move the item to directly below the item with id $prevousItemId.
+  // Otherwise, move the item to directly below the item with id $positionItemId.
   else {
     return {
       isMoveOk: true,
-      newParentItemId: (previousItemAncestorItemIds.length > 0)
-        ? _.last(previousItemAncestorItemIds)
+      newPreviousItemId: positionItemId,
+      newParentItemId: (positionItemAncestorItemIds.length > 0)
+        ? _.last(positionItemAncestorItemIds)
         : null,
-      newPreviousItemId: previousItemId,
     };
   }
 }
 
 function processMoveLeft(contentItemId, ancestorItemIds, slide, contentItemsById) {
-  let previousItemId = contentItemId;
-  let previousItemAncestorItemIds = ancestorItemIds;
-  let previousItemCheckContainerChildren = false;
-  let validPreviousItemFound = false;
-  let previousItemIndexInSiblingItemIds;
-
-  // Iterate over all next contentItems, starting at the item with id $contentItemId.
-  while (!validPreviousItemFound && previousItemId !== null) {
-    ({
-      contentItemId: previousItemId,
-      ancestorItemIds: previousItemAncestorItemIds,
-      checkContainerChildren: previousItemCheckContainerChildren,
-    } = getNextValidContentItemId(
-      previousItemId,
-      previousItemAncestorItemIds,
-      slide.contentItemIds,
-      contentItemsById,
-      previousItemCheckContainerChildren,
-    ));
-
-    if (
-      isMoveLeftValid(
-        contentItemId,
-        ancestorItemIds,
-        previousItemId,
-        previousItemAncestorItemIds,
-        slide,
-        contentItemsById,
-      )) {
-      validPreviousItemFound = true;
-    }
-
-    // If the previousItem is the first child in a container, see if we can move the contentItem to
-    // the top of the container (i.e. previousItemId === null) first. (If so, override the valid
-    // previousItemId that might have been set in the previous step.)
-    ({
-      indexInSiblingItemIds: previousItemIndexInSiblingItemIds,
-    } = getContentItemSiblingItemIdsAndIndex(
-      previousItemId,
-      previousItemAncestorItemIds,
-      slide.contentItemIds,
-      contentItemsById,
-    ));
-    if (previousItemIndexInSiblingItemIds === 0) {
-      if (
-        isMoveLeftValid(
-          contentItemId,
-          ancestorItemIds,
-          null,
-          previousItemAncestorItemIds,
-          slide,
-          contentItemsById,
-        )
-      ) {
-        validPreviousItemFound = true;
-        previousItemId = null;
-      }
-    }
-  }
+  const {
+    validPositionFound,
+    positionItemId,
+    positionItemAncestorItemIds,
+  } = getNextValidContentItemPosition(
+    contentItemId,
+    ancestorItemIds,
+    slide.contentItemIds,
+    contentItemsById,
+    isMoveLeftValid,
+  );
 
   // If no valid previous item was found, this item cannot be moved left.
-  if (!validPreviousItemFound) {
+  if (!validPositionFound) {
     return {
       isMoveOk: false,
-      newParentItemId: null,
       newPreviousItemId: null,
+      newParentItemId: null,
     };
   }
-  // Otherwise, move the item to directly below the item with id $prevousItemId
+  // Otherwise, move the item to directly below the item with id $positionItemId.
   else {
     return {
       isMoveOk: true,
-      newParentItemId: (previousItemAncestorItemIds.length > 0)
-        ? _.last(previousItemAncestorItemIds)
+      newPreviousItemId: positionItemId,
+      newParentItemId: (positionItemAncestorItemIds.length > 0)
+        ? _.last(positionItemAncestorItemIds)
         : null,
-      newPreviousItemId: previousItemId,
     };
   }
 }
@@ -622,86 +435,34 @@ function processMoveRight(contentItemId, ancestorItemIds, slide, contentItemsByI
   // generic title and place the contentItem into that section (as opposed to moving it around in a
   // very non-intuitive way, which is how it is handled right now).
 
-  let previousItemId = contentItemId;
-  let previousItemAncestorItemIds = ancestorItemIds;
-  let previousItemCheckContainerChildren = false;
-  let previousItemIndexInSiblingItemIds;
-  let validPreviousItemFound = false;
-
-  // Iterate over all previous contentItems, starting at the item with id $contentItemId.
-  while (!validPreviousItemFound && previousItemId !== null) {
-    // If the item we last checked was the first item in its section, see if we can move the
-    // contentItem to the first position in the section (i.e. previousItemId === null) before
-    // moving on to the parent section.
-    ({
-      indexInSiblingItemIds: previousItemIndexInSiblingItemIds,
-    } = getContentItemSiblingItemIdsAndIndex(
-      previousItemId,
-      previousItemAncestorItemIds,
-      slide.contentItemIds,
-      contentItemsById,
-    ));
-    if (previousItemIndexInSiblingItemIds === 0) {
-      if (
-        isMoveRightValid(
-          contentItemId,
-          ancestorItemIds,
-          null,
-          previousItemAncestorItemIds,
-          slide,
-          contentItemsById,
-        )
-      ) {
-        validPreviousItemFound = true;
-        previousItemId = null;
-      }
-    }
-
-    // If no valid previous item was found in the above step, get a new previous item and try to
-    // validate that one.
-    if (!validPreviousItemFound) {
-      ({
-        contentItemId: previousItemId,
-        ancestorItemIds: previousItemAncestorItemIds,
-        checkContainerChildren: previousItemCheckContainerChildren,
-      } = getPreviousValidContentItemId(
-        previousItemId,
-        previousItemAncestorItemIds,
-        slide.contentItemIds,
-        contentItemsById,
-        previousItemCheckContainerChildren,
-      ));
-
-      if (
-        isMoveRightValid(
-          contentItemId,
-          ancestorItemIds,
-          previousItemId,
-          previousItemAncestorItemIds,
-          slide,
-          contentItemsById,
-        )) {
-        validPreviousItemFound = true;
-      }
-    }
-  }
+  const {
+    validPositionFound,
+    positionItemId,
+    positionItemAncestorItemIds,
+  } = getPreviousValidContentItemPosition(
+    contentItemId,
+    ancestorItemIds,
+    slide.contentItemIds,
+    contentItemsById,
+    isMoveRightValid,
+  );
 
   // If no valid previous item was found, this item cannot be moved right.
-  if (!validPreviousItemFound) {
+  if (!validPositionFound) {
     return {
       isMoveOk: false,
-      newParentItemId: null,
       newPreviousItemId: null,
+      newParentItemId: null,
     };
   }
-  // Otherwise, move the item to directly below the item with id $prevousItemId
+  // Otherwise, move the item to directly below the item with id $positionItemId.
   else {
     return {
       isMoveOk: true,
-      newParentItemId: (previousItemAncestorItemIds.length > 0)
-        ? _.last(previousItemAncestorItemIds)
+      newPreviousItemId: positionItemId,
+      newParentItemId: (positionItemAncestorItemIds.length > 0)
+        ? _.last(positionItemAncestorItemIds)
         : null,
-      newPreviousItemId: previousItemId,
     };
   }
 }
