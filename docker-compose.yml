@@ -11,6 +11,7 @@ services:
     environment:
       - RAILS_ENV=production
       - NODE_ENV=production
+      - HOSTNAME=`hostname -f`
     volumes:
       - public:/app/public/
       - data:/app/data/
@@ -39,6 +40,10 @@ services:
     image: openwebslides/openwebslides:latest
     env_file:
       - openwebslides.env
+    environment:
+      - RAILS_ENV=production
+      - NODE_ENV=production
+      - HOSTNAME=`hostname -f`
     volumes:
       - /var/run/postgresql/:/var/run/postgresql/
       - uploads:/app/tmp/uploads/
