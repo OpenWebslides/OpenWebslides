@@ -84,7 +84,7 @@ Rails.application.configure do
   Rails.application.config.middleware.use ExceptionNotification::Rack,
                                           :email => {
                                             :email_prefix => '[OPENWEBSLIDES] ',
-                                            :sender_address => config.action_mailer.smtp_settings[:address],
+                                            :sender_address => ENV['SMTP_FROM'],
                                             :exception_recipients => (ENV['EXCEPTION_EMAIL'] || '').split(',')
                                           },
                                           :slack => {
