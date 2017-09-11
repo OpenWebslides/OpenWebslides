@@ -9,10 +9,11 @@ module Repository
       attr_accessor :content
 
       def execute
-        raise OpenWebslides::ArgumentError, 'Content not specified' unless @content
+        raise OpenWebslides::ArgumentError, 'Filename not specified' unless filename
+        raise OpenWebslides::ArgumentError, 'Content not specified' unless content
 
         File.open(asset_file, 'wb') do |f|
-          f.write @content.read
+          f.write content
         end
       end
     end
