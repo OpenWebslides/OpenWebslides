@@ -44,4 +44,10 @@ RSpec.describe AssetResource, :type => :resource do
       expect(subject).to respond_to :custom_links
     end
   end
+
+  describe 'filters' do
+    it 'should have a valid set of filters' do
+      expect(described_class.filters.keys).to match_array %i[id filename]
+    end
+  end
 end

@@ -21,6 +21,8 @@ class AssetResource < ApplicationResource
   ##
   # Filters
   #
+  filter :filename
+
   ##
   # Callbacks
   #
