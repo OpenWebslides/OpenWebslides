@@ -3,10 +3,11 @@ import { takeLatest, put } from 'redux-saga/effects';
 import { OAUTH_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 
 function* doOauthSigninUser(action) {
-  const { authToken } = action.meta;
+  const { authToken, id } = action.meta;
   yield put({
     type: SIGNIN_USER_SUCCESS,
     payload: {
+      id,
       authToken,
     },
   });
