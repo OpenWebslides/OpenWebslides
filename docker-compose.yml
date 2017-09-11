@@ -46,6 +46,7 @@ services:
       - HOSTNAME=`hostname -f`
     volumes:
       - /var/run/postgresql/:/var/run/postgresql/
+      - data:/app/data/
       - uploads:/app/tmp/uploads/
     depends_on:
       - postgres
