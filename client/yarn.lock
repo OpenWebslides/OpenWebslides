@@ -5419,9 +5419,9 @@ redux-form@^6.5.0:
     lodash-es "^4.17.3"
     prop-types "^15.5.6"
 
-redux-saga@^0.14.4:
-  version "0.14.8"
-  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.14.8.tgz#ad01afabe02ec41a17df54e2e09aa236b30a7732"
+redux-saga@^0.15.6:
+  version "0.15.6"
+  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.15.6.tgz#8638dc522de6c6c0a496fe8b2b5466287ac2dc4d"
 
 redux@^3.6.0:
   version "3.6.0"
