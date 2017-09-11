@@ -9,30 +9,31 @@ module Repository
       attr_accessor :author, :file
 
       def execute
-        raise OpenWebslides::ArgumentError, 'No author specified' unless @author
-        raise OpenWebslides::ArgumentError, 'No file specified' unless @file
+        raise OpenWebslides::ArgumentError, 'Filename not specified' unless filename
+        raise OpenWebslides::ArgumentError, 'Author not specified' unless author
+        raise OpenWebslides::ArgumentError, 'File not specified' unless file
+        raise OpenWebslides::ArgumentError, 'File does not exist' unless File.exist? file
 
         exists = File.exist? asset_file
 
         # Copy asset file
         exec Asset::Copy do |c|
-          c.file = @file
+          c.file = file
         end
 
         # Commit
-        exec_deck Git::Commit do |c|
-          c.author = @author
-          c.message = "#{exists ? 'Update' : 'Add'} #{@receiver.filename}"
+        exec Git::Commit do |c|
+          c.author = author
+          c.message = "#{exists ? 'Update' : 'Add'} #{filename}"
         end
 
         # Update timestamps
         @receiver.touch
-        @receiver.deck.touch
 
         return unless OpenWebslides.config.github.enabled
 
         # Sync remote
-        exec_deck Remote::Sync
+        exec Remote::Sync
       end
     end
   end
