@@ -80,7 +80,6 @@ function contentItemObjectToReact(
 function convertSlideToContentItems(slide, entities, imagesPref, decorativeImagesPref, iframesPref) {
   const slideElements = slide.contentItemIds.map(itemId => entities.contentItems.byId[itemId]);
   const level = parseInt(slide.level, 10);
-
   return slideElements.reduce(
     (arr, currentObject) =>
       arr.concat(
@@ -92,47 +91,45 @@ function convertSlideToContentItems(slide, entities, imagesPref, decorativeImage
   );
 }
 
-// Returns a <section> element containing all nested sections
-function convertSection(slides, currentLevel, entities, imagesPref, decorativeImagesPref, iframesPref) {
-  let thisSectionElements = [];
-  for (let i = 0; i < slides.length; i += 1) {
-    if (slides[i].level === currentLevel) {
-      if (!slides[i + 1] || slides[i + 1].level === currentLevel) {
-        // there is no subsection, so add the content directly to the current section
-        thisSectionElements = thisSectionElements.concat(
-          convertSlideToContentItems(
-            slides[i], entities, imagesPref, decorativeImagesPref, iframesPref,
-          ),
-        );
-      }
-      else {
-        // Add the current slide to the section:
-        thisSectionElements = thisSectionElements.concat(
-          convertSlideToContentItems(
-            slides[i], entities, imagesPref, decorativeImagesPref, iframesPref,
-          ),
-        );
-        i += 1;
-        let subsectionSlides = [];
-        while (i < slides.length && slides[i].level > currentLevel) {
-          subsectionSlides = subsectionSlides.concat(slides[i]);
-          i += 1;
-        }
-        // Then convert the subsection:
-        thisSectionElements = thisSectionElements.concat(
-          convertSection(
-            subsectionSlides,
-            currentLevel + 1,
-            entities,
-            imagesPref,
-            decorativeImagesPref,
-            iframesPref,
-          ),
-        );
-      }
+
+function divideTopLevelIntoSections(slides, level) {
+  const sections = [];
+  let currentSection = [];
+  let i = 0;
+
+  while (i < slides.length) {
+    // Add the first slide which we assume to be at level 1
+    currentSection.push(slides[i]);
+    i += 1;
+    while (i < slides.length && slides[i].level > level) {
+      currentSection.push(slides[i]);
+      i += 1;
     }
+    sections.push(currentSection);
+    currentSection = [];
   }
 
+  return sections;
+}
+
+// Returns a <section> element containing all nested sections
+function convertSection(slides, currentLevel, entities, imagesPref, decorativeImagesPref, iframesPref) {
+  let thisSectionElements;
+
+  thisSectionElements = convertSlideToContentItems(
+    slides[0], entities, imagesPref, decorativeImagesPref, iframesPref,
+  );
+
+
+  if (slides.length > 1) {
+    const subSections = divideTopLevelIntoSections(slides.slice(1), currentLevel + 1);
+    const subSectionsElements = subSections.map(
+      section => convertSection(
+        section, currentLevel + 1, entities, imagesPref, decorativeImagesPref, iframesPref,
+      ),
+    );
+    thisSectionElements = thisSectionElements.concat(subSectionsElements);
+  }
   return React.createElement(
     'section',
     null,
@@ -143,10 +140,12 @@ function convertToPrint(entities, deckId, imagesPref, decorativeImagesPref, ifra
   const slideIds = entities.decks.byId[deckId].slideIds;
   const slideObjects = slideIds.map(id => entities.slides.byId[id]);
 
-  const elements = convertSection(
-    slideObjects, 1, entities, imagesPref, decorativeImagesPref, iframesPref,
+  const sections = divideTopLevelIntoSections(slideObjects, 1);
+  const elements = sections.map(
+    section => convertSection(
+      section, 1, entities, imagesPref, decorativeImagesPref, iframesPref,
+    ),
   );
-
   return elements;
 }
 export default convertToPrint;
