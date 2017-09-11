@@ -7,12 +7,7 @@ import ImageInputField from './ImageInputField';
 
 
 export default function ImageUploadForm(props) {
-  const { submitSucceeded, error, updateDeck, handleSubmitSuccess, handleSubmit, imageTypeValue } = props;
-
-  if (submitSucceeded) {
-    updateDeck();
-    handleSubmitSuccess();
-  }
+  const { error, handleSubmit, imageTypeValue } = props;
 
   return (
     <div>
@@ -32,7 +27,6 @@ export default function ImageUploadForm(props) {
           component={ImageInputField}
           name="imageFile"
         />
-
 
         <label>
           <Field name="imageType" component={InputField} type="radio" value="ILLUSTRATIVE_IMAGE" />
@@ -68,12 +62,11 @@ export default function ImageUploadForm(props) {
 ImageUploadForm.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
-  updateDeck: PropTypes.func.isRequired,
-  submitSucceeded: PropTypes.bool.isRequired,
-  handleSubmitSuccess: PropTypes.func.isRequired,
+  imageTypeValue: PropTypes.string,
 };
 
 ImageUploadForm.defaultProps = {
   error: '',
+  imageTypeValue: '',
 };
 

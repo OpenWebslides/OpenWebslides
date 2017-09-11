@@ -50,6 +50,10 @@ const connectedForm = reduxForm({
   onSubmit: validateAndSubmit,
   getFormState: state => state.vendor.forms,
   initialValues: { imageType: 'ILLUSTRATIVE_IMAGE' },
+  onSubmitSuccess: (result, dispatch, props) => {
+    props.updateDeck();
+    props.handleSubmitSuccess();
+  },
 })(ImageUploadForm);
 
 const selector = formValueSelector('imageUpload', state => state.vendor.forms);
