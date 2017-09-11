@@ -47,7 +47,8 @@ module Auth
 
       set_random_password
 
-      @resource.save
+      @resource.skip_confirmation!
+      @resource.save!
 
       Rails.logger.info "Authenticated new user #{@resource.email}"
     end
