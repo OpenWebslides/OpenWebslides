@@ -41,10 +41,6 @@ class Deck < ApplicationRecord
            :class_name => 'User',
            :inverse_of => :collaborations
 
-  has_many :assets,
-           :dependent => :destroy,
-           :inverse_of => :deck
-
   has_many :notifications,
            :dependent => :destroy,
            :inverse_of => :deck

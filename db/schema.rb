@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170822131444) do
+ActiveRecord::Schema.define(version: 20170911124051) do
 
   create_table "annotations", force: :cascade do |t|
     t.string "type"
@@ -27,15 +27,6 @@ ActiveRecord::Schema.define(version: 20170822131444) do
     t.index ["conversation_id"], name: "index_annotations_on_conversation_id"
     t.index ["deck_id"], name: "index_annotations_on_deck_id"
     t.index ["user_id"], name: "index_annotations_on_user_id"
-  end
-
-  create_table "assets", force: :cascade do |t|
-    t.string "filename"
-    t.integer "deck_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["deck_id"], name: "index_assets_on_deck_id"
-    t.index ["filename", "deck_id"], name: "index_assets_on_filename_and_deck_id", unique: true
   end
 
   create_table "conversions", force: :cascade do |t|
