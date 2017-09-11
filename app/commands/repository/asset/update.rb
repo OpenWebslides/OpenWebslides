@@ -5,7 +5,7 @@ module Repository
     ##
     # Update an asset in the backing store with a file
     #
-    class UpdateFile < AssetCommand
+    class Update < AssetCommand
       attr_accessor :author, :file
 
       def execute

@@ -22,5 +22,5 @@ mock_command Repository::Asset::Copy
 mock_command Repository::Asset::Destroy
 mock_command Repository::Asset::Find
 mock_command Repository::Asset::Update
-mock_command Repository::Asset::UpdateFile
+mock_command Repository::Asset::Update
 mock_command Repository::Asset::Write
