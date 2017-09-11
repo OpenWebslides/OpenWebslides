@@ -60,9 +60,12 @@ function LiveViewItem(props) {
             <button
               className="delete-button-live-view"
               onClick={() => deleteContentItemFromSlide(slideId, id, ancestorItemIds, dataId)}
-
             >X</button>
-            <ContentItemComponent contentItem={contentItem} attributes={attributes} {...contentItemTypeProps} />
+            <ContentItemComponent
+              contentItem={contentItem}
+              attributes={attributes}
+              {...contentItemTypeProps}
+            />
           </div>);
 
       default:
@@ -72,7 +75,11 @@ function LiveViewItem(props) {
               onClick={() => deleteContentItemFromSlide(slideId, id, ancestorItemIds)}
               className="delete-button-live-view"
             >X</button>
-            <ContentItemComponent contentItem={contentItem} attributes={attributes} headingLevel={headingLevel}>
+            <ContentItemComponent
+              contentItem={contentItem}
+              attributes={attributes}
+              headingLevel={headingLevel}
+            >
               <ContentEditableContainer
                 contentItem={contentItem}
                 isFocused={isFocused}
