@@ -5,25 +5,13 @@ module Repository
     ##
     # Asset command
     #
-    class AssetCommand < Command
+    class AssetCommand < RepoCommand
+      attr_accessor :filename
+
       protected
 
-      def asset_path
-        File.join OpenWebslides.config.repository_path, @receiver.deck.canonical_name, 'assets'
-      end
-
       def asset_file
-        File.join asset_path, @receiver.filename
-      end
-
-      ##
-      # Execute an action (internal helper)
-      #
-      def exec_deck(klass)
-        command = klass.new @receiver.deck
-        yield command if block_given?
-
-        command.execute
+        File.join repo_path, 'assets', filename
       end
     end
   end
