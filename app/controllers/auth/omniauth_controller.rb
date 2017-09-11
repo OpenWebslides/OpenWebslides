@@ -60,7 +60,7 @@ module Auth
 
       # New identity
       @identity = @resource.identities.build :uid => auth_hash['uid'], :provider => auth_hash['provider']
-      @identity.save
+      @identity.save!
 
       Rails.logger.info "Authenticated user #{@resource.email} with new provider #{@identity.provider}"
     end
@@ -74,6 +74,20 @@ module Auth
 
     def sync_information
       @resource.first_name ||= auth_hash['info']['name']
+      @resource.first_name ||= first_name
+      @resource.last_name ||= last_name
+    end
+
+    def email
+      (auth_hash['info']['email'] || (auth_hash['extra'] && auth_hash['extra']['mail'])).downcase
+    end
+
+    def first_name
+      auth_hash['info']['name'] || (auth_hash['extra'] && auth_hash['extra']['givenname'])
+    end
+
+    def last_name
+      auth_hash['extra'] && auth_hash['extra']['surname']
     end
   end
 end
