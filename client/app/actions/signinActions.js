@@ -11,9 +11,9 @@ export function emailSigninUser({ values, resolve, reject }) {
   };
 }
 
-export function oauthSigninUser({ authToken }) {
+export function oauthSigninUser({ authToken, id }) {
   return {
     type: OAUTH_SIGNIN_USER,
-    meta: { authToken },
+    meta: { authToken, id },
   };
 }
