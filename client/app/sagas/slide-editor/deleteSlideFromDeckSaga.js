@@ -1,7 +1,8 @@
-import { takeLatest, put, select } from 'redux-saga/effects';
+import { takeLatest, put, select, call, all } from 'redux-saga/effects';
 
 import { DELETE_SLIDE_FROM_DECK, UPDATE_DECK } from 'actions/entities/decks';
 import { deleteSlide } from 'actions/entities/slides';
+import deleteAssetApi from 'api/deleteAssetApi';
 
 import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { getSlidesById, getSlideById } from 'selectors/entities/slides';
@@ -36,6 +37,15 @@ function* doDeleteSlideFromDeck(action) {
       slide.contentItemIds,
       contentItemsById,
     );
+
+    // If a content item has a data id, it means its an asset that needs to be deleted separately.
+    yield all(contentItemIdsToDelete.map((contentItemId) => {
+      if (contentItemsById[contentItemId].dataId) {
+        return call(deleteAssetApi, contentItemsById[contentItemId].dataId);
+      }
+      return null;
+    }));
+
 
     // After deleting the slide, set the previous slide as the active slide; if there is no previous
     // slide, set the next one as active instead.
