@@ -14,6 +14,11 @@ a {
 }
 
 // TODO: THIS IS TEMPORARY STYLING!!!!!!
+
+#{$SELECTORS-WIDGET--BUTTON} {
+  cursor: pointer;
+}
+
 #presentation-toolbar {
   background-color: black;
   position: fixed;
@@ -83,4 +88,5 @@ a {
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 1;
 }
