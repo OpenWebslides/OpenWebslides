@@ -4,13 +4,6 @@ import ImageUrlForm from 'presentationals/components/slide-editor/content-item-f
 import { ADD_URI } from 'actions/app/slide-editor';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { updateDeck } from 'actions/entities/decks';
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateDeck }, dispatch);
-}
 
 export function validate(values) {
   const { altText, imageUrl, imageType, imageCaption } = values;
@@ -53,7 +46,6 @@ const connectedForm = reduxForm({
   getFormState: state => state.vendor.forms,
   initialValues: { imageType: 'ILLUSTRATIVE_IMAGE' },
   onSubmitSuccess: (result, dispatch, props) => {
-    props.updateDeck();
     props.handleSubmitSuccess();
   },
 })(ImageUrlForm);
@@ -61,5 +53,4 @@ const connectedForm = reduxForm({
 export default connect(
   (state) => {
     return { imageTypeValue: selector(state, 'imageType') };
-  },
-  mapDispatchToProps)(connectedForm);
+  })(connectedForm);

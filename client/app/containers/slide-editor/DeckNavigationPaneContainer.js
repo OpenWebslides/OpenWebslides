@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { setActiveSlideId } from 'actions/app/slide-editor';
-import { addSlideToDeck, deleteSlideFromDeck, updateDeck } from 'actions/entities/decks';
+import { addSlideToDeck, deleteSlideFromDeck } from 'actions/entities/decks';
 import { increaseSlideLevel, decreaseSlideLevel } from 'actions/entities/slides';
 import { getDeckById } from 'selectors/entities/decks';
 import { getActiveDeckId, getActiveSlideId } from 'selectors/app/slide-editor';
@@ -31,7 +31,6 @@ function mapDispatchToProps(dispatch) {
     setActiveSlideId,
     increaseSlideLevel,
     decreaseSlideLevel,
-    updateDeck,
   }, dispatch);
 }
 
