@@ -16,14 +16,14 @@ describe('EmailSignin Api Call', () => {
       headers: {
         get: () => `Bearer ${authToken}`,
       },
-      json: () => ({ data: { attributes: { firstName } } }),
+      json: () => ({ data: { attributes: { id: undefined, userEmail: undefined } } }),
     });
 
     const response = await emailSignin(email, password);
-    expect(response).toEqual({ authToken, firstName });
+    expect(response).toEqual({ authToken, id: undefined, userEmail: undefined });
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual('http://localhost:3000/api/token');
+    expect(calledUrl).toEqual('http://owsqas.ugent.be/api/token');
 
     const body = JSON.stringify({
       data: {

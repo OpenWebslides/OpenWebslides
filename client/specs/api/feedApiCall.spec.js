@@ -19,7 +19,7 @@ describe('get feed notifications Api Call', () => {
     const calledUrl = asyncFetch.mock.calls[0][0];
 
     expect(calledUrl).toEqual(
-      'http://localhost:3000/api/notifications?sort=-createdAt&page[offset]=234',
+      'http://owsqas.ugent.be/api/notifications?sort=-createdAt&page[offset]=234',
     );
 
     const requestConfig = asyncFetch.mock.calls[0][1];
