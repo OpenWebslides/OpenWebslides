@@ -8,6 +8,7 @@ import {
 import { getActiveSlideId, getActiveSlideViewTypes } from 'selectors/app/slide-editor';
 
 import { addContentItemToSlide } from 'actions/entities/slides';
+import { updateDeck } from 'actions/entities/decks';
 
 import Toolbar from 'presentationals/components/shared/Toolbar';
 
@@ -23,7 +24,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addContentItemToSlide }, dispatch);
+  return bindActionCreators({ addContentItemToSlide, updateDeck }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

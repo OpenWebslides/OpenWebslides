@@ -1,6 +1,6 @@
 import { takeLatest, put, select, call, all } from 'redux-saga/effects';
 
-import { DELETE_SLIDE_FROM_DECK, UPDATE_DECK } from 'actions/entities/decks';
+import { DELETE_SLIDE_FROM_DECK } from 'actions/entities/decks';
 import { deleteSlide } from 'actions/entities/slides';
 import deleteAssetApi from 'api/deleteAssetApi';
 

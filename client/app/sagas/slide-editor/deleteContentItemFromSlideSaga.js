@@ -11,7 +11,6 @@ import {
 } from 'lib/state-traversal/contentItems';
 
 import { DELETE_CONTENT_ITEM_FROM_SLIDE } from 'actions/entities/slides';
-import { UPDATE_DECK } from 'actions/entities/decks';
 import { deleteContentItem } from 'actions/entities/content-items';
 import deleteAssetApi from 'api/deleteAssetApi';
 import { getFocusedSlideViewType } from 'selectors/app/slide-editor';
@@ -194,8 +193,6 @@ function* doDeleteContentItemFromSlide(action) {
       newFocusedContentItemId,
       newSelectionOffsets,
     ));
-
-    yield put({ type: UPDATE_DECK });
   }
   catch (e) {
     console.error(e);

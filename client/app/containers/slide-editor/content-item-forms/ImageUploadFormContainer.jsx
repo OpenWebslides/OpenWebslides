@@ -1,16 +1,10 @@
 import { reduxForm, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { uploadAsset } from 'actions/other/assetActions';
-import { updateDeck } from 'actions/entities/decks';
 
 import ImageUploadForm from
   'presentationals/components/slide-editor/content-item-forms/ImageUploadForm';
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateDeck }, dispatch);
-}
 
 export function validate(values) {
   const { altText, imageFile, imageType, imageCaption } = values;
@@ -51,7 +45,6 @@ const connectedForm = reduxForm({
   getFormState: state => state.vendor.forms,
   initialValues: { imageType: 'ILLUSTRATIVE_IMAGE' },
   onSubmitSuccess: (result, dispatch, props) => {
-    props.updateDeck();
     props.handleSubmitSuccess();
   },
 })(ImageUploadForm);
@@ -61,5 +54,4 @@ const selector = formValueSelector('imageUpload', state => state.vendor.forms);
 export default connect(
   (state) => {
     return { imageTypeValue: selector(state, 'imageType') };
-  },
-  mapDispatchToProps)(connectedForm);
+  })(connectedForm);

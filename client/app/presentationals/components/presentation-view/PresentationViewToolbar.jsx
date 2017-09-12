@@ -9,8 +9,6 @@ class PresentationToolbar extends Component {
     this.handleNavigation = this.handleNavigation.bind(this);
   }
   componentDidMount() {
-    console.log('ADDED UN MOUNT');
-
     window.addEventListener('keydown', this.handleNavigation);
   }
 
@@ -20,20 +18,14 @@ class PresentationToolbar extends Component {
     const { annotationMode } = nextProps;
 
     if (!annotationMode) {
-      console.log('ADDED');
-
       window.addEventListener('keydown', this.handleNavigation);
     }
     else {
-      console.log('REMOVED');
-
       window.removeEventListener('keydown', this.handleNavigation);
     }
   }
 
   componentWillUnmount() {
-    console.log('UNMOUNT');
-
     window.removeEventListener('keydown', this.handleNavigation);
   }
 
