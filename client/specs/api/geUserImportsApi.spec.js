@@ -21,7 +21,7 @@ describe('get user imports Api Call', () => {
     const calledUrl = asyncFetch.mock.calls[0][0];
 
     expect(calledUrl).toEqual(
-      `http://localhost:3000/api/users/${dummyId}/conversions?sort=-createdAt`,
+      `http://owsqas.ugent.be/api/users/${dummyId}/conversions?sort=-createdAt`,
     );
 
     const requestConfig = asyncFetch.mock.calls[0][1];
