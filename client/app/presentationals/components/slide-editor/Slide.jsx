@@ -133,7 +133,11 @@ class Slide extends Component {
         <div className="c_slide-container__size">
           <div className="c_slide-container__wrapper">
             <div className="c_slide-container__content ows-slide">
-              {slideContent}
+              <div className="ows-slide__overflow">
+                <div className="ows-slide__wrapper">
+                  {slideContent}
+                </div>
+              </div>
             </div>
           </div>
         </div>
