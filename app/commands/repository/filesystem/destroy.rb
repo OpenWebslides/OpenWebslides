@@ -7,6 +7,8 @@ module Repository
     #
     class Destroy < RepoCommand
       def execute
+        raise OpenWebslides::RepoMissingError, repo_path if Dir.exist? repo_path
+
         FileUtils.rm_r repo_path, :secure => true
       end
     end

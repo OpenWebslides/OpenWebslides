@@ -10,7 +10,7 @@ module Repository
         exec Filesystem::Create
 
         # Populate local repo
-        raise OpenWebslides::NoTemplateError, "No template found for #{template_path}" unless Dir.exist? template_path
+        raise OpenWebslides::NoTemplateError, @receiver.template unless Dir.exist? template_path
         FileUtils.cp_r "#{template_path}/.", repo_path
 
         # Delete unnecessary files
