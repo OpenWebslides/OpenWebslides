@@ -7,7 +7,8 @@ module Repository
     #
     class Find < AssetCommand
       def execute
-        raise OpenWebslides::ArgumentError, 'Filename not specified' unless filename
+        raise 'Filename not specified' unless filename
+
         raise OpenWebslides::ArgumentError, 'File does not exist' unless File.exist? asset_file
 
         asset_file

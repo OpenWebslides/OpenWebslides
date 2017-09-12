@@ -8,14 +8,15 @@ module Repository
     # Copy asset file
     #
     class Copy < AssetCommand
-      attr_accessor :file
+      attr_accessor :path
 
       def execute
-        raise OpenWebslides::ArgumentError, 'Filename not specified' unless filename
-        raise OpenWebslides::ArgumentError, 'File not specified' unless file
-        raise OpenWebslides::ArgumentError, 'File does not exist' unless File.exist? file
+        raise 'Filename not specified' unless filename
+        raise 'Path not specified' unless path
 
-        FileUtils.cp file, asset_file
+        raise OpenWebslides::FileMissingError, 'File does not exist' unless File.exist? path
+
+        FileUtils.cp path, asset_file
       end
     end
   end

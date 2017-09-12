@@ -9,9 +9,10 @@ module Repository
       attr_accessor :author
 
       def execute
-        raise OpenWebslides::ArgumentError, 'No filename specified' unless filename
+        raise 'No filename specified' unless filename
+        raise 'No author specified' unless author
+
         raise OpenWebslides::ArgumentError, 'File does not exist' unless File.exist? asset_file
-        raise OpenWebslides::ArgumentError, 'No author specified' unless author
 
         File.delete asset_file
 
