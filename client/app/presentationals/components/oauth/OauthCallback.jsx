@@ -6,7 +6,8 @@ import { Redirect } from 'react-router-dom';
 export default class OauthCallback extends Component {
   componentDidMount() {
     const authToken = queryString.parse(this.props.location.search).token;
-    this.props.oauthSigninUser({ authToken });
+    const id = queryString.parse(this.props.location.search).id;
+    this.props.oauthSigninUser({ authToken, id });
   }
 
   render() {

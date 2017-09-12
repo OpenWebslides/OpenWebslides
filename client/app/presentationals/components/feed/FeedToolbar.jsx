@@ -14,12 +14,11 @@ function FeedToolbar({ selectedType, typeChange }) {
   return (
     <div className="c_feed-toolbar">
       <p>
-        {' '}Filter by type:
-        {' '}
+        Filter by type:
         <select
           key={selectedType}
           value={selectedType}
-          onChange={e => {
+          onChange={(e) => {
             // pass the new value to the feedContainer method
             const target = e.target.value;
             return typeChange(target);
