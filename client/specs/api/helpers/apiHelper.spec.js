@@ -5,7 +5,7 @@ describe('ApiHelper constructor', () => {
   it('builds a basic request', () => {
     const testEmpty = new ApiRequest();
 
-    expect(testEmpty.url).toEqual('http://localhost:3000/api/');
+    expect(testEmpty.url).toEqual('http://owsqas.ugent.be/api/');
     expect(testEmpty.headers).toEqual({
       'Content-Type': 'application/vnd.api+json',
     });
@@ -44,13 +44,13 @@ describe('ApiHelper constructor', () => {
     expect(() => testRequest.setBody('body')).toThrowError("Can't add a body to a GET request.");
 
     expect(() => testRequest.addHeader('Authentication', 'bla')).toThrowError(
-      `Invalid header 'Authentication': No need to specify an authentication header, it's included by default.`,
+      'Invalid header \'Authentication\': No need to specify an authentication header, it\'s included by default.',
     );
 
     testRequest.setMethod('POST');
-    expect(() => testRequest.addParameter('name', 'val')).toThrowError(`Can't add url parameters to a POST request!`);
+    expect(() => testRequest.addParameter('name', 'val')).toThrowError('Can\'t add url parameters to a POST request!');
     expect(() => testRequest.setMethod('wrong')).toThrowError(
-      `Invalid request method: 'wrong'. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')`,
+      'Invalid request method: \'wrong\'. Must be one of (\'GET\', \'POST\', \'PUT\', \'PATCH\', \'DELETE\')',
     );
   });
 });
