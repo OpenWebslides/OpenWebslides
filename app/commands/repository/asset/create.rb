@@ -5,7 +5,7 @@ module Repository
     ##
     # Update an asset in the backing store
     #
-    class Update < AssetCommand
+    class Create < AssetCommand
       attr_accessor :author, :path
 
       def execute
