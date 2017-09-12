@@ -79,7 +79,6 @@ function contentItemObjectToReact(
 }
 
 function countImagesInSlide(slideElements, entities) {
-  debugger;
   let elementsToCount = [];
   if (slideElements[0].contentItemType === 'SECTION') {
     const childItems = slideElements[0].childItemIds.map(
@@ -97,7 +96,6 @@ function countImagesInSlide(slideElements, entities) {
       counter += 1;
     }
   });
-debugger;
   return counter;
 }
 
