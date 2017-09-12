@@ -20,6 +20,7 @@ function contentItemObjectToReact(
   imagesPref,
   decorativeImagesPref,
   iframesPref,
+  amountOfImages,
 ) {
   switch (contentItemObject.contentItemType) {
     case TITLE:
@@ -36,10 +37,11 @@ function contentItemObjectToReact(
         return contentItemObjectToReact(
           entities,
           itemObject,
-          currentLevel + 1,
+          currentLevel,
           imagesPref,
           decorativeImagesPref,
           iframesPref,
+          amountOfImages
         );
       });
     case LIST:
@@ -62,7 +64,7 @@ function contentItemObjectToReact(
         contentItemObject.text,
       );
     case ILLUSTRATIVE_IMAGE:
-      return illustrativeImageToReact(contentItemObject, imagesPref, currentLevel);
+      return illustrativeImageToReact(contentItemObject, imagesPref, amountOfImages, currentLevel);
     case DECORATIVE_IMAGE:
       return decorativeImageToReact(contentItemObject, decorativeImagesPref, currentLevel);
     case IFRAME:
@@ -76,15 +78,38 @@ function contentItemObjectToReact(
   }
 }
 
+function countImagesInSlide(slideElements, entities) {
+  debugger;
+  let elementsToCount = [];
+  if (slideElements[0].contentItemType === 'SECTION') {
+    const childItems = slideElements[0].childItemIds.map(
+      itemId => entities.contentItems.byId[itemId],
+    );
+    elementsToCount = elementsToCount.concat(childItems);
+  }
+  else {
+    elementsToCount = slideElements;
+  }
+
+  let counter = 0;
+  elementsToCount.forEach((e) => {
+    if (e.contentItemType === 'ILLUSTRATIVE_IMAGE') {
+      counter += 1;
+    }
+  });
+debugger;
+  return counter;
+}
 
 function convertSlideToContentItems(slide, entities, imagesPref, decorativeImagesPref, iframesPref) {
   const slideElements = slide.contentItemIds.map(itemId => entities.contentItems.byId[itemId]);
   const level = parseInt(slide.level, 10);
+  const amountOfImages = countImagesInSlide(slideElements, entities);
   return slideElements.reduce(
     (arr, currentObject) =>
       arr.concat(
         contentItemObjectToReact(
-          entities, currentObject, level, imagesPref, decorativeImagesPref, iframesPref,
+          entities, currentObject, level, imagesPref, decorativeImagesPref, iframesPref, amountOfImages,
         ),
       ),
     [],
@@ -130,16 +155,19 @@ function convertSection(slides, currentLevel, entities, imagesPref, decorativeIm
     );
     thisSectionElements = thisSectionElements.concat(subSectionsElements);
   }
+  // debugger;
+
   return React.createElement(
     'section',
     null,
     thisSectionElements,
   );
 }
+
+
 function convertToPrint(entities, deckId, imagesPref, decorativeImagesPref, iframesPref) {
   const slideIds = entities.decks.byId[deckId].slideIds;
-  const slideObjects = slideIds.map(id => entities.slides.byId[id]);
-
+  const slideObjects = slideIds.map(id => entities.slides.byId[id]).asMutable();
   const sections = divideTopLevelIntoSections(slideObjects, 1);
   const elements = sections.map(
     section => convertSection(
