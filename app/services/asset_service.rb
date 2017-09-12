@@ -7,38 +7,39 @@ class AssetService < ApplicationService
     @asset = asset
   end
 
+  ##
+  # Create asset in the backing store
+  #
   def create(params)
-    if @asset.save
-      # Create asset in backing store
-      command = Repository::Asset::UpdateFile.new @asset
+    command = Repository::Asset::Create.new asset.deck
 
-      command.author = params[:author]
-      command.file = params[:file].path
-
-      command.execute
-
-      true
-    else
-      false
-    end
-  end
-
-  def find
-    # Get file path in the backing store
-    command = Repository::Asset::Find.new @asset
+    command.filename = asset.filename
+    command.author = params[:author]
+    command.path = params[:file].path
 
     command.execute
   end
 
-  def delete(params)
-    # Delete file in backing store
-    command = Repository::Asset::Destroy.new @asset
+  ##
+  # Get asset path in the backing store
+  #
+  def find
+    command = Repository::Asset::Find.new asset.deck
 
+    command.filename = asset.filename
+
+    command.execute
+  end
+
+  ##
+  # Delete asset in the backing store
+  #
+  def delete(params)
+    command = Repository::Asset::Destroy.new asset.deck
+
+    command.filename = asset.filename
     command.author = params[:author]
 
     command.execute
-
-    # Delete database
-    @asset.destroy
   end
 end
