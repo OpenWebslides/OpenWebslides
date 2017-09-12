@@ -2,8 +2,8 @@
   width: 21cm;
   max-width: 100%;
   padding: 2cm;
-  display: flex;
-  flex-flow: row wrap;
+  //display: flex;
+  //flex-flow: row wrap;
   background-color: white;
 
 
@@ -12,7 +12,7 @@
     text-indent: 1cm;
     margin-top: 0;
     font-size: 12px;
-    flex: 1 100%;
+    //flex: 1 100%;
 
     [data-level="4"] & {
       padding-left: 1.5cm;
@@ -26,9 +26,9 @@
   &__list {
     text-indent: 1cm;
     margin-top: 0;
-    flex-basis: 70%;
-    flex-grow: 1;
-    flex-shrink: 1/2;
+    //flex-basis: 70%;
+    //flex-grow: 1;
+    //flex-shrink: 1/2;
   }
 
   &__list-item {
@@ -49,7 +49,7 @@
     font-family: $font-family--heading;
     font-weight: $font-weight--heading;
     text-align: center;
-    flex: 1 100%;
+    //flex: 1 100%;
     break-before: page;
     page-break-before: always;
     page-break-after: avoid;
@@ -63,6 +63,7 @@
       transform: scale(0.6);
       color: $color--main__border;
     }
+
     &__separator-after {
       border-width: 0.05cm 0 0;
       border-style: $border-style--subtle;
@@ -78,7 +79,7 @@
     font-size: $font-size--h2;
     font-family: $font-family--heading;
     font-weight: $font-weight--heading;
-    flex: 1 100%;
+    //flex: 1 100%;
     break-before: page;
     page-break-before: always;
     page-break-after: avoid;
@@ -100,7 +101,7 @@
   }
 
   &__subsection-title {
-    flex: 1 100%;
+    //flex: 1 100%;
     font-style: $font-style--heading;
     font-size: $font-size--h3;
     font-family: $font-family--heading;
@@ -117,7 +118,7 @@
     margin-top: 0;
     padding-left: 1cm;
 
-    flex: 1 100%;
+    //flex: 1 100%;
     font-style: $font-style--heading;
     font-size: $font-size--h4;
     font-family: $font-family--heading;
@@ -133,7 +134,7 @@
   &__subsubsubsection-title {
     margin-top: 0;
     padding-left: 2cm;
-    flex: 1 100%;
+    //flex: 1 100%;
     font-style: $font-style--heading;
     font-size: 14px;
     font-family: $font-family--heading;
@@ -150,16 +151,17 @@
 
   &__illustrative-image-and-text {
     margin: 0 auto; /* not needed unless you want centered */
+    display: inline-block;
     border: $border-width--subtle $border-style--subtle $color--main__border;
     padding-left: 0;
     text-align: center;
-    flex-basis: 30%;
-    flex-grow: 0.66;
-    flex-shrink: 0.33;
+    //flex-basis: 30%;
+    //flex-grow: 0.66;
+    //flex-shrink: 0.33;
 
     .is-single & {
-      flex-basis: 100%;
-      flex-grow: 1;
+      //flex-basis: 100%;
+      //flex-grow: 1;
     }
 
 
@@ -188,17 +190,17 @@
     border: $border-width--subtle $border-style--subtle $color--main__border;
     padding-left: 0;
     text-align: center;
-    flex-basis: 30%;
-    flex-grow: 0.66;
-    flex-shrink: 0.3;
+    //flex-basis: 30%;
+    //flex-grow: 0.66;
+    //flex-shrink: 0.3;
 
     &__image-container {
       height: 5cm;
     }
 
     &__image {
-      max-width:100%;
-      max-height:100%;
+      max-width: 100%;
+      max-height: 100%;
       //object-fit: cover;
       margin: auto 0;
     }
@@ -207,21 +209,44 @@
 
   &__illustrative-image-text-only {
     text-align: center;
-    flex-basis: 30%;
-    flex-grow: 1;
-    flex-shrink: 0.33;
+    //flex-basis: 30%;
+    //flex-grow: 1;
+    //flex-shrink: 0.33;
     border: 1px solid $color--main__border;
   }
 
 
   &__decorative-image {
-    align-self: flex-end;
+    //align-self: flex-end;
     margin: 10px auto;
-    flex: 0.33;
+    //flex: 0.33;
     max-width: 30%;
     max-height: 100%;
   }
+}
 
+.image-single {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.image-double {
+  box-sizing: border-box;
+  max-width: 50%;
+  min-width: 50%;
+}
+
+.image-triple {
+  box-sizing: border-box;
+  max-width: 33%;
+  min-width: 33%;
+}
+
+.image-quadruple {
+  box-sizing: border-box;
+  max-width: 25%;
+  min-width: 25%;
 }
 
 
@@ -248,4 +273,3 @@
   }
 
 }
-
