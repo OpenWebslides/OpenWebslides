@@ -13,6 +13,8 @@ class AssetResource < ApplicationResource
   #
   attribute :filename
 
+  key_type :string
+
   ##
   # Relationships
   #
@@ -31,15 +33,5 @@ class AssetResource < ApplicationResource
   #
   def self.updatable_fields(_ = {})
     []
-  end
-
-  def custom_links(options)
-    return unless context[:current_user]
-    token = AssetToken.new
-    token.subject = context[:current_user]
-    token.object = @model
-
-    url = "#{options[:serializer].link_builder.self_link(self)}/raw?token=#{token.to_jwt}"
-    { :raw => url }
   end
 end
