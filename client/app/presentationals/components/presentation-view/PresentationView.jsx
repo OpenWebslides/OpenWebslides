@@ -16,7 +16,7 @@ class PresentationView extends Component {
   renderSlide() {
     if (this.props.activeSlideId) {
       return (
-        <div>
+        <div className="c_presentation-view">
           <SlideContainer id={this.props.activeSlideId} viewType={slideViewTypes.PRESENTATION} />
           <AnnotationSidePanel />
         </div>
