@@ -9,6 +9,8 @@ module ErrorHandling
 
     rescue_from JWT::Auth::UnauthorizedError, :with => :user_not_authenticated
     rescue_from Pundit::NotAuthorizedError, :with => :user_not_authorized
+
+    rescue_from OpenWebslides::Error, :with => :jsonapi_render_ows_error
   end
 
   ##
@@ -28,5 +30,20 @@ module ErrorHandling
                                                                      type,
                                                                      :status => :forbidden,
                                                                      :code => JSONAPI::FORBIDDEN
+  end
+
+  ##
+  # Handle errors originating from OWS app code
+  #
+  def jsonapi_render_ows_error(exception)
+    body = {
+      :title => exception.title,
+      :detail => exception.detail,
+      :code => exception.code,
+      :status => 422
+    }
+    render :json => { :errors => body }, :status => :unprocessable_entity
+  ensure
+    correct_media_type
   end
 end
