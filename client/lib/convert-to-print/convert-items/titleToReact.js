@@ -9,6 +9,7 @@ export default function titleToReact(title, level) {
     5: { tag: 'h5', className: 'c_print-view__subsubsubsection-title' },
     6: { tag: 'h6', className: 'c_print-view__subsubsubsubsection-title' },
   };
+
   // if it's an h1 or h2, add an horizontal line:
   const elements = level === 1
     ? [
