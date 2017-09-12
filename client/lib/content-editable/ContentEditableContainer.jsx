@@ -6,7 +6,6 @@ import {
   setSelectionOffsets,
 } from 'actions/app/slide-editor';
 import { updateContentItem } from 'actions/entities/content-items';
-import { updateDeck } from 'actions/entities/decks';
 
 import {
   getSelectionOffsets,
@@ -31,7 +30,6 @@ function mapDispatchToProps(dispatch) {
       updateContentItem,
       setFocusedContentItemId,
       setSelectionOffsets,
-      updateDeck,
       addContentItemToSlide,
       deleteContentItemFromSlide,
     },
