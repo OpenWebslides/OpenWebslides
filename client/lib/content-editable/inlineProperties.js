@@ -176,6 +176,10 @@ export function getHTMLStringFromInlinePropertiesAndText(
 ) {
   /* eslint-disable */
 
+  if (text === undefined) {
+    return '';
+  }
+
   // #TODO maybe this should be moved to a selector instead? (more efficient)
   let textHTML = '';
 
