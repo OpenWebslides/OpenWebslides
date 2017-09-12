@@ -22,6 +22,7 @@
     $font-weight--emphasis: 300 !default;
     $font-weight--emphasis__strong: 400 !default;
     $font-weight--emphasis__x-strong: 600 !default;
+    $font-weight--emphasis__xx-strong: 800 !default;
     $font-weight--emphasis__light: 100 !default;
 
 
@@ -38,6 +39,7 @@
     $font-size--h6: 0.90em !default;
     $font-weight--heading: $font-weight--emphasis__strong !default;
     $font-weight--heading__strong: $font-weight--emphasis__x-strong !default;
+    $font-weight--heading__x-strong: $font-weight--emphasis__xx-strong !default;
 
 
 
