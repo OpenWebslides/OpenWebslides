@@ -1,20 +1,20 @@
-import _ from 'lodash';
+import parseSlideNodes from './parseSlideNodes';
 
-import parseSlides from './parseSlides';
-
-function convertToState(html) {
+export default function convertToState(deckId, HTMLString, assetLinks) {
+  const validSlideNodeNames = ['SECTION', 'DIV', 'ASIDE', 'ARTICLE'];
   const parser = new DOMParser();
-  const document = parser.parseFromString(html, 'text/html');
+  const document = parser.parseFromString(HTMLString, 'text/html');
 
-  if (_.isUndefined(document)) {
-    throw new Error('Invalid data');
+  let slideNodes = [];
+
+  if (document.body) {
+    slideNodes = Array.from(document.body.children).filter(
+      node => Array.indexOf(
+        validSlideNodeNames,
+        node.nodeName,
+      ) !== -1 && node.className.includes('slide'),
+    );
   }
 
-  const slideArr = Array.from(document.body.children).filter(
-    node => node.nodeName === 'SECTION',
-  );
-
-  return parseSlides(slideArr);
+  return parseSlideNodes(deckId, slideNodes, assetLinks);
 }
-
-export default convertToState;

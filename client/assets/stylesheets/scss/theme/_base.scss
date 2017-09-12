@@ -12,3 +12,81 @@ a {
   transition: all $transition-duration--fast ease-in-out;
   transition-property: color;
 }
+
+// TODO: THIS IS TEMPORARY STYLING!!!!!!
+
+#{$SELECTORS-WIDGET--BUTTON} {
+  cursor: pointer;
+}
+
+#presentation-toolbar {
+  background-color: black;
+  position: fixed;
+  height: 10%;
+  bottom: 0;
+  width: 30%;
+  left: 35%;
+}
+
+
+.annotations-side-bar {
+  display: block;
+  height: 100%;
+  right: -470px;
+  width: 440px;
+  padding-left: 40px;
+  padding-right: 30px;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  background-color: white;
+  border-left: 2px solid black;
+  overflow-x: hidden;
+  transition: transform ease 250ms;
+}
+
+.annotations-side-bar.visible {
+  transform: translate3d(-470px, 0, 0);
+  -ms-transform: translate3d(-470px, 0, 0);
+  -webkit-transform: translate3d(-470px, 0, 0);
+  -o-transform: translate3d(-470px, 0, 0);
+  -moz-transform: translate3d(-470px, 0, 0);
+}
+
+.annotations-side-bar .close-btn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  color: black;
+}
+
+.annotations-side-bar .back-btn {
+  position: absolute;
+  top: 10px;
+  left: -30px;
+  font-size: 30px;
+  margin-left: 50px;
+  color: black;
+}
+
+.list-style-none {
+  list-style-type: none;
+}
+
+.deletion-wrapper {
+  position: relative;
+}
+
+.delete-button-live-view {
+  display: none;
+}
+
+.deletion-wrapper:hover .delete-button-live-view {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}

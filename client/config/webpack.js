@@ -6,7 +6,7 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const config = {
   context: path.join(__dirname, '..'),
 
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-eval-source-map',
 
   entry: [
     'react-hot-loader/patch',
@@ -16,11 +16,15 @@ const config = {
   output: {
     path: path.join(__dirname, '..', 'dist'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
 
   module: {
     rules: [
+      {
+        test: /\.(jpe?g|png|gif|svg|tiff)$/i,
+        loader: 'file-loader?name=public/icons/[name].[ext]',
+      },
       {
         test: /\.jsx{0,1}$/,
         exclude: /(node_modules)/,
@@ -30,8 +34,13 @@ const config = {
         },
       },
       {
-        test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+        test: /\.s?css$/,
+        loaders: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -39,7 +48,7 @@ const config = {
       },
       {
         test: /locales/,
-        use: ['i18next-resource-store-loader']
+        use: ['i18next-resource-store-loader'],
       },
     ],
   },
@@ -50,6 +59,8 @@ const config = {
       root: path.join(__dirname, '..'),
       presentationals: path.join(__dirname, '..', 'app', 'presentationals'),
       pages: path.join(__dirname, '..', 'app', 'pages'),
+      constants: path.join(__dirname, '..', 'app', 'constants'),
+      selectors: path.join(__dirname, '..', 'app', 'selectors'),
       reducers: path.join(__dirname, '..', 'app', 'reducers'),
       actions: path.join(__dirname, '..', 'app', 'actions'),
       containers: path.join(__dirname, '..', 'app', 'containers'),
@@ -77,7 +88,7 @@ const config = {
     hot: true,
     historyApiFallback: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
-  }
+  },
 };
 
 module.exports = config;

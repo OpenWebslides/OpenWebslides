@@ -1,0 +1,66 @@
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.o_user-imports-title{
+  margin-top: 0.4em;
+}
+.c_deck-import-info{
+
+  h3 {
+    margin: 0;
+  }
+
+  div {
+    p {
+      margin-top:0;
+    }
+  }
+  list-style-type:none;
+  padding: 0.6em;
+  margin: 0.3em;
+  &.is_queued{
+    background: rgba(200,200,200,0.2);
+  }
+  &.is_success{
+    background: rgba(0,255,0,0.1);
+  }
+  &.is_error{
+    background: rgba(255,0,0,0.1);
+  }
+  &.is_processing{
+    background: rgba(100,0,200,0.1);
+
+    &.o_deck-import-info-name{
+      &::after{
+        @include icon($fa-var-spinner);
+        float:right;
+        animation: spinner .6s linear infinite;
+      }
+    }
+  }
+
+  &.is_pdf{
+    &::before {
+      @include icon($fa-var-file-pdf-o);
+      font-size:5em;
+      float:left;
+
+      margin-right: 0.2em;
+      margin-top: 0.1em;
+    }
+
+  }
+  &.is_pptx{
+    &::before {
+      @include icon($fa-var-file-powerpoint-o);
+      font-size:5em;
+      float:left;
+      margin-right: 0.2em;
+      margin-top: 0.1em;
+
+    }
+
+  }
+}
+

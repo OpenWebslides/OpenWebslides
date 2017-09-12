@@ -1,3 +1,45 @@
 // ----------------------------
 // Overrides for framework maps
 // ----------------------------
+
+// Breakpoints
+
+// Font sizes
+
+$map--breakpoints_to_font-sizes: (
+        false: 90%, // base value, no breakpoint
+        $breakpoint--small: 100%,
+        //$breakpoint--average: 110%,
+        //$breakpoint--large: 120%,
+        //$breakpoint--x-large: 140%,
+        //$breakpoint--xx-large: 160%,
+) !default;
+
+// Font icons
+
+// Actions
+
+$map--actions_to_icons: (show: $fa-var-arrow-right,
+        add: $fa-var-plus,
+        edit: $fa-var-pencil,
+        trash: $fa-var-trash,
+        delete: $fa-var-remove,
+        save: $fa-var-save,
+        cancel: $fa-var-times,
+        back: $fa-var-arrow-left,
+        post: $fa-var-envelope,
+        read-more: $fa-var-chevron-right,
+) !default; // #TODO make test page
+
+// ContentItemTypes
+
+$map--content-item-types_to_icons: (
+        title: $fa-var-header,
+        paragraph: $fa-var-paragraph,
+        unordered-list: $fa-var-list-ul,
+        ordered-list: $fa-var-list-ol,
+        illustrative-image: $fa-var-image,
+        decorative-image: $fa-var-image,
+        iframe: $fa-var-globe, // $fa-var-html5,
+        save-button: $fa-var-save, // #TODO delete this
+) !default;

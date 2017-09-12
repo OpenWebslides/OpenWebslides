@@ -1,17 +1,32 @@
 {
   "extends": [
-    "airbnb",
-    "prettier"
+    "airbnb"
   ],
   "rules": {
-    "prettier/prettier": [
-      "error", {
-        "trailingComma": "all",
-        "singleQuote": true
+    "linebreak-style": "off",
+    "jsx-a11y/label-has-for": "off",
+    "brace-style": [
+      "error",
+      "stroustrup"
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 100,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
       }
     ],
-    "linebreak-style": "off",
-    "jsx-a11y/label-has-for": "off"
+    "no-else-return": "off",
+    "arrow-body-style": "off",
+    "react/no-unused-prop-types": "off",
+    "react/jsx-boolean-value": [
+      "error",
+      "always"
+    ],
+    "no-console": "off",
+    "no-empty": "off",
+    "no-multiple-empty-lines": "off"
   },
   "parserOptions": {
     "ecmaVersion": 8,
@@ -27,7 +42,6 @@
   },
   "plugins": [
     "react",
-    "prettier",
     "import"
   ],
   "settings": {

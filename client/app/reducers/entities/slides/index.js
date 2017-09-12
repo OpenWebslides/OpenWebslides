@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
 
-import allIds from 'reducers/entities/decks/allIdsReducer';
-import byId from 'reducers/entities/decks/byIdReducer';
+import byId from 'reducers/entities/slides/byIdReducer';
 
 const slides = combineReducers({
-  allIds,
   byId,
 });
 

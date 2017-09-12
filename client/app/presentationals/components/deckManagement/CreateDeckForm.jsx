@@ -30,18 +30,8 @@ class CreateDeckForm extends Component {
       >
         <div>
           <form onSubmit={this.props.handleSubmit(validateAndSubmit)}>
-            <Field
-              component={inputField}
-              label="Title:"
-              name="title"
-              placeholder="Title"
-            />
-            <Field
-              component={inputField}
-              label="Description:"
-              name="description"
-              placeholder="Description"
-            />
+            <Field component={inputField} label="Title:" name="title" placeholder="Title" />
+            <Field component={inputField} label="Description:" name="description" placeholder="Description" />
             <button type="submit"> Create Deck</button>
           </form>
         </div>

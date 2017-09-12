@@ -3,6 +3,7 @@
   "rules": {
     "max-empty-lines": 3,
     "indentation": null,
-    "number-no-trailing-zeros": null
+    "number-no-trailing-zeros": null,
+    "selector-list-comma-newline-after": "always-multi-line"
   }
 }

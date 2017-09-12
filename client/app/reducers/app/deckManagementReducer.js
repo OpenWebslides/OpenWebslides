@@ -32,11 +32,7 @@ function deckManagementReducer(state = initialState, action) {
         sentRequestForDecksList: false,
         receivedList: true,
         listErrorMessage: '',
-        listOfDecks: _.unionWith(
-          state.listOfDecks,
-          action.payload.listOfDecks,
-          (a, b) => a.id === b.id,
-        ),
+        listOfDecks: action.payload.listOfDecks,
       });
     case REQUEST_DECK_LIST_FAILURE:
       return Immutable.merge(state, {
@@ -55,9 +51,7 @@ function deckManagementReducer(state = initialState, action) {
       });
     case DECK_DELETION_REQUEST_SUCCESS:
       return Immutable.merge(state, {
-        listOfDecks: state.listOfDecks
-          .concat()
-          .filter(deck => deck.id !== state.sentDeletionRequestFor),
+        listOfDecks: state.listOfDecks.concat().filter(deck => deck.id !== state.sentDeletionRequestFor),
         sentDeletionRequestFor: null,
         deletionErrorMessage: '',
       });

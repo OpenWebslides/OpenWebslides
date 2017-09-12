@@ -1,0 +1,173 @@
+// ---------------------------------
+// Slide content view item component
+// ---------------------------------
+
+.c_slide-content-view-item {
+  // The minimum height a content view block can take == the base line height of its text content.
+  $type-indicator-size: $line-height--base * 1em;
+  $spacing__v: $spacing--xx-small__v;
+  $spacing__h: $spacing--xx-small__h;
+
+  margin-top: $spacing--element__v;
+
+  // Frame for position: absolute; on descendants.
+  position: relative;
+
+  &__wrapper {
+    @include color--main;
+
+    // Leave some space for absolutely positioned element.
+    padding-left: $type-indicator-size;
+  }
+
+  &__content {
+    @include inkgrid-row($spacing__v, $spacing__h, false);
+  }
+
+  &__content-item {
+    @include inkgrid-col($spacing__v, $spacing__h);
+    @include inkgrid-col__v-align(middle);
+
+    &--text {
+      @include inkgrid-col__parts(4, 3);
+    }
+
+    &--options {
+      @include inkgrid-col__parts(4, 1);
+    }
+  }
+
+  &__type-indicator {
+    color: lightgray;
+
+    // Position to the left of the item.
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: $type-indicator-size;
+
+    &::before {
+      @include icon(false, $type-indicator-size);
+
+      position: absolute;
+      top: 50%;
+      margin-top: -($type-indicator-size / 2);
+    }
+
+    &__wrapper {
+      @include screenreaders-only;
+    }
+  }
+
+  &__options {
+    &__wrapper {
+      @include inkgrid-row(false);
+      @include inkgrid-row__h-align(right);
+    }
+  }
+
+  &__options-item {
+    @include inkgrid-col(false);
+    @include inkgrid-col__v-align(middle);
+  }
+
+  .o_direction-menu {
+    $button-size: 1em;
+
+    @include inkgrid-row(false, false);
+
+    // Don't add extra space below buttons (which are smaller than default line-height).
+    line-height: 0em;
+
+    // Undo default list styles.
+    list-style: none;
+    margin-top: 0;
+    padding-left: 0;
+
+    // Two on one row.
+    max-width: $button-size * 2 + 0.5em;
+
+    &__item {
+      @include inkgrid-col(false, false);
+    }
+
+    &__button {
+      display: block;
+
+      // Undo default button styles.
+      padding: 0;
+
+      &::before {
+        @include icon(false, $button-size);
+
+        display: block;
+      }
+
+      &__wrapper {
+        @include screenreaders-only;
+      }
+
+      &--up::before {
+        content: $fa-var-arrow-up;
+      }
+
+      &--right::before {
+        content: $fa-var-arrow-right;
+      }
+
+      &--down::before {
+        content: $fa-var-arrow-down;
+      }
+
+      &--left::before {
+        content: $fa-var-arrow-left;
+      }
+    }
+  }
+
+  @each $content-item-type, $icon in $map--content-item-types_to_icons {
+    &--type-#{$content-item-type} {
+      .c_slide-content-view-item__type-indicator::before {
+        content: $icon;
+      }
+    }
+  }
+
+  &__section {
+    $indent: $spacing--xx-small__h;
+    $border-width: $border-width--strong;
+
+    border-left: $border-width solid lightgray;
+    padding-left: $indent;
+
+    // Start counter.
+    counter-reset: slide-content-view-section;
+
+    &--ordered-list,
+    &--unordered-list {
+      border-left: $border-width dotted shade(lightgray, 10%);
+      // margin-left: -$indent - $border-width;
+    }
+
+    &--ordered-list .c_slide-content-view-item--type-list-item {
+      .c_slide-content-view-item__type-indicator::before {
+        @include font--mono;
+
+        font-weight: $font-weight--mono__x-strong;
+        content: counter(slide-content-view-section); // map-get($map--content-item-types_to_icons, ordered-list);
+        counter-increment: slide-content-view-section;
+      }
+    }
+
+    &--unordered-list .c_slide-content-view-item--type-list-item {
+      .c_slide-content-view-item__type-indicator::before {
+        content: '●'; // map-get($map--content-item-types_to_icons, unordered-list);
+      }
+    }
+  }
+
+  .o_content-editable {
+    @include wrap-line-height(1.25);
+  }
+}

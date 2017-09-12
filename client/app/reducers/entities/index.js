@@ -1,13 +1,17 @@
 import { combineReducers } from 'redux';
 
-import contentBlocks from 'reducers/entities/content-blocks';
+import contentItems from 'reducers/entities/content-items';
 import decks from 'reducers/entities/decks';
 import slides from 'reducers/entities/slides';
+import conversations from 'reducers/entities/conversations';
+import conversationComments from 'reducers/entities/conversation-comments';
 
 const entities = combineReducers({
   decks,
   slides,
-  contentBlocks,
+  contentItems,
+  conversations,
+  conversationComments,
 });
 
 export default entities;

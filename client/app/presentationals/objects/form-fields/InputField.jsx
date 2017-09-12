@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 function InputField(props) {
   // #TODO test this
+
+  const { errorOnPristine } = props;
   let errors;
   if (props.meta.extraErrors) {
     errors = (
@@ -11,16 +13,18 @@ function InputField(props) {
         {props.meta.extraErrors.map(error => <li>{error}</li>)}
       </ul>
     );
-  } else {
+  }
+  else {
     errors = <p>{props.meta.error}</p>;
   }
   return (
     <div className="c_input-field">
       <div className="c_input-field__wrapper">
         <label className="c_input-field__widget">
-          <span className="c_input-field__label">{props.label}</span>
+          {props.label && <span className="c_input-field__label">{props.label}</span>}
           <span className="c_input-field__object">
             <input
+              autoFocus={props.autoFocus}
               className="c_input-field__element"
               {...props.input}
               type={props.type}
@@ -28,7 +32,7 @@ function InputField(props) {
             />
           </span>
         </label>
-        {props.meta.touched &&
+        {props.meta.touched && (errorOnPristine ? true : !props.meta.pristine) &&
           props.meta.error &&
           <span className="c_input-field__error">
             <span className="c_input-field__error__wrapper">
@@ -42,13 +46,15 @@ function InputField(props) {
 
 InputField.propTypes = {
   type: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  autoFocus: PropTypes.bool,
   placeholder: PropTypes.string,
   input: PropTypes.objectOf(String).isRequired,
   meta: PropTypes.shape({
     touched: PropTypes.bool,
     active: PropTypes.bool,
     error: PropTypes.string,
+    pristine: PropTypes.bool,
     extraErrors: PropTypes.arrayOf(String),
   }).isRequired,
 };
@@ -56,6 +62,8 @@ InputField.propTypes = {
 InputField.defaultProps = {
   type: 'text',
   placeholder: '',
+  label: '',
+  autoFocus: false,
 };
 
 export default InputField;

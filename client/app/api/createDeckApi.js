@@ -1,6 +1,6 @@
 import ApiRequest from './helpers/apiHelper';
 
-async function createDeck(title, description, authorID, token) {
+async function createDeck(title, description, authorID) {
   const request = new ApiRequest();
 
   const requestBody = {
@@ -21,11 +21,7 @@ async function createDeck(title, description, authorID, token) {
     },
   };
 
-  request
-    .setMethod('POST')
-    .setEndpoint('decks')
-    .addHeader('Accept', 'application/vnd.api+json')
-    .setBody(requestBody);
+  request.setMethod('POST').setEndpoint('decks').addHeader('Accept', 'application/vnd.api+json').setBody(requestBody);
 
   return request.executeRequest();
 }

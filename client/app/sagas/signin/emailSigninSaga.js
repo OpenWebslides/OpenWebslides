@@ -3,6 +3,7 @@ import { SubmissionError } from 'redux-form';
 
 import { EMAIL_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 import emailSigninApi from 'api/emailSigninApi';
+import { loadState, saveState } from '../../../localStorage';
 
 export function* doEmailSignin(action) {
   const { resolve, reject } = action.meta;
@@ -10,7 +11,7 @@ export function* doEmailSignin(action) {
   try {
     const { email, password } = action.meta.values;
     const response = yield call(emailSigninApi, email, password);
-    const { authToken, firstName, id } = response;
+    const { authToken, userEmail, id } = response;
 
     if (typeof authToken === 'undefined') {
       throw new Error('Unable to find JWT in response');
@@ -20,13 +21,25 @@ export function* doEmailSignin(action) {
       type: SIGNIN_USER_SUCCESS,
       payload: {
         authToken,
-        firstName,
+        firstName: userEmail,
         id,
       },
     });
 
+    saveState({
+      app: {
+        authentication: {
+          authToken,
+          firstName: userEmail,
+          id,
+        },
+      },
+      // entities: store.getState().entities,
+    });
+
     yield call(resolve);
-  } catch (error) {
+  }
+  catch (error) {
     let errorMessage;
     switch (error.statusCode) {
       case 401:

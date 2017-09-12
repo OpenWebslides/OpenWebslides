@@ -14,13 +14,14 @@ async function emailSignin(email, password) {
 
   const response = await request.executeRequest();
   const responseBody = await response.json();
+
   const id = responseBody.data.id;
   const bearerResponseHeader = response.headers.get('Authorization');
 
   const authToken = bearerResponseHeader.split(' ')[1];
-  const { firstName } = responseBody.data.attributes;
+  const { email: userEmail } = responseBody.data.attributes;
 
-  return { authToken, id ,firstName};
+  return { authToken, id, userEmail };
 }
 
 export default emailSignin;

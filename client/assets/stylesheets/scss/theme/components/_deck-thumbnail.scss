@@ -1,0 +1,61 @@
+.c_deck-thumbnail {
+  //width: 8em;
+  //display: inline;
+  //overflow: hidden;
+  //white-space: nowrap;
+  text-align: left;
+
+
+  &__deck-name {
+    //text-overflow: ellipsis;
+    display: inline;
+    padding-left: $spacing--small__h;
+    padding-right: $spacing--small__h;
+    margin-top: 0;
+  }
+
+  &__delete-button {
+    height: 100%;
+    background-color: transparent;
+    padding-right: $spacing--small__h;
+    padding-left: $spacing--small__h;
+    border: 1px solid $color--main__border;
+    color: red;
+
+    &:hover {
+      background-color: $color--main__border;
+    }
+  }
+
+  &__deck-view-link {
+    margin-top: 0;
+    background-color: transparent;
+    //padding: $spacing--xx-small__v $spacing--small__h $spacing--xx-small__v $spacing--small__h;
+    //border: 1px solid $color--main__border;
+    &:hover {
+      background-color: $color--main__border;
+    }
+  }
+
+  &__deck-edit-link {
+    margin-top: 0;
+
+    //padding: $spacing--xx-small__v $spacing--small__h $spacing--xx-small__v $spacing--small__h;
+    //border: 1px solid $color--main__border;
+
+    &:hover {
+      background-color: $color--main__border;
+    }
+  }
+
+  &__deck-view-print-link {
+    margin-top: 0;
+
+    //padding: $spacing--xx-small__v $spacing--small__h $spacing--xx-small__v $spacing--small__h;
+    //border: 1px solid $color--main__border;
+
+    &:hover {
+      background-color: $color--main__border;
+    }
+  }
+}

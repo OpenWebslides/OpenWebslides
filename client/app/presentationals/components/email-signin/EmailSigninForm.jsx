@@ -12,10 +12,6 @@ function EmailSigninForm(props) {
     return <Redirect to="/" />;
   }
 
-  if (props.submitSucceeded) {
-    return <Redirect to="/" />;
-  }
-
   return (
     <div>
       <form className="o_form" onSubmit={props.handleSubmit}>

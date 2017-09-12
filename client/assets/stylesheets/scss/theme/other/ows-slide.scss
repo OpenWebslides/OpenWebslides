@@ -1,0 +1,175 @@
+// -------------------------
+// OpenWebslide slide styles
+// -------------------------
+
+.ows-slide {
+  $slide-color--main: white;
+  $slide-color--highlight: #1e64c8;
+  $slide-color--accent: #ffd200;
+
+  $heading-base-font-size: 1.4em;
+  $subsection-scaling-factor: 0.8em;
+  $subsection-indent: $line-height--base * 1em;
+
+  $list-bullet-size: 1em;
+  $list-bullet-spacing: $spacing--line__h;
+
+  background-color: $slide-color--main;
+  border: $border-width--subtle $border-style--subtle shade(white, 20%);
+
+  // Make sure default text-align is 'left' no matter the text-align of the containing element.
+  text-align: left;
+
+  // UGent logo in background.
+  &::after {
+    $ratio: 100 / 76.4;
+    $width: 4em;
+    $spacing: 1em;
+
+    content: '';
+    position: absolute;
+    right: $spacing;
+    bottom: $spacing;
+    width: $width;
+    padding-top: $width / $ratio;
+
+    // Logo image.
+    background-image: url("#{$setting--image-path}/logo/ugent.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+
+    // Make image slightly transparent.
+    opacity: 0.3;
+  }
+
+  &__overflow {
+    height: 100%;
+    overflow: auto;
+  }
+
+  &__wrapper {
+    @include padding--x-small;
+  }
+
+  a[href] {
+    color: $slide-color--highlight;
+    font-weight: inherit;
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+
+  // Necessary because slides might be nested inside another list, which unsets the top margin.
+  ul, ol, menu {
+    margin-top: $spacing--element__v;
+    padding-left: 0;
+  }
+
+  li {
+    list-style: none;
+    padding-left: $text-indent--list;
+
+    // Frame for position: absolute; on list bullets.
+    position: relative;
+
+    &::before {
+      color: $slide-color--highlight;
+      opacity: 0.66;
+
+      // Size.
+      height: $list-bullet-size;
+      line-height: $list-bullet-size;
+      width: $list-bullet-size;
+
+      // Position.
+      position: absolute;
+      left: $text-indent--list - $list-bullet-size - $list-bullet-spacing;
+      top: ($line-height--base * 1em - $list-bullet-size) / 2;
+      text-align: center;
+    }
+  }
+
+  ul li {
+    &::before {
+      content: '\25CF\00A0';
+    }
+  }
+
+  ol {
+    counter-reset: ol;
+
+    li {
+      &::before {
+        @include font--mono;
+
+        // Override line-height set by font-mono.
+        line-height: $list-bullet-size;
+
+        // Ol numbers.
+        content: counter(ol) '.';
+        counter-increment: ol;
+      }
+    }
+  }
+
+  p, // #TODO ?
+  li {
+    @include wrap-line-height(1.5);
+  }
+
+  img {
+    margin-top: $spacing--element__v;
+  }
+
+  figure {
+    text-align: center;
+
+    img:first-child {
+      margin-top: 0;
+      max-height: 12em;
+    }
+
+    figcaption {
+      font-size: $font-size--x-smaller;
+    }
+  }
+
+  iframe {
+    border: 0;
+    margin-top: $spacing--element__v;
+    height: 15em; // #TODO
+    width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $slide-color--highlight;
+    font-size: $heading-base-font-size;
+    font-weight: $font-weight--heading__strong;
+    margin-top: $spacing--element__v / $heading-base-font-size * 1em;
+
+    #{$SELECTORS-STRONG} {
+      font-weight: $font-weight--heading__x-strong;
+    }
+
+    & + section {
+      &,
+      & ~ section {
+        // #TODO deeper nesting?
+        padding-left: $subsection-indent;
+      }
+    }
+  }
+
+  section section {
+    font-size: $subsection-scaling-factor;
+  }
+
+  // Hide elements that have a data-view-type attribute with a value different from 'live'.
+  [data-view-type]:not([data-view-type='live']) {
+    display: none;
+  }
+}

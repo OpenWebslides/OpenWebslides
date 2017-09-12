@@ -7,6 +7,7 @@
 // Functions
 
     @import 'inkframe/libraries/functions/color';
+    @import 'inkframe/libraries/functions/conversion';
     @import 'inkframe/libraries/functions/math';
     @import 'inkframe/libraries/functions/selector';
     @import 'inkframe/libraries/functions/unit';
@@ -76,8 +77,14 @@
 
 // Pages
 
-    @import 'theme/pages/base';
-    @import 'theme/pages/slide-editor';
+    // Layouts
+
+        @import 'theme/pages/layouts/base';
+        @import 'theme/pages/layouts/full-viewport';
+
+    // Specific pages
+
+        @import 'theme/pages/slide-editor';
 
 
 // Components
@@ -88,7 +95,20 @@
     @import 'theme/components/slide-editor';
     @import 'theme/components/editor-slide-view';
     @import 'theme/components/switcher-menu';
+    @import 'theme/components/slide-views-pane';
     @import 'theme/components/slide-container';
+    @import 'theme/components/user-imports';
+    @import 'theme/components/fine-uploader-error';
+    @import 'theme/components/feed';
+    @import 'theme/components/feed-notification';
+    @import 'theme/components/deck-management';
+    @import 'theme/components/deck-thumbnail';
+    @import 'theme/components/toolbar';
+    @import 'theme/components/toolbar-button';
+    @import 'theme/components/course-view';
+    @import 'theme/components/slide-content-view';
+    @import 'theme/components/slide-content-view-item';
+    @import 'theme/components/presentation-view';
 
 
 // Objects
@@ -97,3 +117,11 @@
     @import 'theme/objects/form';
     @import 'theme/objects/buttons-row';
     @import 'theme/objects/logo--site';
+    @import 'theme/objects/content-editable';
+    @import 'theme/objects/code-block';
+
+
+// Other
+
+    @import 'theme/other/ows-slide';
+

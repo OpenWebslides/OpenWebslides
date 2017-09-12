@@ -2,13 +2,11 @@ import { loadState } from '../../../localStorage';
 import defaults from '../../../config/api';
 import asyncFetch from './asyncFetch';
 
-function getAuthToken() {
+export function getAuthToken() {
   // We load it from the local storage.
   const loadedState = loadState();
   if (loadedState) {
-    return loadedState.app.authentication.authToken
-      ? loadedState.app.authentication.authToken
-      : null;
+    return loadedState.app.authentication.authToken ? loadedState.app.authentication.authToken : null;
   }
 
   return null;
@@ -40,7 +38,7 @@ function ApiRequest() {
    * @param endpoint
    * @returns {{}}
    */
-  that.setEndpoint = endpoint => {
+  that.setEndpoint = (endpoint) => {
     that.endPoint = endpoint;
     return that;
   };
@@ -50,7 +48,7 @@ function ApiRequest() {
    * @param url
    * @returns {{}}
    */
-  that.setUrl = url => {
+  that.setUrl = (url) => {
     that.url = url;
     return that;
   };
@@ -60,26 +58,20 @@ function ApiRequest() {
    * @param type Type of the request. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')
    * @returns {{}}
    */
-  that.setMethod = type => {
+  that.setMethod = (type) => {
     // Check it's a valid type:
     if (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].indexOf(type) === -1) {
-      throw new Error(
-        `Invalid request method: '${type}'. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')`,
-      );
+      throw new Error(`Invalid request method: '${type}'. Must be one of ('GET', 'POST', 'PUT', 'PATCH', 'DELETE')`);
     }
 
     // If attempting to set 'GET': check it doesn't have a body
     if (type === 'GET' && that.body) {
-      throw new Error(
-        `Error: Attempting to use a 'GET' request but there is a body.`,
-      );
+      throw new Error('Error: Attempting to use a \'GET\' request but there is a body.');
     }
 
     // If attempting to set 'GET': check it doesn't have a body
     if (type in ['POST', 'PUT', 'PATCH', 'DELETE'] && that.parameters) {
-      throw new Error(
-        `Error: Attempting to use a '${type}' request but there are url parameters.`,
-      );
+      throw new Error(`Error: Attempting to use a '${type}' request but there are url parameters.`);
     }
 
     that.method = type;
@@ -96,9 +88,10 @@ function ApiRequest() {
     // Check it's not an authentication header. that one is included by default.
     if (headerName === 'Authentication') {
       throw new Error(
-        `Invalid header 'Authentication': No need to specify an authentication header, it's included by default.`,
+        'Invalid header \'Authentication\': No need to specify an authentication header, it\'s included by default.',
       );
-    } else {
+    }
+    else {
       that.headers[headerName] = headerValue;
       return that;
     }
@@ -109,15 +102,27 @@ function ApiRequest() {
    * @param body
    * @returns {{}}
    */
-  that.setBody = body => {
+  that.setBody = (body) => {
     // Check we're not trying to add a body to a GET request
     if (that.method === 'GET') {
-      throw new Error(`Can't add a body to a GET request.`);
+      throw new Error('Can\'t add a body to a GET request.');
     }
-    that.body = JSON.stringify(body);
+    if (body.preview) {
+      that.body = body;
+    }
+    else {
+      that.body = typeof body === 'string' ? body : JSON.stringify(body);
+    }
     return that;
   };
 
+  that.setSendFile = file => {
+    if (that.method === 'GET') {
+      throw new Error(`Can't sent a file with a GET request.`);
+    }
+    that.addHeader('Content-Disposition', `filename="${file.name}"`);
+    that.body = file;
+  };
   /**
    * Add a parameter to the request. Only works for GET requests.
    * @param paramName
@@ -142,7 +147,8 @@ function ApiRequest() {
     let url = that.url;
     if (that.endPoint) {
       url += that.endPoint;
-    } else {
+    }
+    else {
       throw new Error('Cannot execute request: no endpoint is set!');
     }
     if (that.parameters) {

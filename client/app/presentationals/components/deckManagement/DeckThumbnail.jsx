@@ -1,31 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export function DeckThumbnail({
   deckTitle,
   deckId,
-  deckIconImage,
   deckLink,
   deleteDeck,
 }) {
-  const altIconText = `Icon of deck: ${deckTitle}`;
   return (
-    <li>
-      <div className="c_deck-thumbnail">
-        <a href={deckLink}>
-          <img src={deckIconImage} alt={altIconText} />
-          <p>{deckTitle}</p>
-        </a>
+    <tr className="c_deck-thumbnail">
+      <th>
+        <p className="c_deck-thumbnail__deck-name">
+          {deckTitle}
+        </p>
+      </th>
+      <th>
+        <Link to={`/presentation/${deckId}`}>
+          <p className="c_deck-thumbnail__deck-view-link">
+              View
+            </p>
+        </Link>
+      </th>
+      <th>
+        <Link to={`/print/${deckId}`}>
+          <p className="c_deck-thumbnail__deck-view-print-link">
+           Course mode
+          </p>
+        </Link>
+      </th>
+      <th>
+        <Link to={`/editor/${deckId}`}>
+          <p className="c_deck-thumbnail__deck-edit-link">
+              Edit
+            </p>
+        </Link>
+      </th>
+      <th>
         <button
+          className="c_deck-thumbnail__delete-button"
           onClick={() => {
             deleteDeck(deckId);
           }}
         >
-          {' '}Delete
-          {' '}
+          Delete
         </button>
-      </div>
-    </li>
+      </th>
+    </tr>
   );
 }
 

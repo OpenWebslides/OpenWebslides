@@ -11,25 +11,28 @@ import ResetPasswordPage from 'presentationals/pages/ResetPasswordPage';
 import ConfirmEmailPage from 'presentationals/pages/ConfirmEmailPage';
 import OauthCallbackPage from 'presentationals/pages/OauthCallbackPage';
 import SlideEditorPage from 'presentationals/pages/SlideEditorPage';
-import EditorPage from 'presentationals/pages/EditorPage';
 import CreateDeckPage from 'presentationals/pages/CreateDeckPage';
+import PrintViewPage from 'presentationals/pages/PrintViewPage';
+import ImportDeckPage from 'presentationals/pages/ImportDeckPage';
+import PresentationViewPage from 'presentationals/pages/PresentationViewPage';
 
 import history from './history';
 
 export default (
   <Router history={history}>
     <Switch>
-      <Route path="/" exact component={Dashboard} />
+      <Route path="/" exact={true} component={Dashboard} />
       <Route path="/signup" component={SignupPage} />
       <Route path="/signin" component={SigninPage} />
+      <Route path="/print/:id" component={PrintViewPage} />
       <Route path="/confirmation" component={ConfirmEmailPage} />
       <Route path="/forgot_password" component={ForgotPasswordPage} />
       <Route path="/oauth/omniauth" component={OauthCallbackPage} />
       <Route path="/reset_password" component={ResetPasswordPage} />
-      <Route path="/editor/slide" component={SlideEditorPage} />
-      <Route path="/editortest" component={EditorPage} />
+      <Route path="/editor/:deckId" component={SlideEditorPage} />
+      <Route path="/presentation/:deckId" component={PresentationViewPage} />
       <Route path="/create_new_deck" component={CreateDeckPage} />
+      <Route path="/import_deck" component={ImportDeckPage} />
     </Switch>
   </Router>
 );
-

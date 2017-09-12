@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
 import i18n from 'i18next';
+import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import isEmail from 'sane-email-validation';
 
@@ -15,7 +15,8 @@ export function validate(values) {
 
   if (!email || email.trim() === '') {
     errors.email = i18n.t('formErrors:emailRequired');
-  } else if (!isEmail(email.trim())) {
+  }
+  else if (!isEmail(email.trim())) {
     errors.email = i18n.t('formErrors:emailInvalid');
   }
 

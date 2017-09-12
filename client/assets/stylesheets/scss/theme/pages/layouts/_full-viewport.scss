@@ -1,0 +1,37 @@
+// -------------------------
+// Full viewport page layout
+// -------------------------
+
+.l_page--full-viewport {
+  .l_page__item {
+    &--main {
+      // Set the extra spacing on the main items instead, to allow them to have 100% height layout.
+      padding-top: 0;
+    }
+  }
+
+  .l_main {
+    &__item {
+      // The
+      @include inkgrid-col__gutter($spacing--site__v, false);
+
+      // Vertically fill the viewport.
+      height: calc(100vh - #{$site__header-height} - #{$spacing--site__v * 2});
+      // Leave some space for the header.
+      margin-top: $site__header-height + $spacing--site__v;
+
+      // Frame for position: absolute; on children.
+      position: relative;
+
+      &__wrapper {
+        @include position-absolute-fill;
+
+        left: $spacing--site__h / 2;
+        right: $spacing--site__h / 2;
+
+        // Add scrollbar if content doesn't fit on the screen.
+        overflow-y: auto;
+      }
+    }
+  }
+}

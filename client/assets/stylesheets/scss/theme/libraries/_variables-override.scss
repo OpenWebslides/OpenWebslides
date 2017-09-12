@@ -22,6 +22,7 @@
     $font-weight--emphasis: 300 !default;
     $font-weight--emphasis__strong: 400 !default;
     $font-weight--emphasis__x-strong: 600 !default;
+    $font-weight--emphasis__xx-strong: 800 !default;
     $font-weight--emphasis__light: 100 !default;
 
 
@@ -38,6 +39,7 @@
     $font-size--h6: 0.90em !default;
     $font-weight--heading: $font-weight--emphasis__strong !default;
     $font-weight--heading__strong: $font-weight--emphasis__x-strong !default;
+    $font-weight--heading__x-strong: $font-weight--emphasis__xx-strong !default;
 
 
 
@@ -92,13 +94,15 @@
     // The background color of the main area of the site.
     $color--main: hsl(0, 0%, 100%) !default;
     // The text color of the main area of the site (which should be contrasting enough to make text readable).
-    $color--contrast: hsl(0, 0%, 15%) !default;
+    $color--contrast: hsl(197, 3%, 18%) !default;
     // Alternative background color, usually close to $color--main, used to softly emphasize some areas.
     $color--emphasis: hsl(0, 0%, 93%) !default;
     // Color / background color used to make certain text or areas stand out from their surroundings.
-    $color--highlight: hsl(208, 56%, 46%) !default;
+    $color--highlight: hsl(197, 71%, 73%) !default; // skyblue
     // Extra color used distinguish small areas or pieces of text (for example, links) from their surroundings.
-    $color--accent: hsl(190, 80%, 40%) !default;
+    $color--accent: hsl(197, 55%, 51%) !default;
+    // Extra color used to make elements stand out in the page.
+    $color--special: hsl(55, 67, 80) !default; // palegoldenrod
 
     // Color used for info messages; indicates that everything went ok.
     $color--info: hsl(80, 80%, 75%) !default;
@@ -115,7 +119,7 @@
     $color--main__text-alt: shade($color--main, 40%) !default;
     $color--main__text-icon: shade($color--main, 10%) !default;
     $color--main__link: $color--accent !default;
-    $color--main__link-hover: shade($color--accent, 40%) !default;
+    $color--main__link-hover: darken($color--accent, 10%) !default;
     $color--main__border: shade($color--main, 10%) !default;
 
     $color--emphasis__background: $color--emphasis !default;
@@ -125,3 +129,36 @@
     $color--emphasis__link: lighten($color--highlight, 15%) !default;
     $color--emphasis__link-hover: $color--highlight !default;
 
+    $color--contrast__background: $color--contrast !default;
+    $color--contrast__text: $color--main !default;
+    $color--contrast__text-alt: $color--special !default;
+    $color--contrast__text-icon: $color--highlight !default;
+    $color--contrast__link: $color--accent !default;
+    $color--contrast__link-hover: $color--highlight !default;
+    $color--contrast__border: tint($color--contrast, 10%) !default;
+
+
+
+// Site layout settings
+
+  $site__header-height: 8em !default;
+  $site__item-padding__v: $spacing--base__v !default;
+  $site__item-padding__h: $spacing--base__h !default;
+
+
+
+// Slide rendering settings
+
+  // The aspect ratio of the slide.
+  // Note: slide ratio needs to be defined as a string in order to be able to use it in aspect ratio media queries.
+  // Use convert-string-ratio-to-number($slide__ratio) when the number value is needed for calculations.
+  $slide__ratio: '3/2' !default; // '16/9' !default;
+  // The number of plain text lines that fit on a single slide and their line-height.
+  // These numbers determine the height of a slide (at base font size). Slide width can then be calculated using
+  // $slide__ratio.
+  // Note: we calculate the height of a slide from the font-size / number of lines / line-height instead of the other
+  // way around (calculating the font-size from a given height) because we will be resizing the slide to fit its
+  // container anyway, making the 'actual' size of a slide irrelevant. By doing it this way, we only resize once
+  // instead of twice, which simplifies things when rendering & debugging.
+  $slide__number-of-plain-text-lines: 12 !default;
+  $slide__base-line-height: $line-height--base !default;

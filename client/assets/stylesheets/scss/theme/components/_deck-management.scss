@@ -1,0 +1,9 @@
+.c_deck-management-container {
+  &__title {
+    margin-top: $spacing--large__v;
+  }
+
+  &__owned-decks-list {
+    list-style-type: none;
+  }
+}

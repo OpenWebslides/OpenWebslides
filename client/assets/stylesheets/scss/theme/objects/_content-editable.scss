@@ -1,0 +1,119 @@
+// ----------------------
+// ContentEditable object
+// ----------------------
+
+.o_content-editable {
+  // local variables
+  $shift: 9999em;
+  $menu-button-size: 1.5em;
+  $z-index__input: 1;
+  $z-index__hidden-buttons: $z-index__input - 1;
+
+  // container for absolutely positioned menu
+  position: relative;
+
+  &,
+  &__wrapper,
+  &__menu,
+  &__input {
+    // these need to be spans because they need to be nestable everywhere,
+    // but we want them to behave as blocks
+    display: block;
+  }
+
+  &__menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+
+    // Never wrap menu buttons onto next line no matter how small container is.
+    white-space: nowrap;
+
+    &-item {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    &-button {
+      // undo default button styles
+      padding: 0;
+
+      // square button of fixed size
+      box-sizing: border-box;
+      display: block;
+      height: $menu-button-size;
+      line-height: $menu-button-size;
+      width: $menu-button-size;
+      text-align: center;
+
+      &--id_strong {
+        &::before {
+          @include icon($fa-var-bold, 1em);
+        }
+      }
+
+      &--id_em {
+        &::before {
+          @include icon($fa-var-italic, 1em);
+        }
+      }
+
+      &::before {
+        font-size: $menu-button-size * 2 / 3;
+        line-height: inherit;
+        vertical-align: top;
+      }
+    }
+
+    &-text {
+      @include screenreaders-only;
+    }
+  }
+
+  &__wrapper {
+    // Put border on separate, absolutely positioned element, so that it does not effect element size.
+    &::before {
+      @include position-absolute-fill;
+
+      border: 1px solid transparent;
+      content: '';
+    }
+
+    &:hover::before {
+      border-color: lightgray;
+    }
+  }
+
+  &.has_focus {
+    .o_content-editable__menu {
+      // make menu visible again and position it on the top right of the contentEditable 'frame'
+      top: -$menu-button-size;
+      right: 0;
+      opacity: 1;
+    }
+
+    .o_content-editable__wrapper::before {
+      border-color: blue;
+    }
+  }
+
+  &__input {
+    // Display on top of &__wrapper.
+    position: relative;
+
+    &:focus {
+      outline: 0;
+    }
+
+    // if the element is empty and has a placeholder attribute
+    &[placeholder]:empty {
+      &::before {
+        color: lightgray;
+        content: attr(placeholder);
+        cursor: text;
+        font-style: italic;
+      }
+    }
+  }
+}

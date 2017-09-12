@@ -4,16 +4,29 @@
 
 .c_slide-editor {
   &__wrapper {
-    @include inkflex-container;
+    // Use inkgrid to create gutter between items.
+    @include inkgrid-row(false);
   }
 
   &__item {
-    @include inkflex-item;
-
-    flex: 1 1 auto;
+    @include inkgrid-col(false);
 
     &--toolbar {
-      flex-grow: 0;
+      float: left;
+
+      // #TODO replace by actual toolbar component!
+      button {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    &--views-panel {
+      // Fill space next to float.
+      display: block;
+
+      // Don't wrap around float.
+      overflow: hidden;
     }
   }
 }

@@ -34,8 +34,9 @@
     "faker": "^4.1.0",
     "fetch-mock": "^5.10.0",
     "file-loader": "^0.10.1",
+    "flowtype": "^2.0.0",
     "jest": "^20.0.0",
-    "node-sass": "^4.5.0",
+    "node-sass": "^4.5.3",
     "postcss-loader": "^1.3.3",
     "postcss-smart-import": "^0.6.9",
     "prettier": "^1.3.1",
@@ -49,24 +50,36 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
+    "fine-uploader": "^5.14.5",
+    "fine-uploader-wrappers": "^1.0.0",
+    "flow-bin": "^0.49.1",
     "history": "^4.6.1",
     "i18next": "^8.3.0",
     "i18next-resource-store-loader": "^0.1.1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "prop-types": "^15.5.8",
     "query-string": "^4.3.4",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.6.0",
+    "react-debounce-render": "^0.0.11",
     "react-dom": "^15.4.2",
+    "react-dropzone": "^3.13.4",
+    "react-fine-uploader": "^1.0.2",
     "react-hot-loader": "next",
     "react-i18next": "^4.1.0",
+    "react-modal": "^2.2.2",
     "react-redux": "^5.0.3",
     "react-router-dom": "^4.1.1",
+    "recompose": "^0.25.0",
     "redux": "^3.6.0",
     "redux-form": "^6.5.0",
-    "redux-saga": "^0.14.4",
+    "redux-saga": "^0.15.6",
+    "reselect": "^3.0.1",
     "sane-email-validation": "^1.1.0",
     "seamless-immutable": "^7.1.2",
+    "shortid": "^2.2.8",
     "yarn": "^0.27.5"
   },
   "scripts": {
@@ -93,8 +106,10 @@
       "^sagas(.*)$": "<rootDir>/app/sagas$1",
       "^errors(.*)$": "<rootDir>/app/errors$1",
       "^api(.*)$": "<rootDir>/app/api$1",
-      "^lib(.*)$": "<rootDir>/lib$1"
+      "^lib(.*)$": "<rootDir>/lib$1",
+      "^constants(.*)$": "<rootDir>/app/constants$1",
+      "^selectors(.*)$": "<rootDir>/app/selectors$1"
     },
-    "setupTestFrameworkScriptFile":"./jestLocalStorage.js"
+    "setupTestFrameworkScriptFile": "./jestLocalStorage.js"
   }
 }

@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
-import { DeckThumbnail } from 'presentationals/components/deckManagement/DeckThumbnail';
+import DeckThumbnail from 'presentationals/components/deckManagement/DeckThumbnail';
 
 // Helpers:
-import IfAuthHOC from '../../../../lib/IfAuthHOC';
+import IfAuthHOC from 'lib/IfAuthHOC';
 
 function renderDeckThumbnail(el, deleteDeck) {
   return (
@@ -41,14 +41,15 @@ class DeckManagement extends React.Component {
           <NeedSigninWarning requestedAction="display your decks" />}
       >
         <div className="c_deck-management-container">
-          <h1> Your decks </h1>
-          <div className="o_owned-decks-container">
-            <ol>
-              {listOfDeckThumbnails}
-              <li key={Number.MAX_SAFE_INTEGER}>
-                <Link to="/create_new_deck"> Add new </Link>
-              </li>
-            </ol>
+          <h1 className="c_deck-management-container__title"> Your decks: </h1>
+          <div className="c_deck-management-container__owned-decks-container">
+            <table className="c_deck-management-container__owned-decks-table">
+              <tbody>
+                {listOfDeckThumbnails}
+              </tbody>
+            </table>
+            <Link to="/create_new_deck"> Add new </Link>
+            <Link to="/import_deck"> Import Deck </Link>
           </div>
         </div>
       </IfAuthHOC>

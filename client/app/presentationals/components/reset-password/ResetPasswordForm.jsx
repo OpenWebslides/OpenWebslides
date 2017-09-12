@@ -30,7 +30,6 @@ class ResetPasswordForm extends Component {
 
     return (
       <div>
-
         <form className="red" onSubmit={this.handleSubmit}>
 
           <Field

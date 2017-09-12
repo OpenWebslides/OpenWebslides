@@ -14,9 +14,9 @@ describe('Auth Reducer', () => {
     expect(authenticationReducer(emptyState, emptyAction)).toEqual(
       Immutable({
         isAuthenticated: false,
-        authToken: undefined,
-        id: undefined,
-        firstName: '',
+        authToken: null,
+        id: null,
+        firstName: null,
       }),
     );
   });

@@ -17,11 +17,7 @@ function configureStore() {
   const persistedState = loadState();
   const sagaMiddleware = createSagaMiddleware();
 
-  const store = createStore(
-    rootReducer,
-    persistedState,
-    composeSetup(applyMiddleware(sagaMiddleware)),
-  );
+  const store = createStore(rootReducer, persistedState, composeSetup(applyMiddleware(sagaMiddleware)));
 
   // Persists state to localStorage
   store.subscribe(
@@ -30,7 +26,7 @@ function configureStore() {
         app: {
           authentication: store.getState().app.authentication,
         },
-        entities: store.getState().entities,
+        // entities: store.getState().entities,
       });
     }, 1000),
   );
