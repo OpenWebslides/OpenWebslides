@@ -64,6 +64,10 @@ class Toolbar extends Component {
     this.props.addContentItemToSlide(this.props.activeSlideId, contentItemType, contentItemTypeProps);
   }
 
+  handleUpdateDeck() {
+    this.props.updateDeck();
+  }
+
   render() {
     let modalComponent = null;
 
@@ -95,6 +99,15 @@ class Toolbar extends Component {
                 </div>
               </li>,
             )}
+            <li className="c_toolbar__item o_list__item">
+              <div className="c_toolbar__item__wrapper o_list__item__wrapper">
+                <ToolbarButton
+                  cssIdentifier={this.props.cssIdentifier}
+                  button={{ key: 'save-button', id: 'save-button', text: 'Save', title: 'Save' }}
+                  onClick={() => this.handleUpdateDeck()}
+                />
+              </div>
+            </li>
           </menu>
         </div>
       </div>
@@ -104,6 +117,7 @@ class Toolbar extends Component {
 
 Toolbar.propTypes = {
   cssIdentifier: PropTypes.string,
+  updateDeck: PropTypes.func.isRequired,
   buttons: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
