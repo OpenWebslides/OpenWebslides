@@ -125,6 +125,19 @@
     margin-top: $spacing--element__v;
   }
 
+  figure {
+    text-align: center;
+
+    img:first-child {
+      margin-top: 0;
+      max-height: 12em;
+    }
+
+    figcaption {
+      font-size: $font-size--x-smaller;
+    }
+  }
+
   iframe {
     border: 0;
     margin-top: $spacing--element__v;
