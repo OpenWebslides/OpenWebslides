@@ -12,7 +12,7 @@ module Repository
         raise 'No filename specified' unless filename
         raise 'No author specified' unless author
 
-        raise OpenWebslides::ArgumentError, 'File does not exist' unless File.exist? asset_file
+        raise OpenWebslides::FileMissingError, 'File does not exist' unless File.exist? asset_file
 
         File.delete asset_file
 

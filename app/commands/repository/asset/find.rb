@@ -9,7 +9,7 @@ module Repository
       def execute
         raise 'Filename not specified' unless filename
 
-        raise OpenWebslides::ArgumentError, 'File does not exist' unless File.exist? asset_file
+        raise OpenWebslides::FileMissingError, 'File does not exist' unless File.exist? asset_file
 
         asset_file
       end
