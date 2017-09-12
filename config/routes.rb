@@ -55,18 +55,7 @@ Rails.application.routes.draw do
       jsonapi_related_resources :conversations
       jsonapi_links :conversations, :only => :show
 
-      jsonapi_resources :assets, :only => :create
-    end
-
-    ##
-    # Assets API
-    #
-    jsonapi_resources :assets, :only => %i[show destroy] do
-      # Deck relationship
-      jsonapi_related_resource :deck
-      jsonapi_link :deck, :only => :show
-
-      get '/raw' => 'assets#raw'
+      jsonapi_resources :assets, :only => %i[create show destroy], :id => %r{[^\/]+}
     end
 
     ##
