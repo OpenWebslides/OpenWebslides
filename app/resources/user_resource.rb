@@ -44,12 +44,12 @@ class UserResource < ApplicationResource
     end
   end
 
-  def self.creatable_fields(_context = {})
-    []
+  def self.creatable_fields(context = {})
+    super(context) - %i[decks collaborations conversions]
   end
 
-  def self.updatable_fields(_context = {})
-    []
+  def self.updatable_fields(context = {})
+    super(context) - %i[email tos_accepted]
   end
 
   def self.sortable_fields(context)
