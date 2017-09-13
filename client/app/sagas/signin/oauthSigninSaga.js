@@ -15,7 +15,6 @@ function* doOauthSigninUser(action) {
   yield put({
     type: SIGNIN_USER_SUCCESS,
     payload: {
-      id,
       authToken,
       firstName,
       lastName,
