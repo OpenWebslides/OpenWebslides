@@ -48,9 +48,13 @@
   .c_slide-container {
     vertical-align: middle;
 
-    &__size {
-      // #TODO better resizing system
-      // font-size: 0.5vw;
+    &__content {
+      // Slide overlay prevents slides in the deck navigator from being interacted with.
+      &::after {
+        @include position-absolute-fill;
+
+        content: '';
+      }
     }
   }
 }
