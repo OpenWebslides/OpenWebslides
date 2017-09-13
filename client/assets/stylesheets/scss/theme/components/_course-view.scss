@@ -50,10 +50,10 @@
     font-weight: $font-weight--heading;
     text-align: center;
     //flex: 1 100%;
-    break-before: page;
+    //break-before: page;
     page-break-before: always;
-    page-break-after: avoid;
-    break-after: avoid;
+    page-break-after: always;
+    //break-after: avoid;
     counter-reset: h2counter;
 
     &__separator-before {
@@ -252,7 +252,8 @@
 
 @media print {
   .l_site__background {
-    overflow: visible;
+    //overflow: visible;
+    position:relative;
   }
 
   .l_page__item--header {
@@ -264,6 +265,7 @@
   }
 
   .l_main__item__wrapper{
+    position: relative;
     padding: 0 !important;
   }
 
