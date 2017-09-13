@@ -10,9 +10,9 @@ import { signout } from 'actions/signoutActions';
 function NavMenu(props) {
   const { isAuthenticated, firstName } = props;
 
-  function signoutUser() {
-    props.signout();
-  }
+  // function signoutUser() {
+  //   props.signout();
+  // }
 
   function renderAuthLinks() {
     if (isAuthenticated) {
