@@ -13,6 +13,7 @@ import OauthCallbackPage from 'presentationals/pages/OauthCallbackPage';
 import SlideEditorPage from 'presentationals/pages/SlideEditorPage';
 import CreateDeckPage from 'presentationals/pages/CreateDeckPage';
 import PrintViewPage from 'presentationals/pages/PrintViewPage';
+import PrintViewOnlyPage from 'presentationals/pages/PrintViewOnlyPage';
 import ImportDeckPage from 'presentationals/pages/ImportDeckPage';
 import PresentationViewPage from 'presentationals/pages/PresentationViewPage';
 
@@ -25,6 +26,7 @@ export default (
       <Route path="/signup" component={SignupPage} />
       <Route path="/signin" component={SigninPage} />
       <Route path="/print/:id" component={PrintViewPage} />
+      <Route path="/printOnly/:id" component={PrintViewOnlyPage} />
       <Route path="/confirmation" component={ConfirmEmailPage} />
       <Route path="/forgot_password" component={ForgotPasswordPage} />
       <Route path="/oauth/omniauth" component={OauthCallbackPage} />
