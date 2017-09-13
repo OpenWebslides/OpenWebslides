@@ -10,9 +10,9 @@ import { signout } from 'actions/signoutActions';
 function NavMenu(props) {
   const { isAuthenticated, firstName } = props;
 
-  // function signoutUser() {
-  //   props.signout();
-  // }
+  function signoutUser() {
+    props.signout();
+  }
 
   function renderAuthLinks() {
     if (isAuthenticated) {
@@ -21,7 +21,7 @@ function NavMenu(props) {
           <li className="c_nav-menu__item" key={'Dashboard'}><Link className="c_nav-menu__link" to={'/'}>Dashboard </Link></li>
           <li className="c_nav-menu__item" key={'Editor'}><Link className="c_nav-menu__link" to={'/editor'}>Slide Editor </Link></li>
           <li className="c_nav-menu__item" key={'welcomeMessage'}>{`Welcome, ${firstName}`}</li>
-          {/* <li className="c_nav-menu__item" key={'Sign Out'}><Link className="c_nav-menu__link" to={'/'} onClick={() => signoutUser()}>Sign Out</Link></li>*/}
+          <li className="c_nav-menu__item" key={'Sign Out'}><Link className="c_nav-menu__link" to={'/'} onClick={() => signoutUser()}>Sign Out</Link></li>
         </ul>
       );
     }
@@ -30,8 +30,8 @@ function NavMenu(props) {
       <ul className="c_nav-menu__list">
         <li className="c_nav-menu__item" key={'Dashboard'}><Link className="c_nav-menu__link" to={'/'}>Dashboard </Link></li>
         <li className="c_nav-menu__item" key={'Editor'}><Link className="c_nav-menu__link" to={'/editor'}>Slide Editor </Link></li>
-        {/*<li className="c_nav-menu__item" key={'Sign Up'}><Link className="c_nav-menu__link" to={'/signup'}>Sign Up</Link></li>*/}
-        <li className="c_nav-menu__item" key={'Sign in with UGent CAS'}><a href="/auth/cas">Sign in with UGent CAS</a></li>
+        <li className="c_nav-menu__item" key={'Sign Up'}><Link className="c_nav-menu__link" to={'/signup'}>Sign Up</Link></li>
+        <li className="c_nav-menu__item" key={'Sign In'}><Link className="c_nav-menu__link" to={'/signin'}>Sign In </Link></li>
       </ul>
     );
   }
