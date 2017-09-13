@@ -55,6 +55,57 @@ RSpec.describe 'User API', :type => :request do
     end
   end
 
+  describe 'POST /' do
+    before do
+      add_content_type_header
+      add_accept_header
+    end
+
+    it 'rejects an already existing email' do
+      post users_path, :params => request_body(attributes.merge :email => user.email), :headers => headers
+
+      expect(response.status).to eq 422
+      expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'rejects TOS not accepted' do
+      post users_path, :params => request_body(attributes.merge :tosAccepted => false), :headers => headers
+
+      expect(response.status).to eq 422
+      expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'rejects empty passwords' do
+      post users_path, :params => request_body(attributes.merge :password => ''), :headers => headers
+
+      expect(response.status).to eq 422
+      expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'rejects no first name' do
+      post users_path, :params => request_body(attributes.except :firstName), :headers => headers
+
+      expect(response.status).to eq 422
+      expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'returns successful' do
+      post users_path, :params => request_body(attributes), :headers => headers
+
+      expect(response.status).to eq 201
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+
+      json = JSON.parse response.body
+
+      # Email is hidden for unauthenticated users
+      expect(json['data']['attributes']).to match 'firstName' => attributes[:firstName]
+    end
+  end
+
   describe 'GET /:id' do
     before do
       add_accept_header
@@ -72,6 +123,76 @@ RSpec.describe 'User API', :type => :request do
 
       expect(response.status).to eq 200
       expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+  end
+
+  describe 'PUT/PATCH /:id' do
+    before do
+      add_content_type_header
+      add_accept_header
+      add_auth_header
+    end
+
+    it 'rejects id not equal to URL' do
+      patch user_path(:id => user.id), :params => update_body(999, :firstName => 'foo'), :headers => headers
+
+      expect(response.status).to eq 400
+      expect(jsonapi_error_code(response)).to eq JSONAPI::KEY_NOT_INCLUDED_IN_URL
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'rejects non-existant users' do
+      patch user_path(:id => 999), :params => update_body(999, :firstName => 'foo'), :headers => headers
+
+      expect(response.status).to eq 404
+      expect(jsonapi_error_code(response)).to eq JSONAPI::RECORD_NOT_FOUND
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'rejects email changes' do
+      patch user_path(:id => user.id), :params => update_body(user.id, :email => user.email), :headers => headers
+
+      expect(response.status).to eq 400
+      expect(jsonapi_error_code(response)).to eq JSONAPI::PARAM_NOT_ALLOWED
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'rejects empty passwords' do
+      patch user_path(:id => user.id), :params => update_body(user.id, :password => ''), :headers => headers
+
+      expect(response.status).to eq 422
+      expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+    end
+
+    it 'updates firstName' do
+      expect(user.first_name).not_to eq first_name
+      patch user_path(:id => user.id), :params => update_body(user.id, :firstName => first_name), :headers => headers
+
+      user.reload
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      expect(user.first_name).to eq first_name
+    end
+
+    it 'updates lastName' do
+      expect(user.last_name).not_to eq last_name
+      patch user_path(:id => user.id), :params => update_body(user.id, :lastName => last_name), :headers => headers
+
+      user.reload
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      expect(user.last_name).to eq last_name
+    end
+
+    it 'updates password' do
+      expect(user.valid_password? password).not_to be true
+      patch user_path(:id => user.id), :params => update_body(user.id, :password => password), :headers => headers
+
+      user.reload
+      expect(response.status).to eq 200
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      expect(user.valid_password? password).to be true
     end
   end
 
