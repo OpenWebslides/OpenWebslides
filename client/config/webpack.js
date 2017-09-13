@@ -26,7 +26,7 @@ const config = {
         loader: 'file-loader?name=public/icons/[name].[ext]',
       },
       {
-        test: /\.jsx{0,1}$/,
+        test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loader: require.resolve('babel-loader'),
         options: {
@@ -44,6 +44,7 @@ const config = {
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
+        exclude: [/images/], // Prevent font loader from overwriting svg files in the images folder.
         use: ['file-loader'],
       },
       {
