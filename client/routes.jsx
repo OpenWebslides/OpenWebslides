@@ -22,6 +22,7 @@ export default (
       <Route path="/presentation/:deckId" component={PresentationViewPage} />
       <Route path="/create_new_deck" component={CreateDeckPage} />
       <Route path="/import_deck" component={ImportDeckPage} />
+      <Route path="/print/:id" component={PrintViewPage} />
     </Switch>
   </Router>
 );
