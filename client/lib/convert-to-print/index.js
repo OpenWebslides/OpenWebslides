@@ -80,7 +80,7 @@ function contentItemObjectToReact(
 
 function countImagesInSlide(slideElements, entities) {
   let elementsToCount = [];
-  if (slideElements[0].contentItemType === 'SECTION') {
+  if (slideElements[0] && slideElements[0].contentItemType === 'SECTION') {
     const childItems = slideElements[0].childItemIds.map(
       itemId => entities.contentItems.byId[itemId],
     );
@@ -166,10 +166,10 @@ function convertSection(slides, currentLevel, entities, imagesPref, decorativeIm
 function convertToPrint(entities, deckId, imagesPref, decorativeImagesPref, iframesPref) {
   const slideIds = entities.decks.byId[deckId].slideIds;
   const slideObjects = slideIds.map(id => entities.slides.byId[id]).asMutable();
-  const sections = divideTopLevelIntoSections(slideObjects, 1);
+  const sections = divideTopLevelIntoSections(slideObjects, 0);
   const elements = sections.map(
     section => convertSection(
-      section, 1, entities, imagesPref, decorativeImagesPref, iframesPref,
+      section, 0, entities, imagesPref, decorativeImagesPref, iframesPref,
     ),
   );
   return elements;
