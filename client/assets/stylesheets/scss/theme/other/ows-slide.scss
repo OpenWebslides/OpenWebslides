@@ -21,7 +21,7 @@
   text-align: left;
 
   // UGent logo in background.
-  &::after {
+  &::before {
     $ratio: 100 / 76.4;
     $width: 4em;
     $spacing: 1em;
@@ -46,6 +46,9 @@
   &__overflow {
     height: 100%;
     overflow: auto;
+
+    // Position slide content on top of the UGent logo in the bottom right corner.
+    position: relative;
   }
 
   &__wrapper {
