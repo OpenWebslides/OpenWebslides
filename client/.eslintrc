@@ -26,7 +26,15 @@
     ],
     "no-console": "off",
     "no-empty": "off",
-    "no-multiple-empty-lines": "off"
+    "no-multiple-empty-lines": "off",
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": true,
+        "variables": true
+      }
+    ]
   },
   "parserOptions": {
     "ecmaVersion": 8,
