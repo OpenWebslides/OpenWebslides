@@ -41,6 +41,7 @@ export function* requestDeckListFlow(action) {
     });
   }
   catch (error) {
+    debugger;
     console.log(error);
     console.log(error.statusCode);
     if (error.statusCode === 401) {
