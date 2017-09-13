@@ -6,7 +6,7 @@ function NeedSigninWarning({ requestedAction }) {
   return (
     <div className="c_sign-in-warning">
       <p> You need to be signed in to {requestedAction}. </p>
-      <a href="/auth/cas"> Sign in here </a>
+      <Link to={'/signin'}> Sign in here </Link>
     </div>
   );
 }
