@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'faker'
-require 'benchmark'
-
 namespace :db do
   desc 'Populates the database with sample data'
   task :sample => :environment do
@@ -45,7 +42,8 @@ namespace :db do
 
         user = User.new :email => Faker::Internet.email,
                         :first_name => Faker::Name.first_name,
-                        :password => Faker::Internet.password
+                        :password => Faker::Internet.password,
+                        :tos_accepted => true
 
         # 90% of the users have a last name
         user.last_name = Faker::Name.last_name if prob 0.9
