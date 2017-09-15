@@ -11,7 +11,7 @@ function PrintViewPage(props) {
       cssIdentifier="print-view-container"
       components={{
         'print-view-toolbar': <PrintViewToolbarContainer />,
-        'print-view-container': <PrintViewContainer id={id} />,
+        'print-view-container': <PrintViewContainer id={id} printAndClose={false} />,
       }}
     />
   );

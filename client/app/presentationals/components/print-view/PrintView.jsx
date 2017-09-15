@@ -7,12 +7,40 @@ import { imgOptions, iframeOptions } from 'constants/printViewOptions';
 
 import convertToPrint from 'lib/convert-to-print/index';
 
+function waitForImagesAndPrint() {
+  const images = Array.from(document.getElementsByTagName('img'));
+
+  let allComplete = true;
+
+  images.forEach((img) => {
+    if (!img.complete) {
+      allComplete = false;
+    }
+  });
+
+  if (!allComplete) {
+    setTimeout(waitForImagesAndPrint, 200);
+  }
+  else {
+    window.print();
+  }
+}
+
 export default class PrintView extends Component {
   // TODO: This will have to be fixed after we are actually stocking decks in the back end
   componentDidMount() {
     const id = this.props.id;
     if (!_.get(this.props, `entities.decks.byId.${id}.slideIds`, false)) {
       this.props.fetchDeck(id);
+    }
+  }
+
+  componentDidUpdate() {
+    console.log('updated');
+    const id = this.props.id;
+    if (_.get(this.props, `entities.decks.byId.${id}.slideIds`, false) && this.props.printAndClose) {
+      waitForImagesAndPrint();
+      // window.location.href = `/print/${id}`;
     }
   }
 
@@ -27,7 +55,8 @@ export default class PrintView extends Component {
     let toDisplay;
     if (!_.get(this.props, `entities.decks.byId.${this.props.id}.slideIds`, false)) {
       toDisplay = <div> <p> Loading ...</p> </div>;
-    } else {
+    }
+    else {
       // We pass the entities and preferences as argument to the converter function.
       const elements = convertToPrint(entities, this.props.id, imagePref, decorativeImagePref, iframesPref);
       toDisplay = (
@@ -49,4 +78,9 @@ PrintView.propTypes = {
   entities: PropTypes.object,
   fetchDeck: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  printAndClose: PropTypes.bool,
+};
+
+PrintView.defaultProps = {
+  printAndClose: false,
 };
