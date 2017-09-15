@@ -13,9 +13,9 @@ module Repository
       ##
       # Fix asset references
       def fix_assets
-        doc = Nokogiri::HTML5(exec Filesystem::Read)
+        doc = exec Filesystem::Read
         doc.css('img').each do |img|
-          filename = File.basename img.attr 'src'
+          filename = File.basename img.attr('src').strip
 
           asset = @receiver.assets.find_by :filename => filename
 
@@ -26,7 +26,7 @@ module Repository
           img['src'] = "assets/#{filename}"
         end
 
-        update doc.at('body').children.to_html, 'Fix asset references'
+        update doc.to_html, 'Fix asset references'
       end
 
       protected
