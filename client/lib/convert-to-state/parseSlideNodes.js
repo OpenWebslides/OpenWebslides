@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import _ from 'lodash';
+// import _ from 'lodash';
 import { contentItemTypes } from 'constants/contentItemTypes';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
@@ -11,43 +11,6 @@ const plaintextNodeNames = [...headingNodeNames, 'P', 'LI'];
 const listNodeNames = ['UL', 'OL'];
 const sectionNodeNames = ['SECTION', 'ASIDE'];
 const containerNodeNames = [...listNodeNames, ...sectionNodeNames];
-let assetLinks;
-
-function checkAddFirstChildHeadingToImplicitSection(nodeList, parentIsSection) {
-  // Given a nodelist, it's possible that
-  // a) its parent node is an existing section, and
-  // b) the first node is a heading and it's the only heading of its level in
-  //    its parent section.
-  // In this specific case, wrapping the first-child heading + its content in an implicit section
-  // would result in two levels of sections (with no other siblings) which is pointless. This
-  // function checks if we are in this situation and returns FALSE if so.
-  let addFirstChildHeadingToImplicitSection;
-
-  // If the first node is not a heading.
-  if (
-    !parentIsSection ||
-    nodeList.length === 0 ||
-    Array.indexOf(headingNodeNames, nodeList[0].nodeName) === -1
-  ) {
-    addFirstChildHeadingToImplicitSection = true;
-  }
-  // If the first node is a heading.
-  else {
-    // Check if it's the only heading of its level in this nodeList.
-    let i = 1;
-    while (
-      i < nodeList.length &&
-      nodeList[i].nodeName !== nodeList[0].nodeName
-    ) {
-      i += 1;
-    }
-    // If another heading of the same level was found, an implicit section needs
-    // to be added.
-    addFirstChildHeadingToImplicitSection = i !== nodeList.length;
-  }
-
-  return addFirstChildHeadingToImplicitSection;
-}
 
 function parseTextContent(textContent, trim = true) {
   if (trim) {
@@ -56,7 +19,12 @@ function parseTextContent(textContent, trim = true) {
   return textContent;
 }
 
-function parseContentItemNode(node, slideId, contentItemSequence) {
+function parseContentItemNode(
+  node,
+  slideId,
+  contentItemSequence,
+  assetLinks,
+) {
   const emptyResult = {
     contentItemId: null,
     contentItemsById: {},
@@ -115,7 +83,7 @@ function parseContentItemNode(node, slideId, contentItemSequence) {
       children,
       slideId,
       contentItemSequence + 1,
-      true,
+      assetLinks,
     ));
 
     // Add childItemIds to contentItem.
@@ -226,77 +194,16 @@ function parseContentItemNodes(
   nodeList,
   slideId,
   startContentItemSequence,
-  parentIsSection = false,
+  assetLinks,
 ) {
   const contentItemIds = [];
   let contentItemsById = {};
 
   let newContentItemId;
   let newContentItemsById;
-
-  let addFirstChildHeadingToImplicitSection =
-    checkAddFirstChildHeadingToImplicitSection(nodeList, parentIsSection);
-  const sectionContentItems = [];
-  let sectionContentItem;
-  let headingLevel;
   let contentItemSequence = startContentItemSequence;
 
   Array.from(nodeList).forEach((node) => {
-    // If the node is a heading (and we are not in the special situation described in
-    // 'checkAddFirstChildHeadingToImplicitSection') we need to wrap it + it's contents into a newly
-    // created section element (called an 'implicit section').
-    if (
-      addFirstChildHeadingToImplicitSection &&
-      Array.indexOf(headingNodeNames, node.nodeName) !== -1
-    ) {
-      // Get the heading level.
-      headingLevel = parseInt(node.nodeName.slice(-1), 10);
-
-      // If this is a heading of a lower level than that of the implicit section we're currently
-      // working with, end sections until the correct level has been reached.
-      while (
-        sectionContentItems.length > 0 &&
-        headingLevel <= _.last(sectionContentItems).level
-      ) {
-        // Pop the last implicit section of the sections stack.
-        sectionContentItems.pop();
-      }
-
-      // Add a section to contain this heading + its contents.
-      // Create the section content item object with an empty childIds array;
-      // contentItems that 'fall under' this heading will be added to it.
-      newContentItemId = generateContentItemId(slideId, contentItemSequence);
-      contentItemSequence += 1;
-      sectionContentItem = {
-        id: newContentItemId,
-        contentItemType: contentItemTypes.SECTION,
-        viewType: slideViewTypes.LIVE,
-        childItemIds: [],
-      };
-
-      // Add the new section content item to the main byId object.
-      contentItemsById = {
-        ...contentItemsById,
-        [newContentItemId]: sectionContentItem,
-      };
-
-      // Add the new section contentItem's id to the ids list of it's containing entity (which can
-      // either be the parent implicit section, or the main ids list if there is no parent implicit
-      // section).
-      if (sectionContentItems.length !== 0) {
-        _.last(sectionContentItems).item.childItemIds.push(newContentItemId);
-      }
-      else {
-        contentItemIds.push(newContentItemId);
-      }
-
-      // Push the new section item on the sections stack.
-      sectionContentItems.push({
-        level: headingLevel,
-        item: sectionContentItem,
-      });
-    }
-
     // Parse this node into a contentItem and get the new contentItem id + the byId object of this +
     // all child contentItems.
     ({
@@ -306,6 +213,7 @@ function parseContentItemNodes(
       node,
       slideId,
       contentItemSequence,
+      assetLinks,
     ));
 
     // If the node was correctly parsed.
@@ -319,18 +227,9 @@ function parseContentItemNodes(
         ...newContentItemsById,
       };
 
-      // Add its id to its parent's ids list (which can either be an implicit section or the main
-      // ids list).
-      if (sectionContentItems.length !== 0) {
-        _.last(sectionContentItems).item.childItemIds.push(newContentItemId);
-      }
-      else {
-        contentItemIds.push(newContentItemId);
-      }
+      // Add its id to the slide ids list.
+      contentItemIds.push(newContentItemId);
     }
-
-    // This value is longer relevant after the first child is processed; it should always be TRUE.
-    addFirstChildHeadingToImplicitSection = true;
   });
 
   return {
@@ -339,8 +238,7 @@ function parseContentItemNodes(
   };
 }
 
-export default function parseSlideNodes(deckId, nodes, assets) {
-  assetLinks = assets;
+export default function parseSlideNodes(deckId, nodes, assetLinks) {
   const slidesById = {};
   let contentItemsById = {};
 
@@ -374,6 +272,7 @@ export default function parseSlideNodes(deckId, nodes, assets) {
         node.children,
         slideId,
         0,
+        assetLinks,
       ));
 
       slidesById[slideId] = {
