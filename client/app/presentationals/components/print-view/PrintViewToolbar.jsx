@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { imgOptions, iframeOptions } from 'constants/printViewOptions';
 import SelectImageOptions from './SelectImageOptions';
 import SelectIframeOptions from './SelectIframeOptions';
 import SelectDecorativeImageOptions from './SelectDecorativeImageOptions';
 
-function PrintViewToolbar({ printViewState, changeImagePref, changeIframePref, changeDecorativeImagePref }) {
+function PrintViewToolbar({ printViewState, changeImagePref, changeIframePref, changeDecorativeImagePref, id }) {
   const curImagePref = printViewState.images;
   const curDecorativeImagePref = printViewState.decorativeImages;
   const curIframePref = printViewState.iframes;
@@ -17,7 +18,7 @@ function PrintViewToolbar({ printViewState, changeImagePref, changeIframePref, c
         changeDecorativeImagePref={changeDecorativeImagePref}
         selectedDecorativeImagePref={curDecorativeImagePref}
       />
-
+      <Link to={`/printOnly/${id}`}> Print </Link>
     </div>
   );
 }
