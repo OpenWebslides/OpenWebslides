@@ -2,9 +2,9 @@ import React from 'react';
 
 import PrintViewContainer from 'containers/printView/PrintViewContainer';
 
-function PrintViewPage(props) {
+function PrintViewOnlyPage(props) {
   const id = props.location.pathname.match(/\/printOnly\/([0-9]+)/)[1];
   return (<PrintViewContainer id={id} printAndClose={true} />);
 }
 
-export default PrintViewPage;
+export default PrintViewOnlyPage;
