@@ -8,7 +8,9 @@ module Repository
     def execute
       read_lock do
         # Get repository contents
-        exec Filesystem::Read
+        body = exec Filesystem::Read
+
+        body.children.to_html.strip
       end
     end
   end
