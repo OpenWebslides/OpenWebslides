@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export const testDeckFlamesFixed = `
   <!DOCTYPE html>
   <html lang="nl">
@@ -18,24 +20,24 @@ export const testDeckFlamesFixed = `
       </p>
     </header>
   
-      <!--<section class="slide" id="TestSlideSections">
-          <h2>Lorem ipsum</h2>
-          <p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
-          <section>
-            <h3>Dolor sit</h3>
-            <p>Quisque faucibus lacus ac eros sagittis, et ultricies dui volutpat. Nulla facilisi. Sed semper porta tortor, in faucibus tortor.</p>
-          </section>
-          <section>
-            <h3>Amet</h3>
-            <p>In auctor elementum orci ac pharetra. Sed accumsan, orci id sodales eleifend, nisl risus semper nulla, ut ultrices dolor nulla eu nunc. </p>
-            <!--<h4>Blub</h4>
-            <p>Let it go, let it go, I'm one with the wind and sky!</p>-->
+    <section class="slide" id="TestSlideSections">
+      <h2>Lorem ipsum</h2>
+      <p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
+      <section>
+        <h3>Dolor sit</h3>
+        <p>Quisque faucibus lacus ac eros sagittis, et ultricies dui volutpat. Nulla facilisi. Sed semper porta tortor, in faucibus tortor.</p>
       </section>
-      </section>-->
+      <section>
+        <h3>Amet</h3>
+        <p>In auctor elementum orci ac pharetra. Sed accumsan, orci id sodales eleifend, nisl risus semper nulla, ut ultrices dolor nulla eu nunc. </p>
+        <!--<h4>Blub</h4>
+        <p>Let it go, let it go, I'm one with the wind and sky!</p>-->
+      </section>
+    </section>
   
-      <!--<section class="slide" id="TestSlideImplicitSections" data-level="1">
-          <h2>Lorem ipsum</h2>
-          <p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
+    <section class="slide" id="TestSlideImplicitSections" data-level="1">
+      <h2>Lorem ipsum</h2>
+      <p>Nullam a lacinia lorem. Nullam ut tincidunt ligula, vitae feugiat tortor. Aliquam tincidunt felis sed neque rutrum dapibus. In tristique magna eget enim efficitur, nec rutrum mauris placerat.</p>
       <h3>Dolor sit</h3>
       <p>Quisque faucibus lacus ac eros sagittis, et ultricies dui volutpat. Nulla facilisi. Sed semper porta tortor, in faucibus tortor.</p>
       <h3>Amet</h3>
@@ -48,7 +50,7 @@ export const testDeckFlamesFixed = `
         <li>Blob</li>
         <li>Blub</li>
       </ul>-->
-      </section>-->
+    </section>-->
   
     <section class="black title slide" id="title">
       <h2>Open Webslides</h2>
@@ -632,3 +634,4 @@ export const testDeckFlamesFixed = `
   </body>
   </html>
 `;
+/* eslint-enable */
