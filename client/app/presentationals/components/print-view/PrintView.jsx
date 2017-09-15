@@ -7,7 +7,7 @@ import { imgOptions, iframeOptions } from 'constants/printViewOptions';
 
 import convertToPrint from 'lib/convert-to-print/index';
 
-function waitForImagesAndPrint() {
+function waitForImagesAndPrint(id) {
   const images = Array.from(document.getElementsByTagName('img'));
 
   let allComplete = true;
@@ -19,10 +19,11 @@ function waitForImagesAndPrint() {
   });
 
   if (!allComplete) {
-    setTimeout(waitForImagesAndPrint, 200);
+    setTimeout(() => waitForImagesAndPrint(id), 200);
   }
   else {
     window.print();
+    window.location.href = `/print/${id}`;
   }
 }
 
@@ -32,6 +33,8 @@ export default class PrintView extends Component {
     const id = this.props.id;
     if (!_.get(this.props, `entities.decks.byId.${id}.slideIds`, false)) {
       this.props.fetchDeck(id);
+    } else if (this.props.printAndClose){
+      waitForImagesAndPrint(id);
     }
   }
 
@@ -39,8 +42,7 @@ export default class PrintView extends Component {
     console.log('updated');
     const id = this.props.id;
     if (_.get(this.props, `entities.decks.byId.${id}.slideIds`, false) && this.props.printAndClose) {
-      waitForImagesAndPrint();
-      // window.location.href = `/print/${id}`;
+      waitForImagesAndPrint(id);
     }
   }
 
