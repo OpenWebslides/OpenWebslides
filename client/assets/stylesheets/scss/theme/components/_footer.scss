@@ -1,0 +1,20 @@
+// ---------------------
+// Footer component
+// ---------------------
+
+.c_footer {
+  &__wrapper {
+     @include color--contrast (true);
+     @include padding($spacing--small__v, $site__item-padding__h);
+     // Container has a fixed height; make sure the background-color completely fills it.
+     @include position-absolute-fill;
+  }
+
+  //&__text {
+  //  color: #fff;
+  //}
+  //
+  //&__link {
+  //  color: $color--contrast__link;
+  //}
+}

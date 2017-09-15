@@ -16,16 +16,27 @@
       height: $site__header-height;
     }
 
+    &--footer {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+
+      background-color: $color--contrast;
+
+      height: $site__footer-height;
+    }
+
     &--main {
       // Prevent main from overlapping with absolutely positioned header.
       padding-top: $site__header-height;
+      padding-bottom: $site__footer-height;
     }
   }
 
   &::after { // footer placeholder
     @include stretch(bottom);
 
-    background-color: $color--contrast;
     content: '';
     display: block;
   }
