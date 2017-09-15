@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import PageHeader from 'presentationals/components/shared/PageHeader';
+import Footer from 'presentationals/components/shared/Footer';
 
 function DefaultLayout(props) {
   // Two different ways of providing page content:
@@ -41,6 +42,11 @@ function DefaultLayout(props) {
         <div className="l_page__item l_page__item--main">
           <div className="l_page__item__wrapper">
             {layoutContent}
+          </div>
+        </div>
+        <div className="l_page__item l_page__item--footer">
+          <div className="l_page__item__wrapper">
+            <Footer />
           </div>
         </div>
       </div>
