@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 def mock_method(klass, method, &block)
   klass.send :define_method,
              method,
              block || ->(*_) { true }
 end
 
-def mock_command(klass)
-  mock_method klass, :execute
+def mock_command(klass, &block)
+  mock_method klass, :execute, &block
 end
 
 mock_command Repository::Git::Commit
 mock_command Repository::Git::Init
 
 mock_command Repository::Filesystem::Init
-mock_command Repository::Filesystem::Read
+mock_command(Repository::Filesystem::Read) { Nokogiri::HTML5 '' }
 mock_command Repository::Filesystem::Render
 mock_command Repository::Filesystem::Destroy
 
