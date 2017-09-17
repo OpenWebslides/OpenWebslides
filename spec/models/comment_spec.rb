@@ -72,4 +72,24 @@ RSpec.describe Comment, :type => :model do
       end
     end
   end
+
+  describe 'methods' do
+    describe 'locked?' do
+      let(:subject) { create :comment }
+
+      context 'unlocked' do
+        it { is_expected.not_to be_locked }
+      end
+
+      context 'flagged' do
+        before { subject.conversation.flag }
+        it { is_expected.to be_locked }
+      end
+
+      context 'hidden' do
+        before { subject.conversation.hide }
+        it { is_expected.to be_locked }
+      end
+    end
+  end
 end

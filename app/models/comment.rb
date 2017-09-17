@@ -30,6 +30,10 @@ class Comment < Annotation
   ##
   # Methods
   #
+  def locked?
+    super || conversation.locked?
+  end
+
   ##
   # Overrides
   #

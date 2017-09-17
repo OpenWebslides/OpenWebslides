@@ -82,6 +82,10 @@ class Annotation < ApplicationRecord
   ##
   # Methods
   #
+  def locked?
+    hidden? || flagged?
+  end
+
   ##
   # Overrides
   #
