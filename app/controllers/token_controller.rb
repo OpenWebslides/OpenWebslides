@@ -11,7 +11,7 @@ class TokenController < ApplicationController
 
   # POST /token
   def create
-    @user = User.find_by :email => resource_params[:email]
+    @user = User.find_by :email => resource_params[:email].downcase
 
     unless @user && @user.valid_password?(resource_params[:password])
       raise JSONAPI::Exceptions::UnauthorizedError.new :create, :token

@@ -43,6 +43,17 @@ RSpec.describe 'Token API', :type => :request do
       token = JWT::Auth::Token.from_token response.headers['Authorization'].scan(/Bearer (.*)$/).flatten.last
       expect(token).to be_valid
     end
+
+    it 'is case insensitive' do
+      post token_path, :params => request_body(user.email.upcase, password), :headers => headers
+
+      expect(response.status).to eq 201
+      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+      expect(response.headers['Authorization']).to start_with 'Bearer'
+
+      token = JWT::Auth::Token.from_token response.headers['Authorization'].scan(/Bearer (.*)$/).flatten.last
+      expect(token).to be_valid
+    end
   end
 
   describe 'DELETE /' do
