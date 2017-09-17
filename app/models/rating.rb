@@ -48,14 +48,6 @@ class Rating < ApplicationRecord
   # Validate whether the annotation is not hidden or flagged
   #
   def annotation_unlocked
-    # Annotation is locked
-    locked = annotation.hidden? || annotation.flagged?
-
-    # Parent conversation is locked
-    convo_locked = annotation.is_a?(Comment) && (annotation.conversation.hidden? || annotation.conversation.flagged?)
-
-    return unless locked || convo_locked
-
-    errors.add :base, 'annotation cannot be hidden or flagged'
+    errors.add :base, 'annotation (or parent) cannot be hidden or flagged' if annotation.locked?
   end
 end

@@ -63,4 +63,24 @@ RSpec.describe Annotation, :type => :model do
       it { is_expected.to reject_events :hide, :edit, :protect, :publish, :flag, :when => :hidden }
     end
   end
+
+  describe 'methods' do
+    describe 'locked?' do
+      let(:subject) { build :annotation }
+
+      context 'unlocked' do
+        it { is_expected.not_to be_locked }
+      end
+
+      context 'flagged' do
+        before { subject.flag }
+        it { is_expected.to be_locked }
+      end
+
+      context 'hidden' do
+        before { subject.hide }
+        it { is_expected.to be_locked }
+      end
+    end
+  end
 end
