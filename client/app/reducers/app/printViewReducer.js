@@ -1,11 +1,17 @@
 import Immutable from 'seamless-immutable';
 
-import { imgOptions, iframeOptions } from 'constants/printViewOptions';
-import { CHANGE_IMAGE_OPTIONS, CHANGE_IFRAME_OPTIONS, CHANGE_DECORATIVE_IMAGE_OPTIONS } from 'actions/printViewActions';
+import { imgOptions, iframeOptions, annotationsOptions } from 'constants/printViewOptions';
+import {
+  CHANGE_IMAGE_OPTIONS,
+  CHANGE_IFRAME_OPTIONS,
+  CHANGE_DECORATIVE_IMAGE_OPTIONS,
+  CHANGE_ANNOTATIONS_OPTIONS,
+} from 'actions/printViewActions';
 
 const initialState = Immutable({
   images: imgOptions.IMAGES_AND_TEXT,
   iframes: iframeOptions.DESCRIPTION,
+  annotationsOptions: annotationsOptions.INLINE,
   decorativeImages: false,
 });
 
@@ -22,6 +28,10 @@ function printViewReducer(state = initialState, action) {
     case CHANGE_IFRAME_OPTIONS:
       return Immutable.merge(state, {
         iframes: action.payload,
+      });
+    case CHANGE_ANNOTATIONS_OPTIONS:
+      return Immutable.merge(state, {
+        annotations: action.payload,
       });
     default:
       return state;
