@@ -42,7 +42,7 @@ module ErrorHandling
       :code => exception.code,
       :status => 422
     }
-    render :json => { :errors => body }, :status => :unprocessable_entity
+    render :json => { :errors => [body] }, :status => :unprocessable_entity
   ensure
     correct_media_type
   end
