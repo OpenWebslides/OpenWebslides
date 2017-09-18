@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :notification do
-    event_type { Notification.event_types.keys.sample }
-    user { build :user }
-    deck { build :deck }
+    predicate { Notification.predicates.keys.sample }
+    subject { build :user }
+    object { build :deck }
   end
 end

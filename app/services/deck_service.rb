@@ -10,9 +10,9 @@ class DeckService < ApplicationService
   def create
     if @deck.save
       Repository::Create.new(@deck).execute
-      Notification.create :user => @deck.owner,
-                          :deck => @deck,
-                          :event_type => :deck_created
+      Notification.create :subject => @deck.owner,
+                          :predicate => :deck_created,
+                          :object => @deck
 
       true
     else
@@ -46,9 +46,9 @@ class DeckService < ApplicationService
     command.execute
 
     # Generate notification
-    Notification.create :user => params[:author],
-                        :deck => @deck,
-                        :event_type => :deck_updated
+    Notification.create :subject => params[:author],
+                        :predicate => :deck_updated,
+                        :object => @deck
 
     true
   end
@@ -69,9 +69,9 @@ class DeckService < ApplicationService
 
       command.execute
 
-      Notification.create :user => @deck.owner,
-                          :deck => @deck,
-                          :event_type => :deck_created
+      Notification.create :subject => @deck.owner,
+                          :predicate => :deck_created,
+                          :object => @deck
 
       true
     else

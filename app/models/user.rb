@@ -42,7 +42,8 @@ class User < ApplicationRecord
 
   has_many :notifications,
            :dependent => :destroy,
-           :inverse_of => :user
+           :foreign_key => 'subject_id',
+           :inverse_of => :subject
 
   has_many :annotations,
            :dependent => :destroy,

@@ -109,17 +109,17 @@ namespace :db do
         creation_time = RANDOM.rand(1.year)
 
         # Deck created
-        Notification.create! :event_type => :deck_created,
-                             :user => deck.owner,
-                             :deck => deck,
+        Notification.create! :predicate => :deck_created,
+                             :subject => deck.owner,
+                             :object => deck,
                              :created_at => creation_time.seconds.ago,
                              :updated_at => creation_time.seconds.ago
 
         # Deck updated
         notification_count.times do
-          Notification.create! :event_type => :deck_updated,
-                               :user => editors.sample,
-                               :deck => deck,
+          Notification.create! :predicate => :deck_updated,
+                               :subject => editors.sample,
+                               :object => deck,
                                :created_at => RANDOM.rand(creation_time).seconds.ago,
                                :updated_at => RANDOM.rand(creation_time).seconds.ago
         end

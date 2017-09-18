@@ -61,7 +61,7 @@ RSpec.describe Deck, :type => :model do
     it { is_expected.to have_many(:grants).dependent(:destroy) }
     it { is_expected.to have_many(:collaborators).through(:grants).inverse_of(:collaborations) }
     it { is_expected.to have_many(:assets).dependent(:destroy).inverse_of(:deck) }
-    it { is_expected.to have_many(:notifications).dependent(:destroy).inverse_of(:deck) }
+    it { is_expected.to have_many(:notifications).dependent(:destroy).inverse_of(:object) }
     it { is_expected.to have_one(:conversion).dependent(:destroy).inverse_of(:deck) }
     it { is_expected.to have_many(:annotations).dependent(:destroy).inverse_of(:deck) }
     it { is_expected.to have_many(:conversations).inverse_of(:deck) }
@@ -73,8 +73,8 @@ RSpec.describe Deck, :type => :model do
       DeckService.new(d).create
 
       expect(Notification.count).to eq count + 1
-      expect(Notification.last.event_type).to eq 'deck_created'
-      expect(Notification.last.deck).to eq d
+      expect(Notification.last.predicate).to eq 'deck_created'
+      expect(Notification.last.object).to eq d
     end
 
     it 'generates a notification on update' do
@@ -85,8 +85,8 @@ RSpec.describe Deck, :type => :model do
       DeckService.new(d).update :author => user, :content => 'foo'
 
       expect(Notification.count).to eq count + 1
-      expect(Notification.last.event_type).to eq 'deck_updated'
-      expect(Notification.last.deck).to eq d
+      expect(Notification.last.predicate).to eq 'deck_updated'
+      expect(Notification.last.object).to eq d
     end
   end
 end

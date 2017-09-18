@@ -7,23 +7,28 @@ class Notification < ApplicationRecord
   ##
   # Properties
   #
-  enum :event_type => %i[deck_created deck_updated]
+  enum :predicate => %i[
+    deck_created
+    deck_updated
+  ]
 
   ##
   # Associations
   #
-  belongs_to :user,
+  belongs_to :subject,
+             :class_name => 'User',
              :required => true,
              :inverse_of => :notifications
 
-  belongs_to :deck,
+  belongs_to :object,
+             :class_name => 'Deck',
              :required => true,
              :inverse_of => :notifications
 
   ##
   # Validations
   #
-  validates :event_type,
+  validates :predicate,
             :presence => true
 
   ##
