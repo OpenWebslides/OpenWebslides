@@ -11,7 +11,7 @@ function annotationsOptions() {
 function SelectAnnotationsOptions({ selectedAnnotationsPref, changeAnnotationsPref }) {
   return (
     <p>
-      Choose iframe behaviour:
+      How do you want to display other people{'\''}s annotations?
       <select
         key={selectedAnnotationsPref}
         value={selectedAnnotationsPref}
