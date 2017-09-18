@@ -89,4 +89,8 @@ RSpec.describe Deck, :type => :model do
       expect(Notification.last.object).to eq d
     end
   end
+
+  describe 'methods' do
+    it { is_expected.to respond_to :display_name }
+  end
 end

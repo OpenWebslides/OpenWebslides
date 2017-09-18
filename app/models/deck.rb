@@ -77,6 +77,10 @@ class Deck < ApplicationRecord
   ##
   # Methods
   #
+  def display_name
+    name
+  end
+
   ##
   # Overrides
   #

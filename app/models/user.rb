@@ -10,7 +10,6 @@ class User < ApplicationRecord
   ##
   # Properties
   #
-
   property :first_name
   property :last_name
   property :email
@@ -102,6 +101,10 @@ class User < ApplicationRecord
 
   def create_email_identity
     identities.build :provider => 'email', :uid => email
+  end
+
+  def display_name
+    name
   end
 
   ##

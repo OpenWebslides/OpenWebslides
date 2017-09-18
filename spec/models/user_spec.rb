@@ -68,9 +68,9 @@ RSpec.describe User, :type => :model do
     end
 
     it 'returns a correct full name' do
-      expect(build(:user, :first_name => 'foo', :last_name => nil).name).to eq 'foo'
-      expect(build(:user, :first_name => 'foo', :last_name => '').name).to eq 'foo'
-      expect(build(:user, :first_name => 'foo', :last_name => 'bar').name).to eq 'foo bar'
+      expect(build(:user, :first_name => 'foo', :last_name => nil).display_name).to eq 'foo'
+      expect(build(:user, :first_name => 'foo', :last_name => '').display_name).to eq 'foo'
+      expect(build(:user, :first_name => 'foo', :last_name => 'bar').display_name).to eq 'foo bar'
     end
   end
 
@@ -94,5 +94,9 @@ RSpec.describe User, :type => :model do
     result = proc { User.find_by_token :id => user.id, :token_version => user.token_version }
 
     expect(result).to raise_error JSONAPI::Exceptions::UnconfirmedError
+  end
+
+  describe 'methods' do
+    it { is_expected.to respond_to :display_name }
   end
 end
