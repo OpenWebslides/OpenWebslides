@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 
 import PrintViewToolbar from 'presentationals/components/print-view/PrintViewToolbar';
 
-import { changeImagePref, changeIframePref, changeDecorativeImagePref } from 'actions/printViewActions';
+import {
+  changeImagePref,
+  changeIframePref,
+  changeDecorativeImagePref,
+  changeAnnotationsPref } from 'actions/printViewActions';
 
 function mapStateToProps(state) {
   const printViewState = state.app.printView;
@@ -12,7 +16,9 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeImagePref, changeIframePref, changeDecorativeImagePref }, dispatch);
+  return bindActionCreators(
+    { changeImagePref, changeIframePref, changeDecorativeImagePref, changeAnnotationsPref },
+    dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintViewToolbar);
