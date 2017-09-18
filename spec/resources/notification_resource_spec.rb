@@ -10,16 +10,16 @@ RSpec.describe NotificationResource, :type => :resource do
 
   it { is_expected.to have_primary_key :id }
 
-  it { is_expected.to have_attribute :event_type }
-  it { is_expected.to have_attribute :deck_name }
-  it { is_expected.to have_attribute :user_name }
+  it { is_expected.to have_attribute :predicate }
+  it { is_expected.to have_attribute :subject_display_name }
+  it { is_expected.to have_attribute :object_display_name }
 
-  it { is_expected.to have_one(:user) }
-  it { is_expected.to have_one(:deck) }
+  it { is_expected.to have_one(:subject) }
+  it { is_expected.to have_one(:object) }
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id event_type deck_name user_name deck user]
+      expect(subject.fetchable_fields).to match_array %i[id predicate subject_display_name object_display_name subject object]
     end
 
     it 'should have a valid set of sortable fields' do
@@ -36,7 +36,7 @@ RSpec.describe NotificationResource, :type => :resource do
 
   describe 'filters' do
     it 'should have a valid set of filters' do
-      expect(described_class.filters.keys).to match_array %i[id event_type deck user]
+      expect(described_class.filters.keys).to match_array %i[id predicate subject object]
     end
   end
 end

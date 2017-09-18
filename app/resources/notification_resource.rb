@@ -9,26 +9,29 @@ class NotificationResource < ApplicationResource
   ##
   # Attributes
   #
-  attribute :event_type
-  attribute :user_name
-  attribute :deck_name
+  attribute :predicate
+
+  attribute :subject_display_name
+  attribute :object_display_name
 
   ##
   # Relationships
   #
-  has_one :user,
+  has_one :subject,
+          :class_name => 'User',
           :always_include_linkage_data => true
 
-  has_one :deck,
+  has_one :object,
+          :class_name => 'Deck',
           :always_include_linkage_data => true
 
   ##
   # Filters
   #
-  filter :user
-  filter :deck
-  filter :event_type,
-         :verify => ->(values, _) { values.map(&:downcase) & Notification.event_types.keys }
+  filter :subject
+  filter :object
+  filter :predicate,
+         :verify => ->(values, _) { values.map(&:downcase) & Notification.predicates.keys }
 
   ##
   # Callbacks
@@ -44,12 +47,12 @@ class NotificationResource < ApplicationResource
     [{ :field => 'created_at', :direction => :desc }]
   end
 
-  def user_name
-    @model.user.name
+  def subject_display_name
+    @model && @model.subject && @model.subject.display_name
   end
 
-  def deck_name
-    @model.deck.name
+  def object_display_name
+    @model && @model.object && @model.object.display_name
   end
 
   def meta(options)

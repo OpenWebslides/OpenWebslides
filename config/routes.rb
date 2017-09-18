@@ -86,13 +86,13 @@ Rails.application.routes.draw do
     # Notifications API (immutable)
     #
     jsonapi_resources :notifications, :only => %i[index show] do
-      # Deck relationship
-      jsonapi_related_resource :deck
-      jsonapi_link :deck, :only => :show
+      # Subject relationship
+      jsonapi_related_resource :subject
+      jsonapi_link :subject, :only => :show
 
-      # User relationship
-      jsonapi_related_resource :user
-      jsonapi_link :user, :only => :show
+      # Object relationship
+      jsonapi_related_resource :object
+      jsonapi_link :object, :only => :show
     end
 
     ##

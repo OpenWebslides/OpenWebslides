@@ -23,11 +23,11 @@ RSpec.describe 'notifications routing', :type => :routing do
     expect(:delete => route).not_to be_routable
   end
 
-  it 'routes notification user relationship endpoint' do
-    route = '/api/notifications/foo/relationships/user'
-    params = { :notification_id => 'foo', :relationship => 'user' }
+  it 'routes notification subject relationship endpoint' do
+    route = '/api/notifications/foo/relationships/subject'
+    params = { :notification_id => 'foo', :relationship => 'subject' }
 
-    expect(:get => '/api/notifications/foo/user').to route_to 'users#get_related_resource', params.merge(:source => 'notifications')
+    expect(:get => '/api/notifications/foo/subject').to route_to 'users#get_related_resource', params.merge(:source => 'notifications')
 
     expect(:get => route).to route_to 'notifications#show_relationship', params
     expect(:patch => route).not_to be_routable
@@ -36,11 +36,11 @@ RSpec.describe 'notifications routing', :type => :routing do
     expect(:delete => route).not_to be_routable
   end
 
-  it 'routes notification deck relationship endpoint' do
-    route = '/api/notifications/foo/relationships/deck'
-    params = { :notification_id => 'foo', :relationship => 'deck' }
+  it 'routes notification object relationship endpoint' do
+    route = '/api/notifications/foo/relationships/object'
+    params = { :notification_id => 'foo', :relationship => 'object' }
 
-    expect(:get => '/api/notifications/foo/deck').to route_to 'decks#get_related_resource', params.merge(:source => 'notifications')
+    expect(:get => '/api/notifications/foo/object').to route_to 'decks#get_related_resource', params.merge(:source => 'notifications')
 
     expect(:get => route).to route_to 'notifications#show_relationship', params
     expect(:patch => route).not_to be_routable

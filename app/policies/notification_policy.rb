@@ -37,8 +37,10 @@ class NotificationPolicy < ApplicationPolicy
   #
   class Scope < Scope
     def resolve
-      # Defer asset scoping to the respective objects
-      DeckPolicy::Scope.new(@user, scope.joins(:object)).resolve
+      # Defer notification scoping to the respective objects
+      decks = Deck.where :id => scope.pluck(:id)
+
+      Notification.where :object_id => DeckPolicy::Scope.new(@user, decks).resolve.pluck(:id)
     end
   end
 end
