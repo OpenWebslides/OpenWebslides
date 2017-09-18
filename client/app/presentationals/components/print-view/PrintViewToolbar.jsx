@@ -6,7 +6,7 @@ import { imgOptions, iframeOptions } from 'constants/printViewOptions';
 import SelectImageOptions from './SelectImageOptions';
 import SelectIframeOptions from './SelectIframeOptions';
 import SelectDecorativeImageOptions from './SelectDecorativeImageOptions';
-import SelectAnnotationsOprions from './SelectAnnotationsOptions';
+import SelectAnnotationsOptions from './SelectAnnotationsOptions';
 
 
 class PrintViewToolbar extends Component {
@@ -33,18 +33,25 @@ class PrintViewToolbar extends Component {
   }
 
   render() {
-    const { printViewState, changeImagePref, changeIframePref, changeDecorativeImagePref, id } = this.props;
+    const { printViewState, changeImagePref, changeIframePref, changeDecorativeImagePref, changeAnnotationsPref, id } = this.props;
     const curImagePref = printViewState.images;
-
+    const curAnnotationsPref = printViewState.annotations;
     const curDecorativeImagePref = printViewState.decorativeImages;
     const curIframePref = printViewState.iframes;
     return (
       <div className="c_print-view-toolbar">
         <SelectImageOptions changeImagePref={changeImagePref} selectedImagePref={curImagePref} />
-        <SelectIframeOptions changeIframePref={changeIframePref} selectedIframePref={curIframePref} />
+        <SelectIframeOptions
+          changeIframePref={changeIframePref}
+          selectedIframePref={curIframePref}
+        />
         <SelectDecorativeImageOptions
           changeDecorativeImagePref={changeDecorativeImagePref}
           selectedDecorativeImagePref={curDecorativeImagePref}
+        />
+        <SelectAnnotationsOptions
+          changeAnnotationsPref={changeAnnotationsPref}
+          selectedAnnotationsPref={curAnnotationsPref}
         />
         <Link to={`/printOnly/${id}`}> Print </Link>
       </div>
