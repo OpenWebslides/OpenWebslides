@@ -10,8 +10,18 @@ export const RATE_CONVERSATION_SUCCESS = 'RATE_CONVERSATION_SUCCESS';
 export const UPDATE_CONVERSATION = 'UPDATE_CONVERSATION';
 export const UPDATE_CONVERSATION_SUCCESS = 'UPDATE_CONVERSATION_SUCCESS';
 
-export function fetchConversations() {
-  return { type: FETCH_CONVERSATIONS };
+export function fetchConversations(deckId) {
+  if (deckId) {
+    return {
+      type: FETCH_CONVERSATIONS,
+      meta: {
+        deckId,
+      },
+    };
+  }
+  else {
+    return { type: FETCH_CONVERSATIONS };
+  }
 }
 
 export function deleteConversation(conversationId) {
