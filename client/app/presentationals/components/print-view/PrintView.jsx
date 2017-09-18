@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { imgOptions, iframeOptions } from 'constants/printViewOptions';
-// import { jasperState } from 'constants/exampleState';
 
 import convertToPrint from 'lib/convert-to-print/index';
 
@@ -31,9 +30,11 @@ export default class PrintView extends Component {
   // TODO: This will have to be fixed after we are actually stocking decks in the back end
   componentDidMount() {
     const id = this.props.id;
+    this.props.fetchConversations(id);
     if (!_.get(this.props, `entities.decks.byId.${id}.slideIds`, false)) {
       this.props.fetchDeck(id);
-    } else if (this.props.printAndClose){
+    }
+    else if (this.props.printAndClose) {
       waitForImagesAndPrint(id);
     }
   }
@@ -44,6 +45,7 @@ export default class PrintView extends Component {
     if (_.get(this.props, `entities.decks.byId.${id}.slideIds`, false) && this.props.printAndClose) {
       waitForImagesAndPrint(id);
     }
+    this.props.fetchConversations();
   }
 
   render() {
@@ -79,6 +81,7 @@ PrintView.propTypes = {
   }).isRequired,
   entities: PropTypes.object,
   fetchDeck: PropTypes.func.isRequired,
+  fetchConversations: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   printAndClose: PropTypes.bool,
 };

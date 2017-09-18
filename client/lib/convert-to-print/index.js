@@ -4,7 +4,7 @@ import { contentItemTypes } from 'constants/contentItemTypes';
 import ipt from 'constants/inlinePropertyTypes';
 
 // converters:
-
+import ConversationElement from 'presentationals/components/print-view/ConversationElement';
 import illustrativeImageToReact from './convert-items/illustrativeImageToReact';
 import decorativeImageToReact from './convert-items/decorativeImageToReact';
 import iframeToReact from './convert-items/iframeToReact';
@@ -41,7 +41,7 @@ function contentItemObjectToReact(
           imagesPref,
           decorativeImagesPref,
           iframesPref,
-          amountOfImages
+          amountOfImages,
         );
       });
     case LIST:
@@ -99,11 +99,24 @@ function countImagesInSlide(slideElements, entities) {
   return counter;
 }
 
+function getRelevantConversations(conversationsById, slideId) {
+  let relevantConversations = [];
+  Object.keys(conversationsById).forEach((id) => {
+    if (conversationsById[id].contentItemId === slideId) {
+      relevantConversations = relevantConversations.concat(conversationsById[id]);
+    }
+  });
+  return relevantConversations;
+}
+
 function convertSlideToContentItems(slide, entities, imagesPref, decorativeImagesPref, iframesPref) {
   const slideElements = slide.contentItemIds.map(itemId => entities.contentItems.byId[itemId]);
   const level = parseInt(slide.level, 10);
+  const slideId = slide.id;
+
+  const conversations = getRelevantConversations(entities.conversations.byId, slideId);
   const amountOfImages = countImagesInSlide(slideElements, entities);
-  return slideElements.reduce(
+  let reactElements = slideElements.reduce(
     (arr, currentObject) =>
       arr.concat(
         contentItemObjectToReact(
@@ -112,6 +125,14 @@ function convertSlideToContentItems(slide, entities, imagesPref, decorativeImage
       ),
     [],
   );
+
+  if (conversations) {
+    reactElements = reactElements.concat(conversations.map((conversation) => {
+      const res = ConversationElement(conversation);
+      return res;
+    }));
+  }
+  return reactElements;
 }
 
 
@@ -172,6 +193,7 @@ function convertToPrint(entities, deckId, imagesPref, decorativeImagesPref, ifra
       section, 0, entities, imagesPref, decorativeImagesPref, iframesPref,
     ),
   );
+  debugger;
   return elements;
 }
 export default convertToPrint;
