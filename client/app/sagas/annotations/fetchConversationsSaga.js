@@ -27,9 +27,15 @@ const mockConversations = {
   },
 };
 
-export function* doFetchConversations() {
+export function* doFetchConversations(action) {
   try {
-    const deckId = yield select(getActiveDeckId);
+    let deckId;
+    if (action.meta.deckId) {
+      deckId = action.meta.deckId;
+    }
+    else {
+      deckId = yield select(getActiveDeckId);
+    }
     const currentUserId = yield select(getCurrentUserId);
 
     const conversations = yield call(fetchConversationsApi, deckId);
