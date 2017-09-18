@@ -11,7 +11,7 @@ import {
 const initialState = Immutable({
   images: imgOptions.IMAGES_AND_TEXT,
   iframes: iframeOptions.DESCRIPTION,
-  annotationsOptions: annotationsOptions.INLINE,
+  annotations : annotationsOptions.INLINE,
   decorativeImages: false,
 });
 
