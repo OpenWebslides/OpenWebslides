@@ -5,6 +5,7 @@ import PrintView from 'presentationals/components/print-view/PrintView';
 // Actions
 import { fetchDeck } from 'actions/entities/decks';
 import { fetchConversations } from 'actions/entities/conversations';
+import { fetchDeckComments } from 'actions/entities/conversation-comments';
 
 function mapStateToProps(state) {
   const printViewState = state.app.printView;
@@ -15,7 +16,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchDeck, fetchConversations }, dispatch);
+  return bindActionCreators({ fetchDeck, fetchConversations, fetchDeckComments }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintView);
