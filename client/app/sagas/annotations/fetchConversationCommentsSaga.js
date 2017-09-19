@@ -80,7 +80,7 @@ export function* doFetchConversations(action) {
       const userAttributes = conversationComments.included.find(user => user.id === userId).attributes;
       const createdTimeAgo = moment.unix(createdAt).fromNow();
 
-      payload[id] = { id, ...attributes, byCurrentUser, user: { ...userAttributes }, createdTimeAgo };
+      payload[id] = { id, ...attributes, conversationId, byCurrentUser, user: { ...userAttributes }, createdTimeAgo };
     });
 
     yield put({ type: FETCH_CONVERSATION_COMMENTS_SUCCESS, payload });
