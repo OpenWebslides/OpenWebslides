@@ -1,4 +1,4 @@
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, call, put } from 'redux-saga/effects';
 
 import { OAUTH_SIGNIN_USER, SIGNIN_USER_SUCCESS } from 'actions/signinActions';
 
@@ -8,7 +8,7 @@ import fetchUserApi from 'api/fetchUserApi';
 function* doOauthSigninUser(action) {
   const { authToken, id } = action.meta;
 
-  const user = fetchUserApi(id);
+  const user = yield call(fetchUserApi, id);
 
   const { firstName, lastName } = user.data.attributes;
 
