@@ -17,9 +17,7 @@ function contentItemObjectToReact(
   entities,
   contentItemObject,
   currentLevel,
-  imagesPref,
-  decorativeImagesPref,
-  iframesPref,
+  preferences,
   amountOfImages,
 ) {
   switch (contentItemObject.contentItemType) {
@@ -35,13 +33,7 @@ function contentItemObjectToReact(
       return contentItemObject.childItemIds.map((itemId) => {
         const itemObject = entities.contentItems.byId[itemId];
         return contentItemObjectToReact(
-          entities,
-          itemObject,
-          currentLevel,
-          imagesPref,
-          decorativeImagesPref,
-          iframesPref,
-          amountOfImages,
+          entities, itemObject, currentLevel, preferences, amountOfImages
         );
       });
     case LIST:
@@ -52,9 +44,7 @@ function contentItemObjectToReact(
         contentItemObject.ordered ? 'ol' : 'ul',
         { 'data-level': currentLevel, className: 'c_print-view__list' },
         childrenObjects.map(child =>
-          contentItemObjectToReact(
-            entities, child, currentLevel, imagesPref, decorativeImagesPref, iframesPref,
-          ),
+          contentItemObjectToReact(entities, child, currentLevel, preferences),
         ),
       );
     case LIST_ITEM:
@@ -64,11 +54,15 @@ function contentItemObjectToReact(
         contentItemObject.text,
       );
     case ILLUSTRATIVE_IMAGE:
-      return illustrativeImageToReact(contentItemObject, imagesPref, amountOfImages, currentLevel);
+      return illustrativeImageToReact(
+        contentItemObject, preferences.imagesPref, amountOfImages, currentLevel,
+      );
     case DECORATIVE_IMAGE:
-      return decorativeImageToReact(contentItemObject, decorativeImagesPref, currentLevel);
+      return decorativeImageToReact(
+        contentItemObject, preferences.decorativeImagesPref, currentLevel,
+      );
     case IFRAME:
-      return iframeToReact(contentItemObject, iframesPref, currentLevel);
+      return iframeToReact(contentItemObject, preferences.iframesPref, currentLevel);
     default:
       return React.createElement(
         'p',
@@ -109,7 +103,7 @@ function getRelevantConversations(conversationsById, slideId) {
   return relevantConversations;
 }
 
-function convertSlideToContentItems(slide, entities, imagesPref, decorativeImagesPref, iframesPref) {
+function convertSlideToContentItems(slide, entities, preferences) {
   const slideElements = slide.contentItemIds.map(itemId => entities.contentItems.byId[itemId]);
   const level = parseInt(slide.level, 10);
   const slideId = slide.id;
@@ -119,9 +113,7 @@ function convertSlideToContentItems(slide, entities, imagesPref, decorativeImage
   let reactElements = slideElements.reduce(
     (arr, currentObject) =>
       arr.concat(
-        contentItemObjectToReact(
-          entities, currentObject, level, imagesPref, decorativeImagesPref, iframesPref, amountOfImages,
-        ),
+        contentItemObjectToReact(entities, currentObject, level, preferences, amountOfImages),
       ),
     [],
   );
@@ -156,19 +148,17 @@ function divideTopLevelIntoSections(slides, level) {
 }
 
 // Returns a <section> element containing all nested sections
-function convertSection(slides, currentLevel, entities, imagesPref, decorativeImagesPref, iframesPref) {
+function convertSection(slides, currentLevel, entities, preferences) {
   let thisSectionElements;
 
-  thisSectionElements = convertSlideToContentItems(
-    slides[0], entities, imagesPref, decorativeImagesPref, iframesPref,
-  );
+  thisSectionElements = convertSlideToContentItems(slides[0], entities, preferences);
 
 
   if (slides.length > 1) {
     const subSections = divideTopLevelIntoSections(slides.slice(1), currentLevel + 1);
     const subSectionsElements = subSections.map(
       section => convertSection(
-        section, currentLevel + 1, entities, imagesPref, decorativeImagesPref, iframesPref,
+        section, currentLevel + 1, entities, preferences,
       ),
     );
     thisSectionElements = thisSectionElements.concat(subSectionsElements);
@@ -184,13 +174,12 @@ function convertSection(slides, currentLevel, entities, imagesPref, decorativeIm
 
 
 function convertToPrint(entities, deckId, imagesPref, decorativeImagesPref, iframesPref) {
+  const preferences = { imagesPref, decorativeImagesPref, iframesPref };
   const slideIds = entities.decks.byId[deckId].slideIds;
   const slideObjects = slideIds.map(id => entities.slides.byId[id]).asMutable();
   const sections = divideTopLevelIntoSections(slideObjects, 0);
   const elements = sections.map(
-    section => convertSection(
-      section, 0, entities, imagesPref, decorativeImagesPref, iframesPref,
-    ),
+    section => convertSection(section, 0, entities, preferences),
   );
   return elements;
 }
