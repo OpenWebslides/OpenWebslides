@@ -30,7 +30,7 @@ const mockConversations = {
 export function* doFetchConversations(action) {
   try {
     let deckId;
-    if (action.meta.deckId) {
+    if (action.meta) {
       deckId = action.meta.deckId;
     }
     else {
