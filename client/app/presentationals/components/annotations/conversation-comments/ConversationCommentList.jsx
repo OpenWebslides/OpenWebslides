@@ -21,40 +21,44 @@ function ConversationCommentList(props) {
     return (
       <div>
         <ul className="list-style-none">
+          {
+            Object.keys(conversationComments)
+              .filter((commentId) => { // Only display comments for this conversation
+                return conversationComments[commentId].conversationId === activeConversationId;
+              })
+              .map((commentId) => {
+                if (editableConversationCommentId === commentId) {
+                  return (
+                    <ConversationCommentMetaData
+                      {...conversationComments[commentId]}
+                      activeConversationId={activeConversationId}
+                      editing={true}
+                    >
+                      <ConversationCommentForm
+                        key={commentId}
+                        cols={30}
+                        rows={3}
+                        autoFocus={true}
+                        cancelAction={props.unsetEditableConversationComment}
+                        form={`ConversationCommentForm${commentId}`}
+                        initialValues={{ text: conversationComments[commentId].text }}
+                        submitText="Save"
+                        onSubmit={(values, dispatch) => {
+                          return new Promise((resolve, reject) => {
+                            dispatch(updateConversationComment({ values, resolve, reject }));
+                          });
+                        }}
+                      />
+                    </ConversationCommentMetaData>
+                  );
+                }
 
-          { Object.keys(conversationComments).map((commentId) => {
-            if (editableConversationCommentId === commentId) {
-              return (
-                <ConversationCommentMetaData
-                  {...conversationComments[commentId]}
-                  activeConversationId={activeConversationId}
-                  editing={true}
-                >
-                  <ConversationCommentForm
-                    key={commentId}
-                    cols={30}
-                    rows={3}
-                    autoFocus={true}
-                    cancelAction={props.unsetEditableConversationComment}
-                    form={`ConversationCommentForm${commentId}`}
-                    initialValues={{ text: conversationComments[commentId].text }}
-                    submitText="Save"
-                    onSubmit={(values, dispatch) => {
-                      return new Promise((resolve, reject) => {
-                        dispatch(updateConversationComment({ values, resolve, reject }));
-                      });
-                    }}
-                  />
-                </ConversationCommentMetaData>
-              );
-            }
-
-            return (
-              <ConversationCommentMetaData {...conversationComments[commentId]}activeConversationId={activeConversationId} >
-                <ConversationCommentContent text={conversationComments[commentId].text} deleted={conversationComments[commentId].deleted} />
-              </ConversationCommentMetaData>
-            );
-          })
+                return (
+                  <ConversationCommentMetaData {...conversationComments[commentId]}activeConversationId={activeConversationId} >
+                    <ConversationCommentContent text={conversationComments[commentId].text} deleted={conversationComments[commentId].deleted} />
+                  </ConversationCommentMetaData>
+                );
+              })
           }
         </ul>
       </div>

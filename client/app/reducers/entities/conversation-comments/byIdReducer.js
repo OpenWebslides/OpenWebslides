@@ -12,7 +12,7 @@ function byIdReducer(state = initialState, action) {
   switch (action.type) {
 
     case FETCH_CONVERSATION_COMMENTS_SUCCESS:
-      return Immutable(action.payload);
+      return state.merge(action.payload);
 
     case RATE_CONVERSATION_COMMENT_SUCCESS: {
       const { id, attributes } = action.payload;
