@@ -1,4 +1,4 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects';
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 import moment from 'moment';
 
 
@@ -94,7 +94,7 @@ export function* doFetchConversations(action) {
 }
 
 function* fetchConversationsWatcher() {
-  yield takeLatest(FETCH_CONVERSATION_COMMENTS, doFetchConversations);
+  yield takeEvery(FETCH_CONVERSATION_COMMENTS, doFetchConversations);
 }
 
 export default fetchConversationsWatcher;

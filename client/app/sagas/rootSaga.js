@@ -33,6 +33,7 @@ import addConversationCommentSaga from 'sagas/annotations/addConversationComment
 import deleteConversationSaga from 'sagas/annotations/deleteConversationSaga';
 import deleteConversationCommentSaga from 'sagas/annotations/deleteConversationCommentSaga';
 import updateConversationCommentSaga from 'sagas/annotations/updateConversationCommentSaga';
+import fetchDeckCommentsSaga from 'sagas/annotations/fetchDeckCommentsSaga';
 
 export default function* rootSaga() {
   yield [
@@ -66,5 +67,6 @@ export default function* rootSaga() {
     updateDeckSaga(),
     uploadAssetSaga(),
     addUriSaga(),
+    fetchDeckCommentsSaga(),
   ];
 }

@@ -128,8 +128,7 @@ function convertSlideToContentItems(slide, entities, imagesPref, decorativeImage
 
   if (conversations) {
     reactElements = reactElements.concat(conversations.map((conversation) => {
-      const res = ConversationElement(conversation);
-      return res;
+      return ConversationElement(conversation);
     }));
   }
   return reactElements;
@@ -193,7 +192,6 @@ function convertToPrint(entities, deckId, imagesPref, decorativeImagesPref, ifra
       section, 0, entities, imagesPref, decorativeImagesPref, iframesPref,
     ),
   );
-  debugger;
   return elements;
 }
 export default convertToPrint;

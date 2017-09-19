@@ -27,10 +27,9 @@ function waitForImagesAndPrint(id) {
 }
 
 export default class PrintView extends Component {
-  // TODO: This will have to be fixed after we are actually stocking decks in the back end
   componentDidMount() {
     const id = this.props.id;
-    this.props.fetchConversations(id);
+    this.props.fetchDeckComments(id);
     if (!_.get(this.props, `entities.decks.byId.${id}.slideIds`, false)) {
       this.props.fetchDeck(id);
     }
@@ -45,7 +44,6 @@ export default class PrintView extends Component {
     if (_.get(this.props, `entities.decks.byId.${id}.slideIds`, false) && this.props.printAndClose) {
       waitForImagesAndPrint(id);
     }
-    this.props.fetchConversations();
   }
 
   render() {
@@ -82,6 +80,7 @@ PrintView.propTypes = {
   entities: PropTypes.object,
   fetchDeck: PropTypes.func.isRequired,
   fetchConversations: PropTypes.func.isRequired,
+  fetchDeckComments: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   printAndClose: PropTypes.bool,
 };
