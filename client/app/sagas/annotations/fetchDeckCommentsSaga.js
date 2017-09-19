@@ -55,7 +55,7 @@ function conversationsJsonToObjects(conversations, currentUserId) {
   return conversationsPayload;
 }
 
-function commentsJsonToObjects(comments, currentUserId) {
+function commentsJsonToObjects(comments, currentUserId, conversationId) {
   const commentObject = {};
 
   comments.data.forEach((conversationComment) => {
@@ -69,6 +69,7 @@ function commentsJsonToObjects(comments, currentUserId) {
 
     commentObject[id] = {
       id,
+      conversationId,
       ...attributes,
       byCurrentUser,
       user: { ...userAttributes },
@@ -93,7 +94,7 @@ export function* doFetchDeckComments(action) {
 
     for (const conversationId of conversationsIds) {
       const conversationComments = yield call(fetchConversationCommentsApi, conversationId);
-      const commentsObjects = commentsJsonToObjects(conversationComments, currentUserId);
+      const commentsObjects = commentsJsonToObjects(conversationComments, currentUserId, conversationId);
       yield put({ type: FETCH_CONVERSATION_COMMENTS_SUCCESS, payload: commentsObjects });
     }
   }
