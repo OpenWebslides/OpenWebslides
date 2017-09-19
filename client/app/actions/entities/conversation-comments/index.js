@@ -2,6 +2,12 @@ export const FETCH_CONVERSATION_COMMENTS = 'FETCH_CONVERSATION_COMMENTS';
 export const FETCH_CONVERSATION_COMMENTS_SUCCESS = 'FETCH_CONVERSATION_COMMENTS_SUCCESS';
 export const FETCH_CONVERSATION_COMMENTS_FAILURE = 'FETCH_CONVERSATION_COMMENTS_FAILURE';
 
+export const FETCH_DECK_COMMENTS = 'FETCH_DECK_COMMENTS';
+export const FETCH_DECK_COMMENTS_SUCCESS = 'FETCH_DECK_COMMENTS_SUCCESS';
+export const FETCH_DECK_COMMENTS_FAILURE = 'FETCH_DECK_COMMENTS_FAILURE';
+
+
+
 export const ADD_CONVERSATION_COMMENT = 'ADD_CONVERSATION_COMMENT';
 export const DELETE_CONVERSATION_COMMENT = 'DELETE_CONVERSATION_COMMENT';
 
@@ -13,6 +19,10 @@ export const RATE_CONVERSATION_COMMENT_SUCCESS = 'RATE_CONVERSATION_COMMENT_SUCC
 
 export function fetchConversationComments(conversationId) {
   return { type: FETCH_CONVERSATION_COMMENTS, meta: { conversationId } };
+}
+
+export function fetchDeckComments(deckId) {
+  return { type: FETCH_DECK_COMMENTS, meta: { deckId } };
 }
 
 export function addConversationComment({ resolve, reject, values }) {
