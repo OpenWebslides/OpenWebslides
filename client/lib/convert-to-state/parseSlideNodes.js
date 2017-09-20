@@ -1,6 +1,5 @@
-/* eslint-disable no-case-declarations */
-// import _ from 'lodash';
-import { contentItemTypes } from 'constants/contentItemTypes';
+import _ from 'lodash';
+import { contentItemTypes, containerContentItemTypes } from 'constants/contentItemTypes';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
 import { generateSlideId, generateContentItemId } from './generateIds';
@@ -11,6 +10,161 @@ const plaintextNodeNames = [...headingNodeNames, 'P', 'LI'];
 const listNodeNames = ['UL', 'OL'];
 const sectionNodeNames = ['SECTION', 'ASIDE'];
 const containerNodeNames = [...listNodeNames, ...sectionNodeNames];
+
+function addImplicitSections(
+  slideId,
+  contentItemIds,
+  contentItemsById,
+  contentItemSequence = false,
+  parentIsSection = false,
+) {
+  // Note: this is far from the most efficient way of adding containers; I tried to prioritize
+  // readability.
+  // Also note: this breaks the 'sequence' of contentItem ids; this shouldn't be a big problem as we
+  // will have to replace these by more permanent ids at some point in the future anyway.
+
+  let newContentItemIds = [];
+  let newContentItemsById = contentItemsById;
+  let newContentItemSequence = (contentItemSequence === false)
+    ? Object.keys(contentItemsById).length
+    : contentItemSequence;
+
+  let sectionContentIds = [];
+  let sectionLevel = -1;
+  let atLeastOneSectionAdded = false;
+
+  let contentItem;
+  let sectionItem;
+  let subContentItemIds;
+
+  // Iterate through all contentItems in contentItemIds.
+  // Note: we actually go 1 past the last id in contentItemIds (because of the '<=') because if a
+  // section runs untill the end of the list, we still need to process it.
+  for (let i = 0; i <= contentItemIds.length; i += 1) {
+    // Put the contentItem in a variable for easier access.
+    // (This will be undefined if i === contentItemIds.length.)
+    contentItem = contentItemsById[contentItemIds[i]];
+
+    // Check if we need to end the current section.
+    if (
+      // If there is a current section
+      sectionLevel !== -1 &&
+      ( // and if we're past the last contentItem,
+        // or this contentItem is a heading of a <= level than the current section.
+        i === contentItemIds.length ||
+        (
+          contentItem.contentItemType === contentItemTypes.TITLE &&
+          contentItem.headingLevel <= sectionLevel
+        )
+      )
+    ) {
+      // Recursively process the section contents (i.e. add deeper level headings).
+      ({
+        contentItemIds: subContentItemIds,
+        contentItemsById: newContentItemsById,
+        contentItemSequence: newContentItemSequence,
+      } = addImplicitSections(
+        slideId,
+        sectionContentIds,
+        newContentItemsById,
+        newContentItemSequence,
+        true,
+      ));
+
+      // If the parent of the current list of contentItemIds is already a section, it's possible
+      // that we would be adding only a single subsection; thereby creating a useless nested
+      // section. In this case, just directly return the list of contentItems without wrapping them
+      // in a section.
+      if (
+        // If the parent is already a section (this is passed as a function argument)
+        parentIsSection &&
+        // and we're at this point in the code because we've processed the last contentItem
+        i === contentItemIds.length &&
+        // and we haven't add any section before this (meaning that there is exactly one heading)
+        !atLeastOneSectionAdded &&
+        // and that one heading was the first item in the list.
+        newContentItemsById[contentItemIds[0]].contentItemType === contentItemTypes.TITLE
+      ) {
+        // Just directly use the processed subContentItemIds without adding a section.
+        // Note: the loop ends here, so these are immediately returned.
+        newContentItemIds = subContentItemIds;
+      }
+      else {
+        // Create a new section and add the heading + contents to it.
+        sectionItem = {
+          id: generateContentItemId(slideId, newContentItemSequence),
+          contentItemType: contentItemTypes.SECTION,
+          viewtype: slideViewTypes.LIVE,
+          childItemIds: subContentItemIds,
+        };
+        newContentItemIds.push(sectionItem.id);
+        newContentItemsById[sectionItem.id] = sectionItem;
+        newContentItemSequence += 1;
+        atLeastOneSectionAdded = true;
+
+        // Reset variables to allow the next section to start.
+        sectionContentIds = [];
+        sectionLevel = -1;
+      }
+    }
+
+    // This code only needs to be executed if there is a contentItem left to process;
+    // i.e. if i is a valid index for contentItemIds.
+    if (i < contentItemIds.length) {
+      // Check if we need to start a new section.
+      if (
+        // If there is no section already in progress
+        // (note: deeper sections are handled recursively; no need to handle nested sections here)
+        sectionLevel === -1 &&
+        // and if this contentItem is an unprocessed title.
+        contentItem.contentItemType === contentItemTypes.TITLE &&
+        'headingLevel' in contentItem
+      ) {
+        // Save the headingLevel; this allows us to end the section if we encounter a contentItem of
+        // the same or lower level.
+        sectionLevel = contentItem.headingLevel;
+
+        // Remove headingLevel to indicate this title has already been processed;
+        // note that we don't need this property anymore after proper sections have been added,
+        // because the level is determined by section nesting instead.
+        delete contentItem.headingLevel;
+        newContentItemsById[contentItem.id] = contentItem;
+      }
+
+      // If the contentItem is a container, recursively process it's contents.
+      if (_.includes(containerContentItemTypes, contentItem.contentItemType)) {
+        ({
+          contentItemIds: subContentItemIds,
+          contentItemsById: newContentItemsById,
+          contentItemSequence: newContentItemSequence,
+        } = addImplicitSections(
+          slideId,
+          contentItem.childItemIds,
+          newContentItemsById,
+          newContentItemSequence,
+          true,
+        ));
+        contentItem.childItemIds = subContentItemIds;
+        newContentItemsById[contentItem.id] = contentItem;
+      }
+
+      // Either add the current contentItem to the section in progress (if there is one) ...
+      if (sectionLevel > 0) {
+        sectionContentIds.push(contentItem.id);
+      }
+      // ... or to the general contentItemIds list.
+      else {
+        newContentItemIds.push(contentItem.id);
+      }
+    }
+  }
+
+  return {
+    contentItemIds: newContentItemIds,
+    contentItemsById: newContentItemsById,
+    contentItemSequence: newContentItemSequence,
+  };
+}
 
 function parseTextContent(textContent, trim = true) {
   if (trim) {
@@ -96,7 +250,12 @@ function parseContentItemNode(
   else if (Array.indexOf(plaintextNodeNames, nodeName) !== -1) {
     // Add contentItemType.
     if (Array.indexOf(headingNodeNames, nodeName) !== -1) {
-      contentItem = { ...contentItem, contentItemType: contentItemTypes.TITLE };
+      contentItem = {
+        ...contentItem,
+        contentItemType: contentItemTypes.TITLE,
+        // Temporary property; will be deleted after the second pass.
+        headingLevel: nodeName.slice(-1),
+      };
     }
     else if (nodeName === 'LI') {
       contentItem = {
@@ -246,6 +405,7 @@ export default function parseSlideNodes(deckId, nodes, assetLinks) {
   let slideId;
   let slideLevel;
 
+  let contentItemSequence;
   let newContentItemIds;
   let newContentItemsById;
 
@@ -275,12 +435,22 @@ export default function parseSlideNodes(deckId, nodes, assetLinks) {
         assetLinks,
       ));
 
+      ({
+        contentItemIds: newContentItemIds,
+        contentItemsById: newContentItemsById,
+        contentItemSequence,
+      } = addImplicitSections(
+        slideId,
+        newContentItemIds,
+        newContentItemsById,
+      ));
+
       slidesById[slideId] = {
         id: slideId,
         meta: {},
         level: slideLevel,
         contentItemIds: newContentItemIds,
-        contentItemSequence: Object.keys(newContentItemsById).length,
+        contentItemSequence,
       };
 
       contentItemsById = {
