@@ -23,7 +23,6 @@ class PrintViewToolbar extends Component {
   }
 
   handlePrintShortcut(e) {
-    // debugger;
     const id = this.props.id;
     if (e.keyCode === 80 && (e.metaKey || e.ctrlKey)) {
       console.log('shortcut detected');
