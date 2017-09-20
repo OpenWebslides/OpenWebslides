@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { imgOptions, iframeOptions } from 'constants/printViewOptions';
+import { imgOptions, iframeOptions, annotationsOptions } from 'constants/printViewOptions';
 
 import convertToPrint from 'lib/convert-to-print/index';
 
@@ -47,9 +47,12 @@ export default class PrintView extends Component {
     const entities = this.props.entities;
 
     // Get the display preferences from the state:
-    const imagePref = this.props.printViewState.images;
-    const decorativeImagePref = this.props.printViewState.decorativeImages;
-    const iframesPref = this.props.printViewState.iframes;
+    const prefs = {
+      imagePref: this.props.printViewState.images,
+      decorativeImagePref: this.props.printViewState.decorativeImages,
+      iframesPref: this.props.printViewState.iframes,
+      annotationsPref: this.props.printViewState.annotations,
+    };
 
     let toDisplay;
     if (!_.get(this.props, `entities.decks.byId.${this.props.id}.slideIds`, false)) {
@@ -57,7 +60,7 @@ export default class PrintView extends Component {
     }
     else {
       // We pass the entities and preferences as argument to the converter function.
-      const elements = convertToPrint(entities, this.props.id, imagePref, decorativeImagePref, iframesPref);
+      const elements = convertToPrint(entities, this.props.id, prefs);
       toDisplay = (
         <div className="c_print-view">
           {elements}
@@ -73,6 +76,7 @@ PrintView.propTypes = {
     images: PropTypes.oneOf(Object.keys(imgOptions)),
     iframes: PropTypes.oneOf(Object.keys(iframeOptions)),
     decorativeImages: PropTypes.bool,
+    annotations: PropTypes.oneOf(Object.keys(annotationsOptions)),
   }).isRequired,
   entities: PropTypes.object,
   fetchDeck: PropTypes.func.isRequired,
