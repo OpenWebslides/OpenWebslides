@@ -7,11 +7,30 @@ import SlideEditingPane
   from 'presentationals/components/slide-editor/SlideEditingPane';
 
 export default class SlideEditor extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handlePageChange = this.handlePageChange.bind(this);
+  }
   componentDidMount() {
     const { deckId } = this.props.match.params;
     this.props.fetchDeck(deckId);
+
+    window.onbeforeunload = this.handlePageChange;
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('beforeUnload', this.handlePageChange);
+  }
+
+  handlePageChange() {
+    const hasChanged = this.props.hasChanged;
+    if (hasChanged) {
+      return 'You have unsaved changes!';
+    }
+    return undefined;
+  }
   render() {
     // #TODO get rid of .l_main in presentational component
     return (
@@ -36,4 +55,5 @@ export default class SlideEditor extends Component {
 SlideEditor.propTypes = {
   fetchDeck: PropTypes.func.isRequired,
   match: PropTypes.objectOf(Object).isRequired,
+  hasChanged: PropTypes.bool.isRequired,
 };
