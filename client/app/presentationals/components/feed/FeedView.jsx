@@ -15,7 +15,9 @@ function renderFeedNotification(el) {
       key={el.id}
       timestamp={el.timestamp}
       concernedUser={el.concernedUser}
+      concernedUserId={el.concernedUserId}
       targetDeck={el.targetDeck}
+      targetDeckId={el.targetDeckId}
       type={el.type}
     />
   );
@@ -35,7 +37,8 @@ class Feed extends React.Component {
   checkWhatToDisplay(filteredList) {
     if (this.props.feedState.errorMessage === '' && filteredList.length === 0) {
       return <li key="0"> No notifications to display </li>;
-    } else if (
+    }
+    else if (
       filteredList.length === 0 &&
       this.props.feedState.errorMessage !== ''
     ) {
