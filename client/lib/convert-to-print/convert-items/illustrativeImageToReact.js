@@ -7,7 +7,7 @@ export default function imageObjectToReact(img, viewType, amountOfImages, level)
     2: 'image-double',
     3: 'image-triple',
     4: 'image-quadruple' };
-
+  debugger;
   switch (viewType) {
     case imgOptions.NOTHING:
       return null;
