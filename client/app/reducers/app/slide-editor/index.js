@@ -33,6 +33,7 @@ const initialState = Immutable({
     slideViewTypes.LIVE,
     slideViewTypes.CONTENT,
   ],
+  hasChanged: false,
 });
 
 function setActiveDeckId(state, action) {
@@ -135,6 +136,7 @@ function addSlide(state, action) {
   return state.merge({
     activeSlideId: action.payload.slideId,
     activeContentItemId: null,
+    hasChanged: true,
   });
 }
 
@@ -143,12 +145,14 @@ function deleteSlide(state, action) {
     return state.merge({
       activeSlideId: action.payload.newActiveSlideId,
       activeContentItemId: null,
+      hasChanged: true,
     });
   }
   else if (action.payload.slideId === state.activeSlideId) {
     return state.merge({
       activeSlideId: null,
       activeContentItemId: null,
+      hasChanged: true,
     });
   }
   else {
@@ -164,6 +168,7 @@ function addContentItem(state, action) {
       start: 0,
       end: 0,
     },
+    hasChanged: true,
   });
 }
 
@@ -173,6 +178,7 @@ function updateContentItem(state, action) {
   if (selectionOffsets !== null) {
     return state.merge({
       selectionOffsets,
+      hasChanged: true,
     });
   }
   else {
@@ -193,6 +199,7 @@ function deleteContentItem(state, action) {
       activeContentItemId: newFocusedContentItemId,
       focusedContentItemId: newFocusedContentItemId,
       selectionOffsets: newSelectionOffsets,
+      hasChanged: true,
     });
   }
   else if (
@@ -206,6 +213,7 @@ function deleteContentItem(state, action) {
         start: 0,
         end: 0,
       },
+      hasChanged: true,
     });
   }
   else {
