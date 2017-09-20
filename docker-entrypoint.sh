@@ -19,13 +19,13 @@ bundle exec rake db:migrate
 erb /app/client/config/config.js.erb > /app/client/dist/config.js
 
 # Copy assets
-mkdir -p /app/public/
+[[ ! -d /app/public/ ]] && mkdir -p /app/public/
 rm -rf /app/public/*
 cp -r /app/client/dist/* /app/public/
 
 # Clear temporary files
 rm -rf /app/tmp/uploads/*
-mkdir /app/tmp/uploads/
+[[ ! -d /app/public/ ]] && mkdir /app/tmp/uploads/
 
 # Start app server
 bundle exec puma
