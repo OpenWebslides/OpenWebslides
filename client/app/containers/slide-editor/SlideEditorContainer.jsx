@@ -5,8 +5,11 @@ import { fetchDeck } from 'actions/entities/decks';
 
 import SlideEditor from 'presentationals/components/slide-editor/SlideEditor';
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps(state) {
+  const hasChanged = state.app.slideEditor.hasChanged;
+  return {
+    hasChanged,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
