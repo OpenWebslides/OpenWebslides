@@ -20,6 +20,7 @@ function contentItemObjectToReact(
   preferences,
   amountOfImages,
 ) {
+  debugger;
   switch (contentItemObject.contentItemType) {
     case TITLE:
       return titleToReact(contentItemObject, currentLevel);
@@ -55,11 +56,11 @@ function contentItemObjectToReact(
       );
     case ILLUSTRATIVE_IMAGE:
       return illustrativeImageToReact(
-        contentItemObject, preferences.imagesPref, amountOfImages, currentLevel,
+        contentItemObject, preferences.imagePref, amountOfImages, currentLevel,
       );
     case DECORATIVE_IMAGE:
       return decorativeImageToReact(
-        contentItemObject, preferences.decorativeImagesPref, currentLevel,
+        contentItemObject, preferences.decorativeImagePref, currentLevel,
       );
     case IFRAME:
       return iframeToReact(contentItemObject, preferences.iframesPref, currentLevel);
@@ -188,7 +189,6 @@ function convertSection(slides, currentLevel, entities, preferences) {
 
 function convertToPrint(entities, deckId, preferences) {
   const slideIds = entities.decks.byId[deckId].slideIds;
-  debugger;
   const slideObjects = slideIds.map(id => entities.slides.byId[id]).asMutable();
   const sections = divideTopLevelIntoSections(slideObjects, 0);
   const elements = sections.map(
