@@ -10,7 +10,7 @@ module Repository
         # Get repository contents
         body = exec Filesystem::Read
 
-        body.children.to_html.strip
+        body.to_html.strip
       end
     end
   end
