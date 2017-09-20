@@ -128,11 +128,13 @@ function convertSlideToContentItems(slide, entities, preferences) {
   );
 
   if (conversations) {
-    reactElements = reactElements.concat(conversations.map((conversation) => {
-      const comments = getRelevantComments(entities.conversationComments.byId, conversation.id);
-      const conversationWithComments = { ...conversation, comments };
-      return ConversationElement(conversationWithComments);
-    }));
+    if (preferences.annotationsPref === 'INLINE') {
+      reactElements = reactElements.concat(conversations.map((conversation) => {
+        const comments = getRelevantComments(entities.conversationComments.byId, conversation.id);
+        const conversationWithComments = { ...conversation, comments };
+        return ConversationElement(conversationWithComments);
+      }));
+    }
   }
   return reactElements;
 }
@@ -184,9 +186,9 @@ function convertSection(slides, currentLevel, entities, preferences) {
 }
 
 
-function convertToPrint(entities, deckId, imagesPref, decorativeImagesPref, iframesPref) {
-  const preferences = { imagesPref, decorativeImagesPref, iframesPref };
+function convertToPrint(entities, deckId, preferences) {
   const slideIds = entities.decks.byId[deckId].slideIds;
+  debugger;
   const slideObjects = slideIds.map(id => entities.slides.byId[id]).asMutable();
   const sections = divideTopLevelIntoSections(slideObjects, 0);
   const elements = sections.map(
