@@ -1,0 +1,18 @@
+.c_print-view__comment-element {
+  &--list-item {
+    list-style-type: none;
+    border-bottom: 1px solid $color--kbd-element__border;
+  }
+  &--text{
+    font-size: x-small;
+
+  }
+  &--user-and-time {
+    padding-left: $spacing--large__h;
+    display: inline;
+    margin-top: 0;
+    font-size: xx-small;
+    color: $color--info__text;
+    font-style: italic;
+  }
+}
