@@ -33,7 +33,7 @@ function contentItemObjectToReact(
       return contentItemObject.childItemIds.map((itemId) => {
         const itemObject = entities.contentItems.byId[itemId];
         return contentItemObjectToReact(
-          entities, itemObject, currentLevel, preferences, amountOfImages
+          entities, itemObject, currentLevel, preferences, amountOfImages,
         );
       });
     case LIST:
@@ -102,6 +102,15 @@ function getRelevantConversations(conversationsById, slideId) {
   });
   return relevantConversations;
 }
+function getRelevantComments(commentsById, conversationId) {
+  let relevantComments = [];
+  Object.keys(commentsById).forEach((id) => {
+    if (commentsById[id].conversationId === conversationId) {
+      relevantComments = relevantComments.concat(commentsById[id]);
+    }
+  });
+  return relevantComments;
+}
 
 function convertSlideToContentItems(slide, entities, preferences) {
   const slideElements = slide.contentItemIds.map(itemId => entities.contentItems.byId[itemId]);
@@ -120,7 +129,9 @@ function convertSlideToContentItems(slide, entities, preferences) {
 
   if (conversations) {
     reactElements = reactElements.concat(conversations.map((conversation) => {
-      return ConversationElement(conversation);
+      const comments = getRelevantComments(entities.conversationComments.byId, conversation.id);
+      const conversationWithComments = { ...conversation, comments };
+      return ConversationElement(conversationWithComments);
     }));
   }
   return reactElements;

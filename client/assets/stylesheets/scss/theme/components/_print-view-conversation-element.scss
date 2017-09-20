@@ -1,0 +1,37 @@
+.c_print-view__conversation-element {
+
+  &--container {
+    background-color: $color--emphasis__background;
+    padding-left: $spacing--small__h;
+    padding-top: $spacing--xx-small__v;
+    margin-left: $spacing--xx-large__h;
+    border: 1px solid $color--main__border;
+  }
+
+  &--header-container {
+    border-bottom: 1px solid $color--kbd-element__border
+  }
+
+  &--title{
+    font-size: small;
+    font-weight: bold;
+    margin-top: 0;
+  }
+
+  &--text {
+    font-size: x-small;
+    margin-top: 0;
+  }
+
+  &--user-and-time {
+    padding-left: $spacing--large__h;
+    margin-top: 0;
+    font-size: xx-small;
+    color: $color--info__text;
+    font-style: italic;
+  }
+
+  &--comments-list{
+    padding-left: $spacing--large__h;
+  }
+}
