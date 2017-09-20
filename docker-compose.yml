@@ -23,6 +23,7 @@ services:
     links:
       - postgres
       - redis
+    restart: always
 
   ##
   # Database container
