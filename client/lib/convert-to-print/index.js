@@ -20,7 +20,6 @@ function contentItemObjectToReact(
   preferences,
   amountOfImages,
 ) {
-  debugger;
   switch (contentItemObject.contentItemType) {
     case TITLE:
       return titleToReact(contentItemObject, currentLevel);
@@ -177,7 +176,6 @@ function convertSection(slides, currentLevel, entities, preferences) {
     );
     thisSectionElements = thisSectionElements.concat(subSectionsElements);
   }
-  // debugger;
 
   return React.createElement(
     'section',
