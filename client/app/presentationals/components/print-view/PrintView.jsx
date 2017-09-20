@@ -33,9 +33,6 @@ export default class PrintView extends Component {
     if (!_.get(this.props, `entities.decks.byId.${id}.slideIds`, false)) {
       this.props.fetchDeck(id);
     }
-    else if (this.props.printAndClose) {
-      waitForImagesAndPrint(id);
-    }
   }
 
   componentDidUpdate() {
