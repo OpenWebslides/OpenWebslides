@@ -10,7 +10,7 @@ import { testDeckFlamesFixed } from 'assets/files/test-decks/flamesFixed';
 
 function* doFetchDeck(action) {
   try {
-    const debug = true; // #TODO TURN OFF!!!
+    const debug = false;
 
     let htmlString;
     let metadata = {};
