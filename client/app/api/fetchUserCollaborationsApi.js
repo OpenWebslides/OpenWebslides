@@ -1,8 +1,8 @@
 import ApiRequest from './helpers/apiHelper';
 
-async function fetchUser(userId) {
+async function fetchUserCollaborations(userId) {
   const request = new ApiRequest();
-  request.setMethod('GET').setEndpoint(`users/${userId}`);
+  request.setMethod('GET').setEndpoint(`users/${userId}/relationships/collaborations`);
 
   const response = await request.executeRequest();
 
@@ -11,4 +11,4 @@ async function fetchUser(userId) {
   return responseBody;
 }
 
-export default fetchUser;
+export default fetchUserCollaborations;
