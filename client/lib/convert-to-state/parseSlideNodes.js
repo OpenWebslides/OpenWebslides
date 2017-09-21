@@ -8,14 +8,18 @@ import parseInlineProperties from './parseInlineProperties';
 const headingNodeNames = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'];
 const plaintextNodeNames = [...headingNodeNames, 'P', 'LI'];
 const listNodeNames = ['UL', 'OL'];
-const sectionNodeNames = ['SECTION', 'ASIDE'];
+const sectionNodeNames = ['SECTION', 'ASIDE', 'DIV'];
 const containerNodeNames = [...listNodeNames, ...sectionNodeNames];
+const imageContentItemTypes = [
+  contentItemTypes.ILLUSTRATIVE_IMAGE,
+  contentItemTypes.DECORATIVE_IMAGE,
+];
 
 function addImplicitSections(
   slideId,
   contentItemIds,
   contentItemsById,
-  contentItemSequence = false,
+  contentItemSequence,
   parentIsSection = false,
 ) {
   // Note: this is far from the most efficient way of adding containers; I tried to prioritize
@@ -25,9 +29,7 @@ function addImplicitSections(
 
   let newContentItemIds = [];
   let newContentItemsById = contentItemsById;
-  let newContentItemSequence = (contentItemSequence === false)
-    ? Object.keys(contentItemsById).length
-    : contentItemSequence;
+  let newContentItemSequence = contentItemSequence;
 
   let sectionContentIds = [];
   let sectionLevel = -1;
@@ -166,6 +168,144 @@ function addImplicitSections(
   };
 }
 
+function addImageContainers(
+  slideId,
+  contentItemIds,
+  contentItemsById,
+  contentItemSequence,
+) {
+  const newContentItemIds = [];
+  let newContentItemsById = contentItemsById;
+  let newContentItemSequence = contentItemSequence;
+
+  let containerContentIds = [];
+  let containerInProgressType = false;
+
+  let contentItem;
+  let containerItem;
+  let subContentItemIds;
+
+  // Iterate through all contentItems in contentItemIds.
+  // Note: we actually go 1 past the last id in contentItemIds (because of the '<=') because if a
+  // container runs untill the end of the list, we still need to process it.
+  for (let i = 0; i <= contentItemIds.length; i += 1) {
+    // Put the contentItem in a variable for easier access.
+    // (This will be undefined if i === contentItemIds.length.)
+    contentItem = contentItemsById[contentItemIds[i]];
+
+    // #TODO throw away container children that are not images of the correct type
+
+    // Check if we need to end the current container.
+    if (
+      // If there is a current section
+      containerInProgressType !== false &&
+      ( // and if we're past the last contentItem,
+        // or this contentItem not an image of the correct type.
+        i === contentItemIds.length || contentItem.contentItemType !== containerInProgressType
+      )
+    ) {
+      // Create a new image-container and add the images to it.
+      containerItem = {
+        id: generateContentItemId(slideId, newContentItemSequence),
+        contentItemType: contentItemTypes.IMAGE_CONTAINER,
+        viewtype: slideViewTypes.LIVE,
+        childItemIds: containerContentIds,
+      };
+      newContentItemIds.push(containerItem.id);
+      newContentItemsById[containerItem.id] = containerItem;
+      newContentItemSequence += 1;
+
+      // Reset variables to allow the next section to start.
+      containerContentIds = [];
+      containerInProgressType = false;
+    }
+
+    // This code only needs to be executed if there is a contentItem left to process;
+    // i.e. if i is a valid index for contentItemIds.
+    if (i < contentItemIds.length) {
+      // Check if we need to start a new container.
+      if (
+        // If there is no container already in progress
+        containerInProgressType === false &&
+        // and if this contentItem is an image.
+        _.includes(imageContentItemTypes, contentItem.contentItemType)
+      ) {
+        // Save the image type; this allows us to know when to end the image container.
+        containerInProgressType = contentItem.contentItemType;
+      }
+
+      // If the contentItem is a container, recursively process it's contents.
+      if (_.includes(containerContentItemTypes, contentItem.contentItemType)) {
+        ({
+          contentItemIds: subContentItemIds,
+          contentItemsById: newContentItemsById,
+          contentItemSequence: newContentItemSequence,
+        } = addImageContainers(
+          slideId,
+          contentItem.childItemIds,
+          newContentItemsById,
+          newContentItemSequence,
+        ));
+        contentItem.childItemIds = subContentItemIds;
+        newContentItemsById[contentItem.id] = contentItem;
+      }
+
+      // Either add the current contentItem to the container in progress (if there is one) ...
+      if (containerInProgressType !== false) {
+        containerContentIds.push(contentItem.id);
+      }
+      // ... or to the general contentItemIds list.
+      else {
+        newContentItemIds.push(contentItem.id);
+      }
+    }
+  }
+
+  return {
+    contentItemIds: newContentItemIds,
+    contentItemsById: newContentItemsById,
+    contentItemSequence: newContentItemSequence,
+  };
+}
+
+function processContentItems(
+  slideId,
+  contentItemIds,
+  contentItemsById,
+) {
+  let newContentItemIds = contentItemIds;
+  let newContentItemsById = contentItemsById;
+  let newContentItemSequence = Object.keys(contentItemsById).length;
+
+  ({
+    contentItemIds: newContentItemIds,
+    contentItemsById: newContentItemsById,
+    contentItemSequence: newContentItemSequence,
+  } = addImplicitSections(
+    slideId,
+    newContentItemIds,
+    newContentItemsById,
+    newContentItemSequence,
+  ));
+
+  ({
+    contentItemIds: newContentItemIds,
+    contentItemsById: newContentItemsById,
+    contentItemSequence: newContentItemSequence,
+  } = addImageContainers(
+    slideId,
+    newContentItemIds,
+    newContentItemsById,
+    newContentItemSequence,
+  ));
+
+  return {
+    contentItemIds: newContentItemIds,
+    contentItemsById: newContentItemsById,
+    contentItemSequence: newContentItemSequence,
+  };
+}
+
 function parseTextContent(textContent, trim = true) {
   if (trim) {
     return textContent.replace(/\s+/g, ' ').trim();
@@ -180,13 +320,15 @@ function parseContentItemNode(
   assetLinks,
 ) {
   const emptyResult = {
-    contentItemId: null,
+    contentItemIds: [],
     contentItemsById: {},
   };
   if (node.outerHTML === undefined) return emptyResult;
 
-  const { nodeName, childNodes, children, textContent } = node;
+  const { nodeName, childNodes, children, textContent, className } = node;
   const contentItemId = generateContentItemId(slideId, contentItemSequence);
+  let contentItemsById = {};
+  let contentItemIds = [];
   let contentItem = { id: contentItemId };
   let childItemIds = [];
   let childItemsById = {};
@@ -201,6 +343,7 @@ function parseContentItemNode(
     // Add contentItemType + custom properties for different contentItemTypes.
     if (Array.indexOf(listNodeNames, nodeName) !== -1) {
       // Verify that all children are list items.
+      // #TODO move this to step two
       i = 0;
       while (i < children.length && children[i].nodeName === 'LI') {
         i += 1;
@@ -225,8 +368,15 @@ function parseContentItemNode(
         contentItemType: contentItemTypes.SECTION,
       };
     }
+    else if (nodeName === 'DIV' && className === 'ows-image-container') {
+      contentItem = {
+        ...contentItem,
+        contentItemType: contentItemTypes.IMAGE_CONTAINER,
+      };
+    }
     else {
       console.error(`Unrecognized container node name: ${nodeName}`);
+      contentItem = null;
     }
 
     // Parse container childrenItems.
@@ -236,15 +386,23 @@ function parseContentItemNode(
     } = parseContentItemNodes(
       children,
       slideId,
-      contentItemSequence + 1,
+      contentItem === null ? contentItemSequence : contentItemSequence + 1,
       assetLinks,
     ));
 
-    // Add childItemIds to contentItem.
-    contentItem = {
-      ...contentItem,
-      childItemIds,
-    };
+    // If the contentItem was a valid container.
+    if (contentItem !== null) {
+      // Add childItemIds to contentItem.
+      contentItem = {
+        ...contentItem,
+        childItemIds,
+      };
+    }
+    // If the contentItem was not a valid container.
+    else {
+      // Directly return the children without their container.
+      contentItemIds = childItemIds;
+    }
   }
   // P, LI, H1, H2, ...
   else if (Array.indexOf(plaintextNodeNames, nodeName) !== -1) {
@@ -271,14 +429,17 @@ function parseContentItemNode(
     }
     else {
       console.error(`Unrecognized plain text node name: ${nodeName}`);
+      contentItem = null;
     }
 
-    // Add text + inlineProperties.
-    contentItem = {
-      ...contentItem,
-      text: parseTextContent(textContent),
-      inlineProperties: parseInlineProperties(childNodes),
-    };
+    if (contentItem !== null) {
+      // Add text + inlineProperties.
+      contentItem = {
+        ...contentItem,
+        text: parseTextContent(textContent),
+        inlineProperties: parseInlineProperties(childNodes),
+      };
+    }
   }
   // IMG
   else if (nodeName === 'IMG') {
@@ -304,7 +465,7 @@ function parseContentItemNode(
   // FIGURE
   else if (nodeName === 'FIGURE') {
     const imgNode = node.children[0];
-    const caption = node.children[1] ? node.children[1].textContent : '';
+    const caption = node.children[1] ? node.children[1].textContent : '[No caption found]';
     const assetId = assetLinks[imgNode.dataset.id];
     const contentItemType = contentItemTypes.ILLUSTRATIVE_IMAGE;
     const alt = imgNode.alt;
@@ -334,17 +495,26 @@ function parseContentItemNode(
   }
   // Skip unrecognized nodeNames.
   else {
+    console.error(`Unrecognized node name: ${nodeName}`);
     return emptyResult;
   }
 
-  // Merge new content item and child content items (if there are any) into a single byId object.
-  const contentItemsById = {
-    [contentItemId]: contentItem,
+  // If the node produced a valid contentItem.
+  if (contentItem !== null) {
+    // This is the only id we will return (as children will have been added to the contentItem).
+    contentItemIds = [contentItemId];
+    // Add the contentItem to the byId object.
+    contentItemsById[contentItemId] = contentItem;
+  }
+
+  // Merge new content items and child content items into a single byId object.
+  contentItemsById = {
+    ...contentItemsById,
     ...childItemsById,
   };
 
   return {
-    contentItemId,
+    contentItemIds,
     contentItemsById,
   };
 }
@@ -355,18 +525,18 @@ function parseContentItemNodes(
   startContentItemSequence,
   assetLinks,
 ) {
-  const contentItemIds = [];
+  let contentItemIds = [];
   let contentItemsById = {};
 
-  let newContentItemId;
+  let newContentItemIds;
   let newContentItemsById;
   let contentItemSequence = startContentItemSequence;
 
   Array.from(nodeList).forEach((node) => {
-    // Parse this node into a contentItem and get the new contentItem id + the byId object of this +
-    // all child contentItems.
+    // Parse this node into a contentItem and get the new contentItem id(s) +
+    // the byId object of this + all child contentItems.
     ({
-      contentItemId: newContentItemId,
+      contentItemIds: newContentItemIds,
       contentItemsById: newContentItemsById,
     } = parseContentItemNode(
       node,
@@ -376,18 +546,16 @@ function parseContentItemNodes(
     ));
 
     // If the node was correctly parsed.
-    if (newContentItemId !== null) {
+    if (newContentItemIds.length > 0) {
       // Update the contentItem sequence counter.
       contentItemSequence += Object.keys(newContentItemsById).length;
-
       // Merge its byId object with the larger byId object.
       contentItemsById = {
         ...contentItemsById,
         ...newContentItemsById,
       };
-
-      // Add its id to the slide ids list.
-      contentItemIds.push(newContentItemId);
+      // Add its id(s) to the slide ids list.
+      contentItemIds = contentItemIds.concat(newContentItemIds);
     }
   });
 
@@ -439,7 +607,7 @@ export default function parseSlideNodes(deckId, nodes, assetLinks) {
         contentItemIds: newContentItemIds,
         contentItemsById: newContentItemsById,
         contentItemSequence,
-      } = addImplicitSections(
+      } = processContentItems(
         slideId,
         newContentItemIds,
         newContentItemsById,
