@@ -33,6 +33,10 @@ class Conversation < Annotation
   ##
   # Methods
   #
+  def display_name
+    title
+  end
+
   ##
   # Overrides
   #

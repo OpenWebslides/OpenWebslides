@@ -17,4 +17,8 @@ RSpec.describe Conversation, :type => :model do
   describe 'associations' do
     it { is_expected.to have_many(:comments).dependent(:destroy).inverse_of(:conversation) }
   end
+
+  describe 'methods' do
+    it { is_expected.to respond_to :display_name }
+  end
 end
