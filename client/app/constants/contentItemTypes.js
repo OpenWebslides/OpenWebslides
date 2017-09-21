@@ -11,6 +11,7 @@ export const contentItemTypes = {
   IFRAME: 'IFRAME',
   SECTION: 'SECTION',
   ASIDE: 'ASIDE',
+  IMAGE_CONTAINER: 'IMAGE_CONTAINER',
 };
 
 export const plaintextContentItemTypes = [
@@ -25,6 +26,7 @@ export const sectionContentItemTypes = [
 export const containerContentItemTypes = [
   ...sectionContentItemTypes,
   contentItemTypes.LIST,
+  contentItemTypes.IMAGE_CONTAINER,
 ];
 
 export const toolbarContentItemTypes = [
@@ -141,6 +143,14 @@ export const contentItemTypesById = {
     id: contentItemTypes.ASIDE,
     name: 'Aside',
     description: 'TODO: aside description',
+    defaultProps: {
+      childItemIds: [],
+    },
+  },
+  [contentItemTypes.IMAGE_CONTAINER]: {
+    id: contentItemTypes.IMAGE_CONTAINER,
+    name: 'Image container',
+    description: '[If you see this, something went wrong.]',
     defaultProps: {
       childItemIds: [],
     },
