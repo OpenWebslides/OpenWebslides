@@ -22,7 +22,7 @@ class NotificationResource < ApplicationResource
           :always_include_linkage_data => true
 
   has_one :object,
-          :class_name => 'Deck',
+          :polymorphic => true,
           :always_include_linkage_data => true
 
   ##

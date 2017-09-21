@@ -25,6 +25,11 @@ class Annotation < ApplicationRecord
            :dependent => :destroy,
            :inverse_of => :annotation
 
+  has_many :notifications,
+           :dependent => :destroy,
+           :foreign_key => 'object_id',
+           :inverse_of => :object
+
   ##
   # Validations
   #

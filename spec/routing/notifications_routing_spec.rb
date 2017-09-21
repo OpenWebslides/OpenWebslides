@@ -40,7 +40,7 @@ RSpec.describe 'notifications routing', :type => :routing do
     route = '/api/notifications/foo/relationships/object'
     params = { :notification_id => 'foo', :relationship => 'object' }
 
-    expect(:get => '/api/notifications/foo/object').to route_to 'decks#get_related_resource', params.merge(:source => 'notifications')
+    expect(:get => '/api/notifications/foo/object').to route_to 'objects#get_related_resource', params.merge(:source => 'notifications')
 
     expect(:get => route).to route_to 'notifications#show_relationship', params
     expect(:patch => route).not_to be_routable
