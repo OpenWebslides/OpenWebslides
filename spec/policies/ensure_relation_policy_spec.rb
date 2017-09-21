@@ -22,9 +22,9 @@ MODEL_BLACKLIST = [
 ACTION_BLACKLIST = {
   UserPolicy => %i[show_identities? show_grants? show_ratings?],
   DeckPolicy => %i[show_grants?],
-  AnnotationPolicy => %i[show_ratings?],
-  ConversationPolicy => %i[show_ratings?],
-  CommentPolicy => %i[show_ratings?],
+  AnnotationPolicy => %i[show_ratings? show_notifications?],
+  ConversationPolicy => %i[show_ratings? show_notifications?],
+  CommentPolicy => %i[show_ratings? show_notifications?],
   RatingPolicy => %i[show_annotation? show_user?]
 }.freeze
 
@@ -43,6 +43,8 @@ RSpec.describe 'relationship policy actions' do
           it { is_expected.to respond_to action }
         end
       end
+
+      next if relation.polymorphic?
 
       next unless relation.inverse_of && !MODEL_BLACKLIST.include?(relation.klass)
 
