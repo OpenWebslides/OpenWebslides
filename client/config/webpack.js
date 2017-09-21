@@ -2,6 +2,14 @@ const path = require('path');
 const webpack = require('webpack');
 const StatsPlugin = require('stats-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const RobotstxtPlugin = require('robotstxt-webpack-plugin').default;
+
+const robotstxtOptions = {
+  policy: [{
+    userAgent: '*',
+    disallow: '/'
+  }]
+};
 
 const config = {
   context: path.join(__dirname, '..'),
@@ -81,6 +89,7 @@ const config = {
       modules: false,
       assets: true,
     }),
+    new RobotstxtPlugin(robotstxtOptions),
     //new StyleLintPlugin()
   ],
 
