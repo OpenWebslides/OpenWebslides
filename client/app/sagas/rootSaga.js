@@ -3,9 +3,8 @@ import requestFeedNorificationsSaga from 'sagas/feed/requestFeedNotificationsSag
 
 // USERS
 import fetchUserSaga from 'sagas/entities/users/fetchUserSaga';
-
-// COLLABORATIONS
 import fetchUserCollaborationsSaga from 'sagas/entities/users/fetchUserCollaborationsSaga';
+import fetchUserDecksIdsSaga from 'sagas/entities/users/fetchUserDecksIdsSaga';
 
 
 // EDITOR
@@ -82,5 +81,6 @@ export default function* rootSaga() {
     fetchDeckCommentsSaga(),
     fetchUserSaga(),
     fetchUserCollaborationsSaga(),
+    fetchUserDecksIdsSaga(),
   ];
 }
