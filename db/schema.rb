@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918105406) do
+ActiveRecord::Schema.define(version: 20170920123828) do
 
   create_table "annotations", force: :cascade do |t|
     t.string "type"
@@ -87,7 +87,8 @@ ActiveRecord::Schema.define(version: 20170918105406) do
     t.integer "object_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["object_id"], name: "index_notifications_on_object_id"
+    t.string "object_type"
+    t.index ["object_type", "object_id"], name: "index_notifications_on_object_type_and_object_id"
     t.index ["subject_id"], name: "index_notifications_on_subject_id"
   end
 

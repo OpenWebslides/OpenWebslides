@@ -10,6 +10,9 @@ class Notification < ApplicationRecord
   enum :predicate => %i[
     deck_created
     deck_updated
+
+    conversation_created
+    comment_created
   ]
 
   ##
@@ -21,7 +24,7 @@ class Notification < ApplicationRecord
              :inverse_of => :notifications
 
   belongs_to :object,
-             :class_name => 'Deck',
+             :polymorphic => true,
              :required => true,
              :inverse_of => :notifications
 

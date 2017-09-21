@@ -17,7 +17,7 @@ RSpec.describe Notification, :type => :model do
     end
 
     it 'has a valid :predicate enum' do
-      expect(%w[deck_created deck_updated]).to eq Notification.predicates.keys
+      expect(%w[deck_created deck_updated conversation_created comment_created]).to eq Notification.predicates.keys
     end
   end
 
