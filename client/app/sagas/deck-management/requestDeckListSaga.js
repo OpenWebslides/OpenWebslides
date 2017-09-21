@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
-import getDecksCall from 'api/fetchUserDecksApi';
+import getDecksCall from 'api/requestUserDecksCall';
 
 import {
   REQUEST_DECK_LIST,
