@@ -11,6 +11,7 @@ import PrintViewPage from 'presentationals/pages/PrintViewPage';
 import PrintViewOnlyPage from 'presentationals/pages/PrintViewOnlyPage';
 import ImportDeckPage from 'presentationals/pages/ImportDeckPage';
 import PresentationViewPage from 'presentationals/pages/PresentationViewPage';
+import UserPage from 'presentationals/pages/UserPage';
 
 import history from './history';
 
@@ -27,6 +28,7 @@ export default (
       <Route path="/presentation/:deckId" component={PresentationViewPage} />
       <Route path="/create_new_deck" component={CreateDeckPage} />
       <Route path="/import_deck" component={ImportDeckPage} />
+      <Route path="/users/:userId" component={UserPage} />
     </Switch>
   </Router>
 );

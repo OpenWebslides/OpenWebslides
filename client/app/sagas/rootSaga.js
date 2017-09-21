@@ -1,28 +1,40 @@
-import signupSaga from 'sagas/signupSaga';
-import confirmEmailSaga from 'sagas/confirmEmailSaga';
+// FEED
 import requestFeedNorificationsSaga from 'sagas/feed/requestFeedNotificationsSaga';
-import requestResetPasswordSaga from 'sagas/forgotPasswordSaga';
-import resetPasswordSaga from 'sagas/resetPasswordSaga';
 
+// USERS
+import fetchUserSaga from 'sagas/entities/users/fetchUserSaga';
+
+// COLLABORATIONS
+import fetchUserCollaborationsSaga from 'sagas/entities/users/fetchUserCollaborationsSaga';
+
+
+// EDITOR
 import fetchDeckSaga from 'sagas/slide-editor/fetchDeckSaga';
 import addSlideToDeckSaga from 'sagas/slide-editor/addSlideToDeckSaga';
 import deleteSlideFromDeckSaga from 'sagas/slide-editor/deleteSlideFromDeckSaga';
 import addContentItemToSlideSaga from 'sagas/slide-editor/addContentItemToSlideSaga';
 import deleteContentItemFromSlideSaga from 'sagas/slide-editor/deleteContentItemFromSlideSaga';
 import moveContentItemOnSlideSaga from 'sagas/slide-editor/moveContentItemOnSlideSaga';
+import updateDeckSaga from 'sagas/updateDeckSaga';
+import uploadAssetSaga from 'sagas/uploadAssetSaga';
+import addUriSaga from 'sagas/slide-editor/addUriSaga';
 
+// SIGN-UP/IN
+import signupSaga from 'sagas/signupSaga';
+import confirmEmailSaga from 'sagas/confirmEmailSaga';
 import oauthSigninSaga from 'sagas/signin/oauthSigninSaga';
 import emailSigninSaga from 'sagas/signin/emailSigninSaga';
+import requestResetPasswordSaga from 'sagas/forgotPasswordSaga';
+import resetPasswordSaga from 'sagas/resetPasswordSaga';
 
+// DECK MANAGEMENT
 import requestDeckListSaga from 'sagas/deck-management/requestDeckListSaga';
 import requestImportsListSaga from 'sagas/deckManagement/requestImportsListSaga';
 import createDeckSaga from 'sagas/deck-management/createDeckSaga';
 import deleteDeckSaga from 'sagas/deck-management/deleteDeckSaga';
 
-import updateDeckSaga from 'sagas/updateDeckSaga';
-import uploadAssetSaga from 'sagas/uploadAssetSaga';
-import addUriSaga from 'sagas/slide-editor/addUriSaga';
 
+// ANNOTATIONS
 import fetchConversationsSaga from 'sagas/annotations/fetchConversationsSaga';
 import fetchConversationCommentsSaga from 'sagas/annotations/fetchConversationCommentsSaga';
 import addConversationSaga from 'sagas/annotations/addConversationSaga';
@@ -68,5 +80,7 @@ export default function* rootSaga() {
     uploadAssetSaga(),
     addUriSaga(),
     fetchDeckCommentsSaga(),
+    fetchUserSaga(),
+    fetchUserCollaborationsSaga(),
   ];
 }
