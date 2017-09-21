@@ -19,7 +19,7 @@ module Repository
 
         # Create assets in database
         Dir[File.join repo_path, 'assets', '*'].each do |asset|
-          @receiver.assets.create :filename => File.basename(asset)
+          @receiver.assets.create :filename => File.basename(asset).strip.downcase
         end
 
         exec Filesystem::Rebuild

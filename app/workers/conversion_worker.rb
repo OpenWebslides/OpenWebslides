@@ -84,7 +84,7 @@ class ConversionWorker
       logger.info "Copying asset '#{asset_file}'"
 
       # Create asset metadata
-      asset = Asset.create :deck => @conversion.deck, :filename => File.basename(asset_file)
+      asset = Asset.create :deck => @conversion.deck, :filename => File.basename(asset_file).strip.downcase
 
       # Copy asset file
       command = Repository::Asset::UpdateFile.new asset
