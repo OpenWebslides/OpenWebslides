@@ -8,6 +8,7 @@ class UserProfile extends React.Component {
   componentWillMount() {
     this.props.fetchUser(this.props.id);
     this.props.fetchUserCollaborations(this.props.id);
+    this.props.fetchUserDecksIds(this.props.id);
   }
 
 
