@@ -38,7 +38,7 @@ class NotificationPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       # Defer notification scoping to the respective objects
-      decks = Deck.where :id => scope.pluck(:id)
+      decks = Deck.where :id => scope.pluck(:object_id)
 
       Notification.where :object_id => DeckPolicy::Scope.new(@user, decks).resolve.pluck(:id)
     end
