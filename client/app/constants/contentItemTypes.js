@@ -19,6 +19,10 @@ export const plaintextContentItemTypes = [
   contentItemTypes.PARAGRAPH,
   contentItemTypes.LIST_ITEM,
 ];
+export const imageContentItemTypes = [
+  contentItemTypes.ILLUSTRATIVE_IMAGE,
+  contentItemTypes.DECORATIVE_IMAGe,
+];
 export const sectionContentItemTypes = [
   contentItemTypes.SECTION,
   contentItemTypes.ASIDE,

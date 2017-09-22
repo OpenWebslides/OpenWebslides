@@ -3,6 +3,7 @@ import { takeEvery, select, put } from 'redux-saga/effects';
 
 import {
   contentItemTypes,
+  imageContentItemTypes,
   sectionContentItemTypes,
   contentItemTypesById,
 } from 'constants/contentItemTypes';
@@ -31,7 +32,14 @@ function getPropsForContentItemType(contentItemType, contentItemTypeProps) {
   };
 }
 
-function findParentItemIdAndPreviousItemId(slide, activeContentItemId, contentItemsById) {
+function findParentItemIdAndPreviousItemId(
+  slide,
+  activeContentItemId,
+  contentItemType,
+  contentItemsById,
+) {
+  // #TODO needs more intuititve way of handling imageContainers
+
   let parentItemId;
   let previousItemId;
 
@@ -60,7 +68,18 @@ function findParentItemIdAndPreviousItemId(slide, activeContentItemId, contentIt
         activeContentItemAncestorItemIds,
         contentItemsById,
         (contentItem) => {
-          return _.includes(sectionContentItemTypes, contentItem.contentItemType);
+          if (contentItemType === contentItemTypes.LIST_ITEM) {
+            return contentItem.contentItemType === contentItemTypes.LIST;
+          }
+          else if (_.includes(imageContentItemTypes, contentItemType)) {
+            return (
+              contentItem.contentItemType === contentItemTypes.IMAGE_CONTAINER &&
+              contentItem.imageType === contentItemType
+            );
+          }
+          else {
+            return _.includes(sectionContentItemTypes, contentItem.contentItemType);
+          }
         },
       );
 
@@ -112,6 +131,20 @@ function findParentItemIdAndPreviousItemId(slide, activeContentItemId, contentIt
       : null;
   }
 
+  // If the contentItem to add is an image, check if the previousItem happens to be an
+  // imageContainer of the correct type. If so, use it as the parentItem.
+  if (
+    _.includes(imageContentItemTypes, contentItemType) &&
+    previousItemId !== null &&
+    contentItemsById[previousItemId].contentItemType === contentItemTypes.IMAGE_CONTAINER &&
+    contentItemsById[previousItemId].imageType === contentItemType
+  ) {
+    parentItemId = previousItemId;
+    previousItemId = (contentItemsById[parentItemId].childItemIds.length > 0)
+      ? _.last(contentItemsById[parentItemId].childItemIds)
+      : null;
+  }
+
   return {
     parentItemId,
     previousItemId,
@@ -123,7 +156,14 @@ function* doAddContentItemToSlide(action) {
     const contentItemsById = yield select(getContentItemsById);
     const activeContentItemId = yield select(getActiveContentItemId);
     const slide = yield select(getSlideById, action.meta.slideId);
-    let { parentItemId, previousItemId } = action.meta;
+    const {
+      contentItemType,
+      contentItemTypeProps,
+    } = action.meta;
+    let {
+      parentItemId,
+      previousItemId,
+    } = action.meta;
 
     // Generate an id for the contentItem that we're going to add.
     let contentItemId = generateContentItemId(
@@ -133,19 +173,20 @@ function* doAddContentItemToSlide(action) {
 
     // If no parentItemId or previousItemId was explicitly passed to the action.
     if (
-      action.meta.parentItemId === null &&
-      action.meta.previousItemId === null
+      parentItemId === null &&
+      previousItemId === null
     ) {
       // Find an appropriate location on the slide to add the new contentItem.
       ({ parentItemId, previousItemId } = findParentItemIdAndPreviousItemId(
         slide,
         activeContentItemId,
+        contentItemType,
         contentItemsById,
       ));
     }
 
     // If the new contentItem is a title, we need to add a new section for it.
-    if (action.meta.contentItemType === contentItemTypes.TITLE) {
+    if (contentItemType === contentItemTypes.TITLE) {
       const sectionProps = getPropsForContentItemType(contentItemTypes.SECTION);
       // Since the section should be added first, give it the id we just generated.
       const sectionItemId = contentItemId;
@@ -171,14 +212,48 @@ function* doAddContentItemToSlide(action) {
       previousItemId = null;
     }
 
+    // If the new contentItem is an image and it's new parent is not already an imageContainer,
+    // we need to create an imageContainer for it.
+    if (
+      _.includes(imageContentItemTypes, contentItemType) &&
+      (
+        parentItemId === null ||
+        contentItemsById[parentItemId].contentItemType !== contentItemTypes.IMAGE_CONTAINER
+      )
+    ) {
+      const imageContainerProps = getPropsForContentItemType(contentItemTypes.IMAGE_CONTAINER);
+      // Since the imageContainer should be added first, give it the id we just generated.
+      const imageContainerItemId = contentItemId;
+      // Generate a new id for the contentItem.
+      contentItemId = generateContentItemId(
+        slide.id,
+        slide.contentItemSequence + 1,
+      );
+
+      // Add the new imageContainer to the state.
+      yield put(addContentItem(
+        imageContainerItemId,
+        contentItemTypes.IMAGE_CONTAINER,
+        slideViewTypes.LIVE,
+        imageContainerProps,
+        slide.id,
+        parentItemId,
+        previousItemId,
+      ));
+
+      // Use the new imageContainer as the parent item for the new contentItem.
+      parentItemId = imageContainerItemId;
+      previousItemId = null;
+    }
+
     // Add the new contentItem to the state.
     yield put(addContentItem(
       contentItemId,
-      action.meta.contentItemType,
+      contentItemType,
       slideViewTypes.LIVE,
       getPropsForContentItemType(
-        action.meta.contentItemType,
-        action.meta.contentItemTypeProps,
+        contentItemType,
+        contentItemTypeProps,
       ),
       slide.id,
       parentItemId,
@@ -186,7 +261,7 @@ function* doAddContentItemToSlide(action) {
     ));
 
     // If the new contentItem is a list, we need to automatically add the first list item inside it.
-    if (action.meta.contentItemType === contentItemTypes.LIST) {
+    if (contentItemType === contentItemTypes.LIST) {
       // Generate contentItem props for the new list item.
       const childItemId = generateContentItemId(
         slide.id,
