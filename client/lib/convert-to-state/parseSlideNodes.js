@@ -210,6 +210,7 @@ function addImageContainers(
         contentItemType: contentItemTypes.IMAGE_CONTAINER,
         viewtype: slideViewTypes.LIVE,
         childItemIds: containerContentIds,
+        imageType: containerInProgressType,
       };
       newContentItemIds.push(containerItem.id);
       newContentItemsById[containerItem.id] = containerItem;
@@ -334,7 +335,7 @@ function parseContentItemNode(
   let childItemsById = {};
   let i;
 
-  contentItem.viewType = node.dataset.viewType
+  contentItem.viewType = (node.dataset.viewType)
     ? node.dataset.viewType.toUpperCase()
     : slideViewTypes.LIVE;
 
@@ -368,10 +369,15 @@ function parseContentItemNode(
         contentItemType: contentItemTypes.SECTION,
       };
     }
-    else if (nodeName === 'DIV' && className === 'ows-image-container') {
+    else if (
+      nodeName === 'DIV' &&
+      className === 'ows-image-container' &&
+      node.dataset.imageType
+    ) {
       contentItem = {
         ...contentItem,
         contentItemType: contentItemTypes.IMAGE_CONTAINER,
+        imageType: node.dataset.imageType.toUpperCase(),
       };
     }
     else {
