@@ -119,6 +119,17 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
           alt="${alt}"/>`;
         break;
       }
+      case contentItemTypes.IMAGE_CONTAINER: {
+        // #TODO TEST SAVING / RELOADING !!!
+        const images = yield convertContentItems(
+          contentItemObject.childItemIds,
+          headingLevel,
+          `${indent}  `,
+        );
+
+        string += `<div class="ows-image-container" ${attributeString}>${images}\n${indent}</div>`;
+        break;
+      }
       default:
         break;
     }
