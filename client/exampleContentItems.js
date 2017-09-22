@@ -77,4 +77,12 @@ const examples = [
     contentItemType: ASIDE,
     childItemIds: [],
   },
+
+  // IMAGE_CONTAINER
+  {
+    id: '23-1-1',
+    contentItemType: IMAGE_CONTAINER,
+    childItemIds: [],
+    imageType: ILLUSTRATIVE_IMAGE,
+  }
 ];
