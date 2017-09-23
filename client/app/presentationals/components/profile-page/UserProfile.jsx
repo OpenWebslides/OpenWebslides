@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Immutable from 'seamless-immutable';
 
 
 
@@ -28,6 +27,11 @@ class UserProfile extends React.Component {
 
 
 UserProfile.propTypes = {
+  profilePageState: PropTypes.shape({
+    userInfoError: PropTypes.string,
+    requestsSucceeded: PropTypes.bool,
+    requestsRunning: PropTypes.bool,
+  }).isRequired,
   profilePageStartRequests: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
 };
