@@ -1,11 +1,6 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
-import {
-  FETCH_USER_SUCCESS,
-  FETCH_USER,
-  FETCH_USER_FAILURE,
-} from 'actions/entities/users';
-import { SIGNOUT } from 'actions/signoutActions';
+import { FETCH_USER_SUCCESS } from 'actions/entities/users';
 
 import fetchUser from 'api/fetchUserApi';
 
@@ -17,43 +12,17 @@ function userJsonToObject(responseUser) {
   };
 }
 
-export function* fetchUserFlow(action) {
-  try {
-    const responseUser = yield call(
+export function* fetchUserFlow(userId) {
+  const responseUser = yield call(
       fetchUser,
-      action.meta.userId,
+      userId,
     );
-    if (!responseUser) {
-      throw new Error('Received undefined user.');
-    }
-
-    const userObject = userJsonToObject(responseUser);
-
-    yield put({ type: FETCH_USER_SUCCESS, payload: userObject });
+  if (responseUser.errors) {
+    throw new Error(responseUser.errors[0].title);
   }
-  catch (error) {
-    if (error.statusCode === 401) {
-      yield put({ type: SIGNOUT });
-      yield put({
-        type: FETCH_USER_FAILURE,
-        payload: {
-          message: 'You are not signed in!',
-        },
-      });
-    }
-    else {
-      yield put({
-        type: FETCH_USER_FAILURE,
-        payload: {
-          message: error.message,
-        },
-      });
-    }
-  }
+  const userObject = userJsonToObject(responseUser);
+
+  yield put({ type: FETCH_USER_SUCCESS, payload: userObject });
 }
 
-function* fetchUserWatcher() {
-  yield takeLatest(FETCH_USER, fetchUserFlow);
-}
 
-export default fetchUserWatcher;
