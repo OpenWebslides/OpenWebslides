@@ -1,9 +1,11 @@
 import ApiRequest from './helpers/apiHelper';
 
-async function fetchDeck(deckId) {
+async function fetchDeckJson(deckId, includeAssets = true) {
   const request = new ApiRequest();
 
-  request.setMethod('GET').setEndpoint(`decks/${deckId}?include=assets`);
+  const endpoint = includeAssets ? `decks/${deckId}?include=assets` : `decks/${deckId}`;
+
+  request.setMethod('GET').setEndpoint(endpoint);
 
   const response = await request.executeRequest();
 
@@ -12,4 +14,4 @@ async function fetchDeck(deckId) {
   return responseBody;
 }
 
-export default fetchDeck;
+export default fetchDeckJson;
