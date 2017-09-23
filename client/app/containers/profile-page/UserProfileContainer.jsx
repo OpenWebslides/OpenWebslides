@@ -2,8 +2,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // Presentationals
 import PrintView from 'presentationals/components/profile-page/UserProfile';
-// Actions
-import { fetchUser, fetchUserCollaborations, fetchUserDecksIds } from 'actions/entities/users';
+
+import { profilePageStartRequests } from 'actions/app/profile-page';
 
 function mapStateToProps(state) {
   const profilePageState = state.app.profilePage;
@@ -14,7 +14,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchUser, fetchUserCollaborations, fetchUserDecksIds }, dispatch);
+  return bindActionCreators({ profilePageStartRequests }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintView);
