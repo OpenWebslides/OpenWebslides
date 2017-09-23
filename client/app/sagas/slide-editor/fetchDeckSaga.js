@@ -9,7 +9,7 @@ import fetchDeckJsonApi from 'api/fetchDeckJsonApi';
 function* doFetchDeck(action) {
   try {
     const htmlString = yield call(fetchDeckHtmlApi, action.meta.deckId);
-    const metadata = yield call(fetchDeckJsonApi, action.meta.deckId);
+    const metadata = yield call(fetchDeckJsonApi, action.meta.deckId, true);
 
     const { included } = metadata;
 
