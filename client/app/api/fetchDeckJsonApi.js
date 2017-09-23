@@ -1,11 +1,33 @@
 import ApiRequest from './helpers/apiHelper';
 
-async function fetchDeckJson(deckId, includeAssets = true) {
+async function fetchDeckJson(deckId, inclusions) {
   const request = new ApiRequest();
 
-  const endpoint = includeAssets ? `decks/${deckId}?include=assets` : `decks/${deckId}`;
+  const { assets, collaborators, owner, conversations } = inclusions;
+
+  const endpoint = `decks/${deckId}`;
 
   request.setMethod('GET').setEndpoint(endpoint);
+
+  if (assets || collaborators || owner || conversations) {
+    let param = '';
+
+    if (assets) {
+      param = `${param}assets,`;
+    }
+    if (collaborators) {
+      param = `${param}collaborators,`;
+    }
+    if (owner) {
+      param = `${param}owner,`;
+    }
+    if (conversations) {
+      param = `${param}conversations,`;
+    }
+    // remove trailing comma
+    param = param.substring(0, param.length);
+    request.addParameter('include', param);
+  }
 
   const response = await request.executeRequest();
 
