@@ -36,6 +36,7 @@ export function* getFeedNotificationsFlow(action) {
       moreNotificationsCall,
       action.meta,
     );
+
     if (!responseListOfNotifications) {
       throw new Error('Received undefined list.');
     }
@@ -49,6 +50,7 @@ export function* getFeedNotificationsFlow(action) {
     });
   }
   catch (error) {
+    debugger;
     if (error.statusCode === 401) {
       yield put({ type: SIGNOUT });
       yield put({

@@ -10,6 +10,7 @@ import printView from 'reducers/app/printViewReducer';
 import userImports from 'reducers/app/userImportsReducer';
 import fineUploader from 'reducers/app/fineUploaderReducer';
 import presentationView from 'reducers/app/presentationViewReducer';
+import profilePage from 'reducers/app/profile-page';
 
 const app = combineReducers({
   authentication,
@@ -22,6 +23,7 @@ const app = combineReducers({
   userImports,
   fineUploader,
   presentationView,
+  profilePage,
 });
 
 export default app;

@@ -1,12 +1,6 @@
 // FEED
 import requestFeedNorificationsSaga from 'sagas/feed/requestFeedNotificationsSaga';
 
-// USERS
-import fetchUserSaga from 'sagas/entities/users/fetchUserSaga';
-import fetchUserCollaborationsSaga from 'sagas/entities/users/fetchUserCollaborationsSaga';
-import fetchUserDecksIdsSaga from 'sagas/entities/users/fetchUserDecksIdsSaga';
-
-
 // EDITOR
 import fetchDeckSaga from 'sagas/slide-editor/fetchDeckSaga';
 import addSlideToDeckSaga from 'sagas/slide-editor/addSlideToDeckSaga';
@@ -32,6 +26,8 @@ import requestImportsListSaga from 'sagas/deckManagement/requestImportsListSaga'
 import createDeckSaga from 'sagas/deck-management/createDeckSaga';
 import deleteDeckSaga from 'sagas/deck-management/deleteDeckSaga';
 
+// PROFILE PAGE
+import profilePageStartRequestsSaga from 'sagas/app/profile-page/loadProfilePageInfoSaga';
 
 // ANNOTATIONS
 import fetchConversationsSaga from 'sagas/annotations/fetchConversationsSaga';
@@ -79,8 +75,6 @@ export default function* rootSaga() {
     uploadAssetSaga(),
     addUriSaga(),
     fetchDeckCommentsSaga(),
-    fetchUserSaga(),
-    fetchUserCollaborationsSaga(),
-    fetchUserDecksIdsSaga(),
+    profilePageStartRequestsSaga(),
   ];
 }
