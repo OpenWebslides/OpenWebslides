@@ -5,40 +5,41 @@ import _ from 'lodash';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
-import UserDeckThumbnail from 'presentationals/components/profile-page/UserDeckThumbnail';
+import UserCollaborationThumbnail from 'presentationals/components/profile-page/UserCollaborationThumbnail';
 
 // Helpers:
 import IfAuthHOC from 'lib/IfAuthHOC';
 
 function renderDeckThumbnail(el) {
   return (
-    <UserDeckThumbnail
+    <UserCollaborationThumbnail
       key={el.id}
       deckId={el.id}
       deckTitle={el.meta.title}
+      ownerName={el.meta.ownerName}
+      ownerId={el.meta.ownerId}
     />
   );
 }
 
-function UserDecks({ entities, ids, authState }) {
+function UserCollaborations({ entities, ids, authState }) {
   const listOfDecks = ids.map(id => entities.decks.byId[id]);
   const listOfDeckThumbnails = listOfDecks.map(el =>
-      renderDeckThumbnail(el),
-    );
+    renderDeckThumbnail(el),
+  );
 
   let tableOrNothing;
-
   if (listOfDecks.length > 0) {
     tableOrNothing = (
-      <table className="c_user-decks--owned-decks-table">
+      <table className="c_user-collaborations--table">
         <tbody>
           {listOfDeckThumbnails}
         </tbody>
       </table>
-    );
+     );
   }
   else {
-    tableOrNothing = (<p> No decks yet! </p>);
+    tableOrNothing = (<p> No collaborations yet! </p>);
   }
   return (
     <IfAuthHOC
@@ -46,9 +47,9 @@ function UserDecks({ entities, ids, authState }) {
       fallback={() =>
         <NeedSigninWarning requestedAction="display this user's decks" />}
     >
-      <div className="c_user-decks--container">
-        <h2 className="c_user-decks--title"> Decks: </h2>
-        <div className="c_user-decks--owned-decks-container">
+      <div className="c_user-collaborations--container">
+        <h2 className="c_user-collaborations--title"> Collaborations: </h2>
+        <div className="c_user-collaborations--container" >
           {tableOrNothing}
         </div>
       </div>
@@ -57,11 +58,11 @@ function UserDecks({ entities, ids, authState }) {
 }
 
 
-UserDecks.propTypes = {
+UserCollaborations.propTypes = {
   authState: PropTypes.shape({
     id: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
   }),
 };
 
-export default UserDecks;
+export default UserCollaborations;
