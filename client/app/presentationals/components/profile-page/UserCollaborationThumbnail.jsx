@@ -11,7 +11,7 @@ export function CollaborationThumbnail({ deckTitle, deckId, ownerName, ownerId }
         </p>
       </th>
       <th>
-        <Link to={`/users/${ownerId}`}>
+        <Link to={`/user/${ownerId}`}>
           <p className="c_deck-thumbnail__owner-name">
             {ownerName}
           </p>
