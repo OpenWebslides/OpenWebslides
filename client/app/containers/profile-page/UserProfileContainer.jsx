@@ -8,9 +8,11 @@ import { profilePageStartRequests } from 'actions/app/profile-page';
 function mapStateToProps(state) {
   const profilePageState = state.app.profilePage;
   const entities = state.entities;
+  const authState = state.app.authentication;
   return {
     profilePageState,
     entities,
+    authState,
   };
 }
 function mapDispatchToProps(dispatch) {

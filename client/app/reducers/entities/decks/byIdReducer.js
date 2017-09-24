@@ -51,6 +51,7 @@ function addDeckMetadata(state, action) {
   const metadata = action.payload.metadata;
   return state.merge({
     [deckId]: {
+      id: deckId,
       meta: metadata,
     },
   });
