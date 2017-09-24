@@ -4,7 +4,7 @@ import DefaultLayout from 'presentationals/layouts/DefaultLayout';
 import UserProfileContainer from 'containers/profile-page/UserProfileContainer';
 
 function UserProfilePage(props) {
-  const id = props.location.pathname.match(/\/users\/([0-9]+)/)[1];
+  const id = props.location.pathname.match(/\/user\/([0-9]+)/)[1];
   return (
     <DefaultLayout
       cssIdentifier="user-page-container"
