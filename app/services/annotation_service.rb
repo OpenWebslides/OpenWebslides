@@ -9,6 +9,15 @@ class AnnotationService < ApplicationService
 
   def create
     @annotation.save
+
+    if @annotation.save
+      Notification.create :subject => @annotation.user,
+                          :predicate => (@annotation.is_a?(Conversation) ? :conversation_created : :comment_created),
+                          :item => @annotation.deck
+      true
+    else
+      false
+    end
   end
 
   def update(params)
