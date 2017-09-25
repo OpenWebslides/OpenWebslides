@@ -2945,10 +2945,6 @@ ignore@^3.2.0:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.3.tgz#432352e57accd87ab3110e82d3fea0e47812156d"
 
-immutable@^3.8.1:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
-
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
@@ -6410,6 +6406,22 @@ typed-function@0.10.5:
 typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
+
+typeface-open-sans@^0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/typeface-open-sans/-/typeface-open-sans-0.0.35.tgz#170dc36bbbd63829c9ea64b991c2b0fd65017708"
+
+typeface-raleway-dots@^0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/typeface-raleway-dots/-/typeface-raleway-dots-0.0.35.tgz#50484ce37115ac43bfe121e2e9c8d24236e37a23"
+
+typeface-raleway@^0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/typeface-raleway/-/typeface-raleway-0.0.35.tgz#61f8a4d8be242a07e4066f6fa352152f0b4b0a72"
+
+typeface-ubuntu-mono@^0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/typeface-ubuntu-mono/-/typeface-ubuntu-mono-0.0.35.tgz#3f39ec19402dea54b88406a7f0b75b659e40a735"
 
 ua-parser-js@^0.7.9:
   version "0.7.12"

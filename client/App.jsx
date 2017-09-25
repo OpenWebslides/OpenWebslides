@@ -8,6 +8,11 @@ import configureStore from './configureStore';
 import i18n from './i18n';
 import './assets/stylesheets/scss/application.scss';
 
+import 'typeface-open-sans';
+import 'typeface-ubuntu-mono'
+import 'typeface-raleway'
+import 'typeface-raleway-dots'
+
 import 'file-loader?name=index.html!index.html';
 
 const store = configureStore();
