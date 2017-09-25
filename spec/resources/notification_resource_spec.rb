@@ -19,7 +19,7 @@ RSpec.describe NotificationResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id predicate subject_display_name item_display_name subject item]
+      expect(subject.fetchable_fields).to match_array %i[id predicate subject_display_name deck_display_name item_display_name subject item deck]
     end
 
     it 'should have a valid set of sortable fields' do
@@ -36,7 +36,7 @@ RSpec.describe NotificationResource, :type => :resource do
 
   describe 'filters' do
     it 'should have a valid set of filters' do
-      expect(described_class.filters.keys).to match_array %i[id predicate subject item]
+      expect(described_class.filters.keys).to match_array %i[id predicate subject deck]
     end
   end
 end

@@ -13,6 +13,7 @@ class NotificationResource < ApplicationResource
 
   attribute :subject_display_name
   attribute :item_display_name
+  attribute :deck_display_name
 
   ##
   # Relationships
@@ -25,11 +26,14 @@ class NotificationResource < ApplicationResource
           :polymorphic => true,
           :always_include_linkage_data => true
 
+  has_one :deck,
+          :always_include_linkage_data => true
+
   ##
   # Filters
   #
   filter :subject
-  filter :item
+  filter :deck
   filter :predicate,
          :verify => ->(values, _) { values.map(&:downcase) & Notification.predicates.keys }
 
@@ -48,7 +52,11 @@ class NotificationResource < ApplicationResource
   end
 
   def subject_display_name
-    @model && @model.subject && @model.subject.display_name
+    @model.subject.display_name
+  end
+
+  def deck_display_name
+    @model.deck.display_name
   end
 
   def item_display_name

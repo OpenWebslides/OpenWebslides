@@ -24,7 +24,11 @@ class Notification < ApplicationRecord
              :inverse_of => :notifications
 
   belongs_to :item,
+             :required => false,
              :polymorphic => true,
+             :inverse_of => :notifications
+
+  belongs_to :deck,
              :required => true,
              :inverse_of => :notifications
 

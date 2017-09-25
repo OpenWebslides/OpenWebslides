@@ -33,14 +33,23 @@ class NotificationPolicy < ApplicationPolicy
   end
 
   ##
+  # Relationship: deck
+  #
+  def show_deck?
+    # Users can only show deck relationship if the notification is showable
+    # Authorize the deck separately in the controller
+    show?
+  end
+
+  ##
   # Scope
   #
   class Scope < Scope
     def resolve
       # Defer notification scoping to the respective items
-      decks = Deck.where :id => scope.pluck(:item_id)
+      decks = Deck.where :id => scope.pluck(:deck_id)
 
-      Notification.where :item_id => DeckPolicy::Scope.new(@user, decks).resolve.pluck(:id)
+      Notification.where :deck_id => DeckPolicy::Scope.new(@user, decks).resolve.pluck(:id)
     end
   end
 end

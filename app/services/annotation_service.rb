@@ -13,7 +13,8 @@ class AnnotationService < ApplicationService
     if @annotation.save
       Notification.create :subject => @annotation.user,
                           :predicate => (@annotation.is_a?(Conversation) ? :conversation_created : :comment_created),
-                          :item => @annotation.deck
+                          :deck => @annotation.deck,
+                          :item => @annotation
       true
     else
       false

@@ -24,5 +24,6 @@ RSpec.describe Notification, :type => :model do
   describe 'associations' do
     it { is_expected.to belong_to(:subject).inverse_of(:notifications) }
     it { is_expected.to belong_to(:item).inverse_of(:notifications) }
+    it { is_expected.to belong_to(:deck).inverse_of(:notifications) }
   end
 end
