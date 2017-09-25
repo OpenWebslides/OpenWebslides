@@ -47,8 +47,8 @@ class Deck < ApplicationRecord
 
   has_many :notifications,
            :dependent => :destroy,
-           :foreign_key => 'object_id',
-           :inverse_of => :object
+           :foreign_key => 'item_id',
+           :inverse_of => :item
 
   has_one :conversion,
           :dependent => :destroy,

@@ -36,11 +36,11 @@ RSpec.describe 'notifications routing', :type => :routing do
     expect(:delete => route).not_to be_routable
   end
 
-  it 'routes notification object relationship endpoint' do
-    route = '/api/notifications/foo/relationships/object'
-    params = { :notification_id => 'foo', :relationship => 'object' }
+  it 'routes notification item relationship endpoint' do
+    route = '/api/notifications/foo/relationships/item'
+    params = { :notification_id => 'foo', :relationship => 'item' }
 
-    expect(:get => '/api/notifications/foo/object').to route_to 'objects#get_related_resource', params.merge(:source => 'notifications')
+    expect(:get => '/api/notifications/foo/item').to route_to 'items#get_related_resource', params.merge(:source => 'notifications')
 
     expect(:get => route).to route_to 'notifications#show_relationship', params
     expect(:patch => route).not_to be_routable

@@ -3,6 +3,6 @@
 ##
 # Notification object
 #
-class ObjectResource < ApplicationResource
+class ItemResource < ApplicationResource
   abstract
 end

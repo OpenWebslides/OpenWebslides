@@ -18,7 +18,7 @@ RSpec.describe Annotation, :type => :model do
     it { is_expected.to belong_to(:deck).inverse_of(:annotations) }
 
     it { is_expected.to have_many(:ratings).dependent(:destroy).inverse_of(:annotation) }
-    it { is_expected.to have_many(:notifications).dependent(:destroy).inverse_of(:object) }
+    it { is_expected.to have_many(:notifications).dependent(:destroy).inverse_of(:item) }
   end
 
   describe 'state machine' do

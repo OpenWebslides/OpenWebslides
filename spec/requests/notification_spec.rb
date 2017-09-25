@@ -26,7 +26,7 @@ RSpec.describe 'Notification API', :type => :request do
       expect(notification).to include 'attributes'
       expect(notification['attributes']).to include 'predicate'
       expect(notification['attributes']).to include 'subjectDisplayName'
-      expect(notification['attributes']).to include 'objectDisplayName'
+      expect(notification['attributes']).to include 'itemDisplayName'
       expect(notification['meta']).to include 'createdAt'
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe 'Notification API', :type => :request do
       expect(notification).to include 'attributes'
       expect(notification['attributes']).to include 'predicate'
       expect(notification['attributes']).to include 'subjectDisplayName'
-      expect(notification['attributes']).to include 'objectDisplayName'
+      expect(notification['attributes']).to include 'itemDisplayName'
       expect(notification['meta']).to include 'createdAt'
     end
   end

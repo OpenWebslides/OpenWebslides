@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :notification do
     predicate { Notification.predicates.keys.sample }
     subject { build :user }
-    object { build :deck }
+    item { build :deck }
   end
 end

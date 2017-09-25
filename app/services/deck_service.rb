@@ -12,7 +12,7 @@ class DeckService < ApplicationService
       Repository::Create.new(@deck).execute
       Notification.create :subject => @deck.owner,
                           :predicate => :deck_created,
-                          :object => @deck
+                          :item => @deck
 
       true
     else
@@ -48,7 +48,7 @@ class DeckService < ApplicationService
     # Generate notification
     Notification.create :subject => params[:author],
                         :predicate => :deck_updated,
-                        :object => @deck
+                        :item => @deck
 
     true
   end
@@ -71,7 +71,7 @@ class DeckService < ApplicationService
 
       Notification.create :subject => @deck.owner,
                           :predicate => :deck_created,
-                          :object => @deck
+                          :item => @deck
 
       true
     else

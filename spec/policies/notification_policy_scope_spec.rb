@@ -14,11 +14,11 @@ RSpec.describe NotificationPolicy::Scope do
     d4 = create :deck, :state => :private_access
     d5 = create :deck, :state => :private_access, :owner => owner
 
-    create :notification, :object => d1, :subject => d1.owner
-    create :notification, :object => d2, :subject => d2.owner
-    create :notification, :object => d3, :subject => d3.owner
-    create :notification, :object => d4, :subject => d4.owner
-    create :notification, :object => d5, :subject => d5.owner
+    create :notification, :item => d1, :subject => d1.owner
+    create :notification, :item => d2, :subject => d2.owner
+    create :notification, :item => d3, :subject => d3.owner
+    create :notification, :item => d4, :subject => d4.owner
+    create :notification, :item => d5, :subject => d5.owner
   end
 
   context 'for a guest' do

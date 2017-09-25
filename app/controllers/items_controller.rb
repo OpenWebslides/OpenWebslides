@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ObjectsController < ApplicationController
+class ItemsController < ApplicationController
   include RelatedResources
 
   # Authentication

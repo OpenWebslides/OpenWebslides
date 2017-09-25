@@ -12,7 +12,7 @@ class NotificationResource < ApplicationResource
   attribute :predicate
 
   attribute :subject_display_name
-  attribute :object_display_name
+  attribute :item_display_name
 
   ##
   # Relationships
@@ -21,7 +21,7 @@ class NotificationResource < ApplicationResource
           :class_name => 'User',
           :always_include_linkage_data => true
 
-  has_one :object,
+  has_one :item,
           :polymorphic => true,
           :always_include_linkage_data => true
 
@@ -29,7 +29,7 @@ class NotificationResource < ApplicationResource
   # Filters
   #
   filter :subject
-  filter :object
+  filter :item
   filter :predicate,
          :verify => ->(values, _) { values.map(&:downcase) & Notification.predicates.keys }
 
@@ -51,8 +51,8 @@ class NotificationResource < ApplicationResource
     @model && @model.subject && @model.subject.display_name
   end
 
-  def object_display_name
-    @model && @model.object && @model.object.display_name
+  def item_display_name
+    @model && @model.item && @model.item.display_name
   end
 
   def meta(options)

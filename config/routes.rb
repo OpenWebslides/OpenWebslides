@@ -90,9 +90,9 @@ Rails.application.routes.draw do
       jsonapi_related_resource :subject
       jsonapi_link :subject, :only => :show
 
-      # Object relationship
-      jsonapi_related_resource :object
-      jsonapi_link :object, :only => :show
+      # Item relationship
+      jsonapi_related_resource :item
+      jsonapi_link :item, :only => :show
     end
 
     ##

@@ -12,14 +12,14 @@ RSpec.describe NotificationResource, :type => :resource do
 
   it { is_expected.to have_attribute :predicate }
   it { is_expected.to have_attribute :subject_display_name }
-  it { is_expected.to have_attribute :object_display_name }
+  it { is_expected.to have_attribute :item_display_name }
 
   it { is_expected.to have_one(:subject) }
-  it { is_expected.to have_one(:object) }
+  it { is_expected.to have_one(:item) }
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id predicate subject_display_name object_display_name subject object]
+      expect(subject.fetchable_fields).to match_array %i[id predicate subject_display_name item_display_name subject item]
     end
 
     it 'should have a valid set of sortable fields' do
@@ -36,7 +36,7 @@ RSpec.describe NotificationResource, :type => :resource do
 
   describe 'filters' do
     it 'should have a valid set of filters' do
-      expect(described_class.filters.keys).to match_array %i[id predicate subject object]
+      expect(described_class.filters.keys).to match_array %i[id predicate subject item]
     end
   end
 end
