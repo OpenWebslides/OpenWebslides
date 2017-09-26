@@ -9,8 +9,8 @@ function Dashboard() {
     <DefaultLayout
       cssIdentifier="feed"
       components={{
-        feed: <FeedContainer />,
         ownDecks: <OwnDecksContainer />,
+        feed: <FeedContainer />,
       }}
     />
   );
