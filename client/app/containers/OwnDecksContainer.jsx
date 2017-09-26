@@ -7,7 +7,7 @@ import {
   requestDeckDeletion,
 } from 'actions/deckManagementActions';
 
-import DeckManagement from 'presentationals/components/deckManagement/DeckManagement';
+import OwnDecks from 'presentationals/components/deckManagement/OwnDecks';
 
 function mapStateToProps(state) {
   const ownDecksState = state.app.deckManagement;
@@ -21,4 +21,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ requestOwnDecks, requestDeckDeletion }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeckManagement);
+export default connect(mapStateToProps, mapDispatchToProps)(OwnDecks);

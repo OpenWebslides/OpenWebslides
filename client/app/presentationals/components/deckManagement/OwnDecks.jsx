@@ -22,7 +22,7 @@ function renderDeckThumbnail(el, deleteDeck) {
   );
 }
 
-class DeckManagement extends React.Component {
+class OwnDecks extends React.Component {
   componentWillMount() {
     if (this.props.authState.isAuthenticated) {
       this.props.requestOwnDecks(this.props.authState.id);
@@ -57,7 +57,7 @@ class DeckManagement extends React.Component {
   }
 }
 
-DeckManagement.propTypes = {
+OwnDecks.propTypes = {
   requestOwnDecks: PropTypes.func.isRequired,
   ownDecksState: PropTypes.shape({
     listOfDecks: PropTypes.array.isRequired,
@@ -69,4 +69,4 @@ DeckManagement.propTypes = {
   }),
 };
 
-export default DeckManagement;
+export default OwnDecks;
