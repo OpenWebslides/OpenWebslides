@@ -28,7 +28,11 @@ function PresentationViewItem(props) {
     const ChildComponents = renderChildrenHOC({ childItemIds, headingLevel, ordered })(PresentationViewItem);
 
     return (
-      <ContentItemWrapper attributes={attributes} ordered={ordered}>
+      <ContentItemWrapper
+        contentItem={contentItem}
+        attributes={attributes}
+        ordered={ordered}
+      >
         <ChildComponents />
       </ContentItemWrapper>);
   }

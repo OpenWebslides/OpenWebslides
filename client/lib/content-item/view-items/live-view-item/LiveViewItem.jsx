@@ -31,7 +31,12 @@ function LiveViewItem(props) {
     const ContentItemWrapper = htmlContainers[contentItemType];
 
     return (
-      <ContentItemWrapper attributes={attributes} headingLevel={headingLevel} ordered={ordered}>
+      <ContentItemWrapper
+        contentItem={contentItem}
+        attributes={attributes}
+        headingLevel={headingLevel}
+        ordered={ordered}
+      >
         {childItemIds.map(childItemId => (
           <LiveViewItemContainer
             key={childItemId}
@@ -55,7 +60,11 @@ function LiveViewItem(props) {
       case contentItemTypes.ILLUSTRATIVE_IMAGE:
       case contentItemTypes.DECORATIVE_IMAGE:
       case contentItemTypes.IFRAME:
-        return (
+        // #TODO: Temporarily removed the deletion-wrapper
+        // because it prevented me from properly styling the slide.
+        // Wrappers should be added further 'inside' the contentItem
+        // where it can't mess up the HTML structure.
+        /* return (
           <div className="deletion-wrapper">
             <button
               className="delete-button-live-view"
@@ -66,10 +75,17 @@ function LiveViewItem(props) {
               attributes={attributes}
               {...contentItemTypeProps}
             />
-          </div>);
+          </div>); */
+        return (
+          <ContentItemComponent
+            contentItem={contentItem}
+            attributes={attributes}
+            {...contentItemTypeProps}
+          />
+        );
 
       default:
-        return (
+        /* return (
           <div className="deletion-wrapper">
             <button
               onClick={() => deleteContentItemFromSlide(slideId, id, ancestorItemIds)}
@@ -92,6 +108,24 @@ function LiveViewItem(props) {
               />
             </ContentItemComponent>
           </div>
+        ); */
+        return (
+          <ContentItemComponent
+            contentItem={contentItem}
+            attributes={attributes}
+            headingLevel={headingLevel}
+          >
+            <ContentEditableContainer
+              contentItem={contentItem}
+              isFocused={isFocused}
+              slideViewType={slideViewType}
+              textPropName={textPropName}
+              slideId={slideId}
+              ancestorItemIds={ancestorItemIds}
+              hasInlineProperties={hasInlineProperties}
+              {...contentItemTypeProps}
+            />
+          </ContentItemComponent>
         );
     }
   }

@@ -24,7 +24,11 @@ function NavigationViewItem(props) {
     const ChildComponents = renderChildrenHOC({ childItemIds, headingLevel, ordered })(NavigationViewItem);
 
     return (
-      <ContentItemWrapper attributes={attributes} ordered={ordered}>
+      <ContentItemWrapper
+        contentItem={contentItem}
+        attributes={attributes}
+        ordered={ordered}
+      >
         <ChildComponents />
       </ContentItemWrapper>);
   }
