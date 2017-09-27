@@ -5,6 +5,7 @@ import { directions } from 'constants/directions';
 import {
   contentItemTypes,
   sectionContentItemTypes,
+  imageContentItemTypes,
 } from 'constants/contentItemTypes';
 
 import { MOVE_CONTENT_ITEM_ON_SLIDE, deleteContentItemFromSlide } from 'actions/entities/slides';
@@ -28,7 +29,7 @@ function getMoveParameters(
 ) {
   // Take 'raw' parameters such as item ids, ancestor items, etc. and convert them to directly
   // usable parameters such as parent/previous/nextItem that are necessary for move validation. We
-  // put this in a separate function to keep other function easy to read.
+  // put this in a separate function to keep other functions easy to read.
 
   const contentItem = contentItemsById[contentItemId];
   const parentItem = (ancestorItemIds.length > 0)
@@ -156,6 +157,19 @@ function isMoveValid(
     )
   ) {
     if (debug) console.log(`${previousItemId} invalid: move list-item outside list`);
+    return false;
+  }
+
+  // Images cannot be moved outside an imageContainer.
+  // #TODO instead of invalidating the move, it should split the imageContainer.
+  if (
+    _.includes(imageContentItemTypes, contentItem.contentItemType) &&
+    (
+      previousItemParentItem === null ||
+      previousItemParentItem.contentItemtype !== contentItemTypes.IMAGE_CONTAINER
+    )
+  ) {
+    if (debug) console.log(`${previousItemId} invalid: move image outside imageContainer`);
     return false;
   }
 
