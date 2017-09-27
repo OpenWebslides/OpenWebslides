@@ -53,6 +53,7 @@
     "fine-uploader": "^5.14.5",
     "fine-uploader-wrappers": "^1.0.0",
     "flow-bin": "^0.49.1",
+    "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "i18next": "^8.3.0",
     "i18next-resource-store-loader": "^0.1.1",

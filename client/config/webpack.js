@@ -43,7 +43,7 @@ const config = {
         ],
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
         use: ['file-loader'],
       },
       {
