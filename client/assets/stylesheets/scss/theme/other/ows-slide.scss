@@ -171,6 +171,26 @@
     font-size: $subsection-scaling-factor;
   }
 
+  .ows-image-container {
+    @include inkgrid-row;
+
+    figure {
+      @include inkgrid-col;
+      @include inkgrid-col__v-align(middle);
+
+      margin-right: 0;
+      margin-left: 0;
+
+      text-align: center;
+    }
+
+    @for $i from 1 through 20 {
+      &.has-#{$i}-children figure {
+        @include inkgrid-col__parts($i);
+      }
+    }
+  }
+
   // Hide elements that have a data-view-type attribute with a value different from 'live'.
   [data-view-type]:not([data-view-type='live']) {
     display: none;
