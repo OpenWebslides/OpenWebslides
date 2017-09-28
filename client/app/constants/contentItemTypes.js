@@ -21,7 +21,7 @@ export const plaintextContentItemTypes = [
 ];
 export const imageContentItemTypes = [
   contentItemTypes.ILLUSTRATIVE_IMAGE,
-  contentItemTypes.DECORATIVE_IMAGe,
+  contentItemTypes.DECORATIVE_IMAGE,
 ];
 export const sectionContentItemTypes = [
   contentItemTypes.SECTION,
