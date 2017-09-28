@@ -27,6 +27,49 @@ class Slide extends Component {
     window.removeEventListener('resize', this.updateSlideContainerSize);
   }
 
+  updateSlideImageContainersSize() {
+    const slideHeight = (this.slideContainer.getElementsByClassName(
+      'ows-slide__overflow',
+    )[0]).getBoundingClientRect().height;
+    const slideWrapper = this.slideContainer.getElementsByClassName(
+      'ows-slide__wrapper',
+    )[0];
+    const slideWrapperComputedStyle = window.getComputedStyle(slideWrapper, null);
+    const imageContainers = this.slideContainer.getElementsByClassName(
+      'ows-image-container',
+    );
+    const imageContainersArray = Array.from(imageContainers);
+
+    // Temporarily hide imageContainers in order to measure remaining content height.
+    if (imageContainersArray.length > 0) {
+      /* eslint-disable no-param-reassign */
+      imageContainersArray.forEach((imageContainer) => {
+        imageContainer.style.display = 'none';
+      });
+      /* eslint-enable */
+    }
+
+    // Calculate imageContainer height to make them fill the remaining space.
+    const slideContentsHeightWithoutImageContainers = slideWrapper.getBoundingClientRect().height;
+    const slidePaddingTop = slideWrapperComputedStyle.getPropertyValue('padding-top');
+    const slidePaddingBottom = slideWrapperComputedStyle.getPropertyValue('padding-bottom');
+    const slidePaddingTopFloat = parseFloat(slidePaddingTop.replace('px', ''));
+    const slidePaddingBottomFloat = parseFloat(slidePaddingBottom.replace('px', ''));
+    const slideContentMaxHeight = slideHeight - slidePaddingTopFloat - slidePaddingBottomFloat;
+    const slideFreeSpace = slideContentMaxHeight - slideContentsHeightWithoutImageContainers;
+    const imageContainerHeight = slideFreeSpace / imageContainersArray.length;
+
+    // Set imageContainer height and make them visible again.
+    if (imageContainersArray.length > 0) {
+      /* eslint-disable no-param-reassign */
+      imageContainersArray.forEach((imageContainer) => {
+        imageContainer.style.height = `${imageContainerHeight}px`;
+        imageContainer.style.display = 'block';
+      });
+      /* eslint-enable */
+    }
+  }
+
   updateSlideContainerSize() {
     // Fullscreen slide sizing can be handled CSS only; only use Javascript to
     // resize if the slide isn't displayed fullscreen.
@@ -71,6 +114,10 @@ class Slide extends Component {
         scComputedFontSize.replace('px', ''),
       );
       scSizeElement.style.fontSize = `${scComputedFontSizeFloat * factor}px`;
+
+      // When the slide height is set, we can resize the imageContainers based on it and the size of
+      // the rest of the slide contents.
+      this.updateSlideImageContainersSize();
 
       // (Note: this only works because we use exclusively em and % units,
       // allowing elements to be resizeable by changing their font-size.
