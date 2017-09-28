@@ -99,11 +99,11 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
         const assetId = dataId ? `data-id="${dataId}"` : '';
 
         string +=
-          `<figure><img ${attributeString} 
+          `<figure><div class="ows-figure-wrapper"><div class="ows-figure-image-wrapper" style="background-image: url('${src}');"><img ${attributeString} 
             ${assetId}
-            src="${source}" 
-            alt="${alt}"/>
-            <figcaption><a href="${source}">${caption}</a></figcaption></figure>`;
+            src="${source}"
+            alt="${alt}"/></div>
+            <figcaption><a href="${source}">${caption}</a></figcaption></div></figure>`;
         break;
       }
       case contentItemTypes.DECORATIVE_IMAGE: {
@@ -127,7 +127,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
           `${indent}  `,
         );
 
-        string += `<div class="ows-image-container" ${attributeString}>${images}\n${indent}</div>`;
+        string += `<div class="ows-image-container"><div class="ows-image-container-wrapper" ${attributeString}>${images}\n${indent}</div></div>`;
         break;
       }
       default:
