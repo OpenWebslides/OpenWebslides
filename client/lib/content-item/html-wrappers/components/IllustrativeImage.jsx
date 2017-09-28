@@ -6,10 +6,14 @@ export default function IllustrativeImage(
 ) {
   return (
     <figure>
-      <img {...attributes} src={src} alt={altText} data-id={dataId} />
-      <figcaption>
-        {caption}
-      </figcaption>
+      <div className="ows-figure-wrapper">
+        <div className="ows-figure-image-wrapper" style={{ backgroundImage: `url('${src}')` }}>
+          <img {...attributes} src={src} alt={altText} data-id={dataId} />
+        </div>
+        <figcaption>
+          {caption}
+        </figcaption>
+      </div>
     </figure>
   );
 }

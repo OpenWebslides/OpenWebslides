@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 export default function ImageContainer({ children, attributes, contentItem }) {
   return (
-    <div className={`ows-image-container has-${contentItem.childItemIds.length}-children`} {...attributes} >
-      {children}
+    <div className={`ows-image-container has-${contentItem.childItemIds.length}-children`}>
+      <div className="ows-image-container-wrapper" {...attributes}>
+        {children}
+      </div>
     </div>
   );
 }
