@@ -8,9 +8,17 @@ const initialState = Immutable({});
 
 function addSlide(state, action) {
   const deck = state[action.payload.deckId];
+  const previousSlideId = action.payload.previousSlideId;
+  const previousSlideIndex = deck.slideIds.indexOf(previousSlideId);
+  // insert the slide at the right place
+  const newSlideIds = deck.slideIds
+    .slice(0, previousSlideIndex + 1)
+    .concat(action.payload.slideId)
+    .concat(deck.slideIds.slice(previousSlideIndex + 1));
+
   return state.merge({
     [deck.id]: {
-      slideIds: deck.slideIds.concat(action.payload.slideId),
+      slideIds: newSlideIds,
       slideSequence: deck.slideSequence + 1,
     },
   }, { deep: true });
