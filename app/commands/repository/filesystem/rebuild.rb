@@ -15,7 +15,7 @@ module Repository
       def fix_assets
         doc = exec Filesystem::Read
         doc.css('img').each do |img|
-          filename = File.basename img.attr('src').strip
+          filename = File.basename img.attr('src').strip.downcase
 
           asset = @receiver.assets.find_by :filename => filename
 
