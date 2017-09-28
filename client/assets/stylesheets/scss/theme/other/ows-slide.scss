@@ -137,6 +137,8 @@
     }
 
     figcaption {
+      @include wrap-line-height(1.2em);
+
       font-size: $font-size--x-smaller;
     }
   }
@@ -172,16 +174,53 @@
   }
 
   .ows-image-container {
-    @include inkgrid-row;
+    $spacing__v: $inkgrid__default-v-gutter;
+    $spacing__h: $inkgrid__default-h-gutter;
+
+    overflow: hidden;
+
+    min-height: 5em;
+
+    &-wrapper {
+      @include inkgrid-row($v-gutter: $spacing__v, $h-gutter: $spacing__h);
+
+      height: calc(100% + #{$spacing__v});
+    }
+
+    .THIS-DIV-SHOULD-NOT-BE-HERE-REFACTOR-THIS {
+      height: 100%;
+    }
 
     figure {
-      @include inkgrid-col;
+      @include inkgrid-col($v-gutter: $spacing__v, $h-gutter: $spacing__h);
       @include inkgrid-col__v-align(middle);
 
       margin-right: 0;
       margin-left: 0;
 
       text-align: center;
+
+      height: 100%;
+    }
+
+    .ows-figure-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      height: 100%;
+    }
+
+    .ows-figure-image-wrapper {
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      flex-grow: 1;
+
+      img {
+        // Visible image is background-image on .ows-figure-image-wrapper (which allows us to crop / contain it).
+        @include screenreaders-only;
+      }
     }
 
     @for $i from 1 through 20 {
