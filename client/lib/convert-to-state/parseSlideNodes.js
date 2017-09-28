@@ -1,5 +1,9 @@
 import _ from 'lodash';
-import { contentItemTypes, containerContentItemTypes } from 'constants/contentItemTypes';
+import {
+  contentItemTypes,
+  containerContentItemTypes,
+  imageContentItemTypes,
+} from 'constants/contentItemTypes';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
 import { generateSlideId, generateContentItemId } from './generateIds';
@@ -10,9 +14,10 @@ const plaintextNodeNames = [...headingNodeNames, 'P', 'LI'];
 const listNodeNames = ['UL', 'OL'];
 const sectionNodeNames = ['SECTION', 'ASIDE', 'DIV'];
 const containerNodeNames = [...listNodeNames, ...sectionNodeNames];
-const imageContentItemTypes = [
-  contentItemTypes.ILLUSTRATIVE_IMAGE,
-  contentItemTypes.DECORATIVE_IMAGE,
+const recognizedDivClasses = [
+  'ows-image-container',
+  'ows-figure-wrapper',
+  'ows-figure-image-wrapper',
 ];
 
 function addImplicitSections(
@@ -371,7 +376,7 @@ function parseContentItemNode(
     }
     else if (
       nodeName === 'DIV' &&
-      className === 'ows-image-container' &&
+      className === 'ows-image-container-wrapper' &&
       node.dataset.imageType
     ) {
       contentItem = {
@@ -380,8 +385,15 @@ function parseContentItemNode(
         imageType: node.dataset.imageType.toUpperCase(),
       };
     }
+    else if (
+      nodeName === 'DIV' &&
+      _.includes(recognizedDivClasses, className)
+    ) {
+      // Recognized but pass-through node name.
+      contentItem = null;
+    }
     else {
-      console.error(`Unrecognized container node name: ${nodeName}`);
+      console.error(`Unrecognized container node name: "${nodeName}" with class: "${className}"`);
       contentItem = null;
     }
 
@@ -434,7 +446,7 @@ function parseContentItemNode(
       };
     }
     else {
-      console.error(`Unrecognized plain text node name: ${nodeName}`);
+      console.error(`Unrecognized plain text node name: "${nodeName}" with class: "${className}"`);
       contentItem = null;
     }
 
@@ -501,7 +513,7 @@ function parseContentItemNode(
   }
   // Skip unrecognized nodeNames.
   else {
-    console.error(`Unrecognized node name: ${nodeName}`);
+    console.error(`Unrecognized node name: "${nodeName}" with class: "${className}"`);
     return emptyResult;
   }
 

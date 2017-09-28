@@ -9,8 +9,10 @@ export default function renderChildrenHOC(selectedProps) {
     return function childrenContainer() {
       const { childItemIds, headingLevel } = selectedProps;
 
+      // #TODO this creates an extra div in navigation / presentation view
+      // where there is none in live view. This disrepancy creates styling issues; must be fixed.
       return (
-        <div>
+        <div className="THIS-DIV-SHOULD-NOT-BE-HERE-REFACTOR-THIS">
           {childItemIds.map(childItemId => (
             <ConnectedComponent
               key={childItemId}
