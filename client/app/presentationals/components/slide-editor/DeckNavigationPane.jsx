@@ -15,9 +15,9 @@ export default class DeckNavigationPane extends Component {
   }
 
   handleAddSlide() {
-    const numberOfSlides = this.props.activeDeck.slideIds.length;
-    const lastSlideId = this.props.activeDeck.slideIds[numberOfSlides - 1];
-    this.props.addSlideToDeck(this.props.activeDeck.id, lastSlideId);
+    // const numberOfSlides = this.props.activeDeck.slideIds.length;
+    // const lastSlideId = this.props.activeDeck.slideIds[numberOfSlides - 1];
+    this.props.addSlideToDeck(this.props.activeDeck.id, this.props.activeSlideId);
   }
 
   handleDeleteSlide(selectedSlideId) {
@@ -50,6 +50,14 @@ export default class DeckNavigationPane extends Component {
           className={`c_deck-navigator c_deck-navigator--${this.props.cssIdentifier}`}
         >
           <div className="c_deck-navigator__wrapper">
+            <p className="c_deck-navigator__controls">
+              <button
+                onClick={this.handleAddSlide}
+                className="c_deck-navigator__add-button o_action o_action--add"
+              >
+                Add slide
+              </button>
+            </p>
             <ol className="o_list c_deck-navigator__list">
               {this.props.activeDeck.slideIds.map(slideId =>
                 <li
@@ -102,14 +110,6 @@ export default class DeckNavigationPane extends Component {
                 </li>,
               )}
             </ol>
-            <p className="c_deck-navigator__controls">
-              <button
-                onClick={this.handleAddSlide}
-                className="c_deck-navigator__add-button o_action o_action--add"
-              >
-                Add slide
-              </button>
-            </p>
           </div>
         </div>
       );
