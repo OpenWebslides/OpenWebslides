@@ -9,8 +9,15 @@ function AddConversationPanel(props) {
 
   return (
     <div>
-      <a href="#" className="back-btn" onClick={closeAddConversationPanel}><i className="fa fa-chevron-left fa-6" aria-hidden="true" /></a>
-      <h3><strong>Add conversation</strong></h3>
+      <button
+        className="back-btn"
+        onClick={closeAddConversationPanel}
+      >
+        <i className="fa fa-chevron-left fa-6" aria-hidden="true" />
+      </button>
+      <h3>
+        <strong>Add conversation</strong>
+      </h3>
 
       <ConversationForm
         submitSucceededAction={closeAddConversationPanel}

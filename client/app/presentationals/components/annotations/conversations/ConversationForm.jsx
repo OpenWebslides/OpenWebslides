@@ -27,9 +27,15 @@ function ConversationForm(props) {
       <form onSubmit={props.handleSubmit}>
 
         { includeTypeChoice && !secret && <div>
-          <label>Type</label>
-          <label><Field name="conversationType" component={InputField} type="radio" value="question" />Question</label>
-          <label><Field name="conversationType" component={InputField} type="radio" value="note" />Note</label>
+          <p>Type:</p>
+          <label className="radio-label">
+            <Field name="conversationType" component={InputField} type="radio" value="question" />
+            <span className="label-text">Question</span>
+          </label>
+          <label className="radio-label">
+            <Field name="conversationType" component={InputField} type="radio" value="note" />
+            <span className="label-text">Note</span>
+          </label>
         </div> }
 
         <div>
