@@ -19,28 +19,39 @@ a {
   cursor: pointer;
 }
 
+$annotations-side-bar-width: 440px;
+$annotations-side-bar-padding-left: 40px;
+$annotations-side-bar-padding-right: 30px;
+$annotations-side-bar-total-width:
+        $annotations-side-bar-width + $annotations-side-bar-padding-left + $annotations-side-bar-padding-right;
+$annotations-side-bar-visible-part-width: 10px;
+$annotations-side-bar-shift: $annotations-side-bar-total-width - $annotations-side-bar-visible-part-width;
+
 .annotations-side-bar {
   display: block;
   height: 100%;
-  right: -470px;
-  width: 440px;
-  padding-left: 40px;
-  padding-right: 30px;
+  right: -$annotations-side-bar-shift;
+  width: $annotations-side-bar-width;
+  padding-left: $annotations-side-bar-padding-left;
+  padding-right: $annotations-side-bar-padding-right;
   position: absolute;
   z-index: 2;
   top: 0;
   background-color: white;
-  border-left: 2px solid black;
+  border-left: 2px solid $color--emphasis;
   overflow-x: hidden;
-  transition: transform ease 250ms;
+  transition: all ease 250ms;
+  transition-property: transform, opacity;
+  opacity: 0.75;
 }
 
 .annotations-side-bar.visible {
-  transform: translate3d(-470px, 0, 0);
-  -ms-transform: translate3d(-470px, 0, 0);
-  -webkit-transform: translate3d(-470px, 0, 0);
-  -o-transform: translate3d(-470px, 0, 0);
-  -moz-transform: translate3d(-470px, 0, 0);
+  transform: translate3d(-$annotations-side-bar-shift, 0, 0);
+  -ms-transform: translate3d(-$annotations-side-bar-shift, 0, 0);
+  -webkit-transform: translate3d(-$annotations-side-bar-shift, 0, 0);
+  -o-transform: translate3d(-$annotations-side-bar-shift, 0, 0);
+  -moz-transform: translate3d(-$annotations-side-bar-shift, 0, 0);
+  opacity: 1;
 }
 
 .annotations-side-bar .close-btn {

@@ -96,10 +96,14 @@ class AnnotationSidePanel extends Component {
 
     return (
       <div>
-        <a href="#" className="close-btn" onClick={() => this.props.toggleAnnotationMode()}>&times;</a>
-        <h3><strong>Conversations for current slide</strong></h3>
+        <button className="close-btn" onClick={() => this.props.toggleAnnotationMode()}>
+          &times;
+        </button>
+        <h3>
+          <strong>Conversations for current slide</strong>
+        </h3>
         <button onClick={this.openAddConversationPanel}>Add conversation</button>
-        <button onClick={this.showPrivateNotePanel}>Add private note</button>
+        { false && <button onClick={this.showPrivateNotePanel}>Add private note</button>}
         <ConversationList showConversationPanel={this.showConversationPanel} />
       </div>
     );
