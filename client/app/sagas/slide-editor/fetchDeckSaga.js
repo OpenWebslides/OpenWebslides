@@ -27,8 +27,8 @@ function* doFetchDeck(action) {
 
       if (included) {
         included.forEach((asset) => {
-          const { id, filename, links: { raw } } = asset;
-          assetLinks[id] = { src: raw, filename };
+          const { id, attributes, links: { raw } } = asset;
+          assetLinks[id] = { src: raw, filename: attributes.filename };
         });
       }
     }
