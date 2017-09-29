@@ -66,10 +66,23 @@ $annotations-side-bar-shift: $annotations-side-bar-total-width - $annotations-si
 .annotations-side-bar .back-btn {
   position: absolute;
   top: 10px;
-  left: -30px;
+  right: 20px;
   font-size: 30px;
   margin-left: 50px;
   color: black;
+}
+
+.annotations-side-bar .radio-label {
+  display: block;
+
+  .c_input-field,
+  .label-text {
+    display: inline-block;
+  }
+
+  .label-text {
+    padding-left: 5px;
+  }
 }
 
 .list-style-none {
