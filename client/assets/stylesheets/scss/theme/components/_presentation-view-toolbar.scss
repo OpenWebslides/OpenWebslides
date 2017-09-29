@@ -1,0 +1,36 @@
+// -----------------------------------
+// Presentation view toolbar component
+// -----------------------------------
+
+.c_presentation-view-toolbar {
+  $spacing__v: $spacing--xx-small__v;
+  $spacing__h: $spacing--xx-small__h;
+
+  @include color--emphasis;
+
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  // #TODO keyboard accessibility
+  opacity: 0.33;
+  transition: opacity $transition-duration--fast ease-in-out;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &__list {
+    @include inkgrid-row($spacing__v, $spacing__h, false);
+    @include inkgrid-row__h-align(center);
+
+    display: block;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  &__item {
+    @include inkgrid-col($spacing__v, $spacing__h);
+  }
+}
