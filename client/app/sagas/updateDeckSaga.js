@@ -99,7 +99,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
         const assetId = dataId ? `data-id="${dataId}"` : '';
 
         string +=
-          `<figure><div class="ows-figure-wrapper"><div class="ows-figure-image-wrapper" style="background-image: url('${src}');"><img ${attributeString} 
+          `<figure><div class="ows-figure-wrapper"><div class="ows-figure-image-wrapper" style="background-image: url('${source}');"><img ${attributeString} 
             ${assetId}
             src="${source}"
             alt="${alt}"/></div>
