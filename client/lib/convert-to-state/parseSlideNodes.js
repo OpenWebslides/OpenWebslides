@@ -482,8 +482,9 @@ function parseContentItemNode(
   }
   // FIGURE
   else if (nodeName === 'FIGURE') {
-    const imgNode = node.children[0];
-    const caption = node.children[1] ? node.children[1].textContent : '[No caption found]';
+    const imgNode = node.children[0].children[0].children[0];
+    const caption = node.children[0].children[1] ? node.children[0].children[1].textContent : '[No caption found]';
+
     const assetId = assetLinks[imgNode.dataset.id];
     const contentItemType = contentItemTypes.ILLUSTRATIVE_IMAGE;
     const alt = imgNode.alt;
