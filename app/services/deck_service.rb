@@ -77,5 +77,8 @@ class DeckService < ApplicationService
     else
       false
     end
+  rescue => e
+    delete
+    raise e
   end
 end
