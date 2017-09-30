@@ -15,9 +15,24 @@ module Repository
       def fix_assets
         doc = exec Filesystem::Read
         doc.css('img').each do |img|
-          filename = File.basename img.attr('src').strip.downcase
+          src = img.attr('src').strip
 
+          # Skip external assets
+          next if src.match?(/^http:|https:|data:|blob:/i)
+
+          filename = File.basename src
+
+          # Find asset in database
           asset = @receiver.assets.find_by :filename => filename
+
+          unless asset
+            # No such asset, probably a casing issue
+            assets = @receiver.assets.where('LOWER(filename) LIKE LOWER(?)', filename)
+
+            raise "#{assets.count} asset files found for reference '#{filename}'" unless assets.one?
+
+            asset = assets.first
+          end
 
           # Fix `data-id` attribute (imports and conversions)
           img['data-id'] = asset.id if asset
