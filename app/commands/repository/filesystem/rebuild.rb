@@ -15,8 +15,14 @@ module Repository
       def fix_assets
         doc = exec Filesystem::Read
         doc.css('img').each do |img|
-          filename = File.basename img.attr('src').strip
+          src = img.attr('src').strip
 
+          # Skip external assets
+          next if src.match?(/^http:|https:|data:|blob:/i)
+
+          filename = File.basename src
+
+          # Find asset in database
           asset = @receiver.assets.find_by :filename => filename
 
           unless asset
