@@ -18,8 +18,10 @@ module Repository
         end
 
         # Create assets in database
-        Dir[File.join repo_path, 'assets', '*'].each do |asset|
-          @receiver.assets.create :filename => File.basename(asset).strip.downcase
+        Asset.transaction do
+          Dir[File.join repo_path, 'assets', '*'].each do |asset|
+            @receiver.assets.create! :filename => File.basename(asset).strip
+          end
         end
 
         exec Filesystem::Rebuild
