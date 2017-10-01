@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  nginx:
+    volumes:
+      - ${PWD}/nginx/nginx.prod.conf:/etc/nginx/nginx.conf
+      - ${PWD}/nginx/certificate.crt:/etc/nginx/certificate.crt
+      - ${PWD}/nginx/certificate.key:/etc/nginx/certificate.key
