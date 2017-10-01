@@ -1,33 +1,26 @@
-#!/usr/bin/env ruby
-# frozen_string_literal: true
+#!/usr/bin/env bash
 
-require 'pathname'
-require 'fileutils'
-include FileUtils
+APP_ROOT=/opt/openwebslides/OpenWebslides
+BRANCH=${1:-master}
 
-# Deployment branch
-BRANCH = ARGV.first || 'master'
+cd "${APP_ROOT}"
 
-# path to your application root.
-APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
+# Error handling
+trap _error_handler ERR
+function _error_handler() {
+  echo -e "\e[1;31m== Command exited unsuccessfully ==\e[0m"
+  exit 1
+}
 
-def system!(*args)
-  system(*args) || abort("\n== Command #{args} failed ==")
-end
+echo "== Retrieving sources =="
+git fetch --all
+REF=`git rev-parse origin/${BRANCH}`
+git checkout "${REF}"
 
-chdir APP_ROOT do
-  # This script is a way to deploy a release automatically
+echo "== Building application image =="
+docker build -t openwebslides/openwebslides:latest .
 
-  puts '== Retrieving sources =='
-  system! 'git fetch --all'
-  ref = `git rev-parse origin/#{BRANCH}`.strip
-  system! "git checkout #{ref}"
-
-  puts "\n== Building application image =="
-  system! 'docker build -t openwebslides/openwebslides:latest .'
-
-  puts "\n== Deploying application =="
-  # Don't fail docker-compose down
-  system 'docker-compose down'
-  system! 'docker-compose up -d'
-end
+echo "== Deploying application =="
+# Don't fail docker-compose down
+docker-compose down || true
+docker-compose up -d
