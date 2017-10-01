@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'pathname'
+require 'fileutils'
+include FileUtils
+
+# Deployment branch
+BRANCH = ARGV.first || 'master'
+
+# path to your application root.
+APP_ROOT = Pathname.new File.expand_path('../../', __FILE__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+chdir APP_ROOT do
+  # This script is a way to deploy a release automatically
+
+  puts '== Retrieving sources =='
+  system! 'git fetch --all'
+  ref = `git rev-parse origin/#{BRANCH}`.strip
+  system! "git checkout #{ref}"
+
+  puts "\n== Building application image =="
+  system! 'docker build -t openwebslides/openwebslides:latest .'
+
+  puts "\n== Deploying application =="
+  # Don't fail docker-compose down
+  system 'docker-compose down'
+  system! 'docker-compose up -d'
+end
