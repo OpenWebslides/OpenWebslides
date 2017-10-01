@@ -61,7 +61,7 @@ services:
   # Redis container
   #
   redis:
-    image: redis:3.0
+    image: redis:3.2
     volumes:
       - redis:/var/lib/redis/data/
     restart: always
@@ -73,8 +73,8 @@ services:
     image: nginx:1.13
     volumes:
       - public:/app/public/
-      - ${PWD}/nginx.conf:/etc/nginx/nginx.conf
-      - ${PWD}/nginx-proxy.conf:/etc/nginx/nginx-proxy.conf
+      - ${PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ${PWD}/nginx/nginx-proxy.conf:/etc/nginx/nginx-proxy.conf
       - uploads:/app/tmp/uploads/
     ports:
       - "0.0.0.0:80:80"
