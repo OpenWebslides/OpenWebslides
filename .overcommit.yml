@@ -42,8 +42,6 @@ PreCommit:
     enabled: true
   BundleCheck:
     enabled: true
-  ExecutePermissions:
-    enabled: true
   FixMe:
     enabled: true
   EsLint:
