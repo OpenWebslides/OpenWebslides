@@ -19,13 +19,13 @@ chdir APP_ROOT do
   puts '== Installing dependencies =='
   system! 'gem install bundler --conservative'
   system('bundle check') || system!('bundle install')
+  chdir File.join APP_ROOT, 'client' do
+    system! 'yarn install'
+  end
 
   puts "\n== Updating database =="
   system! 'bin/rails db:migrate'
 
   puts "\n== Removing old logs and tempfiles =="
   system! 'bin/rails log:clear tmp:clear'
-
-  puts "\n== Restarting application server =="
-  system! 'bin/rails restart'
 end
