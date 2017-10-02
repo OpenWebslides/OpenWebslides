@@ -112,15 +112,14 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
         const source = dataId ? `assets/${filename}` : src;
         const assetId = dataId ? `data-id="${dataId}"` : '';
 
-        string += `<img 
+        string += `<div class="ows-decorative-image"><div class="ows-decorative-image-wrapper" style="background-image: url('${source}');"><img 
           ${attributeString}             
           ${assetId}
           src="${source}" 
-          alt="${alt}"/>`;
+          alt="${alt}"/></div></div>`;
         break;
       }
       case contentItemTypes.IMAGE_CONTAINER: {
-        // #TODO TEST SAVING / RELOADING !!!
         const images = yield convertContentItems(
           contentItemObject.childItemIds,
           headingLevel,

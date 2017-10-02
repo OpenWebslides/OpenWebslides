@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 export default function DecorativeImage({ attributes, contentItem: { src, altText, dataId } }) {
   return (
-    <img {...attributes} src={src} alt={altText} data-id={dataId} />
+    <div className="ows-decorative-image">
+      <div className="ows-decorative-image-wrapper" style={{ backgroundImage: `url('${src}')` }}>
+        <img {...attributes} src={src} alt={altText} data-id={dataId} />
+      </div>
+    </div>
   );
 }
 
