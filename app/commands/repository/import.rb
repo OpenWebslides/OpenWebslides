@@ -18,7 +18,7 @@ module Repository
         end
 
         # Create assets in database
-        Asset.transaction do
+        ::Asset.transaction do
           Dir[File.join repo_path, 'assets', '*'].each do |asset|
             @receiver.assets.create! :filename => File.basename(asset).strip
           end
