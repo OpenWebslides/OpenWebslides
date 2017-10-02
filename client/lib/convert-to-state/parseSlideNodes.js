@@ -19,6 +19,8 @@ const recognizedDivClasses = [
   'ows-image-container-wrapper',
   'ows-figure-wrapper',
   'ows-figure-image-wrapper',
+  'ows-decorative-image',
+  'ows-decorative-image-wrapper',
 ];
 
 function addImplicitSections(
