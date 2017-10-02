@@ -16,6 +16,7 @@ const sectionNodeNames = ['SECTION', 'ASIDE', 'DIV'];
 const containerNodeNames = [...listNodeNames, ...sectionNodeNames];
 const recognizedDivClasses = [
   'ows-image-container',
+  'ows-image-container-wrapper',
   'ows-figure-wrapper',
   'ows-figure-image-wrapper',
 ];
@@ -379,11 +380,8 @@ function parseContentItemNode(
       className === 'ows-image-container-wrapper' &&
       node.dataset.imageType
     ) {
-      contentItem = {
-        ...contentItem,
-        contentItemType: contentItemTypes.IMAGE_CONTAINER,
-        imageType: node.dataset.imageType.toUpperCase(),
-      };
+      // imageContainers automatically added in later step; don't explicitely add them now.
+      contentItem = null;
     }
     else if (
       nodeName === 'DIV' &&
