@@ -15,7 +15,7 @@ describe('RequestResetPassword Api Call', () => {
     expect(response).toEqual(200);
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual('http://owsqas.ugent.be/api/password');
+    expect(calledUrl).toEqual('http://owsdev.ugent.be/api/password');
 
     const body = JSON.stringify({
       data: {
