@@ -50,13 +50,59 @@ class PresentationToolbar extends Component {
 
   render() {
     return (
-      <div id="presentation-toolbar">
-        <button onClick={() => this.props.viewFirstSlide()}>First</button>
-        <button onClick={() => this.props.viewPreviousSlide()}>Previous</button>
-        <button onClick={() => this.props.viewNextSlide()}>Next</button>
-        <button onClick={() => this.props.viewLastSlide()}>Last</button>
-        <button onClick={() => this.props.history.push('/')}>Dashboard</button>
-        <button onClick={() => this.props.toggleAnnotationMode()}>Toggle Annotation Mode</button>
+      <div className="c_presentation-view-toolbar">
+        <div className="c_presentation-view-toolbar__wrapper">
+          <menu className="c_presentation-view-toolbar__list">
+            <li className="c_presentation-view-toolbar__item">
+              <button
+                className="c_presentation-view-toolbar__button"
+                onClick={() => this.props.viewFirstSlide()}
+              >
+                First
+              </button>
+            </li>
+            <li className="c_presentation-view-toolbar__item">
+              <button
+                className="c_presentation-view-toolbar__button"
+                onClick={() => this.props.viewPreviousSlide()}
+              >
+                Previous
+              </button>
+            </li>
+            <li className="c_presentation-view-toolbar__item">
+              <button
+                className="c_presentation-view-toolbar__button"
+                onClick={() => this.props.viewNextSlide()}
+              >
+                Next
+              </button>
+            </li>
+            <li className="c_presentation-view-toolbar__item">
+              <button
+                className="c_presentation-view-toolbar__button"
+                onClick={() => this.props.viewLastSlide()}
+              >
+                Last
+              </button>
+            </li>
+            <li className="c_presentation-view-toolbar__item">
+              <button
+                className="c_presentation-view-toolbar__button"
+                onClick={() => this.props.history.push('/')}
+              >
+                Dashboard
+              </button>
+            </li>
+            <li className="c_presentation-view-toolbar__item">
+              <button
+                className="c_presentation-view-toolbar__button"
+                onClick={() => this.props.toggleAnnotationMode()}
+              >
+                Toggle Annotation Mode
+              </button>
+            </li>
+          </menu>
+        </div>
       </div>
     );
   }

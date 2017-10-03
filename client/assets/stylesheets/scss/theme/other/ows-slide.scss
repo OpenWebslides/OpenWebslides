@@ -139,7 +139,7 @@
     figcaption {
       @include wrap-line-height(1.2em);
 
-      font-size: $font-size--x-smaller;
+      font-size: 0.6em;
     }
   }
 
@@ -174,8 +174,8 @@
   }
 
   .ows-image-container {
-    $spacing__v: $inkgrid__default-v-gutter;
-    $spacing__h: $inkgrid__default-h-gutter;
+    $spacing__v: $spacing--element__v;
+    $spacing__h: $spacing--element__h;
 
     overflow: hidden;
 
@@ -184,16 +184,24 @@
     &-wrapper {
       @include inkgrid-row($v-gutter: $spacing__v, $h-gutter: $spacing__h);
 
-      height: calc(100% + #{$spacing__v});
+      height: 100%;
+
+      // Allow column margins to affect the row.
+      margin-top: 0;
     }
 
     .THIS-DIV-SHOULD-NOT-BE-HERE-REFACTOR-THIS {
       height: 100%;
     }
 
-    figure {
+    figure,
+    .ows-decorative-image {
       @include inkgrid-col($v-gutter: $spacing__v, $h-gutter: $spacing__h);
       @include inkgrid-col__v-align(middle);
+
+      // Undo default figure styles.
+      padding-top: 0;
+      padding-bottom: 0;
 
       margin-right: 0;
       margin-left: 0;
@@ -210,7 +218,16 @@
       height: 100%;
     }
 
-    .ows-figure-image-wrapper {
+    .ows-decorative-image {
+      @include inkgrid-col__parts(1);
+    }
+
+    .ows-decorative-image-wrapper {
+      height: 100%;
+    }
+
+    .ows-figure-image-wrapper,
+    .ows-decorative-image-wrapper {
       background-position: center center;
       background-repeat: no-repeat;
       background-size: contain;

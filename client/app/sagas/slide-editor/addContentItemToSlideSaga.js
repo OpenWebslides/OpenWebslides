@@ -125,10 +125,21 @@ function findParentItemIdAndPreviousItemId(
         return _.includes(sectionContentItemTypes, contentItem.contentItemType);
       },
     ));
-    previousItemId = (parentItemId !== null &&
-                      contentItemsById[parentItemId].childItemIds.length > 0)
-      ? _.last(contentItemsById[parentItemId].childItemIds)
-      : null;
+
+    // The previousItem should be the last item in the parentItem (which cannot itself be a section,
+    // otherwise it would've been found as the parentItem in the previous step).
+    if (parentItemId !== null) {
+      previousItemId = (contentItemsById[parentItemId].childItemIds.length > 0)
+        ? _.last(contentItemsById[parentItemId].childItemIds)
+        : null;
+    }
+    // If there is no parentItem, the previousItem should be the last direct child of the slide (if
+    // there is one).
+    else {
+      previousItemId = (slide.contentItemIds.length > 0)
+        ? _.last(slide.contentItemIds)
+        : null;
+    }
   }
 
   // If the contentItem to add is an image, check if the previousItem happens to be an
@@ -221,7 +232,6 @@ function* doAddContentItemToSlide(action) {
         contentItemsById[parentItemId].contentItemType !== contentItemTypes.IMAGE_CONTAINER
       )
     ) {
-      const imageContainerProps = getPropsForContentItemType(contentItemTypes.IMAGE_CONTAINER);
       // Since the imageContainer should be added first, give it the id we just generated.
       const imageContainerItemId = contentItemId;
       // Generate a new id for the contentItem.
@@ -229,6 +239,13 @@ function* doAddContentItemToSlide(action) {
         slide.id,
         slide.contentItemSequence + 1,
       );
+      // Generate default props for the imageContainer.
+      let imageContainerProps = getPropsForContentItemType(contentItemTypes.IMAGE_CONTAINER);
+      // Set the imageContainer imageType to the type of image we're adding.
+      imageContainerProps = {
+        ...imageContainerProps,
+        imageType: contentItemType,
+      };
 
       // Add the new imageContainer to the state.
       yield put(addContentItem(
