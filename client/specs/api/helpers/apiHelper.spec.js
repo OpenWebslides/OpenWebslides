@@ -5,7 +5,7 @@ describe('ApiHelper constructor', () => {
   it('builds a basic request', () => {
     const testEmpty = new ApiRequest();
 
-    expect(testEmpty.url).toEqual('http://owsqas.ugent.be/api/');
+    expect(testEmpty.url).toEqual('http://owsdev.ugent.be/api/');
     expect(testEmpty.headers).toEqual({
       'Content-Type': 'application/vnd.api+json',
     });
