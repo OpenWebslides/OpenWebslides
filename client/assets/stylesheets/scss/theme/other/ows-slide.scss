@@ -208,7 +208,8 @@
 
       text-align: center;
 
-      height: 100%;
+      // Make sure to take column margins into account when calculating the height.
+      height: calc(100% - #{$spacing__v});
     }
 
     .ows-figure-wrapper {
