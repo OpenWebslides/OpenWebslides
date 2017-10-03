@@ -179,10 +179,16 @@ class Slide extends Component {
 
         <div className="c_slide-container__size">
           <div className="c_slide-container__wrapper">
-            <div className="c_slide-container__content ows-slide">
-              <div className="ows-slide__overflow">
-                <div className="ows-slide__wrapper">
-                  {slideContent}
+            <div className="c_slide-container__content">
+              <div
+                className="ows-slide"
+                data-slide-position={this.props.slideIndexInDeck + 1}
+                data-slide-count={this.props.numberOfSlidesInDeck}
+              >
+                <div className="ows-slide__overflow">
+                  <div className="ows-slide__wrapper">
+                    {slideContent}
+                  </div>
                 </div>
               </div>
             </div>
@@ -208,6 +214,8 @@ Slide.propTypes = {
   // We need to connect these to force a rerender (and thus a resize) when the
   // active slide view types change.
   activeSlideViewTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  numberOfSlidesInDeck: PropTypes.number.isRequired,
+  slideIndexInDeck: PropTypes.number.isRequired,
 };
 
 Slide.defaultProps = {
