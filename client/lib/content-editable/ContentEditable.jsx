@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Immutable from 'seamless-immutable';
 import _ from 'lodash';
 
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import {
   addInlinePropertyToArray,
@@ -103,10 +102,7 @@ class ContentEditable extends Component {
     };
 
     if (this.props.hasInlineProperties) {
-      const inlineProperties = Immutable.asMutable(
-        this.props.contentItem.inlineProperties,
-        { deep: true },
-      );
+      const inlineProperties = this.props.contentItem.inlineProperties.asMutable({ deep: true });
       const amount =
         text.length - this.props.contentItem[this.props.textPropName].length;
       updateInlinePropertiesAfterInputAtIndex(
@@ -156,10 +152,7 @@ class ContentEditable extends Component {
     const selectionOffsets = this.props.selectionOffsets;
 
     // get copy of current inlineProperties
-    const inlineProperties = Immutable.asMutable(
-      this.props.contentItem.inlineProperties,
-      { deep: true },
-    );
+    const inlineProperties = this.props.contentItem.inlineProperties.asMutable({ deep: true });
 
     // create new inlineProperty object
     const newInlineProperty = {
