@@ -13,6 +13,10 @@ export const inlinePropertyTags = {
     startTag: '<a target="_blank">',
     endTag: '</a>',
   },
+  SUP: {
+    startTag: '<sup>',
+    endTag: '</sup>',
+  },
 };
 
 export function removeOrMergeOverlappingInlineProperties(
