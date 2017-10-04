@@ -3,4 +3,5 @@ export default {
   STRONG: 'STRONG',
   LINK: 'LINK',
   SUP: 'SUP',
+  SUB: 'SUB',
 };
