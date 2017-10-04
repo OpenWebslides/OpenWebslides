@@ -4,10 +4,11 @@ import { SubmissionError } from 'redux-form';
 import uploadAssetApi from 'api/uploadAssetApi';
 import { getActiveDeckId, getActiveSlideId } from 'selectors/app/slide-editor';
 
-import { ADD_CONTENT_ITEM_TO_SLIDE } from 'actions/entities/slides';
+import { addContentItemToSlide } from 'actions/entities/slides';
 import { SIGNOUT } from 'actions/signoutActions';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
+
 
 import {
   UPLOAD_ASSET,
@@ -27,10 +28,11 @@ export function* doUploadAsset(action) {
     const assetUri = yield response.links.raw;
     const { filename } = yield response.attributes;
 
-    yield put({ type: ADD_CONTENT_ITEM_TO_SLIDE,
-      meta: { slideId: activeSlideId,
-        contentItemType: assetType,
-        contentItemTypeProps: { src: assetUri, alt: altText, filename, caption: imageCaption, dataId: response.id } } });
+    yield put(addContentItemToSlide(
+      activeSlideId,
+      assetType,
+      { src: assetUri, alt: altText, filename, caption: imageCaption, dataId: response.id },
+    ));
 
     yield call(resolve);
   }
