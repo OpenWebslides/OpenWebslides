@@ -7,6 +7,9 @@
   $slide-color--highlight: #1e64c8;
   $slide-color--accent: #ffd200;
 
+  $slide-padding__v: $spacing--x-small__v;
+  $slide-padding__h: $spacing--x-small__h;
+
   $heading-base-font-size: 1.4em;
   $subsection-scaling-factor: 0.8em;
   $subsection-indent: $line-height--base * 1em;
@@ -19,6 +22,12 @@
 
   // Make sure default text-align is 'left' no matter the text-align of the containing element.
   text-align: left;
+
+  // Take height from container.
+  height: 100%;
+
+  // Frame for absolutely positioned children.
+  position: relative;
 
   // UGent logo in background.
   &::before {
@@ -43,6 +52,30 @@
     opacity: 0.3;
   }
 
+  // Slide number
+  &::after {
+    $font-size: 0.6em;
+    // Fit slide number in open space left by slide padding.
+    $spacing__v: scale-length-to-font-size(($slide-padding__v - $font-size) / 2, $font-size);
+    $spacing__h: scale-length-to-font-size($slide-padding__h, $font-size);
+
+    content: attr(data-slide-position) "/" attr(data-slide-count);
+
+    position: absolute;
+    bottom: 0;
+    left: $spacing__h;
+    right: $spacing__h;
+
+    font-size: $font-size;
+    line-height: 1em;
+    padding: $spacing__v 0;
+    text-align: center;
+
+    background-color: $slide-color--main;
+    color: $slide-color--highlight;
+    font-weight: $font-weight--base__x-strong;
+  }
+
   &__overflow {
     height: 100%;
     overflow: auto;
@@ -52,7 +85,7 @@
   }
 
   &__wrapper {
-    @include padding--x-small;
+    @include padding($slide-padding__v, $slide-padding__h);
   }
 
   a[href] {
@@ -208,7 +241,8 @@
 
       text-align: center;
 
-      height: 100%;
+      // Make sure to take column margins into account when calculating the height.
+      height: calc(100% - #{$spacing__v});
     }
 
     .ows-figure-wrapper {

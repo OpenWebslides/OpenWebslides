@@ -222,7 +222,7 @@ class ContentEditable extends Component {
             <span className="o_content-editable__menu list" role="toolbar">
               <span className="o_content-editable__menu-item list__item">
                 <button
-                  className="o_content-editable__menu-button"
+                  className="o_content-editable__menu-button o_content-editable__menu-button--id_link"
                   tabIndex="-1"
                   onClick={() => this.handleLinkModalOpen()}
                 >
@@ -243,6 +243,33 @@ class ContentEditable extends Component {
                   </span>
                 </button>
               </span>
+
+              <span className="o_content-editable__menu-item list__item">
+                <button
+                  className="o_content-editable__menu-button o_content-editable__menu-button--id_sup"
+                  tabIndex="-1"
+                  onClick={() =>
+                    this.handleMenuButtonClick(inlinePropertyTypes.SUP)}
+                >
+                  <span className="o_content-editable__menu-text">
+                    Super
+                  </span>
+                </button>
+              </span>
+
+              <span className="o_content-editable__menu-item list__item">
+                <button
+                  className="o_content-editable__menu-button o_content-editable__menu-button--id_sub"
+                  tabIndex="-1"
+                  onClick={() =>
+                    this.handleMenuButtonClick(inlinePropertyTypes.SUB)}
+                >
+                  <span className="o_content-editable__menu-text">
+                    Super
+                  </span>
+                </button>
+              </span>
+
               <span className="o_content-editable__menu-item list__item">
                 <button
                   className="o_content-editable__menu-button o_content-editable__menu-button--id_em"

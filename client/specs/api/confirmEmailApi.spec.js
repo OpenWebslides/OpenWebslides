@@ -15,7 +15,7 @@ describe('ConfirmEmail Api Call', () => {
     expect(response).toEqual(200);
 
     const calledUrl = asyncFetch.mock.calls[0][0];
-    expect(calledUrl).toEqual('http://owsqas.ugent.be/api/confirmation');
+    expect(calledUrl).toEqual('http://owsdev.ugent.be/api/confirmation');
 
     const body = JSON.stringify({
       data: {

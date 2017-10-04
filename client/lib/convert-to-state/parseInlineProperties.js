@@ -1,4 +1,4 @@
-const SUPPORTED_PROPERTIES = { EM: 'EM', STRONG: 'STRONG', A: 'LINK' };
+const SUPPORTED_PROPERTIES = { EM: 'EM', STRONG: 'STRONG', A: 'LINK', SUP: 'SUP', SUB: 'SUB' };
 
 export default function parseInlineProperties(nodes) {
   const inlineProperties = [];
@@ -10,6 +10,7 @@ export default function parseInlineProperties(nodes) {
 
   for (let i = 0; i < nodes.length; i += 1) {
     node = nodes[i];
+
     // Trim left side & merge successive whitespace chars into one.
     textContent = node.textContent.replace(/^\s+/, '').replace(/\s+/g, ' ');
     endsAtChar = charOffset + textContent.length;
