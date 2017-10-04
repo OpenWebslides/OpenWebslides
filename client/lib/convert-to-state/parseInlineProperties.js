@@ -1,4 +1,4 @@
-const SUPPORTED_PROPERTIES = { EM: 'EM', STRONG: 'STRONG', A: 'LINK', SUP: 'SUP' };
+const SUPPORTED_PROPERTIES = { EM: 'EM', STRONG: 'STRONG', A: 'LINK', SUP: 'SUP', SUB: 'SUB' };
 
 export default function parseInlineProperties(nodes) {
   const inlineProperties = [];
