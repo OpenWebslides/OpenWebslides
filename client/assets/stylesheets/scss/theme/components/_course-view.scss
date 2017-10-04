@@ -148,17 +148,24 @@
 
   // IMAGES:
 
+  &__image-container {
+    height: 8cm;
+    padding: 1em;
+  }
+
   &__illustrative-image-and-text {
     margin: 0 auto; /* not needed unless you want centered */
     display: inline-block;
     border: $border-width--subtle $border-style--subtle $color--main__border;
     padding-left: 0;
     text-align: center;
+    height:100%;
+    vertical-align:top;
 
     &__image {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: cover;
+      max-width: 95%;
+      height: 90%;
+      object-fit: contain;
     }
   }
 
@@ -176,9 +183,7 @@
     //flex-grow: 0.66;
     //flex-shrink: 0.3;
 
-    &__image-container {
-      height: 5cm;
-    }
+
 
     &__image {
       max-width: 100%;
