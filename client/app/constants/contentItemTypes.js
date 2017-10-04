@@ -23,7 +23,7 @@ export const imageContentItemTypes = [
   contentItemTypes.ILLUSTRATIVE_IMAGE,
   contentItemTypes.DECORATIVE_IMAGE,
 ];
-export const sectionContentItemTypes = [
+export const sectionContentItemTypes = [ // #TODO rename this to sectioningContentItemTypes
   contentItemTypes.SECTION,
   contentItemTypes.ASIDE,
 ];
