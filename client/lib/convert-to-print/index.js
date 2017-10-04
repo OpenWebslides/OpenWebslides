@@ -108,11 +108,10 @@ function convertSlideToContentItems(slide, entities, preferences) {
   const slideId = slide.id;
 
   const conversations = getRelevantConversations(entities.conversations.byId, slideId);
-  const amountOfImages = countImagesInSlide(slideElements, entities);
   let reactElements = slideElements.reduce(
     (arr, currentObject) =>
       arr.concat(
-        contentItemObjectToReact(entities, currentObject, level, preferences, amountOfImages),
+        contentItemObjectToReact(entities, currentObject, level, preferences),
       ),
     [],
   );
