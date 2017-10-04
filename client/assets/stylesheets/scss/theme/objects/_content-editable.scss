@@ -71,6 +71,12 @@
         }
       }
 
+      &--id_sub {
+        &::before {
+          @include icon($fa-var-subscript, 1em);
+        }
+      }
+
       &::before {
         font-size: $menu-button-size * 2 / 3;
         line-height: inherit;

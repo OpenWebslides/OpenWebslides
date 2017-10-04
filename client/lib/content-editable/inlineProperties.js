@@ -17,6 +17,10 @@ export const inlinePropertyTags = {
     startTag: '<sup>',
     endTag: '</sup>',
   },
+  SUB: {
+    startTag: '<sub>',
+    endTag: '</sub>',
+  },
 };
 
 export function removeOrMergeOverlappingInlineProperties(
