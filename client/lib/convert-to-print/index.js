@@ -83,27 +83,6 @@ function contentItemObjectToReact(
   }
 }
 
-function countImagesInSlide(slideElements, entities) {
-  let elementsToCount = [];
-  if (slideElements[0] && slideElements[0].contentItemType === 'SECTION') {
-    const childItems = slideElements[0].childItemIds.map(
-      itemId => entities.contentItems.byId[itemId],
-    );
-    elementsToCount = elementsToCount.concat(childItems);
-  }
-  else {
-    elementsToCount = slideElements;
-  }
-
-  let counter = 0;
-  elementsToCount.forEach((e) => {
-    if (e.contentItemType === 'ILLUSTRATIVE_IMAGE') {
-      counter += 1;
-    }
-  });
-  return counter;
-}
-
 function getRelevantConversations(conversationsById, slideId) {
   let relevantConversations = [];
   Object.keys(conversationsById).forEach((id) => {
