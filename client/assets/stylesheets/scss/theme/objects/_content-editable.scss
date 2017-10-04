@@ -59,6 +59,18 @@
         }
       }
 
+      &--id_sup {
+        &::before {
+          @include icon($fa-var-superscript, 1em);
+        }
+      }
+
+      &--id_link {
+        &::before {
+          @include icon($fa-var-link, 1em);
+        }
+      }
+
       &::before {
         font-size: $menu-button-size * 2 / 3;
         line-height: inherit;
