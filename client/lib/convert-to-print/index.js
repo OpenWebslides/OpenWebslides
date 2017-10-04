@@ -10,7 +10,7 @@ import decorativeImageToReact from './convert-items/decorativeImageToReact';
 import iframeToReact from './convert-items/iframeToReact';
 import titleToReact from './convert-items/titleToReact';
 
-const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, DECORATIVE_IMAGE, ILLUSTRATIVE_IMAGE, IFRAME } = contentItemTypes;
+const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE_CONTAINER, ILLUSTRATIVE_IMAGE, DECORATIVE_IMAGE, IFRAME } = contentItemTypes;
 const { EM, STRONG } = ipt;
 
 function contentItemObjectToReact(
@@ -18,7 +18,7 @@ function contentItemObjectToReact(
   contentItemObject,
   currentLevel,
   preferences,
-  amountOfImages,
+  amountOfImages = 0,
 ) {
   switch (contentItemObject.contentItemType) {
     case TITLE:
@@ -33,11 +33,11 @@ function contentItemObjectToReact(
       return contentItemObject.childItemIds.map((itemId) => {
         const itemObject = entities.contentItems.byId[itemId];
         return contentItemObjectToReact(
-          entities, itemObject, currentLevel, preferences, amountOfImages,
+          entities, itemObject, currentLevel, preferences,
         );
       });
     case LIST:
-      const childrenObjects = contentItemObject.childItemIds.map(
+      let childrenObjects = contentItemObject.childItemIds.map(
         itemId => entities.contentItems.byId[itemId],
       );
       return React.createElement(
@@ -52,6 +52,17 @@ function contentItemObjectToReact(
         'li',
         { 'data-level': currentLevel, className: 'c_print-view__list-item' },
         contentItemObject.text,
+      );
+    case IMAGE_CONTAINER:
+      childrenObjects = contentItemObject.childItemIds.map(
+        itemId => entities.contentItems.byId[itemId],
+      );
+      return React.createElement(
+        'div',
+        { className: 'c_print-view__image-container' },
+        childrenObjects.map(child =>
+          contentItemObjectToReact(entities, child, currentLevel, preferences, childrenObjects.length),
+        ),
       );
     case ILLUSTRATIVE_IMAGE:
       return illustrativeImageToReact(
