@@ -45,7 +45,7 @@ export default function imageObjectToReact(img, viewType, amountOfImages, level)
           {
             src: img.src,
             alt: img.alt,
-            className: 'c_print-view__image-and-text__image',
+            className: 'c_print-view__illustrative-image-and-text__image',
             'data-level': level,
           },
           null,
