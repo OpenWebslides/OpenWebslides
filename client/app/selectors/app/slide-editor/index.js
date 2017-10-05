@@ -45,3 +45,8 @@ export const getActiveSlideViewTypes = (state) => {
 export const getFocusedSlideViewType = (state) => {
   return state.app.slideEditor.focusedSlideViewType;
 };
+
+// True if the slide content has changed since being loaded / last being saved, false if it has not.
+export const getHasChanged = (state) => {
+  return state.app.slideEditor.hasChanged;
+};

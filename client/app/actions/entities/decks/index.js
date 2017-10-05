@@ -34,6 +34,13 @@ export function updateDeck() {
   };
 }
 
+export function updateDeckSuccess() {
+  return {
+    type: UPDATE_DECK_SUCCESS,
+    // #TODO meta: { deckid }
+  };
+}
+
 export function fetchDeck(deckId) {
   return {
     type: FETCH_DECK,
