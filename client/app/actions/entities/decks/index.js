@@ -30,6 +30,7 @@ export function deleteSlideFromDeck(deckId, slideId) {
 export function updateDeck() {
   return {
     type: UPDATE_DECK,
+    // #TODO meta: { deckid }
   };
 }
 
