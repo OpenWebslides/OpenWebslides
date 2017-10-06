@@ -50,7 +50,6 @@ export function* getFeedNotificationsFlow(action) {
     });
   }
   catch (error) {
-    debugger;
     if (error.statusCode === 401) {
       yield put({ type: SIGNOUT });
       yield put({
