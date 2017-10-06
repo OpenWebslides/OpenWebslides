@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 import React from 'react';
 import { contentItemTypes } from 'constants/contentItemTypes';
-import ipt from 'constants/inlinePropertyTypes';
+import { inlinePropertyTypes } from 'constants/inlinePropertyTypes';
 
 // converters:
 import ConversationElement from 'presentationals/components/print-view/ConversationElement';
@@ -12,7 +12,7 @@ import titleToReact from './convert-items/titleToReact';
 import paragraphToReact from './convert-items/paragraphToReact';
 
 const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE_CONTAINER, ILLUSTRATIVE_IMAGE, DECORATIVE_IMAGE, IFRAME } = contentItemTypes;
-const { EM, STRONG } = ipt;
+const { EM, STRONG } = inlinePropertyTypes;
 
 function contentItemObjectToReact(
   entities,
