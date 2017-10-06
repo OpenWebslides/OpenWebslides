@@ -21,10 +21,12 @@ import requestResetPasswordSaga from 'sagas/forgotPasswordSaga';
 import resetPasswordSaga from 'sagas/resetPasswordSaga';
 
 // DECK MANAGEMENT
-import requestDeckListSaga from 'sagas/deck-management/requestDeckListSaga';
 import requestImportsListSaga from 'sagas/deckManagement/requestImportsListSaga';
 import createDeckSaga from 'sagas/deck-management/createDeckSaga';
-import deleteDeckSaga from 'sagas/deck-management/deleteDeckSaga';
+
+// DASHBOARD
+import ownDecksSaga from 'sagas/app/dashboard/ownDecksRequestsSaga';
+import ownDeckDeletionSaga from 'sagas/app/dashboard/ownDeckDeletionSaga';
 
 // PROFILE PAGE
 import profilePageStartRequestsSaga from 'sagas/app/profile-page/loadProfilePageInfoSaga';
@@ -58,7 +60,6 @@ export default function* rootSaga() {
     fetchConversationsSaga(),
     confirmEmailSaga(),
     requestFeedNorificationsSaga(),
-    requestDeckListSaga(),
     requestResetPasswordSaga(),
     resetPasswordSaga(),
     oauthSigninSaga(),
@@ -69,12 +70,13 @@ export default function* rootSaga() {
     moveContentItemOnSlideSaga(),
     fetchDeckSaga(),
     createDeckSaga(),
-    deleteDeckSaga(),
     requestImportsListSaga(),
     updateDeckSaga(),
     uploadAssetSaga(),
     addUriSaga(),
     fetchDeckCommentsSaga(),
     profilePageStartRequestsSaga(),
+    ownDecksSaga(),
+    ownDeckDeletionSaga(),
   ];
 }
