@@ -28,10 +28,12 @@ class PresentationView extends Component {
   }
 
   render() {
+    const { deckId } = this.props.match.params;
+
     return (
       <div>
         {this.renderSlide()}
-        <PresentationViewToolbarContainer />
+        <PresentationViewToolbarContainer deckId={deckId} />
       </div>
     );
   }
