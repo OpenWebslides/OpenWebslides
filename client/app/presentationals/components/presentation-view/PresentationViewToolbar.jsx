@@ -38,7 +38,6 @@ class PresentationToolbar extends Component {
         break;
       case 39:
       case 13:
-      case 32:
       case 33:
         e.preventDefault();
         this.props.viewNextSlide();
@@ -49,6 +48,8 @@ class PresentationToolbar extends Component {
   }
 
   render() {
+    const { deckId } = this.props;
+
     return (
       <div className="c_presentation-view-toolbar">
         <div className="c_presentation-view-toolbar__wrapper">
@@ -91,6 +92,14 @@ class PresentationToolbar extends Component {
                 onClick={() => this.props.history.push('/')}
               >
                 Dashboard
+              </button>
+            </li>
+            <li className="c_presentation-view-toolbar__item">
+              <button
+                className="c_presentation-view-toolbar__button"
+                onClick={() => this.props.history.push(`/print/${deckId}`)}
+              >
+                Course Mode
               </button>
             </li>
             <li className="c_presentation-view-toolbar__item">
