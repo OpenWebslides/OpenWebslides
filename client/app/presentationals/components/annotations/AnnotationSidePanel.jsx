@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { toggleAnnotationMode, setActiveConversationId } from 'actions/app/annotations';
+import { fetchConversations } from 'actions/entities/conversations';
 import { getAnnotationMode } from 'selectors/app/annotations';
 import ConversationList from './conversations/ConversationList';
 import ConversationPanel from './conversations/ConversationPanel';
@@ -103,6 +104,7 @@ class AnnotationSidePanel extends Component {
           <strong>Conversations for current slide</strong>
         </h3>
         <button onClick={this.openAddConversationPanel}>Add conversation</button>
+        <button onClick={() => this.props.fetchConversations(this.props.deckId)}>Refresh</button>
         { false && <button onClick={this.showPrivateNotePanel}>Add private note</button>}
         <ConversationList showConversationPanel={this.showConversationPanel} />
       </div>
@@ -125,7 +127,7 @@ export default connect(
     return { annotationMode: getAnnotationMode(state) };
   },
   (dispatch) => {
-    return bindActionCreators({ toggleAnnotationMode, setActiveConversationId }, dispatch);
+    return bindActionCreators({ toggleAnnotationMode, fetchConversations, setActiveConversationId }, dispatch);
   },
 )(AnnotationSidePanel);
 
