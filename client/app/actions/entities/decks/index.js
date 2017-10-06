@@ -11,6 +11,8 @@ export const FETCH_DECK_FAILURE = 'FETCH_DECK_FAILURE';
 
 export const ADD_DECK_METADATA = 'ADD_DECK_METADATA';
 
+export const DECK_DELETION_SUCCESS = 'DECK_DELETION_SUCCESS';
+
 export function addSlideToDeck(deckId, previousSlideId) {
   return {
     type: ADD_SLIDE_TO_DECK,

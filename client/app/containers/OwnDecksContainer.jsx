@@ -2,23 +2,22 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Actions:
-import {
-  requestOwnDecks,
-  requestDeckDeletion,
-} from 'actions/deckManagementActions';
+import { startOwnDecksRequests, ownDeckDeletionRequest } from 'actions/app/dashboard/own-decks';
 
 import OwnDecks from 'presentationals/components/deckManagement/OwnDecks';
 
 function mapStateToProps(state) {
-  const ownDecksState = state.app.deckManagement;
+  const ownDecksState = state.app.ownDecks;
   const authState = state.app.authentication;
+  const entities = state.entities;
   return {
     ownDecksState,
     authState,
+    entities,
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ requestOwnDecks, requestDeckDeletion }, dispatch);
+  return bindActionCreators({ startOwnDecksRequests, ownDeckDeletionRequest }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OwnDecks);

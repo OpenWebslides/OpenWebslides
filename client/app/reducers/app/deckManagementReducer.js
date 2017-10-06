@@ -5,9 +5,6 @@ import {
   DECK_DELETION_REQUEST,
   DECK_DELETION_REQUEST_FAILURE,
   DECK_DELETION_REQUEST_SUCCESS,
-  REQUEST_DECK_LIST,
-  REQUEST_DECK_LIST_FAILURE,
-  REQUEST_DECK_LIST_SUCCESS,
 } from 'actions/deckManagementActions';
 
 const initialState = Immutable({
