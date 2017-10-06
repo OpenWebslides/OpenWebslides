@@ -17,7 +17,7 @@ import {
   getSelectionOffsets,
   setSelectionByOffsets,
 } from 'lib/content-editable/selectionOffsets';
-import inlinePropertyTypes from 'constants/inlinePropertyTypes';
+import { inlinePropertyTypes } from 'constants/inlinePropertyTypes';
 
 import LinkModal from './LinkModal';
 
