@@ -150,8 +150,8 @@ function* doDeleteContentItemFromSlide(action) {
     // If the contentItemToDelete has an asset, delete it as well.
     // #TODO test this as soon as deletion-wrapper is functional again.
     const contentItemToDelete = yield select(getContentItemById, contentItemToDeleteId);
-    if (contentItemToDelete.assetId !== undefined) {
-      yield call(deleteAssetApi, contentItemToDelete.assetId);
+    if (contentItemToDelete.dataId !== undefined) {
+      yield call(deleteAssetApi, contentItemToDelete.dataId);
     }
 
     // Find the contentItem before the deleted one (if there is one) so focus can be moved to it.
