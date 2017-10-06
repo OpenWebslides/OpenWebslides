@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Immutable from 'seamless-immutable';
 
 import { ADD_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
-import { FETCH_DECK_SUCCESS, ADD_DECK_METADATA } from 'actions/entities/decks';
+import { FETCH_DECK_SUCCESS, ADD_DECK_METADATA, DECK_DELETION_SUCCESS } from 'actions/entities/decks';
 
 const initialState = Immutable({});
 
@@ -56,6 +56,10 @@ function addDeckMetadata(state, action) {
     },
   });
 }
+function deckDeletionSuccess(state, action) {
+  const deckId = action.payload;
+  return _.without(state, deckId);
+}
 
 function byId(state = initialState, action) {
   switch (action.type) {
@@ -63,6 +67,7 @@ function byId(state = initialState, action) {
     case DELETE_SLIDE: return deleteSlide(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
     case ADD_DECK_METADATA: return addDeckMetadata(state, action);
+    case DECK_DELETION_SUCCESS: return deckDeletionSuccess(state, action);
     default: return state;
   }
 }
