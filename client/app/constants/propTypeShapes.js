@@ -57,6 +57,8 @@ export const mediaContentItemShape = {
 // More specific shape for contentItems with an image type.
 export const imageContentItemShape = {
   ...mediaContentItemShape,
+  dataId: PropTypes.number,
+  filename: PropTypes.string,
 };
 
 // More specific shape for contentItems with a container type.
