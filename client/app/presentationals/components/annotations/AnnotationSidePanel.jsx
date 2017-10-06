@@ -133,6 +133,8 @@ export default connect(
 
 AnnotationSidePanel.propTypes = {
   annotationMode: PropTypes.bool.isRequired,
+  deckId: PropTypes.number.isRequired,
   toggleAnnotationMode: PropTypes.func.isRequired,
   setActiveConversationId: PropTypes.func.isRequired,
+  fetchConversations: PropTypes.func.isRequired,
 };
