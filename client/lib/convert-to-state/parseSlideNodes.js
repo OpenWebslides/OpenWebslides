@@ -463,7 +463,7 @@ function parseContentItemNode(
   else if (nodeName === 'IMG') {
     const assetId = assetLinks[node.dataset.id];
     const contentItemType = contentItemTypes.DECORATIVE_IMAGE;
-    const alt = node.alt;
+    const alt = (node.alt !== undefined && _.trim(node.alt) !== '') ? node.alt : '[No alt text found]';
     let properties;
 
     if (assetId) {
@@ -495,9 +495,11 @@ function parseContentItemNode(
       caption = node.children[1] ? node.children[1].textContent : '[No caption found]';
     }
 
+    if (_.trim(caption) === '') caption = '[No caption found]';
+
     const assetId = assetLinks[imgNode.dataset.id];
     const contentItemType = contentItemTypes.ILLUSTRATIVE_IMAGE;
-    const alt = imgNode.alt;
+    const alt = (imgNode.alt !== undefined && _.trim(imgNode.alt) !== '') ? imgNode.alt : '[No alt text found]';
     let properties;
 
     if (assetId) {
@@ -520,6 +522,9 @@ function parseContentItemNode(
       ...contentItem,
       contentItemType: contentItemTypes.IFRAME,
       src: node.src,
+      alt: (node.title !== undefined && _.trim(node.title) !== '')
+        ? node.title
+        : '[No title found]',
     };
   }
   // Skip unrecognized nodeNames.
