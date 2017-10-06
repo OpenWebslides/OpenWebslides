@@ -14,11 +14,12 @@ class PresentationView extends Component {
   }
 
   renderSlide() {
+    const { deckId } = this.props.match.params;
     if (this.props.activeSlideId) {
       return (
         <div className="c_presentation-view">
           <SlideContainer id={this.props.activeSlideId} viewType={slideViewTypes.PRESENTATION} />
-          <AnnotationSidePanel />
+          <AnnotationSidePanel deckId={deckId} />
         </div>
       );
     }
