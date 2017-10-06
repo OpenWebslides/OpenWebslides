@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function IllustrativeImage(
-  { attributes, contentItem: { src, altText, caption, dataId } },
-) {
+import { illustrativeImageContentItemShape } from 'constants/propTypeShapes';
+
+export default function IllustrativeImage(props) {
+  const { attributes, contentItem: { src, alt, caption, dataId } } = props;
+
   return (
     <figure>
       <div className="ows-figure-wrapper">
         <div className="ows-figure-image-wrapper" style={{ backgroundImage: `url('${src}')` }}>
-          <img {...attributes} src={src} alt={altText} data-id={dataId} />
+          <img {...attributes} src={src} alt={alt} data-id={dataId} />
         </div>
         <figcaption>
           {caption}
@@ -19,6 +21,6 @@ export default function IllustrativeImage(
 }
 
 IllustrativeImage.propTypes = {
-  attributes: PropTypes.objectOf(Object).isRequired,
-  contentItem: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.shape(illustrativeImageContentItemShape).isRequired,
+  attributes: PropTypes.objectOf(PropTypes.string).isRequired,
 };

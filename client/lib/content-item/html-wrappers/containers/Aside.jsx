@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Aside({ children, attributes }) {
+import { asideContentItemShape } from 'constants/propTypeShapes';
+
+export default function Aside(props) {
+  const { children, attributes } = props;
+
   return (
     <aside {...attributes} >
       {children}
@@ -10,6 +14,7 @@ export default function Aside({ children, attributes }) {
 }
 
 Aside.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(Object), PropTypes.objectOf(Object)]).isRequired,
-  attributes: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.shape(asideContentItemShape).isRequired,
+  attributes: PropTypes.objectOf(PropTypes.string).isRequired,
+  children: PropTypes.node.isRequired,
 };

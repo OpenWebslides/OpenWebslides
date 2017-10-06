@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Section({ children, attributes }) {
+import { sectionContentItemShape } from 'constants/propTypeShapes';
+
+export default function Section(props) {
+  const { children, attributes } = props;
+
   return (
     <section {...attributes} >
       {children}
@@ -10,6 +14,7 @@ export default function Section({ children, attributes }) {
 }
 
 Section.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(Object), PropTypes.objectOf(Object)]).isRequired,
-  attributes: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.shape(sectionContentItemShape).isRequired,
+  attributes: PropTypes.objectOf(PropTypes.string).isRequired,
+  children: PropTypes.node.isRequired,
 };

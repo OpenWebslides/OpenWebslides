@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Paragraph({ children, attributes }) {
+import { paragraphContentItemShape } from 'constants/propTypeShapes';
+
+export default function Paragraph(props) {
+  const { children, attributes } = props;
+
   return (
     <p {...attributes} >
       {children}
@@ -10,8 +14,9 @@ export default function Paragraph({ children, attributes }) {
 }
 
 Paragraph.propTypes = {
+  contentItem: PropTypes.shape(paragraphContentItemShape).isRequired,
+  attributes: PropTypes.objectOf(PropTypes.string).isRequired,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  attributes: PropTypes.objectOf(Object).isRequired,
 };
 
 Paragraph.defaultProps = {

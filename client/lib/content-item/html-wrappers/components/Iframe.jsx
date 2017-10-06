@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Iframe({ attributes, contentItem: { src } }) {
+import { iframeContentItemShape } from 'constants/propTypeShapes';
+
+export default function Iframe(props) {
+  const { attributes, contentItem: { src, alt } } = props;
+
   return (
-    <iframe {...attributes} src={src} />
+    <iframe {...attributes} src={src} title={alt} />
   );
 }
 
 Iframe.propTypes = {
-  attributes: PropTypes.objectOf(Object).isRequired,
-  contentItem: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.shape(iframeContentItemShape).isRequired,
+  attributes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
