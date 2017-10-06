@@ -41,13 +41,13 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const ContentItemContainer = connect(mapStateToProps, mapDispatchToProps)(ContentViewItem);
+const ContentViewItemContainer = connect(mapStateToProps, mapDispatchToProps)(ContentViewItem);
 
-ContentItemContainer.propTypes = {
+ContentViewItemContainer.propTypes = {
   slideViewType: PropTypes.string.isRequired,
   contentItemId: PropTypes.string.isRequired,
   ancestorItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   slideId: PropTypes.string.isRequired,
 };
 
-export default ContentItemContainer;
+export default ContentViewItemContainer;

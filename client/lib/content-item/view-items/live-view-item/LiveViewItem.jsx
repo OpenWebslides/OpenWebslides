@@ -21,7 +21,7 @@ function LiveViewItem(props) {
     hasInlineProperties,
     deleteContentItemFromSlide,
     textPropName,
-    contentItem: { contentItemType, childItemIds, id, ordered, dataId },
+    contentItem: { contentItemType, childItemIds, id, dataId },
     viewType,
     ancestorItemIds,
     slideId,
@@ -35,7 +35,6 @@ function LiveViewItem(props) {
         contentItem={contentItem}
         attributes={attributes}
         headingLevel={headingLevel}
-        ordered={ordered}
       >
         {childItemIds.map(childItemId => (
           <LiveViewItemContainer
@@ -45,7 +44,6 @@ function LiveViewItem(props) {
             contentItemId={childItemId}
             ancestorItemIds={ancestorItemIds.concat(id)}
             slideId={slideId}
-            editable={true}
             headingLevel={headingLevel + 1}
           />))}
       </ContentItemWrapper>

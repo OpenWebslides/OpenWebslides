@@ -10,7 +10,7 @@ const directionsMenu = {
   [directions.DOWN]: 'Down',
 };
 
-function SlideContentViewItem(props) {
+function ContentViewItemWrapper(props) {
   const contentItem = props.contentItem;
   const cssClass = 'c_slide-content-view-item';
   const cssClasses = [
@@ -48,7 +48,7 @@ function SlideContentViewItem(props) {
                   className={`${cssClass}__options-item ${cssClass}__options-item--direction-menu`}
                 >
                   <menu className="o_direction-menu">
-                    {Object.keys(directionsMenu).map(direction =>
+                    {Object.keys(directionsMenu).map(direction => (
                       <li className="o_direction-menu__item" key={direction}>
                         <button
                           className={`o_direction-menu__button o_direction-menu__button--${direction.toLowerCase()}`}
@@ -64,8 +64,8 @@ function SlideContentViewItem(props) {
                             {directionsMenu[direction]}
                           </span>
                         </button>
-                      </li>,
-                    )}
+                      </li>
+                    ))}
                   </menu>
                 </div>
               </div>
@@ -77,7 +77,7 @@ function SlideContentViewItem(props) {
   );
 }
 
-SlideContentViewItem.propTypes = {
+ContentViewItemWrapper.propTypes = {
   cssIdentifier: PropTypes.string,
   isFocused: PropTypes.bool.isRequired,
   contentItem: PropTypes.objectOf(Object).isRequired,
@@ -87,8 +87,8 @@ SlideContentViewItem.propTypes = {
   handleDirectionButtonClick: PropTypes.func.isRequired,
 };
 
-SlideContentViewItem.defaultProps = {
+ContentViewItemWrapper.defaultProps = {
   cssIdentifier: 'default',
 };
 
-export default SlideContentViewItem;
+export default ContentViewItemWrapper;

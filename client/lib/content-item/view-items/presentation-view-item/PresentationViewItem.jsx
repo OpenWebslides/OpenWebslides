@@ -16,7 +16,7 @@ function PresentationViewItem(props) {
   const {
     headingLevel,
     contentItem,
-    contentItem: { contentItemType, childItemIds, ordered },
+    contentItem: { contentItemType, childItemIds },
   } = props;
 
   const attributes = generateAttributes(contentItem);
@@ -25,13 +25,15 @@ function PresentationViewItem(props) {
   if (Object.keys(htmlContainers).includes(contentItemType)) {
     const ContentItemWrapper = htmlContainers[contentItemType];
 
-    const ChildComponents = renderChildrenHOC({ childItemIds, headingLevel, ordered })(PresentationViewItem);
+    const ChildComponents = renderChildrenHOC({
+      childItemIds,
+      headingLevel,
+    })(PresentationViewItem);
 
     return (
       <ContentItemWrapper
         contentItem={contentItem}
         attributes={attributes}
-        ordered={ordered}
       >
         <ChildComponents />
       </ContentItemWrapper>);
@@ -56,7 +58,12 @@ function PresentationViewItem(props) {
             attributes={attributes}
             headingLevel={headingLevel}
           >
-            <span dangerouslySetInnerHTML={{ __html: getHTMLStringFromInlinePropertiesAndText(inlineProperties, text) }} />
+            <span
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{
+                __html: getHTMLStringFromInlinePropertiesAndText(inlineProperties, text),
+              }}
+            />
           </ContentItemComponent>
         );
       }
@@ -67,7 +74,6 @@ function PresentationViewItem(props) {
 
 PresentationViewItem.propTypes = {
   contentItem: PropTypes.objectOf(Object).isRequired,
-  attributes: PropTypes.objectOf(Object).isRequired,
   headingLevel: PropTypes.number.isRequired,
 };
 

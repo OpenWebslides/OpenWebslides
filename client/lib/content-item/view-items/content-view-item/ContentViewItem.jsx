@@ -6,9 +6,9 @@ import ContentEditableContainer from 'lib/content-editable/ContentEditableContai
 import htmlComponents from '../../html-wrappers/components';
 import htmlContainers from '../../html-wrappers/containers';
 
-import SlideContentViewItem from './SlideContentViewItem';
+import ContentViewItemWrapper from './ContentViewItemWrapper';
 import ContentViewItemContainer from './ContentViewItemContainer';
-import addContentItemTypeProps from 'lib/content-item/helpers/addContentItemTypeProps';
+import addContentItemTypeProps from '../../helpers/addContentItemTypeProps';
 
 function ContentViewItem(props) {
   const {
@@ -42,7 +42,6 @@ function ContentViewItem(props) {
             contentItemId={childItemId}
             ancestorItemIds={ancestorItemIds.concat(id)}
             slideId={slideId}
-            editable={true}
             headingLevel={headingLevel + 1}
           />))}
       </div>
@@ -53,7 +52,7 @@ function ContentViewItem(props) {
     const contentItemTypeProps = addContentItemTypeProps(contentItemType);
 
     return (
-      <SlideContentViewItem
+      <ContentViewItemWrapper
         contentItem={contentItem}
         isFocused={isFocused}
         handleDirectionButtonClick={handleDirectionButtonClick}
@@ -70,7 +69,7 @@ function ContentViewItem(props) {
           ancestorItemIds={ancestorItemIds}
           {...contentItemTypeProps}
         />
-      </SlideContentViewItem>
+      </ContentViewItemWrapper>
     );
   }
 }
