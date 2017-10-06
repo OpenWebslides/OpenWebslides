@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Title({ headingLevel, attributes, children }) {
+import { titleContentItemShape } from 'constants/propTypeShapes';
+
+export default function Title(props) {
+  const { headingLevel, attributes, children } = props;
   const Heading = `h${headingLevel <= 6 ? headingLevel : 6}`;
 
   return (
@@ -12,9 +15,10 @@ export default function Title({ headingLevel, attributes, children }) {
 }
 
 Title.propTypes = {
-  headingLevel: PropTypes.number.isRequired,
+  contentItem: PropTypes.shape(titleContentItemShape).isRequired,
+  attributes: PropTypes.objectOf(PropTypes.string).isRequired,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  attributes: PropTypes.objectOf(Object).isRequired,
+  headingLevel: PropTypes.number.isRequired,
 };
 
 Title.defaultProps = {

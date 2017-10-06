@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function List({ children, attributes, ordered }) {
+import { listContentItemShape } from 'constants/propTypeShapes';
+
+export default function List(props) {
+  const { children, attributes, contentItem: { ordered } } = props;
   const ListType = ordered ? 'ol' : 'ul';
 
   return (
@@ -12,7 +15,7 @@ export default function List({ children, attributes, ordered }) {
 }
 
 List.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(Object), PropTypes.objectOf(Object)]).isRequired,
-  attributes: PropTypes.objectOf(Object).isRequired,
-  ordered: PropTypes.bool.isRequired,
+  contentItem: PropTypes.shape(listContentItemShape).isRequired,
+  attributes: PropTypes.objectOf(PropTypes.string).isRequired,
+  children: PropTypes.node.isRequired,
 };
