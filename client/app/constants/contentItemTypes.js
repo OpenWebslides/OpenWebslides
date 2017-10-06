@@ -1,6 +1,3 @@
-// #TODO this doesn't work, probably because of a circular dependency; refactor
-// import { slideViewTypes } from 'constants/slideViewTypes';
-
 export const contentItemTypes = {
   TITLE: 'TITLE',
   PARAGRAPH: 'PARAGRAPH',
@@ -151,6 +148,8 @@ export const contentItemTypesById = {
       childItemIds: [],
     },
   },
+
+  // #TODO get rid of this; replace with auto-generated containers when rendering the slide
   [contentItemTypes.IMAGE_CONTAINER]: {
     id: contentItemTypes.IMAGE_CONTAINER,
     name: 'Image container',
