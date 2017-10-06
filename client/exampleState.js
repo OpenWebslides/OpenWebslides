@@ -77,21 +77,21 @@ const exampleState = {
           inlineProperties: [
             {
               type: EM,
-              offSets: {
+              offsets: {
                 start: 0,
                 end: 4,
               },
             },
             {
               type: STRONG,
-              offSets: {
+              offsets: {
                 start: 8,
                 end: 14,
               },
             },
             {
               type: LINK,
-              offSets: {
+              offsets: {
                 start: 15,
                 end: 20,
               },

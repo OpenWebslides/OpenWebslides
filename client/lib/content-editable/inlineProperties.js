@@ -37,41 +37,41 @@ export function removeOrMergeOverlappingInlineProperties(
   // since the inlineProperties array is ordered.)
   while (
     i < inlineProperties.length &&
-    newInlineProperty.offSets.end >= inlineProperties[i].offSets.start
+    newInlineProperty.offsets.end >= inlineProperties[i].offsets.start
   ) {
     // check for overlap
     // first check the selectionOffset.start
-    if (newInlineProperty.offSets.start >= inlineProperties[i].offSets.start) {
+    if (newInlineProperty.offsets.start >= inlineProperties[i].offsets.start) {
       // if selection start overlaps this inlineProperty
-      if (newInlineProperty.offSets.start < inlineProperties[i].offSets.end) {
+      if (newInlineProperty.offsets.start < inlineProperties[i].offsets.end) {
         // remove this inlineProperty
         indicesToDelete.push(i);
       }
       // if inlineProperties touch each other
-      else if (newInlineProperty.offSets.start === inlineProperties[i].offSets.end) {
+      else if (newInlineProperty.offsets.start === inlineProperties[i].offsets.end) {
         // if they are the same type, they can be merged into one
         if (newInlineProperty.type === inlineProperties[i].type) {
           // remove this inlineProperty
           indicesToDelete.push(i);
           // and change the selectionOffsets to include this inlineProperty
-          newInlineProperty.offSets.start = inlineProperties[i].offSets.start;
+          newInlineProperty.offsets.start = inlineProperties[i].offsets.start;
         }
         // if they are not the same type, they can exist next to each other
       }
     }
     // then check the selectionOffset.end; if selection end overlaps this inlineProperty
-    else if (newInlineProperty.offSets.end > inlineProperties[i].offSets.start) {
+    else if (newInlineProperty.offsets.end > inlineProperties[i].offsets.start) {
       // remove this inlineProperty
       indicesToDelete.push(i);
     }
     // if selection end touches this inlineProperty
-    else if (newInlineProperty.offSets.end === inlineProperties[i].offSets.start) {
+    else if (newInlineProperty.offsets.end === inlineProperties[i].offsets.start) {
       // if they are the same type, they can be merged into one
       if (newInlineProperty.type === inlineProperties[i].type) {
         // remove this inlineProperty
         indicesToDelete.push(i);
         // and change the selectionOffsets to include this inlineProperty
-        newInlineProperty.offSets.end = inlineProperties[i].offSets.end;
+        newInlineProperty.offsets.end = inlineProperties[i].offsets.end;
       }
       // if they are not the same type, they can exist next to each other
     }
@@ -92,12 +92,12 @@ export function addInlinePropertyToArray(inlineProperties, newInlineProperty) {
   removeOrMergeOverlappingInlineProperties(inlineProperties, newInlineProperty);
 
   // only add inline property if any text was selected
-  if (newInlineProperty.offSets.start !== newInlineProperty.offSets.end) {
+  if (newInlineProperty.offsets.start !== newInlineProperty.offsets.end) {
     // inlineProperties should be sorted by startsAtChar; find correct index
     let i = 0;
     while (
       i < inlineProperties.length &&
-      newInlineProperty.offSets.start > inlineProperties[i].offSets.start
+      newInlineProperty.offsets.start > inlineProperties[i].offsets.start
     ) {
       i += 1;
     }
@@ -123,48 +123,48 @@ export function updateInlinePropertiesAfterInputAtIndex(
     // if characters were added
     if (amount > 0) {
       // if the entire inlineProperty lies after the original caret position
-      if (inlineProperties[i].offSets.start >= origPosition) {
+      if (inlineProperties[i].offsets.start >= origPosition) {
         // move both start & end by $amount
-        inlineProperties[i].offSets.start += amount;
-        inlineProperties[i].offSets.end += amount;
+        inlineProperties[i].offsets.start += amount;
+        inlineProperties[i].offsets.end += amount;
       }
       // if the original caret position lies inside the inlineProperty
-      else if (inlineProperties[i].offSets.end >= origPosition) {
+      else if (inlineProperties[i].offsets.end >= origPosition) {
         // move only the end by $amount
-        inlineProperties[i].offSets.end += amount;
+        inlineProperties[i].offsets.end += amount;
       }
     }
     // if characters were deleted
     else if (amount < 0) {
       // if the entire inlineProperty lies after the original caret position
-      if (inlineProperties[i].offSets.start >= origPosition) {
+      if (inlineProperties[i].offsets.start >= origPosition) {
         // move both start & end by $amount
-        inlineProperties[i].offSets.start += amount;
-        inlineProperties[i].offSets.end += amount;
+        inlineProperties[i].offsets.start += amount;
+        inlineProperties[i].offsets.end += amount;
       }
       // if the original caret position lies inside the inlineProperty
-      else if (inlineProperties[i].offSets.end > origPosition) {
+      else if (inlineProperties[i].offsets.end > origPosition) {
         // move the end by $amount
-        inlineProperties[i].offSets.end += amount;
+        inlineProperties[i].offsets.end += amount;
         // check if the deleted character string overlapped with start
-        if (inlineProperties[i].offSets.start > caretPosition) {
+        if (inlineProperties[i].offsets.start > caretPosition) {
           // if so, move start to the new caretPosition
-          inlineProperties[i].offSets.start = caretPosition;
+          inlineProperties[i].offsets.start = caretPosition;
         }
         // if it doesn't overlap, that means the entire deleted string was
         // inside this inlineProperty; start does not need to be moved
       }
       // if the new caret position lies inside or before the inlineProperty
-      else if (inlineProperties[i].offSets.end >= caretPosition) {
+      else if (inlineProperties[i].offsets.end >= caretPosition) {
         // if the entire inlineProperty lies in de deleted character string
-        if (inlineProperties[i].offSets.start >= caretPosition) {
+        if (inlineProperties[i].offsets.start >= caretPosition) {
           // delete the inlineProperty
           indicesToDelete.push(i);
         }
         // if the deleted character string only partially overlapped this inlineProperty
         else {
           // move end to the new caretPosition
-          inlineProperties[i].offSets.end = caretPosition;
+          inlineProperties[i].offsets.end = caretPosition;
         }
       }
     }
@@ -184,16 +184,23 @@ export function getHTMLStringFromInlinePropertiesAndText(
 ) {
   /* eslint-disable */
 
-  if (text === undefined) {
+  if (text === undefined || text === null) {
     return '';
   }
+
+  // #TODO check if inlineProperties offsets still work with escape chars
+  const safeText = _.escape(text);
 
   // #TODO maybe this should be moved to a selector instead? (more efficient)
   let textHTML = '';
 
   // if there are no inlineproperties, just return the plain text
-  if (inlineProperties.length === 0) {
-    textHTML = text;
+  if (
+    inlineProperties === undefined ||
+    inlineProperties === null ||
+    inlineProperties.length === 0
+  ) {
+    textHTML = safeText;
   }
   // if there are inlineProperties, insert their HTML tags into the text
   else {
@@ -206,11 +213,11 @@ export function getHTMLStringFromInlinePropertiesAndText(
 
     // loop over all the chars of text
     // (+ 1 (because an inlineProperty can end after the last charindex)
-    while (charIndex < text.length + 1) {
+    while (charIndex < safeText.length + 1) {
       // if there is a current inlineProperty (meaning: started but not yet ended)
       if (inlineProperty !== null) {
         // check if the current inline property ends at this charIndex
-        if (inlineProperty.offSets.end === charIndex) {
+        if (inlineProperty.offsets.end === charIndex) {
           // if so, add the end tag to the HTML string
           textHTML += inlinePropertyTags[inlineProperty.type].endTag;
           // unset the current inline property
@@ -224,7 +231,7 @@ export function getHTMLStringFromInlinePropertiesAndText(
         inlinePropertyIndex < inlineProperties.length
       ) {
         // check if the next inlineProperty starts at this charIndex
-        if (inlineProperties[inlinePropertyIndex].offSets.start === charIndex) {
+        if (inlineProperties[inlinePropertyIndex].offsets.start === charIndex) {
           // if so, save it as the current inlineProperty
           inlineProperty = inlineProperties[inlinePropertyIndex];
           // add its start tag to the HTML string
@@ -248,7 +255,7 @@ export function getHTMLStringFromInlinePropertiesAndText(
       }
 
       // add the current char to the HTML string
-      textHTML += text.charAt(charIndex);
+      textHTML += safeText.charAt(charIndex);
 
       // move to the next char
       charIndex += 1;
