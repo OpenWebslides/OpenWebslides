@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 import { contentItemTypes } from 'constants/contentItemTypes';
+import { contentItemShape } from 'constants/propTypeShapes';
 
 import htmlComponents from 'lib/content-item/html-wrappers/components';
 import htmlContainers from 'lib/content-item/html-wrappers/containers';
@@ -73,7 +74,7 @@ function PresentationViewItem(props) {
 }
 
 PresentationViewItem.propTypes = {
-  contentItem: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.shape(contentItemShape).isRequired,
   headingLevel: PropTypes.number.isRequired,
 };
 

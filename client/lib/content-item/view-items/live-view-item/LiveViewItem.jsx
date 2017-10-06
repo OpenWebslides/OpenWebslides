@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
+import { slideViewTypes } from 'constants/slideViewTypes';
+import { contentItemShape } from 'constants/propTypeShapes';
 
 import htmlComponents from 'lib/content-item/html-wrappers/components';
 import htmlContainers from 'lib/content-item/html-wrappers/containers';
@@ -130,10 +132,10 @@ function LiveViewItem(props) {
 }
 
 LiveViewItem.propTypes = {
-  contentItem: PropTypes.objectOf(Object).isRequired,
-  attributes: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.shape(contentItemShape).isRequired,
+  attributes: PropTypes.objectOf(PropTypes.string).isRequired,
   headingLevel: PropTypes.number.isRequired,
-  slideViewType: PropTypes.string.isRequired,
+  slideViewType: PropTypes.oneOf(Object.values(slideViewTypes)).isRequired,
   isFocused: PropTypes.bool.isRequired,
   hasInlineProperties: PropTypes.bool,
   textPropName: PropTypes.string,

@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { slideViewTypes } from 'constants/slideViewTypes';
+import { contentItemShape } from 'constants/propTypeShapes';
+
 import ContentEditableContainer from 'lib/content-editable/ContentEditableContainer';
 
 import htmlComponents from '../../html-wrappers/components';
@@ -75,8 +78,8 @@ function ContentViewItem(props) {
 }
 
 ContentViewItem.propTypes = {
-  contentItem: PropTypes.objectOf(Object).isRequired,
-  slideViewType: PropTypes.string.isRequired,
+  contentItem: PropTypes.shape(contentItemShape).isRequired,
+  slideViewType: PropTypes.oneOf(Object.values(slideViewTypes)).isRequired,
   isFocused: PropTypes.bool.isRequired,
   hasInlineProperties: PropTypes.bool,
   textPropName: PropTypes.string,

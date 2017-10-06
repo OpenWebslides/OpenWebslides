@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { contentItemShape } from 'constants/propTypeShapes';
 import { directions } from 'constants/directions';
 
 const directionsMenu = {
@@ -80,10 +81,10 @@ function ContentViewItemWrapper(props) {
 ContentViewItemWrapper.propTypes = {
   cssIdentifier: PropTypes.string,
   isFocused: PropTypes.bool.isRequired,
-  contentItem: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.shape(contentItemShape).isRequired,
   ancestorItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   slideId: PropTypes.string.isRequired,
-  children: PropTypes.objectOf(Object).isRequired,
+  children: PropTypes.node.isRequired,
   handleDirectionButtonClick: PropTypes.func.isRequired,
 };
 
