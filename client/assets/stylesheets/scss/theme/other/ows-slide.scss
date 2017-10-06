@@ -211,8 +211,10 @@
     $spacing__h: $spacing--element__h;
 
     overflow: hidden;
-
+    // Makes sure images are visible and not unreasonable small even if there is too much other content on the slide.
     min-height: 5em;
+    // We need this to make sure that the child elements take this element's height (doesn't work with only min-height).
+    height: 5em;
 
     &-wrapper {
       @include inkgrid-row($v-gutter: $spacing__v, $h-gutter: $spacing__h);
