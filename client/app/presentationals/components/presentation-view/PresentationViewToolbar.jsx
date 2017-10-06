@@ -119,7 +119,9 @@ class PresentationToolbar extends Component {
 
 PresentationToolbar.propTypes = {
   viewFirstSlide: PropTypes.func.isRequired,
+  deckId: PropTypes.string.isRequired,
   viewPreviousSlide: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(Object).isRequired,
   viewNextSlide: PropTypes.func.isRequired,
   viewLastSlide: PropTypes.func.isRequired,
   toggleAnnotationMode: PropTypes.func.isRequired,
