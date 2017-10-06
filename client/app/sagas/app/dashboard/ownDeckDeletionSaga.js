@@ -17,7 +17,6 @@ export function* deleteOwnDeckFlow(action) {
   try {
     const deckId = action.meta;
     yield call(deleteDeckApi, deckId);
-    debugger;
     yield put({ type: DECK_DELETION_SUCCESS, payload: deckId });
   }
   catch (error) {
