@@ -26,7 +26,7 @@ export default function parseInlineProperties(nodes) {
 
       inlineProperties.push({
         type: SUPPORTED_PROPERTIES[node.nodeName], // #TODO fix this
-        offSets: {
+        offsets: {
           start: charOffset,
           end: endsAtChar,
         },

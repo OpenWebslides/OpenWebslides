@@ -157,7 +157,7 @@ class ContentEditable extends Component {
     // create new inlineProperty object
     const newInlineProperty = {
       type: inlinePropertyType,
-      offSets: {
+      offsets: {
         start: selectionOffsets.start,
         end: selectionOffsets.end,
       },
