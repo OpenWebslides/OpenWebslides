@@ -14,20 +14,26 @@ import generateAttributes from '../../helpers/generateAttributes';
 
 
 function NavigationViewItem(props) {
-  const { headingLevel, contentItem, contentItem: { contentItemType, childItemIds, ordered } } = props;
+  const {
+    headingLevel,
+    contentItem,
+    contentItem: { contentItemType, childItemIds },
+  } = props;
 
   const attributes = generateAttributes(contentItem);
 
   if (Object.keys(htmlContainers).includes(contentItemType)) {
     const ContentItemWrapper = htmlContainers[contentItemType];
 
-    const ChildComponents = renderChildrenHOC({ childItemIds, headingLevel, ordered })(NavigationViewItem);
+    const ChildComponents = renderChildrenHOC({
+      childItemIds,
+      headingLevel,
+    })(NavigationViewItem);
 
     return (
       <ContentItemWrapper
         contentItem={contentItem}
         attributes={attributes}
-        ordered={ordered}
       >
         <ChildComponents />
       </ContentItemWrapper>);
@@ -54,7 +60,12 @@ function NavigationViewItem(props) {
             attributes={attributes}
             headingLevel={headingLevel}
           >
-            <span dangerouslySetInnerHTML={{ __html: getHTMLStringFromInlinePropertiesAndText(inlineProperties, text) }} />
+            <span
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{
+                __html: getHTMLStringFromInlinePropertiesAndText(inlineProperties, text),
+              }}
+            />
           </ContentItemComponent>
         );
       }
