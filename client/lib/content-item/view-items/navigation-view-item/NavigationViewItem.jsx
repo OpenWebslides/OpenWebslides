@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
 import { contentItemTypes } from 'constants/contentItemTypes';
+import { contentItemShape } from 'constants/propTypeShapes';
 
 import htmlComponents from '../../html-wrappers/components';
 import htmlContainers from '../../html-wrappers/containers';
@@ -11,7 +12,6 @@ import renderChildrenHOC from '../../hocs/renderChildrenHOC';
 import contentItemHOC from '../../hocs/contentItemHOC';
 
 import generateAttributes from '../../helpers/generateAttributes';
-
 
 function NavigationViewItem(props) {
   const {
@@ -77,7 +77,7 @@ function NavigationViewItem(props) {
 
 
 NavigationViewItem.propTypes = {
-  contentItem: PropTypes.objectOf(Object).isRequired,
+  contentItem: PropTypes.shape(contentItemShape).isRequired,
   headingLevel: PropTypes.number.isRequired,
 
 };
