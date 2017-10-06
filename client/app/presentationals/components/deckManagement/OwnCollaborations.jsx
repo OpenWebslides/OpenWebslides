@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
@@ -26,7 +25,8 @@ class OwnDecks extends React.Component {
     if (isFirstRender || startedRequests) {
       toDisplay = <p> Loading ... </p>;
     }
-    else if (!this.props.ownCollaborationsState.startedRequests && this.props.ownCollaborationsState.errorMessage) {
+    else if (!this.props.ownCollaborationsState.startedRequests
+              && this.props.ownCollaborationsState.errorMessage) {
       toDisplay = <p>{this.props.ownCollaborationsState.errorMessage}</p>;
     }
     else {
@@ -52,15 +52,19 @@ class OwnDecks extends React.Component {
 }
 
 OwnDecks.propTypes = {
-  startOwnDecksRequests: PropTypes.func.isRequired,
-  ownDecksState: PropTypes.shape({
-    listOfDecks: PropTypes.array.isRequired,
-  }),
+  startOwnCollaborationsRequests: PropTypes.func.isRequired,
+  ownCollaborationsState: PropTypes.shape({
+    startedRequests: PropTypes.bool,
+    requestsSucceeded: PropTypes.bool,
+    errorMessage: PropTypes.string,
+  }).isRequired,
   requestDeckDeletion: PropTypes.func.isRequired,
   authState: PropTypes.shape({
     id: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
-  }),
+  }).isRequired,
+// eslint-disable-next-line react/forbid-prop-types
+  entities: PropTypes.object.isRequired,
 };
 
 export default OwnDecks;

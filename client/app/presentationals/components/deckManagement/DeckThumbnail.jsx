@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 export function DeckThumbnail({
   deckTitle,
   deckId,
-  deckLink,
   deleteDeck,
 }) {
   return (
@@ -52,9 +51,8 @@ export function DeckThumbnail({
 
 DeckThumbnail.propTypes = {
   deckTitle: PropTypes.string.isRequired,
-  deckId: PropTypes.string.isRequired,
+  deckId: PropTypes.number.isRequired,
   deckIconImage: PropTypes.string,
-  deckLink: PropTypes.string,
   deleteDeck: PropTypes.func.isRequired,
 };
 
