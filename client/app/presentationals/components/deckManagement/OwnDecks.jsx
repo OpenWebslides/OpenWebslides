@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // Presentationals:
 import NeedSigninWarning from 'presentationals/objects/NeedSigninWarning';
-import DeckThumbnail from 'presentationals/components/deckManagement/DeckThumbnail';
+import { DeckThumbnail } from 'presentationals/components/deckManagement/DeckThumbnail';
 
 // Helpers:
 import IfAuthHOC from 'lib/IfAuthHOC';
@@ -28,7 +28,12 @@ class OwnDecks extends React.Component {
   }
 
   render() {
-    const { requestsSucceeded, startedRequests, errorMessage, deckDeletionErrors } = this.props.ownDecksState;
+    const {
+      requestsSucceeded,
+      startedRequests,
+      errorMessage,
+      deckDeletionErrors,
+    } = this.props.ownDecksState;
 
     const isFirstRender = !startedRequests && !requestsSucceeded && !errorMessage;
     let toDisplay;
@@ -70,7 +75,11 @@ class OwnDecks extends React.Component {
         </div>);
     }
     if (deckDeletionErrors.length > 0) {
-      toDisplay = [toDisplay, deckDeletionErrors.map(err => <p className="c_own-decks--errors">{err}</p>)];
+      toDisplay =
+      [
+        toDisplay,
+        deckDeletionErrors.map(err => <p className="c_own-decks--errors">{err}</p>),
+      ];
     }
 
 
@@ -89,13 +98,18 @@ class OwnDecks extends React.Component {
 OwnDecks.propTypes = {
   startOwnDecksRequests: PropTypes.func.isRequired,
   ownDecksState: PropTypes.shape({
-    listOfDecks: PropTypes.array.isRequired,
+    startedRequests: PropTypes.bool,
+    requestsSucceeded: PropTypes.bool,
+    errorMessage: PropTypes.string,
+    deckDeletionErrors: PropTypes.arrayOf(PropTypes.string),
   }),
-  requestDeckDeletion: PropTypes.func.isRequired,
+  ownDeckDeletionRequest: PropTypes.func.isRequired,
   authState: PropTypes.shape({
     id: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
   }),
+// eslint-disable-next-line react/forbid-prop-types
+  entities: PropTypes.object.isRequired,
 };
 
 export default OwnDecks;
