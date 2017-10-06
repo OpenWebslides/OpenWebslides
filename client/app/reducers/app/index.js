@@ -10,7 +10,8 @@ import userImports from 'reducers/app/userImportsReducer';
 import fineUploader from 'reducers/app/fineUploaderReducer';
 import presentationView from 'reducers/app/presentationViewReducer';
 import profilePage from 'reducers/app/profile-page';
-import ownDecks from 'reducers/app/own-decks'
+import ownDecks from 'reducers/app/own-decks';
+import ownCollaborations from 'reducers/app/own-collaborations';
 
 const app = combineReducers({
   authentication,
@@ -24,6 +25,7 @@ const app = combineReducers({
   presentationView,
   profilePage,
   ownDecks,
+  ownCollaborations,
 });
 
 export default app;
