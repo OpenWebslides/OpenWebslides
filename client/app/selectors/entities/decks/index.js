@@ -7,3 +7,17 @@ export const getDecksById = (state) => {
 export const getDeckById = (state, id) => {
   return state.entities.decks.byId[id];
 };
+
+export const getSlideIdsById = (state, id) => {
+  if (state.entities.decks.byId[id]) {
+    return state.entities.decks.byId[id].slideIds;
+  }
+  return [];
+};
+
+export const getSlideCountById = (state, id) => {
+  if (state.entities.decks.byId[id]) {
+    return state.entities.decks.byId[id].slideIds.length;
+  }
+  return 0;
+};

@@ -13,4 +13,13 @@ const getConversationsForActiveSlide = createSelector(
   },
 );
 
+export const getConversationCountForActiveSlide = createSelector(
+  getActiveSlideId,
+  getConversationsById,
+  (activeSlideId, conversations) => {
+    const conversationsForSlide = _.filter(conversations, { contentItemId: activeSlideId });
+    return conversationsForSlide.length;
+  },
+);
+
 export default getConversationsForActiveSlide;
