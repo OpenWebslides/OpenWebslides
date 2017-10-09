@@ -9,4 +9,8 @@
     // height: 88vh; // temporarily make slide smaller than fullscreen so that pres. mode UI doesn't overlap it
     height: 100vh;
   }
+  // Hide slide numbers in presentation view.
+  .ows-slide::after {
+    display: none;
+  }
 }
