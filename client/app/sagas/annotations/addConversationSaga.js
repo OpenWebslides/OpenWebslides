@@ -1,7 +1,8 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import { getActiveSlideId, getActiveDeckId } from 'selectors/app/annotations';
+import { getActiveDeckId } from 'selectors/app/annotations';
+import { getActiveSlideId } from 'selectors/app/presentation';
 import { getCurrentUserId } from 'selectors/app/auth';
 import { ADD_CONVERSATION } from 'actions/entities/conversations';
 import { SIGNOUT } from 'actions/signoutActions';

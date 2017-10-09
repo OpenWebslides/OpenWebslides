@@ -1,7 +1,8 @@
 import { takeLatest, select, call, put } from 'redux-saga/effects';
 import { SubmissionError } from 'redux-form';
 
-import { getActiveSlideId, getActiveDeckId, getActiveConversationId } from 'selectors/app/annotations';
+import { getActiveDeckId, getActiveConversationId } from 'selectors/app/annotations';
+import { getActiveSlideId } from 'selectors/app/presentation';
 import { getCurrentUserId } from 'selectors/app/auth';
 import { ADD_CONVERSATION_COMMENT, FETCH_CONVERSATION_COMMENTS } from 'actions/entities/conversation-comments';
 import { SIGNOUT } from 'actions/signoutActions';
@@ -26,7 +27,7 @@ export function* doAddConversationComment(action) {
   }
   catch (error) {
     if (error.statusCode === 401) {
-      yield put({type: SIGNOUT});
+      yield put({ type: SIGNOUT });
     }
     const errorMessage = yield { _error: 'Something went wrong on our end.' };
     yield call(reject, new SubmissionError(errorMessage));
