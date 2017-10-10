@@ -54,16 +54,19 @@ function contentItemObjectToReact(
         contentItemObject.text,
       );
     case IMAGE_CONTAINER:
-      childrenObjects = contentItemObject.childItemIds.map(
+      if (contentItemObject.imageType === 'ILLUSTRATIVE_IMAGE') {
+        childrenObjects = contentItemObject.childItemIds.map(
         itemId => entities.contentItems.byId[itemId],
       );
-      return React.createElement(
-        'div',
-        { className: 'c_print-view__image-container' },
-        childrenObjects.map(child =>
-          contentItemObjectToReact(entities, child, currentLevel, preferences, childrenObjects.length),
-        ),
-      );
+        return React.createElement(
+          'div',
+          { className: 'c_print-view__image-container' },
+          childrenObjects.map(child =>
+            contentItemObjectToReact(entities, child, currentLevel, preferences, childrenObjects.length),
+          ),
+        );
+      }
+      break;
     case ILLUSTRATIVE_IMAGE:
       return illustrativeImageToReact(
         contentItemObject, preferences.imagePref, amountOfImages, currentLevel,
