@@ -16,7 +16,7 @@ export const getSlideIdsById = (state, id) => {
 };
 
 export const getSlideCountById = (state, id) => {
-  if (state.entities.decks.byId[id]) {
+  if (state.entities.decks.byId[id] && state.entities.decks.byId[id].slideIds) {
     return state.entities.decks.byId[id].slideIds.length;
   }
   return 0;
