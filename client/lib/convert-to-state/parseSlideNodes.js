@@ -495,7 +495,9 @@ function parseContentItemNode(
       caption = node.children[1] ? node.children[1].textContent : '[No caption found]';
     }
 
-    if (_.trim(caption) === '') caption = '[No caption found]';
+    caption = (_.trim(caption) === '')
+      ? '[No caption found]'
+      : _.trim(caption);
 
     const assetId = assetLinks[imgNode.dataset.id];
     const contentItemType = contentItemTypes.ILLUSTRATIVE_IMAGE;
