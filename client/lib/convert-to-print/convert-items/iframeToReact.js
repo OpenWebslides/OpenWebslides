@@ -4,7 +4,6 @@ import { iframeOptions } from 'constants/printViewOptions';
 function detectType(srcString) {
   // TODO
 
-  debugger;
   if (srcString.match(/youtube/)) {
     return `Youtube video: watch it at ${srcString}`;
   }
@@ -15,6 +14,7 @@ function detectType(srcString) {
 }
 
 export default function iframeObjectToReact(iframe, viewType, level) {
+  debugger;
   switch (viewType) {
     default:
     case iframeOptions.DESCRIPTION:
@@ -26,5 +26,13 @@ export default function iframeObjectToReact(iframe, viewType, level) {
         },
         detectType(iframe.src),
       );
+    case iframeOptions.SHOW:
+      return React.createElement(
+        'iframe',
+        { className: 'c_print-view__iframe', src: iframe.src },
+        null,
+      );
+    case iframeOptions.NOTHING:
+      return null;
   }
 }
