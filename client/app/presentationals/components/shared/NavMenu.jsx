@@ -8,7 +8,7 @@ import { signout } from 'actions/signoutActions';
 
 
 function NavMenu(props) {
-  const { isAuthenticated, firstName } = props;
+  const { isAuthenticated, firstName, id } = props;
 
   function signoutUser() {
     props.signout();
@@ -19,7 +19,7 @@ function NavMenu(props) {
       return (
         <ul className="c_nav-menu__list">
           <li className="c_nav-menu__item" key={'Dashboard'}><Link className="c_nav-menu__link" to={'/'}>Dashboard </Link></li>
-          <li className="c_nav-menu__item" key={'Editor'}><Link className="c_nav-menu__link" to={'/editor'}>Slide Editor </Link></li>
+          <li className="c_nav-menu__item" key={'Editor'}><Link className="c_nav-menu__link" to={`/user/${id}`}>Profile </Link></li>
           <li className="c_nav-menu__item" key={'welcomeMessage'}>{`Welcome, ${firstName}`}</li>
           <li className="c_nav-menu__item" key={'Sign Out'}><a href="https://login.ugent.be/logout" onClick={() => signoutUser()}>Sign Out</a></li>
         </ul>
@@ -49,6 +49,7 @@ export default connect(
     return {
       isAuthenticated: state.app.authentication.isAuthenticated,
       firstName: state.app.authentication.firstName,
+      id: state.app.authentication.id,
     };
   },
   (dispatch) => {
@@ -60,6 +61,7 @@ NavMenu.propTypes = {
   cssIdentifier: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
   firstName: PropTypes.string,
+  id: PropTypes.string.isRequired,
 };
 
 NavMenu.defaultProps = {
