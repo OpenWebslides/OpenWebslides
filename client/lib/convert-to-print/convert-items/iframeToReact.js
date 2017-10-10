@@ -14,7 +14,6 @@ function detectType(srcString) {
 }
 
 export default function iframeObjectToReact(iframe, viewType, level) {
-  debugger;
   switch (viewType) {
     default:
     case iframeOptions.DESCRIPTION:
