@@ -6,6 +6,9 @@
   background-color: white;
 
 
+  &__iframe-description {
+    color: #DDDDDD;
+  }
   // TEXT:
   &__paragraph {
     text-indent: 1cm;
@@ -179,11 +182,6 @@
     border: $border-width--subtle $border-style--subtle $color--main__border;
     padding-left: 0;
     text-align: center;
-    //flex-basis: 30%;
-    //flex-grow: 0.66;
-    //flex-shrink: 0.3;
-
-
 
     &__image {
       max-width: 100%;

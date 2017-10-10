@@ -3,7 +3,15 @@ import { iframeOptions } from 'constants/printViewOptions';
 
 function detectType(srcString) {
   // TODO
-  return 'This will contain a description of the iFrame contents';
+
+  debugger;
+  if (srcString.match(/youtube/)) {
+    return `Youtube video: watch it at ${srcString}`;
+  }
+  else if (srcString.match(/mentimeter/)) {
+    return '[Mentimeter question]';
+  }
+  return `Website: ${srcString}`;
 }
 
 export default function iframeObjectToReact(iframe, viewType, level) {
