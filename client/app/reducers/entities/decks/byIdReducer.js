@@ -36,25 +36,25 @@ function deleteSlide(state, action) {
 
 function fetchDeckSuccess(state, action) {
   const deckId = action.payload.deckId;
-  return state.merge({
+
+  return Immutable.merge(state, {
     [deckId]: {
       id: deckId,
-      meta: action.payload.metadata,
       slideIds: Object.keys(action.payload.slidesById),
       slideSequence: Object.keys(action.payload.slidesById).length,
     },
-  });
+  }, { deep: true });
 }
 
 function addDeckMetadata(state, action) {
   const deckId = action.payload.id;
   const metadata = action.payload.metadata;
-  return state.merge({
+  return Immutable.merge(state, {
     [deckId]: {
       id: deckId,
       meta: metadata,
     },
-  });
+  }, { deep: true });
 }
 function deckDeletionSuccess(state, action) {
   const deckId = action.payload;
