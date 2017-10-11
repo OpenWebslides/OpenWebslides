@@ -13,6 +13,19 @@ class PresentationView extends Component {
     this.props.fetchDeck(deckId);
   }
 
+  componentDidUpdate(prevProps) {
+    const { setActiveSlide, activeSlideId, location: { hash } } = this.props;
+
+    if (!prevProps.activeSlideId && hash) {
+      const slideId = hash.slice(1);
+      setActiveSlide(slideId);
+    }
+
+    if (activeSlideId) {
+      window.history.replaceState(null, null, `#${activeSlideId}`);
+    }
+  }
+
   renderSlide() {
     const { deckId } = this.props.match.params;
     if (this.props.activeSlideId) {
@@ -42,8 +55,10 @@ class PresentationView extends Component {
 PresentationView.propTypes = {
   activeSlideId: PropTypes.string,
   fetchDeck: PropTypes.func.isRequired,
+  setActiveSlide: PropTypes.func.isRequired,
   match: PropTypes.objectOf(Object).isRequired,
   annotationMode: PropTypes.bool.isRequired,
+  location: PropTypes.objectOf(Object).isRequired,
 };
 
 PresentationView.defaultProps = {
