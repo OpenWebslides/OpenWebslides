@@ -68,6 +68,7 @@ class AnnotationSidePanel extends Component {
 
   showConversationPanel(conversationId) {
     this.props.setActiveConversationId(conversationId);
+    this.setState({ showOverviewPanel: false });
     this.setState({ showConversationPanel: true });
   }
 
@@ -96,6 +97,7 @@ class AnnotationSidePanel extends Component {
       return (
         <OverviewPanel
           closeOverviewPanel={this.closeOverviewPanel}
+          showConversationPanel={this.showConversationPanel}
         />
       );
     }

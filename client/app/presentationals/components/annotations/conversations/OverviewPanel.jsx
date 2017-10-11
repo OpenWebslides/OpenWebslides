@@ -19,7 +19,7 @@ const sortConversationsBySlide = (conversations) => {
 };
 
 function OverviewPanel(props) {
-  const { closeOverviewPanel, conversations, setActiveSlide } = props;
+  const { closeOverviewPanel, showConversationPanel, conversations, setActiveSlide } = props;
 
   function renderConversations(conversations) {
     const conversationsBySlide = sortConversationsBySlide(conversations);
@@ -33,8 +33,10 @@ function OverviewPanel(props) {
             <li key={slideNumber}>
               <a href="#" onClick={() => setActiveSlide(slideId)}><h4>Slide {slideNumber}</h4></a>
               {conversationsBySlide[slideId].map((conversation) => {
+                const { id, title, commentCount, createdTimeAgo } = conversation;
                 return (<div>
-                  {conversation.title}
+                  <p><strong>{title} </strong></p>
+                  <a href="#" onClick={() => showConversationPanel(id)}>View</a> - {commentCount} comments - Posted {createdTimeAgo}
                 </div>);
               })
               }
