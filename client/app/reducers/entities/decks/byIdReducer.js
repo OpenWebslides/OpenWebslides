@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Immutable from 'seamless-immutable';
 
 import { ADD_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
-import { FETCH_DECK_SUCCESS, ADD_DECK_METADATA } from 'actions/entities/decks';
+import { FETCH_DECK_SUCCESS, ADD_DECK_METADATA, DECK_DELETION_SUCCESS } from 'actions/entities/decks';
 
 const initialState = Immutable({});
 
@@ -36,25 +36,29 @@ function deleteSlide(state, action) {
 
 function fetchDeckSuccess(state, action) {
   const deckId = action.payload.deckId;
-  return state.merge({
+
+  return Immutable.merge(state, {
     [deckId]: {
       id: deckId,
-      meta: action.payload.metadata,
       slideIds: Object.keys(action.payload.slidesById),
       slideSequence: Object.keys(action.payload.slidesById).length,
     },
-  });
+  }, { deep: true });
 }
 
 function addDeckMetadata(state, action) {
   const deckId = action.payload.id;
   const metadata = action.payload.metadata;
-  return state.merge({
+  return Immutable.merge(state, {
     [deckId]: {
       id: deckId,
       meta: metadata,
     },
-  });
+  }, { deep: true });
+}
+function deckDeletionSuccess(state, action) {
+  const deckId = action.payload;
+  return _.without(state, deckId);
 }
 
 function byId(state = initialState, action) {
@@ -63,6 +67,7 @@ function byId(state = initialState, action) {
     case DELETE_SLIDE: return deleteSlide(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
     case ADD_DECK_METADATA: return addDeckMetadata(state, action);
+    case DECK_DELETION_SUCCESS: return deckDeletionSuccess(state, action);
     default: return state;
   }
 }

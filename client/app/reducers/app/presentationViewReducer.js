@@ -6,6 +6,7 @@ import {
   VIEW_LAST_SLIDE,
   VIEW_PREVIOUS_SLIDE,
   VIEW_NEXT_SLIDE,
+  SET_ACTIVE_SLIDE,
 } from 'actions/app/presentation-view';
 
 
@@ -32,6 +33,12 @@ function presentationView(state = initialState, action) {
 
       return state.merge({
         activeSlideId: firstSlideId,
+      });
+    }
+
+    case SET_ACTIVE_SLIDE: {
+      return state.merge({
+        activeSlideId: action.payload.slideId,
       });
     }
 

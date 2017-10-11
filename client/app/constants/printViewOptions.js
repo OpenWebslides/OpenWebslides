@@ -30,10 +30,12 @@ export const decorativeImgOptionsText = {
 export const iframeOptions = {
   NOTHING: 'NOTHING',
   DESCRIPTION: 'DESCRIPTION',
+  SHOW: 'SHOW',
 };
 export const iframeOptionsText = {
   NOTHING: 'Nothing',
   DESCRIPTION: 'Description',
+  SHOW: 'Show contents',
 };
 
 // ANNOTATIONS:

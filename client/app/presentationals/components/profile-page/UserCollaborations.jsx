@@ -22,7 +22,9 @@ function renderDeckThumbnail(el) {
   );
 }
 
-function UserCollaborations({ entities, ids, authState }) {
+function UserCollaborations({ entities, userId, authState }) {
+
+  const ids = entities.users.byId[userId].collaborations;
   const listOfDecks = ids.map(id => entities.decks.byId[id]);
   const listOfDeckThumbnails = listOfDecks.map(el =>
     renderDeckThumbnail(el),

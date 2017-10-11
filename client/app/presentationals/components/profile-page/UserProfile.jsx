@@ -27,7 +27,7 @@ class UserProfile extends React.Component {
           />
           <UserCollaborations
             entities={this.props.entities}
-            ids={user.collaborations}
+            userId={user.id}
             authState={this.props.authState}
           />
         </div>

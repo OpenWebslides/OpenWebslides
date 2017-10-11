@@ -5,12 +5,13 @@ import confirmEmail from 'reducers/app/confirmEmailReducer';
 import slideEditor from 'reducers/app/slide-editor';
 import feed from 'reducers/app/feedReducer';
 import annotations from 'reducers/app/annotations';
-import deckManagement from 'reducers/app/deckManagementReducer';
 import printView from 'reducers/app/printViewReducer';
 import userImports from 'reducers/app/userImportsReducer';
 import fineUploader from 'reducers/app/fineUploaderReducer';
 import presentationView from 'reducers/app/presentationViewReducer';
 import profilePage from 'reducers/app/profile-page';
+import ownDecks from 'reducers/app/own-decks';
+import ownCollaborations from 'reducers/app/own-collaborations';
 
 const app = combineReducers({
   authentication,
@@ -18,12 +19,13 @@ const app = combineReducers({
   slideEditor,
   feed,
   annotations,
-  deckManagement,
   printView,
   userImports,
   fineUploader,
   presentationView,
   profilePage,
+  ownDecks,
+  ownCollaborations,
 });
 
 export default app;

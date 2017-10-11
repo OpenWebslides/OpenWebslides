@@ -9,6 +9,7 @@ import illustrativeImageToReact from './convert-items/illustrativeImageToReact';
 import decorativeImageToReact from './convert-items/decorativeImageToReact';
 import iframeToReact from './convert-items/iframeToReact';
 import titleToReact from './convert-items/titleToReact';
+import paragraphToReact from './convert-items/paragraphToReact';
 
 const { TITLE, PARAGRAPH, SECTION, LIST, LIST_ITEM, IMAGE_CONTAINER, ILLUSTRATIVE_IMAGE, DECORATIVE_IMAGE, IFRAME } = contentItemTypes;
 const { EM, STRONG } = ipt;
@@ -24,11 +25,7 @@ function contentItemObjectToReact(
     case TITLE:
       return titleToReact(contentItemObject, currentLevel);
     case PARAGRAPH:
-      return React.createElement(
-        'p',
-        { 'data-level': currentLevel, className: 'c_print-view__paragraph' },
-        contentItemObject.text,
-      );
+      return paragraphToReact(contentItemObject, currentLevel);
     case SECTION:
       return contentItemObject.childItemIds.map((itemId) => {
         const itemObject = entities.contentItems.byId[itemId];
@@ -54,16 +51,19 @@ function contentItemObjectToReact(
         contentItemObject.text,
       );
     case IMAGE_CONTAINER:
-      childrenObjects = contentItemObject.childItemIds.map(
+      if (contentItemObject.imageType === 'ILLUSTRATIVE_IMAGE') {
+        childrenObjects = contentItemObject.childItemIds.map(
         itemId => entities.contentItems.byId[itemId],
       );
-      return React.createElement(
-        'div',
-        { className: 'c_print-view__image-container' },
-        childrenObjects.map(child =>
-          contentItemObjectToReact(entities, child, currentLevel, preferences, childrenObjects.length),
-        ),
-      );
+        return React.createElement(
+          'div',
+          { className: 'c_print-view__image-container' },
+          childrenObjects.map(child =>
+            contentItemObjectToReact(entities, child, currentLevel, preferences, childrenObjects.length),
+          ),
+        );
+      }
+      break;
     case ILLUSTRATIVE_IMAGE:
       return illustrativeImageToReact(
         contentItemObject, preferences.imagePref, amountOfImages, currentLevel,

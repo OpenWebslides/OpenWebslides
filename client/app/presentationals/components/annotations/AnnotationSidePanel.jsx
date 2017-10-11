@@ -4,11 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { toggleAnnotationMode, setActiveConversationId } from 'actions/app/annotations';
+import { fetchConversations } from 'actions/entities/conversations';
 import { getAnnotationMode } from 'selectors/app/annotations';
 import ConversationList from './conversations/ConversationList';
 import ConversationPanel from './conversations/ConversationPanel';
 import AddConversationPanel from './conversations/AddConversationPanel';
 import PrivateNotePanel from './conversations/PrivateNotePanel';
+import OverviewPanel from './conversations/OverviewPanel';
 
 
 class AnnotationSidePanel extends Component {
@@ -21,12 +23,15 @@ class AnnotationSidePanel extends Component {
     this.showPrivateNotePanel = this.showPrivateNotePanel.bind(this);
     this.closePrivateNotePanel = this.closePrivateNotePanel.bind(this);
     this.closeConversationPanel = this.closeConversationPanel.bind(this);
+    this.showOverviewPanel = this.showOverviewPanel.bind(this);
+    this.closeOverviewPanel = this.closeOverviewPanel.bind(this);
 
     this.state = {
       showPrivateNoteForm: false,
       showAddConversationPanel: false,
       showConversationPanel: false,
       showPrivateNotePanel: false,
+      showOverviewPanel: false,
     };
   }
 
@@ -49,6 +54,10 @@ class AnnotationSidePanel extends Component {
     this.setState({ showAddConversationPanel: false });
   }
 
+  closeOverviewPanel() {
+    this.setState({ showOverviewPanel: false });
+  }
+
   closePrivateNotePanel() {
     this.setState({ showPrivateNotePanel: false });
   }
@@ -59,12 +68,18 @@ class AnnotationSidePanel extends Component {
 
   showConversationPanel(conversationId) {
     this.props.setActiveConversationId(conversationId);
+    this.setState({ showOverviewPanel: false });
     this.setState({ showConversationPanel: true });
   }
 
   showPrivateNotePanel() {
     this.setState({ showConversationPanel: false });
     this.setState({ showPrivateNotePanel: true });
+  }
+
+  showOverviewPanel() {
+    this.setState({ showConversationPanel: false });
+    this.setState({ showOverviewPanel: true });
   }
 
   renderContent() {
@@ -75,6 +90,15 @@ class AnnotationSidePanel extends Component {
           showConversationPanel={this.showConversationPanel}
         />
 
+      );
+    }
+
+    if (this.state.showOverviewPanel) {
+      return (
+        <OverviewPanel
+          closeOverviewPanel={this.closeOverviewPanel}
+          showConversationPanel={this.showConversationPanel}
+        />
       );
     }
 
@@ -99,10 +123,13 @@ class AnnotationSidePanel extends Component {
         <button className="close-btn" onClick={() => this.props.toggleAnnotationMode()}>
           &times;
         </button>
+        <button onClick={this.showOverviewPanel}>Annotation Overview</button>
+
         <h3>
           <strong>Conversations for current slide</strong>
         </h3>
         <button onClick={this.openAddConversationPanel}>Add conversation</button>
+        <button onClick={() => this.props.fetchConversations(this.props.deckId)}>Refresh</button>
         { false && <button onClick={this.showPrivateNotePanel}>Add private note</button>}
         <ConversationList showConversationPanel={this.showConversationPanel} />
       </div>
@@ -125,12 +152,14 @@ export default connect(
     return { annotationMode: getAnnotationMode(state) };
   },
   (dispatch) => {
-    return bindActionCreators({ toggleAnnotationMode, setActiveConversationId }, dispatch);
+    return bindActionCreators({ toggleAnnotationMode, fetchConversations, setActiveConversationId }, dispatch);
   },
 )(AnnotationSidePanel);
 
 AnnotationSidePanel.propTypes = {
   annotationMode: PropTypes.bool.isRequired,
+  deckId: PropTypes.string.isRequired,
   toggleAnnotationMode: PropTypes.func.isRequired,
   setActiveConversationId: PropTypes.func.isRequired,
+  fetchConversations: PropTypes.func.isRequired,
 };

@@ -3,7 +3,14 @@ import { iframeOptions } from 'constants/printViewOptions';
 
 function detectType(srcString) {
   // TODO
-  return 'This will contain a description of the iFrame contents';
+
+  if (srcString.match(/youtube/)) {
+    return `Youtube video: watch it at ${srcString}`;
+  }
+  else if (srcString.match(/mentimeter/)) {
+    return '[Mentimeter question]';
+  }
+  return `Website: ${srcString}`;
 }
 
 export default function iframeObjectToReact(iframe, viewType, level) {
@@ -18,5 +25,13 @@ export default function iframeObjectToReact(iframe, viewType, level) {
         },
         detectType(iframe.src),
       );
+    case iframeOptions.SHOW:
+      return React.createElement(
+        'iframe',
+        { className: 'c_print-view__iframe', src: iframe.src },
+        null,
+      );
+    case iframeOptions.NOTHING:
+      return null;
   }
 }

@@ -6,13 +6,27 @@
   background-color: white;
 
 
+  &__iframe-description {
+    color: #DDDDDD;
+  }
+
+  &__iframe {
+
+    margin: 0 auto; /* not needed unless you want centered */
+    display: block;
+    padding: $spacing--small__h;
+    border: $border-width--subtle $border-style--subtle $color--main__border;
+    text-align: center;
+    height: 16em;
+    width: 24em;
+    vertical-align:top;
+
+
+  }
   // TEXT:
   &__paragraph {
-    text-indent: 1cm;
     margin-top: 0;
     font-size: 12px;
-    //flex: 1 100%;
-
     [data-level="4"] & {
       padding-left: 1.5cm;
     }
@@ -23,11 +37,8 @@
 
   // LISTS:
   &__list {
-    text-indent: 1cm;
     margin-top: 0;
-    //flex-basis: 70%;
-    //flex-grow: 1;
-    //flex-shrink: 1/2;
+    padding-left: 1em;
   }
 
   &__list-item {
@@ -48,8 +59,6 @@
     font-family: $font-family--heading;
     font-weight: $font-weight--heading;
     text-align: center;
-    //flex: 1 100%;
-    //break-before: page;
     page-break-before: always;
     page-break-after: always;
     //break-after: avoid;
@@ -78,7 +87,6 @@
     font-size: $font-size--h2;
     font-family: $font-family--heading;
     font-weight: $font-weight--heading;
-    //flex: 1 100%;
     break-before: page;
     page-break-before: always;
     page-break-after: avoid;
@@ -100,7 +108,6 @@
   }
 
   &__subsection-title {
-    //flex: 1 100%;
     font-style: $font-style--heading;
     font-size: $font-size--h3;
     font-family: $font-family--heading;
@@ -117,7 +124,6 @@
     margin-top: 0;
     padding-left: 1cm;
 
-    //flex: 1 100%;
     font-style: $font-style--heading;
     font-size: $font-size--h4;
     font-family: $font-family--heading;
@@ -133,7 +139,6 @@
   &__subsubsubsection-title {
     margin-top: 0;
     padding-left: 2cm;
-    //flex: 1 100%;
     font-style: $font-style--heading;
     font-size: 14px;
     font-family: $font-family--heading;
@@ -179,11 +184,6 @@
     border: $border-width--subtle $border-style--subtle $color--main__border;
     padding-left: 0;
     text-align: center;
-    //flex-basis: 30%;
-    //flex-grow: 0.66;
-    //flex-shrink: 0.3;
-
-
 
     &__image {
       max-width: 100%;
@@ -211,6 +211,7 @@
   box-sizing: border-box;
   max-width: 50%;
   min-width: 50%;
+  display: block;
 }
 
 .image-double {
