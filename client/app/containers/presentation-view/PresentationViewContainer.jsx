@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { fetchDeck } from 'actions/entities/decks';
+import { setActiveSlide } from 'actions/app/presentation-view';
 
 import PresentationView from 'presentationals/components/presentation-view/PresentationView';
 
@@ -14,7 +15,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchDeck }, dispatch);
+  return bindActionCreators({ fetchDeck, setActiveSlide }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PresentationView);
