@@ -10,6 +10,7 @@ import ConversationList from './conversations/ConversationList';
 import ConversationPanel from './conversations/ConversationPanel';
 import AddConversationPanel from './conversations/AddConversationPanel';
 import PrivateNotePanel from './conversations/PrivateNotePanel';
+import OverviewPanel from './conversations/OverviewPanel';
 
 
 class AnnotationSidePanel extends Component {
@@ -22,12 +23,15 @@ class AnnotationSidePanel extends Component {
     this.showPrivateNotePanel = this.showPrivateNotePanel.bind(this);
     this.closePrivateNotePanel = this.closePrivateNotePanel.bind(this);
     this.closeConversationPanel = this.closeConversationPanel.bind(this);
+    this.showOverviewPanel = this.showOverviewPanel.bind(this);
+    this.closeOverviewPanel = this.closeOverviewPanel.bind(this);
 
     this.state = {
       showPrivateNoteForm: false,
       showAddConversationPanel: false,
       showConversationPanel: false,
       showPrivateNotePanel: false,
+      showOverviewPanel: false,
     };
   }
 
@@ -50,6 +54,10 @@ class AnnotationSidePanel extends Component {
     this.setState({ showAddConversationPanel: false });
   }
 
+  closeOverviewPanel() {
+    this.setState({ showOverviewPanel: false });
+  }
+
   closePrivateNotePanel() {
     this.setState({ showPrivateNotePanel: false });
   }
@@ -68,6 +76,11 @@ class AnnotationSidePanel extends Component {
     this.setState({ showPrivateNotePanel: true });
   }
 
+  showOverviewPanel() {
+    this.setState({ showConversationPanel: false });
+    this.setState({ showOverviewPanel: true });
+  }
+
   renderContent() {
     if (this.state.showAddConversationPanel) {
       return (
@@ -76,6 +89,14 @@ class AnnotationSidePanel extends Component {
           showConversationPanel={this.showConversationPanel}
         />
 
+      );
+    }
+
+    if (this.state.showOverviewPanel) {
+      return (
+        <OverviewPanel
+          closeOverviewPanel={this.closeOverviewPanel}
+        />
       );
     }
 
@@ -100,6 +121,8 @@ class AnnotationSidePanel extends Component {
         <button className="close-btn" onClick={() => this.props.toggleAnnotationMode()}>
           &times;
         </button>
+        <button onClick={this.showOverviewPanel}>Annotation Overview</button>
+
         <h3>
           <strong>Conversations for current slide</strong>
         </h3>
