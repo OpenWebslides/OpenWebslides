@@ -25,7 +25,7 @@ class ContentItemEditableWrapper extends Component {
 
     return (
       <div
-        className={`ows-pass-through ows-editable-wrapper ${isFocused ? 'has_focus' : ''}`}
+        className={`ows_pass-through ows_editable-wrapper ${isFocused ? 'has_focus' : ''}`}
         // #TODO accessibility
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex="0" // make element focusable
@@ -35,9 +35,9 @@ class ContentItemEditableWrapper extends Component {
         {/* #TODO add edit button here for images / iframes / etc. */}
         <button
           onClick={() => onDeleteContentItem()}
-          className="ows-editable-wrapper-delete-button"
+          className="ows_editable-wrapper-delete-button"
         >
-          <span className="ows-editable-wrapper-delete-button-wrapper">Delete contentItem</span>
+          <span className="ows_editable-wrapper-delete-button-wrapper">Delete contentItem</span>
         </button>
         {children}
       </div>

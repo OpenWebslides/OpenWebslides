@@ -10,7 +10,7 @@
     height: 100vh;
   }
   // Hide slide numbers in presentation view.
-  .ows-slide::after {
+  .ows_slide::after {
     display: none;
   }
 }

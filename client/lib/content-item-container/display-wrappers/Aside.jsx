@@ -9,7 +9,10 @@ function Aside(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <aside {...attributes} >
+    <aside
+      className="ows_aside"
+      {...attributes}
+    >
       <ContainerContentItemChildren
         contentItem={contentItem}
         {...passThroughProps}

@@ -9,7 +9,10 @@ function ListItem(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <li {...attributes}>
+    <li
+      className="ows_list-item"
+      {...attributes}
+    >
       <ContentItemInnerContents
         contentItem={contentItem}
         {...passThroughProps}

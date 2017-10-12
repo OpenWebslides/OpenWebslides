@@ -9,7 +9,10 @@ function Section(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <section {...attributes} >
+    <section
+      className="ows_section"
+      {...attributes}
+    >
       <ContainerContentItemChildren
         contentItem={contentItem}
         {...passThroughProps}

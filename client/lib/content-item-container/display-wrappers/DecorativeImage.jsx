@@ -9,20 +9,26 @@ function DecorativeImage(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <div className="ows-decorative-image" {...attributes}>
+    <div
+      className="ows_decorative-image"
+      {...attributes}
+    >
       <ContentItemInnerContents
         contentItem={contentItem}
         {...passThroughProps}
       >
-        <span
-          className="ows-image-wrapper"
-          style={{ backgroundImage: `url('${contentItem.src}')` }}
-        >
-          <img
-            src={contentItem.src}
-            alt={contentItem.alt}
-            data-id={contentItem.dataId}
-          />
+        <span className="ows_decorative-image__wrapper">
+          <span
+            className="ows_decorative-image__background"
+            style={{ backgroundImage: `url(${contentItem.src})` }}
+          >
+            <img
+              className="ows_decorative-image__image"
+              src={contentItem.src}
+              alt={contentItem.alt}
+              data-id={contentItem.dataId}
+            />
+          </span>
         </span>
       </ContentItemInnerContents>
     </div>

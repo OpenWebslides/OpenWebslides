@@ -2,7 +2,7 @@
 // OpenWebslide slide styles
 // -------------------------
 
-.ows-slide {
+.ows_slide {
   $slide-color--main: white;
   $slide-color--highlight: #1e64c8;
   $slide-color--accent: #ffd200;
@@ -166,7 +166,6 @@
 
     img:first-child {
       margin-top: 0;
-      max-height: 12em;
     }
 
     figcaption {
@@ -201,7 +200,7 @@
       }
     }
 
-    & + .ows-iframe iframe {
+    & + .ows_iframe .ows_iframe__widget {
       height: 15em; // #TODO
     }
   }
@@ -210,7 +209,7 @@
     font-size: $subsection-scaling-factor;
   }
 
-  .ows-image-container {
+  .ows_image-container {
     $spacing__v: $spacing--element__v;
     $spacing__h: $spacing--element__h;
 
@@ -220,7 +219,7 @@
     // We need this to make sure that the child elements take this element's height (doesn't work with only min-height).
     height: 5em;
 
-    &-wrapper {
+    &__wrapper {
       @include inkgrid-row($v-gutter: $spacing__v, $h-gutter: $spacing__h);
 
       height: 100%;
@@ -229,14 +228,13 @@
       margin-top: 0;
     }
 
-    .THIS-DIV-SHOULD-NOT-BE-HERE-REFACTOR-THIS,
-    .ows-pass-through {
+    .ows_pass-through {
       display: block;
       height: 100%;
     }
 
-    .ows-figure,
-    .ows-decorative-image {
+    .ows_illustrative-image,
+    .ows_decorative-image {
       @include inkgrid-col($v-gutter: $spacing__v, $h-gutter: $spacing__h);
       @include inkgrid-col__v-align(middle);
 
@@ -244,49 +242,45 @@
 
       // Make sure to take column margins into account when calculating the height.
       height: calc(100% - #{$spacing__v});
-    }
 
-    .ows-figure figure {
-      display: flex;
-      flex-direction: column;
+      &__wrapper {
+        display: flex;
+        flex-direction: column;
 
-      height: 100%;
+        height: 100%;
 
-      // Undo default figure styles.
-      margin: 0;
-      padding: 0;
-    }
+        // Undo default figure styles.
+        margin: 0;
+        padding: 0;
+      }
 
-    .ows-image-wrapper {
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: contain;
+      &__background {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
 
-      display: block;
-      flex-grow: 1;
+        display: block;
+        flex-grow: 1;
+      }
 
-      img {
-        // Visible image is background-image on .ows-figure-image-wrapper (which allows us to crop / contain it).
+      &__image {
+        // Visible image is background-image on .ows_[type]-image__wrapper (which allows us to crop / contain it).
         @include screenreaders-only;
       }
     }
 
     @for $i from 1 through 20 {
-      &.has-#{$i}-children .ows-figure {
+      &--children-count-#{$i} .ows_illustrative-image {
         @include inkgrid-col__parts($i);
       }
     }
 
-    .ows-decorative-image {
+    .ows_decorative-image {
       @include inkgrid-col__parts(1);
-
-      .ows-image-wrapper {
-        height: 100%;
-      }
     }
   }
 
-  .ows-editable-wrapper {
+  .ows_editable-wrapper {
     // Frame for position: absolute; on button.
     position: relative;
 
@@ -310,13 +304,13 @@
         border-color: blue;
       }
 
-      .ows-editable-wrapper-delete-button {
+      .ows_editable-wrapper-delete-button {
         opacity: 1;
       }
     }
   }
 
-  .ows-editable-wrapper-delete-button {
+  .ows_editable-wrapper-delete-button {
     opacity: 0;
 
     position: absolute;
@@ -334,6 +328,7 @@
 
   // Hide elements that have a data-view-type attribute with a value different from 'live'.
   [data-view-type]:not([data-view-type='live']) {
+    // #TODO prevent these from rendering rather than hiding them with CSS
     display: none;
   }
 }
