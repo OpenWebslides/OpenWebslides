@@ -10,7 +10,7 @@ import './assets/stylesheets/scss/application.scss';
 
 import 'file-loader?name=index.html!index.html';
 
-const store = configureStore();
+export const store = configureStore();
 
 export default function App() {
   return (

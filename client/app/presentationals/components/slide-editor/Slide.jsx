@@ -162,6 +162,7 @@ class Slide extends Component {
                 className="ows_slide"
                 data-slide-position={this.props.slideIndexInDeck + 1}
                 data-slide-count={this.props.numberOfSlidesInDeck}
+                data-level={this.props.slide.level}
               >
                 <div className="ows_slide__overflow">
                   <div className="ows_slide__wrapper">
