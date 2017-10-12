@@ -156,6 +156,7 @@ export const contentItemTypesById = {
     description: '[If you see this, something went wrong.]',
     defaultProps: {
       childItemIds: [],
+      imageType: contentItemTypes.ILLUSTRATIVE_IMAGE,
     },
   },
 };
