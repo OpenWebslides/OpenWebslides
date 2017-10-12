@@ -9,7 +9,7 @@ function DecorativeImage(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <div className="ows-decorative-image">
+    <div className="ows-decorative-image" {...attributes}>
       <ContentItemInnerContents
         contentItem={contentItem}
         {...passThroughProps}
@@ -22,7 +22,6 @@ function DecorativeImage(props) {
             src={contentItem.src}
             alt={contentItem.alt}
             data-id={contentItem.dataId}
-            {...attributes}
           />
         </span>
       </ContentItemInnerContents>

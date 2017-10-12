@@ -9,8 +9,11 @@ function ImageContainer(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <div className={`ows-image-container has-${contentItem.childItemIds.length}-children`}>
-      <div className="ows-image-container-wrapper" {...attributes}>
+    <div
+      className={`ows-image-container has-${contentItem.childItemIds.length}-children`}
+      {...attributes}
+    >
+      <div className="ows-image-container-wrapper">
         <ContainerContentItemChildren
           contentItem={contentItem}
           {...passThroughProps}
