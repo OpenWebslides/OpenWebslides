@@ -35,6 +35,13 @@ const slideViewTypeToRenderTypeAndOptionsMap = {
       isEditable: false,
     },
   },
+  [slideViewTypes.SAVE]: {
+    renderType: contentItemRenderTypes.DISPLAY,
+    renderOptions: {
+      useMediaPlaceholders: false,
+      isEditable: false,
+    },
+  },
 };
 
 function ContentItem(props) {

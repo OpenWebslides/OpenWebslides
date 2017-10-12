@@ -23,6 +23,12 @@ export const inlinePropertyShape = {
   ).isRequired,
 };
 
+export const deckShape = {
+  id: PropTypes.string.isRequired,
+  slideIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  slideSequence: PropTypes.number.isRequired,
+};
+
 export const slideShape = {
   id: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
