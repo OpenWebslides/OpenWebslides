@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { slideViewTypes } from 'constants/slideViewTypes';
 import { contentItemShape } from 'constants/propTypeShapes';
 import { directions } from 'constants/directions';
 
@@ -40,12 +41,24 @@ function ContentRenderWrapper(props) {
           >
             <div className={`${cssClass}__options`}>
               <div className={`${cssClass}__options__wrapper`}>
-                {false &&
                 <div
                   className={`${cssClass}__options-item ${cssClass}__options-item--on-slide-checkbox`}
                 >
-                  <input type="checkbox" checked={true} tabIndex="-1" />
-                </div>}
+                  <label className="o_view-type-switcher" title="Display on slide">
+                    <input
+                      className="o_view-type-switcher__input"
+                      type="checkbox"
+                      checked={contentItem.viewType === slideViewTypes.LIVE}
+                      onChange={props.onToggleContentItemViewType}
+                      tabIndex="-1"
+                    />
+                    <span className="o_view-type-switcher__text">
+                      <span className="o_view-type-switcher__text__wrapper">
+                        Display on slide
+                      </span>
+                    </span>
+                  </label>
+                </div>
                 <div
                   className={`${cssClass}__options-item ${cssClass}__options-item--direction-menu`}
                 >
@@ -78,6 +91,7 @@ ContentRenderWrapper.propTypes = {
   contentItem: PropTypes.shape(contentItemShape).isRequired,
   children: PropTypes.node.isRequired,
   onMoveContentItemInDirection: PropTypes.func.isRequired,
+  onToggleContentItemViewType: PropTypes.func.isRequired,
 };
 
 export default makeContentItemEditable({})(ContentRenderWrapper);

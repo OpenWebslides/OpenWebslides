@@ -99,7 +99,16 @@ const makeContentItemEditable = (props = {}) => (ContentItemComponent) => {
           ownProps.contentItem.id,
         ));
       },
-      // onViewTypeToggle
+      onToggleContentItemViewType: () => {
+        // #TODO should be replaced by more advanced viewType setting after refactor of viewTypes
+        const viewType = (ownProps.contentItem.viewType === slideViewTypes.LIVE)
+          ? slideViewTypes.COURSE
+          : slideViewTypes.LIVE;
+        dispatch(updateContentItem(
+          ownProps.contentItem.id,
+          { viewType },
+        ));
+      },
     };
   }
 
