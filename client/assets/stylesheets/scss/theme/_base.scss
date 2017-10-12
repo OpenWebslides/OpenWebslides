@@ -88,19 +88,3 @@ $annotations-side-bar-shift: $annotations-side-bar-total-width - $annotations-si
 .list-style-none {
   list-style-type: none;
 }
-
-.deletion-wrapper {
-  position: relative;
-}
-
-.delete-button-live-view {
-  display: none;
-}
-
-.deletion-wrapper:hover .delete-button-live-view {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
-}

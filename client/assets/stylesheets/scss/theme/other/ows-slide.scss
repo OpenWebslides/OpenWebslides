@@ -225,21 +225,16 @@
       margin-top: 0;
     }
 
-    .THIS-DIV-SHOULD-NOT-BE-HERE-REFACTOR-THIS {
+    .THIS-DIV-SHOULD-NOT-BE-HERE-REFACTOR-THIS,
+    .ows-pass-through {
+      display: block;
       height: 100%;
     }
 
-    figure,
+    .ows-figure,
     .ows-decorative-image {
       @include inkgrid-col($v-gutter: $spacing__v, $h-gutter: $spacing__h);
       @include inkgrid-col__v-align(middle);
-
-      // Undo default figure styles.
-      padding-top: 0;
-      padding-bottom: 0;
-
-      margin-right: 0;
-      margin-left: 0;
 
       text-align: center;
 
@@ -247,27 +242,23 @@
       height: calc(100% - #{$spacing__v});
     }
 
-    .ows-figure-wrapper {
+    .ows-figure figure {
       display: flex;
       flex-direction: column;
 
       height: 100%;
+
+      // Undo default figure styles.
+      margin: 0;
+      padding: 0;
     }
 
-    .ows-decorative-image {
-      @include inkgrid-col__parts(1);
-    }
-
-    .ows-decorative-image-wrapper {
-      height: 100%;
-    }
-
-    .ows-figure-image-wrapper,
-    .ows-decorative-image-wrapper {
+    .ows-image-wrapper {
       background-position: center center;
       background-repeat: no-repeat;
       background-size: contain;
 
+      display: block;
       flex-grow: 1;
 
       img {
@@ -277,9 +268,63 @@
     }
 
     @for $i from 1 through 20 {
-      &.has-#{$i}-children figure {
+      &.has-#{$i}-children .ows-figure {
         @include inkgrid-col__parts($i);
       }
+    }
+
+    .ows-decorative-image {
+      @include inkgrid-col__parts(1);
+
+      .ows-image-wrapper {
+        height: 100%;
+      }
+    }
+  }
+
+  .ows-editable-wrapper {
+    // Frame for position: absolute; on button.
+    position: relative;
+
+    // Put border on separate, absolutely positioned element, so that it does not effect element size.
+    &::before {
+      @include position-absolute-fill;
+
+      border: 1px solid transparent;
+      content: '';
+    }
+
+    &:hover::before {
+      border-color: lightgray;
+    }
+
+    &.has_focus {
+      background-color: shade(white, 5%);
+      outline: 0;
+
+      &::before {
+        border-color: blue;
+      }
+
+      .ows-editable-wrapper-delete-button {
+        opacity: 1;
+      }
+    }
+  }
+
+  .ows-editable-wrapper-delete-button {
+    opacity: 0;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    &::before {
+      @include icon($fa-var-trash);
+    }
+
+    &-wrapper {
+      @include screenreaders-only;
     }
   }
 

@@ -12,7 +12,8 @@ import { getContentItemById } from 'selectors/entities/content-items';
 import { contentItemTypes } from 'constants/contentItemTypes';
 import generateAttributesObject from 'lib/content-item/helpers/generateAttributes';
 
-import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
+import getHtmlStringFromInlinePropertiesAndText
+  from 'lib/getHtmlStringFromInlinePropertiesAndText';
 
 function* convertContentItems(contentItemIds, headingLevel, indent = '') {
   let string = '';
@@ -28,7 +29,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
     switch (contentItemObject.contentItemType) {
       case contentItemTypes.TITLE: {
         const heading = `h${headingLevel <= 6 ? headingLevel : 6}`;
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = getHtmlStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );
@@ -38,7 +39,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
       }
 
       case contentItemTypes.PARAGRAPH: {
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = getHtmlStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );
@@ -78,7 +79,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
         break;
       }
       case contentItemTypes.LIST_ITEM: {
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = getHtmlStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );

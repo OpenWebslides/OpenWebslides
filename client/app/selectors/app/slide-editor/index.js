@@ -30,6 +30,12 @@ export const getFocusedContentItemId = (state) => {
   return state.app.slideEditor.focusedContentItemId;
 };
 
+// Get the id of the content item prop that is currently being edited.
+// (If this is NULL, a default should be used.)
+export const getFocusedTextPropName = (state) => {
+  return state.app.slideEditor.focusedTextPropName;
+};
+
 // Get the offset values of the current selection in the currently active
 // contentItem.
 export const getSelectionOffsets = (state) => {

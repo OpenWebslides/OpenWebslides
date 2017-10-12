@@ -33,10 +33,11 @@ export function setFocusedContentItemId(
   contentItemId,
   selectionOffsets = null,
   focusedSlideViewType = null,
+  focusedTextPropName = null,
 ) {
   return {
     type: SET_FOCUSED_CONTENT_ITEM_ID,
-    payload: { contentItemId, selectionOffsets, focusedSlideViewType },
+    payload: { contentItemId, selectionOffsets, focusedSlideViewType, focusedTextPropName },
   };
 }
 

@@ -16,6 +16,7 @@ const exampleState = {
       activeSlideId: '53-1',
       activeContentItemId: null,
       focusedContentItemId: null,
+      focusedTextPropName: null,
       selectionOffsets: {
         start: 0,
         end: 0,

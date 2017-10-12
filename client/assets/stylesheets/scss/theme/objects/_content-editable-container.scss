@@ -1,0 +1,31 @@
+// --------------------------------
+// ContentEditable container object
+// --------------------------------
+
+.o_content-editable-container {
+  display: block;
+
+  &__wrapper {
+    display: block;
+  }
+}
+
+.o_content-editable-container-item {
+  &__wrapper {
+    @include inkgrid-row;
+  }
+
+  &__title,
+  &__widget {
+    @include inkgrid-col;
+    @include inkgrid-col__v-align(middle);
+  }
+
+  &__title {
+    @include inkgrid-col__parts(4, 1);
+  }
+
+  &__widget {
+    @include inkgrid-col__parts(4, 3);
+  }
+}
