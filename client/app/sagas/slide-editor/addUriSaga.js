@@ -3,7 +3,7 @@ import { SubmissionError } from 'redux-form';
 import { getActiveSlideId } from 'selectors/app/slide-editor';
 import { ADD_URI } from 'actions/app/slide-editor';
 
-import { ADD_CONTENT_ITEM_TO_SLIDE } from 'actions/entities/slides';
+import { addContentItemToSlide } from 'actions/entities/slides';
 
 export function* doAddUri(action) {
   const { resolve, reject } = action.meta;
@@ -13,12 +13,11 @@ export function* doAddUri(action) {
 
     const { contentItemType, values: { imageUrl, altText, imageCaption } } = yield action.meta;
 
-    console.log(action.meta);
-
-    yield put({ type: ADD_CONTENT_ITEM_TO_SLIDE,
-      meta: { slideId: activeSlideId,
-        contentItemType,
-        contentItemTypeProps: { src: imageUrl, altText, caption: imageCaption } } });
+    yield put(addContentItemToSlide(
+      activeSlideId,
+      contentItemType,
+      { src: imageUrl, alt: altText, caption: imageCaption },
+    ));
 
     yield call(resolve);
   }
