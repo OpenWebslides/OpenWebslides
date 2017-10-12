@@ -149,6 +149,7 @@ function* doDeleteContentItemFromSlide(action) {
 
     // If the contentItemToDelete has an asset, delete it as well.
     // #TODO test this as soon as deletion-wrapper is functional again.
+    // #TODO buffer asset deletions until the deck is actually saved
     const contentItemToDelete = yield select(getContentItemById, contentItemToDeleteId);
     if (contentItemToDelete.dataId !== undefined) {
       yield call(deleteAssetApi, contentItemToDelete.dataId);
