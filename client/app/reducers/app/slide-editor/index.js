@@ -25,6 +25,8 @@ const initialState = Immutable({
   activeSlideId: null,
   activeContentItemId: null,
   focusedContentItemId: null,
+  // #TODO merge all focusedContentItem related properties into a single nested object
+  focusedTextPropName: null,
   selectionOffsets: {
     start: 0,
     end: 0,
@@ -58,9 +60,12 @@ function setActiveContentItemId(state, action) {
 
 function setFocusedContentItemId(state, action) {
   let newState = state;
-  const focusedContentItemId = action.payload.contentItemId;
-  const selectionOffsets = action.payload.selectionOffsets;
-  const focusedSlideViewType = action.payload.focusedSlideViewType;
+  const {
+    contentItemId,
+    selectionOffsets,
+    focusedSlideViewType,
+    focusedTextPropName,
+  } = action.payload;
 
   if (selectionOffsets !== null) {
     newState = newState.merge({
@@ -77,14 +82,15 @@ function setFocusedContentItemId(state, action) {
   // If we're focusing on a new contentItem, set the activeContentItem as well.
   // (If we're blurring the focused contentItem by setting it to null, keep the active contentItem
   // for reference.)
-  if (focusedContentItemId !== null) {
+  if (contentItemId !== null) {
     newState = newState.merge({
-      activeContentItemId: focusedContentItemId,
+      activeContentItemId: contentItemId,
     });
   }
 
   return newState.merge({
-    focusedContentItemId: action.payload.contentItemId,
+    focusedContentItemId: contentItemId,
+    focusedTextPropName,
   });
 }
 
@@ -175,6 +181,7 @@ function addContentItem(state, action) {
   return state.merge({
     activeContentItemId: action.payload.contentItemId,
     focusedContentItemId: action.payload.contentItemId,
+    focusedTextPropName: null,
     selectionOffsets: {
       start: 0,
       end: 0,
@@ -218,6 +225,7 @@ function deleteContentItem(state, action) {
     return newState.merge({
       activeContentItemId: newFocusedContentItemId,
       focusedContentItemId: newFocusedContentItemId,
+      focusedTextPropName: null,
       selectionOffsets: newSelectionOffsets,
     });
   }
@@ -228,6 +236,7 @@ function deleteContentItem(state, action) {
     return newState.merge({
       activeContentItemId: null,
       focusedContentItemId: null,
+      focusedTextPropName: null,
       selectionOffsets: {
         start: 0,
         end: 0,

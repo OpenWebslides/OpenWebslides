@@ -5,21 +5,22 @@ import { slideViewTypes } from 'constants/slideViewTypes';
 import { slideShape } from 'constants/propTypeShapes';
 import { initialHeadingLevels } from 'constants/slideOptions';
 
-import ContentViewItem from 'lib/content-item/view-items/content-view-item';
+import ContentItemContainer from 'lib/content-item-container/ContentItemContainer';
 
 function SlideContentView(props) {
   if (props.slide !== null) {
+    const viewType = slideViewTypes.CONTENT;
     let slideContent;
 
     if (props.slide) {
       slideContent = props.slide.contentItemIds.map(id => (
-        <ContentViewItem
+        <ContentItemContainer
           key={id}
-          slideViewType={slideViewTypes.CONTENT}
           contentItemId={id}
-          ancestorItemIds={[]}
           slideId={props.slide.id}
-          headingLevel={initialHeadingLevels[slideViewTypes.CONTENT]}
+          slideViewType={viewType}
+          headingLevel={initialHeadingLevels[viewType]}
+          ancestorItemIds={[]}
         />));
     }
     else {

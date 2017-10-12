@@ -5,10 +5,7 @@ import { slideViewTypes } from 'constants/slideViewTypes';
 import { slideShape } from 'constants/propTypeShapes';
 import { initialHeadingLevels } from 'constants/slideOptions';
 
-import NavigationViewItem from 'lib/content-item/view-items/navigation-view-item';
-import LiveViewItem from 'lib/content-item/view-items/live-view-item';
-import PresentationViewItem from 'lib/content-item/view-items/presentation-view-item';
-
+import ContentItemContainer from 'lib/content-item-container/ContentItemContainer';
 
 class Slide extends Component {
   constructor(props) {
@@ -130,42 +127,23 @@ class Slide extends Component {
   }
 
   render() {
-    const { viewType } = this.props;
+    const { viewType, slide } = this.props;
     let slideContent;
 
-    switch (viewType) {
-      case slideViewTypes.NAVIGATION:
-        slideContent = this.props.slide.contentItemIds.map(id => (
-          <NavigationViewItem
-            key={id}
-            contentItemId={id}
-            slideId={this.props.slide.id}
-            headingLevel={initialHeadingLevels[viewType]}
-          />));
-        break;
-      case slideViewTypes.PRESENTATION:
-        slideContent = this.props.slide.contentItemIds.map(id => (
-          <PresentationViewItem
-            key={id}
-            contentItemId={id}
-            slideId={this.props.slide.id}
-            headingLevel={initialHeadingLevels[viewType]}
-          />));
-        break;
-      case slideViewTypes.LIVE:
-        slideContent = this.props.slide.contentItemIds.map(id => (
-          <LiveViewItem
-            key={id}
-            slideViewType={slideViewTypes.LIVE}
-            contentItemId={id}
-            ancestorItemIds={[]}
-            slideId={this.props.slide.id}
-            headingLevel={initialHeadingLevels[viewType]}
-          />));
-        break;
-      default:
-        slideContent = <p>Loading...</p>;
-        break;
+    if (slide) {
+      slideContent = this.props.slide.contentItemIds.map(id => (
+        <ContentItemContainer
+          key={id}
+          contentItemId={id}
+          slideId={slide.id}
+          slideViewType={viewType}
+          headingLevel={initialHeadingLevels[viewType]}
+          ancestorItemIds={[]}
+        />
+      ));
+    }
+    else {
+      slideContent = <p>Loading...</p>;
     }
 
     return (
