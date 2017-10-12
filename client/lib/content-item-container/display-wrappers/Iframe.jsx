@@ -11,12 +11,15 @@ function Iframe(props) {
 
   if (renderOptions.useMediaPlaceholders) {
     innerContents = (
-      <p>Placeholder for iframe: {contentItem.alt} ({contentItem.src})</p>
+      <p className="ows_iframe__placeholder">
+        Placeholder for iframe: {contentItem.alt} ({contentItem.src})
+      </p>
     );
   }
   else {
     innerContents = (
       <iframe
+        className="ows_iframe__widget"
         src={contentItem.src}
         title={contentItem.alt}
       />
@@ -25,7 +28,10 @@ function Iframe(props) {
 
   // #TODO iframe classes
   return (
-    <div className="ows-iframe" {...attributes}>
+    <div
+      className="ows_iframe"
+      {...attributes}
+    >
       <ContentItemInnerContents
         contentItem={contentItem}
         renderOptions={renderOptions}

@@ -10,7 +10,7 @@ function ContainerContentItemChildren(props) {
 
   // #TODO appearantly React 16.0 supports rendering arrays of elements; upgrade asap
   return (
-    <div className="THIS-DIV-SHOULD-NOT-BE-HERE-REFACTOR-THIS">
+    <div className="ows_pass-through">
       {contentItem.childItemIds.map(childItemId => (
         <ContentItemContainer
           key={childItemId}

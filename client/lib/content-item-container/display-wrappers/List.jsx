@@ -10,7 +10,10 @@ function List(props) {
   const ListElement = (contentItem.ordered) ? 'ol' : 'ul';
 
   return (
-    <ListElement {...attributes} >
+    <ListElement
+      className="ows_list"
+      {...attributes}
+    >
       <ContainerContentItemChildren
         contentItem={contentItem}
         {...passThroughProps}

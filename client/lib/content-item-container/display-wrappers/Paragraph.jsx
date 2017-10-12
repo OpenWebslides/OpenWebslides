@@ -9,7 +9,10 @@ function Paragraph(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <p {...attributes}>
+    <p
+      className="ows_paragraph"
+      {...attributes}
+    >
       <ContentItemInnerContents
         contentItem={contentItem}
         {...passThroughProps}

@@ -10,10 +10,10 @@ function ImageContainer(props) {
 
   return (
     <div
-      className={`ows-image-container has-${contentItem.childItemIds.length}-children`}
+      className={`ows_image-container ows_image-container--children-count-${contentItem.childItemIds.length}`}
       {...attributes}
     >
-      <div className="ows-image-container-wrapper">
+      <div className="ows_image-container__wrapper">
         <ContainerContentItemChildren
           contentItem={contentItem}
           {...passThroughProps}

@@ -9,23 +9,27 @@ function IllustrativeImage(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <div className="ows-figure" {...attributes}>
+    <div
+      className="ows_illustrative-image"
+      {...attributes}
+    >
       <ContentItemInnerContents
         contentItem={contentItem}
         {...passThroughProps}
       >
-        <figure>
+        <figure className="ows_illustrative-image__wrapper">
           <span
-            className="ows-image-wrapper"
-            style={{ backgroundImage: `url('${contentItem.src}')` }}
+            className="ows_illustrative-image__background"
+            style={{ backgroundImage: `url(${contentItem.src})` }}
           >
             <img
+              className="ows_illustrative-image__image"
               src={contentItem.src}
               alt={contentItem.alt}
               data-id={contentItem.dataId}
             />
           </span>
-          <figcaption>
+          <figcaption className="ows_illustrative-image__caption">
             {contentItem.caption}
           </figcaption>
         </figure>

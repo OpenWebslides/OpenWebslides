@@ -28,14 +28,14 @@ class Slide extends Component {
 
   updateSlideImageContainersSize() {
     const slideHeight = (this.slideContainer.getElementsByClassName(
-      'ows-slide__overflow',
+      'ows_slide__overflow',
     )[0]).getBoundingClientRect().height;
     const slideWrapper = this.slideContainer.getElementsByClassName(
-      'ows-slide__wrapper',
+      'ows_slide__wrapper',
     )[0];
     const slideWrapperComputedStyle = window.getComputedStyle(slideWrapper, null);
     const imageContainers = this.slideContainer.getElementsByClassName(
-      'ows-image-container',
+      'ows_image-container',
     );
     const imageContainersArray = Array.from(imageContainers);
 
@@ -155,17 +155,16 @@ class Slide extends Component {
           this.slideContainer = slideContainer;
         }}
       >
-
         <div className="c_slide-container__size">
           <div className="c_slide-container__wrapper">
             <div className="c_slide-container__content">
               <div
-                className="ows-slide"
+                className="ows_slide"
                 data-slide-position={this.props.slideIndexInDeck + 1}
                 data-slide-count={this.props.numberOfSlidesInDeck}
               >
-                <div className="ows-slide__overflow">
-                  <div className="ows-slide__wrapper">
+                <div className="ows_slide__overflow">
+                  <div className="ows_slide__wrapper">
                     {slideContent}
                   </div>
                 </div>
@@ -176,7 +175,6 @@ class Slide extends Component {
         {(viewType === slideViewTypes.NAVIGATION) &&
           <p>{this.props.slide.level}</p> /* #TODO visualize with indents instead of number */ }
       </div>
-
     );
   }
 }

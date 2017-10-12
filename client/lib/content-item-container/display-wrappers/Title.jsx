@@ -10,7 +10,10 @@ function Title(props) {
   const Heading = `h${Math.min(headingLevel, 6)}`;
 
   return (
-    <Heading {...attributes}>
+    <Heading
+      className="ows_title"
+      {...attributes}
+    >
       <ContentItemInnerContents
         contentItem={contentItem}
         {...passThroughProps}

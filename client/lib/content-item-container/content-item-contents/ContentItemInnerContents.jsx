@@ -63,20 +63,20 @@ function renderContentItemInnerContentsWithTextProps(
   else {
     let textPropHtmlString = '';
 
-    textPropOptions.forEach((textPropOption) => {
-      textPropHtmlString += textPropOption.textPropTitle !== ''
+    textPropOptions.forEach((textPropOption, index) => {
+      textPropHtmlString += (textPropOption.textPropTitle !== '')
         ? _.escape(`${textPropOption.textPropTitle}: `)
         : '';
       textPropHtmlString += getHtmlStringFromInlinePropertiesAndText(
         (textPropOption.hasInlineProperties) ? contentItem.inlineProperties : null,
         contentItem[textPropOption.textPropName],
       );
-      textPropHtmlString += '\n';
+      if (index !== textPropOptions.length - 1) textPropHtmlString += ', ';
     });
 
     innerContents = (
       <span
-        className="ows-pass-through"
+        className="ows_pass-through"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: textPropHtmlString,
