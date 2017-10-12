@@ -19,14 +19,13 @@ function Iframe(props) {
       <iframe
         src={contentItem.src}
         title={contentItem.alt}
-        {...attributes}
       />
     );
   }
 
   // #TODO iframe classes
   return (
-    <div className="ows-iframe">
+    <div className="ows-iframe" {...attributes}>
       <ContentItemInnerContents
         contentItem={contentItem}
         renderOptions={renderOptions}

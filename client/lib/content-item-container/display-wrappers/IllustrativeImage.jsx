@@ -9,7 +9,7 @@ function IllustrativeImage(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <div className="ows-figure">
+    <div className="ows-figure" {...attributes}>
       <ContentItemInnerContents
         contentItem={contentItem}
         {...passThroughProps}
@@ -23,7 +23,6 @@ function IllustrativeImage(props) {
               src={contentItem.src}
               alt={contentItem.alt}
               data-id={contentItem.dataId}
-              {...attributes}
             />
           </span>
           <figcaption>
