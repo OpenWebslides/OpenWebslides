@@ -30,6 +30,12 @@ export const getFocusedContentItemId = (state) => {
   return state.app.slideEditor.focusedContentItemId;
 };
 
+// Get the id of the content item prop that is currently being edited.
+// (If this is NULL, a default should be used.)
+export const getFocusedTextPropName = (state) => {
+  return state.app.slideEditor.focusedTextPropName;
+};
+
 // Get the offset values of the current selection in the currently active
 // contentItem.
 export const getSelectionOffsets = (state) => {
@@ -44,4 +50,9 @@ export const getActiveSlideViewTypes = (state) => {
 // Get the slide view type in which content is currently being edited.
 export const getFocusedSlideViewType = (state) => {
   return state.app.slideEditor.focusedSlideViewType;
+};
+
+// True if the slide content has changed since being loaded / last being saved, false if it has not.
+export const getHasChanged = (state) => {
+  return state.app.slideEditor.hasChanged;
 };

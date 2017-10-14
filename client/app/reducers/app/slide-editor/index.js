@@ -12,7 +12,7 @@ import {
   SET_FOCUSED_SLIDE_VIEW_TYPE,
   TOGGLE_SLIDE_VIEW,
 } from 'actions/app/slide-editor';
-import { FETCH_DECK_SUCCESS } from 'actions/entities/decks';
+import { FETCH_DECK_SUCCESS, UPDATE_DECK_SUCCESS } from 'actions/entities/decks';
 import { ADD_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
 import {
   ADD_CONTENT_ITEM,
@@ -25,6 +25,8 @@ const initialState = Immutable({
   activeSlideId: null,
   activeContentItemId: null,
   focusedContentItemId: null,
+  // #TODO merge all focusedContentItem related properties into a single nested object
+  focusedTextPropName: null,
   selectionOffsets: {
     start: 0,
     end: 0,
@@ -33,6 +35,7 @@ const initialState = Immutable({
     slideViewTypes.LIVE,
     slideViewTypes.CONTENT,
   ],
+  // #TODO add default for focusedSlideViewType
   hasChanged: false,
 });
 
@@ -57,9 +60,12 @@ function setActiveContentItemId(state, action) {
 
 function setFocusedContentItemId(state, action) {
   let newState = state;
-  const focusedContentItemId = action.payload.contentItemId;
-  const selectionOffsets = action.payload.selectionOffsets;
-  const focusedSlideViewType = action.payload.focusedSlideViewType;
+  const {
+    contentItemId,
+    selectionOffsets,
+    focusedSlideViewType,
+    focusedTextPropName,
+  } = action.payload;
 
   if (selectionOffsets !== null) {
     newState = newState.merge({
@@ -76,14 +82,15 @@ function setFocusedContentItemId(state, action) {
   // If we're focusing on a new contentItem, set the activeContentItem as well.
   // (If we're blurring the focused contentItem by setting it to null, keep the active contentItem
   // for reference.)
-  if (focusedContentItemId !== null) {
+  if (contentItemId !== null) {
     newState = newState.merge({
-      activeContentItemId: focusedContentItemId,
+      activeContentItemId: contentItemId,
     });
   }
 
   return newState.merge({
-    focusedContentItemId: action.payload.contentItemId,
+    focusedContentItemId: contentItemId,
+    focusedTextPropName,
   });
 }
 
@@ -132,6 +139,12 @@ function fetchDeckSuccess(state, action) {
   });
 }
 
+function updateDeckSuccess(state) {
+  return state.merge({
+    hasChanged: false,
+  });
+}
+
 function addSlide(state, action) {
   return state.merge({
     activeSlideId: action.payload.slideId,
@@ -141,22 +154,26 @@ function addSlide(state, action) {
 }
 
 function deleteSlide(state, action) {
+  let newState = state;
+
+  newState = newState.merge({
+    hasChanged: true,
+  });
+
   if (action.payload.newActiveSlideId !== null) {
-    return state.merge({
+    return newState.merge({
       activeSlideId: action.payload.newActiveSlideId,
       activeContentItemId: null,
-      hasChanged: true,
     });
   }
   else if (action.payload.slideId === state.activeSlideId) {
-    return state.merge({
+    return newState.merge({
       activeSlideId: null,
       activeContentItemId: null,
-      hasChanged: true,
     });
   }
   else {
-    return state;
+    return newState;
   }
 }
 
@@ -164,6 +181,7 @@ function addContentItem(state, action) {
   return state.merge({
     activeContentItemId: action.payload.contentItemId,
     focusedContentItemId: action.payload.contentItemId,
+    focusedTextPropName: null,
     selectionOffsets: {
       start: 0,
       end: 0,
@@ -173,20 +191,25 @@ function addContentItem(state, action) {
 }
 
 function updateContentItem(state, action) {
+  let newState = state;
   const selectionOffsets = action.payload.selectionOffsets;
 
+  newState = newState.merge({
+    hasChanged: true,
+  });
+
   if (selectionOffsets !== null) {
-    return state.merge({
+    return newState.merge({
       selectionOffsets,
-      hasChanged: true,
     });
   }
   else {
-    return state;
+    return newState;
   }
 }
 
 function deleteContentItem(state, action) {
+  let newState = state;
   const {
     contentItemId,
     descendantItemIds,
@@ -194,30 +217,34 @@ function deleteContentItem(state, action) {
     newSelectionOffsets,
   } = action.payload;
 
+  newState = newState.merge({
+    hasChanged: true,
+  });
+
   if (newFocusedContentItemId !== null) {
-    return state.merge({
+    return newState.merge({
       activeContentItemId: newFocusedContentItemId,
       focusedContentItemId: newFocusedContentItemId,
+      focusedTextPropName: null,
       selectionOffsets: newSelectionOffsets,
-      hasChanged: true,
     });
   }
   else if (
     (contentItemId === state.focusedContentItemId) ||
     (descendantItemIds.length > 0 && _.includes(descendantItemIds, state.activeContentItemId))
   ) {
-    return state.merge({
+    return newState.merge({
       activeContentItemId: null,
       focusedContentItemId: null,
+      focusedTextPropName: null,
       selectionOffsets: {
         start: 0,
         end: 0,
       },
-      hasChanged: true,
     });
   }
   else {
-    return state;
+    return newState;
   }
 }
 
@@ -231,6 +258,7 @@ export default function slideEditorReducer(state = initialState, action) {
     case SET_FOCUSED_SLIDE_VIEW_TYPE: return setFocusedSlideViewType(state, action);
     case TOGGLE_SLIDE_VIEW: return toggleSlideView(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
+    case UPDATE_DECK_SUCCESS: return updateDeckSuccess(state, action);
     case ADD_SLIDE: return addSlide(state, action);
     case DELETE_SLIDE: return deleteSlide(state, action);
     case ADD_CONTENT_ITEM: return addContentItem(state, action);

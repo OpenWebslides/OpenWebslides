@@ -68,11 +68,10 @@ export function deleteContentItemFromSlide(
   slideId,
   contentItemId,
   ancestorItemIds,
-  assetId = null,
 ) {
   return {
     type: DELETE_CONTENT_ITEM_FROM_SLIDE,
-    meta: { slideId, contentItemId, ancestorItemIds, assetId },
+    meta: { slideId, contentItemId, ancestorItemIds },
   };
 }
 

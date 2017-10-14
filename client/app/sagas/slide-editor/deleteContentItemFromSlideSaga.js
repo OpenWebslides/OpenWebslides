@@ -133,11 +133,7 @@ function* doDeleteContentItemFromSlide(action) {
     const focusedSlideViewType = yield select(getFocusedSlideViewType);
     const contentItemsById = yield select(getContentItemsById);
     const slide = yield select(getSlideById, action.meta.slideId);
-    const { contentItemId, ancestorItemIds, assetId } = action.meta;
-
-    if (assetId) {
-      yield call(deleteAssetApi, assetId);
-    }
+    const { contentItemId, ancestorItemIds } = action.meta;
 
     // If this contentItem is a single child, parent (and potentially ancestors further up the tree)
     // needs to be deleted as well.
@@ -150,6 +146,14 @@ function* doDeleteContentItemFromSlide(action) {
       ancestorItemIds,
       contentItemsById,
     );
+
+    // If the contentItemToDelete has an asset, delete it as well.
+    // #TODO test this as soon as deletion-wrapper is functional again.
+    // #TODO buffer asset deletions until the deck is actually saved
+    const contentItemToDelete = yield select(getContentItemById, contentItemToDeleteId);
+    if (contentItemToDelete.dataId !== undefined) {
+      yield call(deleteAssetApi, contentItemToDelete.dataId);
+    }
 
     // Find the contentItem before the deleted one (if there is one) so focus can be moved to it.
     const { contentItemId: newFocusedContentItemId } = getPreviousValidContentItemId(

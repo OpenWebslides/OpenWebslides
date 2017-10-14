@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { slideViewTypes } from 'constants/slideViewTypes';
+import { slideShape } from 'constants/propTypeShapes';
+import { initialHeadingLevels } from 'constants/slideOptions';
 
-import NavigationViewItem from 'lib/content-item/view-items/navigation-view-item';
-import LiveViewItem from 'lib/content-item/view-items/live-view-item';
-import PresentationViewItem from 'lib/content-item/view-items/presentation-view-item';
-
+import ContentItemContainer from 'lib/content-item-container/ContentItemContainer';
 
 class Slide extends Component {
   constructor(props) {
@@ -29,14 +28,14 @@ class Slide extends Component {
 
   updateSlideImageContainersSize() {
     const slideHeight = (this.slideContainer.getElementsByClassName(
-      'ows-slide__overflow',
+      'ows_slide__overflow',
     )[0]).getBoundingClientRect().height;
     const slideWrapper = this.slideContainer.getElementsByClassName(
-      'ows-slide__wrapper',
+      'ows_slide__wrapper',
     )[0];
     const slideWrapperComputedStyle = window.getComputedStyle(slideWrapper, null);
     const imageContainers = this.slideContainer.getElementsByClassName(
-      'ows-image-container',
+      'ows_image-container',
     );
     const imageContainersArray = Array.from(imageContainers);
 
@@ -63,7 +62,11 @@ class Slide extends Component {
     if (imageContainersArray.length > 0) {
       /* eslint-disable no-param-reassign */
       imageContainersArray.forEach((imageContainer) => {
-        imageContainer.style.height = `${imageContainerHeight}px`;
+        // Note: imageContainerHeight that is too small (because of too much content on the slide)
+        // is handled by min-height in the CSS.
+        if (imageContainerHeight > 0) {
+          imageContainer.style.height = `${imageContainerHeight}px`;
+        }
         imageContainer.style.display = 'block';
       });
       /* eslint-enable */
@@ -71,30 +74,28 @@ class Slide extends Component {
   }
 
   updateSlideContainerSize() {
-    // Fullscreen slide sizing can be handled CSS only; only use Javascript to
-    // resize if the slide isn't displayed fullscreen.
+    // Fullscreen slide sizing can be handled CSS only; only use Javascript to resize
+    // if the slide isn't displayed fullscreen.
     if (!this.props.isFullscreen) {
-      // note: 'sc' == 'slideContainer'
-      // get the slideContainer size wrapper element
+      // Get the slideContainer size wrapper element. (Note: 'sc' == 'slideContainer'.)
       const scSizeElement = this.slideContainer.getElementsByClassName(
         'c_slide-container__size',
       )[0];
 
-      // remove sizing that might have been set by a previous call of this
-      // function
+      // Remove sizing that might have been set by a previous call of this function.
       scSizeElement.removeAttribute('style');
 
-      // calculate the horizontal & vertical scaling factors
-      // between the slideContainer and its size wrapper
+      // Calculate the horizontal & vertical scaling factors
+      // between the slideContainer and its size wrapper.
       const scRect = this.slideContainer.getBoundingClientRect();
       const scSizeElementRect = scSizeElement.getBoundingClientRect();
       const horizontalFactor = scRect.width / scSizeElementRect.width;
       const verticalFactor = scRect.height / scSizeElementRect.height;
 
-      // if the vertical factor === 1 (meaning the container has no set height),
-      // use the horizontal factor
-      // otherwise, use whichever factor is smallest, so the slide wrapper
-      // always fits in the slide container
+      // If the vertical factor === 1 (meaning the container has no set height),
+      // use the horizontal factor.
+      // Otherwise, use whichever factor is smallest,
+      // so the slide wrapper always fits in the slide container.
       let factor;
       if (verticalFactor !== 1 && verticalFactor < horizontalFactor) {
         factor = verticalFactor;
@@ -103,9 +104,8 @@ class Slide extends Component {
         factor = horizontalFactor;
       }
 
-      // get the computed font size of the container, multiply it by the scaling
-      // factor, and set it on the size wrapper element so that it will scale to
-      // fit its container
+      // Get the computed font size of the container, multiply it by the scaling factor,
+      // and set it on the size wrapper element so that it will scale to fit its container.
       const scComputedFontSize = window.getComputedStyle(
         this.slideContainer,
         null,
@@ -121,50 +121,29 @@ class Slide extends Component {
 
       // (Note: this only works because we use exclusively em and % units,
       // allowing elements to be resizeable by changing their font-size.
-      // Anything defined in other units such as rem or px will not scale with
-      // the rest of the slide.)
+      // Anything defined in other units such as rem or px
+      // will not scale with the rest of the slide.)
     }
   }
 
   render() {
-    const { viewType } = this.props;
+    const { viewType, slide } = this.props;
     let slideContent;
 
-    switch (viewType) {
-      case slideViewTypes.NAVIGATION:
-        slideContent = this.props.slide.contentItemIds.map(id =>
-          <NavigationViewItem
-            key={id}
-            contentItemId={id}
-            slideId={this.props.slide.id}
-            headingLevel={1}
-          />);
-        break;
-      case slideViewTypes.PRESENTATION:
-        slideContent = this.props.slide.contentItemIds.map(id =>
-          <PresentationViewItem
-            key={id}
-            contentItemId={id}
-            slideId={this.props.slide.id}
-            headingLevel={1}
-          />);
-        break;
-      case slideViewTypes.LIVE:
-        slideContent = this.props.slide.contentItemIds.map(id =>
-          <LiveViewItem
-            key={id}
-            slideViewType={slideViewTypes.LIVE}
-            contentItemId={id}
-            ancestorItemIds={[]}
-            slideId={this.props.slide.id}
-            headingLevel={1}
-            editable={true}
-          />,
-      );
-        break;
-      default:
-        slideContent = <p>Loading...</p>;
-        break;
+    if (slide) {
+      slideContent = this.props.slide.contentItemIds.map(id => (
+        <ContentItemContainer
+          key={id}
+          contentItemId={id}
+          slideId={slide.id}
+          slideViewType={viewType}
+          headingLevel={initialHeadingLevels[viewType]}
+          ancestorItemIds={[]}
+        />
+      ));
+    }
+    else {
+      slideContent = <p>Loading...</p>;
     }
 
     return (
@@ -176,17 +155,16 @@ class Slide extends Component {
           this.slideContainer = slideContainer;
         }}
       >
-
         <div className="c_slide-container__size">
           <div className="c_slide-container__wrapper">
             <div className="c_slide-container__content">
               <div
-                className="ows-slide"
+                className="ows_slide"
                 data-slide-position={this.props.slideIndexInDeck + 1}
                 data-slide-count={this.props.numberOfSlidesInDeck}
               >
-                <div className="ows-slide__overflow">
-                  <div className="ows-slide__wrapper">
+                <div className="ows_slide__overflow">
+                  <div className="ows_slide__wrapper">
                     {slideContent}
                   </div>
                 </div>
@@ -194,9 +172,9 @@ class Slide extends Component {
             </div>
           </div>
         </div>
-        <p>{this.props.slide.level}</p> {/* TODO: Only for debugging*/}
+        {(viewType === slideViewTypes.NAVIGATION) &&
+          <p>{this.props.slide.level}</p> /* #TODO visualize with indents instead of number */ }
       </div>
-
     );
   }
 }
@@ -204,25 +182,21 @@ class Slide extends Component {
 Slide.propTypes = {
   cssIdentifier: PropTypes.string,
   isFullscreen: PropTypes.bool,
-  slide: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    level: PropTypes.number.isRequired,
-    contentItemIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-    contentItemSequence: PropTypes.number.isRequired,
-  }).isRequired,
-  editable: PropTypes.bool.isRequired,
-  // We need to connect these to force a rerender (and thus a resize) when the
-  // active slide view types change.
-  activeSlideViewTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  slide: PropTypes.shape(slideShape).isRequired,
   numberOfSlidesInDeck: PropTypes.number.isRequired,
   slideIndexInDeck: PropTypes.number.isRequired,
+  viewType: PropTypes.oneOf(Object.values(slideViewTypes)).isRequired,
+  // We need to connect these to force a rerender (and thus a resize)
+  // when the active slide view types change.
+  activeSlideViewTypes: PropTypes.arrayOf(
+    PropTypes.oneOf(Object.values(slideViewTypes)),
+  ).isRequired,
 };
 
 Slide.defaultProps = {
   cssIdentifier: 'default',
   isFullscreen: false,
   slide: null,
-  editable: false,
 };
 
 export default Slide;

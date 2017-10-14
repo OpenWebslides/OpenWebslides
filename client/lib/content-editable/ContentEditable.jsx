@@ -1,43 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Immutable from 'seamless-immutable';
-import _ from 'lodash';
 
+import { selectionOffsetsShape, inlinePropertyShape } from 'constants/propTypeShapes';
 
+import getHtmlStringFromInlinePropertiesAndText from 'lib/getHtmlStringFromInlinePropertiesAndText';
+import { getSelectionOffsets, setSelectionByOffsets } from 'lib/content-editable/selectionOffsets';
+import getFilteredTextContent from 'lib/content-editable/textContent';
 import {
   addInlinePropertyToArray,
   updateInlinePropertiesAfterInputAtIndex,
-  getHTMLStringFromInlinePropertiesAndText,
 } from 'lib/content-editable/inlineProperties';
 
-import getFilteredTextContent from 'lib/content-editable/textContent';
-
-import { contentItemTypes } from 'constants/contentItemTypes';
-
-import {
-  getSelectionOffsets,
-  setSelectionByOffsets,
-} from 'lib/content-editable/selectionOffsets';
-import inlinePropertyTypes from 'constants/inlinePropertyTypes';
-
-import LinkModal from './LinkModal';
+import ContentEditableMenu from './ContentEditableMenu';
 
 class ContentEditable extends Component {
+
+  // !!! IMPORTANT !!!
+  // !!! DO NOT ADD ANYTHING TO DO WITH CONTENTITEMS TO THIS FILE. !!!
 
   constructor(props) {
     super(props);
 
-    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.hasInlineProperties = (props.inlineProperties !== null);
+
+    this.handleMenuInlinePropertyAdd = this.handleMenuInlinePropertyAdd.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
-    this.handleLinkModalClose = this.handleLinkModalClose.bind(this);
-    this.handleLinkModalOpen = this.handleLinkModalOpen.bind(this);
-    this.handleAddLink = this.handleAddLink.bind(this);
-
-    this.state = {
-      linkModalOpen: false,
-    };
   }
 
   componentDidMount() {
@@ -48,158 +38,96 @@ class ContentEditable extends Component {
     this.loadSelectionOffsets();
   }
 
-  loadSelectionOffsets() {
-    if (this.props.isFocused) {
-      setSelectionByOffsets(
-        this.contentEditable,
-        this.props.selectionOffsets.start,
-        this.props.selectionOffsets.end,
-      );
+  handleMenuInlinePropertyAdd(
+    inlinePropertyType,
+    inlinePropertyAttributes,
+    inlinePropertyOffsets,
+  ) {
+    if (this.props.onInput !== null) {
+      // Deep copy inlineProperties array.
+      const newInlineProperties = JSON.parse(JSON.stringify(this.props.inlineProperties));
+
+      // Create new inlineProperty object.
+      const newInlineProperty = {
+        type: inlinePropertyType,
+        offsets: {
+          start: inlinePropertyOffsets.start,
+          end: inlinePropertyOffsets.end,
+        },
+        attributes: inlinePropertyAttributes,
+      };
+
+      // Add the new inline property to the copied array.
+      addInlinePropertyToArray(newInlineProperties, newInlineProperty);
+
+      // Move the caret to the end of the new inlineProperty.
+      const newSelectionOffsets = {
+        start: inlinePropertyOffsets.end,
+        end: inlinePropertyOffsets.end,
+      };
+
+      this.props.onInput(this.props.textContent, newInlineProperties, newSelectionOffsets);
+    }
+  }
+
+  handleInput() {
+    if (this.props.onInput !== null) {
+      const selectionOffsets = getSelectionOffsets(this.contentEditable);
+      const newTextContent = getFilteredTextContent(this.contentEditable);
+      let newInlineProperties = null;
+
+      if (this.hasInlineProperties) {
+        // Deep copy inlineProperties array.
+        newInlineProperties = JSON.parse(JSON.stringify(this.props.inlineProperties));
+        // Calculate the 'distance' of the string that has changed.
+        const amount = newTextContent.length - this.props.textContent.length;
+        // Update the inlineProperties offsets with the added / deleted amount.
+        updateInlinePropertiesAfterInputAtIndex(
+          newInlineProperties,
+          selectionOffsets.start,
+          amount,
+        );
+      }
+
+      this.props.onInput(newTextContent, newInlineProperties, selectionOffsets);
     }
   }
 
   handleKeyDown(e) {
-    const { contentItem, slideId, ancestorItemIds } = this.props;
+    // Prevent users from inserting newlines in the contenteditable field.
+    const blacklist = ['Enter'];
 
-    if (e.key === 'Enter') {
-      let newContentItemType;
-
-      if (contentItem.contentItemType === contentItemTypes.LIST_ITEM) {
-        newContentItemType = contentItemTypes.LIST_ITEM;
-      }
-      else {
-        newContentItemType = contentItemTypes.PARAGRAPH;
-      }
-
-      this.props.addContentItemToSlide(
-          slideId,
-          newContentItemType,
-          {},
-          _.last(ancestorItemIds),
-          contentItem.id,
-        );
-    }
-    // If backspace is pressed on an empty contentItem, delete the contentItem
-    // and jump to the previous one.
-    else if (e.key === 'Backspace') {
-      if (contentItem.text === '') {
-        e.preventDefault();
-        this.props.deleteContentItemFromSlide(
-          slideId,
-          contentItem.id,
-          ancestorItemIds,
-        );
-      }
-    }
-  }
-
-  // Map state to contenteditable innerHTML.
-  handleInput() {
-    const text = getFilteredTextContent(this.contentEditable);
-    const selectionOffsets = getSelectionOffsets(this.contentEditable);
-
-    let props = {
-      [this.props.textPropName]: text,
-    };
-
-    if (this.props.hasInlineProperties) {
-      const inlineProperties = Immutable.asMutable(
-        this.props.contentItem.inlineProperties,
-        { deep: true },
-      );
-      const amount =
-        text.length - this.props.contentItem[this.props.textPropName].length;
-      updateInlinePropertiesAfterInputAtIndex(
-        inlineProperties,
-        selectionOffsets.start,
-        amount,
-      );
-
-      props = { ...props, inlineProperties };
+    if (blacklist.indexOf(e.key) >= 0) {
+      // If the pressed key is in the blacklist, don't execute the event.
+      e.preventDefault();
     }
 
-    this.props.updateContentItem(
-      this.props.contentItem.id,
-      props,
-      getSelectionOffsets(this.contentEditable),
-    );
+    // Containers may add their own extra keydown handler.
+    if (this.props.onKeyDown !== null) {
+      this.props.onKeyDown(e);
+    }
   }
 
   handleFocus() {
-    this.props.setFocusedContentItemId(
-      this.props.contentItem.id,
-      getSelectionOffsets(this.contentEditable),
-      this.props.slideViewType,
-    );
+    if (this.props.onFocus !== null) {
+      this.props.onFocus(getSelectionOffsets(this.contentEditable));
+    }
   }
 
   handleBlur() {
-    this.props.setFocusedContentItemId(
-      null,
-      getSelectionOffsets(this.contentEditable),
-      null,
-    );
-  }
-
-  handleMenuButtonClick(inlinePropertyType) {
-    this.props.setSelectionOffsets(getSelectionOffsets(this.contentEditable));
-
-    if (inlinePropertyType === inlinePropertyType.LINK) {
-      this.setState({ linkModalOpen: true });
-    }
-    else {
-      this.handleContentItemUpdate(inlinePropertyType, {});
+    if (this.props.onBlur !== null) {
+      this.props.onBlur(getSelectionOffsets(this.contentEditable));
     }
   }
 
-  handleContentItemUpdate(inlinePropertyType, attributes) {
-    const selectionOffsets = this.props.selectionOffsets;
-
-    // get copy of current inlineProperties
-    const inlineProperties = Immutable.asMutable(
-      this.props.contentItem.inlineProperties,
-      { deep: true },
-    );
-
-    // create new inlineProperty object
-    const newInlineProperty = {
-      type: inlinePropertyType,
-      offSets: {
-        start: selectionOffsets.start,
-        end: selectionOffsets.end,
-      },
-      attributes,
-    };
-
-    // add the new inline property to the copied array
-    addInlinePropertyToArray(inlineProperties, newInlineProperty);
-
-    // set the new inlineProperties array in the state
-    // and move the caret to the end of the new inlineProperty
-    this.props.updateContentItem(
-      this.props.contentItem.id,
-      {
-        inlineProperties,
-      },
-      {
-        start: selectionOffsets.end,
-        end: selectionOffsets.end,
-      },
-    );
-  }
-
-  handleLinkModalOpen() {
-    this.setState({ linkModalOpen: true });
-  }
-
-  handleLinkModalClose() {
-    this.setState({ linkModalOpen: false });
-  }
-
-  handleAddLink(url) {
-    this.setState({ linkModalOpen: false });
-
-    this.handleContentItemUpdate(inlinePropertyTypes.LINK, { href: url });
+  loadSelectionOffsets() {
+    if (this.props.isFocused) {
+      setSelectionByOffsets(
+        this.contentEditable,
+        this.props.initialSelectionOffsets.start,
+        this.props.initialSelectionOffsets.end,
+      );
+    }
   }
 
   render() {
@@ -207,100 +135,36 @@ class ContentEditable extends Component {
       <span
         className={`o_content-editable ${this.props.isFocused
           ? 'has_focus'
-          : ''}`}
+          : ''} ${this.props.isSingleLine ? 'o_content-editable--single-line' : ''}`}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
       >
-        <LinkModal
-          isOpen={this.state.linkModalOpen}
-          onAdd={this.handleAddLink}
-          onClose={this.handleLinkModalClose}
-        />
-
         <span className="o_content-editable__wrapper">
-          {this.props.hasInlineProperties &&
-            <span className="o_content-editable__menu list" role="toolbar">
-              <span className="o_content-editable__menu-item list__item">
-                <button
-                  className="o_content-editable__menu-button o_content-editable__menu-button--id_link"
-                  tabIndex="-1"
-                  onClick={() => this.handleLinkModalOpen()}
-                >
-                  <span className="o_content-editable__menu-text">
-                    Link
-                  </span>
-                </button>
-              </span>
-              <span className="o_content-editable__menu-item list__item">
-                <button
-                  className="o_content-editable__menu-button o_content-editable__menu-button--id_strong"
-                  tabIndex="-1"
-                  onClick={() =>
-                    this.handleMenuButtonClick(inlinePropertyTypes.STRONG)}
-                >
-                  <span className="o_content-editable__menu-text">
-                    Strong
-                  </span>
-                </button>
-              </span>
-
-              <span className="o_content-editable__menu-item list__item">
-                <button
-                  className="o_content-editable__menu-button o_content-editable__menu-button--id_sup"
-                  tabIndex="-1"
-                  onClick={() =>
-                    this.handleMenuButtonClick(inlinePropertyTypes.SUP)}
-                >
-                  <span className="o_content-editable__menu-text">
-                    Super
-                  </span>
-                </button>
-              </span>
-
-              <span className="o_content-editable__menu-item list__item">
-                <button
-                  className="o_content-editable__menu-button o_content-editable__menu-button--id_sub"
-                  tabIndex="-1"
-                  onClick={() =>
-                    this.handleMenuButtonClick(inlinePropertyTypes.SUB)}
-                >
-                  <span className="o_content-editable__menu-text">
-                    Super
-                  </span>
-                </button>
-              </span>
-
-              <span className="o_content-editable__menu-item list__item">
-                <button
-                  className="o_content-editable__menu-button o_content-editable__menu-button--id_em"
-                  tabIndex="-1"
-                  onClick={() =>
-                    this.handleMenuButtonClick(inlinePropertyTypes.EM)}
-                >
-                  <span className="o_content-editable__menu-text">
-                    Emphasis
-                  </span>
-                </button>
-              </span>
-            </span>}
+          {
+            this.hasInlineProperties &&
+            <ContentEditableMenu
+              getSelectionOffsets={() => getSelectionOffsets(this.contentEditable)}
+              onInlinePropertyAdd={this.handleMenuInlinePropertyAdd}
+            />
+          }
           <span
             className="o_content-editable__input"
             contentEditable="true"
             role="textbox"
+            tabIndex={0}
             ref={(contentEditable) => {
               this.contentEditable = contentEditable;
             }}
             onKeyDown={this.handleKeyDown}
             onInput={this.handleInput}
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-              __html: getHTMLStringFromInlinePropertiesAndText(
-                this.props.hasInlineProperties
-                  ? this.props.contentItem.inlineProperties
-                  : {},
-                this.props.contentItem[this.props.textPropName],
+              __html: getHtmlStringFromInlinePropertiesAndText(
+                this.props.inlineProperties,
+                this.props.textContent,
               ),
             }}
-            placeholder="Type something..."
+            placeholder={this.props.placeholder}
           />
         </span>
       </span>
@@ -309,24 +173,38 @@ class ContentEditable extends Component {
 }
 
 ContentEditable.propTypes = {
-  contentItem: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
-  textPropName: PropTypes.string.isRequired,
-  hasInlineProperties: PropTypes.bool.isRequired,
+  // The plain text string that the contentEditable should contain; this should not contain HTML.
+  textContent: PropTypes.string.isRequired,
+  // Defines the inline HTML elements that should be entered into the textContent string. If this
+  // property is not passed, the inlineProperty buttons in the contentEditable will be disabled.
+  inlineProperties: PropTypes.arrayOf(PropTypes.shape(inlinePropertyShape)),
+  // Defines the selection offsets when the contentEditable is intially rendered.
+  initialSelectionOffsets: PropTypes.shape(selectionOffsetsShape).isRequired,
+  // True if this contentEditable should initially be focused; false if not.
   isFocused: PropTypes.bool.isRequired,
-  slideViewType: PropTypes.string.isRequired,
-  selectionOffsets: PropTypes.shape({
-    start: PropTypes.number.isRequired,
-    end: PropTypes.number.isRequired,
-  }).isRequired,
-  setFocusedContentItemId: PropTypes.func.isRequired,
-  updateContentItem: PropTypes.func.isRequired,
-  handleKeyDown: PropTypes.func,
+  // True if this contentEditable should display it's text on a single line, instead of wrapping it
+  // when the text is too long.
+  isSingleLine: PropTypes.bool,
+  // Placeholder text in an empty contentEditable.
+  placeholder: PropTypes.string,
+  // This function is called when the contentEditable receives focus.
+  onFocus: PropTypes.func,
+  // This function is called when the contentEditable loses focus.
+  onBlur: PropTypes.func,
+  // This function is called when a key is pressed in the contentEditable.
+  onKeyDown: PropTypes.func,
+  // This function is called when the textContent and/or is changed.
+  onInput: PropTypes.func,
 };
 
 ContentEditable.defaultProps = {
-  handleKeyDown: null,
+  inlineProperties: null,
+  isSingleLine: false,
+  placeholder: 'Type something...',
+  onFocus: null,
+  onBlur: null,
+  onKeyDown: null,
+  onInput: null,
 };
 
 export default ContentEditable;

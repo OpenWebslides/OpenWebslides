@@ -1,7 +1,7 @@
 import { takeLatest, call, select, put } from 'redux-saga/effects';
 import updateDeckApi from 'api/updateDeckApi';
 
-import { UPDATE_DECK } from 'actions/entities/decks';
+import { UPDATE_DECK, updateDeckSuccess } from 'actions/entities/decks';
 import { SIGNOUT } from 'actions/signoutActions';
 
 import { getActiveDeckId } from 'selectors/app/slide-editor';
@@ -10,9 +10,10 @@ import { getSlideById } from 'selectors/entities/slides';
 import { getContentItemById } from 'selectors/entities/content-items';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
-import generateAttributesObject from 'lib/content-item/helpers/generateAttributes';
+import generateAttributesObject from 'lib/content-item-container/helpers/generateAttributesObject';
 
-import { getHTMLStringFromInlinePropertiesAndText } from 'lib/content-editable/inlineProperties';
+import getHtmlStringFromInlinePropertiesAndText
+  from 'lib/getHtmlStringFromInlinePropertiesAndText';
 
 function* convertContentItems(contentItemIds, headingLevel, indent = '') {
   let string = '';
@@ -28,7 +29,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
     switch (contentItemObject.contentItemType) {
       case contentItemTypes.TITLE: {
         const heading = `h${headingLevel <= 6 ? headingLevel : 6}`;
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = getHtmlStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );
@@ -38,7 +39,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
       }
 
       case contentItemTypes.PARAGRAPH: {
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = getHtmlStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );
@@ -78,7 +79,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
         break;
       }
       case contentItemTypes.LIST_ITEM: {
-        const text = getHTMLStringFromInlinePropertiesAndText(
+        const text = getHtmlStringFromInlinePropertiesAndText(
           contentItemObject.inlineProperties,
           contentItemObject.text,
         );
@@ -89,7 +90,7 @@ function* convertContentItems(contentItemIds, headingLevel, indent = '') {
       case contentItemTypes.IFRAME: {
         const { src, alt } = contentItemObject;
 
-        string += `<iframe ${attributeString} src="${src}" alt="${alt}"></iframe>`;
+        string += `<iframe ${attributeString} src="${src}" title="${alt}"></iframe>`;
         break;
       }
       case contentItemTypes.ILLUSTRATIVE_IMAGE: {
@@ -167,6 +168,7 @@ function* doUpdateDeck() {
     const deck = yield select(getDeckById, activeDeckId);
     const htmlString = yield convertToHTML(deck);
     yield call(updateDeckApi, deck.id, htmlString);
+    yield put(updateDeckSuccess());
   }
   catch (e) {
     if (e.statusCode === 401) {

@@ -134,4 +134,11 @@
       }
     }
   }
+
+  &--single-line {
+    .o_content-editable__input {
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
 }

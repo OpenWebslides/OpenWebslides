@@ -126,6 +126,30 @@
     }
   }
 
+  .o_view-type-switcher {
+
+    &__text {
+      color: $color--main__text-icon;
+      cursor: pointer;
+
+      &::before {
+        @include icon($fa-var-file-image-o);
+      }
+
+      &__wrapper {
+        @include screenreaders-only;
+      }
+    }
+
+    &__input {
+      @include screenreaders-only;
+    }
+
+    &__input:checked + .o_view-type-switcher__text {
+      color: $color--main__text;
+    }
+  }
+
   @each $content-item-type, $icon in $map--content-item-types_to_icons {
     &--type-#{$content-item-type} {
       .c_slide-content-view-item__type-indicator::before {

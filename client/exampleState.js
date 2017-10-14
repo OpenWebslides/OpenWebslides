@@ -16,12 +16,14 @@ const exampleState = {
       activeSlideId: '53-1',
       activeContentItemId: null,
       focusedContentItemId: null,
+      focusedTextPropName: null,
       selectionOffsets: {
         start: 0,
         end: 0,
       },
       activeSlideViewTypes: ['CONTENT', 'LIVE'],
       focusedSlideViewType: null,
+      hasChanged: false,
     },
     feed: {
       listOfFeedNotifications: [],
@@ -76,21 +78,21 @@ const exampleState = {
           inlineProperties: [
             {
               type: EM,
-              offSets: {
+              offsets: {
                 start: 0,
                 end: 4,
               },
             },
             {
               type: STRONG,
-              offSets: {
+              offsets: {
                 start: 8,
                 end: 14,
               },
             },
             {
               type: LINK,
-              offSets: {
+              offsets: {
                 start: 15,
                 end: 20,
               },
