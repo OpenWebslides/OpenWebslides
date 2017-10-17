@@ -13,7 +13,7 @@ import RequestStatusHOC from 'lib/RequestsStatusHOC';
 class OwnCollaborations extends React.Component {
   componentWillMount() {
     if (this.props.authState.isAuthenticated) {
-      this.props.startOwnCollaborationsRequests(this.props.authState.id);
+      this.props.ownCollaborationsRequestsStart(this.props.authState.id);
     }
   }
 
@@ -43,8 +43,8 @@ class OwnCollaborations extends React.Component {
   }
 }
 
-OwnCollaborations.propTypes = {
-  startOwnCollaborationsRequests: PropTypes.func.isRequired,
+OwnDecks.propTypes = {
+  ownCollaborationsRequestsStart: PropTypes.func.isRequired,
   ownCollaborationsState: PropTypes.shape({
     requestsStatus: PropTypes.oneOf(['notStarted', 'pending', 'succeeded', 'failed']),
     errorMessage: PropTypes.string,

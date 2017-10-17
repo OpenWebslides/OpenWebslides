@@ -2,7 +2,7 @@ import { takeLatest, put, call, select } from 'redux-saga/effects';
 
 import { SIGNOUT } from 'actions/signoutActions';
 import {
-  OWN_COLLABORATIONS_START_REQUESTS,
+  OWN_COLLABORATIONS_REQUESTS_START,
   OWN_COLLABORATIONS_REQUESTS_FAILURE,
   OWN_COLLABORATIONS_REQUESTS_SUCCESS,
 } from 'actions/app/dashboard/own-collaborations';
@@ -15,13 +15,12 @@ import { fetchUserCollaborationsFlow } from 'sagas/entities/users/fetchUserColla
 // Selectors:
 import { getUserCollaborationsIds } from 'selectors/entities/users';
 
-export function* requestOwnCollaborationsFlow(action) {
+export function* ownCollaborationsRequestsFlow(action) {
   try {
     yield call(fetchUserFlow, action.payload);
     yield call(fetchUserCollaborationsFlow, action.payload);
 
     const collaborationsIds = yield select(getUserCollaborationsIds, action.payload);
-
     for (let i = 0; i < collaborationsIds.length; i += 1) {
       // Note to future refactorer:
       // We need a traditional loop because of limitation on `yield`, don't try using .foreach
@@ -53,7 +52,7 @@ export function* requestOwnCollaborationsFlow(action) {
 }
 
 function* ownCollaborationsRequestsWatcher() {
-  yield takeLatest(OWN_COLLABORATIONS_START_REQUESTS, requestOwnCollaborationsFlow);
+  yield takeLatest(OWN_COLLABORATIONS_REQUESTS_START, ownCollaborationsRequestsFlow);
 }
 
 export default ownCollaborationsRequestsWatcher;

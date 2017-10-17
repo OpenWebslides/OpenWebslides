@@ -23,7 +23,7 @@ function renderDeckThumbnail(el, deleteDeck) {
 class OwnDecks extends React.Component {
   componentWillMount() {
     if (this.props.authState.isAuthenticated) {
-      this.props.startOwnDecksRequests(this.props.authState.id);
+      this.props.ownDecksRequestsStart(this.props.authState.id);
     }
   }
 
@@ -96,7 +96,7 @@ class OwnDecks extends React.Component {
 }
 
 OwnDecks.propTypes = {
-  startOwnDecksRequests: PropTypes.func.isRequired,
+  ownDecksRequestsStart: PropTypes.func.isRequired,
   ownDecksState: PropTypes.shape({
     startedRequests: PropTypes.bool,
     requestsSucceeded: PropTypes.bool,

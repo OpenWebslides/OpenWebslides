@@ -1,4 +1,4 @@
-export const OWN_DECKS_START_REQUESTS = 'OWN_DECKS_START_REQUESTS';
+export const OWN_DECKS_REQUESTS_START = 'OWN_DECKS_REQUESTS_START';
 export const OWN_DECKS_REQUESTS_FAILURE = 'OWN_DECKS_REQUESTS_FAILURE';
 export const OWN_DECKS_REQUESTS_SUCCESS = 'OWN_DECKS_REQUESTS_SUCCESS';
 
@@ -7,9 +7,9 @@ export const OWN_DECK_DELETION_REQUEST_SUCCESS = 'OWN_DECK_DELETION_REQUEST_SUCC
 export const OWN_DECK_DELETION_REQUEST_FAILURE = 'OWN_DECK_DELETION_REQUEST_FAILURE';
 
 
-export function startOwnDecksRequests(userId) {
+export function ownDecksRequestsStart(userId) {
   return {
-    type: OWN_DECKS_START_REQUESTS,
+    type: OWN_DECKS_REQUESTS_START,
     payload: userId,
   };
 }

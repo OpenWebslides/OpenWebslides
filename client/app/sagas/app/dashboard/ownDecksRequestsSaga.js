@@ -2,7 +2,7 @@ import { takeLatest, put, call, select } from 'redux-saga/effects';
 
 import { SIGNOUT } from 'actions/signoutActions';
 import {
-  OWN_DECKS_START_REQUESTS,
+  OWN_DECKS_REQUESTS_START,
   OWN_DECKS_REQUESTS_FAILURE,
   OWN_DECKS_REQUESTS_SUCCESS,
 } from 'actions/app/dashboard/own-decks';
@@ -53,7 +53,7 @@ export function* requestOwnDecksFlow(action) {
 }
 
 function* ownDecksRequestsWatcher() {
-  yield takeLatest(OWN_DECKS_START_REQUESTS, requestOwnDecksFlow);
+  yield takeLatest(OWN_DECKS_REQUESTS_START, requestOwnDecksFlow);
 }
 
 export default ownDecksRequestsWatcher;

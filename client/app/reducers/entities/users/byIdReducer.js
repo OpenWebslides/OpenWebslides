@@ -1,5 +1,5 @@
 import Immutable from 'seamless-immutable';
-import { FETCH_USER_SUCCESS, FETCH_USER_COLLABORATIONS_SUCCESS, FETCH_USER_DECKS_IDS_SUCCESS } from 'actions/entities/users';
+import { SET_USER, SET_USER_COLLABORATIONS, SET_USER_DECKS_IDS } from 'actions/entities/users';
 import {
   DECK_DELETION_SUCCESS,
 } from 'actions/entities/decks';
@@ -28,19 +28,20 @@ function deleteDeckFromUsers(state, action) {
 
 
 
+
 function byId(state = initialState, action) {
   switch (action.type) {
-    case FETCH_USER_SUCCESS:
+    case SET_USER:
       return state.merge({
         [action.payload.id]: action.payload,
       });
-    case FETCH_USER_COLLABORATIONS_SUCCESS:
+    case SET_USER_COLLABORATIONS:
       return state.merge({
-        [action.payload.id]: { collaborations: action.payload.collaborations },
+        [action.payload.userId]: { collaborations: action.payload.collaborationIds },
       }, { deep: true });
-    case FETCH_USER_DECKS_IDS_SUCCESS:
+    case SET_USER_DECKS_IDS:
       return state.merge({
-        [action.payload.id]: { decks: action.payload.deckIds },
+        [action.payload.userId]: { decks: action.payload.decksIds },
       }, { deep: true });
     case DECK_DELETION_SUCCESS:
       return deleteDeckFromUsers(state, action);

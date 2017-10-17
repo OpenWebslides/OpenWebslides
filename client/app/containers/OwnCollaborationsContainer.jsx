@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Actions:
-import { startOwnCollaborationsRequests } from 'actions/app/dashboard/own-collaborations';
+import { ownCollaborationsRequestsStart } from 'actions/app/dashboard/own-collaborations';
 
 import OwnCollaborations from 'presentationals/components/deckManagement/OwnCollaborations';
 
@@ -17,7 +17,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ startOwnCollaborationsRequests }, dispatch);
+  return bindActionCreators({ ownCollaborationsRequestsStart }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OwnCollaborations);

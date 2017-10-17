@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 
-import { FETCH_USER_SUCCESS } from 'actions/entities/users';
+import { setUser } from 'actions/entities/users';
 
 import fetchUser from 'api/fetchUserApi';
 
@@ -22,7 +22,9 @@ export function* fetchUserFlow(userId) {
   }
   const userObject = userJsonToObject(responseUser);
 
-  yield put({ type: FETCH_USER_SUCCESS, payload: userObject });
+  yield put(setUser(userObject));
 }
+
+export default fetchUserFlow;
 
 

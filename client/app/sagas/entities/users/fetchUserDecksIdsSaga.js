@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 
-import { FETCH_USER_DECKS_IDS_SUCCESS } from 'actions/entities/users';
+import { setUserDecksIds } from 'actions/entities/users';
 
 import fetchUserDecksIds from 'api/fetchUserDecksIdsApi';
 
@@ -17,11 +17,9 @@ export function* fetchUserDecksIdsFlow(userId) {
     throw new Error('Received undefined decks.');
   }
   const deckIds = responseUserDecksIds.data.map(deckIdJsonToId);
-  yield put(
-    {
-      type: FETCH_USER_DECKS_IDS_SUCCESS,
-      payload: { id: userId, deckIds },
-    },
-  );
+  yield put(setUserDecksIds(userId, deckIds));
 }
+
+export default fetchUserDecksIdsFlow;
+
 
