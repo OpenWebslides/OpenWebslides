@@ -54,7 +54,7 @@ class Comment < Annotation
   # Validate whether the record's parent conversation is not hidden or flagged
   #
   def conversation_unlocked
-    return unless conversation.hidden? || conversation.flagged?
+    return unless conversation && (conversation.hidden? || conversation.flagged?)
 
     errors.add :base, 'parent conversation cannot be hidden or flagged'
   end
