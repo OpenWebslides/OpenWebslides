@@ -65,6 +65,9 @@ UserCollaborations.propTypes = {
     id: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
   }),
+  userId: PropTypes.string.isRequired,
+// eslint-disable-next-line react/forbid-prop-types
+  entities: PropTypes.object.isRequired,
 };
 
 export default UserCollaborations;

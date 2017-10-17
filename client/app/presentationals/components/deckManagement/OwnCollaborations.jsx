@@ -43,7 +43,7 @@ class OwnCollaborations extends React.Component {
   }
 }
 
-OwnDecks.propTypes = {
+OwnCollaborations.propTypes = {
   ownCollaborationsRequestsStart: PropTypes.func.isRequired,
   ownCollaborationsState: PropTypes.shape({
     requestsStatus: PropTypes.oneOf(['notStarted', 'pending', 'succeeded', 'failed']),

@@ -3,8 +3,8 @@ import { takeLatest, put, call, select } from 'redux-saga/effects';
 import { SIGNOUT } from 'actions/signoutActions';
 import {
   OWN_COLLABORATIONS_REQUESTS_START,
-  OWN_COLLABORATIONS_REQUESTS_FAILURE,
-  OWN_COLLABORATIONS_REQUESTS_SUCCESS,
+  ownCollaborationsRequestsFailure,
+  ownCollaborationsRequestsSuccess,
 } from 'actions/app/dashboard/own-collaborations';
 
 // other sagas:
@@ -31,24 +31,14 @@ export function* ownCollaborationsRequestsFlow(action) {
   catch (error) {
     if (error.statusCode === 401) {
       yield put({ type: SIGNOUT });
-      yield put({
-        type: OWN_COLLABORATIONS_REQUESTS_FAILURE,
-        payload: {
-          message: 'You are not signed in!',
-        },
-      });
+      yield put(ownCollaborationsRequestsFailure('You are not signed in!'));
     }
     else {
-      yield put({
-        type: OWN_COLLABORATIONS_REQUESTS_FAILURE,
-        payload: {
-          message: error.message,
-        },
-      });
+      yield put(ownCollaborationsRequestsFailure(error.message));
     }
   }
 
-  yield put({ type: OWN_COLLABORATIONS_REQUESTS_SUCCESS });
+  yield put(ownCollaborationsRequestsSuccess());
 }
 
 function* ownCollaborationsRequestsWatcher() {

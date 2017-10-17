@@ -9,3 +9,16 @@ export function ownCollaborationsRequestsStart(userId) {
     payload: userId,
   };
 }
+
+export function ownCollaborationsRequestsFailure(message) {
+  return {
+    type: OWN_COLLABORATIONS_REQUESTS_FAILURE,
+    payload: { message },
+  };
+}
+
+export function ownCollaborationsRequestsSuccess() {
+  return {
+    type: OWN_COLLABORATIONS_REQUESTS_SUCCESS,
+  };
+}
