@@ -2,7 +2,7 @@
 // Slide container component
 // -------------------------
 
-.c_slide-container {
+.ows_slide-container {
   $slide-ratio-number: convert-string-ratio-to-number($slide__ratio);
   $slide-height: $slide__number-of-plain-text-lines * $slide__base-line-height * 1em;
   $slide-width: $slide-height * $slide-ratio-number;
@@ -10,7 +10,7 @@
   // Set these properties on container element because we do not want them to resize with the slide.
   margin-top: $spacing--element__v;
 
-  // Note: slide can be resized by setting font-size on .c_slide-container__size.
+  // Note: slide can be resized by setting font-size on .ows_slide-container__size.
   &__size {
     // Container for position: absolute; on &__content.
     position: relative;
@@ -22,10 +22,6 @@
     // Horizontally center the slide inside of its container.
     margin-right: auto;
     margin-left: auto;
-  }
-
-  &__content {
-    @include position-absolute-fill;
   }
 
   &--fullscreen {
@@ -56,7 +52,7 @@
       height: 100vh;
     }
 
-    .c_slide-container__size {
+    .ows_slide-container__size {
       // Undo white-space: nowrap; on container.
       white-space: normal;
 

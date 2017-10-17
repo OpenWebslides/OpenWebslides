@@ -79,7 +79,7 @@ class Slide extends Component {
     if (!this.props.isFullscreen) {
       // Get the slideContainer size wrapper element. (Note: 'sc' == 'slideContainer'.)
       const scSizeElement = this.slideContainer.getElementsByClassName(
-        'c_slide-container__size',
+        'ows_slide-container__size',
       )[0];
 
       // Remove sizing that might have been set by a previous call of this function.
@@ -148,27 +148,23 @@ class Slide extends Component {
 
     return (
       <div
-        className={`c_slide-container c_slide-container--${this.props.cssIdentifier} ${this.props.isFullscreen
-          ? 'c_slide-container--fullscreen'
+        className={`ows_slide-container ows_slide-container--${this.props.cssIdentifier}${this.props.isFullscreen
+          ? ' ows_slide-container--fullscreen'
           : ''}`}
         ref={(slideContainer) => {
           this.slideContainer = slideContainer;
         }}
       >
-        <div className="c_slide-container__size">
-          <div className="c_slide-container__wrapper">
-            <div className="c_slide-container__content">
-              <div
-                className="ows_slide"
-                data-slide-position={this.props.slideIndexInDeck + 1}
-                data-slide-count={this.props.numberOfSlidesInDeck}
-                data-level={this.props.slide.level}
-              >
-                <div className="ows_slide__overflow">
-                  <div className="ows_slide__wrapper">
-                    {slideContent}
-                  </div>
-                </div>
+        <div className="ows_slide-container__size">
+          <div
+            className="ows_slide"
+            data-slide-position={this.props.slideIndexInDeck + 1}
+            data-slide-count={this.props.numberOfSlidesInDeck}
+            data-level={this.props.slide.level}
+          >
+            <div className="ows_slide__overflow">
+              <div className="ows_slide__wrapper">
+                {slideContent}
               </div>
             </div>
           </div>

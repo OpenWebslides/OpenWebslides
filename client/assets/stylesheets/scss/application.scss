@@ -97,7 +97,6 @@
     @import 'theme/components/editor-slide-view';
     @import 'theme/components/switcher-menu';
     @import 'theme/components/slide-views-pane';
-    @import 'theme/components/slide-container';
     @import 'theme/components/user-imports';
     @import 'theme/components/fine-uploader-error';
     @import 'theme/components/feed';
@@ -127,5 +126,6 @@
 
 // Other
 
+    @import 'theme/other/ows_slide-container';
     @import 'theme/other/ows_slide';
 
