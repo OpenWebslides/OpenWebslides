@@ -7,7 +7,9 @@ import { initialHeadingLevels } from 'constants/slideOptions';
 
 import ContentItemContainer from 'lib/content-item-container/ContentItemContainer';
 
-class Slide extends Component {
+import SlideDisplayWrapper from './SlideDisplayWrapper';
+
+class SlideContainerDisplayWrapper extends Component {
   constructor(props) {
     super(props);
     this.updateSlideContainerSize = this.updateSlideContainerSize.bind(this);
@@ -127,8 +129,13 @@ class Slide extends Component {
   }
 
   render() {
-    const { viewType, slide } = this.props;
+    const { slide, viewType, isFullscreen } = this.props;
+    const classNames = ['ows_slide-container'];
     let slideContent;
+
+    if (isFullscreen) {
+      classNames.push(`${classNames[0]}--fullscreen`);
+    }
 
     if (slide) {
       slideContent = this.props.slide.contentItemIds.map(id => (
@@ -148,41 +155,27 @@ class Slide extends Component {
 
     return (
       <div
-        className={`ows_slide-container ows_slide-container--${this.props.cssIdentifier}${this.props.isFullscreen
-          ? ' ows_slide-container--fullscreen'
-          : ''}`}
+        className={classNames.join(' ')}
         ref={(slideContainer) => {
           this.slideContainer = slideContainer;
         }}
       >
         <div className="ows_slide-container__size">
-          <div
-            className="ows_slide"
-            data-slide-position={this.props.slideIndexInDeck + 1}
-            data-slide-count={this.props.numberOfSlidesInDeck}
-            data-level={this.props.slide.level}
-          >
-            <div className="ows_slide__overflow">
-              <div className="ows_slide__wrapper">
-                {slideContent}
-              </div>
-            </div>
-          </div>
+          <SlideDisplayWrapper {...this.props}>
+            {slideContent}
+          </SlideDisplayWrapper>
         </div>
         {(viewType === slideViewTypes.NAVIGATION) &&
-          <p>{this.props.slide.level}</p> /* #TODO visualize with indents instead of number */ }
+        <p>{this.props.slide.level}</p> /* #TODO visualize with indents instead of number */ }
       </div>
     );
   }
 }
 
-Slide.propTypes = {
-  cssIdentifier: PropTypes.string,
-  isFullscreen: PropTypes.bool,
+SlideContainerDisplayWrapper.propTypes = {
   slide: PropTypes.shape(slideShape).isRequired,
-  numberOfSlidesInDeck: PropTypes.number.isRequired,
-  slideIndexInDeck: PropTypes.number.isRequired,
   viewType: PropTypes.oneOf(Object.values(slideViewTypes)).isRequired,
+  isFullscreen: PropTypes.bool,
   // We need to connect these to force a rerender (and thus a resize)
   // when the active slide view types change.
   activeSlideViewTypes: PropTypes.arrayOf(
@@ -190,10 +183,8 @@ Slide.propTypes = {
   ).isRequired,
 };
 
-Slide.defaultProps = {
-  cssIdentifier: 'default',
+SlideContainerDisplayWrapper.defaultProps = {
   isFullscreen: false,
-  slide: null,
 };
 
-export default Slide;
+export default SlideContainerDisplayWrapper;

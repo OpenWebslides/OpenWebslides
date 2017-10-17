@@ -7,18 +7,18 @@ import { Provider } from 'react-redux';
 
 import { store } from 'App';
 
-import DeckHtmlWrapper from './DeckHtmlWrapper';
+import DeckDisplayWrapper from 'lib/ows-parts/deck/DeckDisplayWrapper';
 
 function convertDeckToHtmlString(deck) {
   const htmlString = ReactDOMServer.renderToStaticMarkup((
     <Provider store={store}>
-      <DeckHtmlWrapper
+      <DeckDisplayWrapper
         deck={deck}
       />
     </Provider>
   ));
 
-  return html_beautify(htmlString);
+  return html_beautify(htmlString, { indent_size: 2 });
 }
 
 export default convertDeckToHtmlString;

@@ -5,7 +5,7 @@ import { getActiveDeckId, getActiveSlideViewTypes } from 'selectors/app/slide-ed
 import { getDeckById } from 'selectors/entities/decks';
 import { getSlideById } from 'selectors/entities/slides';
 
-import Slide from 'presentationals/components/slide-editor/Slide';
+import SlideContainerDisplayWrapper from 'lib/ows-parts/slide/SlideContainerDisplayWrapper';
 
 function mapStateToProps(state, props) {
   // Calculate slide number.
@@ -24,4 +24,4 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(Slide);
+export default connect(mapStateToProps)(SlideContainerDisplayWrapper);

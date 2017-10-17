@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import { imageContainerContentItemShape } from 'constants/propTypeShapes';
 
-import ContainerContentItemChildren from '../content-item-contents/ContainerContentItemChildren';
+import ContainerContentItemChildren
+  from 'lib/content-item-container/content-item-contents/ContainerContentItemChildren';
 
-function ImageContainer(props) {
+function ImageContainerDisplayWrapper(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
@@ -23,9 +24,9 @@ function ImageContainer(props) {
   );
 }
 
-ImageContainer.propTypes = {
+ImageContainerDisplayWrapper.propTypes = {
   contentItem: PropTypes.shape(imageContainerContentItemShape).isRequired,
   attributes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default ImageContainer;
+export default ImageContainerDisplayWrapper;

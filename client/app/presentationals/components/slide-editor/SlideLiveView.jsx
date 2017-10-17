@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SlideContainer from 'containers/slide-editor/SlideContainer';
+import SlideContainer from 'lib/slide-container/SlideContainer';
 import { slideViewTypes } from 'constants/slideViewTypes';
 
 function SlideLiveView(props) {

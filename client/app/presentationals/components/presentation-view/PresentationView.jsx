@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import SlideContainer from 'containers/slide-editor/SlideContainer';
+import SlideContainer from 'lib/slide-container/SlideContainer';
 import { slideViewTypes } from 'constants/slideViewTypes';
 import PresentationViewToolbarContainer from
   'containers/presentation-view/PresentationViewToolbarContainer';

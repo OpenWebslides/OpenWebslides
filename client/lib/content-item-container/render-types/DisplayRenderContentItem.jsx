@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { contentItemShape } from 'constants/propTypeShapes';
+import displayWrappersIndex from 'lib/ows-parts/content-item-types/displayWrappers';
 
 import generateAttributesObject from '../helpers/generateAttributesObject';
-import displayWrappersIndex from '../display-wrappers';
 
 function DisplayRenderContentItem(props) {
   const { contentItem } = props;

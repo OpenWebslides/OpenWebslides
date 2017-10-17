@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { slideViewTypes } from 'constants/slideViewTypes';
 import { deckShape } from 'constants/propTypeShapes';
 
-import SlideContainer from 'containers/slide-editor/SlideContainer';
+import SlideContainer from 'lib/slide-container/SlideContainer';
 
-function DeckHtmlWrapper(props) {
+function DeckDisplayWrapper(props) {
   const { deck } = props;
 
   return (
@@ -28,8 +28,8 @@ function DeckHtmlWrapper(props) {
   );
 }
 
-DeckHtmlWrapper.propTypes = {
+DeckDisplayWrapper.propTypes = {
   deck: PropTypes.shape(deckShape).isRequired,
 };
 
-export default DeckHtmlWrapper;
+export default DeckDisplayWrapper;

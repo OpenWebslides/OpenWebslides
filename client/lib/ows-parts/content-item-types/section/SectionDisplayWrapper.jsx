@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import { sectionContentItemShape } from 'constants/propTypeShapes';
 
-import ContainerContentItemChildren from '../content-item-contents/ContainerContentItemChildren';
+import ContainerContentItemChildren
+  from 'lib/content-item-container/content-item-contents/ContainerContentItemChildren';
 
-function Section(props) {
+function SectionDisplayWrapper(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
@@ -21,9 +22,9 @@ function Section(props) {
   );
 }
 
-Section.propTypes = {
+SectionDisplayWrapper.propTypes = {
   contentItem: PropTypes.shape(sectionContentItemShape).isRequired,
   attributes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default Section;
+export default SectionDisplayWrapper;

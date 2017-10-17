@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import { iframeContentItemShape } from 'constants/propTypeShapes';
 
-import ContentItemInnerContents from '../content-item-contents/ContentItemInnerContents';
+import ContentItemInnerContents
+  from 'lib/content-item-container/content-item-contents/ContentItemInnerContents';
 
-function Iframe(props) {
+function IframeDisplayWrapper(props) {
   const { contentItem, attributes, renderOptions, ...passThroughProps } = props;
   let innerContents;
 
@@ -43,7 +44,7 @@ function Iframe(props) {
   );
 }
 
-Iframe.propTypes = {
+IframeDisplayWrapper.propTypes = {
   contentItem: PropTypes.shape(iframeContentItemShape).isRequired,
   attributes: PropTypes.objectOf(PropTypes.string).isRequired,
   renderOptions: PropTypes.shape({
@@ -51,4 +52,4 @@ Iframe.propTypes = {
   }).isRequired,
 };
 
-export default Iframe;
+export default IframeDisplayWrapper;

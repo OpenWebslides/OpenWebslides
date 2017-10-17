@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { paragraphContentItemShape } from 'constants/propTypeShapes';
+import { listItemContentItemShape } from 'constants/propTypeShapes';
 
-import ContentItemInnerContents from '../content-item-contents/ContentItemInnerContents';
+import ContentItemInnerContents
+  from 'lib/content-item-container/content-item-contents/ContentItemInnerContents';
 
-function Paragraph(props) {
+function ListItemDisplayWrapper(props) {
   const { contentItem, attributes, ...passThroughProps } = props;
 
   return (
-    <p
-      className="ows_paragraph"
+    <li
+      className="ows_list-item"
       {...attributes}
     >
       <ContentItemInnerContents
@@ -23,13 +24,13 @@ function Paragraph(props) {
           deleteOnBackspace: true,
         }]}
       />
-    </p>
+    </li>
   );
 }
 
-Paragraph.propTypes = {
-  contentItem: PropTypes.shape(paragraphContentItemShape).isRequired,
+ListItemDisplayWrapper.propTypes = {
+  contentItem: PropTypes.shape(listItemContentItemShape).isRequired,
   attributes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default Paragraph;
+export default ListItemDisplayWrapper;
