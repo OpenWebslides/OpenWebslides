@@ -95,7 +95,6 @@ RSpec.describe 'Comments API', :type => :request do
       attr = JSON.parse(response.body)['data']['attributes']
 
       expect(attr['text']).to match attributes[:text]
-      expect(attr['secret']).to eq false
     end
   end
 
@@ -138,50 +137,6 @@ RSpec.describe 'Comments API', :type => :request do
       attr = JSON.parse(response.body)['data']['attributes']
 
       expect(attr['text']).to eq 'foo'
-    end
-
-    it 'protects public annotation' do
-      expect(comment).not_to be_secret
-
-      patch comment_path(:id => comment.id), :params => update_body(comment.id, :secret => true), :headers => headers
-
-      expect(response.status).to eq 200
-      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
-
-      attr = JSON.parse(response.body)['data']['attributes']
-
-      expect(attr['secret']).to eq true
-    end
-
-    it 'publishes protected annotation' do
-      comment.protect
-      expect(comment).to be_secret
-
-      patch comment_path(:id => comment.id), :params => update_body(comment.id, :secret => false), :headers => headers
-
-      expect(response.status).to eq 200
-      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
-
-      attr = JSON.parse(response.body)['data']['attributes']
-
-      expect(attr['secret']).to eq false
-    end
-
-    it 'does not protect protected annotation' do
-      comment.protect
-      expect(comment).to be_secret
-
-      patch comment_path(:id => comment.id), :params => update_body(comment.id, :secret => true), :headers => headers
-
-      expect(response.status).to eq 422
-    end
-
-    it 'does not publish published annotation' do
-      expect(comment).not_to be_secret
-
-      patch comment_path(:id => comment.id), :params => update_body(comment.id, :secret => false), :headers => headers
-
-      expect(response.status).to eq 422
     end
   end
 

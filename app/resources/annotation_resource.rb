@@ -12,7 +12,6 @@ class AnnotationResource < ApplicationResource
   attribute :rated
 
   # State
-  attribute :secret
   attribute :edited
   attribute :flagged
   attribute :deleted
@@ -37,11 +36,11 @@ class AnnotationResource < ApplicationResource
   # Methods
   #
   def self.creatable_fields(context = {})
-    super(context) - %i[rating rated secret edited flagged deleted]
+    super(context) - %i[rating rated edited flagged deleted]
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[content_item_id user deck rating rated secret edited flagged deleted]
+    super(context) - %i[content_item_id user deck rating rated edited flagged deleted]
   end
 
   def meta(options)
@@ -61,10 +60,6 @@ class AnnotationResource < ApplicationResource
   ##
   # State methods
   #
-  def secret
-    _model.secret?
-  end
-
   def edited
     _model.edited?
   end

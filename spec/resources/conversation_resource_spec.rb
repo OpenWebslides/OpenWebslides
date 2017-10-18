@@ -14,6 +14,7 @@ RSpec.describe ConversationResource, :type => :resource do
   it { is_expected.to have_attribute :conversation_type }
   it { is_expected.to have_attribute :title }
   it { is_expected.to have_attribute :text }
+  it { is_expected.to have_attribute :secret }
 
   it { is_expected.to have_one :user }
   it { is_expected.to have_one :deck }
@@ -33,7 +34,7 @@ RSpec.describe ConversationResource, :type => :resource do
     end
 
     it 'should have a valid set of updatable fields' do
-      expect(described_class.updatable_fields).to match_array %i[title text secret]
+      expect(described_class.updatable_fields).to match_array %i[title text]
     end
 
     it 'should have a valid set of sortable fields' do

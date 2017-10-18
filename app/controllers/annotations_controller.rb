@@ -44,7 +44,6 @@ class AnnotationsController < ApplicationController
     @resource = model_klass.find params[:id]
 
     authorize @resource
-    # TODO: authorize state changes
 
     if service.update resource_params
       jsonapi_render :json => @resource

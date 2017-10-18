@@ -11,6 +11,9 @@ class ConversationResource < AnnotationResource
   attribute :title
   attribute :text
 
+  # State
+  attribute :secret
+
   ##
   # Relationships
   #
@@ -28,11 +31,11 @@ class ConversationResource < AnnotationResource
   # Methods
   #
   def self.creatable_fields(context = {})
-    super(context) - %i[comments]
+    super(context) - %i[comments secret]
   end
 
   def self.updatable_fields(context = {})
-    super(context) - %i[conversation_type comments]
+    super(context) - %i[conversation_type comments secret]
   end
 
   def meta(options)
@@ -51,5 +54,12 @@ class ConversationResource < AnnotationResource
   # Omit text when annotation is deleted
   def text
     _model.hidden? ? nil : _model.text
+  end
+
+  ##
+  # State methods
+  #
+  def secret
+    _model.secret?
   end
 end

@@ -123,50 +123,6 @@ RSpec.describe 'Conversations API', :type => :request do
 
       expect(attr['title']).to eq 'foo'
     end
-
-    it 'protects public annotation' do
-      expect(conversation).not_to be_secret
-
-      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :secret => true), :headers => headers
-
-      expect(response.status).to eq 200
-      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
-
-      attr = JSON.parse(response.body)['data']['attributes']
-
-      expect(attr['secret']).to eq true
-    end
-
-    it 'publishes protected annotation' do
-      conversation.protect
-      expect(conversation).to be_secret
-
-      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :secret => false), :headers => headers
-
-      expect(response.status).to eq 200
-      expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
-
-      attr = JSON.parse(response.body)['data']['attributes']
-
-      expect(attr['secret']).to eq false
-    end
-
-    it 'does not protect protected annotation' do
-      conversation.protect
-      expect(conversation).to be_secret
-
-      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :secret => true), :headers => headers
-
-      expect(response.status).to eq 422
-    end
-
-    it 'does not publish published annotation' do
-      expect(conversation).not_to be_secret
-
-      patch conversation_path(:id => conversation.id), :params => update_body(conversation.id, :secret => false), :headers => headers
-
-      expect(response.status).to eq 422
-    end
   end
 
   describe 'GET /:id' do
