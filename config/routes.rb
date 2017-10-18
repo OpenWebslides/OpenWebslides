@@ -116,6 +116,9 @@ Rails.application.routes.draw do
 
       # Flag
       jsonapi_resource :flag, :only => %i[create] do end
+
+      # Secret
+      jsonapi_resource :secret, :only => %i[create destroy] do end
     end
 
     jsonapi_resources :comments, :except => %i[index] do
