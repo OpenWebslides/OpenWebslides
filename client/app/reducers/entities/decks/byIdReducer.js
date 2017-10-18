@@ -37,7 +37,7 @@ function deleteSlide(state, action) {
 function fetchDeckSuccess(state, action) {
   const deckId = action.payload.deckId;
 
-  return Immutable.merge(state, {
+  return state.merge({
     [deckId]: {
       id: deckId,
       slideIds: Object.keys(action.payload.slidesById),
@@ -49,7 +49,7 @@ function fetchDeckSuccess(state, action) {
 function addDeckMetadata(state, action) {
   const deckId = action.payload.id;
   const metadata = action.payload.metadata;
-  return Immutable.merge(state, {
+  return state.merge({
     [deckId]: {
       id: deckId,
       meta: metadata,
