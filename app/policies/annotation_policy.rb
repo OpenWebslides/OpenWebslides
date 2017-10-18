@@ -34,13 +34,6 @@ class AnnotationPolicy < ApplicationPolicy
     deck_policy.show? && user_policy.update?
   end
 
-  def flag?
-    return false if @user.nil?
-
-    # Users can flag but only for updatable deck
-    deck_policy.update?
-  end
-
   ##
   # Relationship: user
   #
@@ -59,6 +52,37 @@ class AnnotationPolicy < ApplicationPolicy
 
     # Users can show user but only for showable deck
     deck_policy.show?
+  end
+
+  ##
+  # State machine
+  #
+  def fsm_edit?
+    update?
+  end
+
+  def fsm_flag?
+    return false if @user.nil?
+
+    # Users can flag but only for showable deck and user, except owner
+    deck_policy.show? && user_policy.show? && @user != @record.user
+  end
+
+  def fsm_hide?
+    return false if @user.nil?
+
+    # Users can hide but only for destroyable annotation or updatable deck
+    destroy? || deck_policy.update?
+  end
+
+  def fsm_protect?
+    # Users can protect but only for destroyable annotation
+    destroy?
+  end
+
+  def fsm_publish?
+    # Users can protect but only for destroyable annotation
+    destroy?
   end
 
   ##

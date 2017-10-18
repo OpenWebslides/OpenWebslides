@@ -17,10 +17,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
-      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to forbid_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for another user' do
@@ -30,10 +35,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
-      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to permit_action :fsm_flag }
+      it { is_expected.to forbid_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for a collaborator' do
@@ -44,10 +54,33 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
+    end
+
+    context 'for another collaborator' do
+      let(:user) { deck.collaborators.first }
+
+      it { is_expected.to forbid_action :create }
+      it { is_expected.to permit_action :show }
+      it { is_expected.to forbid_action :update }
+      it { is_expected.to forbid_action :destroy }
+
+      it { is_expected.to permit_action :show_deck }
+      it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to permit_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for an owner' do
@@ -57,10 +90,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
     end
 
     context 'for a deck owner' do
@@ -71,10 +109,33 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
+    end
+
+    context 'for another deck owner' do
+      let(:user) { deck.owner }
+
+      it { is_expected.to forbid_action :create }
+      it { is_expected.to permit_action :show }
+      it { is_expected.to forbid_action :update }
+      it { is_expected.to forbid_action :destroy }
+
+      it { is_expected.to permit_action :show_deck }
+      it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to permit_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
   end
 
@@ -88,10 +149,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
-      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to forbid_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to forbid_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for another user' do
@@ -101,10 +167,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
-      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to permit_action :fsm_flag }
+      it { is_expected.to forbid_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for a collaborator' do
@@ -115,10 +186,33 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
+    end
+
+    context 'for another collaborator' do
+      let(:user) { deck.collaborators.first }
+
+      it { is_expected.to forbid_action :create }
+      it { is_expected.to permit_action :show }
+      it { is_expected.to forbid_action :update }
+      it { is_expected.to forbid_action :destroy }
+
+      it { is_expected.to permit_action :show_deck }
+      it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to permit_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for an owner' do
@@ -128,10 +222,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
     end
 
     context 'for a deck owner' do
@@ -142,10 +241,33 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
+    end
+
+    context 'for another deck owner' do
+      let(:user) { deck.owner }
+
+      it { is_expected.to forbid_action :create }
+      it { is_expected.to permit_action :show }
+      it { is_expected.to forbid_action :update }
+      it { is_expected.to forbid_action :destroy }
+
+      it { is_expected.to permit_action :show_deck }
+      it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to permit_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
   end
 
@@ -159,10 +281,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
-      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to forbid_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to forbid_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for another user' do
@@ -172,10 +299,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :show }
       it { is_expected.to forbid_action :update }
       it { is_expected.to forbid_action :destroy }
-      it { is_expected.to forbid_action :flag }
 
       it { is_expected.to forbid_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to forbid_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for a collaborator' do
@@ -186,10 +318,33 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
+    end
+
+    context 'for another collaborator' do
+      let(:user) { deck.collaborators.first }
+
+      it { is_expected.to forbid_action :create }
+      it { is_expected.to permit_action :show }
+      it { is_expected.to forbid_action :update }
+      it { is_expected.to forbid_action :destroy }
+
+      it { is_expected.to permit_action :show_deck }
+      it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to permit_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
 
     context 'for an owner' do
@@ -200,10 +355,15 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
     end
 
     context 'for a deck owner' do
@@ -214,10 +374,33 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show }
       it { is_expected.to permit_action :update }
       it { is_expected.to permit_action :destroy }
-      it { is_expected.to permit_action :flag }
 
       it { is_expected.to permit_action :show_deck }
       it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to permit_action :fsm_edit }
+      it { is_expected.to forbid_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to permit_action :fsm_protect }
+      it { is_expected.to permit_action :fsm_publish }
+    end
+
+    context 'for another deck owner' do
+      let(:user) { deck.owner }
+
+      it { is_expected.to forbid_action :create }
+      it { is_expected.to permit_action :show }
+      it { is_expected.to forbid_action :update }
+      it { is_expected.to forbid_action :destroy }
+
+      it { is_expected.to permit_action :show_deck }
+      it { is_expected.to permit_action :show_user }
+
+      it { is_expected.to forbid_action :fsm_edit }
+      it { is_expected.to permit_action :fsm_flag }
+      it { is_expected.to permit_action :fsm_hide }
+      it { is_expected.to forbid_action :fsm_protect }
+      it { is_expected.to forbid_action :fsm_publish }
     end
   end
 end
