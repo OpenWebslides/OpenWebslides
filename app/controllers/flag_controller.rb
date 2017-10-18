@@ -16,7 +16,7 @@ class FlagController < ApplicationController
   def create
     @annotation = params[:comment_id] ? Comment.find(params[:comment_id]) : Conversation.find(params[:conversation_id])
 
-    authorize @annotation, :flag?
+    authorize @annotation, :fsm_flag?
 
     if @annotation.flag
       jsonapi_render :json => @annotation, :options => { :resource => annotation_resource }
