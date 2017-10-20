@@ -13,6 +13,17 @@ export function ownDecksRequestsStart(userId) {
     payload: userId,
   };
 }
+export function ownDecksRequestsSuccess() {
+  return {
+    type: OWN_DECKS_REQUESTS_SUCCESS,
+  };
+}
+export function ownDecksRequestsFailure(message) {
+  return {
+    type: OWN_DECKS_REQUESTS_FAILURE,
+    payload: message,
+  };
+}
 
 export function ownDeckDeletionRequest(deckId) {
   return {

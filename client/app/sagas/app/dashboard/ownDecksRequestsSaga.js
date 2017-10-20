@@ -3,8 +3,8 @@ import { takeLatest, put, call, select } from 'redux-saga/effects';
 import { SIGNOUT } from 'actions/signoutActions';
 import {
   OWN_DECKS_REQUESTS_START,
-  OWN_DECKS_REQUESTS_FAILURE,
-  OWN_DECKS_REQUESTS_SUCCESS,
+  ownDecksRequestFailure,
+  ownDecksRequestsSuccess,
 } from 'actions/app/dashboard/own-decks';
 
 // other sagas:
@@ -15,7 +15,7 @@ import { fetchDeckMetadataFlow } from 'sagas/entities/decks/fetchDeckMetadataSag
 // Selectors:
 import { getUserDecksIds } from 'selectors/entities/users';
 
-export function* requestOwnDecksFlow(action) {
+export function* ownDecksRequestsFlow(action) {
   try {
     yield call(fetchUserFlow, action.payload);
     yield call(fetchUserDecksIdsFlow, action.payload);
@@ -32,28 +32,18 @@ export function* requestOwnDecksFlow(action) {
   catch (error) {
     if (error.statusCode === 401) {
       yield put({ type: SIGNOUT });
-      yield put({
-        type: OWN_DECKS_REQUESTS_FAILURE,
-        payload: {
-          message: 'You are not signed in!',
-        },
-      });
+      yield put(ownDecksRequestFailure('You are not signed in!'));
     }
     else {
-      yield put({
-        type: OWN_DECKS_REQUESTS_FAILURE,
-        payload: {
-          message: error.message,
-        },
-      });
+      yield put(ownDecksRequestFailure(error.message));
     }
   }
 
-  yield put({ type: OWN_DECKS_REQUESTS_SUCCESS });
+  yield put(ownDecksRequestsSuccess());
 }
 
 function* ownDecksRequestsWatcher() {
-  yield takeLatest(OWN_DECKS_REQUESTS_START, requestOwnDecksFlow);
+  yield takeLatest(OWN_DECKS_REQUESTS_START, ownDecksRequestsFlow);
 }
 
 export default ownDecksRequestsWatcher;
