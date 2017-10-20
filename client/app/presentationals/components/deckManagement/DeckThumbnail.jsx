@@ -17,33 +17,35 @@ export function DeckThumbnail({
       <th>
         <Link to={`/presentation/${deckId}`}>
           <p className="c_deck-thumbnail__deck-view-link">
-              View
-            </p>
+            <i className="fa fa-desktop fa-6 deck-icon" aria-hidden="true" />
+          </p>
         </Link>
       </th>
       <th>
         <Link to={`/print/${deckId}`}>
           <p className="c_deck-thumbnail__deck-view-print-link">
-           Course mode
+            <i className="fa fa-file-text-o fa-6 deck-icon" aria-hidden="true" />
           </p>
         </Link>
       </th>
       <th>
         <Link to={`/editor/${deckId}`}>
           <p className="c_deck-thumbnail__deck-edit-link">
-              Edit
-            </p>
+            <i className="fa fa-pencil fa-6 deck-icon" aria-hidden="true" />
+          </p>
         </Link>
       </th>
       <th>
-        <button
-          className="c_deck-thumbnail__delete-button"
+        <a
+          href="#"
+          className="c_deck-thumbnail__deck-edit-link"
           onClick={() => {
+            confirm('Are you sure you want to delete this deck?');
             deleteDeck(deckId);
           }}
         >
-          Delete
-        </button>
+          <i className="fa fa-times fa-6 deck-icon delete-deck" aria-hidden="true" />
+        </a>
       </th>
     </tr>
   );

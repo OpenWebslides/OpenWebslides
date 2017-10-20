@@ -88,3 +88,72 @@ $annotations-side-bar-shift: $annotations-side-bar-total-width - $annotations-si
 .list-style-none {
   list-style-type: none;
 }
+
+.c_page-header__wrapper {
+  background-color: white !important;
+  border-bottom: 1px solid gainsboro;
+  color: black !important;
+}
+
+.c_footer__wrapper {
+  background-color: white !important;
+  border-top: 1px solid gainsboro;
+  color: black !important;
+}
+
+.o_logo--site .o_logo__link {
+  color: #4f555a !important;
+  text-shadow: none !important;
+}
+
+.o_logo--site .o_logo__item--open {
+  text-transform: none !important;
+}
+
+.l_page .l_main__item__wrapper {
+  background-color: white !important;
+  border-bottom: 1px solid gainsboro;
+}
+
+.c_feed-container {
+  color: #4f555a;
+}
+
+.c_feed-container h1 {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.c_own-decks-container__title {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #4f555a;
+}
+
+.c_deck-thumbnail__deck-name {
+  color: #4f555a;
+  font-weight: 400 !important;
+}
+
+.c_feed-notifications-container__more-button {
+  color: #4f555a;
+  padding: 7px !important;
+  font-size: 16px !important;
+  border-radius: 5px;
+}
+
+.feed-filter {
+  background-color: white;
+  color: #4f555a;
+}
+
+.deck-icon {
+  margin: 10px;
+  font-size: 20px;
+}
+
+.deck-icon.delete-deck {
+  color: #d65c61 !important;
+}

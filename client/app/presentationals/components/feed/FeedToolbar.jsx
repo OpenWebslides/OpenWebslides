@@ -14,8 +14,9 @@ function FeedToolbar({ selectedType, typeChange }) {
   return (
     <div className="c_feed-toolbar">
       <p>
-        Filter by type:
+        Filter by type:{' '}
         <select
+          className="feed-filter"
           key={selectedType}
           value={selectedType}
           onChange={(e) => {
