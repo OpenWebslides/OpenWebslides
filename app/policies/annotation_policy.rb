@@ -85,6 +85,13 @@ class AnnotationPolicy < ApplicationPolicy
     destroy?
   end
 
+  def fsm_rate?
+    return false if @user.nil?
+
+    # Users can rate but only for showable annotation
+    show?
+  end
+
   ##
   # Scope
   #

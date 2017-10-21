@@ -26,27 +26,29 @@ RSpec.describe Annotation, :type => :model do
     it { is_expected.to have_states :created, :secret, :edited, :flagged, :hidden }
 
     context 'created' do
-      it { is_expected.to handle_events :edit, :protect, :flag, :hide, :when => :created }
+      it { is_expected.to handle_events :edit, :protect, :flag, :hide, :rate, :when => :created }
       it { is_expected.to reject_events :publish, :when => :created }
 
       it { is_expected.to transition_from :created, :to_state => :edited, :on_event => :edit }
       it { is_expected.to transition_from :created, :to_state => :secret, :on_event => :protect }
       it { is_expected.to transition_from :created, :to_state => :flagged, :on_event => :flag }
       it { is_expected.to transition_from :created, :to_state => :hidden, :on_event => :hide }
+      it { is_expected.to transition_from :created, :to_state => :created, :on_event => :rate }
     end
 
     context 'edited' do
-      it { is_expected.to handle_events :edit, :flag, :hide, :when => :edited }
+      it { is_expected.to handle_events :edit, :flag, :hide, :rate, :when => :edited }
       it { is_expected.to reject_events :protect, :publish, :when => :edited }
 
       it { is_expected.to transition_from :edited, :to_state => :edited, :on_event => :edit }
       it { is_expected.to transition_from :edited, :to_state => :flagged, :on_event => :flag }
       it { is_expected.to transition_from :edited, :to_state => :hidden, :on_event => :hide }
+      it { is_expected.to transition_from :edited, :to_state => :edited, :on_event => :rate }
     end
 
     context 'secret' do
       it { is_expected.to handle_events :edit, :publish, :hide, :when => :secret }
-      it { is_expected.to reject_events :protect, :flag, :when => :secret }
+      it { is_expected.to reject_events :protect, :flag, :rate, :when => :secret }
 
       it { is_expected.to transition_from :secret, :to_state => :secret, :on_event => :edit }
       it { is_expected.to transition_from :secret, :to_state => :created, :on_event => :publish }
@@ -54,13 +56,13 @@ RSpec.describe Annotation, :type => :model do
 
     context 'flagged' do
       it { is_expected.to handle_events :hide, :when => :flagged }
-      it { is_expected.to reject_events :edit, :protect, :publish, :flag, :when => :flagged }
+      it { is_expected.to reject_events :edit, :protect, :publish, :flag, :rate, :when => :flagged }
 
       it { is_expected.to transition_from :flagged, :to_state => :hidden, :on_event => :hide }
     end
 
     context 'hidden' do
-      it { is_expected.to reject_events :hide, :edit, :protect, :publish, :flag, :when => :hidden }
+      it { is_expected.to reject_events :hide, :edit, :protect, :publish, :flag, :rate, :when => :hidden }
     end
   end
 

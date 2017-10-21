@@ -74,6 +74,11 @@ class Annotation < ApplicationRecord
     event :publish do
       transition :secret => :created
     end
+
+    # Rate an annotation
+    event :rate do
+      transition %i[created edited] => same
+    end
   end
 
   ##

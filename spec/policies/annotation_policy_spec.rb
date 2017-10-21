@@ -26,6 +26,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to forbid_action :fsm_rate }
     end
 
     context 'for another user' do
@@ -44,6 +45,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for a collaborator' do
@@ -63,6 +65,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for another collaborator' do
@@ -81,6 +84,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for an owner' do
@@ -99,6 +103,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for a deck owner' do
@@ -118,6 +123,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for another deck owner' do
@@ -136,6 +142,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
   end
 
@@ -158,6 +165,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to forbid_action :fsm_rate }
     end
 
     context 'for another user' do
@@ -176,6 +184,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for a collaborator' do
@@ -195,6 +204,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for another collaborator' do
@@ -213,6 +223,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for an owner' do
@@ -231,6 +242,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for a deck owner' do
@@ -250,6 +262,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for another deck owner' do
@@ -268,6 +281,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
   end
 
@@ -290,6 +304,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to forbid_action :fsm_rate }
     end
 
     context 'for another user' do
@@ -308,6 +323,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to forbid_action :fsm_rate }
     end
 
     context 'for a collaborator' do
@@ -327,6 +343,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for another collaborator' do
@@ -345,6 +362,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for an owner' do
@@ -364,6 +382,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for a deck owner' do
@@ -383,6 +402,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for another deck owner' do
@@ -401,6 +421,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
+      it { is_expected.to permit_action :fsm_rate }
     end
   end
 end
