@@ -35,6 +35,10 @@ class AnnotationResource < ApplicationResource
   ##
   # Methods
   #
+  def fetchable_fields
+    context[:current_user] ? super : super - %i[rated]
+  end
+
   def self.creatable_fields(context = {})
     super(context) - %i[rating rated edited flagged deleted]
   end

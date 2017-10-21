@@ -22,14 +22,14 @@ RSpec.describe ConversationResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type title text comments rating rated secret edited flagged deleted]
+      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type title text comments rating secret edited flagged deleted]
     end
 
     context 'hidden state' do
       before { conversation.hide }
 
       it 'should have a valid set of fetchable fields' do
-        expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type comments rating rated secret edited flagged deleted]
+        expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type comments rating secret edited flagged deleted]
       end
     end
 
@@ -45,6 +45,18 @@ RSpec.describe ConversationResource, :type => :resource do
   describe 'filters' do
     it 'should have a valid set of filters' do
       expect(described_class.filters.keys).to match_array %i[id user content_item_id conversation_type rated]
+    end
+  end
+
+  context 'context' do
+    before do
+      subject.define_singleton_method :context do
+        { :current_user => 'foo' }
+      end
+    end
+
+    it 'should have a valid set of fetchable fields' do
+      expect(subject.fetchable_fields).to match_array %i[id content_item_id user deck conversation_type title text comments rating rated secret edited flagged deleted]
     end
   end
 end
