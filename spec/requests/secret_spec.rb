@@ -23,7 +23,7 @@ RSpec.describe 'Secrets API', :type => :request do
         add_auth_header
       end
 
-      context 'already secret' do
+      context 'is secret' do
         before { annotation.protect }
 
         it 'rejects already secret' do
@@ -35,18 +35,20 @@ RSpec.describe 'Secrets API', :type => :request do
         end
       end
 
-      it 'protects' do
-        post conversation_secret_path(:conversation_id => annotation.id), :params => params, :headers => headers
+      context 'is public' do
+        it 'protects' do
+          post conversation_secret_path(:conversation_id => annotation.id), :params => params, :headers => headers
 
-        expect(response.status).to eq 200
-        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+          expect(response.status).to eq 200
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
-        attrs = JSON.parse(response.body)['data']['attributes']
+          attrs = JSON.parse(response.body)['data']['attributes']
 
-        expect(attrs['secret']).to be true
+          expect(attrs['secret']).to be true
 
-        annotation.reload
-        expect(annotation).to be_secret
+          annotation.reload
+          expect(annotation).to be_secret
+        end
       end
     end
 
@@ -56,15 +58,17 @@ RSpec.describe 'Secrets API', :type => :request do
         add_auth_header
       end
 
-      it 'rejects already public' do
-        delete conversation_secret_path(:conversation_id => annotation.id), :params => params, :headers => headers
+      context 'is public' do
+        it 'rejects already public' do
+          delete conversation_secret_path(:conversation_id => annotation.id), :params => params, :headers => headers
 
-        expect(response.status).to eq 422
-        expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
-        expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+          expect(response.status).to eq 422
+          expect(jsonapi_error_code(response)).to eq JSONAPI::VALIDATION_ERROR
+          expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
+        end
       end
 
-      context 'already secret' do
+      context 'is secret' do
         before { annotation.protect }
 
         it 'publishes' do

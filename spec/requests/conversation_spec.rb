@@ -92,7 +92,9 @@ RSpec.describe 'Conversations API', :type => :request do
       attr = JSON.parse(response.body)['data']['attributes']
 
       expect(attr['text']).to match attributes[:text]
-      expect(attr['secret']).to eq false
+
+      # Newly created conversations should always be secret by default
+      expect(attr['secret']).to eq true
     end
   end
 
