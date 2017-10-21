@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SecretController < ApplicationController
+  include EventAuthorizable
+
   # Authentication
   before_action :authenticate_user
   after_action :renew_token
@@ -18,7 +20,7 @@ class SecretController < ApplicationController
   def create
     @annotation = Conversation.find params[:conversation_id]
 
-    authorize @annotation, :fsm_protect?
+    authorize_event @annotation, :protect
 
     if @annotation.protect
       jsonapi_render :json => @annotation, :options => { :resource => ConversationResource }
@@ -31,7 +33,7 @@ class SecretController < ApplicationController
   def destroy
     @annotation = Conversation.find params[:conversation_id]
 
-    authorize @annotation, :fsm_publish?
+    authorize_event @annotation, :publish
 
     if @annotation.publish
       jsonapi_render :json => @annotation, :options => { :resource => ConversationResource }

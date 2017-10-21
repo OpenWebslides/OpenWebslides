@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RatingController < ApplicationController
+  include EventAuthorizable
+
   # Authentication
   before_action :authenticate_user
   after_action :renew_token
@@ -22,6 +24,7 @@ class RatingController < ApplicationController
                          :annotation => @annotation
 
     authorize @rating
+    authorize_event @annotation, :rate
 
     if @rating.save
       jsonapi_render :json => @annotation, :options => { :resource => annotation_resource }
@@ -37,6 +40,7 @@ class RatingController < ApplicationController
     @rating = @annotation.ratings.find_by!(:user => current_user)
 
     authorize @rating
+    authorize_event @annotation, :rate
 
     if @rating.destroy
       jsonapi_render :json => @annotation, :options => { :resource => annotation_resource }

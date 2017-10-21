@@ -3,6 +3,7 @@
 class AnnotationsController < ApplicationController
   include Relationships
   include RelatedResources
+  include EventAuthorizable
 
   # Authentication
   before_action :authenticate_user, :only => %i[create update destroy]
@@ -44,6 +45,7 @@ class AnnotationsController < ApplicationController
     @resource = model_klass.find params[:id]
 
     authorize @resource
+    authorize_event @resource, :edit
 
     if service.update resource_params
       jsonapi_render :json => @resource
@@ -57,6 +59,7 @@ class AnnotationsController < ApplicationController
     @resource = model_klass.find params[:id]
 
     authorize @resource
+    authorize_event @resource, :hide
 
     service.delete
 

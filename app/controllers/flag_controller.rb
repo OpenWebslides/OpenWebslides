@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class FlagController < ApplicationController
+  include EventAuthorizable
+
   # Authentication
   before_action :authenticate_user
   after_action :renew_token
@@ -16,7 +18,7 @@ class FlagController < ApplicationController
   def create
     @annotation = params[:comment_id] ? Comment.find(params[:comment_id]) : Conversation.find(params[:conversation_id])
 
-    authorize @annotation, :fsm_flag?
+    authorize_event @annotation, :flag
 
     if @annotation.flag
       jsonapi_render :json => @annotation, :options => { :resource => annotation_resource }
