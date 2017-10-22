@@ -12,13 +12,13 @@ module OpenWebslides
       @app = 'Open Webslides'
       @build = '1'
       @version = {
-        :auth => '1.0.0',
-        :user => '1.0.0',
-        :deck => '1.0.0',
-        :feed => '1.0.0',
-        :asst => '1.0.0',
-        :annt => '1.0.0',
-        :conv => '1.0.0',
+        :auth => '1.0.0',   # Auth module
+        :user => '1.0.0',   # User module
+        :deck => '1.0.0',   # Deck module
+        :feed => '1.0.0',   # Social feed module
+        :asst => '1.0.0',   # Asset module
+        :annt => '1.0.0',   # Annotation module
+        :conv => '1.0.0',   # Conversion module
       }
     end
 
