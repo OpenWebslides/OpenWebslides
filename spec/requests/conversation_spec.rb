@@ -150,6 +150,18 @@ RSpec.describe 'Conversations API', :type => :request do
       expect(json['data']['meta']['createdAt'].to_i).to eq conversation.created_at.to_i
       expect(json['data']['meta']['commentCount']).to eq conversation.comments.count
     end
+
+    context 'private conversation' do
+      before { conversation.protect }
+
+      it 'rejects another user' do
+        headers['Authorization'] = "Bearer #{JWT::Auth::Token.from_user(build :user).to_jwt}"
+
+        get conversation_path(:id => conversation.id), :headers => headers
+
+        expect(response.status).to eq 403
+      end
+    end
   end
 
   describe 'DELETE /:id' do

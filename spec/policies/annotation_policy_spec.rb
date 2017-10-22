@@ -144,6 +144,30 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :fsm_publish }
       it { is_expected.to permit_action :fsm_rate }
     end
+
+    describe 'private annotations' do
+      before { annotation.protect }
+
+      context 'for a guest' do
+        let(:user) { nil }
+
+        it { is_expected.to forbid_action :show }
+      end
+
+      context 'for another user' do
+        let(:user) { build :user }
+
+        it { is_expected.to forbid_action :show }
+      end
+
+      context 'for the owner' do
+        let(:user) { annotation.user }
+
+        it do
+          is_expected.to permit_action :show
+        end
+      end
+    end
   end
 
   context 'for protected decks' do
@@ -283,6 +307,30 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to forbid_action :fsm_publish }
       it { is_expected.to permit_action :fsm_rate }
     end
+
+    describe 'private annotations' do
+      before { annotation.protect }
+
+      context 'for a guest' do
+        let(:user) { nil }
+
+        it { is_expected.to forbid_action :show }
+      end
+
+      context 'for another user' do
+        let(:user) { build :user }
+
+        it { is_expected.to forbid_action :show }
+      end
+
+      context 'for the owner' do
+        let(:user) { annotation.user }
+
+        it do
+          is_expected.to permit_action :show
+        end
+      end
+    end
   end
 
   context 'for private decks' do
@@ -402,7 +450,6 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to permit_action :fsm_protect }
       it { is_expected.to permit_action :fsm_publish }
-      it { is_expected.to permit_action :fsm_rate }
     end
 
     context 'for another deck owner' do
@@ -421,7 +468,31 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :fsm_hide }
       it { is_expected.to forbid_action :fsm_protect }
       it { is_expected.to forbid_action :fsm_publish }
-      it { is_expected.to permit_action :fsm_rate }
+    end
+
+    describe 'private annotations' do
+      before { annotation.protect }
+
+      context 'for a guest' do
+        let(:user) { nil }
+
+        it { is_expected.to forbid_action :show }
+      end
+
+      context 'for another user' do
+        let(:user) { build :user }
+
+        it { is_expected.to forbid_action :show }
+      end
+
+      context 'for the owner' do
+        let(:user) { annotation.user }
+        before { deck.collaborators << user }
+
+        it do
+          is_expected.to permit_action :show
+        end
+      end
     end
   end
 end

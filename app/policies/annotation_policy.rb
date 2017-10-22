@@ -14,8 +14,12 @@ class AnnotationPolicy < ApplicationPolicy
   end
 
   def show?
-    # Users can show but only for showable deck
-    deck_policy.show? && user_policy.show?
+    # Users can show but only for showable deck and user
+    if @record.secret?
+      deck_policy.show? && user_policy.show? && @record.user == @user
+    else
+      deck_policy.show? && user_policy.show?
+    end
   end
 
   def update?
@@ -97,8 +101,20 @@ class AnnotationPolicy < ApplicationPolicy
   #
   class Scope < Scope
     def resolve
+      # Database value for 'secret' state
+      secret_state_value = Annotation.state_machine.states.find { |s| s.name == :secret }.value
+
+      new_scope = scope.joins(:deck).where
+      new_scope = if @user
+                    # Don't include secret annotations belonging to other users
+                    new_scope.not('annotations.state = ? AND annotations.user_id != ?', secret_state_value, @user.id)
+                  else
+                    # Don't include any secret annotations
+                    new_scope.not('annotations.state = ?', secret_state_value)
+                  end
+
       # Defer annotation scoping to the respective decks
-      DeckPolicy::Scope.new(@user, scope.joins(:deck)).resolve
+      DeckPolicy::Scope.new(@user, new_scope).resolve
     end
   end
 

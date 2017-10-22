@@ -46,4 +46,34 @@ RSpec.describe AnnotationPolicy::Scope do
       expect(subject.count).to eq 27
     end
   end
+
+  describe 'secret annotations' do
+    let(:annotation) { build :conversation }
+
+    before { annotation.protect }
+
+    context 'for a guest' do
+      let(:user) { nil }
+
+      it 'does not includes the secret annotation' do
+        expect(subject).not_to include annotation
+      end
+    end
+
+    context 'for another user' do
+      let(:user) { build :user }
+
+      it 'does not includes the secret annotation' do
+        expect(subject).not_to include annotation
+      end
+    end
+
+    context 'for an owner' do
+      let(:user) { annotation.user }
+
+      it 'includes the secret annotation' do
+        expect(subject).to include annotation
+      end
+    end
+  end
 end
