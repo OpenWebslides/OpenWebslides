@@ -25,6 +25,7 @@ class ApplicationController < ActionController::API
       }
     }
 
+    response.headers['Content-Type'] = JSONAPI::MEDIA_TYPE
     render :json => info, :status => :ok
   end
 
