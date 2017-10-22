@@ -10,17 +10,15 @@ class ApplicationController < ActionController::API
   include ErrorHandling
 
   def version
-    version = OpenWebslides::Version.new
-
     info = {
       :data => {
         :type => 'apps',
         :links => {
-          :self => root_url
+          :self => version_url
         },
         :attributes => {
-          :version => version.build,
-          :version_string => version.version_string
+          :version => OpenWebslides.version.build,
+          :version_string => OpenWebslides.version.version_string
         }
       }
     }
