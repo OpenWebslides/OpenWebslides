@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const StatsPlugin = require('stats-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const RobotstxtPlugin = require('robotstxt-webpack-plugin').default;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const fs = require('fs');
 
 const robotstxtOptions = {
   policy: [{
@@ -100,5 +102,11 @@ const config = {
     headers: { 'Access-Control-Allow-Origin': '*' },
   },
 };
+
+if (process.env.NODE_ENV !== 'production' && fs.existsSync('config/config.js')) {
+  config.plugins.push(new CopyWebpackPlugin([
+    { from: 'config/config.js', to: 'config.js' }
+  ]))
+}
 
 module.exports = config;
