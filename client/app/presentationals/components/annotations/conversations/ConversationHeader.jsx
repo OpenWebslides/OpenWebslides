@@ -40,19 +40,22 @@ function ConversationHeader(props) {
   }
 
   return (
-    <div>
+    <div className="soft-color">
       <p><strong>{user.firstName} {user.lastName}</strong> wrote:</p>
 
-      <h3>{title}</h3>
-      <p>{text}</p>
+      <h3 className="no-margin">{title}</h3>
+      <p className="margin-b15">{text}</p>
 
       {byCurrentUser && !deleted &&
-        <button onClick={props.setIsEditingConversation}>Edit</button>}
+        <button className="like-btn" onClick={props.setIsEditingConversation}>
+          <i className="fa fa-pencil fa-6" aria-hidden="true" />
+        </button>}
 
-      { deleted ?
-        <p> Adding comments is disabled for deleted conversations.</p> :
-        <button onClick={() => scrollToForm()}>Add comment</button>}
-      <hr />
+      { deleted &&
+        <p> Adding comments is disabled for deleted conversations.</p>
+        }
+      <hr className="delimiter" />
+
     </div>
   );
 }

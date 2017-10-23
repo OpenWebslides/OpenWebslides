@@ -10,14 +10,15 @@ function AddConversationPanel(props) {
   return (
     <div>
       <button
-        className="back-btn"
+        className="close-btn"
         onClick={closeAddConversationPanel}
       >
         <i className="fa fa-chevron-left fa-6" aria-hidden="true" />
       </button>
-      <h3>
+      <h3 className="panel-title">
         <strong>Add conversation</strong>
       </h3>
+      <hr className="delimiter" />
 
       <ConversationForm
         submitSucceededAction={closeAddConversationPanel}

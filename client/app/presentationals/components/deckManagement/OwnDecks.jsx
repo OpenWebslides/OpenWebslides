@@ -69,8 +69,12 @@ class OwnDecks extends React.Component {
           <h1 className="c_own-decks-container__title"> Your decks: </h1>
           <div className="c_own-decks-container__owned-decks-container">
             {tableOrNothing}
-            <Link to="/create_new_deck"> Add new </Link>
-            <Link to="/import_deck"> Import Deck </Link>
+            <Link to="/create_new_deck">
+              <i className="fa fa-plus fa-6 deck-action-icon" aria-hidden="true" />
+            </Link>
+            <Link to="/import_deck">
+              <i className="fa fa-download fa-6 deck-action-icon" aria-hidden="true" />
+            </Link>
           </div>
         </div>);
     }

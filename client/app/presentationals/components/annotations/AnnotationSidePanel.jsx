@@ -121,15 +121,22 @@ class AnnotationSidePanel extends Component {
     return (
       <div>
         <button className="close-btn" onClick={() => this.props.toggleAnnotationMode()}>
-          &times;
+          <i className={'fa fa-times'} aria-hidden="true" />
         </button>
-        <button onClick={this.showOverviewPanel}>Annotation Overview</button>
+        <button className="overview-btn" onClick={this.showOverviewPanel}>
+          <i className={'fa fa-list'} aria-hidden="true" />
+        </button>
+        <button className="refresh-btn" onClick={() => this.props.fetchConversations(this.props.deckId)}>
+          <i className={'fa fa-refresh'} aria-hidden="true" />
+        </button>
 
-        <h3>
+        <h3 className="panel-title">
           <strong>Conversations for current slide</strong>
         </h3>
-        <button onClick={this.openAddConversationPanel}>Add conversation</button>
-        <button onClick={() => this.props.fetchConversations(this.props.deckId)}>Refresh</button>
+        <hr className="delimiter" />
+        <button className="add-btn" onClick={this.openAddConversationPanel}>
+          <i className={'fa fa-plus'} aria-hidden="true" />
+        </button>
         { false && <button onClick={this.showPrivateNotePanel}>Add private note</button>}
         <ConversationList showConversationPanel={this.showConversationPanel} />
       </div>

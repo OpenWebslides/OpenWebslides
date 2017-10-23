@@ -24,26 +24,23 @@ function ConversationCommentMetaData(props) {
 
   return (
     <div>
-      <p>
-        Rating: {rating}
-        {!deleted &&
-          <button onClick={() => props.rateConversationComment(id, rated)}>{ rated ? '</3' : '<3'}</button>}
-      </p>
-
-      <p><strong>{user.firstName} {user.lastName} {edited ? '(Edited)' : ''} </strong> wrote:</p>
-
       {children}
 
-      <p><em>Written <strong>{createdTimeAgo}</strong></em></p>
+      <p className="metadata" >{rating} votes - by <strong> {user.firstName} {user.lastName}</strong> - {createdTimeAgo} {edited ? '- (Edited)' : ''}</p>
 
-      <span>
+      <p className="no-margin">
+        {!deleted &&
+        <button className="like-btn" onClick={() => props.rateConversationComment(id, rated)}>
+          { rated ? <i className={'fa fa-arrow-up golden'} aria-hidden="true" />
+                      : <i className={'fa fa-arrow-up'} aria-hidden="true" />}
+        </button> }
         {byCurrentUser && !deleted && !editing &&
-          <div>
-            <button onClick={() => props.setEditableConversationComment(id)}>Edit</button>
-            <button onClick={() => props.deleteConversationComment(id, activeConversationId)}>Delete</button>
-          </div>}
-      </span>
-      <hr />
+          <span>
+            <button className="like-btn" onClick={() => props.setEditableConversationComment(id)}><i className={'fa fa-pencil'} aria-hidden="true" /></button>
+            <button className="del-btn" onClick={() => props.deleteConversationComment(id, activeConversationId)}><i className={'fa fa-times'} aria-hidden="true" /></button>
+          </span>}
+      </p>
+      <hr className="delimiter" />
     </div>
   );
 }
