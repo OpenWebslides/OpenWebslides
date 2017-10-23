@@ -22,29 +22,28 @@ function ConversationItem(props) {
     showConversationPanel,
   } = props;
 
-  const iconClass = conversationType === 'question' ? 'fa-question' : 'fa-comment';
+  const iconClass = conversationType === 'question' ? 'fa-question' : 'fa-exclamation';
   const visibleTitle = _.truncate(title, { length: 80, separator: '.' });
 
   return (
     <div>
-      <p>
-        Rating: {rating}
-        { !deleted &&
-          <button onClick={() => props.rateConversation(id, rated)}>{ rated ? '</3' : '<3'}</button> }
+      <p className="soft-color">
+        <a href="#" className="conversation-title" onClick={() => showConversationPanel(id)}>
+          <i className={`fa annotation-type ${iconClass}`} aria-hidden="true" /> {visibleTitle} {edited ? '(Edited)' : ''}
+        </a>
       </p>
 
-      {byCurrentUser && !deleted &&
-        <div>
-          <button onClick={() => props.deleteConversation(id)}>Delete</button>
-        </div>}
-
-      <a href="#" onClick={() => showConversationPanel(id)}>
-        <i className={`fa ${iconClass}`} aria-hidden="true" /> {visibleTitle} {edited ? '(Edited)' : ''}
-      </a>
-
-      <p>by <strong> {user.firstName} {user.lastName}</strong> - Posted {createdTimeAgo} - {commentCount} Comments</p>
-
-      <hr />
+      <p className="metadata no-margin" >{rating} votes - by {user.firstName} {user.lastName} - {commentCount} comments - {createdTimeAgo}</p>
+      <p className="no-margin bold">
+        { !deleted &&
+        <button className="like-btn" onClick={() => props.rateConversation(id, rated)}>
+          { rated ? <i className={'fa fa-arrow-up golden'} aria-hidden="true" />
+                      : <i className={'fa fa-arrow-up'} aria-hidden="true" />}
+        </button> }
+        {byCurrentUser && !deleted &&
+          <button className="del-btn" onClick={() => props.deleteConversation(id)}><i className={'fa fa-times'} aria-hidden="true" /></button>}
+      </p>
+      <hr className="delimiter" />
     </div>
   );
 }

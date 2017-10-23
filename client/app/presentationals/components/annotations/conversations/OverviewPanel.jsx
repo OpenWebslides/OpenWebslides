@@ -10,9 +10,9 @@ const sortConversationsBySlide = (conversations) => {
   const conversationsPerSlide = {};
 
   Object.keys(conversations).forEach((key) => {
-    const { id, title, createdTimeAgo, commentCount, contentItemId } = conversations[key];
+    const { id, title, createdTimeAgo, commentCount, contentItemId, conversationType } = conversations[key];
 
-    (conversationsPerSlide[contentItemId] = conversationsPerSlide[contentItemId] || []).push({ id, title, contentItemId, createdTimeAgo, commentCount });
+    (conversationsPerSlide[contentItemId] = conversationsPerSlide[contentItemId] || []).push({ id, conversationType, title, contentItemId, createdTimeAgo, commentCount });
   });
 
   return conversationsPerSlide;
@@ -33,13 +33,23 @@ function OverviewPanel(props) {
             <li key={slideNumber}>
               <a href="#" onClick={() => setActiveSlide(slideId)}><h4>Slide {slideNumber}</h4></a>
               {conversationsBySlide[slideId].map((conversation) => {
-                const { id, title, commentCount, createdTimeAgo } = conversation;
+                const { id, title, commentCount, createdTimeAgo, conversationType } = conversation;
+                const iconClass = conversationType === 'question' ? 'fa-question' : 'fa-exclamation';
+                const visibleTitle = _.truncate(title, { length: 80, separator: '.' });
+
                 return (<div>
-                  <p><strong>{title} </strong></p>
-                  <a href="#" onClick={() => showConversationPanel(id)}>View</a> - {commentCount} comments - Posted {createdTimeAgo}
+                  <p className="soft-color">
+                    <a href="#" onClick={() => showConversationPanel(id)}>
+                      <i className={`fa annotation-type ${iconClass}`} aria-hidden="true" /> {visibleTitle}
+                    </a>
+                  </p>
+                  <p className="metadata no-margin">
+                    {commentCount} comments - {createdTimeAgo}
+                  </p>
                 </div>);
               })
               }
+              <hr className="delimiter" />
             </li>
           );
         })}
@@ -50,7 +60,8 @@ function OverviewPanel(props) {
   return (
     <div>
       <button className="close-btn fa fa-chevron-left fa-6" onClick={() => closeOverviewPanel()} />
-      <h3><strong>Annotations Overview</strong></h3>
+      <h3 className="panel-title"><strong>Annotations Overview</strong></h3>
+      <hr className="delimiter" />
       { conversations ? renderConversations(conversations) : <div><p>Hello</p></div>}
     </div>
   );

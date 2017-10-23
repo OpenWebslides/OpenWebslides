@@ -10,11 +10,6 @@ export function DeckThumbnail({
   return (
     <tr className="c_deck-thumbnail">
       <th>
-        <p className="c_deck-thumbnail__deck-name">
-          {deckTitle}
-        </p>
-      </th>
-      <th>
         <Link to={`/presentation/${deckId}`}>
           <p className="c_deck-thumbnail__deck-view-link">
             <i className="fa fa-desktop fa-6 deck-icon" aria-hidden="true" />
@@ -24,7 +19,7 @@ export function DeckThumbnail({
       <th>
         <Link to={`/print/${deckId}`}>
           <p className="c_deck-thumbnail__deck-view-print-link">
-            <i className="fa fa-file-text-o fa-6 deck-icon" aria-hidden="true" />
+            <i className="fa fa-book fa-6 deck-icon" aria-hidden="true" />
           </p>
         </Link>
       </th>
@@ -46,6 +41,11 @@ export function DeckThumbnail({
         >
           <i className="fa fa-times fa-6 deck-icon delete-deck" aria-hidden="true" />
         </a>
+      </th>
+      <th>
+        <p className="c_deck-thumbnail__deck-name">
+          {deckTitle}
+        </p>
       </th>
     </tr>
   );

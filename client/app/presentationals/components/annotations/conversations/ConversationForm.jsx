@@ -26,8 +26,7 @@ function ConversationForm(props) {
 
       <form onSubmit={props.handleSubmit}>
 
-        { includeTypeChoice && !secret && <div>
-          <p>Type:</p>
+        { includeTypeChoice && !secret && <div className="form-section">
           <label className="radio-label">
             <Field name="conversationType" component={InputField} type="radio" value="question" />
             <span className="label-text">Question</span>
@@ -38,7 +37,7 @@ function ConversationForm(props) {
           </label>
         </div> }
 
-        <div>
+        <div className="form-section">
           <Field
             autoFocus={true}
             component={InputField}
@@ -46,7 +45,7 @@ function ConversationForm(props) {
           />
         </div>
 
-        <div>
+        <div className="form-section">
           <Field
             component={TextAreaField}
             rows={rows}
@@ -58,8 +57,12 @@ function ConversationForm(props) {
         {props.error && <strong>{props.error}</strong>}
 
         <div>
-          <button type="submit">{submitText}</button>
-          <button type="button" onClick={cancelAction}>Cancel</button>
+          <button className="send-btn" type="submit">
+            <i className="fa fa-paper-plane fa-6" aria-hidden="true" />
+          </button>
+          <button className="cancel-btn" type="button" onClick={cancelAction}>
+            <i className="fa fa-chevron-left fa-6" aria-hidden="true" />
+          </button>
         </div>
       </form>
     </div>
