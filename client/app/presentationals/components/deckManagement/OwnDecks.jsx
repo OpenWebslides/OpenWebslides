@@ -9,13 +9,15 @@ import { DeckThumbnail } from 'presentationals/components/deckManagement/DeckThu
 // Helpers:
 import IfAuthHOC from 'lib/IfAuthHOC';
 
-function renderDeckThumbnail(el, deleteDeck) {
+function renderDeckThumbnail(el, deleteDeck, isDeletionPending, deletionError) {
   return (
     <DeckThumbnail
       key={el.id}
       deckId={el.id}
       deckTitle={el.meta.title}
       deleteDeck={deleteDeck}
+      deletionPending={isDeletionPending}
+      deletionError={deletionError}
     />
   );
 }
@@ -47,12 +49,13 @@ class OwnDecks extends React.Component {
     else {
       const user = this.props.entities.users.byId[this.props.authState.id];
       const listOfDecks = user.decks.map(id => this.props.entities.decks.byId[id]);
-
       let tableOrNothing;
       if (listOfDecks.length > 0) {
-        const listOfDeckThumbnails = listOfDecks.map(el =>
-          renderDeckThumbnail(el, this.props.ownDeckDeletionRequest),
-        );
+        const listOfDeckThumbnails = listOfDecks.map((el) => {
+          const isDeletionPending = this.props.ownDecksState.deckDeletionRequested.includes(el.id);
+          const deletionError = this.props.ownDecksState.deckDeletionErrors[el.id];
+          return renderDeckThumbnail(el, this.props.ownDeckDeletionRequestStart, isDeletionPending, deletionError);
+        });
         tableOrNothing = (
           <table className="c_own-decks-container__owned-decks-table">
             <tbody>
@@ -101,9 +104,10 @@ OwnDecks.propTypes = {
     startedRequests: PropTypes.bool,
     requestsSucceeded: PropTypes.bool,
     errorMessage: PropTypes.string,
-    deckDeletionErrors: PropTypes.arrayOf(PropTypes.string),
+    deckDeletionErrors: PropTypes.object,
+    deckDeletionRequested: PropTypes.arrayOf(PropTypes.string),
   }),
-  ownDeckDeletionRequest: PropTypes.func.isRequired,
+  ownDeckDeletionRequestStart: PropTypes.func.isRequired,
   authState: PropTypes.shape({
     id: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,

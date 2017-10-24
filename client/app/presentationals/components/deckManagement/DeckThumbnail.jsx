@@ -6,8 +6,27 @@ export function DeckThumbnail({
   deckTitle,
   deckId,
   deleteDeck,
+  deletionPending,
+  deletionError,
 }) {
-  return (
+  let deleteDisplay;
+  if (!deletionPending) {
+    deleteDisplay = (<a
+      href="#"
+      className="c_deck-thumbnail__deck-edit-link"
+      onClick={() => {
+        confirm('Are you sure you want to delete this deck?');
+        deleteDeck(deckId);
+      }}
+    >
+      <i className="fa fa-times fa-6 deck-icon delete-deck" aria-hidden="true" />
+    </a>);
+  }
+  else {
+    deleteDisplay = (<i className="fa fa-spinner fa-6 loading-icon" aria-hidden="true" />);
+  }
+
+  let toDisplay = (
     <tr className="c_deck-thumbnail">
       <th>
         <p className="c_deck-thumbnail__deck-name">
@@ -17,36 +36,35 @@ export function DeckThumbnail({
       <th>
         <Link to={`/presentation/${deckId}`}>
           <p className="c_deck-thumbnail__deck-view-link">
-              View
-            </p>
+            View
+          </p>
         </Link>
       </th>
       <th>
         <Link to={`/print/${deckId}`}>
           <p className="c_deck-thumbnail__deck-view-print-link">
-           Course mode
+            Course mode
           </p>
         </Link>
       </th>
       <th>
         <Link to={`/editor/${deckId}`}>
           <p className="c_deck-thumbnail__deck-edit-link">
-              Edit
-            </p>
-        </Link>
+            Edit
+          </p>
+        </Link  >
       </th>
       <th>
-        <button
-          className="c_deck-thumbnail__delete-button"
-          onClick={() => {
-            deleteDeck(deckId);
-          }}
-        >
-          Delete
-        </button>
+        {deleteDisplay}
       </th>
-    </tr>
-  );
+    </tr>);
+
+  if (deletionError) {
+    toDisplay += <tr><th className="c_deck-thumbnail__deletion-error">{deletionError}</th></tr>;
+  }
+
+
+  return toDisplay;
 }
 
 DeckThumbnail.propTypes = {

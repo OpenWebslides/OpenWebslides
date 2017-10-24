@@ -27,7 +27,7 @@ import createDeckSaga from 'sagas/deck-management/createDeckSaga';
 // DASHBOARD
 import ownDecksSaga from 'sagas/app/dashboard/ownDecksRequestsSaga';
 import ownCollaborationsSaga from 'sagas/app/dashboard/ownCollaborationsRequestsSaga';
-import ownDeckDeletionSaga from 'sagas/app/dashboard/ownDeckDeletionSaga';
+import ownDeckDeletionRequestSaga from 'sagas/app/dashboard/ownDeckDeletionRequestSaga';
 
 // PROFILE PAGE
 import profilePageStartRequestsSaga from 'sagas/app/profile-page/loadProfilePageInfoSaga';
@@ -79,6 +79,6 @@ export default function* rootSaga() {
     profilePageStartRequestsSaga(),
     ownDecksSaga(),
     ownCollaborationsSaga(),
-    ownDeckDeletionSaga(),
+    ownDeckDeletionRequestSaga(),
   ];
 }

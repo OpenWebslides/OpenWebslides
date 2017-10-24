@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Actions:
-import { ownDecksRequestsStart, ownDeckDeletionRequest } from 'actions/app/dashboard/own-decks';
+import { ownDecksRequestsStart, ownDeckDeletionRequestStart } from 'actions/app/dashboard/own-decks';
 
 import OwnDecks from 'presentationals/components/deckManagement/OwnDecks';
 
@@ -17,7 +17,7 @@ function mapStateToProps(state) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ ownDecksRequestsStart, ownDeckDeletionRequest }, dispatch);
+  return bindActionCreators({ ownDecksRequestsStart, ownDeckDeletionRequestStart }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OwnDecks);

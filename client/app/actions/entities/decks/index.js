@@ -11,7 +11,7 @@ export const FETCH_DECK_FAILURE = 'FETCH_DECK_FAILURE';
 
 export const ADD_DECK_METADATA = 'ADD_DECK_METADATA';
 
-export const DECK_DELETION_SUCCESS = 'DECK_DELETION_SUCCESS';
+export const DELETE_DECK = 'DELETE_DECK';
 
 export function addSlideToDeck(deckId, previousSlideId) {
   return {
@@ -52,5 +52,12 @@ export function fetchDeckSuccess(deckId, meta, slidesById, contentItemsById) {
   return {
     type: FETCH_DECK_SUCCESS,
     payload: { deckId, meta, slidesById, contentItemsById },
+  };
+}
+
+export function deleteDeck(deckId) {
+  return {
+    type: DELETE_DECK,
+    payload: deckId,
   };
 }
