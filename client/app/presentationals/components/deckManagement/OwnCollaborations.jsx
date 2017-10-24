@@ -10,7 +10,7 @@ import IfAuthHOC from 'lib/IfAuthHOC';
 import RequestStatusHOC from 'lib/RequestsStatusHOC';
 
 
-class OwnDecks extends React.Component {
+class OwnCollaborations extends React.Component {
   componentWillMount() {
     if (this.props.authState.isAuthenticated) {
       this.props.startOwnCollaborationsRequests(this.props.authState.id);
@@ -43,7 +43,7 @@ class OwnDecks extends React.Component {
   }
 }
 
-OwnDecks.propTypes = {
+OwnCollaborations.propTypes = {
   startOwnCollaborationsRequests: PropTypes.func.isRequired,
   ownCollaborationsState: PropTypes.shape({
     requestsStatus: PropTypes.oneOf(['notStarted', 'pending', 'succeeded', 'failed']),
@@ -58,4 +58,4 @@ OwnDecks.propTypes = {
   entities: PropTypes.object.isRequired,
 };
 
-export default OwnDecks;
+export default OwnCollaborations;
