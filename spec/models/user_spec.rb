@@ -32,6 +32,11 @@ RSpec.describe User, :type => :model do
     it { is_expected.to allow_value('foo').for(:tos_accepted) }
     it { is_expected.not_to allow_value('false').for(:tos_accepted) }
 
+    it { is_expected.not_to allow_value(nil).for(:password) }
+    it { is_expected.not_to allow_value('').for(:password) }
+    it { is_expected.not_to allow_value('abc12').for(:password) }
+    it { is_expected.to allow_value('abc123').for(:password) }
+
     it 'is invalid without attributes' do
       expect(User.new).not_to be_valid
     end
