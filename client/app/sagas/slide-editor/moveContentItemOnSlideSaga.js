@@ -439,39 +439,56 @@ function processMove(direction, contentItemId, ancestorItemIds, slide, contentIt
   }
 }
 
-function* doMoveContentItemOnSlide(action) {
+export function* doMoveContentItemOnSlide(action) {
   try {
     const debug = true;
 
     if (debug) console.log('New move -------------------------------');
 
+
     const { slideId, contentItemId, ancestorItemIds, direction } = action.meta;
+
+    console.log('SLIDE ID: ', slideId);
+    console.log('CONTENT ITEM ID: ', contentItemId);
+    console.log('ANCESTOR ITEM ID: ', ancestorItemIds);
+    console.log('DIRECTION: ', direction);
+
+
     const slide = yield select(getSlideById, slideId);
+    console.log('SLIDE: ', slide);
+
     const contentItemsById = yield select(getContentItemsById);
-    const contentItem = contentItemsById[contentItemId];
+    console.log('CONTENT ITEMS BY ID: ', contentItemsById);
+
+    const contentItem = yield contentItemsById[contentItemId];
+    console.log('CONTENT ITEM: ', contentItem);
+
     let contentItemToMoveId;
     let newAncestorItemIds;
 
     // If the contentItem is a title, move its entire section along with it.
     if (contentItem.contentItemType === contentItemTypes.TITLE) {
       // Note that if the contentItem is a title, there MUST be at least one ancestor.
-      contentItemToMoveId = _.last(ancestorItemIds);
-      newAncestorItemIds = _.dropRight(ancestorItemIds, 1);
+      contentItemToMoveId = yield _.last(ancestorItemIds);
+      newAncestorItemIds = yield _.dropRight(ancestorItemIds, 1);
     }
     // If the contentItem is not a title, just move that contentItem.
     else {
-      contentItemToMoveId = contentItemId;
-      newAncestorItemIds = ancestorItemIds;
+      contentItemToMoveId = yield contentItemId;
+      newAncestorItemIds = yield ancestorItemIds;
     }
 
     // Get the old parentItemId to pass along to the moveContentItem action.
-    const oldParentItemId = (newAncestorItemIds.length > 0)
+    const oldParentItemId = yield (newAncestorItemIds.length > 0)
       ? _.last(newAncestorItemIds)
       : null;
 
     // Check if the move is a 'valid' move, and if so, get the new parentItemId and the new
     // previousItemId where the contentItem is to be moved to.
-    const { isMoveOk, newParentItemId, newPreviousItemId } = processMove(
+    console.log('CONTENT ITEM TO MOVE', contentItemToMoveId);
+    console.log('NEW ANCESTOR ITEM IDS', newAncestorItemIds);
+
+    const { isMoveOk, newParentItemId, newPreviousItemId } = yield processMove(
       direction,
       contentItemToMoveId,
       newAncestorItemIds,
@@ -484,14 +501,14 @@ function* doMoveContentItemOnSlide(action) {
     if (debug) console.log(`newPreviousItemId: ${newPreviousItemId}`);
 
     if (isMoveOk) {
-      let deleteParentItem = false;
+      let deleteParentItem = yield false;
       // If the move is ok, check if the move causes $contentItemToMove's old parent to become
       // empty. If so, delete the parent from the slide.
       if (
         oldParentItemId !== null &&
         contentItemsById[oldParentItemId].childItemIds.length === 1
       ) {
-        deleteParentItem = true;
+        deleteParentItem = yield true;
       }
 
       yield put(moveContentItem(
