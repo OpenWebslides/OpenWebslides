@@ -37,6 +37,9 @@ gem 'nokogumbo'
 # Asynchronous processing
 gem 'sidekiq'
 
+# Filename sanitization
+gem 'zaru'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 # Use Puma as the application server
