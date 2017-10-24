@@ -17,11 +17,10 @@ module BinaryUploadable
   def before_upload_action
     ensure_media_type
 
-    # Copy uploaded file to tempfile
-    # TODO: sanitize filenames
-    # FIXME: parse headers safely
+    # Extract filename
     raise JSONAPI::Exceptions::BadRequest, 'Invalid filename' unless request.headers['Content-Disposition']
-    @uploaded_filename = request.headers['Content-Disposition'].gsub(/.*filename=([^;]*).*/, '\1')[1..-2]
+    match = request.headers['Content-Disposition'].match(/filename ?= ?(?<filename>[^;]*);?/)
+    @uploaded_filename = Zaru.sanitize! match['filename']
 
     # Create tempfile with proper extension
     @uploaded_file = Tempfile.new ['', ".#{@uploaded_filename.split('.').last}"]
