@@ -117,7 +117,7 @@ function isMoveValid(
     return false;
   }
 
-  // Sections cannot be moved above a contentItem that is not a section; they can only be moved in
+  // TESTED: Sections cannot be moved above a contentItem that is not a section; they can only be moved in
   // front of another section or to the end of another section.
   if (
     nextItem !== null &&
@@ -138,7 +138,7 @@ function isMoveValid(
     return false;
   }
 
-  // ContentItems that are not list items cannot be moved inside a list.
+  // TESTED: ContentItems that are not list items cannot be moved inside a list.
   if (
     contentItem.contentItemType !== contentItemTypes.LIST_ITEM &&
     previousItemParentItem !== null &&
@@ -148,7 +148,7 @@ function isMoveValid(
     return false;
   }
 
-  // List items cannot be moved outside a list.
+  // TESTED: List items cannot be moved outside a list.
   if (
     contentItem.contentItemType === contentItemTypes.LIST_ITEM &&
     (
@@ -160,7 +160,7 @@ function isMoveValid(
     return false;
   }
 
-  // Images cannot be moved outside an imageContainer.
+  // TESTED: Images cannot be moved outside an imageContainer.
   // #TODO instead of invalidating the move, it should split the imageContainer.
   if (
     _.includes(imageContentItemTypes, contentItem.contentItemType) &&
@@ -448,20 +448,20 @@ export function* doMoveContentItemOnSlide(action) {
 
     const { slideId, contentItemId, ancestorItemIds, direction } = action.meta;
 
-    console.log('SLIDE ID: ', slideId);
-    console.log('CONTENT ITEM ID: ', contentItemId);
-    console.log('ANCESTOR ITEM ID: ', ancestorItemIds);
-    console.log('DIRECTION: ', direction);
+    // console.log('SLIDE ID: ', slideId);
+    // console.log('CONTENT ITEM ID: ', contentItemId);
+    // console.log('ANCESTOR ITEM ID: ', ancestorItemIds);
+    // console.log('DIRECTION: ', direction);
 
 
     const slide = yield select(getSlideById, slideId);
-    console.log('SLIDE: ', slide);
+    // console.log('SLIDE: ', slide);
 
     const contentItemsById = yield select(getContentItemsById);
-    console.log('CONTENT ITEMS BY ID: ', contentItemsById);
+    // console.log('CONTENT ITEMS BY ID: ', contentItemsById);
 
     const contentItem = yield contentItemsById[contentItemId];
-    console.log('CONTENT ITEM: ', contentItem);
+    // console.log('CONTENT ITEM: ', contentItem);
 
     let contentItemToMoveId;
     let newAncestorItemIds;
@@ -485,8 +485,8 @@ export function* doMoveContentItemOnSlide(action) {
 
     // Check if the move is a 'valid' move, and if so, get the new parentItemId and the new
     // previousItemId where the contentItem is to be moved to.
-    console.log('CONTENT ITEM TO MOVE', contentItemToMoveId);
-    console.log('NEW ANCESTOR ITEM IDS', newAncestorItemIds);
+    // console.log('CONTENT ITEM TO MOVE', contentItemToMoveId);
+    // console.log('NEW ANCESTOR ITEM IDS', newAncestorItemIds);
 
     const { isMoveOk, newParentItemId, newPreviousItemId } = yield processMove(
       direction,
