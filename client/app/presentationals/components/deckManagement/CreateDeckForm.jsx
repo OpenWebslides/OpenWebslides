@@ -29,9 +29,21 @@ class CreateDeckForm extends Component {
         fallback={() => <NeedSigninWarning requestedAction="create a deck" />}
       >
         <div>
-          <form onSubmit={this.props.handleSubmit(validateAndSubmit)}>
-            <Field component={inputField} label="Title:" name="title" placeholder="Title" />
-            <Field component={inputField} label="Description:" name="description" placeholder="Description" />
+          <form
+            onSubmit={this.props.handleSubmit(validateAndSubmit)}
+          >
+            <Field
+              component={inputField}
+              label="Title:" name="title"
+              placeholder="Title"
+              autoFocus="true"
+            />
+            <Field
+              component={inputField}
+              label="Description:"
+              name="description"
+              placeholder="Description"
+            />
             <button type="submit"> Create Deck</button>
           </form>
         </div>
