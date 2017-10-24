@@ -67,6 +67,10 @@ class User < ApplicationRecord
             :presence => true,
             :numericality => { :only_integer => true }
 
+  validates :password,
+            :presence => true,
+            :length => { :in => Rails.application.config.devise.password_length }
+
   validate :readonly_email, :on => :update
 
   validate :accepted_terms
