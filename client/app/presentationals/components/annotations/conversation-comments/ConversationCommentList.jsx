@@ -37,7 +37,7 @@ function ConversationCommentList(props) {
                       <ConversationCommentForm
                         key={commentId}
                         cols={30}
-                        rows={3}
+                        rows={2}
                         autoFocus={true}
                         cancelAction={props.unsetEditableConversationComment}
                         form={`ConversationCommentForm${commentId}`}

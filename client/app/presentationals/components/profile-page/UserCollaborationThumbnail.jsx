@@ -5,11 +5,7 @@ import { Link } from 'react-router-dom';
 export function CollaborationThumbnail({ deckTitle, deckId, ownerName, ownerId }) {
   return (
     <tr className="c_deck-thumbnail">
-      <th>
-        <p className="c_deck-thumbnail__deck-name">
-          {deckTitle}
-        </p>
-      </th>
+
       <th>
         <Link to={`/user/${ownerId}`}>
           <p className="c_deck-thumbnail__owner-name">
@@ -20,16 +16,21 @@ export function CollaborationThumbnail({ deckTitle, deckId, ownerName, ownerId }
       <th>
         <Link to={`/presentation/${deckId}`}>
           <p className="c_deck-thumbnail__deck-view-link">
-            View
+            <i className="fa fa-desktop fa-6 deck-icon" aria-hidden="true" />
           </p>
         </Link>
       </th>
       <th>
         <Link to={`/print/${deckId}`}>
           <p className="c_deck-thumbnail__deck-view-print-link">
-            Course mode
+            <i className="fa fa-book fa-6 deck-icon" aria-hidden="true" />
           </p>
         </Link>
+      </th>
+      <th>
+        <p className="c_deck-thumbnail__deck-name">
+          {deckTitle}
+        </p>
       </th>
     </tr>
   );

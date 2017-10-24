@@ -101,7 +101,7 @@ class PresentationToolbar extends Component {
                 className="c_presentation-view-toolbar__button"
                 onClick={() => this.props.history.push('/')}
               >
-                <i className={'fa fa-bars'} aria-hidden="true" />
+                <i className={'fa fa-home'} aria-hidden="true" />
               </button>
             </li>
             <li className="c_presentation-view-toolbar__item">
@@ -109,7 +109,7 @@ class PresentationToolbar extends Component {
                 className="c_presentation-view-toolbar__button"
                 onClick={() => this.props.history.push(`/print/${deckId}`)}
               >
-                <i className={'fa fa-file-text-o'} aria-hidden="true" />
+                <i className={'fa fa-book'} aria-hidden="true" />
               </button>
             </li>
             <li className="c_presentation-view-toolbar__item">
@@ -117,8 +117,9 @@ class PresentationToolbar extends Component {
                 className="c_presentation-view-toolbar__button"
                 onClick={() => this.props.toggleAnnotationMode()}
               >
-                <i className={`fa ${conversationCountIconClass}`} aria-hidden="true" /> {`(${conversationCount})`}
+                <i className={`fa ${conversationCountIconClass}`} aria-hidden="true" />
               </button>
+              {`${conversationCount}`}
             </li>
           </menu>
         </div>
