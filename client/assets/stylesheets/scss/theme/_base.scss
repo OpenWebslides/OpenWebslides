@@ -54,13 +54,155 @@ $annotations-side-bar-shift: $annotations-side-bar-total-width - $annotations-si
   opacity: 1;
 }
 
+.top40 {
+  margin-top: 40px;
+}
+
+.form-section {
+  margin-bottom: 10px;
+}
+
+.label-text {
+  color: #4f555a;
+  font-weight: 500;
+}
+
 .annotations-side-bar .close-btn {
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 25px;
-  font-size: 36px;
+  font-size: 25px;
+  color: #bb787b;
+  border: none;
+  background-color: white;
+  outline: none;
+}
+
+.annotations-side-bar .refresh-btn {
+  position: absolute;
+  top: 10px;
+  right: 70px;
+  font-size: 25px;  
   margin-left: 50px;
-  color: black;
+  color: #4f555a;
+  margin-bottom: 30px;
+  border: none;
+  background-color: white;
+  outline: none;
+}
+
+.annotations-side-bar .add-btn {
+  font-size: 25px;
+  color: #79c27f;
+  border: none;
+  background-color: white;
+  outline: none;  
+}
+
+.annotations-side-bar .panel-title {
+  margin-top: 70px;
+  color: #4f555a;
+}
+
+.metadata {
+  color: #4f555a;
+  font-size: 13px;
+}
+
+.annotations-side-bar .overview-btn {
+  position: absolute;
+  top: 10px;
+  font-size: 25px;
+  right: 120px;
+  margin-left: 50px;
+  color: #4f555a;
+  border: none;
+  background-color: white;
+  outline: none;
+  
+}
+
+.send-btn {
+  border: none;
+  color: #4f555a;
+  font-size: 18px;
+  padding-right: 0;
+  background-color: white;
+  margin-right: 5px;
+  outline: none;
+}
+
+.cancel-btn {
+  border: none;
+  color: #bb787b;
+  font-size: 18px;
+  padding-right: 0;
+  background-color: white;
+  outline: none;
+}
+
+.annotation-type {
+  color: #4f555a;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.margin-l5 {
+  margin-left: 5px;
+}
+
+.conversation-title {
+  font-size: 16px;
+}
+
+.rating {
+  color: #4f555a;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.soft-color {
+  color: #4f555a;
+}
+
+.margin-b15 {
+  margin-bottom: 15px;
+}
+
+.delimiter {
+  background-color: gainsboro;
+  height: 1px;
+  border: none;
+  margin-bottom: 5px;
+}
+
+.no-margin {
+  margin-top: 0;
+}
+
+.like-btn {
+  border: none;
+  color: #4f555a;
+  font-size: 20px;
+  padding-right: 0;
+  background-color: white;
+  outline: none;
+}
+
+.bold {
+  font-weight: 'bold';
+}
+
+.del-btn {
+  border: none;
+  font-size: 20px;
+  background-color: white;
+  color: #bb787b;
+  outline: none;
+}
+
+.golden {
+  color: #e8bb74;
 }
 
 .annotations-side-bar .back-btn {
@@ -69,7 +211,7 @@ $annotations-side-bar-shift: $annotations-side-bar-total-width - $annotations-si
   right: 20px;
   font-size: 30px;
   margin-left: 50px;
-  color: black;
+  color: #4f555a;
 }
 
 .annotations-side-bar .radio-label {
@@ -87,4 +229,109 @@ $annotations-side-bar-shift: $annotations-side-bar-total-width - $annotations-si
 
 .list-style-none {
   list-style-type: none;
+}
+
+.c_page-header__wrapper {
+  background-color: white !important;
+  border-bottom: 1px solid gainsboro;
+  color: #4f555a !important;
+}
+
+.c_footer__wrapper {
+  background-color: white !important;
+  border-top: 1px solid gainsboro;
+  color: #4f555a !important;
+}
+
+.o_logo--site .o_logo__link {
+  color: #4f555a !important;
+  text-shadow: none !important;
+}
+
+.o_logo--site .o_logo__item--open {
+  text-transform: none !important;
+}
+
+.l_page .l_main__item__wrapper {
+  background-color: white !important;
+  border-bottom: 1px solid gainsboro;
+}
+
+.c_feed-container {
+  color: #4f555a;
+}
+
+.c_feed-container h1 {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.c_user-collaborations--title {
+  color: #4f555a;
+}
+
+.c_user-collaborations--title {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.c_own-decks-container__title {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: #4f555a;
+}
+
+.c_deck-thumbnail__deck-name {
+  color: #4f555a;
+  padding-left: 10px !important;
+  font-weight: 400 !important;
+}
+
+.c_feed-notifications-container__more-button {
+  color: #4f555a;
+  padding: 7px !important;
+  font-size: 16px !important;
+  border-radius: 5px;
+}
+
+.feed-filter {
+  background-color: white;
+  color: #4f555a;
+}
+
+.deck-icon {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 7px;
+  margin-top: 7px;
+  font-size: 20px;
+}
+
+.deck-action-icon {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 7px;
+  margin-top: 7px;
+  font-size: 25px;
+  color: #79c27f;
+}
+
+.deck-icon.delete-deck {
+  color: #bb787b !important;
+}
+
+.c_presentation-view-toolbar {
+  background-color: white !important;
+  border-top: 1px solid gainsboro;
+}
+
+.c_presentation-view-toolbar__button {
+  background-color: white;
+  border-radius: 5px;
+  border: 0;
+  color: #4f555a;
+  font-size: 20px;
 }

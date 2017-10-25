@@ -70,7 +70,7 @@ class Feed extends React.Component {
           );
         }}
       >
-        more
+        More
       </button>
     );
   }

@@ -32,8 +32,10 @@ function ConversationCommentForm(props) {
         {props.error && <strong>{props.error}</strong>}
 
         <div>
-          <button type="submit">{submitText}</button>
-          { cancelAction && <button onClick={cancelAction}>Cancel</button>}
+          <button className="send-btn" type="submit">
+            <i className="fa fa-paper-plane fa-6" aria-hidden="true" />
+          </button>
+          { cancelAction && <button className="cancel-btn" onClick={cancelAction}><i className="fa fa-chevron-left fa-6" aria-hidden="true" /></button>}
         </div>
 
       </form>

@@ -16,8 +16,8 @@ function ConversationPanel(props) {
   const { activeConversation, closeConversationPanel } = props;
 
   return (
-    <div>
-      <button className="back-btn" onClick={closeConversationPanel}>
+    <div className="top40">
+      <button className="close-btn" onClick={closeConversationPanel}>
         <i className="fa fa-chevron-left fa-6" aria-hidden="true" />
       </button>
 
@@ -32,7 +32,8 @@ function ConversationPanel(props) {
           }}
         >
           <ConversationCommentForm
-            label="Text"
+            label="Add Comment"
+            rows={3}
             onSubmit={(values, dispatch) => {
               return new Promise((resolve, reject) => {
                 dispatch(addConversationComment({ values, resolve, reject }));
