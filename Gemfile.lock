@@ -324,6 +324,7 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    zaru (0.2.0)
 
 PLATFORMS
   ruby
@@ -379,6 +380,7 @@ DEPENDENCIES
   state_machines-activerecord
   state_machines-rspec
   tzinfo-data
+  zaru
 
 RUBY VERSION
    ruby 2.4.1p111

@@ -88,7 +88,7 @@ class Deck < ApplicationRecord
   def generate_canonical_name
     return if canonical_name?
 
-    self.canonical_name = "#{owner.email.parameterize}-#{name.parameterize}"
+    self.canonical_name = Zaru.sanitize! "#{owner.email.parameterize}-#{name.parameterize}"
     return unless self.class.exists? :canonical_name => canonical_name
 
     i = 1

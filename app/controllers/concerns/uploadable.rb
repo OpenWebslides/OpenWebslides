@@ -19,9 +19,8 @@ module Uploadable
     ensure_media_type
 
     # Copy uploaded file to tempfile
-    # TODO: sanitize filenames
     raise JSONAPI::Exceptions::BadRequest, 'Invalid filename' unless params[:qqfilename]
-    @uploaded_filename = params[:qqfilename]
+    @uploaded_filename = Zaru.sanitize! params[:qqfilename]
 
     # Create tempfile with proper extension
     raise JSONAPI::Exceptions::BadRequest, 'Invalid file' unless params[:qqfile]
