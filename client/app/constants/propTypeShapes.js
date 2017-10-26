@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import { contentItemTypes } from 'constants/contentItemTypes';
 import { inlinePropertyTypes } from 'constants/inlinePropertyTypes';
+import { slideViewTypes } from 'constants/slideViewTypes';
 
 // Contains reusable shapes for certain state parts (contentItems, inlineProperties, etc.) so these
 // needn't be copypasted into the PropTypes definition of various components.
@@ -43,6 +44,7 @@ export const slideShape = {
 export const contentItemShape = {
   id: PropTypes.string.isRequired,
   contentItemType: PropTypes.oneOf(Object.values(contentItemTypes)).isRequired,
+  viewType: PropTypes.oneOf(Object.values(slideViewTypes)).isRequired,
 };
 
 // More specific shape for contentItems with a plaintext type.
