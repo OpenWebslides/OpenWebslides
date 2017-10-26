@@ -2,9 +2,17 @@ import _ from 'lodash';
 import Immutable from 'seamless-immutable';
 
 import { ADD_SLIDE, DELETE_SLIDE } from 'actions/entities/slides';
-import { FETCH_DECK_SUCCESS, ADD_DECK_METADATA, DECK_DELETION_SUCCESS } from 'actions/entities/decks';
+import { SET_DECK, FETCH_DECK_SUCCESS, ADD_DECK_METADATA, DECK_DELETION_SUCCESS }
+  from 'actions/entities/decks';
 
 const initialState = Immutable({});
+
+function setDeck(state, action) {
+  const { deck } = action.payload;
+  return state.merge({
+    [deck.id]: deck,
+  }, { deep: true });
+}
 
 function addSlide(state, action) {
   const deck = state[action.payload.deckId];
@@ -63,6 +71,7 @@ function deckDeletionSuccess(state, action) {
 
 function byId(state = initialState, action) {
   switch (action.type) {
+    case SET_DECK: return setDeck(state, action);
     case ADD_SLIDE: return addSlide(state, action);
     case DELETE_SLIDE: return deleteSlide(state, action);
     case FETCH_DECK_SUCCESS: return fetchDeckSuccess(state, action);
