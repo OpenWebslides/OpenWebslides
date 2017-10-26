@@ -2,7 +2,7 @@ import { takeLatest, put, call } from 'redux-saga/effects';
 import { FETCH_DECK, fetchDeckSuccess } from 'actions/entities/decks';
 import { SIGNOUT } from 'actions/signoutActions';
 
-import convertToState from 'lib/convert-to-state';
+import parseHtmlString from 'lib/ows-parts/parseHtmlString';
 import fetchDeckHtmlApi from 'api/fetchDeckHtmlApi';
 import fetchDeckJsonApi from 'api/fetchDeckJsonApi';
 
@@ -36,7 +36,7 @@ function* doFetchDeck(action) {
     const {
       slidesById,
       contentItemsById,
-    } = yield convertToState(action.meta.deckId, htmlString, assetLinks);
+    } = yield parseHtmlString(htmlString, assetLinks, action.meta.deckId);
 
     yield put(fetchDeckSuccess(action.meta.deckId, metadata, slidesById, contentItemsById));
   }

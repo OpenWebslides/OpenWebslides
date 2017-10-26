@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { contentItemShape } from 'constants/propTypeShapes';
-import displayWrappersIndex from 'lib/ows-parts/content-item-types/displayWrappers';
+import displayWrappersIndex from 'lib/ows-parts/content-item/displayWrappers';
 
 import generateAttributesObject from '../helpers/generateAttributesObject';
 
