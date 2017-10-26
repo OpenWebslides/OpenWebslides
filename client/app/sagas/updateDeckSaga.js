@@ -15,10 +15,8 @@ function* doUpdateDeck() {
     const deck = yield select(getDeckById, activeDeckId);
     const htmlString = convertDeckToHtmlString(deck);
 
-    console.log(htmlString);
-
-    // yield call(updateDeckApi, deck.id, htmlString);
-    // yield put(updateDeckSuccess());
+    yield call(updateDeckApi, deck.id, htmlString);
+    yield put(updateDeckSuccess());
   }
   catch (e) {
     if (e.statusCode === 401) {
