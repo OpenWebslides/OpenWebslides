@@ -45,16 +45,14 @@
     width: 100%;
   }
 
-  .c_slide-container {
+  .ows_slide-container {
     vertical-align: middle;
 
-    &__content {
-      // Slide overlay prevents slides in the deck navigator from being interacted with.
-      &::after {
-        @include position-absolute-fill;
+    // Slide overlay prevents slides in the deck navigator from being interacted with.
+    &::after {
+      @include position-absolute-fill;
 
-        content: '';
-      }
+      content: '';
     }
   }
 }

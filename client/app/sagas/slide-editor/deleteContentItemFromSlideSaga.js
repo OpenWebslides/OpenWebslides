@@ -111,7 +111,7 @@ function contentItemValidator(contentItem, focusedSlideViewType) {
 
   // In live view, we want to skip all course-view only contentItems (because these are invisible
   // in live view and can't receive focus).
-  // #TODO generalize this for all possible (future) viewtypes
+  // #TODO generalize this for all possible (future) viewTypes
   const isSlideViewTypeCorrect = !(
     focusedSlideViewType === slideViewTypes.LIVE &&
     contentItem.viewType !== slideViewTypes.LIVE);

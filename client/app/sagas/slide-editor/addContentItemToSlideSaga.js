@@ -14,7 +14,7 @@ import { addContentItem } from 'actions/entities/content-items';
 import { getActiveContentItemId } from 'selectors/app/slide-editor';
 import { getSlideById } from 'selectors/entities/slides';
 import { getContentItemsById } from 'selectors/entities/content-items';
-import { generateContentItemId } from 'lib/convert-to-state/generateIds';
+import { generateContentItemId } from 'lib/ows-parts/helpers/generateIds';
 
 import {
   getLastValidContentItemId,

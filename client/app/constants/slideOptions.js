@@ -7,4 +7,5 @@ export const initialHeadingLevels = {
   [slideViewTypes.CONTENT]: 1,
   [slideViewTypes.NAVIGATION]: 1,
   [slideViewTypes.PRESENTATION]: 1,
+  [slideViewTypes.SAVE]: 1,
 };

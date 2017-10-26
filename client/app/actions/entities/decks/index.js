@@ -1,3 +1,5 @@
+export const SET_DECK = 'SET_DECK';
+
 export const ADD_SLIDE_TO_DECK = 'ADD_SLIDE_TO_DECK';
 export const DELETE_SLIDE_FROM_DECK = 'DELETE_SLIDE_FROM_DECK';
 
@@ -12,6 +14,13 @@ export const FETCH_DECK_FAILURE = 'FETCH_DECK_FAILURE';
 export const ADD_DECK_METADATA = 'ADD_DECK_METADATA';
 
 export const DECK_DELETION_SUCCESS = 'DECK_DELETION_SUCCESS';
+
+export function setDeck(deck) {
+  return {
+    type: SET_DECK,
+    payload: { deck },
+  };
+}
 
 export function addSlideToDeck(deckId, previousSlideId) {
   return {

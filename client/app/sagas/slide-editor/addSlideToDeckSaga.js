@@ -3,7 +3,7 @@ import { takeEvery, select, put } from 'redux-saga/effects';
 import { ADD_SLIDE_TO_DECK } from 'actions/entities/decks';
 import { addSlide } from 'actions/entities/slides';
 import { getDeckById } from 'selectors/entities/decks';
-import { generateSlideId } from 'lib/convert-to-state/generateIds';
+import { generateSlideId } from 'lib/ows-parts/helpers/generateIds';
 
 function* doAddSlideToDeck(action) {
   try {

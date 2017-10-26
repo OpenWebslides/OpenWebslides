@@ -5,6 +5,7 @@ export const slideViewTypes = {
   LIVE: 'LIVE',
   NAVIGATION: 'NAVIGATION',
   PRESENTATION: 'PRESENTATION',
+  SAVE: 'SAVE',
 };
 
 export const slideViewTypesById = {
