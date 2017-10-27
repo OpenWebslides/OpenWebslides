@@ -9,25 +9,23 @@ import {
 } from 'actions/app/dashboard/own-decks';
 
 const initialState = Immutable({
-  requestsStarted: false,
-  requestsSucceeded: false,
+  requestsStatus: 'notStarted',
   errorMessage: '',
   deckDeletionRequested: [],
   deckDeletionErrors: {},
 });
 
 function ownDecksRequestsStart(state) {
-  return Immutable.merge(state, { requestsStarted: true, requestsSucceeded: false });
+  return Immutable.merge(state, { requestsStatus: 'pending' });
 }
 
 function ownDecksRequestsFailure(state, action) {
-  return Immutable.merge(state, { requestsStarted: false,
-    requestsSucceeded: false,
+  return Immutable.merge(state, { requestsStatus: 'failed',
     errorMessage: action.payload.message });
 }
 
 function ownDecksRequestsSuccess(state) {
-  return Immutable.merge(state, { requestsStarted: false, requestsSucceeded: true });
+  return Immutable.merge(state, { requestsStatus: 'succeeded' });
 }
 
 function ownDeckDeletionRequestStart(state, action) {

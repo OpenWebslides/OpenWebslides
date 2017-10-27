@@ -24,7 +24,7 @@ class OwnCollaborations extends React.Component {
       <IfAuthHOC
         isAuthenticated={this.props.authState.isAuthenticated}
         fallback={() =>
-          <NeedSigninWarning requestedAction="display your decks" />}
+          <NeedSigninWarning requestedAction="display your collaborations" />}
       >
         <RequestStatusHOC
           requestsStatus={requestsStatus}

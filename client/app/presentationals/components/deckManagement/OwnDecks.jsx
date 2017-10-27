@@ -8,6 +8,7 @@ import { DeckThumbnail } from 'presentationals/components/deckManagement/DeckThu
 
 // Helpers:
 import IfAuthHOC from 'lib/IfAuthHOC';
+import RequestStatusHOC from 'lib/RequestsStatusHOC';
 
 function renderDeckThumbnail(el, deleteDeck, isDeletionPending, deletionError) {
   return (
@@ -31,22 +32,14 @@ class OwnDecks extends React.Component {
 
   render() {
     const {
-      requestsSucceeded,
-      startedRequests,
+      requestsStatus,
       errorMessage,
       deckDeletionErrors,
     } = this.props.ownDecksState;
 
-    const isFirstRender = !startedRequests && !requestsSucceeded && !errorMessage;
     let toDisplay;
 
-    if (isFirstRender || startedRequests) {
-      toDisplay = <p> Loading ... </p>;
-    }
-    else if (!this.props.ownDecksState.startedRequests && this.props.ownDecksState.errorMessage) {
-      toDisplay = <p>{this.props.ownDecksState.errorMessage}</p>;
-    }
-    else {
+    if (requestsStatus === 'succeeded') {
       const user = this.props.entities.users.byId[this.props.authState.id];
       const listOfDecks = user.decks.map(id => this.props.entities.decks.byId[id]);
       let tableOrNothing;
@@ -54,7 +47,11 @@ class OwnDecks extends React.Component {
         const listOfDeckThumbnails = listOfDecks.map((el) => {
           const isDeletionPending = this.props.ownDecksState.deckDeletionRequested.includes(el.id);
           const deletionError = this.props.ownDecksState.deckDeletionErrors[el.id];
-          return renderDeckThumbnail(el, this.props.ownDeckDeletionRequestStart, isDeletionPending, deletionError);
+          return renderDeckThumbnail(
+            el,
+            this.props.ownDeckDeletionRequestStart,
+            isDeletionPending,
+            deletionError);
         });
         tableOrNothing = (
           <table className="c_own-decks-container__owned-decks-table">
@@ -67,6 +64,8 @@ class OwnDecks extends React.Component {
       else {
         tableOrNothing = (<p> No decks yet! </p>);
       }
+
+
       toDisplay =
         (<div className="c_own-decks-container">
           <h1 className="c_own-decks-container__title"> Your decks: </h1>
@@ -76,15 +75,15 @@ class OwnDecks extends React.Component {
             <Link to="/import_deck"> Import Deck </Link>
           </div>
         </div>);
-    }
-    if (deckDeletionErrors.length > 0) {
-      toDisplay =
-      [
-        toDisplay,
-        deckDeletionErrors.map(err => <p className="c_own-decks--errors">{err}</p>),
-      ];
-    }
 
+      if (deckDeletionErrors.length > 0) {
+        toDisplay =
+        [
+          toDisplay,
+          deckDeletionErrors.map(err => <p className="c_own-decks--errors">{err}</p>),
+        ];
+      }
+    }
 
     return (
       <IfAuthHOC
@@ -92,7 +91,14 @@ class OwnDecks extends React.Component {
         fallback={() =>
           <NeedSigninWarning requestedAction="display your decks" />}
       >
-        {toDisplay}
+        <RequestStatusHOC
+          requestsStatus={requestsStatus}
+          pending={() => <p> Loading your decks</p>}
+          notStarted={() => <p> Loading your decks</p>}
+          failed={() => <p> Error: {errorMessage}</p>}
+        >
+          {toDisplay}
+        </RequestStatusHOC>
       </IfAuthHOC>
     );
   }
@@ -101,8 +107,7 @@ class OwnDecks extends React.Component {
 OwnDecks.propTypes = {
   ownDecksRequestsStart: PropTypes.func.isRequired,
   ownDecksState: PropTypes.shape({
-    startedRequests: PropTypes.bool,
-    requestsSucceeded: PropTypes.bool,
+    requestsStatus: PropTypes.string,
     errorMessage: PropTypes.string,
     deckDeletionErrors: PropTypes.object,
     deckDeletionRequested: PropTypes.arrayOf(PropTypes.string),
