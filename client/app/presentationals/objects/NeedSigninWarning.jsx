@@ -6,7 +6,7 @@ function NeedSigninWarning({ requestedAction }) {
   return (
     <div className="c_sign-in-warning">
       <p> You need to be signed in to {requestedAction}. </p>
-      <a href="/auth/cas"> Sign in here </a>
+      <a href="/auth/cas"> Sign in with UGent CAS </a> or <Link className="c_nav-menu__link" to={'/signin'}>sign in with guest account</Link>
     </div>
   );
 }

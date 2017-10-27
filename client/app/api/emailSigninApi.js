@@ -19,9 +19,12 @@ async function emailSignin(email, password) {
   const bearerResponseHeader = response.headers.get('Authorization');
 
   const authToken = bearerResponseHeader.split(' ')[1];
-  const { email: userEmail } = responseBody.data.attributes;
+  const {
+    email: userEmail,
+    firstName,
+  } = responseBody.data.attributes;
 
-  return { authToken, id, userEmail };
+  return { authToken, id, userEmail, firstName };
 }
 
 export default emailSignin;

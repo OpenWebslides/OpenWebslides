@@ -137,5 +137,10 @@ Rails.application.routes.draw do
       # Flag
       jsonapi_resource :flag, :only => %i[create] do end
     end
+
+    ##
+    # Authentication API
+    #
+    jsonapi_resource :token, :only => %i[create destroy] do end
   end
 end

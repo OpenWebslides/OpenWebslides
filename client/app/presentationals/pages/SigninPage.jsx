@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import DefaultLayout from 'presentationals/layouts/DefaultLayout';
 import EmailSigninForm from 'containers/EmailSigninContainer';
-import OauthLinks from 'presentationals/components/oauth/OauthLinks';
 
 function SigninPage() {
   return (
@@ -14,7 +13,6 @@ function SigninPage() {
         signin: (
           <div>
             <EmailSigninForm />
-            <OauthLinks />
           </div>
         ),
       }}
