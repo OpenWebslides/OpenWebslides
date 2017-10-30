@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { signout } from 'actions/signoutActions';
+import { casSignout } from 'actions/signoutActions';
 
 
 function NavMenu(props) {
   const { isAuthenticated, firstName, id } = props;
 
   function signoutUser() {
-    props.signout();
+    props.casSignout();
   }
 
   function renderAuthLinks() {
@@ -54,7 +54,7 @@ export default connect(
     };
   },
   (dispatch) => {
-    return bindActionCreators({ signout }, dispatch);
+    return bindActionCreators({ casSignout }, dispatch);
   },
 )(NavMenu);
 

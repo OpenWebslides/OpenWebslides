@@ -14,6 +14,7 @@ import addUriSaga from 'sagas/slide-editor/addUriSaga';
 
 // SIGN-UP/IN
 import signupSaga from 'sagas/signupSaga';
+import casSignoutSaga from 'sagas/casSignoutSaga';
 import confirmEmailSaga from 'sagas/confirmEmailSaga';
 import oauthSigninSaga from 'sagas/signin/oauthSigninSaga';
 import emailSigninSaga from 'sagas/signin/emailSigninSaga';
@@ -50,6 +51,7 @@ export default function* rootSaga() {
     addConversationSaga(),
     emailSigninSaga(),
     signupSaga(),
+    casSignoutSaga(),
     updateConversationSaga(),
     rateConversationCommentSaga(),
     rateConversationSaga(),
