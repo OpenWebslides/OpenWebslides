@@ -34,6 +34,16 @@ function ApiRequest() {
   that.url = defaults.url;
 
   /**
+   * Set the mode of the request
+   * @param param
+   * @returns {{}}
+   */
+  that.setMode = (mode) => {
+    that.mode = mode;
+    return that;
+  };
+
+  /**
    * Set the last part of the url to which to make the request
    * @param endpoint
    * @returns {{}}
@@ -162,6 +172,7 @@ function ApiRequest() {
       method: that.method,
       headers: that.headers,
       body: that.body,
+      mode: that.mode,
     };
 
     return asyncFetch(url, config);

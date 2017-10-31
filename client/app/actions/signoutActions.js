@@ -1,7 +1,13 @@
-export const SIGNOUT = 'SIGNOUT';
+import { authTypes } from 'constants/auth';
 
 export function signout() {
   return {
-    type: SIGNOUT,
+    type: authTypes.SIGNOUT,
+  };
+}
+
+export function casSignout() {
+  return {
+    type: authTypes.CAS_SIGNOUT,
   };
 }

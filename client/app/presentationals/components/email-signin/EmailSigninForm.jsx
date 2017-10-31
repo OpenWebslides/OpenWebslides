@@ -39,11 +39,6 @@ function EmailSigninForm(props) {
                   {t('signin:signin')}
                 </button>
               </span>
-              <span className="o_buttons-row__item">
-                <Link className="o_button" to="/forgot_password">
-                  {t('forgotPassword')}
-                </Link>
-              </span>
             </span>
           </p>
 

@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { signout } from 'actions/signoutActions';
+import { casSignout } from 'actions/signoutActions';
 
 
 function NavMenu(props) {
   const { isAuthenticated, firstName, id } = props;
 
   function signoutUser() {
-    props.signout();
+    props.casSignout();
   }
 
   function renderAuthLinks() {
@@ -21,7 +21,7 @@ function NavMenu(props) {
           <li className="c_nav-menu__item" key={'Dashboard'}><Link className="c_nav-menu__link" to={'/'}>Dashboard </Link></li>
           <li className="c_nav-menu__item" key={'Editor'}><Link className="c_nav-menu__link" to={`/user/${id}`}>Profile </Link></li>
           <li className="c_nav-menu__item" key={'welcomeMessage'}>{`Welcome, ${firstName}`}</li>
-          <li className="c_nav-menu__item" key={'Sign Out'}><a href="https://login.ugent.be/logout" onClick={() => signoutUser()}>Sign Out</a></li>
+          <li className="c_nav-menu__item" key={'Sign Out'}><a href="#" onClick={() => signoutUser()}>Sign Out</a></li>
         </ul>
       );
     }
@@ -31,6 +31,7 @@ function NavMenu(props) {
         <li className="c_nav-menu__item" key={'Dashboard'}><Link className="c_nav-menu__link" to={'/'}>Dashboard </Link></li>
         <li className="c_nav-menu__item" key={'Editor'}><Link className="c_nav-menu__link" to={'/editor'}>Slide Editor </Link></li>
         <li className="c_nav-menu__item" key={'Sign in with UGent CAS'}><a href="/auth/cas">Sign in with UGent CAS</a></li>
+        <li className="c_nav-menu__item" key={'Sign in with guest account'}><a href="/signin">Sign in with guest account</a></li>
       </ul>
     );
   }
@@ -53,7 +54,7 @@ export default connect(
     };
   },
   (dispatch) => {
-    return bindActionCreators({ signout }, dispatch);
+    return bindActionCreators({ casSignout }, dispatch);
   },
 )(NavMenu);
 
