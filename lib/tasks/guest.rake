@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'securerandom'
-
 namespace :guest do
   desc 'Create one or more guest accounts'
   task :create, [:count] => :environment do |_, args|
@@ -16,7 +14,7 @@ namespace :guest do
           email = "guest#{i}@openwebslides.ugent.be"
         end
 
-        password = SecureRandom.hex 25
+        password = [*('a'..'z'), *(0..9)].shuffle.take(10).join
         creds << [email, password]
 
         user = User.new :email => email,
