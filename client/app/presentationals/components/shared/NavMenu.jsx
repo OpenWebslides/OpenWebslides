@@ -31,7 +31,7 @@ function NavMenu(props) {
         <li className="c_nav-menu__item" key={'Dashboard'}><Link className="c_nav-menu__link" to={'/'}>Dashboard </Link></li>
         <li className="c_nav-menu__item" key={'Editor'}><Link className="c_nav-menu__link" to={'/editor'}>Slide Editor </Link></li>
         <li className="c_nav-menu__item" key={'Sign in with UGent CAS'}><a href="/auth/cas">Sign in with UGent CAS</a></li>
-        <li className="c_nav-menu__item" key={'Sign in with guest account'}><a href="/signin">Sign in with guest account</a></li>
+        <li className="c_nav-menu__item" key={'Sign in with guest account'}><Link className="c_nav-menu__link" to={'/signin'}>Sign in with guest account</Link></li>
       </ul>
     );
   }
