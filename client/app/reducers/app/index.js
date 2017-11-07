@@ -12,6 +12,8 @@ import presentationView from 'reducers/app/presentationViewReducer';
 import profilePage from 'reducers/app/profile-page';
 import ownDecks from 'reducers/app/own-decks';
 import ownCollaborations from 'reducers/app/own-collaborations';
+import courseNotePanel from 'reducers/app/courseNotePanelReducer';
+
 
 const app = combineReducers({
   authentication,
@@ -26,6 +28,7 @@ const app = combineReducers({
   profilePage,
   ownDecks,
   ownCollaborations,
+  courseNotePanel,
 });
 
 export default app;
