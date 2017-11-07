@@ -8,12 +8,20 @@ import {
   viewLastSlide,
 } from 'actions/app/presentation-view';
 
+import { currentSlideHasCourseNotes } from 'selectors/app/course-note-panel';
+
+import { toggleCourseNotePanel } from 'actions/app/course-note-panel';
+
 import { toggleAnnotationMode } from 'actions/app/annotations';
 
 import PresentationViewToolbar from 'presentationals/components/presentation-view/PresentationViewToolbar';
 
 function mapStateToProps(state) {
-  return ({ annotationMode: state.app.annotations.annotationMode });
+  return ({
+    annotationMode: state.app.annotations.annotationMode,
+    courseNotePanel: state.app.courseNotePanel.showCourseNotePanel,
+    currentSlideHasCourseNotes: currentSlideHasCourseNotes(state),
+  });
 }
 
 function mapDispatchToProps(dispatch) {
@@ -23,6 +31,7 @@ function mapDispatchToProps(dispatch) {
     viewNextSlide,
     viewLastSlide,
     toggleAnnotationMode,
+    toggleCourseNotePanel,
   }, dispatch);
 }
 

@@ -11,6 +11,7 @@ function mapStateToProps(state) {
     activeDeckId: state.app.presentationView.activeDeckId,
     activeSlideId: state.app.presentationView.activeSlideId,
     annotationMode: state.app.annotations.annotationMode,
+    courseNotePanel: state.app.courseNotePanel.showCourseNotePanel,
   });
 }
 
