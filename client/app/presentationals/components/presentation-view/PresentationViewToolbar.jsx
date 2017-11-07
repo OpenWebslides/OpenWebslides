@@ -54,8 +54,9 @@ class PresentationToolbar extends Component {
   }
 
   render() {
-    const { deckId, conversationCount, deckLength, slideNumber } = this.props;
+    const { deckId, conversationCount, deckLength, slideNumber, currentSlideHasCourseNotes } = this.props;
     const conversationCountIconClass = conversationCount ? 'fa-comment' : 'fa-comment-o';
+    const courseNotePanelIconClass = currentSlideHasCourseNotes ? 'fa-file green' : 'fa-file-o';
 
     return (
       <div className="c_presentation-view-toolbar">
@@ -121,6 +122,14 @@ class PresentationToolbar extends Component {
               </button>
               {`${conversationCount}`}
             </li>
+            <li className="c_presentation-view-toolbar__item">
+              <button
+                className="c_presentation-view-toolbar__button"
+                onClick={() => this.props.toggleCourseNotePanel()}
+              >
+                <i className={`fa ${courseNotePanelIconClass}`} aria-hidden="true" />
+              </button>
+            </li>
           </menu>
         </div>
       </div>
@@ -130,6 +139,7 @@ class PresentationToolbar extends Component {
 
 PresentationToolbar.propTypes = {
   viewFirstSlide: PropTypes.func.isRequired,
+  toggleCourseNotePanel: PropTypes.func.isRequired,
   deckId: PropTypes.string.isRequired,
   viewPreviousSlide: PropTypes.func.isRequired,
   history: PropTypes.objectOf(Object).isRequired,
@@ -137,6 +147,7 @@ PresentationToolbar.propTypes = {
   viewLastSlide: PropTypes.func.isRequired,
   toggleAnnotationMode: PropTypes.func.isRequired,
   annotationMode: PropTypes.bool.isRequired,
+  currentSlideHasCourseNotes: PropTypes.bool.isRequired,
   conversationCount: PropTypes.number.isRequired,
   deckLength: PropTypes.number.isRequired,
   slideNumber: PropTypes.number.isRequired,
