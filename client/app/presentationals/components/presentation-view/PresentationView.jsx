@@ -6,6 +6,7 @@ import { slideViewTypes } from 'constants/slideViewTypes';
 import PresentationViewToolbarContainer from
   'containers/presentation-view/PresentationViewToolbarContainer';
 import AnnotationSidePanel from 'presentationals/components/annotations/AnnotationSidePanel';
+import CourseNotePanel from 'containers/CourseNotePanelContainer';
 
 class PresentationView extends Component {
   componentDidMount() {
@@ -47,6 +48,7 @@ class PresentationView extends Component {
       <div>
         {this.renderSlide()}
         <PresentationViewToolbarContainer deckId={deckId} />
+        <CourseNotePanel />
       </div>
     );
   }
