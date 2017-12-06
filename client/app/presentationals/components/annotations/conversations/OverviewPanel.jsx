@@ -27,7 +27,7 @@ function OverviewPanel(props) {
     return (
       <ul>
         {Object.keys(conversationsBySlide).map((slideId) => {
-          const slideNumber = parseInt(slideId.slice(3)) + 1;
+          const slideNumber = parseInt(slideId.split('-')[0]) + 1;
 
           return (
             <li key={slideNumber}>
