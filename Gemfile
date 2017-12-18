@@ -36,6 +36,7 @@ gem 'nokogumbo'
 
 # Asynchronous processing
 gem 'sidekiq'
+gem 'wisper'
 
 # Filename sanitization
 gem 'zaru'
