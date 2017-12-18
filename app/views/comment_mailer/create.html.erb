@@ -1,0 +1,13 @@
+<p>Hello <%= @comment.conversation.user.first_name %>!</p>
+
+<p>
+  <strong><%= "#{@user.first_name} #{@user.last_name}" %></strong> posted a comment on your conversation <strong><%= @comment.conversation.title %></strong>:
+</p>
+
+<p>
+  <blockquote>
+    <%= @comment.text %>
+  </blockquote>
+</p>
+
+<p><%= link_to 'View complete conversation', deck_url(@deck) %></p>

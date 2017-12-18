@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 class CommentService < AnnotationService
+  def create
+    super
+
+    CommentMailer.create(@annotation).deliver_later
+  end
+
   def delete
     # Hide annotation text
     @annotation.text = I18n.t 'openwebslides.annotations.hidden'

@@ -31,6 +31,9 @@ en:
     annotations:
       hidden: "[deleted]"
     mailer:
-      annotations:
+      conversation:
         create:
           subject: "Conversation added"
+      comment:
+        create:
+          subject: "Comment added"
