@@ -4,6 +4,9 @@ class CommentService < AnnotationService
   def create
     super
 
+    # Don't continue on model errors
+    return unless @annotation.persisted?
+
     CommentMailer.create(@annotation).deliver_later
   end
 

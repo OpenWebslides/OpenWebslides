@@ -4,6 +4,9 @@ class ConversationService < AnnotationService
   def create
     super
 
+    # Don't continue on model errors
+    return unless @annotation.persisted?
+
     ConversationMailer.create(@annotation).deliver_later
   end
 
