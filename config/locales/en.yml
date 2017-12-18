@@ -30,3 +30,7 @@ en:
         tos_accepted: "must be true"
     annotations:
       hidden: "[deleted]"
+    mailer:
+      annotations:
+        create:
+          subject: "Conversation added"

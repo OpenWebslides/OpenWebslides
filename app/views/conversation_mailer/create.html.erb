@@ -1,0 +1,13 @@
+<p>Hello <%= @deck.owner.first_name %>!</p>
+
+<p>
+  <strong><%= "#{@user.first_name} #{@user.last_name}" %></strong> posted a <%= @conversation.conversation_type %> on the slide deck <strong><%= @deck.name %></strong>:
+</p>
+
+<p>
+  <blockquote>
+    <%= @conversation.title %>
+  </blockquote>
+</p>
+
+<p><%= link_to 'View complete conversation', deck_url(@deck) %></p>
