@@ -27,7 +27,7 @@ RSpec.describe Annotation, :type => :model do
 
     context 'created' do
       it { is_expected.to handle_events :edit, :protect, :flag, :hide, :when => :created }
-      it { is_expected.to reject_events :publish, :when => :created }
+      it { is_expected.to reject_events :unprotect, :when => :created }
 
       it { is_expected.to transition_from :created, :to_state => :edited, :on_event => :edit }
       it { is_expected.to transition_from :created, :to_state => :secret, :on_event => :protect }
@@ -37,7 +37,7 @@ RSpec.describe Annotation, :type => :model do
 
     context 'edited' do
       it { is_expected.to handle_events :edit, :flag, :hide, :when => :edited }
-      it { is_expected.to reject_events :protect, :publish, :when => :edited }
+      it { is_expected.to reject_events :protect, :unprotect, :when => :edited }
 
       it { is_expected.to transition_from :edited, :to_state => :edited, :on_event => :edit }
       it { is_expected.to transition_from :edited, :to_state => :flagged, :on_event => :flag }
@@ -45,22 +45,22 @@ RSpec.describe Annotation, :type => :model do
     end
 
     context 'secret' do
-      it { is_expected.to handle_events :edit, :publish, :hide, :when => :secret }
+      it { is_expected.to handle_events :edit, :unprotect, :hide, :when => :secret }
       it { is_expected.to reject_events :protect, :flag, :when => :secret }
 
       it { is_expected.to transition_from :secret, :to_state => :secret, :on_event => :edit }
-      it { is_expected.to transition_from :secret, :to_state => :created, :on_event => :publish }
+      it { is_expected.to transition_from :secret, :to_state => :created, :on_event => :unprotect }
     end
 
     context 'flagged' do
       it { is_expected.to handle_events :hide, :when => :flagged }
-      it { is_expected.to reject_events :edit, :protect, :publish, :flag, :when => :flagged }
+      it { is_expected.to reject_events :edit, :protect, :unprotect, :flag, :when => :flagged }
 
       it { is_expected.to transition_from :flagged, :to_state => :hidden, :on_event => :hide }
     end
 
     context 'hidden' do
-      it { is_expected.to reject_events :hide, :edit, :protect, :publish, :flag, :when => :hidden }
+      it { is_expected.to reject_events :hide, :edit, :protect, :unprotect, :flag, :when => :hidden }
     end
   end
 

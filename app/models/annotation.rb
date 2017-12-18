@@ -70,8 +70,8 @@ class Annotation < ApplicationRecord
       transition :created => :secret
     end
 
-    # Publish (publicize) an annotation
-    event :publish do
+    # Unprotect an annotation
+    event :unprotect do
       transition :secret => :created
     end
   end

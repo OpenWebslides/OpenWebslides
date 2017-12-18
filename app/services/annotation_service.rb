@@ -16,7 +16,7 @@ class AnnotationService < ApplicationService
       if params[:secret] == 'true' || params[:secret] == true
         @annotation.protect
       else
-        @annotation.publish
+        @annotation.unprotect
       end
     else
       @annotation.assign_attributes params.except :secret
@@ -28,8 +28,8 @@ class AnnotationService < ApplicationService
     @annotation.protect
   end
 
-  def publish
-    @annotation.publish
+  def unprotect
+    @annotation.unprotect
   end
 
   def flag

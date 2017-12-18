@@ -153,7 +153,7 @@ RSpec.describe 'Comments API', :type => :request do
       expect(attr['secret']).to eq true
     end
 
-    it 'publishes protected annotation' do
+    it 'unprotects protected annotation' do
       comment.protect
       expect(comment).to be_secret
 
@@ -176,7 +176,7 @@ RSpec.describe 'Comments API', :type => :request do
       expect(response.status).to eq 422
     end
 
-    it 'does not publish published annotation' do
+    it 'does not unprotect unprotected annotation' do
       expect(comment).not_to be_secret
 
       patch comment_path(:id => comment.id), :params => update_body(comment.id, :secret => false), :headers => headers

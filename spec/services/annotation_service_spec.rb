@@ -45,15 +45,15 @@ RSpec.describe AnnotationService do
     end
   end
 
-  describe 'publish' do
+  describe 'unprotect' do
     it 'persists' do
-      subject.publish
+      subject.unprotect
       expect(annotation).to be_persisted
     end
 
     it 'transitions' do
-      expect(annotation).to receive :publish
-      subject.publish
+      expect(annotation).to receive :unprotect
+      subject.unprotect
     end
   end
 
