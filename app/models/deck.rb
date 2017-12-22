@@ -26,10 +26,8 @@ class Deck < ApplicationRecord
   ##
   # Associations
   #
-  belongs_to :owner,
+  belongs_to :user,
              :required => true,
-             :class_name => 'User',
-             :foreign_key => 'user_id',
              :inverse_of => :decks
 
   has_many :grants,
@@ -88,7 +86,7 @@ class Deck < ApplicationRecord
   def generate_canonical_name
     return if canonical_name?
 
-    self.canonical_name = Zaru.sanitize! "#{owner.email.parameterize}-#{name.parameterize}"
+    self.canonical_name = Zaru.sanitize! "#{user.email.parameterize}-#{name.parameterize}"
     return unless self.class.exists? :canonical_name => canonical_name
 
     i = 1

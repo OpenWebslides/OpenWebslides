@@ -40,8 +40,8 @@ Rails.application.routes.draw do
     #
     jsonapi_resources :decks do
       # Owner relationship
-      jsonapi_related_resource :owner
-      jsonapi_link :owner, :only => :show
+      jsonapi_related_resource :user
+      jsonapi_link :user, :only => :show
 
       # Collaborators relationship
       jsonapi_related_resources :collaborators

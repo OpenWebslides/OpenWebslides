@@ -32,7 +32,7 @@ RSpec.describe UserResource, :type => :resource do
       end
     end
 
-    context 'for an owner' do
+    context 'for a user' do
       let(:context) { { :current_user => user } }
       it 'should have a valid set of fetchable fields' do
         expect(subject.fetchable_fields).to match_array %i[id first_name last_name email decks collaborations conversions]

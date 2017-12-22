@@ -16,8 +16,8 @@ function renderDeckThumbnail(el) {
       key={el.id}
       deckId={el.id}
       deckTitle={el.meta.title}
-      ownerName={el.meta.ownerName}
-      ownerId={el.meta.ownerId}
+      userName={el.meta.userName}
+      userId={el.meta.userId}
     />
   );
 }

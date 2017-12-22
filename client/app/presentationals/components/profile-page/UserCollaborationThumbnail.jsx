@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export function CollaborationThumbnail({ deckTitle, deckId, ownerName, ownerId }) {
+export function CollaborationThumbnail({ deckTitle, deckId, userName, userId }) {
   return (
     <tr className="c_deck-thumbnail">
 
       <th>
-        <Link to={`/user/${ownerId}`}>
-          <p className="c_deck-thumbnail__owner-name">
-            {ownerName}
+        <Link to={`/user/${userId}`}>
+          <p className="c_deck-thumbnail__user-name">
+            {userName}
           </p>
         </Link>
       </th>
@@ -39,8 +39,8 @@ export function CollaborationThumbnail({ deckTitle, deckId, ownerName, ownerId }
 CollaborationThumbnail.propTypes = {
   deckTitle: PropTypes.string.isRequired,
   deckId: PropTypes.string.isRequired,
-  ownerId: PropTypes.string.isRequired,
-  ownerName: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 export default CollaborationThumbnail;

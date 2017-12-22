@@ -13,7 +13,7 @@ class DeckPolicy < ApplicationPolicy
     return false if @user.nil?
 
     # Users can create a deck but only for itself
-    @record.owner == @user
+    @record.user == @user
   end
 
   def show?
@@ -27,7 +27,7 @@ class DeckPolicy < ApplicationPolicy
     elsif @record.private_access?
       return false if @user.nil?
       # Owner and collaborators can read private deck
-      @record.owner == @user || @record.collaborators.include?(@user)
+      @record.user == @user || @record.collaborators.include?(@user)
     end
   end
 
@@ -35,21 +35,21 @@ class DeckPolicy < ApplicationPolicy
     return false if @user.nil?
 
     # Owner and collaborators can update deck
-    @record.owner == @user || @record.collaborators.include?(@user)
+    @record.user == @user || @record.collaborators.include?(@user)
   end
 
   def destroy?
     return false if @user.nil?
 
     # Owner can destroy deck
-    @record.owner == @user
+    @record.user == @user
   end
 
   ##
-  # Relationship: owner
+  # Relationship: user
   #
-  def show_owner?
-    # Users can only show owner if the deck is showable
+  def show_user?
+    # Users can only show user if the deck is showable
     # Authorize the user separately in the controller
     show?
   end

@@ -11,7 +11,7 @@ async function createDeck(title, description, authorID) {
         description,
       },
       relationships: {
-        owner: {
+        user: {
           data: {
             id: authorID,
             type: 'users',

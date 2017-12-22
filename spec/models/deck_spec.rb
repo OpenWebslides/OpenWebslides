@@ -46,18 +46,18 @@ RSpec.describe Deck, :type => :model do
       expect(deck.template).to eq new_template
     end
 
-    let(:owner) { build :user, :email => 'foo@bar' }
+    let(:user) { build :user, :email => 'foo@bar' }
     it 'has a unique canonical name' do
-      deck = create :deck, :name => 'Foo Bar', :owner => owner
+      deck = create :deck, :name => 'Foo Bar', :user => user
       expect(deck.canonical_name).to eq 'foo-bar-foo-bar'
 
-      deck2 = create :deck, :name => 'Foo Bar', :owner => owner
+      deck2 = create :deck, :name => 'Foo Bar', :user => user
       expect(deck2.canonical_name).to eq 'foo-bar-foo-bar-2'
     end
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:owner).inverse_of(:decks) }
+    it { is_expected.to belong_to(:user).inverse_of(:decks) }
     it { is_expected.to have_many(:grants).dependent(:destroy) }
     it { is_expected.to have_many(:collaborators).through(:grants).inverse_of(:collaborations) }
     it { is_expected.to have_many(:assets).dependent(:destroy).inverse_of(:deck) }

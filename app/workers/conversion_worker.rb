@@ -65,7 +65,7 @@ class ConversionWorker
   # Create deck metadata
   #
   def create_deck
-    @deck = Deck.new :owner => @conversion.user, :name => @conversion.name
+    @deck = Deck.new :user => @conversion.user, :name => @conversion.name
     DeckService.new(@deck).create
 
     @conversion.update :deck => @deck

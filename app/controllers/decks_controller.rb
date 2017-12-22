@@ -121,7 +121,7 @@ class DecksController < ApplicationController
   protected
 
   def deck_params
-    resource_params.merge :user_id => relationship_params[:owner]
+    resource_params.merge :user_id => relationship_params[:user]
   end
 
   def service

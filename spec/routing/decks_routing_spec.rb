@@ -23,11 +23,11 @@ RSpec.describe 'decks routing', :type => :routing do
     expect(:delete => route).to route_to 'decks#destroy', :id => 'foo'
   end
 
-  it 'routes deck owner relationship endpoint' do
-    route = '/api/decks/foo/relationships/owner'
-    params = { :deck_id => 'foo', :relationship => 'owner' }
+  it 'routes deck user relationship endpoint' do
+    route = '/api/decks/foo/relationships/user'
+    params = { :deck_id => 'foo', :relationship => 'user' }
 
-    expect(:get => '/api/decks/foo/owner').to route_to 'users#get_related_resource', params.merge(:source => 'decks')
+    expect(:get => '/api/decks/foo/user').to route_to 'users#get_related_resource', params.merge(:source => 'decks')
 
     expect(:get => route).to route_to 'decks#show_relationship', params
     expect(:patch => route).not_to be_routable

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Flags API', :type => :request do
   let(:user) { create :user, :confirmed }
-  let(:deck) { create :deck, :owner => user }
+  let(:deck) { create :deck, :user => user }
   let(:conversation) { create :conversation, :deck => deck }
 
   let(:params) do

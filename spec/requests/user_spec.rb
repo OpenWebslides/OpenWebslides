@@ -106,7 +106,7 @@ RSpec.describe 'User API', :type => :request do
         add_accept_header
         add_auth_header
 
-        create :deck, :owner => user
+        create :deck, :user => user
       end
 
       it 'returns successful' do
@@ -116,7 +116,7 @@ RSpec.describe 'User API', :type => :request do
         expect(response.content_type).to eq JSONAPI::MEDIA_TYPE
 
         json = JSON.parse response.body
-        expect(json['data'].count).to eq Deck.where(:owner => user).count
+        expect(json['data'].count).to eq Deck.where(:user => user).count
         expect(json['data'].first['type']).to eq 'decks'
       end
     end

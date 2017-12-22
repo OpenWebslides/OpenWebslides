@@ -15,9 +15,7 @@ class DeckResource < ApplicationResource
   ##
   # Relationships
   #
-  has_one :owner,
-          :foreign_key => 'user_id'
-
+  has_one :user
   has_many :collaborators
   has_many :assets
   has_many :conversations

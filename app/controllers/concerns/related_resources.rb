@@ -6,7 +6,7 @@
 module RelatedResources
   extend ActiveSupport::Concern
 
-  # GET /klass/:klass_id/:relationship (e.g. /decks/:deck_id/owner)
+  # GET /klass/:klass_id/:relationship (e.g. /decks/:deck_id/user)
   def get_related_resource
     model_klass = params[:source].classify.constantize
 
@@ -14,7 +14,7 @@ module RelatedResources
     @resource = model_klass.find id
     @relationship = @resource.send params[:relationship]
 
-    # Authorize RELATIONSHIP_CLASS#show_RELATIONSHIP? (e.g. DeckPolicy#show_owner?)
+    # Authorize RELATIONSHIP_CLASS#show_RELATIONSHIP? (e.g. DeckPolicy#show_user?)
     authorize @resource, "show_#{params[:relationship]}?"
 
     # Authorize INVERSE_RELATIONSHIP_CLASS#show? (e.g. UserPolicy#show?)

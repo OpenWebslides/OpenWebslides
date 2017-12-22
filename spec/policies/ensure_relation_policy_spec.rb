@@ -5,7 +5,7 @@ require 'rails_helper'
 ##
 # This script will iterate over all the relations in all of the models, and
 # check if there is a policy action defined for both the relation
-# (e.g. UserPolicy#show_decks?) and the inverse relation (e.g. DeckPolicy#show_owner?)
+# (e.g. UserPolicy#show_decks?) and the inverse relation (e.g. DeckPolicy#show_user?)
 #
 
 ##

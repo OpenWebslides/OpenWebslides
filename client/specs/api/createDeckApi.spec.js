@@ -30,7 +30,7 @@ describe('Api call to create a new deck', () => {
           description,
         },
         relationships: {
-          owner: {
+          user: {
             data: {
               id: authorID,
               type: 'users',

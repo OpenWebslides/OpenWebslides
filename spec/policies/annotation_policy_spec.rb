@@ -50,7 +50,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for an owner' do
+    context 'for a user' do
       let(:user) { annotation.user }
 
       it { is_expected.to permit_action :create }
@@ -63,9 +63,9 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for a deck owner' do
+    context 'for a deck user' do
       before { annotation.user = user }
-      let(:user) { deck.owner }
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
@@ -121,7 +121,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for an owner' do
+    context 'for a user' do
       let(:user) { annotation.user }
 
       it { is_expected.to permit_action :create }
@@ -134,9 +134,9 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for a deck owner' do
+    context 'for a deck user' do
       before { annotation.user = user }
-      let(:user) { deck.owner }
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }
@@ -192,7 +192,7 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for an owner' do
+    context 'for a user' do
       before { deck.collaborators << annotation.user }
       let(:user) { annotation.user }
 
@@ -206,9 +206,9 @@ RSpec.describe AnnotationPolicy do
       it { is_expected.to permit_action :show_user }
     end
 
-    context 'for a deck owner' do
+    context 'for a deck user' do
       before { annotation.user = user }
-      let(:user) { deck.owner }
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }

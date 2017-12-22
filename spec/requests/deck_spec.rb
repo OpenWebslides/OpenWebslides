@@ -6,7 +6,7 @@ RSpec.describe 'Deck API', :type => :request do
   let(:name) { Faker::Lorem.words(4).join(' ') }
 
   let(:user) { create :user, :confirmed }
-  let(:deck) { create :deck, :owner => user }
+  let(:deck) { create :deck, :user => user }
 
   let(:attributes) do
     {
@@ -23,7 +23,7 @@ RSpec.describe 'Deck API', :type => :request do
         :type => 'decks',
         :attributes => attributes,
         :relationships => {
-          :owner => {
+          :user => {
             :data => {
               :id => user.id,
               :type => 'users'
@@ -245,7 +245,7 @@ RSpec.describe 'Deck API', :type => :request do
     end
   end
 
-  # TODO: owner relationship
+  # TODO: user relationship
   # TODO: collaborators relationship
   # TODO: conversion relationship
   # TODO: assets relationship

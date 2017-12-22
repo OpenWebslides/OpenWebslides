@@ -55,8 +55,8 @@ RSpec.describe AssetPolicy do
       it { is_expected.to permit_action :show_deck }
     end
 
-    context 'for an owner' do
-      let(:user) { deck.owner }
+    context 'for a user' do
+      let(:user) { deck.user }
 
       it 'should not permit :create for another user' do
         expect(described_class.new(build(:user), asset)).to forbid_action :create
@@ -119,8 +119,8 @@ RSpec.describe AssetPolicy do
       it { is_expected.to permit_action :show_deck }
     end
 
-    context 'for an owner' do
-      let(:user) { deck.owner }
+    context 'for a user' do
+      let(:user) { deck.user }
 
       it 'should not permit :create for another user' do
         expect(described_class.new(build(:user), asset)).to forbid_action :create
@@ -171,8 +171,8 @@ RSpec.describe AssetPolicy do
       it { is_expected.to permit_action :show_deck }
     end
 
-    context 'for an owner' do
-      let(:user) { deck.owner }
+    context 'for a user' do
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :show }

@@ -53,7 +53,7 @@ module Repository
 
         # Commit
         exec Git::Commit do |c|
-          c.author = @receiver.owner
+          c.author = @receiver.user
           c.message = message
         end
       end

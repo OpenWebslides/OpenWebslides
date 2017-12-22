@@ -28,14 +28,14 @@ RSpec.describe ConversationPolicy do
       it { is_expected.to permit_action :show_comments }
     end
 
-    context 'for an owner' do
+    context 'for a user' do
       let(:user) { conversation.user }
 
       it { is_expected.to permit_action :show_comments }
     end
 
-    context 'for a deck owner' do
-      let(:user) { deck.owner }
+    context 'for a deck user' do
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :show_comments }
     end
@@ -62,14 +62,14 @@ RSpec.describe ConversationPolicy do
       it { is_expected.to permit_action :show_comments }
     end
 
-    context 'for an owner' do
+    context 'for a user' do
       let(:user) { conversation.user }
 
       it { is_expected.to permit_action :show_comments }
     end
 
-    context 'for a deck owner' do
-      let(:user) { deck.owner }
+    context 'for a deck user' do
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :show_comments }
     end
@@ -96,15 +96,15 @@ RSpec.describe ConversationPolicy do
       it { is_expected.to permit_action :show_comments }
     end
 
-    context 'for an owner' do
+    context 'for a user' do
       before { deck.collaborators << conversation.user }
       let(:user) { conversation.user }
 
       it { is_expected.to permit_action :show_comments }
     end
 
-    context 'for a deck owner' do
-      let(:user) { deck.owner }
+    context 'for a deck user' do
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :show_comments }
     end

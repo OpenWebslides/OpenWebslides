@@ -6,6 +6,6 @@ class ConversationMailer < ApplicationMailer
     @user = conversation.user
     @deck = conversation.deck
 
-    mail :to => @deck.owner.email, :subject => I18n.t('openwebslides.mailer.conversation.create.subject')
+    mail :to => @deck.user.email, :subject => I18n.t('openwebslides.mailer.conversation.create.subject')
   end
 end

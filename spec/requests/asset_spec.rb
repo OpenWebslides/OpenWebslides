@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Assets API', :type => :request do
   let(:asset) { create :asset, :with_deck }
   let(:deck) { asset.deck }
-  let(:user) { deck.owner }
+  let(:user) { deck.user }
 
   let(:asset_file) { Rails.root.join 'spec', 'support', 'asset.png' }
 

@@ -78,8 +78,8 @@ RSpec.describe NotificationPolicy do
       it { is_expected.to forbid_action :show_deck }
     end
 
-    context 'for an owner' do
-      let(:user) { deck.owner }
+    context 'for a user' do
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :index }
       it { is_expected.to permit_action :show }

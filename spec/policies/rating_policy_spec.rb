@@ -31,8 +31,8 @@ RSpec.describe RatingPolicy do
       it { is_expected.to permit_action :destroy }
     end
 
-    context 'for an owner' do
-      let(:user) { deck.owner }
+    context 'for a user' do
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :destroy }
@@ -63,8 +63,8 @@ RSpec.describe RatingPolicy do
       it { is_expected.to permit_action :destroy }
     end
 
-    context 'for an owner' do
-      let(:user) { deck.owner }
+    context 'for a user' do
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :destroy }
@@ -95,8 +95,8 @@ RSpec.describe RatingPolicy do
       it { is_expected.to permit_action :destroy }
     end
 
-    context 'for an owner' do
-      let(:user) { deck.owner }
+    context 'for a user' do
+      let(:user) { deck.user }
 
       it { is_expected.to permit_action :create }
       it { is_expected.to permit_action :destroy }

@@ -15,7 +15,7 @@ RSpec.describe DeckResource, :type => :resource do
   it { is_expected.to have_attribute :name }
   it { is_expected.to have_attribute :state }
 
-  it { is_expected.to have_one :owner }
+  it { is_expected.to have_one :user }
 
   it { is_expected.to have_many(:collaborators).with_class_name 'User' }
   it { is_expected.to have_many(:assets) }
@@ -23,20 +23,20 @@ RSpec.describe DeckResource, :type => :resource do
 
   describe 'fields' do
     it 'should have a valid set of fetchable fields' do
-      expect(subject.fetchable_fields).to match_array %i[id name state description template owner collaborators assets conversations]
+      expect(subject.fetchable_fields).to match_array %i[id name state description template user collaborators assets conversations]
     end
 
     it 'should omit empty fields' do
       subject { described_class.new nil_deck, context }
-      expect(subject.fetchable_fields).to match_array %i[id name state description template owner collaborators assets conversations]
+      expect(subject.fetchable_fields).to match_array %i[id name state description template user collaborators assets conversations]
     end
 
     it 'should have a valid set of creatable fields' do
-      expect(described_class.creatable_fields).to match_array %i[name state description template owner]
+      expect(described_class.creatable_fields).to match_array %i[name state description template user]
     end
 
     it 'should have a valid set of updatable fields' do
-      expect(described_class.updatable_fields).to match_array %i[name state description template owner]
+      expect(described_class.updatable_fields).to match_array %i[name state description template user]
     end
 
     it 'should have a valid set of sortable fields' do

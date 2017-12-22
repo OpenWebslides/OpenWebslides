@@ -7,7 +7,7 @@ import fetchDeckJsonApi from 'api/fetchDeckJsonApi';
 function metadataJsonToObject(json) {
   const collaboratorsIds = json.data.relationships.collaborators.data.map(obj => obj.id);
   const conversationsIds = json.data.relationships.conversations.data.map(obj => obj.id);
-  const authorId = json.data.relationships.owner.data.id;
+  const authorId = json.data.relationships.user.data.id;
   const authorObj = json.included.filter(obj => (obj.id === authorId && obj.type === 'users'))[0];
 
   const firstName = authorObj.attributes.firstName ? authorObj.attributes.firstName : '';
@@ -26,7 +26,7 @@ function metadataJsonToObject(json) {
 
 export function* fetchDeckMetadataFlow(id) {
   try {
-    const metadataResponse = yield call(fetchDeckJsonApi, id, { conversations: true, collaborators: true, owner: true });
+    const metadataResponse = yield call(fetchDeckJsonApi, id, { conversations: true, collaborators: true, user: true });
     const metadata = metadataJsonToObject(metadataResponse);
     yield put({ type: ADD_DECK_METADATA, payload: { id, metadata } });
   }

@@ -3,13 +3,13 @@ import ApiRequest from './helpers/apiHelper';
 async function fetchDeckJson(deckId, inclusions) {
   const request = new ApiRequest();
 
-  const { assets, collaborators, owner, conversations } = inclusions;
+  const { assets, collaborators, user, conversations } = inclusions;
 
   const endpoint = `decks/${deckId}`;
 
   request.setMethod('GET').setEndpoint(endpoint);
 
-  if (assets || collaborators || owner || conversations) {
+  if (assets || collaborators || user || conversations) {
     let param = '';
 
     if (assets) {
@@ -18,8 +18,8 @@ async function fetchDeckJson(deckId, inclusions) {
     if (collaborators) {
       param = `${param}collaborators,`;
     }
-    if (owner) {
-      param = `${param}owner,`;
+    if (user) {
+      param = `${param}user,`;
     }
     if (conversations) {
       param = `${param}conversations,`;
