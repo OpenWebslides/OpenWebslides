@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   # API endpoints
   #
   scope :api, :constraints => { :format => :json } do
-    root :to => proc { [404, {}, []] }
+    root :to => 'application#version', :as => 'version'
 
     ##
     # User API

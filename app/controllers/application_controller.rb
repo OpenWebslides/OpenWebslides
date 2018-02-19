@@ -1,11 +1,31 @@
 # frozen_string_literal: true
 
+require 'open_webslides/version'
+
 class ApplicationController < ActionController::API
   include JSONAPI::Utils
   include JWT::Auth::Authentication
   include Pundit
 
   include ErrorHandling
+
+  def version
+    info = {
+      :data => {
+        :type => 'apps',
+        :links => {
+          :self => version_url
+        },
+        :attributes => {
+          :version => OpenWebslides.version.build,
+          :version_string => OpenWebslides.version.version_string
+        }
+      }
+    }
+
+    response.headers['Content-Type'] = JSONAPI::MEDIA_TYPE
+    render :json => info, :status => :ok
+  end
 
   protected
 
